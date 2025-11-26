@@ -167,30 +167,3 @@ return [
     'thanks' => 'Gracias,',
     'thank_you_using_brand' => '¡Gracias por usar TRANSFERFLUX!',
 ];
-<?php
-
-return [
-	// Compte créé
-	'compte_created_subject' => 'Apertura de cuenta - TRANSFERFLUX',
-	'compte_created_title' => 'Apertura de cuenta en TRANSFERFLUX',
-	'greeting' => 'Hola :name,',
-	'compte_created_message' => "Nos complace informarle que su cuenta ha sido creada con éxito y acreditada con un monto de <strong>:balance :currency</strong>.",
-	'credentials_title' => 'Sus credenciales son:',
-	'label_email' => '📧 Email:',
-	'label_password' => '🔑 Contraseña:',
-	'label_initial_balance' => '💰 Saldo inicial:',
-	'cta_login' => 'Inicie sesión en su cuenta',
-	'info_access' => 'Ahora puede acceder a su cuenta y disfrutar de nuestros servicios.',
-	'support_contact' => 'Si tiene preguntas o necesita más información, <a href="#" class="support-link">contacte con nuestro soporte</a>.',
-	'footer_thanks' => '¡Gracias por usar TRANSFERFLUX!',
-	'footer_brand' => 'TRANSFERFLUX',
-	'footer_partner' => 'Su socio financiero de confianza 🏦',
-
-	// Minimal additional keys to avoid missing translations
-	'virement_success_subject' => 'Transferencia realizada con éxito - TRANSFERFLUX',
-	'virement_success_title' => 'Transferencia realizada con éxito',
-	'virement_success_message' => 'Le informamos que su transferencia se ha realizado con éxito.',
-	'virement_failed_subject' => 'Fallo en la transferencia - TRANSFERFLUX',
-	'virement_failed_title' => 'Fallo en la transferencia',
-	'virement_failed_message' => 'Lamentamos informarle que su transferencia ha fallado.',
-];
