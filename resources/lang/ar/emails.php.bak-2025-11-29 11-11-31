@@ -1,0 +1,148 @@
+<?php
+
+return [
+	// Compte créé
+	'compte_created_subject' => 'فتح الحساب - TRANSFERFLUX',
+	'compte_created_title' => 'فتح حساب على TRANSFERFLUX',
+	'greeting' => 'مرحبًا :name،',
+	'compte_created_message' => 'يسرنا إبلاغك أن حسابك قد تم إنشاؤه بنجاح وتمت إضافة مبلغ قدره :amount.',
+	'credentials_title' => 'بيانات الدخول الخاصة بك:',
+	'label_email' => '📧 البريد الإلكتروني:',
+	'label_password' => '🔑 كلمة المرور:',
+	'label_initial_balance' => '💰 الرصيد الابتدائي:',
+	'cta_login' => 'سجل دخولك إلى حسابك',
+	'info_access' => 'يمكنك الآن الوصول إلى حسابك والاستفادة من خدماتنا.',
+	'support_contact' => 'إذا كان لديك أسئلة أو تحتاج إلى مساعدة، تواصل مع الدعم.',
+	'footer_thanks' => 'شكرًا لاستخدامك TRANSFERFLUX!',
+	'footer_brand' => 'TRANSFERFLUX',
+	'footer_partner' => 'شريكك المالي الموثوق 🏦',
+
+	// Virement réussi
+	'virement_success_subject' => 'تم التحويل بنجاح - TRANSFERFLUX',
+	'virement_success_title' => 'تم التحويل بنجاح',
+	'virement_success_message' => 'نحيطك علمًا بأن تحويلك قد أُكمل بنجاح.',
+
+	// Virement échec
+	'virement_failed_subject' => 'فشل التحويل - TRANSFERFLUX',
+	'virement_failed_title' => 'فشل في التحويل',
+	'virement_failed_message' => 'نأسف لإعلامك بأن محاولة التحويل الخاصة بك لم تنجح.',
+
+	// Détails & labels
+	'details_title' => 'تفاصيل التحويل',
+	'label_amount' => '💰 المبلغ :',
+	'label_date' => '📅 التاريخ :',
+	'label_beneficiary' => '👤 المستفيد :',
+	'virement_notice' => 'سيُعالَج التحويل خلال 1-3 أيام عمل.',
+	'thanks' => 'شكرًا،',
+	'contact_support_for_info' => 'لمزيد من المعلومات تواصل مع خدمة العملاء.',
+	'regards' => 'مع التحية،',
+
+	// Footer / common
+	'footer_brand' => 'TRANSFERFLUX',
+	'footer_partner' => 'شريكك المالي الموثوق 🏦',
+
+	// Compte activé
+	'compte_activated_title' => 'تم تفعيل الحساب - TRANSFERFLUX',
+	'compte_activated_heading' => 'تم تفعيل الحساب بنجاح',
+	'good_news' => '✅ خبر سار :',
+	'compte_activated_message' => 'تم تفعيل حسابك TRANSFERFLUX وهو الآن جاهز للاستخدام.',
+	'compte_activated_explanation' => 'يمكنك الآن إجراء جميع معاملاتك بأمان.',
+	'label_holder' => 'الحامل',
+	'label_current_balance' => 'الرصيد الحالي',
+	'label_status' => 'الحالة',
+	'status_active' => 'مُفعل',
+	'you_can_now' => 'يمكنك الآن :',
+	'can_make_transfers' => 'إجراء التحويلات والمدفوعات',
+	'check_balance' => 'الاطلاع على رصيدك في الوقت الحقيقي',
+	'manage_transactions' => 'إدارة معاملاتك بأمان',
+	'access_services' => 'الوصول إلى جميع خدماتنا المصرفية',
+	'thanks_welcome' => 'شكرًا لثقتك ومرحبًا بك في عائلة TRANSFERFLUX!',
+
+	// Codes de déblocage
+	'unlock_code_used_title' => 'تم استخدام رمز الفتح - TRANSFERFLUX',
+	'unlock_code_used_heading' => 'تم استخدام رمز الفتح',
+	'greeting_simple' => 'مرحبًا،',
+	'info_notification' => 'ℹ️ إشعار :',
+	'unlock_code_used_alert' => 'تم استخدام رمز فتح على حسابك للتو.',
+	'unlock_code_used_explanation' => 'نود إعلامك بأنه قد تم إدخال رمز فتح والتحقق منه لإتمام تحويل.',
+	'label_date_time' => 'التاريخ والوقت',
+	'label_transfer_amount' => 'مبلغ التحويل',
+	'label_recipient' => 'المستلم',
+	'urgent_if_not_you' => '⚠️ إذا لم تكن أنت من قام بهذا الإجراء:',
+	'contact_support_immediately' => 'تواصل فورًا مع خدمة العملاء',
+	'check_recent_transactions' => 'تحقق من جميع المعاملات الأخيرة',
+	'change_access_codes' => 'غيّر رموز الوصول لأمان حسابك',
+	'if_legitimate' => '✅ إذا كان الإجراء مشروعًا:',
+	'client_can_finalize' => 'يمكن لعميلك الآن إتمام معاملته بأمان.',
+
+	// Transfert - code de déblocage envoyé
+	'transfer_unlock_code_title' => 'رمز فتح التحويل - TRANSFERFLUX',
+	'transfer_unlock_heading' => 'رمز فتح التحويل',
+	'transfer_unlock_message_intro' => 'رمز فتح التحويل الخاص بك مذكور أدناه :',
+	'transfer_unlock_code_label' => 'الرمز هو :',
+	'your_unlock_code' => 'رمز الفتح الخاص بك',
+	'do_not_share_unlock_code' => 'لا تشارك رمز الفتح الخاص بك!',
+	'unlock_code_personal_confidential' => 'هذا الرمز شخصي وسري تمامًا.',
+	'unlock_code_needed_finalize' => 'هذا الرمز مطلوب لإتمام عملية التحويل.',
+	'contact_support_for_questions' => 'لأي استفسارات تواصل مع خدمة العملاء.',
+
+	// Welcome
+	'welcome_title' => 'مرحبًا - TRANSFERFLUX',
+	'welcome_heading' => 'مرحبًا بك في FLASH COMPTE',
+	'welcome_message' => 'شكرًا لإنشاء حساب. سعداء بانضمامك!',
+	'login_credentials_title' => '📧 بيانات الدخول الخاصة بك :',
+	'access_member_area' => 'يمكنك الوصول إلى منطقة الأعضاء للاطلاع على خدماتنا والاستفادة من المزايا.',
+	'pleasure_to_assist' => 'سعداء بمساعدتك في معاملاتك المالية!',
+
+	// Solde diminué / augmenté
+	'balance_decreased_title' => 'انخفاض الرصيد - TRANSFERFLUX',
+	'balance_decreased_heading' => 'انخفاض الرصيد',
+	'balance_decreased_message' => 'نود إبلاغك أن رصيدك قد انخفض.',
+	'operation_details' => 'تفاصيل العملية',
+	'label_amount_deducted' => 'المبلغ المخصوم',
+	'label_new_balance' => 'الرصيد الجديد',
+	'contact_us_if_questions' => 'إذا كان لديك أي أسئلة أو تحتاج للمساعدة، يرجى التواصل معنا.',
+	'balance_increased_title' => 'زيادة الرصيد - TRANSFERFLUX',
+	'balance_increased_heading' => 'زيادة الرصيد',
+	'balance_increased_message' => 'نود إبلاغك أن رصيدك قد زاد بنجاح.',
+	'label_amount_added' => 'المبلغ المضاف',
+	'thank_you_trust' => 'شكرًا لثقتك!',
+
+	// Remboursement
+	'refund_title' => 'استرداد - TRANSFERFLUX',
+	'refund_heading' => 'فشل في التحويل',
+	'refund_subject' => 'فشل التحويل - TRANSFERFLUX',
+	'refund_failed_message' => 'نأسف لإبلاغك أن محاولتك لإجراء التحويل قد فشلت.',
+	'transfer_details' => 'تفاصيل التحويل',
+	'label_transfer_date' => 'تاريخ التحويل',
+	'label_reason' => 'سبب التحويل',
+	'refund_notice' => 'تم إرجاع مبلغ :amount إلى حسابك.',
+	'apology' => 'نعتذر عن الإزعاج. إذا كانت لديك أسئلة أو تحتاج مساعدة، تواصل معنا.',
+
+	// Mail error alert
+	'mail_error_alert_title' => 'تنبيه خطأ في البريد الإلكتروني',
+	'system_alert' => '⚠️ تنبيه نظام',
+	'mail_send_failure_detected' => 'تم اكتشاف فشل في إرسال البريد الإلكتروني',
+	'email_sending_problem' => 'لم يتمكن النظام من إرسال البريد الإلكتروني. قد يشير ذلك إلى وصول الحد اليومي أو وجود مشكلة في خادم SMTP.',
+	'error_details' => 'تفاصيل الخطأ',
+	'label_failed_recipient' => 'المستلم الفاشل',
+	'label_context' => 'السياق',
+	'label_error_message' => 'رسالة الخطأ',
+	'possible_causes' => 'الأسباب المحتملة',
+	'cause_daily_limit' => 'تم الوصول إلى الحد اليومي',
+	'cause_smtp_connection' => 'مشكلة في اتصال SMTP',
+	'cause_auth_failed' => 'فشل في التوثيق',
+	'recommended_actions' => 'الإجراءات الموصى بها',
+	'action_check_logs' => 'تحقق من السجلات',
+	'action_check_config' => 'تحقق من إعدادات SMTP في ملف .env',
+	'system_information' => 'معلومات النظام',
+	'alert_auto_generated_notice' => 'تم إنشاء هذا التنبيه تلقائيًا. يواصل التطبيق عمله، ولكن الرسائل الإلكترونية لا تصل.',
+
+	// Password reset
+	'password_reset_title' => 'إعادة تعيين كلمة المرور - TRANSFERFLUX',
+	'password_reset_heading' => 'إعادة تعيين كلمة المرور',
+	'password_reset_reason' => 'أنت تتلقى هذا البريد لأننا تلقينا طلبًا لإعادة تعيين كلمة المرور لحسابك.',
+	'password_reset_click_link' => 'انقر على الزر أدناه لإعادة تعيين كلمة المرور:',
+	'password_reset_button' => 'إعادة تعيين كلمة المرور',
+	'password_reset_no_action_needed' => 'إذا لم تطلب إعادة التعيين، فلا يلزم أي إجراء إضافي.',
+];

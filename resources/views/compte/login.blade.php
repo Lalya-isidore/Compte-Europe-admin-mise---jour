@@ -142,7 +142,6 @@
                 modal.find('#modal-account-type').text(data.accountType);
                 modal.find('#modal-account-status').text(data.accountStatus);
                 modal.find('#modal-transfer-supported').text(data.transferSupported);
-                modal.find('#modal-numerocompte').text(data.numerocompte);
                 $('#compte-id').val(data.compteId);
 
                 $('#envoyer-email-form').attr('action', `/envoyerEmail/${data.compteId}`);

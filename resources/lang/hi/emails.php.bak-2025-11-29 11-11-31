@@ -1,0 +1,127 @@
+<?php
+
+// DRAFT: मशीन अनुवाद (हिन्दी)। कृपया मूलभाषी द्वारा सत्यापित करें।
+// यह फ़ाइल `fr/emails.php` की सभी कुंजियों का मशीन अनुवाद है।
+return [
+	// खाता बनाया गया
+	'compte_created_subject' => 'खाता खोलना - TRANSFERFLUX',
+	'compte_created_title' => 'TRANSFERFLUX पर खाता खोलना',
+	'greeting' => 'नमस्ते :name,',
+	'compte_created_message' => 'हमें यह बताते हुए खुशी हो रही है कि आपका खाता सफलतापूर्वक बनाया गया है और :amount जमा किया गया है।',
+	'credentials_title' => 'आपके लॉगिन विवरण:',
+	'label_email' => '📧 ईमेल:',
+	'label_password' => '🔑 पासवर्ड:',
+	'label_initial_balance' => '💰 प्रारंभिक शेष:',
+	'cta_login' => 'अपने खाते में लॉगिन करें',
+	'info_access' => 'अब आप अपने खाते तक पहुँच सकते हैं और हमारी सेवाओं का उपयोग कर सकते हैं।',
+	'support_contact' => 'हमारे समर्थन से संपर्क करें',
+	'footer_thanks' => 'TRANSFERFLUX उपयोग करने के लिए धन्यवाद!',
+
+	// सफल भुगतान
+	'virement_success_subject' => 'हस्तांतरण सफल - TRANSFERFLUX',
+	'virement_success_title' => 'हस्तांतरण सफल',
+	'virement_success_message' => 'हम सूचित करते हैं कि आपका हस्तांतरण सफलतापूर्वक पूरा हो गया है।',
+
+	// भुगतान विफल
+	'virement_failed_subject' => 'हस्तांतरण विफल - TRANSFERFLUX',
+	'virement_failed_title' => 'हस्तांतरण विफल',
+	'virement_failed_message' => 'क्षमा करें, आपका हस्तांतरण विफल रहा।',
+
+	// विवरण और लेबल
+	'details_title' => 'हस्तांतरण विवरण',
+	'label_amount' => '💰 राशि :',
+	'label_date' => '📅 तारीख :',
+	'label_beneficiary' => '👤 प्राप्तकर्ता :',
+	'virement_notice' => 'हस्तांतरण 1-3 कार्यदिवसों में संसाधित किया जाएगा।',
+	'thanks' => 'धन्यवाद,',
+	'contact_support_for_info' => 'अधिक जानकारी के लिए हमारे ग्राहक समर्थन से संपर्क करें।',
+
+	// सामान्य
+	'footer_brand' => 'TRANSFERFLUX',
+	'footer_partner' => 'आपका भरोसेमंद वित्तीय साझेदार 🏦',
+	'regards' => 'सादर,',
+	'service_client' => 'कस्टमर सर्विस',
+	'auto_generated_notice' => 'यह ईमेल स्वचालित रूप से भेजा गया है, कृपया सीधे उत्तर न दें।',
+
+	// शेष कुंजियाँ (मशीन ड्राफ्ट)
+	'compte_activated_title' => 'खाता सक्रिय - TRANSFERFLUX',
+	'compte_activated_heading' => 'खाता सफलतापूर्वक सक्रिय किया गया',
+	'good_news' => '✅ अच्छी खबर :',
+	'compte_activated_message' => 'आपका TRANSFERFLUX खाता सक्रिय और उपयोग के लिए तैयार है।',
+	'compte_activated_explanation' => 'अब आप सुरक्षित रूप से सभी लेनदेन कर सकते हैं।',
+	'label_holder' => 'धारक',
+	'label_current_balance' => 'वर्तमान शेष',
+	'label_status' => 'स्थिति',
+	'status_active' => 'सक्रिय',
+	'you_can_now' => 'अब आप कर सकते हैं:',
+	'can_make_transfers' => 'हस्तांतरण और भुगतान करें',
+	'check_balance' => 'अपना शेष वास्तविक समय में देखें',
+	'manage_transactions' => 'अपनी लेनदेन सुरक्षित रूप से प्रबंधित करें',
+	'access_services' => 'हमारी सभी बैंकिंग सेवाओं का उपयोग करें',
+	'thanks_welcome' => 'आपके भरोसे के लिए धन्यवाद और TRANSFERFLUX में आपका स्वागत है!',
+
+	'unlock_code_used_title' => 'अनलॉक कोड उपयोग किया गया - TRANSFERFLUX',
+	'unlock_code_used_heading' => 'अनलॉक कोड उपयोग किया गया',
+	'greeting_simple' => 'नमस्ते,',
+	'info_notification' => 'ℹ️ सूचना :',
+	'unlock_code_used_alert' => 'आपके खाते पर एक अनलॉक कोड उपयोग किया गया है।',
+	'unlock_code_used_explanation' => 'हम आपको सूचित करते हैं कि एक अनलॉक कोड दर्ज और सत्यापित किया गया है।',
+	'label_date_time' => 'दिनांक और समय',
+	'label_transfer_amount' => 'हस्तांतरण राशि',
+	'label_recipient' => 'प्राप्तकर्ता',
+	'urgent_if_not_you' => '⚠️ यदि यह आप द्वारा नहीं किया गया है, तो कृपया:',
+	'contact_support_immediately' => 'तुरंत समर्थन से संपर्क करें',
+	'check_recent_transactions' => 'अपनी हाल की लेनदेन जांचें',
+	'change_access_codes' => 'सुरक्षा के लिए अपनी एक्सेस कोड बदलें',
+	'if_legitimate' => '✅ यदि यह कदम वैध है:',
+	'client_can_finalize' => 'आपका क्लाइंट अब सुरक्षित रूप से अपना लेनदेन पूरा कर सकता है।',
+
+	'transfer_unlock_code_title' => 'अनलॉक कोड - TRANSFERFLUX',
+	'transfer_unlock_heading' => 'हस्तांतरण अनलॉक कोड',
+	'transfer_unlock_message_intro' => 'आपका अनलॉक कोड नीचे है:',
+	'transfer_unlock_code_label' => 'कोड है :',
+	'your_unlock_code' => 'आपका अनलॉक कोड',
+	'do_not_share_unlock_code' => 'अपना कोड साझा न करें!',
+	'unlock_code_personal_confidential' => 'यह कोड निजी और गोपनीय है।',
+	'unlock_code_needed_finalize' => 'हस्तांतरण को पूरा करने के लिए यह कोड आवश्यक है।',
+	'contact_support_for_questions' => 'प्रश्नों के लिए समर्थन से संपर्क करें।',
+
+	'welcome_title' => 'स्वागत है - TRANSFERFLUX',
+	'welcome_heading' => 'स्वागत है',
+	'welcome_message' => 'खाता बनाने के लिए धन्यवाद। हमें खुशी है कि आप हमारे साथ हैं!',
+
+	'balance_decreased_title' => 'बैलेंस घटा - TRANSFERFLUX',
+	'balance_decreased_heading' => 'बैलेंस घटा',
+	'balance_decreased_message' => 'हम आपको सूचित करते हैं कि आपका बैलेंस घट गया है।',
+	'operation_details' => 'ऑपरेशन विवरण',
+	'label_amount_deducted' => 'कटौती की गई राशि',
+	'label_new_balance' => 'नया बैलेंस',
+	'contact_us_if_questions' => 'यदि आपके पास प्रश्न हैं या सहायता चाहिए, हमसे संपर्क करें।',
+
+	'balance_increased_title' => 'बैलेंस बढ़ा',
+	'balance_increased_heading' => 'बैलेंस बढ़ा',
+	'balance_increased_message' => 'हम आपको सूचित करते हैं कि आपका बैलेंस सफलतापूर्वक बढ़ा है।',
+	'label_amount_added' => 'जोड़ दी गई राशि',
+	'thank_you_trust' => 'आपके भरोसे के लिए धन्यवाद!',
+
+	'refund_title' => 'वापसी - TRANSFERFLUX',
+	'refund_heading' => 'हस्तांतरण विफल',
+	'refund_subject' => 'हस्तांतरण विफल - TRANSFERFLUX',
+	'refund_failed_message' => ':amount आपकी खाते में वापस कर दिया गया है।',
+
+	'mail_error_alert_title' => 'मेल त्रुटि चेतावनी',
+	'system_alert' => '⚠️ सिस्टम चेतावनी',
+	'mail_send_failure_detected' => 'मेल भेजने में विफलता का पता चला',
+	'email_sending_problem' => 'मेल नहीं भेजा जा सका; सम्भवतः दैनिक सीमा पार या SMTP समस्या।',
+	'email_send_failure_explanation' => 'त्रुटि विवरण: :error',
+
+	'password_reset_title' => 'पासवर्ड रीसेट - TRANSFERFLUX',
+	'password_reset_heading' => 'पासवर्ड रीसेट',
+	'greeting_simple_name' => 'नमस्ते :name,',
+	'password_reset_reason' => 'आप यह ईमेल इसलिए प्राप्त कर रहे हैं क्योंकि पासवर्ड रीसेट का अनुरोध किया गया था।',
+	'password_reset_click_link' => 'पासवर्ड रीसेट करने के लिए नीचे दिए गए लिंक पर क्लिक करें :',
+	'password_reset_no_action_needed' => 'यदि आपने रीक्वेस्ट नहीं किया है तो कोई और कार्रवाई आवश्यक नहीं है।',
+	'password_reset_button' => 'पासवर्ड रीसेट करें',
+
+	'account_blocked_message' => 'आपका TRANSFERFLUX खाता अस्थायी रूप से ब्लॉक कर दिया गया है।',
+];

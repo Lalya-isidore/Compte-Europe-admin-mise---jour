@@ -1,0 +1,23 @@
+<?php
+
+// Backup of resources/lang/de/emails.php (created by automation)
+
+return [
+    // Konto erstellt
+    'compte_created_subject' => 'Kontoeröffnung - TRANSFERFLUX',
+    'compte_created_title' => 'Konto bei TRANSFERFLUX eröffnet',
+    'greeting' => 'Hallo :name,',
+    'compte_created_message' => "Wir freuen uns, Ihnen mitzuteilen, dass Ihr Konto erfolgreich erstellt und mit :amount gutgeschrieben wurde.",
+    'credentials_title' => 'Ihre Zugangsdaten:',
+    'label_email' => '📧 E‑Mail:',
+    'label_password' => '🔑 Passwort:',
+    'label_initial_balance' => '💰 Anfangssaldo:',
+    'cta_login' => 'Melden Sie sich in Ihrem Kundenbereich an',
+    'info_access' => 'Sie können jetzt auf Ihr Konto zugreifen und unsere Dienstleistungen nutzen.',
+    'support_contact' => 'kontaktieren Sie unseren Support',
+    'footer_thanks' => "Danke, dass Sie TRANSFERFLUX nutzen!",
+    'footer_brand' => 'TRANSFERFLUX',
+    'footer_partner' => 'Ihr verlässlicher Finanzpartner 🏦',
+
+    // ... (backup truncated for brevity)
+];

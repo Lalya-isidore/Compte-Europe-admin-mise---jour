@@ -1,0 +1,74 @@
+<?php
+
+return [
+	'refund_subject' => 'Pemindahan Gagal - Baki Dikembalikan - TRANSFERFLUX',
+	'refund_title' => "Pemindahan Gagal\nPemulangan Baki",
+	'greeting' => 'Hai :name,',
+	'refund_failed_message' => 'Kami kesal untuk memberitahu bahawa percubaan pemindahan anda telah gagal.',
+	'details_title' => 'Butiran Pemindahan',
+	'label_amount' => '💰 Amaun:',
+	'label_date' => '📅 Tarikh Pemindahan:',
+	'label_recipient' => '👤 Penerima:',
+	'label_reason' => 'Sebab Pemindahan:',
+	'refund_notice' => 'Jumlah sebanyak :amount telah dikembalikan ke akaun anda.',
+	'apology' => 'Kami memohon maaf atas kesulitan ini. Jika anda mempunyai sebarang pertanyaan atau memerlukan bantuan, sila hubungi kami.',
+	'footer_thanks' => 'Terima kasih kerana menggunakan TRANSFERFLUX!',
+	'footer_brand' => 'TRANSFERFLUX',
+	'footer_partner' => 'Rakan kewangan dipercayai anda 🏦',
+
+	// Password reset
+	'password_reset_heading' => 'Tetapan Semula Kata Laluan',
+	'password_reset_reason' => 'Anda menerima e-mel ini kerana kami menerima permintaan untuk menetapkan semula kata laluan anda.',
+	'password_reset_click_link' => 'Sila klik butang di bawah untuk menetapkan semula kata laluan anda:',
+	'password_reset_button' => 'Tetapkan Semula Kata Laluan',
+	'password_reset_no_action_needed' => 'Jika anda tidak meminta penetapan semula kata laluan, tiada tindakan lanjut diperlukan.',
+
+	// Transfers
+	'virement_success_title' => 'Pemindahan Berjaya',
+	'virement_success_message' => 'Kami memaklumkan bahawa pemindahan anda telah berjaya diselesaikan.',
+	'virement_failed_title' => 'Pemindahan Gagal',
+	'virement_failed_message' => 'Kami memaklumkan bahawa pemindahan anda telah gagal.',
+
+	'label_beneficiary' => '👤 Benefisiari:',
+
+	// Account
+	'compte_created_title' => 'Pembukaan Akaun',
+	'compte_created_message' => 'Akaun anda telah dibuat dan dikreditkan dengan :amount.',
+
+	// Balance
+	'balance_decreased_heading' => 'Baki Berkurangan',
+	'balance_decreased_message' => 'Kami ingin memaklumkan bahawa baki anda telah berkurangan.',
+	'label_amount_deducted' => 'Amaun ditolak',
+	'label_new_balance' => 'Baki baharu',
+
+	'balance_increased_heading' => 'Baki Bertambah',
+	'balance_increased_message' => 'Kami ingin memaklumkan bahawa baki anda telah berjaya ditambah.',
+	'label_amount_added' => 'Amaun ditambah',
+
+	// Unlock codes
+	'unlock_code_used_heading' => 'Kod Nyahkunci Digunakan',
+	'info_notification' => 'ℹ️ Makluman:',
+	'unlock_code_used_alert' => 'Kod nyahkunci baru sahaja digunakan pada akaun anda.',
+	'transfer_unlock_heading' => 'Kod Nyahkunci Pemindahan',
+	'transfer_unlock_message_intro' => 'Kod nyahkunci untuk pemindahan anda disenaraikan di bawah:',
+
+	// Mail error alert
+	'system_alert' => '⚠️ AMARAN SISTEM',
+	'mail_send_failure_detected' => 'Kegagalan penghantaran e-mel dikesan',
+	'email_sending_problem' => 'Masalah penghantaran e-mel',
+	'email_send_failure_explanation' => 'E-mel tidak dapat dihantar. Ini mungkin menunjukkan had harian dicapai atau terdapat masalah dengan pelayan SMTP.',
+	'error_details' => 'Butiran Ralat',
+	'label_date_time' => 'Tarikh dan masa',
+	'label_failed_recipient' => 'Penerima gagal',
+	'label_context' => 'Konteks',
+	'label_error_message' => 'Mesej ralat',
+	'possible_causes' => 'Punca yang mungkin',
+	'recommended_actions' => 'Tindakan yang disyorkan',
+	'system_information' => 'Maklumat sistem',
+	'alert_auto_generated_notice' => 'Amaran ini dijana secara automatik. Aplikasi terus berjalan seperti biasa, tetapi e-mel tidak dihantar.',
+
+	// Misc
+	'thanks' => 'Terima kasih,',
+	'regards' => 'Salam sejahtera,',
+	'account_blocked_message' => 'Akaun TRANSFERFLUX anda telah digantung sementara.',
+];

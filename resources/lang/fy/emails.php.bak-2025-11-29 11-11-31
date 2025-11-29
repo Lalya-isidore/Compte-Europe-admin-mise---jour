@@ -1,0 +1,114 @@
+<?php
+
+// DRAFT: Masine-oersetting (Frysk). Kontrolearje asjebleaft troch in memmetaalsprekkende.
+// Dit bestân befettet in masine-oersetting fan alle kaaien út `fr/emails.php`.
+return [
+	// Rekkening oanmakke
+	'compte_created_subject' => 'Oanmeitsjen fan rekken - TRANSFERFLUX',
+	'compte_created_title' => 'Oanmeitsjen fan rekken op TRANSFERFLUX',
+	'greeting' => 'Hoi :name,',
+	'compte_created_message' => 'Wy binne bliid te melden dat jo rekken mei súkses oanmakke is en kredyt krigen hat fan :amount.',
+	'credentials_title' => 'Jo ynloggegevens binne:',
+	'label_email' => '📧 Email:',
+	'label_password' => '🔑 Wachtwurd:',
+	'label_initial_balance' => '💰 Oanfoljend saldo:',
+	'cta_login' => 'Meld jo oan by jo akkount',
+	'info_access' => 'Jo kinne no tagong krije ta jo akkount en ús tsjinst brûke.',
+	'support_contact' => 'nim kontakt op mei ús stipe',
+	'footer_thanks' => 'Tank foar it brûken fan TRANSFERFLUX!',
+
+	// Oerdracht slagge
+	'virement_success_subject' => 'Oerdracht mei súkses - TRANSFERFLUX',
+	'virement_success_title' => 'Oerdracht slagge',
+	'virement_success_message' => 'Wy jouwe jo witte dat jo oerdracht slagge is.',
+
+	// Oerdracht mislearre
+	'virement_failed_subject' => 'Oerdracht mislearre - TRANSFERFLUX',
+	'virement_failed_title' => 'Oerdracht mislearre',
+	'virement_failed_message' => 'Spitigernôch is jo oerdracht mislearre.',
+
+	// Details & labels
+	'details_title' => 'Details fan de oerdracht',
+	'label_amount' => '💰 Bedrach :',
+	'label_date' => '📅 Datum :',
+	'label_beneficiary' => '👤 Untfanger :',
+	'virement_notice' => 'De oerdracht wurdt ferwurke binnen 1-3 wurkdagen.',
+	'thanks' => 'Tankewol,',
+	'contact_support_for_info' => 'Foar mear ynformaasje, kontaktearje ús klantenservice.',
+
+	// Footer / algemien
+	'footer_brand' => 'TRANSFERFLUX',
+	'footer_partner' => 'Jo betroubere finansjele partner 🏦',
+	'regards' => 'Mei freonlike groetnis,',
+	'service_client' => 'Klantenservice',
+	'auto_generated_notice' => 'Dizze e-mail is automatysk generearre, antwurd net direkt.',
+
+	// Folgjende kaai-entries (masine-oersetting)
+	'compte_activated_title' => 'Rekkening aktivearre - TRANSFERFLUX',
+	'compte_activated_heading' => 'Rekkening suksesfol aktyf',
+	'good_news' => '✅ Goed nijs :',
+	'compte_activated_message' => 'Jo TRANSFERFLUX-akkount is aktivearre en klear foar gebrûk.',
+	'compte_activated_explanation' => 'Jo kinne no feilich alle transaksjes útfierje.',
+	'label_holder' => 'Hâlder',
+	'label_current_balance' => 'Hjoeddeistich saldo',
+	'label_status' => 'Status',
+	'status_active' => 'AKTIVEARD',
+	'you_can_now' => 'Jo kinne no:',
+	'can_make_transfers' => 'Oerdrachten en betellingen meitsje',
+	'check_balance' => 'Sjoch jo saldo yn echt tiid',
+	'manage_transactions' => 'Behear jo transaksjes feilich',
+	'access_services' => 'Tagong ta al ús banktsjinsten',
+	'thanks_welcome' => 'Tank foar jo fertrouwen en wolkom by TRANSFERFLUX!',
+
+	'unlock_code_used_title' => 'Untslutingkoade brûkt - TRANSFERFLUX',
+	'unlock_code_used_heading' => 'Untslutingkoade brûkt',
+	'greeting_simple' => 'Hoi,',
+	'info_notification' => 'ℹ️ Ynformaasje :',
+	'unlock_code_used_alert' => 'In ûntslutingkoade is krekt op jo akkount brûkt.',
+	'unlock_code_used_explanation' => 'Wy melde dat in ûntslutingkoade ynfierd en fiifkeard is foar in transaksje.',
+	'label_date_time' => 'Datum en tiid',
+	'label_transfer_amount' => 'Oerdrachtsbedrach',
+	'label_recipient' => 'Untfanger',
+	'urgent_if_not_you' => '⚠️ As dit net jo wiene, doch dan:',
+	'contact_support_immediately' => 'Nim fuortendaliks kontakt op mei stipe',
+
+	'transfer_unlock_code_title' => 'Untslutingkoade - TRANSFERFLUX',
+	'transfer_unlock_heading' => 'Untslutingkoade foar oerdracht',
+	'transfer_unlock_message_intro' => 'Jo ûntslutingkoade foar de oerdracht is:',
+	'transfer_unlock_code_label' => 'De koade is :',
+	'do_not_share_unlock_code' => 'Diel jo koade net!',
+
+	'welcome_title' => 'Wolkom - TRANSFERFLUX',
+	'welcome_heading' => 'Wolkom',
+	'welcome_message' => 'Tank foar it oanmeitsjen fan in akkount. Wy binne bliid jo te hawwen!',
+
+	'balance_decreased_title' => 'Saldo fermindere - TRANSFERFLUX',
+	'balance_decreased_heading' => 'Saldo fermindere',
+	'balance_decreased_message' => 'Wy litte jo witte dat jo saldo fermindere is.',
+	'operation_details' => 'Details fan de opsje',
+	'label_amount_deducted' => 'Bedrach ôfhelle',
+	'label_new_balance' => 'Nij saldo',
+	'contact_us_if_questions' => 'As jo fragen hawwe, nim dan kontakt op.',
+
+	'balance_increased_title' => 'Saldo fergrutte',
+	'balance_increased_heading' => 'Saldo fergrutte',
+	'balance_increased_message' => 'Wy litte jo witte dat jo saldo mei súkses tanommen is.',
+	'label_amount_added' => 'Tafoege bedrach',
+
+	'refund_title' => 'Tefrede - TRANSFERFLUX',
+	'refund_heading' => 'Oerdracht mislearre',
+	'refund_subject' => 'Oerdracht mislearre - TRANSFERFLUX',
+	'refund_failed_message' => ':amount is weromboerd nei jo akkount.',
+
+	'mail_error_alert_title' => 'E-mail flater warskôging',
+	'system_alert' => '⚠️ SISTEEMWARSKÔGING',
+	'mail_send_failure_detected' => 'Flater by stjoeren e-mail detektearre',
+	'email_sending_problem' => 'E-mail koe net stjoerd wurde; mooglik de deistige limyt of SMTP probleem.',
+	'email_send_failure_explanation' => 'Flater details: :error',
+
+	'password_reset_title' => 'Wachtwurd opnij ynstelle - TRANSFERFLUX',
+	'password_reset_heading' => 'Wachtwurd opnij ynstelle',
+	'password_reset_button' => 'Wachtwurd opnij ynstelle',
+
+	'account_blocked_message' => 'Jo TRANSFERFLUX-akkount is tydlik blokkeare.',
+];

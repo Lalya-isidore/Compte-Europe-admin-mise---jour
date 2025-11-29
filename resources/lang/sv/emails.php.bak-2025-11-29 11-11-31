@@ -1,0 +1,73 @@
+﻿<?php
+
+return [
+    'refund_subject' => 'Överföringen misslyckades - Belopp återbetalat - TRANSFERFLUX',
+    'refund_title' => "Överföringen misslyckades\nÅterbetalning av saldo",
+    'greeting' => 'Hej :name,',
+    'refund_failed_message' => 'Vi beklagar att meddela att ditt försök att genomföra överföringen misslyckades.',
+    'details_title' => 'Överföringsuppgifter',
+    'label_amount' => ' Belopp:',
+    'label_date' => ' Överföringsdatum:',
+    'label_recipient' => ' Mottagare:',
+    'label_reason' => 'Orsak till överföring:',
+    'refund_notice' => 'Beloppet :amount har återbetalats till ditt konto.',
+    'apology' => 'Vi ber om ursäkt för besväret. Om du har frågor eller behöver hjälp, vänligen kontakta oss.',
+    'footer_thanks' => 'Tack för att du använder TRANSFERFLUX!',
+    'footer_brand' => 'TRANSFERFLUX',
+    'footer_partner' => 'Din pålitliga finansiella partner ',
+
+    // Password reset
+    'password_reset_heading' => 'Återställning av lösenord',
+    'password_reset_reason' => 'Du får detta e-postmeddelande eftersom vi mottagit en begäran om återställning av lösenord för ditt konto.',
+    'password_reset_click_link' => 'Klicka på knappen nedan för att återställa ditt lösenord:',
+    'password_reset_button' => 'Återställ lösenord',
+    'password_reset_no_action_needed' => 'Om du inte begärde en återställning behövs ingen åtgärd.',
+
+    // Transfers
+    'virement_success_title' => 'Överföring lyckades',
+    'virement_success_message' => 'Vi informerar dig att din överföring har slutförts.',
+    'virement_failed_title' => 'Överföring misslyckades',
+    'virement_failed_message' => 'Vi informerar dig att din överföring inte kunde genomföras.',
+
+    'label_beneficiary' => ' Mottagare:',
+
+    // Account
+    'compte_created_title' => 'Kontoregistrering',
+    'compte_created_message' => 'Ditt konto har skapats och krediterats med :amount.',
+
+    // Balance
+    'balance_decreased_heading' => 'Saldo minskat',
+    'balance_decreased_message' => 'Vi vill informera dig att ditt saldo har minskat.',
+    'label_amount_deducted' => 'Avdraget belopp',
+    'label_new_balance' => 'Nytt saldo',
+
+    'balance_increased_heading' => 'Saldo ökat',
+    'balance_increased_message' => 'Vi vill informera dig att ditt saldo har ökat.',
+    'label_amount_added' => 'Tilläagt belopp',
+
+    // Unlock codes
+    'unlock_code_used_heading' => 'Upplåsningskod använd',
+    'info_notification' => 'ℹ Meddelande:',
+    'unlock_code_used_alert' => 'En upplåsningskod har just använts för ditt konto.',
+    'transfer_unlock_heading' => 'Upplåsningskod för överföring',
+    'transfer_unlock_message_intro' => 'Din upplåsningskod för överföring visas nedan:',
+
+    // Mail error alert
+    'system_alert' => ' SYSTEMVARNING',
+    'mail_send_failure_detected' => 'Fel vid sändning av e-post upptäckt',
+    'email_sending_problem' => 'E-post kunde inte skickas. Detta kan indikera att en daglig gräns har nåtts eller att det finns ett problem med SMTP-servern.',
+    'error_details' => 'Fel detaljer',
+    'label_date_time' => 'Datum och tid',
+    'label_failed_recipient' => 'Misslyckad mottagare',
+    'label_context' => 'Kontekst',
+    'label_error_message' => 'Felmeddelande',
+    'possible_causes' => 'Möjliga orsaker',
+    'recommended_actions' => 'Rekommenderade åtgärder',
+    'system_information' => 'Systeminformation',
+    'alert_auto_generated_notice' => 'Detta meddelande är automatiskt genererat. Applikationen fortsätter att köras normalt, men e-post skickas inte.',
+
+    // Misc
+    'thanks' => 'Tack,',
+    'regards' => 'Vänliga hälsningar,',
+    'account_blocked_message' => 'Ditt TRANSFERFLUX-konto är tillfälligt blockerat.',
+];

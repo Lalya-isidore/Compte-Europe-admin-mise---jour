@@ -6,120 +6,53 @@
     @if (session()->has('error'))
         <div class="alert alert-danger"> {{ session()->get('error') }} </div>
     @endif
-    <div class="container">
-        <div class="heading">Réinitialiser le mot de passe</div>
-        <form method="POST" action="{{ route('password.update') }}" class="form-product form">
-            @csrf
-            <input type="hidden" name="token" value="{{ $token }}">
 
-            <input type="email" placeholder="Adresse email" class="form-control my-2 input @error('email') is-invalid @enderror" name="email" id="email" value="{{ $email ?? old('email') }}" required autocomplete="email" autofocus>
-            @error('email')
-                <div class="text text-danger">
-                    {{ $message }}
+    <div class="reset-wrapper" style="display:flex;justify-content:center;padding:40px 20px;">
+        <div class="reset-card" style="width:100%;max-width:520px;background:#fff;border-radius:12px;box-shadow:0 10px 30px rgba(0,0,0,0.08);padding:28px;">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;">
+                <h2 style="margin:0;color:#0b74c9;font-weight:700;font-size:22px;">Réinitialiser le mot de passe</h2>
+                <a href="{{ route('connexion') }}" class="btn btn-outline-secondary" style="font-size:14px;padding:6px 12px;border-radius:8px;">← Retour</a>
+            </div>
+
+            <p class="text-muted" style="margin-bottom:18px;">Entrez l'adresse e‑mail associée à votre compte. Vous recevrez un lien sécurisé pour définir un nouveau mot de passe.</p>
+
+            <form method="POST" action="{{ route('password.update') }}" class="form-product form">
+                @csrf
+                <input type="hidden" name="token" value="{{ $token }}">
+
+                <div style="margin-bottom:12px;">
+                    <label for="email" style="display:block;font-weight:600;margin-bottom:6px;color:#333;">Adresse e‑mail</label>
+                    <input type="email" placeholder="Adresse email" class="form-control my-2 input @error('email') is-invalid @enderror" name="email" id="email" value="{{ $email ?? old('email') }}" required autocomplete="email" autofocus>
+                    @error('email')
+                        <div class="text text-danger" style="margin-top:6px;">{{ $message }}</div>
+                    @enderror
                 </div>
-            @enderror
 
-            <input type="password" placeholder="Nouveau mot de passe" class="form-control my-2 input @error('password') is-invalid @enderror" name="password" id="password" required autocomplete="new-password">
-            @error('password')
-                <div class="text text-danger">
-                    {{ $message }}
+                <div style="margin-bottom:12px;">
+                    <label for="password" style="display:block;font-weight:600;margin-bottom:6px;color:#333;">Nouveau mot de passe</label>
+                    <input type="password" placeholder="Nouveau mot de passe" class="form-control my-2 input @error('password') is-invalid @enderror" name="password" id="password" required autocomplete="new-password">
+                    @error('password')
+                        <div class="text text-danger" style="margin-top:6px;">{{ $message }}</div>
+                    @enderror
                 </div>
-            @enderror
 
-            <input type="password" placeholder="Confirmer le nouveau mot de passe" class="form-control my-2 input" name="password_confirmation" id="password-confirm" required autocomplete="new-password">
+                <div style="margin-bottom:18px;">
+                    <label for="password-confirm" style="display:block;font-weight:600;margin-bottom:6px;color:#333;">Confirmer le nouveau mot de passe</label>
+                    <input type="password" placeholder="Confirmer le nouveau mot de passe" class="form-control my-2 input" name="password_confirmation" id="password-confirm" required autocomplete="new-password">
+                </div>
 
-            <input value="Réinitialiser le mot de passe" type="submit" class="login-button" />
-        </form>
+                <div style="display:flex;gap:12px;align-items:center;">
+                    <button type="submit" class="btn btn-primary" style="flex:1;padding:12px 18px;border-radius:10px;background:linear-gradient(90deg,#1676d2,#2fb1e6);border:none;color:#fff;font-weight:700;">Réinitialiser le mot de passe</button>
+                    <a href="{{ route('connexion') }}" class="btn btn-link" style="color:#666;text-decoration:none;">Annuler</a>
+                </div>
+            </form>
+        </div>
     </div>
 
     <style>
-        .container {
-            height: 100%;
-            /* display: flex; */
-            justify-content: center;
-            align-items: center;
-            max-width: 350px;
-            background: #f8f9fd;
-            background: linear-gradient(0deg, rgb(255, 255, 255) 0%, rgb(244, 247, 251) 100%);
-            border-radius: 40px;
-            padding: 25px 35px;
-            border: 5px solid rgb(255, 255, 255);
-            box-shadow: rgba(133, 189, 215, 0.8784313725) 0px 30px 30px -20px;
-            margin-top: 50px;
-        }
-
-        .heading {
-            text-align: center;
-            font-weight: 900;
-            font-size: 30px;
-            color: rgb(16, 137, 211);
-        }
-
-        .form {
-            margin-top: 20px;
-        }
-
-        .form .input {
-            width: 100%;
-            background: white;
-            border: none;
-            padding: 15px 20px;
-            border-radius: 20px;
-            margin-top: 15px;
-            box-shadow: #cff0ff 0px 10px 10px -5px;
-            border-inline: 2px solid transparent;
-        }
-
-        .form .input::-moz-placeholder {
-            color: rgb(170, 170, 170);
-        }
-
-        .form .input::placeholder {
-            color: rgb(170, 170, 170);
-        }
-
-        .form .input:focus {
-            outline: none;
-            border-inline: 2px solid #12b1d1;
-        }
-
-        .form .login-button {
-            display: block;
-            width: 100%;
-            font-weight: bold;
-            background: linear-gradient(45deg, rgb(16, 137, 211) 0%, rgb(18, 177, 209) 100%);
-            color: white;
-            padding-block: 15px;
-            margin: 20px auto;
-            border-radius: 20px;
-            box-shadow: rgba(133, 189, 215, 0.8784313725) 0px 20px 10px -15px;
-            border: none;
-            transition: all 0.2s ease-in-out;
-        }
-
-        .form .login-button:hover {
-            transform: scale(1.03);
-            box-shadow: rgba(133, 189, 215, 0.8784313725) 0px 23px 10px -20px;
-        }
-
-        .form .login-button:active {
-            transform: scale(0.95);
-            box-shadow: rgba(133, 189, 215, 0.8784313725) 0px 15px 10px -10px;
-        }
-
-        /* Media query for larger screens */
-        @media (min-width: 768px) {
-            .container {
-                max-width: 500px;
-                /* Adjust the max-width for larger screens */
-            }
-        }
-
-        @media (min-width: 1024px) {
-            .container {
-                max-width: 600px;
-                /* Further adjust the max-width for even larger screens */
-            }
-        }
+        /* Small improvements kept local to this page */
+        .form .input { width:100%; padding:12px 14px; border-radius:8px; border:1px solid #e6eef6; box-shadow:none; }
+        .form .input:focus { outline:none; border-color:#bfe6ff; box-shadow:0 4px 18px rgba(47,177,230,0.12); }
+        @media (max-width:480px){ .reset-card{ padding:18px; } }
     </style>
 @endsection

@@ -91,6 +91,72 @@
                         @enderror
                     </div>
 
+                    @if(isset($codeParrainage) && $codeParrainage)
+                        <!-- Affichage du parrainage actif -->
+                        <div class="auth-field">
+                            <div class="parrainage-banner">
+                                <div class="parrainage-header">
+                                    <i class="fas fa-handshake"></i>
+                                    <span>Inscription avec parrainage garantie</span>
+                                    <span class="badge bg-success ms-2">Automatique</span>
+                                </div>
+                                <div class="parrainage-info">
+                                    @if(session('parrain_info'))
+                                        <p class="mb-1">
+                                            <strong>Parrainé par :</strong> 
+                                            {{ session('parrain_info.prenom') }} {{ session('parrain_info.nom') }}
+                                        </p>
+                                        <p class="mb-1 small">
+                                            <i class="fas fa-gift me-1 text-success"></i>
+                                            <strong>Votre parrain recevra {{ session('parrain_info.taux_commission') }}% de commission sur vos recharges</strong>
+                                        </p>
+                                        <p class="mb-1 small text-info">
+                                            <i class="fas fa-info-circle me-1"></i>
+                                            La commission s'applique uniquement lors de vos recharges de compte, pas à l'inscription
+                                        </p>
+                                        <p class="mb-0 small text-muted">
+                                            <i class="fas fa-lock me-1"></i>
+                                            Parrainage sécurisé et garanti - Aucune manipulation possible
+                                        </p>
+                                    @else
+                                        <p class="mb-1">
+                                            <strong>Code de parrainage :</strong> {{ $codeParrainage }}
+                                        </p>
+                                        <p class="mb-1 small">
+                                            <i class="fas fa-gift me-1 text-success"></i>
+                                            <strong>Votre parrain recevra 5% de commission sur vos recharges</strong>
+                                        </p>
+                                        <p class="mb-1 small text-info">
+                                            <i class="fas fa-info-circle me-1"></i>
+                                            La commission s'applique uniquement lors de vos recharges de compte, pas à l'inscription
+                                        </p>
+                                        <p class="mb-0 small text-muted">
+                                            <i class="fas fa-lock me-1"></i>
+                                            Parrainage sécurisé et garanti - Aucune manipulation possible
+                                        </p>
+                                    @endif
+                                </div>
+
+                            </div>
+                            <!-- Champ caché pour le code de parrainage -->
+                            <input type="hidden" id="code_parrainage" name="code_parrainage" value="{{ $codeParrainage }}">
+                        </div>
+                    @else
+                        <!-- Champ manuel pour saisir un code de parrainage (optionnel) -->
+                        <div class="auth-field" id="manual-parrainage-field">
+                            <label for="code_parrainage">Code de parrainage (optionnel)</label>
+                            <div class="auth-input">
+                                <span class="auth-input__icon">#</span>
+                                <input type="text" id="code_parrainage" name="code_parrainage" class="auth-input__control"
+                                       value="{{ old('code_parrainage') }}" placeholder="Entrez le code de votre parrain" autocomplete="off">
+                            </div>
+                            @error('code_parrainage')
+                                <p class="auth-error">{{ $message }}</p>
+                            @enderror
+                            <p class="auth-help">Si vous avez été invité par un ami, saisissez son code de parrainage pour qu'il reçoive sa commission.</p>
+                        </div>
+                    @endif
+
                     <div class="auth-field">
                         <label for="password">Mot de passe</label>
                         <div class="auth-input">
@@ -157,6 +223,8 @@
                 });
             }
         });
+
+
     </script>
 
     <style>
@@ -216,6 +284,16 @@
             font-weight: 800;
             font-size: 1.3rem;
             letter-spacing: 0.05em;
+            display: inline-block;
+        }
+
+        .auth-hero__logo img,
+        img.auth-hero__logo {
+            width: 48px;
+            height: 48px;
+            border-radius: 8px;
+            object-fit: cover;
+            display: inline-block;
         }
 
         .auth-hero__tag {
@@ -429,6 +507,42 @@
             font-weight: 500;
         }
 
+        .auth-help {
+            margin: 0.35rem 0 0;
+            font-size: 0.8rem;
+            color: #64748b;
+            font-weight: 400;
+            line-height: 1.4;
+        }
+
+        .parrainage-banner {
+            background: linear-gradient(135deg, rgba(34, 197, 94, 0.1), rgba(16, 185, 129, 0.05));
+            border: 2px solid rgba(34, 197, 94, 0.2);
+            border-radius: 12px;
+            padding: 1rem;
+            margin-bottom: 0.5rem;
+            position: relative;
+        }
+
+        .parrainage-header {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 600;
+            color: #059669;
+            margin-bottom: 0.5rem;
+        }
+
+        .parrainage-header i {
+            font-size: 1.1rem;
+        }
+
+        .parrainage-info {
+            color: #064e3b;
+        }
+
+
+
         .auth-submit {
             width: 100%;
             border: none;
@@ -515,11 +629,11 @@
 
         @media (max-width: 640px) {
             .auth-viewport {
-                padding: 1.5rem;
+                padding: 0.4rem;
             }
 
             .auth-card {
-                padding: 1.85rem;
+                padding: 1rem;
             }
 
             .auth-form__options {

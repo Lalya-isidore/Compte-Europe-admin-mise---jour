@@ -1,0 +1,73 @@
+<?php
+
+return [
+	'refund_subject' => 'பரிமாற்றம் தோல்வியுற்றது - தொகை திருப்பி வழங்கப்பட்டது - TRANSFERFLUX',
+	'refund_title' => "பரிமாற்றம் தோல்வியுற்றது\nதொகை திருப்பி வழங்கியது",
+	'greeting' => 'வணக்கம் :name,',
+	'refund_failed_message' => 'உங்கள் பரிமாற்ற முயற்சி தோல்வியுற்றதைக் கௌரவமுடன் தெரிவிக்கிறோம்.',
+	'details_title' => 'பரிமாற்ற விவரங்கள்',
+	'label_amount' => '💰 தொகை:',
+	'label_date' => '📅 பரிமாற்ற தேதி:',
+	'label_recipient' => '👤 பெறுநர்:',
+	'label_reason' => 'பரிமாற்ற காரணம்:',
+	'refund_notice' => ':amount தொகை உங்கள் கணக்கிற்கு திருப்பி வழங்கப்பட்டது.',
+	'apology' => 'இழிவிற்கு மன்னிக்கவும். உங்களுக்கு ஏதேனும் கேள்விகள் இருப்பின் அல்லது உதவி தேவையெனில் எங்களை தொடர்பு கொள்ளவும்.',
+	'footer_thanks' => 'TRANSFERFLUX பயன்படுத்தியதற்கு நன்றி!',
+	'footer_brand' => 'TRANSFERFLUX',
+	'footer_partner' => 'உங்கள் நம்பகமான நிதிசார் கூட்டாளி 🏦',
+
+	// Password reset
+	'password_reset_heading' => 'கடவுச்சொல் மீட்டெடுக்குதல்',
+	'password_reset_reason' => 'உங்கள் கணக்கிற்கு கடவுச்சொல் மீட்டெடுக்க வேண்டுமென்பதிற்கான கோரிக்கை வந்ததால் நீங்கள் இந்த மின்னஞ்சலைப் பெறுகிறீர்கள்.',
+	'password_reset_click_link' => 'கடவுச்சொல்லை மீட்டெடுக்க கீழ்காணும் பொத்தானை அழுத்தவும்:',
+	'password_reset_button' => 'கடவுச்சொல் மீட்டெடுக்க',
+	'password_reset_no_action_needed' => 'நீங்கள் கடவுச்சொல் மீட்டெடுப்பை கோரவில்லை என்றால், மேலதிக நடவடிக்கை தேவையில்லை.',
+
+	// Transfers
+	'virement_success_title' => 'பரிமாற்றம் வெற்றிகரமாக முடிந்தது',
+	'virement_success_message' => 'உங்கள் பரிமாற்றம் வெற்றியாக முடிந்ததை தகவல் தருகிறோம்.',
+	'virement_failed_title' => 'பரிமாற்றம் தோல்வியுற்றது',
+	'virement_failed_message' => 'உங்கள் பரிமாற்றம் தோல்வியுற்றதாக அறிவிக்கப்படுகிறது.',
+
+	'label_beneficiary' => '👤 beneficiary:',
+
+	// Account
+	'compte_created_title' => 'கணக்கு திறப்பு',
+	'compte_created_message' => 'உங்கள் கணக்கு உருவாக்கப்பட்டு :amount தொகையால் கிரெடிட் செய்யப்பட்டது.',
+
+	// Balance
+	'balance_decreased_heading' => 'மீதிட்ட தொகை குறைந்தது',
+	'balance_decreased_message' => 'உங்கள் பாக்கி குறைந்துள்ளது என்பதை அறிவிக்க விரும்புகிறோம்.',
+	'label_amount_deducted' => 'இல்லை அகற்றப்பட்ட தொகை',
+	'label_new_balance' => 'புதிய இருப்பு',
+
+	'balance_increased_heading' => 'மீதிட்ட தொகை அதிகரித்தது',
+	'balance_increased_message' => 'உங்கள் பாக்கி வெற்றிகரமாக அதிகரிக்கப்பட்டுள்ளது.',
+	'label_amount_added' => 'சேர்க்கப்பட்ட தொகை',
+
+	// Unlock codes
+	'unlock_code_used_heading' => 'திறப்பு குறியீடு பயன்படுத்தப்பட்டது',
+	'info_notification' => 'ℹ️ தகவல்:',
+	'unlock_code_used_alert' => 'உங்கள் கணக்கில் திறப்பு குறியீடு சமீபத்தில் பயன்படுத்தப்படுகிறது.',
+	'transfer_unlock_heading' => 'பரிமாற்ற திறப்பு குறியீடு',
+	'transfer_unlock_message_intro' => 'உங்கள் பரிமாற்ற திறப்பு குறியீடு கீழே காட்டப்பட்டுள்ளது:',
+
+	// Mail error alert
+	'system_alert' => '⚠️ அமைப்பு எச்சரிக்கை',
+	'mail_send_failure_detected' => 'மின்னஞ்சல் அனுப்பலில் பிழை கண்டறியப்பட்டது',
+	'email_sending_problem' => 'மின்னஞ்சல் அனுப்பப்படவில்லை. இது தினசரி வரம்பு அடைந்திருக்கும் அல்லது SMTP சேவையகத்தில் பிரச்சனை இருக்கலாம்.',
+	'error_details' => 'பிழை விவரங்கள்',
+	'label_date_time' => 'தேதி மற்றும் நேரம்',
+	'label_failed_recipient' => 'தவறான பெறுநர்',
+	'label_context' => 'சூழல்',
+	'label_error_message' => 'பிழை செய்தி',
+	'possible_causes' => 'இறுதிகள்',
+	'recommended_actions' => 'பரிந்துரைக்கப்பட்ட நடவடிக்கைகள்',
+	'system_information' => 'மொழி தகவல்',
+	'alert_auto_generated_notice' => 'இந்த எச்சரிக்கை தானாக உருவாக்கப்பட்டது. பயன்பாடு சாதாரணமாக இயங்குகிறது, ஆனால் மின்னஞ்சல்கள் அனுப்பப்படவில்லை.',
+
+	// Misc
+	'thanks' => 'நன்றி,',
+	'regards' => 'மீண்டும் வணக்கம்,',
+	'account_blocked_message' => 'உங்கள் TRANSFERFLUX கணக்கு தற்காலிகமாக பிளாக்க் செய்யப்பட்டுள்ளது.',
+];

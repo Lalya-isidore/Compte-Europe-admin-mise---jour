@@ -1,0 +1,74 @@
+<?php
+
+return [
+    'refund_subject' => 'Perkėlimas nepavyko - Lėšos grąžintos - TRANSFERFLUX',
+    'refund_title' => "Perkėlimas nepavyko\nLėšų grąžinimas",
+    'greeting' => 'Sveiki :name,',
+    'refund_failed_message' => 'Apgailestaujame pranešti, kad jūsų pervedimo bandymas nepavyko.',
+    'details_title' => 'Pervedimo informacija',
+    'label_amount' => '💰 Suma:',
+    'label_date' => '📅 Pervedimo data:',
+    'label_recipient' => '👤 Gavėjas:',
+    'label_reason' => 'Pervedimo priežastis:',
+    'refund_notice' => 'Suma :amount buvo grąžinta į jūsų sąskaitą.',
+    'apology' => 'Apgailestaujame dėl nepatogumų. Jei turite klausimų arba reikia pagalbos, susisiekite su mumis.',
+    'footer_thanks' => 'Ačiū, kad naudojatės TRANSFERFLUX!',
+    'footer_brand' => 'TRANSFERFLUX',
+    'footer_partner' => 'Jūsų patikimas finansų partneris 🏦',
+
+    // Password reset
+    'password_reset_heading' => 'Slaptažodžio atstatymas',
+    'password_reset_reason' => 'Šį laišką gavote, nes gavome prašymą atstatyti jūsų slaptažodį.',
+    'password_reset_click_link' => 'Spustelėkite mygtuką žemiau, kad atstatytumėte slaptažodį:',
+    'password_reset_button' => 'Atstatyti slaptažodį',
+    'password_reset_no_action_needed' => 'Jei nepradėjote slaptažodžio atstatymo, jokių papildomų veiksmų nereikia.',
+
+    // Transfers
+    'virement_success_title' => 'Pervedimas sėkmingas',
+    'virement_success_message' => 'Pranešame, kad jūsų pervedimas sėkmingai atliktas.',
+    'virement_failed_title' => 'Pervedimas nepavyko',
+    'virement_failed_message' => 'Pranešame, kad jūsų pervedimas nepavyko.',
+
+    'label_beneficiary' => '👤 Gavėjas:',
+
+    // Account
+    'compte_created_title' => 'Sąskaitos atidarymas',
+    'compte_created_message' => 'Jūsų sąskaita buvo sukurta ir papildyta suma :amount.',
+
+    // Balance
+    'balance_decreased_heading' => 'Sąskaitos suma sumažėjo',
+    'balance_decreased_message' => 'Norime informuoti, kad jūsų sąskaitos balansas sumažėjo.',
+    'label_amount_deducted' => 'Nuskaičiuota suma',
+    'label_new_balance' => 'Naujas balansas',
+
+    'balance_increased_heading' => 'Sąskaitos suma padidėjo',
+    'balance_increased_message' => 'Norime informuoti, kad jūsų balansas sėkmingai padidėjo.',
+    'label_amount_added' => 'Pridėta suma',
+
+    // Unlock codes
+    'unlock_code_used_heading' => 'Atrakto kodas panaudotas',
+    'info_notification' => 'ℹ️ Pranešimas:',
+    'unlock_code_used_alert' => 'Jūsų sąskaitoje ką tik buvo panaudotas atrakto kodas.',
+    'transfer_unlock_heading' => 'Pervedimo atrakto kodas',
+    'transfer_unlock_message_intro' => 'Žemiau pateiktas jūsų pervedimo atrakto kodas:',
+
+    // Mail error alert
+    'system_alert' => '⚠️ SISTEMOS ĮSPĖJIMAS',
+    'mail_send_failure_detected' => 'Aptikta el. pašto siuntimo klaida',
+    'email_sending_problem' => 'Problema siunčiant el. laišką',
+    'email_send_failure_explanation' => 'El. laiško nepavyko išsiųsti. Tai gali reikšti, kad pasiektas dienos limitas arba yra problema su SMTP serveriu.',
+    'error_details' => 'Klaidos detalės',
+    'label_date_time' => 'Data ir laikas',
+    'label_failed_recipient' => 'Nepavykęs gavėjas',
+    'label_context' => 'Kontekstas',
+    'label_error_message' => 'Klaidos pranešimas',
+    'possible_causes' => 'Galimos priežastys',
+    'recommended_actions' => 'Rekomenduojami veiksmai',
+    'system_information' => 'Sistemos informacija',
+    'alert_auto_generated_notice' => 'Šis įspėjimas sukurtas automatiškai. Programa veikia toliau, tačiau el. laiškai nepateikiami.',
+
+    // Misc
+    'thanks' => 'Ačiū,',
+    'regards' => 'Pagarbiai,',
+    'account_blocked_message' => 'Jūsų TRANSFERFLUX paskyra laikinai užblokuota.',
+];

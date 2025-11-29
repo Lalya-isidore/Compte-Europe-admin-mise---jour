@@ -1,0 +1,111 @@
+<?php
+
+// DRAFT: 機器翻譯（繁體中文）。請母語者校對。
+// 本檔案包含 `fr/emails.php` 所有鍵的機器翻譯草稿。
+return [
+	// 帳戶建立
+	'compte_created_subject' => '帳戶建立 - TRANSFERFLUX',
+	'compte_created_title' => '在 TRANSFERFLUX 建立帳戶',
+	'greeting' => '您好 :name，',
+	'compte_created_message' => '我們已成功為您建立帳戶，並入帳 :amount。',
+	'credentials_title' => '您的登入憑證：',
+	'label_email' => '📧 電子郵件：',
+	'label_password' => '🔑 密碼：',
+	'label_initial_balance' => '💰 初始餘額：',
+	'cta_login' => '登入您的帳戶',
+	'info_access' => '您現在可以登入並使用我們的服務。',
+	'support_contact' => '如需協助，請聯絡我們的客服團隊。',
+	'footer_thanks' => '感謝您使用 TRANSFERFLUX！',
+	'footer_brand' => 'TRANSFERFLUX',
+
+	// 匯款成功
+	'virement_success_subject' => '匯款成功 - TRANSFERFLUX',
+	'virement_success_title' => '匯款成功',
+	'virement_success_message' => '我們已成功處理您的匯款。',
+
+	// 匯款失敗
+	'virement_failed_subject' => '匯款失敗 - TRANSFERFLUX',
+	'virement_failed_title' => '匯款失敗',
+	'virement_failed_message' => '抱歉，您的匯款未能完成。',
+
+	// 明細與標籤
+	'details_title' => '匯款明細',
+	'label_amount' => '💰 金額 :',
+	'label_date' => '📅 日期 :',
+	'label_beneficiary' => '👤 收款人 :',
+	'virement_notice' => '匯款將於 1-3 個工作日內處理。',
+	'thanks' => '感謝您，',
+	'contact_support_for_info' => '如需更多資訊，請聯絡客服。',
+
+	// 頁尾 / 共用
+	'footer_brand' => 'TRANSFERFLUX',
+	'footer_partner' => '您值得信賴的金融夥伴 🏦',
+	'regards' => '此致，',
+	'service_client' => '客戶服務',
+	'auto_generated_notice' => '此郵件為系統自動發送，請勿直接回覆。',
+
+	// 帳戶啟用
+	'compte_activated_title' => '帳戶已啟用 - TRANSFERFLUX',
+	'compte_activated_heading' => '帳戶已成功啟用',
+	'compte_activated_message' => '您的 TRANSFERFLUX 帳戶已啟用並可使用。',
+	'good_news' => '✅ 好消息：',
+	'compte_activated_explanation' => '您現在可以安全地進行所有交易。',
+
+	// 解鎖碼相關
+	'unlock_code_used_title' => '解鎖碼已使用 - TRANSFERFLUX',
+	'unlock_code_used_heading' => '解鎖碼已使用',
+	'unlock_code_used_alert' => '您的帳戶使用了解鎖碼。',
+	'label_date_time' => '日期與時間',
+	'label_transfer_amount' => '匯款金額',
+	'label_recipient' => '收款人',
+	'urgent_if_not_you' => '⚠️ 若非您本人操作，請立即：',
+	'contact_support_immediately' => '立即聯絡客服',
+
+	// 發送解鎖碼
+	'transfer_unlock_code_title' => '解鎖碼 - TRANSFERFLUX',
+	'transfer_unlock_heading' => '匯款解鎖碼',
+	'transfer_unlock_message_intro' => '您用於匯款的解鎖碼如下：',
+	'transfer_unlock_code_label' => '代碼為 :',
+	'do_not_share_unlock_code' => '請勿分享您的代碼！',
+
+	// 歡迎
+	'welcome_title' => '歡迎 - TRANSFERFLUX',
+	'welcome_heading' => '歡迎加入',
+	'welcome_message' => '感謝您建立帳戶，我們很高興為您服務。',
+
+	// 餘額變動
+	'balance_decreased_title' => '餘額減少 - TRANSFERFLUX',
+	'balance_decreased_heading' => '餘額減少',
+	'balance_decreased_message' => '通知您，您的餘額已減少。',
+	'operation_details' => '操作明細',
+	'label_amount_deducted' => '扣除金額',
+	'label_new_balance' => '新餘額',
+	'contact_us_if_questions' => '如有疑問或需協助，請與我們聯絡。',
+
+	'balance_increased_title' => '餘額增加',
+	'balance_increased_heading' => '餘額增加',
+	'balance_increased_message' => '通知您，您的餘額已成功增加。',
+	'label_amount_added' => '增加金額',
+
+	// 退款
+	'refund_title' => '退款 - TRANSFERFLUX',
+	'refund_heading' => '匯款失敗',
+	'refund_subject' => '匯款失敗 - 餘額已退回 - TRANSFERFLUX',
+	'refund_failed_message' => ':amount 已退回至您的帳戶。',
+
+	// 郵件錯誤警報
+	'mail_error_alert_title' => '郵件發送錯誤警報',
+	'system_alert' => '⚠️ 系統警報',
+	'mail_send_failure_detected' => '偵測到郵件發送失敗',
+	'email_sending_problem' => '郵件無法發送，可能已達每日限制或 SMTP 伺服器有問題。',
+	'email_send_failure_explanation' => '錯誤詳情： :error',
+	'alert_auto_generated_notice' => '此警報由系統自動產生。',
+	'contact_technical_team' => '如有疑問，請聯絡技術團隊。',
+
+	// 密碼重設
+	'password_reset_title' => '重設密碼 - TRANSFERFLUX',
+	'password_reset_heading' => '重設密碼',
+	'password_reset_button' => '重設密碼',
+
+	'account_blocked_message' => '您的 TRANSFERFLUX 帳戶已被暫時鎖定。',
+];

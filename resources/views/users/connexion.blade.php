@@ -266,7 +266,7 @@
             display: grid;
             grid-template-columns: auto 1fr;
             align-items: center;
-            gap: 0.8rem;
+            gap: 0.9rem;
         }
 
         .auth-hero__benefits i {
@@ -534,12 +534,19 @@
         }
 
         @media (max-width: 640px) {
+                        .auth-remember input[type="checkbox"] {
+                            width: 1.1rem;
+                            height: 1.1rem;
+                        }
+                        .auth-remember span {
+                            font-size: 0.97rem;
+                        }
             .auth-viewport {
-                padding: 1.5rem;
+                padding: 0.4rem;
             }
 
             .auth-card {
-                padding: 1.85rem;
+                padding: 1rem;
             }
 
             .auth-form__options {

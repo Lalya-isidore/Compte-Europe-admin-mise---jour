@@ -6,6 +6,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use App\Notifications\ResetPasswordNotification;
 
 class User extends Authenticatable
 {
@@ -19,9 +20,12 @@ class User extends Authenticatable
     protected $fillable = [
         'nom',
         'prenom',
+        'phone',
         'email',
         'password',
         'credit_user',
+        'code_parrainage',
+        'parrain_id',
     ];
 
     /**
@@ -50,6 +54,40 @@ class User extends Authenticatable
     public function Compte()
     {
         return $this->hasMany(Compte::class);
+    }
+    
+    public function comptes()
+    {
+        return $this->hasMany(Compte::class);
+    }
+    
+    // Relations d'affiliation
+    public function affiliation()
+    {
+        return $this->hasOne(Affiliation::class);
+    }
+    
+    public function parrain()
+    {
+        return $this->belongsTo(User::class, 'parrain_id');
+    }
+    
+    public function parraines()
+    {
+        return $this->hasMany(User::class, 'parrain_id');
+    }
+
+    public function supportTickets()
+    {
+        return $this->hasMany(SupportTicket::class);
+    }
+    
+    /**
+     * Send the password reset notification using our custom Markdown mail.
+     */
+    public function sendPasswordResetNotification($token)
+    {
+        $this->notify(new ResetPasswordNotification($token));
     }
     
 }

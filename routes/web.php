@@ -106,9 +106,34 @@ Route::middleware(['auth'])->group(function () {
     }
 });
 
-// Webhooks publics (sans authentification) - Support GET et POST
-Route::match(['get', 'post'], '/recharge/webhook/fedapay', [App\Http\Controllers\RechargeController::class, 'fedapayWebhook'])->name('recharge.webhook.fedapay');
-Route::match(['get', 'post'], '/recharge/webhook/oosic', [App\Http\Controllers\RechargeController::class, 'oosicWebhook'])->name('recharge.webhook.oosic');
+// Webhooks publics (sans authentification)
+// - POST : notifications serveur (webhook) envoyées par FedaPay
+// - GET  : redirections utilisateur après paiement (return/cancel)
+// Séparer les endpoints réduit les problèmes liés aux règles d'hébergeur
+// (ex: certains panels/restreignent les méthodes sur un même path).
+
+// Webhook POST (notifications serveur)
+Route::post('/recharge/webhook/fedapay', [App\Http\Controllers\RechargeController::class, 'fedapayWebhook'])
+    ->name('recharge.webhook.fedapay')
+    ->withoutMiddleware([\Illuminate\Foundation\Http\Middleware\VerifyCsrfToken::class]);
+
+// Some providers or older tokens may still redirect to the old path using GET.
+// Provide a GET fallback on the same path that forwards to the dedicated return route.
+Route::get('/recharge/webhook/fedapay', function () {
+    // Preserve query string and forward to the explicit return route
+    $qs = request()->getQueryString();
+    $target = route('recharge.return.fedapay') . ($qs ? "?{$qs}" : '');
+    return redirect($target);
+})->withoutMiddleware([\Illuminate\Foundation\Http\Middleware\VerifyCsrfToken::class]);
+
+// Return/Cancel GET (retours utilisateur après paiement)
+Route::get('/recharge/return/fedapay', [App\Http\Controllers\RechargeController::class, 'fedapayReturn'])
+    ->name('recharge.return.fedapay')
+    ->withoutMiddleware([\Illuminate\Foundation\Http\Middleware\VerifyCsrfToken::class]);
+
+Route::post('/recharge/webhook/oosic', [App\Http\Controllers\RechargeController::class, 'oosicWebhook'])
+    ->name('recharge.webhook.oosic')
+    ->withoutMiddleware([\Illuminate\Foundation\Http\Middleware\VerifyCsrfToken::class]);
 
 // Route temporaire pour compléter les transactions manuellement
 Route::get('/complete-pending-transactions', [App\Http\Controllers\RechargeController::class, 'completePendingTransactions']);
@@ -142,6 +167,8 @@ Route::get('/check-parrain/{userId}', [App\Http\Controllers\RechargeController::
 
 // Route pour forcer la création de commission
 Route::get('/force-commission/{transactionId}', [App\Http\Controllers\RechargeController::class, 'forceCommission']);
+// Route admin pour forcer la complétion d'une transaction (protégée)
+Route::get('/admin/force-complete/{transactionId}', [App\Http\Controllers\RechargeController::class, 'adminForceComplete'])->middleware(\App\Http\Middleware\AdminAuthenticated::class);
 
 //les route pour la connexion aux sous compte
 Route::get('/client/connexion', [SousCompteController::class, 'sousComptelogin'])->name('client.login');

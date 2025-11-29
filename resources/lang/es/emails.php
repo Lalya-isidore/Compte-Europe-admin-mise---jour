@@ -1,129 +1,141 @@
 <?php
+// Spanish translations for email templates
+// Translated internally — please review for tone and completeness.
 
 return [
     // Cuenta creada
     'compte_created_subject' => 'Apertura de cuenta - TRANSFERFLUX',
     'compte_created_title' => 'Apertura de cuenta en TRANSFERFLUX',
     'greeting' => 'Hola :name,',
-    'compte_created_message' => "Nos complace informarle que su cuenta ha sido creada con éxito y se ha acreditado con un importe de <strong>:balance :currency</strong>.",
+    'compte_created_message' => 'Nos complace informarle que su cuenta ha sido creada con éxito y acreditada con :amount.',
     'credentials_title' => 'Sus credenciales son:',
-    'label_email' => '📧 Correo electrónico:',
+    'label_email' => '📧 Email:',
     'label_password' => '🔑 Contraseña:',
     'label_initial_balance' => '💰 Saldo inicial:',
-    'cta_login' => 'Acceda a su área de cliente',
+    'cta_login' => 'Inicie sesión en su área de cliente',
     'info_access' => 'Ahora puede acceder a su cuenta y disfrutar de nuestros servicios.',
-    'support_contact' => 'Si tiene preguntas o necesita más información, <a href="#" class="support-link">contacte con nuestro soporte</a>.',
-    'footer_thanks' => "¡Gracias por usar TRANSFERFLUX!",
+    'support_contact' => 'contacte con nuestro soporte',
+    'footer_thanks' => '¡Gracias por usar TRANSFERFLUX!',
     'footer_brand' => 'TRANSFERFLUX',
     'footer_partner' => 'Su socio financiero de confianza 🏦',
 
-    // Virement réussi
+    // Transferencia exitosa
     'virement_success_subject' => 'Transferencia realizada con éxito - TRANSFERFLUX',
     'virement_success_title' => 'Transferencia realizada con éxito',
     'virement_success_message' => 'Le informamos que su transferencia se ha realizado con éxito.',
 
-    // Virement échec
+    // Transferencia fallida
     'virement_failed_subject' => 'Fallo en la transferencia - TRANSFERFLUX',
     'virement_failed_title' => 'Fallo en la transferencia',
     'virement_failed_message' => 'Le informamos que su transferencia ha fallado.',
 
-    // Détails & labels
+    // Detalles y etiquetas
     'details_title' => 'Detalles de la transferencia',
-    'label_amount' => '💰 Importe :',
-    'label_date' => '📅 Fecha :',
-    'label_beneficiary' => '👤 Beneficiario :',
-    'virement_notice' => 'El procesamiento de la transferencia se realizará en 1-3 días hábiles.',
-    'thanks' => "Gracias por usar nuestros servicios.",
-    'contact_support_for_info' => 'Para más información, póngase en contacto con nuestro servicio de atención al cliente.',
+    'label_amount' => '💰 Importe:',
+    'label_date' => '📅 Fecha:',
+    'label_beneficiary' => '👤 Beneficiario:',
+    'virement_notice' => 'El trámite de la transferencia se realizará en 1-3 días hábiles.',
+    'thanks' => 'Gracias por usar nuestros servicios.',
+    'contact_support_for_info' => 'Para más información, contacte con nuestro servicio de atención al cliente.',
 
-    // Footer / common
+    // Pie / común
+    'footer_brand' => 'TRANSFERFLUX',
+    'footer_partner' => 'Su socio financiero de confianza 🏦',
     'regards' => 'Atentamente,',
-    'service_client' => 'Servicio de Atención al Cliente',
+    'service_client' => 'Atención al cliente',
     'auto_generated_notice' => 'Este correo se ha enviado automáticamente, por favor no responda directamente.',
 
-    // Compte activé
+    // Cuenta activada
     'compte_activated_title' => 'Cuenta activada - TRANSFERFLUX',
     'compte_activated_heading' => 'Cuenta activada con éxito',
     'good_news' => '✅ Buenas noticias:',
-    'compte_activated_message' => 'Su cuenta TRANSFERFLUX ha sido activada y ahora está totalmente operativa.',
-    'compte_activated_explanation' => 'Puede realizar todas sus transacciones con seguridad.',
+    'compte_activated_message' => 'Su cuenta TRANSFERFLUX ha sido activada y ya está plenamente operativa.',
+    'compte_activated_explanation' => 'Ahora puede realizar todas sus transacciones con seguridad.',
     'label_holder' => 'Titular',
+    'label_email' => 'Email',
     'label_current_balance' => 'Saldo actual',
     'label_status' => 'Estado',
-    'status_active' => 'ACTIVADA',
+    'status_active' => 'ACTIVO',
     'you_can_now' => 'Ahora puede:',
-    'can_make_transfers' => 'Realizar transferencias y pagos',
+    'can_make_transfers' => 'Realizar transferencias',
     'check_balance' => 'Consultar su saldo en tiempo real',
-    'manage_transactions' => 'Gestionar sus transacciones de forma segura',
+    'manage_transactions' => 'Gestionar sus transacciones con seguridad',
     'access_services' => 'Acceder a todos nuestros servicios bancarios',
-    'thanks_welcome' => '¡Gracias por su confianza y bienvenido a la familia TRANSFERFLUX!',
+    'thanks_welcome' => 'Gracias por su confianza y bienvenido a la familia TRANSFERFLUX!',
 
-    // Codes de déblocage
-    'unlock_code_used_title' => 'Código de desbloqueo utilizado - TRANSFERFLUX',
-    'unlock_code_used_heading' => 'Código de desbloqueo utilizado',
+    // Códigos de desbloqueo
+    'unlock_code_used_title' => 'Código de desbloqueo usado - TRANSFERFLUX',
+    'unlock_code_used_heading' => 'Código de desbloqueo usado',
     'greeting_simple' => 'Hola,',
     'info_notification' => 'ℹ️ Notificación:',
     'unlock_code_used_alert' => 'Se ha utilizado un código de desbloqueo en su cuenta.',
     'unlock_code_used_explanation' => 'Le informamos que se ha introducido y validado un código de desbloqueo para una transacción.',
     'label_date_time' => 'Fecha y hora',
     'label_transfer_amount' => 'Importe de la transferencia',
-    'label_recipient' => 'Beneficiario',
-    'urgent_if_not_you' => '⚠️ Si usted no ha sido quien realizó esta acción:',
-    'contact_support_immediately' => 'Contacte inmediatamente con nuestro servicio de atención',
-    'check_recent_transactions' => 'Revise todas sus transacciones recientes',
+    'label_recipient' => 'Destinatario',
+    'urgent_if_not_you' => '⚠️ Si usted no autorizó esta acción:',
+    'contact_support_immediately' => 'Contacte inmediatamente con nuestro servicio de atención al cliente',
+    'check_recent_transactions' => 'Revise sus transacciones recientes',
     'change_access_codes' => 'Cambie sus códigos de acceso por seguridad',
-    'if_legitimate' => '✅ Si esta acción es legítima:',
-    'client_can_finalize' => 'Su cliente puede ahora finalizar su transacción de forma segura.',
+    'if_legitimate' => '✅ Si la acción es legítima:',
+    'client_can_finalize' => 'Su cliente puede ahora finalizar su transacción con seguridad.',
 
-    // Transfert - code de déblocage envoyé
+    // Transferencia - código enviado
     'transfer_unlock_code_title' => 'Código de desbloqueo - TRANSFERFLUX',
-    'transfer_unlock_heading' => 'Código de desbloqueo para la transferencia',
-    'transfer_unlock_message_intro' => 'Su código de desbloqueo para la transferencia es el siguiente:',
-    'transfer_unlock_code_label' => 'El código es :',
+    'transfer_unlock_heading' => 'Código de desbloqueo de la transferencia',
+    'transfer_unlock_message_intro' => 'Su código de desbloqueo para la transferencia se muestra a continuación:',
+    'transfer_unlock_code_label' => 'El código es:',
     'your_unlock_code' => 'Su código de desbloqueo',
-    'do_not_share_unlock_code' => '¡No comparta su código de desbloqueo!!',
+    'do_not_share_unlock_code' => '¡No comparta su código de desbloqueo!',
     'unlock_code_personal_confidential' => 'Este código es personal y confidencial.',
-    'unlock_code_needed_finalize' => 'Este código es necesario para finalizar su operación.',
-    'contact_support_for_questions' => 'Si tiene alguna pregunta, contacte con nuestro servicio de asistencia.',
+    'unlock_code_needed_finalize' => 'Este código es necesario para finalizar su operación de transferencia.',
+    'contact_support_for_questions' => 'Para cualquier pregunta, contacte con nuestro servicio de atención al cliente.',
 
-    // Welcome
+    // Bienvenida
     'welcome_title' => 'Bienvenido - TRANSFERFLUX',
-    'welcome_heading' => 'Bienvenido a FLASH COMPTE',
+    'welcome_heading' => 'Bienvenido a FLASH ACCOUNT',
     'welcome_message' => 'Gracias por crear una cuenta. ¡Estamos encantados de darle la bienvenida!',
-    'login_credentials_title' => '📧 Sus credenciales de acceso :',
+    'login_credentials_title' => '📧 Sus credenciales de acceso:',
+    'label_password' => 'Contraseña',
     'access_member_area' => 'Puede acceder al área de miembros para ver nuestros servicios y disfrutar de todas las funciones.',
-    'pleasure_to_assist' => '¡Encantados de ayudarle con sus operaciones financieras!',
+    'pleasure_to_assist' => '¡Será un placer acompañarle en sus operaciones financieras!',
 
-    // Solde diminué / augmenté
+    // Saldo disminuido / aumentado
     'balance_decreased_title' => 'Disminución de saldo - TRANSFERFLUX',
     'balance_decreased_heading' => 'Disminución de saldo',
-    'balance_decreased_message' => 'Le informamos que su saldo se ha reducido.',
+    'balance_decreased_message' => 'Le informamos que su saldo ha disminuido.',
     'operation_details' => 'Detalles de la operación',
     'label_amount_deducted' => 'Importe deducido',
     'label_new_balance' => 'Nuevo saldo',
-    'contact_us_if_questions' => 'Si tiene preguntas o necesita asistencia, no dude en contactarnos.',
+    'contact_us_if_questions' => 'Si tiene preguntas o necesita ayuda, póngase en contacto con nosotros.',
     'balance_increased_title' => 'Aumento de saldo - TRANSFERFLUX',
     'balance_increased_heading' => 'Aumento de saldo',
-    'balance_increased_message' => 'Le informamos que su saldo ha aumentado correctamente.',
+    'balance_increased_message' => 'Le informamos que su saldo ha aumentado con éxito.',
     'label_amount_added' => 'Importe añadido',
     'thank_you_trust' => '¡Gracias por su confianza!',
 
-    // Remboursement
+    // Reembolso
     'refund_title' => 'Reembolso - TRANSFERFLUX',
-    'refund_heading' => 'Fallo de transferencia / Reembolso del saldo',
-    'refund_message' => 'Lamentamos informarle que su intento de transferencia ha fallado.',
+    'refund_heading' => 'Transferencia fallida',
+    // Subject used in <title> and mailable subject
+    'refund_subject' => 'Transferencia fallida - TRANSFERFLUX',
+    // Message shown at top of the refund email
+    'refund_failed_message' => 'Lamentamos informarle que su intento de transferencia ha fallado.',
     'transfer_details' => 'Detalles de la transferencia',
     'label_transfer_date' => 'Fecha de la transferencia',
-    'label_transfer_reason' => 'Motivo de la transferencia',
-    'refund_amount_text' => 'El importe de <strong>:amount</strong> ha sido reembolsado a su cuenta.',
-    'refund_apology_contact' => 'Disculpe las molestias. Si tiene preguntas o necesita ayuda, contáctenos.',
+    // Key expected by the template
+    'label_reason' => 'Motivo de la transferencia',
+    // Notice displayed with refunded amount (template injects HTML around :amount)
+    'refund_notice' => 'El importe de :amount ha sido reembolsado en su cuenta.',
+    // Apology / contact paragraph
+    'apology' => 'Pedimos disculpas por las molestias. Si tiene preguntas o necesita ayuda, no dude en contactarnos.',
 
-    // Mail error alert
-    'mail_error_alert_title' => 'Alerta de error de correo',
+    // Alerta de error de correo
+    'mail_error_alert_title' => 'Alerta de fallo de correo',
     'system_alert' => '⚠️ ALERTA DEL SISTEMA',
-    'mail_send_failure_detected' => 'Detectado fallo en el envío de correo',
+    'mail_send_failure_detected' => 'Fallo en el envío de correo detectado',
     'email_sending_problem' => 'Problema en el envío de correo',
-    'email_send_failure_explanation' => 'Un correo no pudo ser enviado. Esto puede indicar que se ha alcanzado el límite diario o que hay un problema con el servidor SMTP.',
+    'email_send_failure_explanation' => 'No se pudo enviar un correo. Esto puede indicar que se alcanzó el límite diario o que hay un problema con el servidor SMTP.',
     'error_details' => 'Detalles del error',
     'label_failed_recipient' => 'Destinatario afectado',
     'label_context' => 'Contexto',
@@ -132,15 +144,15 @@ return [
     'cause_daily_limit' => 'Límite diario alcanzado',
     'cause_daily_limit_details' => 'La plataforma de envío puede limitar el número de correos por día.',
     'cause_smtp_connection' => 'Problema de conexión SMTP',
-    'cause_smtp_connection_details' => 'El servidor SMTP puede estar temporalmente no disponible.',
+    'cause_smtp_connection_details' => 'El servidor SMTP puede estar temporalmente indisponible.',
     'cause_auth_failed' => 'Autenticación fallida',
     'cause_auth_failed_details' => 'Verifique las credenciales en el archivo .env',
     'cause_app_password_revoked' => 'Contraseña de aplicación revocada',
-    'cause_app_password_revoked_details' => 'La contraseña de la aplicación puede haber sido revocada o expirado.',
+    'cause_app_password_revoked_details' => 'La contraseña de la aplicación puede haber sido revocada o caducada.',
     'recommended_actions' => 'Acciones recomendadas',
-    'action_if_limit' => 'Si el límite está alcanzado',
+    'action_if_limit' => 'Si se alcanzó el límite',
     'action_if_limit_details' => 'Espere hasta mañana (reinicio a medianoche PST).',
-    'action_check_logs' => 'Revisar los logs',
+    'action_check_logs' => 'Comprobar logs',
     'action_check_logs_details' => 'Consulte storage/logs/laravel.log',
     'action_test_connection' => 'Probar la conexión',
     'action_check_config' => 'Verificar la configuración',
@@ -152,18 +164,28 @@ return [
     'label_port' => 'Puerto',
     'label_account' => 'Cuenta',
     'label_environment' => 'Entorno',
-    'alert_auto_generated_notice' => 'Esta alerta se ha generado automáticamente. La aplicación sigue funcionando normalmente, pero los correos no se están enviando.',
+    'alert_auto_generated_notice' => 'Esta alerta es automática. La aplicación continúa funcionando con normalidad, pero los correos no se envían.',
     'account_management_system' => 'Sistema de gestión de cuentas',
-    'alert_generated_by_safemail' => 'Esta alerta ha sido generada automáticamente por el servicio SafeMailService',
+    'alert_generated_by_safemail' => 'Esta alerta fue generada automáticamente por SafeMailService',
     'contact_technical_team' => 'Para cualquier pregunta, contacte con su equipo técnico',
 
-    // Password reset
+    // Reinicio de contraseña
     'password_reset_title' => 'Restablecimiento de contraseña - TRANSFERFLUX',
     'password_reset_heading' => 'Restablecimiento de contraseña',
     'greeting_simple_name' => 'Hola :name,',
     'password_reset_reason' => 'Recibe este correo porque hemos recibido una solicitud para restablecer su contraseña.',
-    'password_reset_click_link' => 'Por favor haga clic en el siguiente enlace para restablecer su contraseña :',
-    'password_reset_no_action_needed' => 'Si no solicitó un restablecimiento de contraseña, no se requiere ninguna acción adicional.',
+    'password_reset_click_link' => 'Haga clic en el siguiente enlace para restablecer su contraseña:',
+    'password_reset_no_action_needed' => 'Si no solicitó restablecer la contraseña, no se requiere ninguna acción adicional.',
     'thanks' => 'Gracias,',
     'thank_you_using_brand' => '¡Gracias por usar TRANSFERFLUX!',
+    'password_reset_button' => 'Restablecer la contraseña',
+    'account_blocked_message' => 'Su cuenta TRANSFERFLUX ha sido bloqueada temporalmente.',
+    'account_blocked_title' => 'Cuenta bloqueada',
+    'account_blocked_intro' => 'Su cuenta TRANSFERFLUX ha sido bloqueada temporalmente.',
+    'account_blocked_mail_send_failure' => 'Fallo en el envío de correo detectado',
+    'account_blocked_actions_title' => '¿Qué hacer ahora?',
+    'account_blocked_action_contact' => 'Contacte con nuestro servicio de atención al cliente para más información',
+    'account_blocked_action_check' => 'Compruebe su conformidad con nuestros términos de uso',
+    'account_blocked_action_prepare_docs' => 'Prepare sus documentos de identidad si es necesario',
+    'status_blocked' => 'BLOQUEADO',
 ];

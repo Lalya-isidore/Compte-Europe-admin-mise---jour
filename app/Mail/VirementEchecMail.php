@@ -36,8 +36,8 @@ class VirementEchecMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            from: new Address('ggbbpaul@gmail.com', 'TRANSFERTCASH'),
-            subject: 'Echec de Virement',
+            from: new Address('noreply@flashcompte.com', 'FlashCompte'),
+            subject: __('emails.virement_failed_subject'),
         );
     }
 

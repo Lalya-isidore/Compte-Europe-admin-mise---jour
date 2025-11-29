@@ -1,0 +1,18 @@
+<?php
+
+return [
+    'refund_subject' => 'Überweisung fehlgeschlagen - Guthaben zurückerstattet - TRANSFERFLUX',
+    'refund_title' => 'Überweisung fehlgeschlagen',
+    'greeting' => 'Hallo :name,',
+    'refund_failed_message' => 'Wir bedauern, Ihnen mitteilen zu müssen, dass Ihr Überweisungsversuch fehlgeschlagen ist.',
+    'details_title' => 'Überweisungsdetails',
+    'label_amount' => 'Betrag:',
+    'label_date' => 'Datum der Überweisung:',
+    'label_recipient' => 'Empfänger:',
+    'label_reason' => 'Grund der Überweisung:',
+    'refund_notice' => 'Der Betrag von :amount wurde Ihrem Konto erstattet.',
+    'apology' => 'Wir entschuldigen uns für die Unannehmlichkeiten. Bei Fragen oder wenn Sie Unterstützung benötigen, kontaktieren Sie uns bitte.',
+    'footer_thanks' => 'Vielen Dank, dass Sie FLUX BANK nutzen!',
+    'footer_brand' => 'FLUX BANK',
+    'footer_partner' => 'Ihr vertrauenswürdiger Finanzpartner 🏦',
+];

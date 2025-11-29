@@ -1,0 +1,73 @@
+﻿<?php
+
+return [
+'refund_subject' => 'Uhamisho Umeshindikana - Salio Lilirudishwa - TRANSFERFLUX',
+'refund_title' => "Uhamisho Umeshindikana\nRudisho la Salio",
+'greeting' => 'Habari :name,',
+'refund_failed_message' => 'Tunasikitika kukujulisha kuwa jaribio lako la uhamisho halikufaulu.',
+'details_title' => 'Maelezo ya Uhamisho',
+'label_amount' => ' Kiasi:',
+'label_date' => ' Tarehe ya Uhamisho:',
+'label_recipient' => ' Mpokeaji:',
+'label_reason' => 'Sababu ya Uhamisho:',
+'refund_notice' => 'Kiasi cha :amount kimerudishwa kwenye akaunti yako.',
+'apology' => 'Tunaomba radhi kwa usumbufu. Ikiwa una maswali au unahitaji msaada, tafadhali wasiliana nasi.',
+'footer_thanks' => 'Asante kwa kutumia TRANSFERFLUX!',
+'footer_brand' => 'TRANSFERFLUX',
+'footer_partner' => 'Mshirika wako wa kuaminika wa kifedha ',
+
+// Password reset
+'password_reset_heading' => 'Urejeshaji wa Nenosiri',
+'password_reset_reason' => 'Unapokea barua hii kwa sababu tumepokea ombi la urejeshaji wa nenosiri kwa akaunti yako.',
+'password_reset_click_link' => 'Tafadhali bonyeza kitufe chini ili kurejesha nenosiri lako:',
+'password_reset_button' => 'Rejesha Nenosiri',
+'password_reset_no_action_needed' => 'Ikiwa haukuomba urejeshaji wa nenosiri, hakuna hatua zaidi inayohitajika.',
+
+// Transfers
+'virement_success_title' => 'Uhamisho Ulifanikiwa',
+'virement_success_message' => 'Tunakuarifu kuwa uhamisho wako umefanikiwa.',
+'virement_failed_title' => 'Uhamisho Umeshindikana',
+'virement_failed_message' => 'Tunakuarifu kuwa uhamisho wako haukuweza kufanyika.',
+
+'label_beneficiary' => ' Mnufaika:',
+
+// Account
+'compte_created_title' => 'Ufunguzi wa Akaunti',
+'compte_created_message' => 'Akaunti yako imeundwa na imepatiwa mkopo wa :amount.',
+
+// Balance
+'balance_decreased_heading' => 'Salio Limepungua',
+'balance_decreased_message' => 'Tunakutaarifu kuwa salio lako limepungua.',
+'label_amount_deducted' => 'Kiasi kilichokatwa',
+'label_new_balance' => 'Salio jipya',
+
+'balance_increased_heading' => 'Salio Limeongezeka',
+'balance_increased_message' => 'Tunakutaarifu kuwa salio lako limeongezeka kwa mafanikio.',
+'label_amount_added' => 'Kiasi kilichoongezwa',
+
+// Unlock codes
+'unlock_code_used_heading' => 'Msimbo wa Kufungua Umetumika',
+'info_notification' => 'ℹ️ Taarifa:',
+'unlock_code_used_alert' => 'Msimbo wa kufungua umefunuliwa katika akaunti yako.',
+'transfer_unlock_heading' => 'Msimbo wa Kufungua Uhamisho',
+'transfer_unlock_message_intro' => 'Msimbo wako wa kufungua uhamisho unaonyeshwa hapa chini:',
+
+// Mail error alert
+'system_alert' => '⚠️ TAARIFA YA MFUMO',
+'mail_send_failure_detected' => 'Kugunduliwa kwa hitilafu ya kutuma barua pepe',
+'email_sending_problem' => 'Barua pepe haikuweza kutumwa. Hili linaweza kuashiria kuwa kikomo cha kila siku kimefikiwa au kuna tatizo na seva ya SMTP.',
+'error_details' => 'Maelezo ya hitilafu',
+'label_date_time' => 'Tarehe na wakati',
+'label_failed_recipient' => 'Mpokeaji aliyeshindwa',
+'label_context' => 'Muktadha',
+'label_error_message' => 'Ujumbe wa kosa',
+'possible_causes' => 'Sababu zinazowezekana',
+'recommended_actions' => 'Hatua zilizopendekezwa',
+'system_information' => 'Taarifa za mfumo',
+'alert_auto_generated_notice' => 'Onyo hili limeundwa kiotomatiki. Programu inaendelea kufanya kazi kawaida, lakini barua pepe hazitumiwi.',
+
+// Misc
+'thanks' => 'Asante,',
+'regards' => 'Kwa heri,',
+'account_blocked_message' => 'Akaunti yako ya TRANSFERFLUX imezuiliwa kwa muda.',
+];

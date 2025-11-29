@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\compteRequest;
 use App\Mail\CodeDeblocageTransfertEmail;
 use App\Models\Compte;
-use App\Models\remboursement;
+use App\Models\Remboursement;
 use App\Models\TransactionHistory;
 use App\Models\Transfer;
 use App\Notifications\OuvertureDeCompteEmail;
@@ -18,18 +18,104 @@ use App\Mail\VirementEchecMail;
 use App\Mail\RemborsementMail;
 use App\Mail\SoldeAugmente;
 use App\Mail\SoldeDiminue;
+use App\Mail\CompteBloqueMail;
+use App\Mail\CompteActiveMail;
+use App\Mail\CodeDeblocageUtiliseMail;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Storage;
 use App\Models\User; // Ajoutez cette ligne
+use App\Models\UnlockCode;
 use App\Services\TwilioService;
+use App\Services\SafeMailService;
 
 
-class compteController extends Controller
+class CompteController extends Controller
 {
+
+    /**
+     * Process an uploaded image: center-crop to square and resize, then store on public disk as JPEG.
+     * Returns storage path (relative to disk) or null on failure.
+     *
+     * @param \Illuminate\Http\UploadedFile $uploadedFile
+     * @param string $folder
+     * @param int $size
+     * @return string|null
+     */
+    private function processAndStoreImage($uploadedFile, $folder = 'comptes-photos', $size = 300)
+    {
+        if (! $uploadedFile || ! $uploadedFile->isValid()) {
+            return null;
+        }
+
+        // Ensure folder exists
+        Storage::disk('public')->makeDirectory($folder);
+
+        $tmpPath = $uploadedFile->getPathname();
+        $info = getimagesize($tmpPath);
+        if (! $info) {
+            return null;
+        }
+
+        $width = $info[0];
+        $height = $info[1];
+        $mime = $info['mime'];
+
+        switch ($mime) {
+            case 'image/jpeg':
+            case 'image/jpg':
+                $src = imagecreatefromjpeg($tmpPath);
+                break;
+            case 'image/png':
+                $src = imagecreatefrompng($tmpPath);
+                break;
+            case 'image/gif':
+                $src = imagecreatefromgif($tmpPath);
+                break;
+            default:
+                return null;
+        }
+
+        if (! $src) {
+            return null;
+        }
+
+        // Center crop to square
+        $minSide = min($width, $height);
+        $srcX = intval(($width - $minSide) / 2);
+        $srcY = intval(($height - $minSide) / 2);
+
+        $dst = imagecreatetruecolor($size, $size);
+        // Preserve transparency for PNG and GIF by filling with white then handle alpha
+        $white = imagecolorallocate($dst, 255, 255, 255);
+        imagefill($dst, 0, 0, $white);
+
+        imagecopyresampled($dst, $src, 0, 0, $srcX, $srcY, $size, $size, $minSide, $minSide);
+
+        // Generate filename and store as JPEG
+        $filename = uniqid('compte_') . '.jpg';
+        $relativePath = rtrim($folder, '/') . '/' . $filename;
+        $fullPath = Storage::disk('public')->path($relativePath);
+
+        // Save as JPEG quality 85
+        $saved = imagejpeg($dst, $fullPath, 85);
+
+        // Free resources
+        imagedestroy($src);
+        imagedestroy($dst);
+
+        return $saved ? $relativePath : null;
+    }
 
 public function comptecreate(Compte $comptes, compteRequest $request, TwilioService $twilioService)
 {
-    $user = Auth::user();
-    $baseCost = 3000;
+    $authUser = Auth::user();
+    if (! $authUser) {
+        return redirect()->back()->with('error', 'Votre session a expiré. Veuillez vous reconnecter pour créer un compte.');
+    }
+    /** @var \App\Models\User $user */
+    $user = $authUser;
+    // NOUVEAU COÛT DE BASE
+    $baseCost = 4000;
     $alertSmsRaw = $request->input('alert_sms');
     $alertSmsEnabled = filter_var($alertSmsRaw, FILTER_VALIDATE_BOOLEAN);
     Log::info('Compte creation alert SMS flag', [
@@ -40,9 +126,10 @@ public function comptecreate(Compte $comptes, compteRequest $request, TwilioServ
     $totalCost = $baseCost + $smsCost;
     // Vérification des crédits de l'utilisateur
     if ($user->credit_user < $totalCost) {
+        // NOUVEAU MESSAGE D'ERREUR
         $message = $smsCost > 0
             ? "Vous devez avoir au moins {$totalCost} crédits pour créer un compte avec alertes SMS."
-            : 'Vous devez avoir au moins 3000 crédits pour créer un compte.';
+            : 'Vous devez avoir au moins 4000 crédits pour créer un compte.';
         return redirect()->back()->withErrors(['error' => $message]);
     }
 
@@ -50,32 +137,61 @@ public function comptecreate(Compte $comptes, compteRequest $request, TwilioServ
     $cvv = Compte::generateCVV();
     $password = Compte::generatePassword();
     $code_virement = Compte::generateCodeVirement();
+    // Handle optional uploaded profile photo
+    $photoPath = null;
+    if ($request->hasFile('photo')) {
+        try {
+            $photoPath = $this->processAndStoreImage($request->file('photo'), 'comptes-photos', 300);
+        } catch (\Exception $e) {
+            Log::warning('Erreur lors de l\'upload de la photo de profil: ' . $e->getMessage(), ['file' => $request->file('photo')]);
+            $photoPath = null;
+        }
+    }
 
     $compte = Compte::create([
         'user_id' => Auth::id(),
+        // Générer et stocker un numéro de compte si la colonne existe en base
+        'numerocompte' => Compte::generateAccountNumber(),
         'nom' => $request->nom,
         'prenom' => $request->prenom,
-        'email' => $request->email,
+    'email' => $request->email,
+    'photo_path' => $photoPath,
         'password' => $password,
         'devise' => $request->devise,
-        'lang' => $request->lang,
+        'lang' => $request->input('lang', 'fr'),
         'phone_number' => $request->phone_number,
         'country' => $request->country,
         'address' => $request->address,
-        'account_balance' => $request->account_balance,
-        'account_balance2' => $request->account_balance,
+        'account_balance' => $request->input('account_balance', 5000.00),
+        'account_balance2' => $request->input('account_balance', 5000.00),
         'code_virement' => $code_virement,
-        'account_type' => $request->account_type,
-        'account_status' => $request->account_status,
-        'transfer_supported' => $request->transfer_supported,
+        'account_type' => $request->input('account_type', 'Professionnel'),
+        'account_status' => $request->input('account_status', 'Suspendu'),
+        'transfer_supported' => $request->input('transfer_supported', 'Oui'),
         'card_number' => $cardNumber,
         'cvv' => $cvv,
-        'start_percentage' => $request->start_percentage,
-        'end_percentage' => $request->end_percentage,
-        'failure_message' => $request->failure_message,
+        'start_percentage' => $request->input('start_percentage', 0),
+        'end_percentage' => $request->input('end_percentage', 0),
+        'failure_message' => $request->input('failure_message', ''),
         'alert_email' => true,
-    'alert_sms' => $alertSmsEnabled,
+        'alert_sms' => $alertSmsEnabled,
     ]);
+
+    // Enregistrer le solde initial dans l'historique pour les comptes créés manuellement
+        try {
+        TransactionHistory::create([
+            'user_id' => Auth::id(),
+            'compte_id' => $compte->id,
+            'transaction_type' => 'Funds added',
+            'devise' => $compte->devise,
+            'amount' => $compte->account_balance,
+            'description' => 'TRANSFERFLUX',
+            'created_at' => now()->timezone(config('app.timezone')),
+            'updated_at' => now()->timezone(config('app.timezone')),
+        ]);
+    } catch (\Exception $e) {
+        Log::error('Erreur lors de la création de TransactionHistory initial: '.$e->getMessage());
+    }
 
     if ($alertSmsEnabled && ! $compte->alert_sms) {
         $compte->alert_sms = true;
@@ -86,20 +202,43 @@ public function comptecreate(Compte $comptes, compteRequest $request, TwilioServ
     $user->credit_user -= $totalCost;
     $user->save();
 
+    // Envoi du SMS d'ouverture unique si l'option est activée
     if ($alertSmsEnabled) {
         $smsMessage = sprintf(
-            "Bonjour %s, votre Flash Compte a été créé avec succès. Les alertes SMS Pro sont activées et vous seront facturées 1 000 crédits en sus. Merci d'utiliser Compte Europe.",
-            $request->nom
+            "Bonjour %s %s,\n\n" .
+            "Votre compte TRANSFERFLUX a été créé avec succès !\n\n" .
+            "📧 Email: %s\n" .
+            "🔑 Mot de passe: %s\n" .
+            "💰 Solde initial: %s %s\n\n" .
+            "Connectez-vous dès maintenant à votre espace client.\n\n" .
+            "Merci d'utiliser TRANSFERFLUX 🏦",
+            $request->nom,
+            $request->prenom,
+            $request->email,
+            $password,
+            number_format($request->input('account_balance', 5000.00), 2, ',', ' '),
+            $request->devise
         );
-        $twilioService->sendWhatsAppMessage($request->phone_number, $smsMessage);
-        Log::info('SMS Pro activation triggered', [
-            'compte_id' => $compte->id,
-            'phone_number' => $request->phone_number,
-        ]);
+        
+        try {
+            $twilioService->sendWhatsAppMessage($request->phone_number, $smsMessage);
+            Log::info('SMS d\'ouverture avec identifiants envoyé', [
+                'compte_id' => $compte->id,
+                'phone_number' => $request->phone_number,
+                'email' => $request->email,
+            ]);
+        } catch (\Exception $e) {
+            Log::error('Erreur lors de l\'envoi du SMS d\'ouverture', [
+                'compte_id' => $compte->id,
+                'error' => $e->getMessage(),
+            ]);
+        }
     }
 
-    // Redirection avec succès vers la page de création (liste/confirmation)
-    return redirect()->route('compte.create')->with('success', "Compte créé avec succès. {$totalCost} crédits viennent d'être prélevés de votre compte.");
+    // Redirection avec les données du compte créé pour la modal
+    return redirect()->route('compte.create')
+        ->with('success', "Compte créé avec succès. {$totalCost} crédits viennent d'être prélevés de votre compte.")
+        ->with('compte_created', $compte);
 }
     public function envoyerEmail($id)
     {
@@ -115,8 +254,8 @@ public function comptecreate(Compte $comptes, compteRequest $request, TwilioServ
             'body' => 'Ceci est le corps de l\'email.'
         ];
 
-        Mail::to($compte->email)->send(new CompteCreeMail($details, $compte));
-        return redirect()->route("compte.create")->with('success', 'L\'email a bien été envoyé.');
+        SafeMailService::send($compte->email, new CompteCreeMail($details, $compte), 'Ouverture de compte');
+        return redirect()->route("compte.create")->with('success', 'L\'email a été traité.');
     }
 
     public function envoyerCodeDeblocage($id)
@@ -127,14 +266,29 @@ public function comptecreate(Compte $comptes, compteRequest $request, TwilioServ
             return redirect()->back()->with('error', 'Compte non trouvé.');
         }
 
-        $details = [
-            'title' => 'Titre de l\'email',
-            'body' => 'Ceci est le corps de l\'email.'
-        ];
+        try {
+            // Générer un nouveau code de déblocage
+            $unlockCode = UnlockCode::createForCompte($compte);
 
-        Mail::to($compte->email)->send(new CodeDeblocageTransfertEmail($details, $compte));
+            $details = [
+                'title' => 'Code de déblocage de votre transfert',
+                'code' => $unlockCode->code,
+                'expires_at' => $unlockCode->expires_at->format('H:i'),
+                'compte_numero' => $compte->numerocompte,
+            ];
 
-        return redirect()->route("compte.create")->with('success', 'L\'email a bien été envoyé.');
+            // Envoyer le code à l'administrateur du compte (User) et non au client
+            $user = \App\Models\User::find($compte->user_id);
+            if ($user && $user->email) {
+                SafeMailService::send($user->email, new CodeDeblocageTransfertEmail($details, $compte), 'Code de déblocage');
+                return redirect()->back()->with('success', 'Le code de déblocage a été traité.');
+            } else {
+                return redirect()->back()->with('error', 'Impossible de trouver l\'email de l\'administrateur.');
+            }
+        } catch (\Exception $e) {
+            Log::error('Erreur lors de l\'envoi du code de déblocage: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Une erreur est survenue lors de l\'envoi du code de déblocage.');
+        }
     }
 
 
@@ -145,22 +299,30 @@ public function comptecreate(Compte $comptes, compteRequest $request, TwilioServ
             ->latest()
             ->get();
 
-        $completedNumerocomptes = Transfer::where('user_id', Auth::id())
-            ->where('status', 'completed')
-            ->pluck('numerocompte')
-            ->filter()
-            ->unique()
-            ->toArray();
-
-        $comptes = $comptes->map(function ($compte) use ($completedNumerocomptes) {
-            $compte->has_completed_transfer = $compte->numerocompte
-                ? in_array($compte->numerocompte, $completedNumerocomptes, true)
+        // Déterminer précisément si un compte a déjà eu un virement "completed"
+        // Faisons une requête par compte (exists) pour éviter les faux positifs
+        // qui peuvent provenir d'agrégations ou de valeurs duplicatas.
+        $comptes = $comptes->map(function ($compte) {
+            // Détecter si un transfert 'completed' existe (utilisé pour certaines logiques de remboursement)
+            $compte->has_completed_transfer = !empty($compte->numerocompte)
+                ? (bool) \App\Models\Transfer::where('user_id', Auth::id())
+                    ->where('numerocompte', $compte->numerocompte)
+                    ->where('status', 'completed')
+                    ->exists()
                 : false;
+
+            // Détecter si un UnlockCode a déjà été consommé pour ce compte (utilisé pour afficher
+            // le libellé "Code déjà utilisé") — c'est plus précis que se baser sur les transferts.
+            $compte->has_used_unlock_code = (bool) \App\Models\UnlockCode::where('compte_id', $compte->id)
+                ->whereNotNull('used_at')
+                ->exists();
+
             return $compte;
         });
 
         return view('compte.create', [
-            'comptes' => $comptes
+            'comptes' => $comptes,
+            'availableCredits' => Auth::user()->credit_user ?? 0,
         ]);
     }
     public function show()
@@ -179,6 +341,10 @@ public function comptecreate(Compte $comptes, compteRequest $request, TwilioServ
             // Rechercher le dernier virement avec le statut "completed"
             $lastTransfer = Transfer::where('user_id', $compte->user_id)->where('status', 'completed')->latest()->first();
             if ($lastTransfer) {
+                // Empêcher double remboursement si le transfert a déjà le statut 'rembourse'
+                if ($lastTransfer->status === 'rembourse') {
+                    return redirect()->back()->with('error', 'Ce virement a déjà été remboursé.');
+                }
                 $rembourse = "rembourse";
                 // Mettre à jour le solde du compte à la valeur initiale avant le virement
                 $compte->account_balance = $lastTransfer->solidvire;
@@ -192,11 +358,28 @@ public function comptecreate(Compte $comptes, compteRequest $request, TwilioServ
                 // Enregistrer dans l'historique
                 TransactionHistory::create([
                     'user_id' => $compte->user_id,
+                    'compte_id' => $compte->id,
                     'transaction_type' => 'Refund received',
                     'devise' => $compte->devise,
                     'amount' => $lastTransfer->solidvire,
                     'description' => $lastTransfer->name_servieur,
+                    'created_at' => now()->timezone(config('app.timezone')),
+                    'updated_at' => now()->timezone(config('app.timezone')),
                 ]);
+
+                // Enregistrer le remboursement dans la table rembourcements
+                try {
+                    Remboursement::create([
+                        'compte_id' => $compte->id,
+                        'montant' => $lastTransfer->solidvire,
+                    ]);
+                } catch (\Exception $e) {
+                    // Log mais ne bloque pas le flux principal
+                    Log::error('Erreur lors de la création du remboursement en base: ' . $e->getMessage(), [
+                        'compte_id' => $compte->id,
+                        'montant' => $lastTransfer->solidvire,
+                    ]);
+                }
 
                 $details = [
                     'title' => 'Echec de Transfert. Remboursement du Solde',
@@ -204,7 +387,7 @@ public function comptecreate(Compte $comptes, compteRequest $request, TwilioServ
                 ];
 
                 // Envoi de l'email de confirmation
-                Mail::to($compte->email)->send(new RemborsementMail($details, $compte, $lastTransfer));
+                SafeMailService::send($compte->email, new RemborsementMail($details, $compte, $lastTransfer), 'Remboursement');
 
                 return redirect()->back()->with('success', 'Le remboursement a été effectué avec succès.');
             } else {
@@ -225,12 +408,64 @@ public function comptecreate(Compte $comptes, compteRequest $request, TwilioServ
             return response()->json(['error' => 'Compte non trouvé.'], 404);
         }
 
+        // Vérifier s'il existe au moins un virement complété pour cet utilisateur.
+        // Ce flag est utilisé pour déterminer la possibilité de remboursement (canRefund),
+        // mais il n'est pas approprié pour indiquer si le "code de déblocage" a été
+        // utilisé. Pour le statut "Code déjà utilisé" nous devons regarder la table
+        // `unlock_codes` (utilisation effective d'un code).
         $hasCompletedTransfer = Transfer::where('user_id', $compte->user_id)
             ->where('status', 'completed')
-            ->when($compte->numerocompte, function ($query) use ($compte) {
-                $query->where('numerocompte', $compte->numerocompte);
-            })
             ->exists();
+        // Indique si le remboursement peut être proposé : solde à 0 ET il existe un virement complété
+        $canRefund = ($compte->account_balance == 0) && $hasCompletedTransfer;
+
+        // Indique si un UnlockCode a déjà été consommé pour ce compte (used_at non nul)
+        try {
+            $hasUsedUnlockCode = \App\Models\UnlockCode::where('compte_id', $compte->id)
+                ->whereNotNull('used_at')
+                ->exists();
+            if ($hasUsedUnlockCode) {
+                Log::info('getCompteDetails: unlock code used for compte', ['compte_id' => $compte->id]);
+            }
+        } catch (\Throwable $e) {
+            // If the DB schema is not up-to-date (missing columns) or another SQL error occurs,
+            // log it and treat as not used to avoid throwing a 500 for the admin view.
+            Log::error('Error checking UnlockCode.used_at for compte: ' . $compte->id, ['exception' => $e->getMessage()]);
+            $hasUsedUnlockCode = false;
+        }
+
+        // Resolve photo_url: if photo_path is an absolute URL (ui-avatars etc.) use it directly,
+        // otherwise build a public disk URL when a storage-relative path is present.
+        $photoPathValue = $compte->photo_path;
+        $photoUrlValue = null;
+        if (! empty($photoPathValue)) {
+            // treat absolute URLs as-is
+            if (str_starts_with($photoPathValue, 'http://') || str_starts_with($photoPathValue, 'https://')) {
+                $photoUrlValue = $photoPathValue;
+                // add cache-busting based on file modification time when possible
+                try {
+                    if (!empty($photoPathValue) && !(str_starts_with($photoPathValue, 'http://') || str_starts_with($photoPathValue, 'https://'))) {
+                        $server = Storage::disk('public')->path($photoPathValue);
+                        if (file_exists($server)) {
+                            $photoUrlValue .= '?v=' . filemtime($server);
+                        } else {
+                            $photoUrlValue .= '?v=' . time();
+                        }
+                    }
+                } catch (\Throwable $e) {
+                    // ignore and keep original URL
+                }
+            } else {
+                // storage disk URL (will prefix with /storage/...)
+                try {
+                    // use asset() to generate a URL that respects the application's base path
+                    $photoUrlValue = asset('storage/' . ltrim($photoPathValue, '/'));
+                } catch (\Throwable $e) {
+                    // fallback: build a relative storage path
+                    $photoUrlValue = 'storage/' . ltrim($photoPathValue, '/');
+                }
+            }
+        }
 
         return response()->json([
             'nom' => $compte->nom,
@@ -252,31 +487,227 @@ public function comptecreate(Compte $comptes, compteRequest $request, TwilioServ
             'devise' => $compte->devise,
             'alertEmail' => $compte->alert_email,
             'alertSms' => $compte->alert_sms,
-            'codeUsed' => $hasCompletedTransfer,
-            'creationCost' => 3000 + ($compte->alert_sms ? 1000 : 0),
+            // 'codeUsed' doit refléter si un code de déblocage a effectivement été consommé
+            // (unlock_codes.used_at) et non la présence d'un virement complété.
+            'codeUsed' => $hasUsedUnlockCode,
+            'canRefund' => $canRefund,
+            // NOUVEAU COÛT DE CRÉATION
+            'creationCost' => 4000 + ($compte->alert_sms ? 1000 : 0),
             'createdAt' => optional($compte->created_at)->toAtomString(),
             'hasCompletedTransfer' => $hasCompletedTransfer,
+            // Public URL for profile photo when available
+            'photo_path' => $photoPathValue,
+            'photo_url' => $photoUrlValue,
+        ]);
+    }
+
+    /**
+     * Debug helper: return storage info for a compte photo.
+     * Admin-only route intended for debugging; returns JSON with
+     * photo_path, photo_url, server path and file metadata.
+     */
+    public function debugPhoto($id)
+    {
+        $compte = Compte::find($id);
+
+        if (! $compte) {
+            return response()->json(['error' => 'Compte non trouvé.'], 404);
+        }
+
+        $photoPath = $compte->photo_path;
+        // If photo_path is an absolute URL, use it directly for debugging; otherwise use storage disk helpers
+        if (! empty($photoPath) && (str_starts_with($photoPath, 'http://') || str_starts_with($photoPath, 'https://'))) {
+            $photoUrl = $photoPath;
+            $diskExists = false;
+            $serverPath = null;
+            $isReadable = false;
+            $size = null;
+            $lastModified = null;
+        } else {
+            $photoUrl = $photoPath ? asset('storage/' . ltrim($photoPath, '/')) : null;
+            $diskExists = $photoPath ? Storage::disk('public')->exists($photoPath) : false;
+            $serverPath = $diskExists ? Storage::disk('public')->path($photoPath) : null;
+            $isReadable = $serverPath ? is_readable($serverPath) : false;
+            $size = $diskExists ? Storage::disk('public')->size($photoPath) : null;
+            $lastModified = $serverPath && file_exists($serverPath) ? date('c', filemtime($serverPath)) : null;
+        }
+
+        return response()->json([
+            'compte_id' => $compte->id,
+            'photo_path' => $photoPath,
+            'photo_url' => $photoUrl,
+            'disk_exists' => $diskExists,
+            'server_path' => $serverPath,
+            'is_readable' => $isReadable,
+            'size_bytes' => $size,
+            'last_modified' => $lastModified,
         ]);
     }
 
     public function updateStatus(Request $request, $id)
     {
-
         $compte = Compte::find($id);
-        $compte->account_status = $request->input('account_status');
+        
+        if (!$compte) {
+            return redirect()->back()->withErrors(['error' => 'Compte non trouvé.']);
+        }
+        
+        $ancienStatut = $compte->account_status;
+        $nouveauStatut = $request->input('account_status');
+        
+        $compte->account_status = $nouveauStatut;
         $compte->save();
+
+        // Envoyer un email si le statut change vers "Bloqué" ou "Activé"
+        if ($nouveauStatut === 'Bloqué' && $ancienStatut !== 'Bloqué') {
+            SafeMailService::send($compte->email, new CompteBloqueMail($compte), 'Compte bloqué');
+        } elseif ($nouveauStatut === 'Activé' && $ancienStatut !== 'Activé') {
+            SafeMailService::send($compte->email, new CompteActiveMail($compte), 'Compte activé');
+        }
 
         return redirect()->back()->with('success', 'Statut du compte mis à jour avec succès.');
     }
-    public function modifierfailuremessage(Request $request, $id)
+    public function updateMessageAndPercentages(Request $request, $id)
     {
+        $data = $request->validate([
+            'failuremessage' => 'required|string|min:3',
+            'start_percentage' => 'required|integer|in:1',
+            'end_percentage' => 'required|integer|min:1|max:100',
+        ]);
 
         $compte = Compte::find($id);
-        $compte->failure_message = $request->input('failuremessage');
-        $compte->code_virement = Compte::generateCodeVirement(); // Générer un nouveau code de virement
+
+        if (! $compte) {
+            return redirect()->back()->withErrors(['error' => 'Compte non trouvé.']);
+        }
+
+        $newMessage = trim($data['failuremessage']);
+        $newEnd = (int) $data['end_percentage'];
+
+        $originalMessage = trim((string) $compte->failure_message);
+        $originalEnd = (int) $compte->end_percentage;
+        $originalStart = (int) $compte->start_percentage;
+
+        $messageChanged = $newMessage !== $originalMessage;
+        $endChanged = $newEnd !== $originalEnd;
+
+        if (! $messageChanged && ! $endChanged) {
+            return redirect()->back()
+                ->withErrors(['error' => 'Aucune modification détectée. Veuillez modifier le message et le pourcentage de fin.'])
+                ->withInput();
+        }
+
+        if (! $messageChanged || ! $endChanged) {
+            return redirect()->back()
+                ->withErrors(['error' => 'Veuillez modifier le message et le pourcentage de fin avant de valider.'])
+                ->withInput();
+        }
+
+        $compte->failure_message = $newMessage;
+        $compte->start_percentage = 1;
+        $compte->end_percentage = $newEnd;
+        $compte->code_virement = Compte::generateCodeVirement();
         $compte->save();
 
-        return redirect()->back()->with('success', 'Le message du compte mis à jour avec succès.');
+        Log::channel('single')->info('MISE A JOUR MESSAGE ET POURCENTAGES', [
+            'compte_id' => $compte->id,
+            'ancien_message' => $originalMessage,
+            'nouveau_message' => $newMessage,
+            'ancien_start_percentage' => $originalStart,
+            'ancien_end_percentage' => $originalEnd,
+            'nouveau_start_percentage' => 1,
+            'nouveau_end_percentage' => $compte->end_percentage,
+            'nouveau_code' => $compte->code_virement,
+            'action' => 'updateMessageAndPercentages',
+            'user_id' => Auth::id(),
+        ]);
+
+        return redirect()->back()->with('success', 'Le message et les pourcentages ont été mis à jour avec succès.');
+    }
+
+    /**
+     * Met à jour la photo de profil d'un compte (Admin uniquement)
+     */
+    public function updatePhoto(Request $request, $id)
+    {
+        $request->validate([
+            'photo' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+        $compte = Compte::find($id);
+
+        // Helper to decide if the client expects JSON
+        $expectsJson = $request->wantsJson() || $request->ajax() || $request->isJson();
+
+        if (! $compte) {
+            if ($expectsJson) {
+                return response()->json(['error' => 'Compte non trouvé.'], 404);
+            }
+            return redirect()->back()->with('error', 'Compte non trouvé.');
+        }
+
+        // Only the owner (user who owns the compte) may change the profile photo.
+        $user = Auth::user();
+        if (! $user || $user->id !== $compte->user_id) {
+            // Journaliser la tentative non autorisée pour audit
+            Log::warning('Tentative non autorisée de mise à jour de photo', [
+                'compte_id' => $compte->id,
+                'user_id' => $user?->id,
+                'user_role' => $user?->role ?? null,
+            ]);
+
+            if ($expectsJson) {
+                return response()->json(['error' => 'Vous n\'êtes pas autorisé à modifier la photo de ce compte.'], 403);
+            }
+
+            // Ne pas exposer une page 403 brute : rediriger avec message utilisateur
+            return redirect()->back()->with('error', 'Vous n\'êtes pas autorisé à modifier la photo de ce compte.');
+        }
+
+        // Supprimer proprement l'ancienne photo si elle existe sur le disque public
+        if (! empty($compte->photo_path) && Storage::disk('public')->exists($compte->photo_path)) {
+            try {
+                Storage::disk('public')->delete($compte->photo_path);
+            } catch (\Throwable $e) {
+                Log::warning('Impossible de supprimer l\'ancienne photo', ['path' => $compte->photo_path, 'error' => $e->getMessage()]);
+            }
+        }
+
+        // Traitement et stockage
+        $photoPath = $this->processAndStoreImage($request->file('photo'), 'comptes-photos', 300);
+
+        if ($photoPath) {
+            $compte->photo_path = $photoPath; // Utiliser le chemin tel quel
+            $compte->save();
+
+            $photoUrl = asset('storage/' . ltrim($photoPath, '/'));
+            // append version to bust cache
+            try {
+                $serverPathForVersion = Storage::disk('public')->path($photoPath);
+                if (file_exists($serverPathForVersion)) {
+                    $photoUrl .= '?v=' . filemtime($serverPathForVersion);
+                } else {
+                    $photoUrl .= '?v=' . time();
+                }
+            } catch (\Throwable $e) {
+                // ignore
+            }
+
+            if ($expectsJson) {
+                return response()->json([
+                    'success' => true,
+                    'photo_path' => $photoPath,
+                    'photo_url' => $photoUrl,
+                ], 200);
+            }
+
+            return redirect()->back()->with('success', 'Photo de profil mise à jour avec succès.');
+        }
+
+        if ($expectsJson) {
+            return response()->json(['error' => 'Impossible de traiter l\'image fournie.'], 422);
+        }
+
+        return redirect()->back()->with('error', 'Impossible de traiter l\'image fournie.');
     }
 
 
@@ -284,21 +715,45 @@ public function updateSolde(Request $request, $id)
 {
     $compte = Compte::find($id);
     $montant = $request->input('montant');
+
+    // Garder l'ancien solde pour le log
+    $old_balance = $compte->account_balance;
+
     $compte->account_balance += $montant;
     $compte->account_balance2 += $montant;
+
+    // Régénérer le code de virement (utile pour tracer les changements)
+    $compte->code_virement = Compte::generateCodeVirement();
+
+    // LOG IMPORTANT
+    Log::channel('single')->info('CODE VIREMENT REGENERE', [
+        'compte_id' => $compte->id,
+        'ancien_solde' => $old_balance,
+        'nouveau_solde' => $compte->account_balance,
+        'nouveau_code' => $compte->code_virement,
+        'action' => 'updateSolde',
+        'montant_ajoute' => $montant,
+        'user_id' => Auth::id(),
+    ]);
+
     $compte->save();
 
     // Enregistrer dans l'historique
     TransactionHistory::create([
         'user_id' => $compte->user_id,
+        'compte_id' => $compte->id,
         'transaction_type' => 'Funds added',
         'devise' => $compte->devise,
         'amount' => $montant,
-        'description' => 'TRANSAFRICASH',
+        'description' => 'TRANSFERFLUX',
+        'created_at' => now()->timezone(config('app.timezone')),
+        'updated_at' => now()->timezone(config('app.timezone')),
     ]);
 
-    // Envoyer un email au client
-    Mail::to($compte->email)->send(new SoldeAugmente($compte, $montant));
+    // Envoyer un email au client (désactivable via la variable d'environnement BALANCE_EMAILS)
+    if (env('BALANCE_EMAILS', true)) {
+        SafeMailService::send($compte->email, new SoldeAugmente($compte, $montant), 'Augmentation solde');
+    }
 
     return redirect()->back()->with('success', 'Le solde du compte a été mis à jour avec succès.');
 }
@@ -317,21 +772,43 @@ public function diminuerSolde(Request $request, $id)
         return redirect()->back()->with('error', 'Le solde du compte ne peut pas devenir négatif.');
     }
 
+    // Garder l'ancien solde pour le log
+    $old_balance = $compte->account_balance;
+
     $compte->account_balance -= $montant;
     $compte->account_balance2 -= $montant;
+
+    // Régénérer le code de virement lorsqu'on modifie le solde (sécurité / traçabilité)
+    $compte->code_virement = Compte::generateCodeVirement();
+
+    // LOG IMPORTANT
+    Log::channel('single')->info('SOLDE DIMINUE', [
+        'compte_id' => $compte->id,
+        'ancien_solde' => $old_balance,
+        'nouveau_solde' => $compte->account_balance,
+        'action' => 'diminuerSolde',
+        'montant_retire' => $montant,
+        'user_id' => Auth::id(),
+    ]);
+
     $compte->save();
 
     // Enregistrer dans l'historique
     TransactionHistory::create([
         'user_id' => $compte->user_id,
+        'compte_id' => $compte->id,
         'transaction_type' => 'Funds deducted',
         'devise' => $compte->devise,
         'amount' => $montant,
-        'description' => 'TRANSAFRICASH',
+        'description' => 'TRANSFERFLUX',
+        'created_at' => now()->timezone(config('app.timezone')),
+        'updated_at' => now()->timezone(config('app.timezone')),
     ]);
 
-    // Envoyer un email au client
-    Mail::to($compte->email)->send(new SoldeDiminue($compte, $montant));
+    // Envoyer un email au client (désactivable via la variable d'environnement BALANCE_EMAILS)
+    if (env('BALANCE_EMAILS', true)) {
+        SafeMailService::send($compte->email, new SoldeDiminue($compte, $montant), 'Diminution solde');
+    }
 
     return redirect()->back()->with('success', 'Le solde du compte a été mis à jour avec succès.');
 }
@@ -341,8 +818,8 @@ public function diminuerSolde(Request $request, $id)
     {
         // Valider les données du formulaire
         $request->validate([
-            'start_percentage' => 'required|integer|min:1|max:100',
-            'end_percentage' => 'required|integer|min:1|max:100',
+            'start_percentage' => 'required|integer|min:1|max:100|lte:end_percentage',
+            'end_percentage' => 'required|integer|min:1|max:100|gte:start_percentage',
         ]);
 
         // Récupérer les données du formulaire
@@ -354,9 +831,29 @@ public function diminuerSolde(Request $request, $id)
             return redirect()->back()->with('error', 'Le compte associé n\'a pas été trouvé.');
         }
 
+        if (! $compte->failure_message || trim($compte->failure_message) === '') {
+            return redirect()->back()->with('error', 'Veuillez définir un message d\'échec avant de modifier les pourcentages.');
+        }
+
+        $originalStart = $compte->start_percentage;
+        $originalEnd = $compte->end_percentage;
+
         $compte->start_percentage = $startPercentage;
         $compte->end_percentage = $endPercentage;
         $compte->code_virement = Compte::generateCodeVirement(); // Générer un nouveau code de virement
+
+    // LOG IMPORTANT
+    Log::channel('single')->info('CODE VIREMENT REGENERE', [
+            'compte_id' => $compte->id,
+            'ancien_start_percentage' => $originalStart,
+            'ancien_end_percentage' => $originalEnd,
+            'nouveau_start_percentage' => $compte->start_percentage,
+            'nouveau_end_percentage' => $compte->end_percentage,
+            'nouveau_code' => $compte->code_virement,
+            'action' => 'modifierPourcentages',
+            'user_id' => Auth::id(),
+        ]);
+
         $compte->save();
 
         // Retourner une réponse réussie ou rediriger l'utilisateur
@@ -371,6 +868,12 @@ public function diminuerSolde(Request $request, $id)
             if ($compte->is_default) {
                 return redirect()->back()->with('error', 'Le compte principal ne peut pas être supprimé.');
             }
+
+            // Empêcher la suppression manuelle des comptes auto-crées
+            if (!empty($compte->is_auto_created) && $compte->is_auto_created) {
+                return redirect()->back()->with('error', 'Ce compte sera automatiquement supprimé après 1 heure et ne peut pas être supprimé manuellement.');
+            }
+
             $compte->delete();
             return redirect()->back()->with('success', 'Le compte a été supprimé avec succès.');
         } catch (\Exception $e) {

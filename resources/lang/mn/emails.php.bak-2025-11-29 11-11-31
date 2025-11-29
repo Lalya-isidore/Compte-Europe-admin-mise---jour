@@ -1,0 +1,74 @@
+<?php
+
+return [
+	'refund_subject' => 'Гүйлгээ амжилтгүй - Төлбөр буцаагдсан - TRANSFERFLUX',
+	'refund_title' => "Гүйлгээ амжилтгүй\nТөлбөр буцаалт",
+	'greeting' => 'Сайн байна уу :name,',
+	'refund_failed_message' => 'Таны гүйлгээ амжилтгүй болсон тул бид харамсаж байна.',
+	'details_title' => 'Гүйлгээний дэлгэрэнгүй',
+	'label_amount' => '💰 Мөнгөн дүн:',
+	'label_date' => '📅 Гүйлгээ огноо:',
+	'label_recipient' => '👤 Хүлээн авагч:',
+	'label_reason' => 'Гүйлгээний шалтгаан:',
+	'refund_notice' => ':amount хэмжээ таны данс руу буцаагдсан байна.',
+	'apology' => 'Уучлаарай, таагүй байдал үүссэнд харамсаж байна. Хэрэв танд асуулт байвал бидэнтэй холбоо барина уу.',
+	'footer_thanks' => 'TRANSFERFLUX ашигласанд баярлалаа!',
+	'footer_brand' => 'TRANSFERFLUX',
+	'footer_partner' => 'Таны итгэмжит санхүүгийн түнш 🏦',
+
+	// Password reset
+	'password_reset_heading' => 'Нууц үг сэргээх',
+	'password_reset_reason' => 'Таны дансанд нууц үг сэргээх хүсэлт ирсэн тул та энэ имэйл хүлээн авсан байна.',
+	'password_reset_click_link' => 'Нууц үгээ сэргээхийн тулд доорх холбоосыг дарна уу:',
+	'password_reset_button' => 'Нууц үг сэргээх',
+	'password_reset_no_action_needed' => 'Хэрвээ та сэргээх хүсэлт өгөөгүй бол нэмэлт үйлдэл шаардлагагүй.',
+
+	// Transfers
+	'virement_success_title' => 'Гүйлгээ амжилттай',
+	'virement_success_message' => 'Таны гүйлгээ амжилттай хийгдсэн байна.',
+	'virement_failed_title' => 'Гүйлгээ амжилтгүй',
+	'virement_failed_message' => 'Таны гүйлгээ амжилтгүй болсон байна.',
+
+	'label_beneficiary' => '👤 Хүлээн авагч:',
+
+	// Account
+	'compte_created_title' => 'Данс нээгдэв',
+	'compte_created_message' => 'Таны данс амжилттай үүсгэгдэж, :amount авсан.',
+
+	// Balance
+	'balance_decreased_heading' => 'Төлбөр буурсан',
+	'balance_decreased_message' => 'Таны дансны үлдэгдэл буурсан тул танд мэдээлж байна.',
+	'label_amount_deducted' => 'Хасагдсан дүн',
+	'label_new_balance' => 'Шинэ үлдэгдэл',
+
+	'balance_increased_heading' => 'Үлдэгдэл нэмэгдсэн',
+	'balance_increased_message' => 'Таны үлдэгдэл амжилттай нэмэгдсэн байна.',
+	'label_amount_added' => 'Нэмэгдсэн дүн',
+
+	// Unlock codes
+	'unlock_code_used_heading' => 'Нээх код ашиглагдсан',
+	'info_notification' => 'ℹ️ Мэдэгдэл:',
+	'unlock_code_used_alert' => 'Нээлтийн код таны дансанд сая хэрэглэгдлээ.',
+	'transfer_unlock_heading' => 'Гүйлгээ нээх код',
+	'transfer_unlock_message_intro' => 'Гүйлгээний нээх код дараах байдлаар байна:',
+
+	// Mail error alert
+	'system_alert' => '⚠️ СИСТЕМИЙН СЭРЭМЖЛҮҮЛЭГ',
+	'mail_send_failure_detected' => 'Имэйл илгээх алдаа илэрлээ',
+	'email_sending_problem' => 'Имэйл илгээх асуудал',
+	'email_send_failure_explanation' => 'Имэйл илгээгдээгүй. Энэ нь өдөр тутмын хязгаар хүрсэн эсвэл SMTP серверт асуудал байж болно.',
+	'error_details' => 'Алдааны дэлгэрэнгүй',
+	'label_date_time' => 'Огноо ба цаг',
+	'label_failed_recipient' => 'Амжилтгүй илгээгдсэн хүлээн авагч',
+	'label_context' => 'Контекст',
+	'label_error_message' => 'Алдааны мэдээлэл',
+	'possible_causes' => 'Боломжит шалтгаан',
+	'recommended_actions' => 'Зөвлөмжит үйлдлүүд',
+	'system_information' => 'Системийн мэдээлэл',
+	'alert_auto_generated_notice' => 'Энэхүү сэрэмжлүүлэг автоматаар үүссэн. Апп хэвийн ажиллаж байгаа ч имэйлүүд илгээгдэж байхгүй.',
+
+	// Misc
+	'thanks' => 'Баярлалаа,',
+	'regards' => 'Хүндэтгэсэн,',
+	'account_blocked_message' => 'Таны TRANSFERFLUX данс түр хугацаагаар хаагдсан байна.',
+];

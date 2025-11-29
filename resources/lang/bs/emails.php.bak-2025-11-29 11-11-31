@@ -1,0 +1,73 @@
+<?php
+
+return [
+	'refund_subject' => 'Prenos nije uspio - Sredstva vraćena - TRANSFERFLUX',
+	'refund_title' => "Prenos nije uspio\nPovrat sredstava",
+	'greeting' => 'Poštovani :name,',
+	'refund_failed_message' => 'Žao nam je što moramo obavijestiti da vaš pokušaj prenosa nije uspio.',
+	'details_title' => 'Detalji prenosa',
+	'label_amount' => '💰 Iznos:',
+	'label_date' => '📅 Datum prenosa:',
+	'label_recipient' => '👤 Primatelj:',
+	'label_reason' => 'Razlog prenosa:',
+	'refund_notice' => 'Iznos od :amount vraćen je na vaš račun.',
+	'apology' => 'Ispričavamo se zbog neugodnosti. Ako imate pitanja ili trebate pomoć, kontaktirajte nas.',
+	'footer_thanks' => 'Hvala što koristite TRANSFERFLUX!',
+	'footer_brand' => 'TRANSFERFLUX',
+	'footer_partner' => 'Vaš pouzdani financijski partner 🏦',
+
+	// Password reset
+	'password_reset_heading' => 'Poništavanje lozinke',
+	'password_reset_reason' => 'Ovaj e-mail ste primili jer smo zaprimili zahtjev za poništavanje lozinke za vaš račun.',
+	'password_reset_click_link' => 'Kliknite gumb ispod kako biste poništili lozinku:',
+	'password_reset_button' => 'Poništi lozinku',
+	'password_reset_no_action_needed' => 'Ako niste tražili poništavanje lozinke, nije potrebno ništa poduzimati.',
+
+	// Transfers
+	'virement_success_title' => 'Povlačenje uspješno',
+	'virement_success_message' => 'Obavještavamo vas da je vaš prenos uspješno izvršen.',
+	'virement_failed_title' => 'Prenos nije uspio',
+	'virement_failed_message' => 'Obavještavamo vas da vaš prenos nije uspio.',
+
+	'label_beneficiary' => '👤 Korisnik primatelj:',
+
+	// Account
+	'compte_created_title' => 'Otvaranje računa',
+	'compte_created_message' => 'Vaš račun je kreiran i napunjen iznosom :amount.',
+
+	// Balance
+	'balance_decreased_heading' => 'Stanje računa smanjeno',
+	'balance_decreased_message' => 'Obavještavamo vas da je stanje na vašem računu smanjeno.',
+	'label_amount_deducted' => 'Oduzeti iznos',
+	'label_new_balance' => 'Novo stanje',
+
+	'balance_increased_heading' => 'Stanje računa povećano',
+	'balance_increased_message' => 'Obavještavamo vas da je stanje na vašem računu uspješno povećano.',
+	'label_amount_added' => 'Dodani iznos',
+
+	// Unlock codes
+	'unlock_code_used_heading' => 'Kod za otključavanje iskorišten',
+	'info_notification' => 'ℹ️ Obavijest:',
+	'unlock_code_used_alert' => 'Kod za otključavanje je upravo iskorišten na vašem računu.',
+	'transfer_unlock_heading' => 'Kod za otključavanje prenosa',
+	'transfer_unlock_message_intro' => 'Ispod se nalazi vaš kod za otključavanje prenosa:',
+
+	// Mail error alert
+	'system_alert' => '⚠️ UPOZORENJE SUSTAVA',
+	'mail_send_failure_detected' => 'Otkrivena greška pri slanju e-pošte',
+	'email_sending_problem' => 'E-mail nije mogao biti poslan. To može značiti da je dnevni limit dostignut ili postoji problem sa SMTP serverom.',
+	'error_details' => 'Detalji greške',
+	'label_date_time' => 'Datum i vrijeme',
+	'label_failed_recipient' => 'Neuspjeli primatelj',
+	'label_context' => 'Kontekst',
+	'label_error_message' => 'Poruka o grešci',
+	'possible_causes' => 'Mogući uzroci',
+	'recommended_actions' => 'Preporučene radnje',
+	'system_information' => 'Informacije o sustavu',
+	'alert_auto_generated_notice' => 'Ovo upozorenje je automatski generirano. Aplikacija i dalje radi normalno, ali e-mailovi se ne šalju.',
+
+	// Misc
+	'thanks' => 'Hvala,',
+	'regards' => 'Srdačan pozdrav,',
+	'account_blocked_message' => 'Vaš TRANSFERFLUX račun je privremeno blokiran.',
+];

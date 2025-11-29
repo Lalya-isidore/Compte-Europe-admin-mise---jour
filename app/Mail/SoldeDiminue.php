@@ -20,8 +20,9 @@ class SoldeDiminue extends Mailable
 
     public function build()
     {
-        return $this->view('emails.soldeDiminue')
-                    ->subject('Votre solde a été diminué')
+        return $this->from('fluxbank37@gmail.com', 'TRANSFERFLUX')
+                    ->view('emails.soldeDiminue')
+                    ->subject('Votre solde a été diminué - TRANSFERFLUX')
                     ->with([
                         'compte' => $this->compte,
                         'montant' => $this->montant,

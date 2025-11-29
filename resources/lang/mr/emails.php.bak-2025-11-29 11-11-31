@@ -1,0 +1,84 @@
+
+<?php
+
+// DRAFT: Automatic copy of `fr/emails.php` for locale `mr`.
+return [
+    // Compte créé
+    'compte_created_subject' => 'Ouverture de compte - TRANSFERFLUX',
+    'compte_created_title' => 'Ouverture de compte sur TRANSFERFLUX',
+    'greeting' => 'Bonjour :name,',
+    'compte_created_message' => "Nous avons le plaisir de vous informer que votre compte a été créé avec succès et crédité d'un montant de :amount.",
+    'credentials_title' => 'Vos identifiants sont:',
+    'label_email' => '📧 Email:',
+    'label_password' => '🔑 Mot de passe:',
+    'label_initial_balance' => '💰 Solde initial:',
+    'cta_login' => 'Connectez-vous à votre espace client',
+    'info_access' => 'Vous pouvez maintenant accéder à votre compte et profiter de nos services.',
+    'support_contact' => 'contactez notre support',
+    'footer_thanks' => "Merci d\'utiliser TRANSFERFLUX !",
+    'footer_brand' => 'TRANSFERFLUX',
+    'footer_partner' => 'Votre partenaire financier de confiance 🏦',
+
+    // Virement réussi
+    'virement_success_subject' => 'Virement effectué avec succès - TRANSFERFLUX',
+    'virement_success_title' => 'Virement Effectué avec Succès',
+    'virement_success_message' => 'Nous vous informons que votre virement a été effectué avec succès.',
+
+    // Virement échec
+    'virement_failed_subject' => 'Échec de virement - TRANSFERFLUX',
+    'virement_failed_title' => 'Échec de Virement',
+    'virement_failed_message' => 'Nous vous informons que votre virement a échoué.',
+
+    // Détails & labels
+    'details_title' => 'Détails du virement',
+    'label_amount' => '💰 Montant :',
+    'label_date' => '📅 Date :',
+    'label_beneficiary' => '👤 Bénéficiaire :',
+    'virement_notice' => 'Le traitement du transfert sera effectué dans les 1-3 jours ouvrables.',
+    'thanks' => "Merci d\'utiliser nos services.",
+    'contact_support_for_info' => 'Pour plus d\'informations, veuillez contacter notre service client.',
+
+    // Footer / common
+    'footer_brand' => 'TRANSFERFLUX',
+    'footer_partner' => 'Votre partenaire financier de confiance 🏦',
+    'regards' => 'Cordialement,',
+    'service_client' => 'Service Client',
+    'auto_generated_notice' => 'Cet email a été envoyé automatiquement, merci de ne pas y répondre directement.',
+
+    // Compte activé
+    'compte_activated_title' => 'Compte Activé - TRANSFERFLUX',
+    'compte_activated_heading' => 'Compte Activé avec Succès',
+    'good_news' => '✅ Bonne nouvelle :',
+    'compte_activated_message' => 'Votre compte TRANSFERFLUX a été activé et est désormais pleinement opérationnel !',
+    'compte_activated_explanation' => 'Vous pouvez effectuer toutes vos transactions en toute sécurité.',
+    'label_holder' => 'Titulaire',
+    'label_email' => 'Email',
+    'label_current_balance' => 'Solde actuel',
+    'label_status' => 'Statut',
+    'status_active' => 'ACTIVÉ',
+    'you_can_now' => 'Vous pouvez maintenant :',
+    'can_make_transfers' => 'Effectuer des virements et transferts',
+    'check_balance' => 'Consulter votre solde en temps réel',
+    'manage_transactions' => 'Gérer vos transactions en toute sécurité',
+    'access_services' => 'Accéder à tous nos services bancaires',
+    'thanks_welcome' => 'Merci de votre confiance et bienvenue dans la famille TRANSFERFLUX !',
+
+    // Codes de déblocage
+    'unlock_code_used_title' => 'Code de Déblocage Utilisé - TRANSFERFLUX',
+    'unlock_code_used_heading' => 'Code de Déblocage Utilisé',
+    'greeting_simple' => 'Bonjour,',
+    'info_notification' => 'ℹ️ Notification :',
+    'unlock_code_used_alert' => 'Un code de déblocage vient d\'être utilisé sur votre compte.',
+    'unlock_code_used_explanation' => 'Nous vous informons qu\'un code de déblocage a été saisi et validé pour une transaction.',
+    'label_date_time' => 'Date et heure',
+    'label_transfer_amount' => 'Montant du transfert',
+    'label_recipient' => 'Destinataire',
+    'urgent_if_not_you' => '⚠️ Si vous n\'êtes pas à l\'origine de cette action :',
+    'contact_support_immediately' => 'Contactez immédiatement notre service client',
+    'check_recent_transactions' => 'Vérifiez toutes vos transactions récentes',
+    'change_access_codes' => 'Changez vos codes d\'accès par mesure de sécurité',
+    'if_legitimate' => '✅ Si cette action est légitime :',
+    'client_can_finalize' => 'Votre client peut maintenant finaliser sa transaction en toute sécurité.',
+
+];
+

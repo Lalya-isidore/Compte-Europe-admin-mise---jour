@@ -1,0 +1,74 @@
+<?php
+
+return [
+	'refund_subject' => 'Tsy tafita ny famindrana - Naverina ny vola - TRANSFERFLUX',
+	'refund_title' => "Tsy tafita ny famindrana\nFiverenana vola",
+	'greeting' => 'Miarahaba :name,',
+	'refund_failed_message' => 'Malahelo izahay mampahafantatra fa tsy nahomby ny fanandramana famindrana nataonao.',
+	'details_title' => 'Antsipirian ny famindrana',
+	'label_amount' => '💰 Vola:',
+	'label_date' => '📅 Daty famindrana:',
+	'label_recipient' => '👤 Mpandray:',
+	'label_reason' => 'Antony famindrana:',
+	'refund_notice' => 'Ny vola :amount dia naverina tamin\'ny kaontinao.',
+	'apology' => 'Miala tsiny izahay noho ny fahasosorana. Raha manana fanontaniana ianao na mila fanampiana, mifandraisa aminay.',
+	'footer_thanks' => 'Misaotra nampiasa TRANSFERFLUX!',
+	'footer_brand' => 'TRANSFERFLUX',
+	'footer_partner' => 'Ny mpiara-miasa ara-bola atokisanao 🏦',
+
+	// Password reset
+	'password_reset_heading' => 'Famerenana ny tenimiafina',
+	'password_reset_reason' => 'Mahazo ity mailaka ity ianao satria nahazo fangatahana hamerenana ny tenimiafina ho an\'ny kaontinao izahay.',
+	'password_reset_click_link' => 'Azafady tsindrio ny bokotra etsy ambany mba hamerenana ny tenimiafinao:',
+	'password_reset_button' => 'Avereno ny tenimiafina',
+	'password_reset_no_action_needed' => 'Raha tsy nangataka famerenana tenimiafina ianao dia tsy ilaina ny manao zavatra hafa.',
+
+	// Transfers
+	'virement_success_title' => 'Vita soa aman-tsara ny famindrana',
+	'virement_success_message' => 'Mampahafantatra izahay fa vita soa aman-tsara ny famindrana nataonao.',
+	'virement_failed_title' => 'Tsy tafita ny famindrana',
+	'virement_failed_message' => 'Mampahafantatra izahay fa tsy tafita ny famindrana nataonao.',
+
+	'label_beneficiary' => '👤 Mpandray tombony:',
+
+	// Account
+	'compte_created_title' => 'Fanokafana kaonty',
+	'compte_created_message' => 'Voasoratra ny kaontinao ary nahazo famindrana vola mitentina :amount izy.',
+
+	// Balance
+	'balance_decreased_heading' => 'Fihenan\'ny vola',
+	'balance_decreased_message' => 'Te hampahafantatra izahay fa nihena ny saldon\'ny kaontinao.',
+	'label_amount_deducted' => 'Vola nalaina',
+	'label_new_balance' => 'Saldo vaovao',
+
+	'balance_increased_heading' => 'Fitombon\'ny vola',
+	'balance_increased_message' => 'Te hampahafantatra izahay fa nitombo soa aman-tsara ny saldon\'ny kaontinao.',
+	'label_amount_added' => 'Vola nampiana',
+
+	// Unlock codes
+	'unlock_code_used_heading' => 'Kaody famotsorana nampiasaina',
+	'info_notification' => 'ℹ️ Filazana:',
+	'unlock_code_used_alert' => 'Vao nampiasaina ny kaody famotsorana amin\'ny kaontinao.',
+	'transfer_unlock_heading' => 'Kaody famotsorana famindrana',
+	'transfer_unlock_message_intro' => 'Eto ambany ny kaody famotsorana ho an\'ny famindrana:',
+
+	// Mail error alert
+	'system_alert' => '⚠️ FIAKARANA RAFITRA',
+	'mail_send_failure_detected' => 'Hitan\'ny rafitra fa tsy tafiditra ny fandefasana mailaka',
+	'email_sending_problem' => 'Olana amin\'ny fandefasana mailaka',
+	'email_send_failure_explanation' => 'Tsy afaka nandefa mailaka. Mety nampiseho fa nahatratra ny fetra isan\'andro na misy olana amin\'ny mpizara SMTP.',
+	'error_details' => 'Antsipirian\'ny hadisoana',
+	'label_date_time' => 'Daty sy ora',
+	'label_failed_recipient' => 'Mpandray tsy tafiditra',
+	'label_context' => 'Toe-javatra',
+	'label_error_message' => 'Hafatra momba ny hadisoana',
+	'possible_causes' => 'Antony mety ho izy',
+	'recommended_actions' => 'Hetra soso-kevitra',
+	'system_information' => 'Fampahalalana momba ny rafitra',
+	'alert_auto_generated_notice' => 'Ity fampahatsiahivana ity dia novokarina ho azy. Mbola mandeha ara-dalàna ny fampiharana, fa tsy mandeha ny mailaka.',
+
+	// Misc
+	'thanks' => 'Misaotra,',
+	'regards' => 'Miarahaba,',
+	'account_blocked_message' => 'Voasakana vonjimaika ny kaonty TRANSFERFLUX anao.',
+];

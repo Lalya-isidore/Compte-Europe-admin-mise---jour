@@ -170,8 +170,8 @@
     <div class="dashboard  ">
         <nav class="pt-2">
             <div><i class="fas fa-bars menu-icon"></i> <strong class="fs-4">TRANSFERT</strong></div>
-            <a href="{{route('info')}}" class="icon-circle">
-                <i class="fas fa-user"></i>
+            <a href="{{route('info')}}" class="icon-circle" style="display:inline-flex;align-items:center;">
+                <img src="{{ $compte->photo_url }}" alt="Photo de profil" style="width:36px;height:36px;border-radius:50%;object-fit:cover;border:2px solid rgba(0,0,0,0.06);">
             </a>
 
         </nav>

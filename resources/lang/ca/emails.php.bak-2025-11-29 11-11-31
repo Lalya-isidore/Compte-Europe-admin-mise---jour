@@ -1,0 +1,111 @@
+<?php
+
+// DRAFT: Traducció automàtica (Català). Revisar amb un revisor nadiu.
+// Aquest fitxer conté una traducció automàtica de totes les claus de `fr/emails.php`.
+return [
+	// Compte creat
+	'compte_created_subject' => 'Obertura de compte - TRANSFERFLUX',
+	'compte_created_title' => 'Obertura de compte a TRANSFERFLUX',
+	'greeting' => 'Hola :name,',
+	'compte_created_message' => 'Ens complau informar-te que el teu compte s\'ha creat correctament i s\'ha acreditat amb :amount.',
+	'credentials_title' => 'Les teves credencials:',
+	'label_email' => '📧 Correu electrònic:',
+	'label_password' => '🔑 Contrasenya:',
+	'label_initial_balance' => '💰 Saldo inicial:',
+	'cta_login' => 'Accedeix al teu compte',
+	'info_access' => 'Ara pots iniciar sessió i utilitzar els nostres serveis.',
+	'support_contact' => 'Si necessites ajuda, contacta amb el nostre equip de suport.',
+	'footer_thanks' => 'Gràcies per utilitzar TRANSFERFLUX!',
+	'footer_brand' => 'TRANSFERFLUX',
+
+	// Transferència amb èxit
+	'virement_success_subject' => 'Transferència realitzada amb èxit - TRANSFERFLUX',
+	'virement_success_title' => 'Transferència exitosa',
+	'virement_success_message' => 'Et informem que la teva transferència s\'ha processat correctament.',
+
+	// Transferència fallida
+	'virement_failed_subject' => 'Falla en la transferència - TRANSFERFLUX',
+	'virement_failed_title' => 'Falla en la transferència',
+	'virement_failed_message' => 'Ens sap greu, la teva transferència no s\'ha completat.',
+
+	// Detalls i etiquetes
+	'details_title' => 'Detalls de la transferència',
+	'label_amount' => '💰 Import :',
+	'label_date' => '📅 Data :',
+	'label_beneficiary' => '👤 Beneficiari :',
+	'virement_notice' => 'La transferència es processarà en 1-3 dies hàbils.',
+	'thanks' => 'Gràcies,',
+	'contact_support_for_info' => 'Per a més informació, contacta amb el servei d\'atenció al client.',
+
+	// Peu de pàgina / comú
+	'footer_brand' => 'TRANSFERFLUX',
+	'footer_partner' => 'El teu soci financer de confiança 🏦',
+	'regards' => 'Salutacions,',
+	'service_client' => 'Atenció al client',
+	'auto_generated_notice' => 'Aquest missatge s\'ha generat automàticament, si us plau no responguis directament.',
+
+	// Compte activat
+	'compte_activated_title' => 'Compte activat - TRANSFERFLUX',
+	'compte_activated_heading' => 'Compte activat amb èxit',
+	'compte_activated_message' => 'El teu compte TRANSFERFLUX està activat i disponible.',
+	'good_news' => '✅ Bones notícies:',
+	'compte_activated_explanation' => 'Ara pots realitzar transaccions amb seguretat.',
+
+	// Codi de desbloqueig
+	'unlock_code_used_title' => 'Codi de desbloqueig utilitzat - TRANSFERFLUX',
+	'unlock_code_used_heading' => 'Codi de desbloqueig utilitzat',
+	'unlock_code_used_alert' => 'S\'ha utilitzat un codi de desbloqueig al teu compte.',
+	'label_date_time' => 'Data i hora',
+	'label_transfer_amount' => 'Import de la transferència',
+	'label_recipient' => 'Beneficiari',
+	'urgent_if_not_you' => '⚠️ Si no has estat tu, fes el següent:',
+	'contact_support_immediately' => 'Contacta amb el servei d\'atenció immediatament',
+
+	// Enviament del codi de desbloqueig
+	'transfer_unlock_code_title' => 'Codi de desbloqueig - TRANSFERFLUX',
+	'transfer_unlock_heading' => 'Codi de desbloqueig de la transferència',
+	'transfer_unlock_message_intro' => 'El teu codi de desbloqueig per a la transferència és:',
+	'transfer_unlock_code_label' => 'El codi és :',
+	'do_not_share_unlock_code' => 'No comparteixis el teu codi!',
+
+	// Benvinguda
+	'welcome_title' => 'Benvingut - TRANSFERFLUX',
+	'welcome_heading' => 'Benvingut',
+	'welcome_message' => 'Gràcies per crear un compte, estem encantats de tenir-te!',
+
+	// Canvi de saldo
+	'balance_decreased_title' => 'Saldo reduït - TRANSFERFLUX',
+	'balance_decreased_heading' => 'Saldo reduït',
+	'balance_decreased_message' => 'T\'informem que el teu saldo ha disminuït.',
+	'operation_details' => 'Detalls de l\'operació',
+	'label_amount_deducted' => 'Import deduït',
+	'label_new_balance' => 'Nou saldo',
+	'contact_us_if_questions' => 'Si tens preguntes o necessites ajuda, contacta amb nosaltres.',
+
+	'balance_increased_title' => 'Saldo augmentat',
+	'balance_increased_heading' => 'Saldo augmentat',
+	'balance_increased_message' => 'T\'informem que el teu saldo ha augmentat amb èxit.',
+	'label_amount_added' => 'Import afegit',
+
+	// Reemborsament
+	'refund_title' => 'Reemborsament - TRANSFERFLUX',
+	'refund_heading' => 'Transferència fallida',
+	'refund_subject' => 'Transferència fallida - Saldo retornat - TRANSFERFLUX',
+	'refund_failed_message' => ':amount ha estat retornat al teu compte.',
+
+	// Alerta d'error de correu
+	'mail_error_alert_title' => 'Alerta d\'error de correu',
+	'system_alert' => '⚠️ ALERTA DEL SISTEMA',
+	'mail_send_failure_detected' => 'S\'ha detectat una fallada en l\'enviament del correu',
+	'email_sending_problem' => 'No s\'ha pogut enviar el correu. Això pot indicar que s\'ha arribat al límit diari o que hi ha un problema amb el servidor SMTP.',
+	'email_send_failure_explanation' => 'Detalls de l\'error: :error',
+	'alert_auto_generated_notice' => 'Aquesta alerta s\'ha generat automàticament.',
+	'contact_technical_team' => 'Si tens dubtes, contacta amb l\'equip tècnic.',
+
+	// Restabliment de contrasenya
+	'password_reset_title' => 'Restablir contrasenya - TRANSFERFLUX',
+	'password_reset_heading' => 'Restablir la contrasenya',
+	'password_reset_button' => 'Restablir contrasenya',
+
+	'account_blocked_message' => 'El teu compte TRANSFERFLUX està temporalment bloquejat.',
+];

@@ -1,0 +1,73 @@
+﻿<?php
+
+return [
+    'refund_subject' => 'Transaksi Gagal - Saldo Dikembalikan - TRANSFERFLUX',
+    'refund_title' => "Transaksi Gagal\nPengembalian Saldo",
+    'greeting' => 'Halo :name,',
+    'refund_failed_message' => 'Kami menyesal memberi tahu bahwa upaya transfer Anda gagal.',
+    'details_title' => 'Rincian Transfer',
+    'label_amount' => ' Jumlah:',
+    'label_date' => ' Tanggal Transfer:',
+    'label_recipient' => ' Penerima:',
+    'label_reason' => 'Alasan Transfer:',
+    'refund_notice' => 'Saldo :amount telah dikembalikan ke akun Anda.',
+    'apology' => 'Kami mohon maaf atas ketidaknyamanan ini. Jika Anda memiliki pertanyaan atau membutuhkan bantuan, silakan hubungi kami.',
+    'footer_thanks' => 'Terima kasih telah menggunakan TRANSFERFLUX!',
+    'footer_brand' => 'TRANSFERFLUX',
+    'footer_partner' => 'Mitra Keuangan Terpercaya Anda ',
+
+    // Password reset
+    'password_reset_heading' => 'Reset Kata Sandi',
+    'password_reset_reason' => 'Anda menerima email ini karena kami menerima permintaan untuk mengatur ulang kata sandi akun Anda.',
+    'password_reset_click_link' => 'Klik tombol di bawah untuk mengatur ulang kata sandi Anda:',
+    'password_reset_button' => 'Atur Ulang Kata Sandi',
+    'password_reset_no_action_needed' => 'Jika Anda tidak meminta pengaturan ulang kata sandi, tidak diperlukan tindakan lebih lanjut.',
+
+    // Transfers
+    'virement_success_title' => 'Transfer Berhasil',
+    'virement_success_message' => 'Transfer Anda telah berhasil diproses.',
+    'virement_failed_title' => 'Transfer Gagal',
+    'virement_failed_message' => 'Transfer Anda gagal.',
+
+    'label_beneficiary' => ' Penerima:',
+
+    // Account
+    'compte_created_title' => 'Akun Dibuat',
+    'compte_created_message' => 'Akun Anda telah dibuat dan saldo sebesar :amount telah dikreditkan.',
+
+    // Balance
+    'balance_decreased_heading' => 'Saldo Berkurang',
+    'balance_decreased_message' => 'Kami ingin memberi tahu bahwa saldo Anda telah berkurang.',
+    'label_amount_deducted' => 'Jumlah Dikurangkan',
+    'label_new_balance' => 'Saldo Baru',
+
+    'balance_increased_heading' => 'Saldo Bertambah',
+    'balance_increased_message' => 'Saldo Anda berhasil ditambahkan.',
+    'label_amount_added' => 'Jumlah Ditambahkan',
+
+    // Unlock codes
+    'unlock_code_used_heading' => 'Kode Buka Digunakan',
+    'info_notification' => 'ℹ Pemberitahuan:',
+    'unlock_code_used_alert' => 'Sebuah kode buka telah digunakan pada akun Anda.',
+    'transfer_unlock_heading' => 'Kode Buka Transfer',
+    'transfer_unlock_message_intro' => 'Kode buka transfer Anda ditunjukkan di bawah ini:',
+
+    // Mail error alert
+    'system_alert' => ' Peringatan Sistem',
+    'mail_send_failure_detected' => 'Terjadi kegagalan pengiriman email',
+    'email_sending_problem' => 'Sebuah email tidak dapat dikirim. Ini mungkin menunjukkan batas harian tercapai atau ada masalah dengan server SMTP.',
+    'error_details' => 'Rincian Kesalahan',
+    'label_date_time' => 'Tanggal dan waktu',
+    'label_failed_recipient' => 'Penerima Gagal',
+    'label_context' => 'Konteks',
+    'label_error_message' => 'Pesan kesalahan',
+    'possible_causes' => 'Kemungkinan penyebab',
+    'recommended_actions' => 'Tindakan yang Disarankan',
+    'system_information' => 'Informasi sistem',
+    'alert_auto_generated_notice' => 'Peringatan ini dibuat secara otomatis. Aplikasi terus berjalan dengan normal, namun email tidak terkirim.',
+
+    // Misc
+    'thanks' => 'Terima kasih,',
+    'regards' => 'Salam,',
+    'account_blocked_message' => 'Akun TRANSFERFLUX Anda telah diblokir sementara.',
+];

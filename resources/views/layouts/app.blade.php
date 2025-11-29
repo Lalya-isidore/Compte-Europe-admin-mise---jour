@@ -4,11 +4,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TRANSFERCASH</title>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <title>FlashCompte - Administration</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" defer></script>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
+    <link rel="stylesheet" href="{{ asset('css/responsive.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/support-widget.css') }}">
+    <script src="{{ asset('js/support-widget.js') }}" defer></script>
     <!--<link rel="icon" type="image/png" sizes="32x32" href="{{ asset('/image/1.jpg') }} ">-->
     <!--<link rel="icon" type="image/png" sizes="16x16" href="{{ asset('/image/1.jpg') }} ">-->
     <!--<link rel="apple-touch-icon" sizes="180x180" href="{{ asset('/image/1.jpg') }} ">-->
@@ -107,7 +111,7 @@
         }
     }
 </style>
-<body>
+<body data-support-enabled="{{ auth()->check() ? '1' : '0' }}">
 
     <header class="app-header-shell">
         <nav class="app-navbar navbar navbar-expand-lg">
@@ -133,6 +137,48 @@
             </div>
         </nav>
     </header>
+
+    <!-- Messages d'erreur et de succès -->
+    @if(session('error'))
+    <div class="container mt-3">
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <i class="fas fa-exclamation-circle me-2"></i>
+            <strong>Erreur :</strong> {{ session('error') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    </div>
+    @endif
+
+    @if(session('success'))
+    <div class="container mt-3">
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <i class="fas fa-check-circle me-2"></i>
+            <strong>Succès :</strong> {{ session('success') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    </div>
+    @endif
+
+    @if(session('warning'))
+    <div class="container mt-3">
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            <i class="fas fa-exclamation-triangle me-2"></i>
+            <strong>Attention :</strong> {{ session('warning') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    </div>
+    @endif
+
+    @if(session('info'))
+    <div class="container mt-3">
+        <div class="alert alert-info alert-dismissible fade show" role="alert">
+            <i class="fas fa-info-circle me-2"></i>
+            <strong>Info :</strong> {{ session('info') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    </div>
+    @endif
+
     <div class="container">
         @yield('page-content')
     </div>
@@ -140,6 +186,7 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js"></script>
+    <script src="{{ asset('js/csrf-handler.js') }}"></script>
 
     <script>
         // Écoute l'événement du clic sur le bouton de remboursement
@@ -188,6 +235,17 @@
                 // Cache le bouton de remboursement
                 remboursementBtn.style.display = 'none';
             }
+        });
+
+        // Auto-dismiss alerts after 5 seconds
+        document.addEventListener('DOMContentLoaded', function() {
+            const alerts = document.querySelectorAll('.alert');
+            alerts.forEach(function(alert) {
+                setTimeout(function() {
+                    const bsAlert = new bootstrap.Alert(alert);
+                    bsAlert.close();
+                }, 5000);
+            });
         });
     </script>
 

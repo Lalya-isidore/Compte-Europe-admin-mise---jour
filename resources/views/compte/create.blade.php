@@ -1,26 +1,417 @@
-@extends('layouts.app')
-@section('page-content')
+@extends('layouts.admin')
+
+@section('title', 'Gestion des Comptes - FlashCompte')
+
+@section('breadcrumb')
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ route('dashboard') }}"><i class="fas fa-home"></i></a></li>
+        <li class="breadcrumb-item active">Mon compte</li>
+    </ol>
+@endsection
+
+@section('content')
+<style>
+    /* Overlay de chargement */
+    .loading-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255,255,255,0.8); display:flex; align-items:center; justify-content:center; z-index:9999; backdrop-filter: blur(2px); }
+    .loading-overlay .spinner-border { width:3rem; height:3rem; border-width:0.3em; }
+
+    .modern-page-header {
+        background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+        border-radius: 1rem;
+        padding: 1.5rem 1rem 1.2rem 1rem;
+        margin-bottom: 2rem;
+        box-shadow: 0 2px 12px rgba(102,126,234,0.08);
+        text-align: left;
+    }
+    .modern-page-header h1 {
+        color: #fff;
+        font-size: 2rem;
+        font-weight: 700;
+        margin: 0;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        text-shadow: 0 2px 8px rgba(102,126,234,0.15);
+    }
+    .modern-page-header .header-icon {
+        background: rgba(255,255,255,0.18);
+        padding: 0.75rem;
+        border-radius: 0.75rem;
+        font-size: 1.5rem;
+        box-shadow: 0 2px 8px rgba(102,126,234,0.10);
+    }
+
+    .info-cards-row {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1rem;
+        margin-bottom: 2rem;
+    }
+    @media (max-width: 900px) {
+        .info-cards-row {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    .info-card {
+        background: white;
+        border-radius: 0.75rem;
+        padding: 1rem;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+        border: 2px solid transparent;
+        transition: all 0.3s ease;
+    }
+
+    .info-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .info-card.info-primary {
+        border-color: #4CAF50;
+        background: linear-gradient(135deg, #e8f5e9 0%, #ffffff 100%);
+    }
+
+    .info-card.info-warning {
+        border-color: #FF9800;
+        background: linear-gradient(135deg, #fff3e0 0%, #ffffff 100%);
+    }
+
+    .info-card.info-success {
+        border-color: #2196F3;
+        background: linear-gradient(135deg, #e3f2fd 0%, #ffffff 100%);
+    }
+
+    .info-card .icon {
+        font-size: 1.8rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .info-card.info-primary .icon { color: #4CAF50; }
+    .info-card.info-warning .icon { color: #FF9800; }
+    .info-card.info-success .icon { color: #2196F3; }
+
+    .info-card h4 {
+        font-size: 0.75rem;
+        color: #666;
+        margin-bottom: 0.35rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        font-weight: 600;
+    }
+
+    .info-card .value {
+        font-size: 1.4rem;
+        font-weight: 700;
+        color: #333;
+    }
+
+    .modern-card {
+        background: white;
+        border-radius: 1rem;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        border: none;
+        overflow: hidden;
+    }
+
+    .modern-card-header {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 1.5rem;
+        border: none;
+    }
+
+    .modern-card-header h4 {
+        margin: 0;
+        font-size: 1.3rem;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+    }
+
+    .modern-card-body {
+        padding: 2rem;
+    }
+
+    .form-label-modern {
+        font-weight: 600;
+        color: #444;
+        margin-bottom: 0.5rem;
+        font-size: 0.9rem;
+        display: flex;
+        align-items: center;
+        gap: 0.25rem;
+    }
+
+    .form-control-modern {
+        border: 2px solid #e0e0e0;
+        border-radius: 0.75rem;
+        padding: 0.75rem 1rem;
+        font-size: 0.95rem;
+        transition: all 0.3s ease;
+    }
+
+    .form-control-modern:focus {
+        border-color: #667eea;
+        box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.15);
+    }
+
+    .form-select-modern {
+        border: 2px solid #e0e0e0;
+        border-radius: 0.75rem;
+        padding: 0.75rem 1rem;
+        font-size: 0.95rem;
+        transition: all 0.3s ease;
+    }
+
+    .form-select-modern:focus {
+        border-color: #667eea;
+        box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.15);
+    }
+
+    .btn-modern-primary {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border: none;
+        color: white;
+        padding: 1rem 2rem;
+        border-radius: 0.75rem;
+        font-weight: 600;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+    }
+
+    .btn-modern-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        color: white;
+    }
+
+    .required-star {
+        color: #e74c3c;
+        font-weight: bold;
+    }
+
+    .compte-item {
+        background: white;
+        border: 2px solid #f0f0f0;
+        border-radius: 0.75rem;
+        padding: 1rem;
+        margin-bottom: 1rem;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+    }
+
+    .compte-item:hover {
+        border-color: #667eea;
+        box-shadow: 0 4px 15px rgba(102, 126, 234, 0.15);
+        transform: translateX(5px);
+    }
+
+    .compte-info {
+        flex: 1;
+        min-width: 200px;
+    }
+    
+    .compte-item .btn-details-modern {
+        flex-shrink: 0;
+        margin-left: auto;
+    }
+
+    .compte-name {
+        font-weight: 700;
+        color: #333;
+        font-size: 1.1rem;
+        margin-bottom: 0.25rem;
+    }
+
+    .compte-balance {
+        color: #666;
+        font-size: 0.95rem;
+    }
+
+    .status-badge-modern {
+        padding: 0.35rem 0.85rem;
+        border-radius: 2rem;
+        font-size: 0.8rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        color: white !important;
+    }
+
+    .btn-details-modern {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        border: none;
+        padding: 0.5rem 1.5rem;
+        border-radius: 0.5rem;
+        font-weight: 600;
+        font-size: 0.9rem;
+        transition: all 0.3s ease;
+    }
+
+    .btn-details-modern:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+        color: white;
+    }
+
+    .form-switch-modern .form-check-input {
+        width: 3rem;
+        height: 1.5rem;
+        cursor: pointer;
+        border: 2px solid #ccc;
+    }
+
+    .form-switch-modern .form-check-input:checked {
+        background-color: #667eea;
+        border-color: #667eea;
+    }
+
+    .alert-modern {
+        border: none;
+        border-radius: 0.75rem;
+        padding: 1rem 1.25rem;
+        border-left: 4px solid;
+    }
+
+    .alert-modern.alert-info {
+        background: #e3f2fd;
+        border-left-color: #2196F3;
+        color: #0d47a1;
+    }
+
+    .alert-modern.alert-success {
+        background: #e8f5e9;
+        border-left-color: #4CAF50;
+        color: #1b5e20;
+    }
+
+    .alert-modern.alert-warning {
+        background: #fff3e0;
+        border-left-color: #FF9800;
+        color: #e65100;
+    }
+
+    .alert-modern.alert-danger {
+        background: #ffebee;
+        border-left-color: #f44336;
+        color: #b71c1c;
+    }
+
+    .section-divider {
+        height: 2px;
+        background: linear-gradient(to right, transparent, #667eea, transparent);
+        margin: 2rem 0;
+    }
+
+    .empty-state {
+        text-align: center;
+        padding: 3rem 1rem;
+        color: #999;
+    }
+
+    .empty-state i {
+        font-size: 4rem;
+        margin-bottom: 1rem;
+        opacity: 0.5;
+    }
+
+    @media (max-width: 768px) {
+        .modern-page-header {
+            padding: 1rem 0.5rem 1rem 0.5rem;
+        }
+        .modern-page-header h1 {
+            font-size: 1.2rem;
+            flex-direction: column;
+            gap: 0.5rem;
+            text-align: left;
+        }
+        .info-cards-row {
+            grid-template-columns: 1fr;
+            gap: 0.5rem;
+        }
+        .info-card {
+            padding: 0.7rem;
+            font-size: 0.95rem;
+        }
+        .modern-card-header {
+            padding: 1rem;
+            font-size: 1rem;
+        }
+        .modern-card-body {
+            padding: 1rem;
+        }
+        .compte-item {
+            flex-wrap: wrap;
+            padding: 0.7rem;
+        }
+        .compte-item .btn-details-modern {
+            width: 100%;
+            margin-left: 0;
+            margin-top: 0.5rem;
+        }
+        .form-control-modern, .form-select-modern {
+            padding: 0.5rem 0.7rem;
+            font-size: 0.9rem;
+        }
+        .btn-modern-primary {
+            padding: 0.7rem 1.2rem;
+            font-size: 0.95rem;
+        }
+    }
+}
+
+    @media (max-width: 480px) {
+        .historique-recharges-card {
+            margin-left: 0.5rem;
+            margin-right: 0.5rem;
+            max-width: 98vw;
+        }
+        .form-switch-modern .form-check-input {
+            width: 2.2rem;
+            height: 1.1rem;
+        }
+        .form-switch-modern label {
+            font-size: 0.95rem;
+        }
+    }
+
+</style>
 
 {{--  MARGE GAUCHE / DROITE  --}}
 <div class="container-fluid px-lg-4 px-md-3 px-2 py-4">
 
+    <!-- En-tête moderne -->
+    <div class="modern-page-header">
+        <h1>
+            <span class="header-icon"><i class="fas fa-wallet"></i></span>
+            Gestion des Flash Comptes
+        </h1>
+    </div>
+
     @if (session('success'))
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
-            {{ session('success') }}
+        <div class="alert alert-modern alert-success alert-dismissible fade show" role="alert">
+            <i class="fas fa-check-circle me-2"></i>{{ session('success') }}
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     @endif
 
     @if (session('error'))
-        <div class="alert alert-danger alert-dismissible fade show" role="alert">
-            {{ session('error') }}
+        <div class="alert alert-modern alert-danger alert-dismissible fade show" role="alert">
+            <i class="fas fa-exclamation-circle me-2"></i>{{ session('error') }}
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     @endif
 
     @if ($errors->has('error'))
-        <div class="alert alert-danger alert-dismissible fade show" role="alert">
-            {{ $errors->first('error') }}
+        <div class="alert alert-modern alert-danger alert-dismissible fade show" role="alert">
+            <i class="fas fa-exclamation-circle me-2"></i>{{ $errors->first('error') }}
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     @endif
@@ -33,11 +424,13 @@
             })
             ->filter()
             ->values();
+        $compteCreated = session('compte_created');
+        $availableCredits = auth()->user()->credit_user ?? 0;
     @endphp
 
     @if ($fieldErrorMessages->isNotEmpty())
-        <div class="alert alert-danger alert-dismissible fade show" role="alert">
-            <strong>Veuillez corriger les champs suivants :</strong>
+        <div class="alert alert-modern alert-danger alert-dismissible fade show" role="alert">
+            <strong><i class="fas fa-exclamation-triangle me-2"></i>Veuillez corriger les champs suivants :</strong>
             <ul class="mb-0 mt-2">
                 @foreach ($fieldErrorMessages as $error)
                     <li>{{ $error }}</li>
@@ -47,168 +440,79 @@
         </div>
     @endif
 
-    <!-- ===== RECHARGER MON COMPTE ===== -->
-    <div class="container mt-4 text-center">
-        <div class="row mb-3 justify-content-center">
-            <button id="paieFormsBtn" class="btn btn-primary col-md-6">Recharger mon compte</button>
+    <!-- Cartes d'information -->
+    <div class="info-cards-row">
+        <div class="info-card info-primary">
+            <div class="icon"><i class="fas fa-coins"></i></div>
+            <h4>Coût de création</h4>
+            <!-- NOUVEAU COÛT -->
+            <div class="value">4 000 Crédits</div>
         </div>
-
-    <div id="rechargeOptions" class="mt-4 d-none text-center">
-            <h6 class="mb-3">Choisissez un montant à recharger</h6>
-            <img src="/téléchargement (33).png" alt="Image 2" class="img-fluid" style="max-width: 80px;">
-            <img src="/MTN.jpeg" alt="Image 3" class="img-fluid" style="max-width: 68px;">
-
-            <div class="row justify-content-center">
-                {{-- 5000 F CFA --}}
-                <div class="col-md-6 mb-3">
-                    <form action="{{ url('payement5000/' . auth()->user()->id) }}" method="POST">
-                        @csrf
-                        <div class="btn-amount">
-                            <div class="amount">5000 F CFA</div>
-                            <div class="credits">+ 6000 Crédits</div>
-                        </div>
-                        <input type="hidden" name="field" value="test">
-                        <script src="https://cdn.fedapay.com/checkout.js?v=1.1.7"
-                            data-public-key="pk_live_efQKwcgS1RbiISIOEMt1PjLi"
-                            data-button-text="Payer 5000"
-                            data-button-class="btn btn-primary"
-                            data-customer-firstname="{{ auth()->user()->name }}"
-                            data-customer-email="{{ auth()->user()->email }}"
-                            data-customer-lastname="{{ auth()->user()->name }}"
-                            data-customer-name="{{ auth()->user()->name }}"
-                            data-transaction-amount="5000"
-                            data-transaction-description="Description de la transaction"
-                            data-currency-iso="XOF"></script>
-                    </form>
-                </div>
-
-                {{-- 10000 F CFA --}}
-                <div class="col-md-6 mb-3">
-                    <form action="{{ url('payement10000/' . auth()->user()->id) }}" method="POST">
-                        @csrf
-                        <div class="btn-amount">
-                            <div class="amount">10000 F CFA</div>
-                            <div class="credits">+ 17000 Crédits</div>
-                        </div>
-                        <input type="hidden" name="field" value="test">
-                        <script src="https://cdn.fedapay.com/checkout.js?v=1.1.7"
-                            data-public-key="pk_live_efQKwcgS1RbiISIOEMt1PjLi"
-                            data-button-text="Payer 10000"
-                            data-button-class="btn btn-primary"
-                            data-customer-firstname="{{ auth()->user()->name }}"
-                            data-customer-email="{{ auth()->user()->email }}"
-                            data-customer-lastname="{{ auth()->user()->name }}"
-                            data-customer-name="{{ auth()->user()->name }}"
-                            data-transaction-amount="10000"
-                            data-transaction-description="Description de la transaction"
-                            data-currency-iso="XOF"></script>
-                    </form>
-                </div>
-            </div>
-
-            <div class="row justify-content-center">
-                {{-- 25000 F CFA --}}
-                <div class="col-md-6 mb-3">
-                    <form action="{{ url('payement25000/' . auth()->user()->id) }}" method="POST">
-                        @csrf
-                        <div class="btn-amount">
-                            <div class="amount">25000 F CFA</div>
-                            <div class="credits">+ 40000 Crédits</div>
-                        </div>
-                        <input type="hidden" name="field" value="test">
-                        <script src="https://cdn.fedapay.com/checkout.js?v=1.1.7"
-                            data-public-key="pk_live_efQKwcgS1RbiISIOEMt1PjLi"
-                            data-button-text="Payer 25000"
-                            data-button-class="btn btn-primary"
-                            data-customer-firstname="{{ auth()->user()->name }}"
-                            data-customer-email="{{ auth()->user()->email }}"
-                            data-customer-lastname="{{ auth()->user()->name }}"
-                            data-customer-name="{{ auth()->user()->name }}"
-                            data-transaction-amount="25000"
-                            data-transaction-description="Description de la transaction"
-                            data-currency-iso="XOF"></script>
-                    </form>
-                </div>
-
-                {{-- 50000 F CFA --}}
-                <div class="col-md-6 mb-3">
-                    <form action="{{ url('payement50000/' . auth()->user()->id) }}" method="POST">
-                        @csrf
-                        <div class="btn-amount">
-                            <div class="amount">50000 F CFA</div>
-                            <div class="credits">+ 100000 Crédits</div>
-                        </div>
-                        <input type="hidden" name="field" value="test">
-                        <script src="https://cdn.fedapay.com/checkout.js?v=1.1.7"
-                            data-public-key="pk_live_efQKwcgS1RbiISIOEMt1PjLi"
-                            data-button-text="Payer 50000"
-                            data-button-class="btn btn-primary"
-                            data-customer-firstname="{{ auth()->user()->name }}"
-                            data-customer-email="{{ auth()->user()->email }}"
-                            data-customer-lastname="{{ auth()->user()->name }}"
-                            data-customer-name="{{ auth()->user()->name }}"
-                            data-transaction-amount="50000"
-                            data-transaction-description="Description de la transaction"
-                            data-currency-iso="XOF"></script>
-                    </form>
-                </div>
-            </div>
-
-            <div class="alert alert-danger d-flex align-items-center mt-3" style="max-width: 500px; margin: auto;">
-                <i class="fas fa-exclamation-triangle me-2"></i>
-                <span>Ne quittez pas la page de paiement Fedapay, les crédits peuvent mettre du temps à apparaître.</span>
-            </div>
+        
+        <div class="info-card info-success">
+            <div class="icon"><i class="fas fa-wallet"></i></div>
+            <h4>Crédit disponible</h4>
+            <div class="value">{{ number_format($availableCredits, 0, ',', ' ') }}</div>
         </div>
-
-        <div class="row my-2">
-            <div class="col-md-12 text-center">
-                <h6>Crédit(s) disponible : <span class="available-credits">{{ auth()->user()->credit_user }}</span></h6>
+        
+        <div class="info-card info-warning">
+            <div class="icon"><i class="fas fa-credit-card"></i></div>
+            <h4>Besoin de crédits ?</h4>
+            <div class="value" style="font-size: 1rem; margin-top: 0.5rem;">
+                <a href="{{ route('recharge.index') }}" class="text-decoration-none" style="color: #FF9800; font-weight: 600;">
+                    Recharger →
+                </a>
             </div>
-        </div>
-
-        <div class="alert alert-info text-center fw-bold">
-            <i class="fas fa-info-circle"></i> La création d'un Flash compte coûte 3000 crédit(s).
         </div>
     </div>
-    <!-- FIN RECHARGER MON COMPTE -->
 
     <!-- ===== CRÉER UN COMPTE ===== -->
     <div class="row mt-4">
-        <div class="col-md-6">
-            <div class="card shadow">
-                <div class="card-body">
-                    <h4 class="fw-bold mb-3">Créer un Flash Compte</h4>
-
-                    <form action="{{ route('compte.store') }}" method="POST">
+        <div class="col-lg-6 mb-4">
+            <div class="modern-card">
+                <div class="modern-card-header">
+                    <h4><i class="fas fa-user-plus"></i> Créer un Flash Compte</h4>
+                </div>
+                <div class="modern-card-body">
+                    <form id="createCompteForm" action="{{ route('compte.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="row mb-3">
                             <div class="col-6">
-                                <label>Nom <i style="color:red">*</i></label>
-                                <input type="text" name="nom" class="form-control" required>
+                                <label class="form-label-modern">Nom <span class="required-star">*</span></label>
+                                <input type="text" name="nom" class="form-control form-control-modern" required>
                             </div>
                             <div class="col-6">
-                                <label>Prénom <i style="color:red">*</i></label>
-                                <input type="text" name="prenom" class="form-control" required>
+                                <label class="form-label-modern">Prénom <span class="required-star">*</span></label>
+                                <input type="text" name="prenom" class="form-control form-control-modern" required>
                             </div>
                         </div>
 
                         <div class="mb-3">
-                            <label>Email <i style="color:red">*</i></label>
-                            <input type="email" name="email" class="form-control" value="{{ old('email') }}" required>
+                            <label class="form-label-modern">Email <span class="required-star">*</span></label>
+                            <input type="email" name="email" class="form-control form-control-modern" value="{{ old('email') }}" required>
                             @error('email')
-                                <div class="text-danger small mt-1">{{ $message }}</div>
+                                <div class="text-danger small mt-1"><i class="fas fa-exclamation-circle"></i> {{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label-modern">Photo de profil (optionnel)</label>
+                            <input type="file" name="photo" class="form-control form-control-modern" accept="image/*">
+                            <small class="form-text text-muted"><i class="fas fa-info-circle"></i> Formats acceptés : JPG, PNG, GIF (max 2MB)</small>
+                            @error('photo')
+                                <div class="text-danger small mt-1"><i class="fas fa-exclamation-circle"></i> {{ $message }}</div>
                             @enderror
                         </div>
 
                         <div class="row mb-3">
                             <div class="col-md-6">
-                                <label>Téléphone <i style="color:red">*</i></label>
-                                <input type="text" name="phone_number" class="form-control" required>
+                                <label class="form-label-modern">Téléphone <span class="required-star">*</span></label>
+                                <input type="text" name="phone_number" class="form-control form-control-modern" required>
                             </div>
                             <div class="col-md-6">
-                                <label>Pays <i style="color:red">*</i></label>
-                                <select class="form-select" name="country" required="" id="country">
-                                <option disabled="" selected="">
+                                <label class="form-label-modern">Pays <span class="required-star">*</span></label>
+                                <select class="form-select form-select-modern" name="country" required id="country">
+                                <option disabled selected>
                                     Sélectionnez un pays
                                 </option>
                                 <option value="Afghanistan (+93)" data-tel="+93" data-code="AF">
@@ -969,14 +1273,14 @@
                         </div>
 
                         <div class="mb-3">
-                            <label>Adresse <i style="color:red">*</i></label>
-                            <input type="text" name="address" class="form-control" required>
+                            <label class="form-label-modern">Adresse <span class="required-star">*</span></label>
+                            <input type="text" name="address" class="form-control form-control-modern" required>
                         </div>
 
                         <div class="row mb-3">
                             <div class="col-md-6">
-                                <label>Devise <i style="color:red">*</i></label>
-                                <select name="devise" id="devise" class="form-select" required="">
+                                <label class="form-label-modern">Devise <span class="required-star">*</span></label>
+                                <select name="devise" id="devise" class="form-select form-select-modern" required="">
                                 <option value="" disabled="" selected="">Devise disponible...</option>
                                 <optgroup label="Europe">
                                     <option value="€">Euro (EUR)</option>
@@ -1014,6 +1318,7 @@
                                     <option value="฿">Baht thaïlandais (THB)</option>
                                     <option value="₪">Shekel israélien (ILS)</option>
                                     <option value="JOD">Dinar jordanien (JOD)</option>
+                                    <option value="PEN">Soles (PEN)</option>
                                     <option value="KGS">Som (KGS)</option>
                                     <option value="KHR">Riel cambodgien (KHR)</option>
                                     <option value="KWD">Dinar koweïtien (KWD)</option>
@@ -1077,8 +1382,8 @@
                             </select>
                             </div>
                             <div class="col-md-6">
-                                <label>Langue <i style="color:red">*</i></label>
-                                <select name="lang" class="form-select" required>
+                                <label class="form-label-modern">Langue <span class="required-star">*</span></label>
+                                <select name="lang" class="form-select form-select-modern" required>
                                     <option disabled selected>Langue</option>
                                     <option value="af">Afrikaans</option>
                             <option value="sq">Albanais</option>
@@ -1195,8 +1500,8 @@
 
                         <div class="row mb-3">
                             <div class="col-md-6">
-                                <label>Type <i style="color:red">*</i></label>
-                                <select name="account_type" class="form-select" required>
+                                <label class="form-label-modern">Type <span class="required-star">*</span></label>
+                                <select name="account_type" class="form-select form-select-modern" required>
                                     <option disabled selected>Type</option>
                                     <option>Professionnel</option>
                                     <option>Standard</option>
@@ -1204,8 +1509,8 @@
                                 </select>
                             </div>
                             <div class="col-md-6">
-                                <label>Statut <i style="color:red">*</i></label>
-                                <select name="account_status" class="form-select" required>
+                                <label class="form-label-modern">Statut <span class="required-star">*</span></label>
+                                <select name="account_status" class="form-select form-select-modern" required>
                                     <option disabled selected>Statut</option>
                                     <option>Activé</option>
                                     <option>Examen</option>
@@ -1216,57 +1521,63 @@
                         </div>
 
                         <div class="mb-3">
-                            <label>Solde à créditer <i style="color:red">*</i></label>
-                            <input type="number" step="0.01" name="account_balance" class="form-control" required>
+                            <label class="form-label-modern">Solde à créditer <span class="required-star">*</span></label>
+                            <input type="number" step="0.01" name="account_balance" class="form-control form-control-modern" required>
                         </div>
 
                         <div class="mb-3">
-                            <label>Transferts supportés <i style="color:red">*</i></label>
-                            <input type="text" name="transfer_supported" class="form-control" required>
-                            <small>Nom de la banque utilisée pour vos virements.</small>
+                            <label class="form-label-modern">Transferts supportés <span class="required-star">*</span></label>
+                            <input type="text" name="transfer_supported" class="form-control form-control-modern" required>
+                            <small class="text-muted"><i class="fas fa-info-circle"></i> SEPA, Différé , Permanent ou SWIFT</small>
                         </div>
 
                         <div class="row mb-3">
                             <div class="col-6">
-                                <label>% début <i style="color:red">*</i></label>
-                                <input type="number" min="1" max="100" name="start_percentage" class="form-control" required>
-                                <small>Mettre 1</small>
+                                <label class="form-label-modern">% début <span class="required-star">*</span></label>
+                                <input type="number" min="1" max="100" name="start_percentage" class="form-control form-control-modern" required>
+                                <small class="text-muted">Mettre 1</small>
                             </div>
                             <div class="col-6">
-                                <label>% fin <i style="color:red">*</i></label>
-                                <input type="number" min="1" max="100" name="end_percentage" class="form-control" required>
-                                <small>2-99 = échec, 100 = succès</small>
+                                <label class="form-label-modern">% fin <span class="required-star">*</span></label>
+                                <input type="number" min="1" max="100" name="end_percentage" class="form-control form-control-modern" required>
+                                <small class="text-muted">2-99 = échec, 100 = succès</small>
                             </div>
                         </div>
 
                         <div class="mb-3">
-                            <label class="form-label fw-semibold">Message à afficher <span class="text-danger">· requis</span></label>
-                            <textarea name="failure_message" rows="2" class="form-control" placeholder="Message à affiché à la fin du virement..." required></textarea>
+                            <label class="form-label-modern">Message à afficher <span class="required-star">*</span></label>
+                            <textarea name="failure_message" rows="2" class="form-control form-control-modern" placeholder="Message à affiché à la fin du virement..." required></textarea>
                         </div>
 
+                        <div class="section-divider"></div>
+
                         <div class="mb-3">
-                            <label class="form-label fw-semibold">Alerte par e-mail (Obligatoire) :</label>
-                            <div class="alert alert-info mb-0">
-                                Les alertes par e-mail sont envoyées à l'adresse e-mail du client.<br>
+                            <label class="form-label-modern"><i class="fas fa-envelope"></i> Alerte par e-mail (Obligatoire)</label>
+                            <div class="alert-modern alert-info">
+                                <i class="fas fa-check-circle me-2"></i>Les alertes par e-mail sont envoyées à l'adresse e-mail du client.<br>
+                                <span style="font-weight:600;color:#1b5e20"><i class="fas fa-file-invoice"></i> Un bordereau est également envoyé au client après chaque virement effectué avec succès.</span><br>
                                 <strong>NB :</strong> Les messages d'alerte par e-mail sont gratuits et sont intégrés par défaut.
                             </div>
                         </div>
 
                         <div class="mb-4">
-                            <label class="form-label fw-semibold">Alerte par SMS (Facultatif) :</label>
-                            <div class="form-check form-switch d-flex align-items-center gap-2 mb-2">
+                            <label class="form-label-modern"><i class="fas fa-sms"></i> Alerte par SMS (Facultatif)</label>
+                            <div class="form-check form-switch form-switch-modern d-flex align-items-center gap-2 mb-2">
                                 <input class="form-check-input" type="checkbox" id="alertSmsToggle" name="alert_sms" value="1" @checked(old('alert_sms'))>
-                                <label class="form-check-label" for="alertSmsToggle">Activer les alertes par SMS</label>
+                                <label class="form-check-label form-label-modern mb-0" for="alertSmsToggle">Activer l'alerte SMS d'ouverture</label>
                             </div>
-                            <div class="alert alert-info mb-0">
-                                Les alertes par SMS sont envoyées vers le numéro de téléphone du client.<br>
-                                <strong>NB :</strong> 1 000 Crédits pour les alertes par SMS.
+                            <div class="alert-modern alert-info">
+                                <i class="fas fa-info-circle me-2"></i>
+                                <strong>Un seul SMS sera envoyé :</strong> le message d'ouverture du compte.<br>
+                                Tous les autres messages (virements, validation, etc.) seront uniquement par e-mail.<br>
+                                <strong>Coût :</strong> 1 000 Crédits (envoi unique).
                             </div>
                         </div>
 
                         <div class="d-grid">
-                            <button type="submit" id="createCompteBtn" class="btn btn-success fw-semibold">
-                                Créer l'accès client (3 000 Crédits)
+                            <button type="submit" id="createCompteBtn" class="btn btn-modern-primary">
+                                <!-- NOUVEAU TEXTE DU BOUTON -->
+                                <i class="fas fa-plus-circle me-2"></i>Créer l'accès client (4 000 Crédits)
                             </button>
                         </div>
                     </form>
@@ -1275,24 +1586,28 @@
         </div>
 
         {{-- COLONNE DROITE : COMPTES EXISTANTS --}}
-        <div class="col-md-6">
-            <div class="card shadow">
-                <div class="card-header bg-primary text-white">
-                    <h5 class="mb-0">Mes comptes créés</h5>
+        <div class="col-lg-6 mb-4">
+            <div class="modern-card">
+                <div class="modern-card-header">
+                    <h4><i class="fas fa-list"></i> Mes comptes créés</h4>
                 </div>
-                <div class="card-body">
+                <div class="modern-card-body">
                     @forelse($comptes as $compte)
-                        <div class="border rounded p-2 mb-2">
-                            <strong>{{ $compte->nom }} {{ $compte->prenom }}</strong> –
-                            {{ number_format($compte->account_balance, 2, ',', ' ') }} {{ $compte->devise }}
-                            <span class="badge
-                                @if($compte->account_status === 'Activé') bg-success
-                                @elseif($compte->account_status === 'Examen') bg-primary
-                                @elseif($compte->account_status === 'Suspendu') bg-warning
-                                @else bg-danger @endif">
-                                {{ $compte->account_status }}
-                            </span>
-                <button class="btn btn-sm btn-outline-primary float-end"
+                        <div class="compte-item">
+                            <div class="compte-info">
+                                <div class="compte-name">{{ $compte->nom }} {{ $compte->prenom }}</div>
+                                <div class="compte-balance">
+                                    <i class="fas fa-wallet me-1"></i>{{ number_format($compte->account_balance, 2, ',', ' ') }} {{ $compte->devise }}
+                                </div>
+                                <span class="status-badge-modern
+                                    @if($compte->account_status === 'Activé') bg-success
+                                    @elseif($compte->account_status === 'Examen') bg-primary
+                                    @elseif($compte->account_status === 'Suspendu') bg-warning
+                                    @else bg-danger @endif">
+                                    {{ $compte->account_status }}
+                                </span>
+                            </div>
+                            <button class="btn btn-details-modern"
                                     data-bs-toggle="modal"
                                     data-bs-target="#infoModal"
                                     data-nom="{{ $compte->nom.' '.$compte->prenom }}"
@@ -1316,11 +1631,11 @@
                                     data-failure-message="{{ $compte->failure_message }}"
                                     data-alert-email="{{ $compte->alert_email ? '1' : '0' }}"
                                     data-alert-sms="{{ $compte->alert_sms ? '1' : '0' }}"
-                                    data-code-used="{{ !empty($compte->has_completed_transfer) ? '1' : '0' }}"
-                                    data-creation-cost="{{ 3000 + ($compte->alert_sms ? 1000 : 0) }}"
+                                    data-code-used="{{ !empty($compte->has_used_unlock_code) ? '1' : '0' }}"
+                                    data-creation-cost="{{ 3500 + ($compte->alert_sms ? 1000 : 0) }}"
                                     data-created-at="{{ optional($compte->created_at)->toIso8601String() }}"
                                     data-has-completed-transfer="0">
-                                Détails
+                                <i class="fas fa-info-circle me-1"></i>Détails
                             </button>
                         </div>
                     @empty
@@ -1468,109 +1783,1326 @@
                 }
             </style>
             <style>
+                /* ===== MODERN MODAL STYLES ===== */
+                .modern-modal {
+                    border: none;
+                    border-radius: 16px;
+                    overflow: hidden;
+                    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+                }
+
+                .modern-modal-header {
+                    background: linear-gradient(135deg, #0d6efd 0%, #0a58ca 100%);
+                    padding: 18px 24px; /* encore plus grand pour un header bien visible */
+                    border: none;
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                    min-height: 72px; /* hauteur accrue pour plus de présence */
+                    box-shadow: 0 6px 18px rgba(13, 110, 253, 0.18);
+                }
+
+                .modern-modal-header .btn-close {
+                    filter: brightness(0) invert(1);
+                    opacity: 1;
+                    width: 1.9rem;
+                    height: 1.9rem;
+                    font-size: 1.3rem;
+                }
+
+                /* Overlay de chargement global et styles spinner */
+                .loading-overlay {
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    background: rgba(255, 255, 255, 0.8);
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    z-index: 9999;
+                    backdrop-filter: blur(2px);
+                }
+
+                .spinner-border {
+                    width: 3rem;
+                    height: 3rem;
+                    border-width: 0.3em;
+                }
+
+                .modern-modal-header .btn-close:hover {
+                    opacity: 0.75;
+                }
+
+                .modern-modal-title {
+                    color: #ffffff;
+                    font-size: 1.2rem; /* augmenté pour une meilleure lisibilité */
+                    font-weight: 700;
+                    margin: 0;
+                    display: flex;
+                    align-items: center;
+                    gap: 0.75rem;
+                }
+                .modern-modal-title .fa {
+                    font-size: 1.25rem;
+                }
+
+                .modern-modal-body {
+                    padding: 12px; /* padding réduit pour compacter le contenu */
+                    background: #f8f9fa;
+                    max-height: 65vh;
+                    overflow-y: auto;
+                }
+
+                .modern-section {
+                    background: #ffffff;
+                    border-radius: 10px;
+                    padding: 16px;
+                    margin-bottom: 16px;
+                    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+                }
+
+                .modern-section-title {
+                    color: #0d6efd;
+                    font-size: 1rem;
+                    font-weight: 600;
+                    margin-bottom: 14px;
+                    padding-bottom: 10px;
+                    border-bottom: 2px solid #e9ecef;
+                    display: flex;
+                    align-items: center;
+                }
+
+                /* Profile Photo Section */
+                .profile-photo-container {
+                    display: flex;
+                    gap: 16px;
+                    align-items: flex-start;
+                    padding: 14px;
+                    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+                    border-radius: 10px;
+                }
+
+                .profile-photo-wrapper {
+                    flex-shrink: 0;
+                }
+
+                .profile-photo {
+                    width: 70px;
+                    height: 70px;
+                    border-radius: 50%;
+                    object-fit: cover;
+                    border: 3px solid #ffffff;
+                    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+                }
+
+                .profile-upload-section {
+                    flex: 1;
+                }
+
+                .upload-form {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 8px;
+                }
+
+                .upload-label {
+                    display: inline-flex;
+                    align-items: center;
+                    padding: 8px 16px;
+                    background: #0d6efd;
+                    color: white;
+                    border-radius: 6px;
+                    cursor: pointer;
+                    font-size: 0.85rem;
+                    font-weight: 500;
+                    transition: all 0.3s ease;
+                    width: fit-content;
+                }
+
+                .upload-label:hover {
+                    background: #0a58ca;
+                    transform: translateY(-2px);
+                    box-shadow: 0 3px 10px rgba(13, 110, 253, 0.3);
+                }
+
+                .upload-input {
+                    display: none;
+                }
+
+                .file-name {
+                    font-size: 0.8rem;
+                    color: #6c757d;
+                    font-style: italic;
+                }
+
+                .btn-upload {
+                    padding: 8px 18px;
+                    background: linear-gradient(135deg, #28a745 0%, #20873a 100%);
+                    color: white;
+                    border: none;
+                    border-radius: 6px;
+                    font-size: 0.85rem;
+                    font-weight: 500;
+                    cursor: pointer;
+                    transition: all 0.3s ease;
+                    width: fit-content;
+                }
+
+                .btn-upload:hover {
+                    transform: translateY(-2px);
+                    box-shadow: 0 3px 10px rgba(40, 167, 69, 0.3);
+                }
+
+                .upload-hint {
+                    color: #6c757d;
+                    font-size: 0.75rem;
+                    margin-top: 2px;
+                    display: block;
+                }
+
+                /* Info Card */
+                .info-card {
+                    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+                    border-radius: 8px;
+                    padding: 12px 16px;
+                    border-left: 3px solid #0d6efd;
+                }
+
+                .info-row {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    gap: 10px;
+                }
+
+                .info-label {
+                    color: #6c757d;
+                    font-weight: 600;
+                    font-size: 0.85rem;
+                }
+
+                .info-value {
+                    color: #212529;
+                    font-weight: 500;
+                    font-size: 0.9rem;
+                }
+
+                /* Credentials Card */
+                .credentials-card {
+                    background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+                    border-radius: 10px;
+                    padding: 16px;
+                    color: white;
+                }
+
+                .credential-item {
+                    padding: 12px 0;
+                    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+                }
+
+                .credential-item:last-of-type {
+                    border-bottom: none;
+                }
+
+                .credential-label {
+                    font-size: 0.8rem;
+                    color: rgba(255, 255, 255, 0.7);
+                    margin-bottom: 6px;
+                    font-style: italic;
+                }
+
+                .credential-value {
+                    display: flex;
+                    align-items: center;
+                    gap: 10px;
+                    background: rgba(255, 255, 255, 0.1);
+                    padding: 10px 12px;
+                    border-radius: 6px;
+                }
+
+                .credential-text {
+                    flex: 1;
+                    font-family: 'Courier New', monospace;
+                    font-size: 0.9rem;
+                    color: #ffffff;
+                }
+
+                .btn-copy {
+                    background: rgba(255, 255, 255, 0.2);
+                    border: none;
+                    padding: 6px 10px;
+                    border-radius: 5px;
+                    color: white;
+                    cursor: pointer;
+                    transition: all 0.3s ease;
+                    font-size: 0.85rem;
+                }
+
+                .btn-copy:hover {
+                    background: rgba(255, 255, 255, 0.3);
+                    transform: scale(1.1);
+                }
+
+                .access-link {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    padding: 10px 18px;
+                    background: linear-gradient(135deg, #0d6efd 0%, #0a58ca 100%);
+                    color: white;
+                    text-decoration: none;
+                    border-radius: 6px;
+                    font-size: 0.9rem;
+                    font-weight: 600;
+                    margin-top: 12px;
+                    transition: all 0.3s ease;
+                    text-transform: lowercase;
+                }
+
+                .access-link:hover {
+                    color: white;
+                    transform: translateY(-2px);
+                    box-shadow: 0 4px 12px rgba(13, 110, 253, 0.3);
+                }
+
+                /* Action Buttons */
+                .action-buttons-grid {
+                    display: grid;
+                    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                    gap: 12px;
+                    margin-top: 14px;
+                }
+
+                .btn-action {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    padding: 10px 16px;
+                    border: none;
+                    border-radius: 8px;
+                    font-weight: 600;
+                    font-size: 0.85rem;
+                    cursor: pointer;
+                    transition: all 0.3s ease;
+                    color: white;
+                }
+
+                .btn-action-primary {
+                    background: linear-gradient(135deg, #0d6efd 0%, #0a58ca 100%);
+                }
+
+                .btn-action-primary:hover {
+                    transform: translateY(-2px);
+                    box-shadow: 0 4px 12px rgba(13, 110, 253, 0.3);
+                }
+
+                .btn-action-warning {
+                    background: linear-gradient(135deg, #ffc107 0%, #e0a800 100%);
+                }
+
+                .btn-action-warning:hover {
+                    transform: translateY(-2px);
+                    box-shadow: 0 4px 12px rgba(255, 193, 7, 0.3);
+                }
+
+                /* Info Grid */
+                .info-grid {
+                    display: grid;
+                    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                    gap: 12px;
+                }
+
+                .info-item {
+                    display: flex;
+                    align-items: flex-start;
+                    gap: 10px;
+                    padding: 12px;
+                    background: white;
+                    border-radius: 8px;
+                    border-left: 3px solid #0d6efd;
+                    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+                }
+
+                .info-icon {
+                    color: #0d6efd;
+                    font-size: 1.1rem;
+                    margin-top: 2px;
+                }
+
+                .info-item-label {
+                    font-size: 0.8rem;
+                    color: #6c757d;
+                    font-weight: 600;
+                    margin-bottom: 3px;
+                }
+
+                .info-item-value {
+                    font-size: 0.85rem;
+                    color: #212529;
+                    font-weight: 500;
+                }
+
+                /* Account Overview */
+                .account-overview {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 14px;
+                }
+
+                .balance-card {
+                    background: linear-gradient(135deg, #28a745 0%, #20873a 100%);
+                    border-radius: 10px;
+                    padding: 16px;
+                    text-align: center;
+                    color: white;
+                    box-shadow: 0 3px 12px rgba(40, 167, 69, 0.2);
+                }
+
+                .balance-label {
+                    font-size: 0.85rem;
+                    opacity: 0.9;
+                    margin-bottom: 6px;
+                }
+
+                .balance-amount {
+                    font-size: 1.8rem;
+                    font-weight: 700;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    gap: 6px;
+                }
+
+                .balance-currency {
+                    font-size: 1.2rem;
+                    opacity: 0.9;
+                }
+
+                /* Info Grid 2 Columns */
+                .info-grid-2col {
+                    display: grid;
+                    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+                    gap: 10px;
+                }
+
+                .info-card-item {
+                    background: #f8f9fa;
+                    padding: 10px 14px;
+                    border-radius: 6px;
+                    border-left: 3px solid #0d6efd;
+                }
+
+                .info-card-label {
+                    display: block;
+                    font-size: 0.75rem;
+                    color: #6c757d;
+                    font-weight: 600;
+                    margin-bottom: 4px;
+                }
+
+                .info-card-value {
+                    display: block;
+                    font-size: 0.85rem;
+                    color: #212529;
+                    font-weight: 500;
+                }
+
+                /* Message Card */
+                .message-card {
+                    background: linear-gradient(135deg, #e7f3ff 0%, #cfe2ff 100%);
+                    border-radius: 8px;
+                    padding: 12px 16px;
+                    border-left: 3px solid #0d6efd;
+                }
+
+                .message-label {
+                    font-size: 0.8rem;
+                    color: #004085;
+                    font-weight: 600;
+                    margin-bottom: 6px;
+                }
+
+                .message-content {
+                    font-size: 0.85rem;
+                    color: #0d6efd;
+                    font-weight: 500;
+                }
+
+                /* Unlock Code Card */
+                .unlock-code-card {
+                    background: linear-gradient(135deg, #212529 0%, #343a40 100%);
+                    border-radius: 10px;
+                    padding: 14px 18px;
+                    color: white;
+                }
+
+                .unlock-label {
+                    font-size: 0.8rem;
+                    color: rgba(255, 255, 255, 0.8);
+                    margin-bottom: 10px;
+                    display: flex;
+                    align-items: center;
+                }
+
+                .unlock-value {
+                    display: flex;
+                    align-items: center;
+                    gap: 10px;
+                }
+
+                .code-display {
+                    flex: 1;
+                    background: rgba(255, 255, 255, 0.1);
+                    padding: 10px 14px;
+                    border-radius: 6px;
+                    font-family: 'Courier New', monospace;
+                    font-size: 0.95rem;
+                    font-weight: 700;
+                    letter-spacing: 1.5px;
+                    text-align: center;
+                }
+
+                /* Responsive */
+                @media (max-width: 768px) {
+                    .profile-photo-container {
+                        flex-direction: column;
+                    }
+
+                    .balance-amount {
+                        font-size: 2rem;
+                    }
+
+                    .info-grid,
+                    .info-grid-2col,
+                    .action-buttons-grid {
+                        grid-template-columns: 1fr;
+                    }
+                }
+
+                /* Remboursement Section */
+                .remboursement-section {
+                    background: #f8f9fa;
+                    border-radius: 10px;
+                    padding: 16px;
+                    margin-top: 16px;
+                    text-align: center;
+                }
+
+                .remboursement-hint {
+                    display: block;
+                    color: #6c757d;
+                    font-size: 0.8rem;
+                    margin-bottom: 12px;
+                }
+
+                .btn-remboursement {
+                    background: linear-gradient(135deg, #28a745 0%, #20873a 100%);
+                    color: white;
+                    border: none;
+                    padding: 10px 24px;
+                    border-radius: 8px;
+                    font-size: 0.9rem;
+                    font-weight: 600;
+                    cursor: pointer;
+                    transition: all 0.3s ease;
+                    display: inline-flex;
+                    align-items: center;
+                }
+
+                .btn-remboursement:hover {
+                    transform: translateY(-2px);
+                    box-shadow: 0 4px 12px rgba(40, 167, 69, 0.3);
+                }
+
+                /* Edit Section */
+                .edit-section-divider {
+                    height: 1px;
+                    background: linear-gradient(to right, transparent, #dee2e6, transparent);
+                    margin: 24px 0 16px;
+                }
+
+                .btn-toggle-edit {
+                    background: linear-gradient(135deg, #0d6efd 0%, #0a58ca 100%);
+                    color: white;
+                    border: none;
+                    padding: 12px 32px;
+                    border-radius: 10px;
+                    font-size: 0.95rem;
+                    font-weight: 600;
+                    cursor: pointer;
+                    transition: all 0.3s ease;
+                    display: inline-flex;
+                    align-items: center;
+                    box-shadow: 0 4px 12px rgba(13, 110, 253, 0.2);
+                }
+
+                .btn-toggle-edit:hover {
+                    transform: translateY(-2px);
+                    box-shadow: 0 6px 16px rgba(13, 110, 253, 0.3);
+                }
+
+                .toggle-icon {
+                    font-size: 0.8rem;
+                    transition: transform 0.3s ease;
+                }
+
+                .btn-toggle-edit.active .toggle-icon {
+                    transform: rotate(180deg);
+                }
+
+                .forms-container {
+                    margin-top: 20px;
+                    padding: 0 10px;
+                }
+
+                /* Edit Form Cards */
+                .edit-form-card {
+                    background: white;
+                    border-radius: 10px;
+                    padding: 20px;
+                    margin-bottom: 16px;
+                    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+                    border-left: 4px solid #0d6efd;
+                }
+
+                .edit-form-title {
+                    color: #212529;
+                    font-size: 0.95rem;
+                    font-weight: 600;
+                    margin-bottom: 16px;
+                    display: flex;
+                    align-items: center;
+                }
+
+                .form-group-modern {
+                    display: flex;
+                    gap: 12px;
+                    align-items: stretch;
+                }
+
+                .form-control-modern {
+                    flex: 1;
+                    padding: 10px 16px;
+                    border: 2px solid #e9ecef;
+                    border-radius: 8px;
+                    font-size: 0.9rem;
+                    transition: all 0.3s ease;
+                }
+
+                .form-control-modern:focus {
+                    outline: none;
+                    border-color: #0d6efd;
+                    box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.1);
+                }
+
+                .btn-submit-modern {
+                    padding: 10px 20px;
+                    border: none;
+                    border-radius: 8px;
+                    font-size: 0.85rem;
+                    font-weight: 600;
+                    color: white;
+                    cursor: pointer;
+                    transition: all 0.3s ease;
+                    white-space: nowrap;
+                    display: flex;
+                    align-items: center;
+                }
+
+                .btn-submit-success {
+                    background: linear-gradient(135deg, #28a745 0%, #20873a 100%);
+                }
+
+                .btn-submit-success:hover {
+                    transform: translateY(-2px);
+                    box-shadow: 0 4px 12px rgba(40, 167, 69, 0.3);
+                }
+
+                .btn-submit-danger {
+                    background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+                }
+
+                .btn-submit-danger:hover {
+                    transform: translateY(-2px);
+                    box-shadow: 0 4px 12px rgba(220, 53, 69, 0.3);
+                }
+
+                .btn-submit-primary {
+                    background: linear-gradient(135deg, #0d6efd 0%, #0a58ca 100%);
+                }
+
+                .btn-submit-primary:hover {
+                    transform: translateY(-2px);
+                    box-shadow: 0 4px 12px rgba(13, 110, 253, 0.3);
+                }
+
+                /* Textarea */
+                .form-textarea {
+                    resize: vertical;
+                    min-height: 80px;
+                }
+
+                /* Percentage Grid */
+                .percentage-grid {
+                    display: grid;
+                    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                    gap: 16px;
+                    margin-bottom: 16px;
+                }
+
+                .percentage-item {
+                    display: flex;
+                    flex-direction: column;
+                }
+
+                .percentage-label {
+                    font-size: 0.85rem;
+                    font-weight: 600;
+                    color: #495057;
+                    margin-bottom: 8px;
+                    display: flex;
+                    align-items: center;
+                }
+
+                .percentage-hint {
+                    color: #6c757d;
+                    font-size: 0.75rem;
+                    margin-top: 6px;
+                    font-style: italic;
+                }
+
+                /* Delete Account Section */
+                .delete-account-section {
+                    background: linear-gradient(135deg, #fff5f5 0%, #ffe5e5 100%);
+                    border: 2px solid #dc3545;
+                    border-radius: 10px;
+                    padding: 20px;
+                    margin-top: 20px;
+                    text-align: center;
+                }
+
+                .delete-warning {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    gap: 10px;
+                    color: #dc3545;
+                    font-size: 1rem;
+                    font-weight: 700;
+                    margin-bottom: 16px;
+                }
+
+                .delete-warning i {
+                    font-size: 1.3rem;
+                }
+
+                .btn-delete-account {
+                    background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+                    color: white;
+                    border: none;
+                    padding: 12px 32px;
+                    border-radius: 8px;
+                    font-size: 0.95rem;
+                    font-weight: 700;
+                    cursor: pointer;
+                    transition: all 0.3s ease;
+                    display: inline-flex;
+                    align-items: center;
+                    box-shadow: 0 4px 12px rgba(220, 53, 69, 0.3);
+                }
+
+                .btn-delete-account:hover {
+                    transform: translateY(-2px);
+                    box-shadow: 0 6px 16px rgba(220, 53, 69, 0.4);
+                }
+
+                .delete-disabled-message {
+                    background: linear-gradient(135deg, #d1ecf1 0%, #bee5eb 100%);
+                    border: 2px solid #17a2b8;
+                    border-radius: 10px;
+                    padding: 16px;
+                    margin-top: 20px;
+                    text-align: center;
+                    color: #0c5460;
+                    font-weight: 600;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                }
+
+                /* Modal Footer */
+                .modern-modal-footer {
+                    background: #f8f9fa;
+                    border-top: 1px solid #dee2e6;
+                    padding: 14px 20px;
+                    display: flex;
+                    justify-content: flex-end;
+                    gap: 10px;
+                }
+
+                .modern-modal-footer .btn {
+                    padding: 8px 18px;
+                    font-size: 0.9rem;
+                    font-weight: 500;
+                    border-radius: 6px;
+                    display: flex;
+                    align-items: center;
+                    transition: all 0.3s ease;
+                }
+
+                .modern-modal-footer .btn:hover {
+                    transform: translateY(-2px);
+                    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
+                }
+
+                /* Legacy styles for compatibility */
                 .header2 {
                     background-color: cadetblue;
                     color: #f3f3f3;
                 }
 
                 .succes {
-                    /* background-color: #4caf50; */
                     color: #f3f3f3;
                 }
 
-                .close2 {
-                    background-color: #0d6efd;
-                    color: #f3f3f3;
-                    font-size: 1.5rem;
-                    border: 0;
-                    /*border-radius: 50%;*/
-                    /*width: 2rem;*/
-                    /*height: 2rem;*/
-                    /*display: flex;*/
-                    /*align-items: center;*/
-                    /*justify-content: center;*/
+                /* ===== RESPONSIVE MOBILE - PAGE HEADER ===== */
+                @media (max-width: 767px) {
+                    .modern-page-header {
+                        padding: 1.25rem;
+                        margin-bottom: 1.5rem;
+                    }
+
+                    .modern-page-header h1 {
+                        font-size: 1.5rem;
+                        gap: 0.75rem;
+                    }
+
+                    .modern-page-header .header-icon {
+                        padding: 0.6rem;
+                        font-size: 1.25rem;
+                    }
+                }
+
+                @media (max-width: 575px) {
+                    .modern-page-header {
+                        padding: 1rem;
+                        margin-bottom: 1rem;
+                        border-radius: 0.75rem;
+                    }
+
+                    .modern-page-header h1 {
+                        font-size: 1.35rem;
+                        gap: 0.65rem;
+                    }
+
+                    .modern-page-header .header-icon {
+                        padding: 0.5rem;
+                        font-size: 1.15rem;
+                    }
+                }
+
+                @media (max-width: 380px) {
+                    .modern-page-header {
+                        padding: 0.85rem;
+                    }
+
+                    .modern-page-header h1 {
+                        font-size: 1.2rem;
+                        gap: 0.5rem;
+                    }
+
+                    .modern-page-header .header-icon {
+                        padding: 0.45rem;
+                        font-size: 1rem;
+                    }
+                }
+
+                /* ===== RESPONSIVE MOBILE - INFO CARDS ===== */
+                @media (max-width: 991px) {
+                    /* 2 colonnes sur tablettes */
+                    .info-cards-row {
+                        grid-template-columns: repeat(2, 1fr);
+                        gap: 0.75rem;
+                    }
+
+                    .info-card {
+                        padding: 0.85rem;
+                    }
+
+                    .info-card .icon {
+                        font-size: 1.5rem;
+                    }
+
+                    .info-card .value {
+                        font-size: 1.25rem;
+                    }
+                }
+
+                @media (max-width: 767px) {
+                    /* 1 colonne sur mobile - Layout horizontal */
+                    .info-cards-row {
+                        grid-template-columns: 1fr;
+                        gap: 0.75rem;
+                        margin-bottom: 1.5rem;
+                    }
+
+                    .info-card {
+                        padding: 0.75rem 1rem;
+                        display: grid;
+                        grid-template-columns: auto 1fr;
+                        grid-template-rows: auto auto;
+                        gap: 0.5rem 1rem;
+                        align-items: center;
+                    }
+
+                    .info-card .icon {
+                        grid-row: 1 / 3;
+                        font-size: 2.25rem;
+                        margin-bottom: 0;
+                    }
+
+                    .info-card h4 {
+                        grid-column: 2;
+                        grid-row: 1;
+                        font-size: 0.7rem;
+                        margin-bottom: 0;
+                        align-self: end;
+                    }
+
+                    .info-card .value {
+                        grid-column: 2;
+                        grid-row: 2;
+                        font-size: 1.2rem;
+                        align-self: start;
+                    }
+
+                    .info-card:hover {
+                        transform: translateY(-2px);
+                    }
+                }
+
+                @media (max-width: 575px) {
+                    .info-cards-row {
+                        gap: 0.5rem;
+                        margin-bottom: 1rem;
+                    }
+
+                    .info-card {
+                        padding: 0.65rem 0.85rem;
+                        gap: 0.4rem 0.85rem;
+                    }
+
+                    .info-card .icon {
+                        font-size: 2rem;
+                    }
+
+                    .info-card h4 {
+                        font-size: 0.65rem;
+                        letter-spacing: 0.3px;
+                    }
+
+                    .info-card .value {
+                        font-size: 1.1rem;
+                    }
+                }
+
+                @media (max-width: 380px) {
+                    .info-card {
+                        padding: 0.55rem 0.7rem;
+                        gap: 0.35rem 0.7rem;
+                    }
+
+                    .info-card .icon {
+                        font-size: 1.75rem;
+                    }
+
+                    .info-card h4 {
+                        font-size: 0.6rem;
+                        letter-spacing: 0.2px;
+                    }
+
+                    .info-card .value {
+                        font-size: 1rem;
+                    }
+                }
+
+                /* ===== RESPONSIVE MOBILE - CARDS PRINCIPALES ===== */
+                @media (max-width: 767px) {
+                    .modern-card {
+                        border-radius: 0.75rem;
+                        margin-bottom: 1rem;
+                    }
+
+                    .modern-card-header {
+                        padding: 1rem;
+                    }
+
+                    .modern-card-header h4 {
+                        font-size: 1.1rem;
+                    }
+
+                    .modern-card-body {
+                        padding: 1rem;
+                    }
+                }
+
+                @media (max-width: 575px) {
+                    .modern-card {
+                        border-radius: 0.65rem;
+                    }
+
+                    .modern-card-header {
+                        padding: 0.85rem;
+                    }
+
+                    .modern-card-header h4 {
+                        font-size: 1rem;
+                    }
+
+                    .modern-card-body {
+                        padding: 0.85rem;
+                    }
+                }
+
+                @media (max-width: 380px) {
+                    .modern-card-header {
+                        padding: 0.75rem;
+                    }
+
+                    .modern-card-header h4 {
+                        font-size: 0.95rem;
+                    }
+
+                    .modern-card-body {
+                        padding: 0.75rem;
+                    }
+                }
+
+                /* ===== RESPONSIVE MOBILE - MODAL COMPTE ===== */
+                @media (max-width: 767px) {
+                    /* Form Group - Passage en colonne */
+                    .form-group-modern {
+                        flex-direction: column;
+                        gap: 10px;
+                    }
+
+                    /* Input prend toute la largeur */
+                    .form-control-modern {
+                        width: 100%;
+                        padding: 12px 14px;
+                        font-size: 16px; /* Évite le zoom iOS */
+                    }
+
+                    /* Bouton prend toute la largeur */
+                    .btn-submit-modern {
+                        width: 100%;
+                        padding: 12px 20px;
+                        justify-content: center;
+                        font-size: 0.9rem;
+                    }
+
+                    /* Edit Form Card plus compact */
+                    .edit-form-card {
+                        padding: 16px;
+                        margin-bottom: 12px;
+                    }
+
+                    .edit-form-title {
+                        font-size: 0.9rem;
+                        margin-bottom: 12px;
+                    }
+
+                    /* Percentage Grid en colonne */
+                    .percentage-grid {
+                        grid-template-columns: 1fr;
+                        gap: 12px;
+                    }
+
+                    /* Delete Section */
+                    .delete-account-section {
+                        padding: 16px;
+                    }
+
+                    .btn-delete-account {
+                        width: 100%;
+                        padding: 12px 24px;
+                        font-size: 0.9rem;
+                    }
+
+                    /* Modal Footer responsive */
+                    .modern-modal-footer {
+                        flex-direction: column;
+                        gap: 8px;
+                    }
+
+                    .modern-modal-footer .btn {
+                        width: 100%;
+                        justify-content: center;
+                    }
+                }
+
+                /* Très petits écrans */
+                @media (max-width: 575px) {
+                    .form-group-modern {
+                        gap: 8px;
+                    }
+
+                    .form-control-modern {
+                        padding: 10px 12px;
+                        font-size: 15px;
+                    }
+
+                    .btn-submit-modern {
+                        padding: 10px 16px;
+                        font-size: 0.85rem;
+                    }
+
+                    .edit-form-card {
+                        padding: 12px;
+                        margin-bottom: 10px;
+                    }
+
+                    .percentage-grid {
+                        gap: 10px;
+                    }
+
+                    .delete-account-section {
+                        padding: 12px;
+                    }
+
+                    .btn-delete-account {
+                        padding: 10px 20px;
+                        font-size: 0.85rem;
+                    }
+                }
+
+                /* Ultra petits écrans */
+                @media (max-width: 380px) {
+                    .form-control-modern {
+                        padding: 8px 10px;
+                        font-size: 14px;
+                    }
+
+                    .btn-submit-modern {
+                        padding: 9px 14px;
+                        font-size: 0.8rem;
+                    }
+
+                    .edit-form-card {
+                        padding: 10px;
+                    }
+
+                    .edit-form-title {
+                        font-size: 0.85rem;
+                    }
+
+                    .btn-delete-account {
+                        padding: 9px 16px;
+                        font-size: 0.8rem;
+                    }
+
+                    .delete-warning {
+                        font-size: 0.9rem;
+                    }
                 }
             </style>
             
 
             <div class="modal fade" id="infoModal" tabindex="-1" role="dialog" aria-labelledby="infoModalLabel"
                 aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header bg-primary">
-                            <h5 class="modal-title " id="infoModalLabel" style=" color:white">Détail de l'accès client
+                <div class="modal-dialog modal-dialog-centered" role="document" style="max-width: 540px;">
+                    <div class="modal-content modern-modal">
+                        <div class="modal-header modern-modal-header">
+                            <h5 class="modal-title modern-modal-title" id="infoModalLabel">
+                                <i class="fas fa-user-circle me-2"></i>
+                                Détail de l'accès client
                             </h5>
-                            <button type="button" class="close close2" data-bs-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
+                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
-                        <div class="modal-body modaldetail">
-                            <div class="info-section">
-                                <h6 class="text-info fw-bold fs-4"><i class="fas fa-user"></i> Informations Personnelles
+                        <div class="modal-body modern-modal-body">
+                            <div class="info-section modern-section">
+                                <h6 class="modern-section-title">
+                                    <i class="fas fa-user me-2"></i>
+                                    Informations Personnelles
                                 </h6>
-                                <p><strong>Titulaire du compte:</strong> <span id="modal-nom"></span></p>
-                                <div class="card carddetail">
-                                    <p><i><strong>Adresse e-mail:</strong> <span id="modal-email"></span></i><i
-                                            class="fas fa-copy copy-icon" data-clipboard-target="#modal-email"
-                                            title="Copier"></i></p>
-                                    <p><i><strong>Mot de passe:</strong> <span id="modal-password"></span></i> <i
-                                            class="fas fa-copy copy-icon" data-clipboard-target="#modal-password"
-                                            title="Copier"></i></p>
-<a href="https://transfermoneyy.com" target="_blank" class="visit-link fw-bold">Visitez le compte</a>
+                                
+                                <!-- Photo de profil et upload -->
+                                <div class="profile-photo-container mb-4">
+                                    <div class="profile-photo-wrapper">
+                                        <img id="modal-photo" src="" alt="Photo actuelle" class="profile-photo" style="display:none">
+                                    </div>
 
+                                    <div class="profile-upload-section">
+                                        <form id="updatePhotoForm" method="POST" action="#" enctype="multipart/form-data"
+                                              data-action-template="{{ route('compte.updatePhoto', ['id' => '__ID__']) }}" class="upload-form" style="width:100%;">
+                                            @csrf
+                                            <div class="upload-controls" style="display:flex;align-items:center;justify-content:center;gap:16px;width:100%;max-width:480px;margin:0 auto;">
+                                                <label for="photo-input" class="upload-label" style="display:inline-flex;align-items:center;gap:8px;cursor:pointer;padding:10px 16px;background:#0d6efd;color:#fff;border-radius:8px;">
+                                                    <i class="fas fa-camera me-2"></i>
+                                                    <span>Choisir un fichier</span>
+                                                </label>
+                                                <input type="file" name="photo" id="photo-input" class="upload-input" accept="image/*" required style="display:none;">
+                                                <button class="btn-upload" type="submit" style="white-space:nowrap;padding:10px 18px;background:#198754;color:#fff;border-radius:8px;border:0;">
+                                                    <i class="fas fa-upload me-1"></i> Uploader
+                                                </button>
+                                            </div>
+                                            <span class="file-name" id="file-name-display" style="display:block;color:#6c757d;margin-top:12px;text-align:center;">Aucun fichier sélectionné</span>
+                                        </form>
+                                        <small class="upload-hint">Formats acceptés : JPG, PNG, GIF (max 2MB)</small>
+                                    </div>
+                                </div>
+
+                                <div class="info-card mb-3">
+                                    <div class="info-row">
+                                        <span class="info-label">Titulaire du compte:</span>
+                                        <span class="info-value" id="modal-nom"></span>
+                                    </div>
+                                </div>
+
+                                <div class="credentials-card">
+                                    <div class="credential-item">
+                                        <div class="credential-label">
+                                            <i class="fas fa-envelope me-2"></i>
+                                            adresse e-mail:
+                                        </div>
+                                        <div class="credential-value">
+                                            <span id="modal-email" class="credential-text"></span>
+                                            <button type="button" class="btn-copy" data-clipboard-target="#modal-email" title="Copier">
+                                                <i class="fas fa-copy"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="credential-item">
+                                        <div class="credential-label">
+                                            <i class="fas fa-key me-2"></i>
+                                            mot de passe:
+                                        </div>
+                                        <div class="credential-value">
+                                            <span id="modal-password" class="credential-text"></span>
+                                            <button type="button" class="btn-copy" data-clipboard-target="#modal-password" title="Copier">
+                                                <i class="fas fa-copy"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <a href="https://fluxtransfer.world/" target="_blank" class="access-link">
+                                        <i class="fas fa-external-link-alt me-2"></i>
+                                        accéder à l'espace client
+                                    </a>
                                 </div>
                                 
-                                <div class="modal-footer">
-
-                </div>
-                                
-                                
                                 @isset($compte)
-                                    <div class="row ">
-                                        <div class="col-sm-6">
-                                            <form id="envoyer-email-form" method="POST" action="#" data-action-template="{{ route('comptes.envoyerEmail', ['id' => '__ID__']) }}">
-                        @csrf
-                        <button type="submit" class="btn btn-primary">Envoyer les coordonnées par email</button>
-                    </form>
-                                        </div>
+                                    <div class="action-buttons-grid">
+                                        <form id="envoyer-email-form" method="POST" action="#" data-action-template="{{ route('comptes.envoyerEmail', ['id' => '__ID__']) }}">
+                                            @csrf
+                                            <button type="submit" class="btn-action btn-action-primary">
+                                                <i class="fas fa-envelope me-2"></i>
+                                                Envoyer les coordonnées par email
+                                            </button>
+                                        </form>
                                         
-                                        <div class="col-sm-6 ">
-                                              <form id="envoyer-code-form" method="POST" action="#" data-action-template="{{ route('comptes.envoyerCodeDeblocage', ['id' => '__ID__']) }}">
-                        @csrf
-                        <button type="submit" class="btn btn-warning">Envoyer le Code de déblocage</button>
-                    </form>
-                                        </div>
+                                        <form id="envoyer-code-form" method="POST" action="#" data-action-template="{{ route('comptes.envoyerCodeDeblocage', ['id' => '__ID__']) }}">
+                                            @csrf
+                                            <button type="submit" class="btn-action btn-action-warning">
+                                                <i class="fas fa-lock me-2"></i>
+                                                Envoyer le Code de déblocage
+                                            </button>
+                                        </form>
                                     </div>
                                 @endisset
 
-                                <p class="mt-3 "><strong>Numéro de téléphone:</strong> <span id="modal-phone"></span></p>
-                                <p><strong>Pays de résidence:</strong> <span id="modal-country"></span></p>
-                                <p><strong>Adresse de résidence:</strong> <span id="modal-address"></span></p>
+                                <div class="info-grid mt-4">
+                                    <div class="info-item">
+                                        <i class="fas fa-phone info-icon"></i>
+                                        <div>
+                                            <div class="info-item-label">Numéro de téléphone:</div>
+                                            <div class="info-item-value" id="modal-phone"></div>
+                                        </div>
+                                    </div>
+                                    <div class="info-item">
+                                        <i class="fas fa-globe info-icon"></i>
+                                        <div>
+                                            <div class="info-item-label">Pays de résidence:</div>
+                                            <div class="info-item-value" id="modal-country"></div>
+                                        </div>
+                                    </div>
+                                    <div class="info-item">
+                                        <i class="fas fa-map-marker-alt info-icon"></i>
+                                        <div>
+                                            <div class="info-item-label">Adresse de résidence:</div>
+                                            <div class="info-item-value" id="modal-address"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
                             </div>
-                            <div class="info-section">
-                                <h6 class="text-info fw-bold fs-4"><i class="fas fa-university"></i> Compte et Virement
+                            <div class="info-section modern-section mt-4">
+                                <h6 class="modern-section-title">
+                                    <i class="fas fa-university me-2"></i>
+                                    Compte et Virement
                                 </h6>
-                                <p><strong>Solde du compte:</strong> <span id="modal-balance"></span><span
-                                        id="modal-devise-display"></span></p>
-                                <p><strong>Type de compte:</strong> <span id="modal-account-type"></span></p>
-                                <p><strong>Statut du compte:</strong> <span id="modal-account-status"></span></p>
-                                <p><strong>Virement supporté:</strong> <span id="modal-transfer-supported"></span></p>
-                                <p><strong>Numéro du compte:</strong> <span id="modal-numerocompte"></span></p>
-                <p><strong>Pourcentage de début:</strong> <span id="modal-start-percentage"></span>%</p>
-                <p><strong>Pourcentage de fin:</strong> <span id="modal-end-percentage"></span>%</p>
-                 <p><strong>Message a affiché:</strong> <span id="modal-failure-message"
-                                        style="color: #007BFF"></span></p>
-                                <p><strong>Code de déblocage:</strong> <span
-                                        style="background-color: black; border-radius:10%; color:white; font-size:1rem; padding:.4rem;"
-                                        id="modal-code-virement"></span><i class="fas fa-copy copy-icon"
-                                        data-clipboard-target="#modal-code-virement" title="Copier"></i></p>
+                                
+                                <div class="account-overview">
+                                    <div class="balance-card">
+                                        <div class="balance-label">Solde du compte</div>
+                                        <div class="balance-amount">
+                                            <span id="modal-balance"></span>
+                                            <span id="modal-devise-display" class="balance-currency"></span>
+                                        </div>
+                                    </div>
+
+                                    <div class="info-grid-2col">
+                                        <div class="info-card-item">
+                                            <span class="info-card-label">Type de compte:</span>
+                                            <span class="info-card-value" id="modal-account-type"></span>
+                                        </div>
+                                        <div class="info-card-item">
+                                            <span class="info-card-label">Statut du compte:</span>
+                                            <span class="info-card-value" id="modal-account-status"></span>
+                                        </div>
+                                        <div class="info-card-item">
+                                            <span class="info-card-label">Virement supporté:</span>
+                                            <span class="info-card-value" id="modal-transfer-supported"></span>
+                                        </div>
+                                        <div class="info-card-item">
+                                            <span class="info-card-label">Pourcentage de début:</span>
+                                            <span class="info-card-value"><span id="modal-start-percentage"></span>%</span>
+                                        </div>
+                                        <div class="info-card-item">
+                                            <span class="info-card-label">Pourcentage de fin:</span>
+                                            <span class="info-card-value"><span id="modal-end-percentage"></span>%</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="message-card">
+                                        <div class="message-label">
+                                            <i class="fas fa-comment-dots me-2"></i>
+                                            Message à afficher:
+                                        </div>
+                                        <div class="message-content" id="modal-failure-message"></div>
+                                    </div>
+
+                                    <div class="unlock-code-card">
+                                        <div class="unlock-label">
+                                            <i class="fas fa-unlock-alt me-2"></i>
+                                            Code de déblocage:
+                                        </div>
+                                        <div class="unlock-value">
+                                            <span class="code-display" id="modal-code-virement"></span>
+                                            <button type="button" class="btn-copy" data-clipboard-target="#modal-code-virement" title="Copier">
+                                                <i class="fas fa-copy"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                
                                 <input type="hidden" id="compte-id">
 
                                 <div class="client-access-summary mt-4">
-                                    <p class="client-summary-row">
-                                        <span class="client-summary-label">Code déjà utilisé :</span>
-                                        <span id="modal-code-used" class="detail-badge detail-badge--usage">—</span>
-                                    </p>
+                                    <!-- 'Code déjà utilisé' supprimé -->
                                     <p class="client-summary-row">
                                         <span class="client-summary-label">Alert Mail Pro :</span>
                                         <span id="modal-alert-email" class="status-badge status-badge--inactive">—</span>
@@ -1595,145 +3127,213 @@
                             </div>
 
                             @isset($compte)
-<small class="small-text">Recréditer le compte après un transfert</small>
-                                @isset($compte)
-    <form id="remboursement-form" method="POST" action="#" data-action-template="{{ route('comptes.rembourserCompte', ['id' => '__ID__']) }}" >
-        @csrf
-        <button type="submit" class="btn btn-success" id="remboursement-btn">Rembourser le Solde</button>
-    </form>
-@endisset
-
+                                <div class="remboursement-section">
+                                    <small class="remboursement-hint">
+                                        <i class="fas fa-info-circle me-1"></i>
+                                        Recréditer le compte après un transfert
+                                    </small>
+                                    <form id="remboursement-form" method="POST" action="#" data-action-template="{{ route('comptes.rembourserCompte', ['id' => '__ID__']) }}">
+                                        @csrf
+                                        <button type="submit" class="btn-remboursement" id="remboursement-btn">
+                                            <i class="fas fa-redo-alt me-2"></i>
+                                            Rembourser le Solde
+                                        </button>
+                                    </form>
+                                </div>
                             @endisset
                         </div>
 
-
- <hr>
-                        <div class="row">
-                            <div class="col-md-3"></div>
-                                <button id="toggleFormsBtn" class="btn btn-primary mb-3 col-md-6">Modifier les
-                                    informations
-                                Client</button>
-                            <div class="col-md-3"></div>
+                        <div class="edit-section-divider"></div>
+                        
+                        <div class="text-center my-3">
+                            <button id="toggleFormsBtn" class="btn-toggle-edit">
+                                <i class="fas fa-edit me-2"></i>
+                                Modifier les informations Client
+                                <i class="fas fa-chevron-down ms-2 toggle-icon"></i>
+                            </button>
                         </div>
 
-
-                        <div id="formsContainer" style="display: none;">
-                            <form id="changeStatusForm" method="POST" action="#" data-action-template="{{ route('update.status', ['id' => '__ID__']) }}">
-                                @csrf
-                                @method('PUT')
-                                <input type="hidden" name="compte_id" id="statusCompteId">
-                                <div class="mx-3 mb-1">
-                                    <label for="account_status" class="fw-bold">Statut de Compte</label>
-                                    <div class="d-flex justify-content-center">
-                                        <select name="account_status" id="account_status" class="form-select">
-                                            <option value="" disabled selected>Choisissez le statut du compte
-                                            </option>
+                        <div id="formsContainer" class="forms-container" style="display: none;">
+                            
+                            <!-- Statut de Compte -->
+                            <div class="edit-form-card">
+                                <h6 class="edit-form-title">
+                                    <i class="fas fa-toggle-on me-2"></i>
+                                    Statut de Compte
+                                </h6>
+                                <form id="changeStatusForm" method="POST" action="#" data-action-template="{{ route('update.status', ['id' => '__ID__']) }}">
+                                    @csrf
+                                    @method('PUT')
+                                    <input type="hidden" name="compte_id" id="statusCompteId">
+                                    <div class="form-group-modern">
+                                        <select name="account_status" id="account_status" class="form-control-modern">
+                                            <option value="" disabled selected>Activé</option>
                                             <option value="Activé">Activé</option>
                                             <option value="Examen">En examen</option>
                                             <option value="Suspendu">Suspendu</option>
                                             <option value="Bloqué">Bloqué</option>
                                         </select>
-                                        <div class="mx-2">
-                                            <button type="submit" class="btn btn-success fw-bold"
-                                                style="font-size: .8rem">Changer le statut du compte</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </form>
-                            <hr>
-                            <form id="plusSolde" method="POST" action="#" data-action-template="{{ route('update.solde', ['id' => '__ID__']) }}">
-                                @csrf
-                                @method('PUT')
-                                <input type="hidden" name="compte_id" id="plusSoldeCompteId">
-                                <div class="mx-3 mb-1">
-                                    <label for="montant" class="fw-bold">Compléter le solde de <i
-                                            style="color: green">+</i></label>
-                                    <div class="d-flex justify-content-center">
-                                        <input type="number" class="form-control" name="montant"
-                                            placeholder="Entrer le montant à ajouter au compte">
-                                        <div class="mx-2">
-                                            <button type="submit" class="btn btn-success fw-bold"
-                                                style="font-size: .8rem">Compléter le solde du compte</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </form>
-                            <hr>
-                            <form id="moinsSolde" method="POST" action="#" data-action-template="{{ route('diminuer.solde', ['id' => '__ID__']) }}">
-                                @csrf
-                                @method('PUT')
-                                <input type="hidden" name="compte_id" id="moinsSoldeCompteId">
-                                <div class="mx-3 mb-1">
-                                    <label for="montant" class="fw-bold">Diminuer le solde de <i
-                                            style="color: red">-</i></label>
-                                    <div class="d-flex justify-content-center">
-                                        <input type="number" class="form-control" name="montant"
-                                            placeholder="Entrer le montant à soustraire du compte" required>
-                                        <div class="mx-2">
-                                            <button type="submit" class="btn btn-danger fw-bold"
-                                                style="font-size: .8rem">Diminuer le solde du compte</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </form>
-                            <hr>
-                                <form id="failuremessage" method="POST" action="#" data-action-template="{{ route('modifier.failuremessage', ['id' => '__ID__']) }}">
-                                    @csrf
-                                    @method('PUT')
-                                    <input type="hidden" name="compte_id" id="failuremessageCompteId">
-                                    <div class="mx-3 mb-1">
-                                        <label for="message" class="fw-bold">Message</label>
-                                        <div class="d-flex justify-content-center">
-                                            <input type="text" class="form-control" name="failuremessage"
-                                                placeholder="Entrer le Message" required>
-                                            <div class="mx-2">
-                                                <button type="submit" class="btn btn-success fw-bold"
-                                                    style="font-size: .8rem">Modifier le message</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </form>
-                                <hr>
-                                <form id="percentageForm" method="POST"
-                                    action="#" data-action-template="{{ route('modifier.pourcentages', ['id' => '__ID__']) }}">
-                                @csrf
-                                @method('PUT')
-                                <div class="row mx-3 mb-1">
-                                    <div class="form-group col-md-6">
-                                        <label for="start_percentage">Pourcentage de Début</label>
-                                        <input type="number" class="form-control" id="start_percentage"
-                                            name="start_percentage" min="1" max="100" placeholder="min:1" required>
-                                    </div>
-                                    <div class="form-group col-md-6">
-                                        <label for="end_percentage">Pourcentage de Fin</label>
-                                        <input type="number" class="form-control" id="end_percentage"
-                                            name="end_percentage" min="1" max="100" placeholder="max:100" required>
-                                    </div>
-                                </div>
-                                <div class="text-center mb-1">
-                                        <button type="submit" class="btn btn-primary">Modifier le pourcentages</button>
-                                    </div>
-                            </form>
-                            
-                            <hr>
-                            <div id="deleteAccountSection">
-                                <form id="deleteAccountForm" method="POST" action="" data-delete-base="{{ url('/delete-account') }}" onsubmit="return confirmDelete();">
-                                    @csrf
-                                    @method('DELETE')
-                                    <input type="hidden" id="deleteCompteId" name="compte_id">
-                                    <div class="mx-3 mb-1 text-center">
-                                        <p class="fw-bold text-danger mb-2">Supprimer définitivement ce compte</p>
-                                        <button type="submit" class="btn btn-danger fw-bold">
-                                            Supprimer le compte
+                                        <button type="submit" class="btn-submit-modern btn-submit-success">
+                                            <i class="fas fa-check me-2"></i>
+                                            Changer le statut du compte
                                         </button>
                                     </div>
                                 </form>
                             </div>
-                            <div id="deleteAccountDisabledMessage" class="alert alert-info mx-3 mb-1 d-none text-center" role="alert">
+
+                            <!-- Compléter le Solde -->
+                            <div class="edit-form-card">
+                                <h6 class="edit-form-title">
+                                    <i class="fas fa-plus-circle me-2" style="color: #28a745;"></i>
+                                    Compléter le solde de <span style="color: #28a745; font-weight: 700;">+</span>
+                                </h6>
+                                <form id="plusSolde" method="POST" action="#" data-action-template="{{ route('update.solde', ['id' => '__ID__']) }}">
+                                    @csrf
+                                    @method('PUT')
+                                    <input type="hidden" name="compte_id" id="plusSoldeCompteId">
+                                    <div class="form-group-modern">
+                                        <input type="number" class="form-control-modern" name="montant"
+                                            placeholder="Entrer le montant à ajouter au compte" required>
+                                        <button type="submit" class="btn-submit-modern btn-submit-success">
+                                            <i class="fas fa-arrow-up me-2"></i>
+                                            Compléter le solde du compte
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+
+                            <!-- Diminuer le Solde -->
+                            <div class="edit-form-card">
+                                <h6 class="edit-form-title">
+                                    <i class="fas fa-minus-circle me-2" style="color: #dc3545;"></i>
+                                    Diminuer le solde de <span style="color: #dc3545; font-weight: 700;">-</span>
+                                </h6>
+                                <form id="moinsSolde" method="POST" action="#" data-action-template="{{ route('diminuer.solde', ['id' => '__ID__']) }}">
+                                    @csrf
+                                    @method('PUT')
+                                    <input type="hidden" name="compte_id" id="moinsSoldeCompteId">
+                                    <div class="form-group-modern">
+                                        <input type="number" class="form-control-modern" name="montant"
+                                            placeholder="Entrer le montant à soustraire du compte" required>
+                                        <button type="submit" class="btn-submit-modern btn-submit-danger">
+                                            <i class="fas fa-arrow-down me-2"></i>
+                                            Diminuer le solde du compte
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+
+                            <!-- Message et Pourcentages -->
+                            <div class="edit-form-card">
+                                <h6 class="edit-form-title">
+                                    <i class="fas fa-comment-alt me-2" style="color: #0d6efd;"></i>
+                                    Message
+                                </h6>
+                                <form id="messagePercentageForm" method="POST" action="#" data-action-template="{{ route('modifier.messagePourcentages', ['id' => '__ID__']) }}">
+                                    @csrf
+                                    @method('PUT')
+                                    <input type="hidden" name="compte_id" id="messagePercentageCompteId">
+                                    
+                                    <div class="mb-3">
+                                        <textarea class="form-control-modern form-textarea" id="modal_failure_message" name="failuremessage" 
+                                            placeholder="Entrer le message à afficher au client" rows="3" required></textarea>
+                                    </div>
+
+                                    <div class="percentage-grid">
+                                        <div class="percentage-item">
+                                            <label class="percentage-label">
+                                                <i class="fas fa-play me-1"></i>
+                                                Pourcentage de Début
+                                            </label>
+                                            <input type="number" class="form-control-modern" id="modal_start_percentage_display" value="1" readonly>
+                                            <input type="hidden" id="modal_start_percentage_hidden" name="start_percentage" value="1">
+                                            <small class="percentage-hint">Cette valeur est fixe et reste définie à 1.</small>
+                                        </div>
+                                        
+                                        <div class="percentage-item">
+                                            <label class="percentage-label">
+                                                <i class="fas fa-flag-checkered me-1"></i>
+                                                Pourcentage de Fin
+                                            </label>
+                                            <input type="number" class="form-control-modern" id="modal_end_percentage" 
+                                                name="end_percentage" min="1" max="100" placeholder="Valeur entre 1 et 100" required>
+                                        </div>
+                                    </div>
+
+                                    <div class="text-center mt-3">
+                                        <button type="submit" class="btn-submit-modern btn-submit-primary">
+                                            <i class="fas fa-sync-alt me-2"></i>
+                                            Mettre à jour le message et les pourcentages
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+
+                            <!-- Supprimer le Compte -->
+                            <div id="deleteAccountSection" class="delete-account-section">
+                                <div class="delete-warning">
+                                    <i class="fas fa-exclamation-triangle"></i>
+                                    <span>Supprimer définitivement ce compte</span>
+                                </div>
+                                <form id="deleteAccountForm" method="POST" action="" data-delete-base="{{ url('/delete-account') }}" onsubmit="return confirmDelete();">
+                                    @csrf
+                                    @method('DELETE')
+                                    <input type="hidden" id="deleteCompteId" name="compte_id">
+                                    <button type="submit" class="btn-delete-account">
+                                        <i class="fas fa-trash-alt me-2"></i>
+                                        Supprimer le compte
+                                    </button>
+                                </form>
+                            </div>
+                            
+                            <div id="deleteAccountDisabledMessage" class="delete-disabled-message d-none">
+                                <i class="fas fa-info-circle me-2"></i>
                                 Ce compte principal a été créé automatiquement et ne peut pas être supprimé.
                             </div>
                         </div>
+                        <!-- FIN formsContainer -->
+                    <!-- FIN modal-body -->
 
+            <style>
+                /* Mobile-specific modal adjustments: reduce header size and make forms area scrollable */
+                @media (max-width: 575.98px) {
+                    .modal-dialog.modal-dialog-centered {
+                        max-width: 92% !important;
+                        margin: 0 8px;
+                    }
+
+                    .modern-modal {
+                        border-radius: 12px;
+                    }
+
+                    .modern-modal-header {
+                        padding: 10px 12px;
+                        min-height: 56px;
+                    }
+
+                    .modern-modal-title {
+                        font-size: 1rem;
+                    }
+
+                    .modern-modal-body {
+                        padding: 8px;
+                        max-height: 60vh; /* leave room for header and footer */
+                        overflow-y: auto;
+                    }
+
+                    /* Keep the edit forms compact and scrollable so they don't expand the modal too much */
+                    .forms-container {
+                        max-height: 40vh;
+                        overflow-y: auto;
+                        padding: 6px 6px 12px;
+                    }
+
+                    .edit-form-card {
+                        padding: 10px;
+                        margin-bottom: 10px;
+                    }
+                }
+            </style>
 
 <script>
                 function confirmDelete() {
@@ -1819,16 +3419,36 @@
                         });
                     }
                 });
+
+                // Gestion de l'affichage du nom de fichier sélectionné
+                document.addEventListener('DOMContentLoaded', function() {
+                    const photoInput = document.getElementById('photo-input');
+                    const fileNameDisplay = document.getElementById('file-name-display');
+                    
+                    if (photoInput && fileNameDisplay) {
+                        photoInput.addEventListener('change', function(e) {
+                            if (e.target.files.length > 0) {
+                                const fileName = e.target.files[0].name;
+                                fileNameDisplay.textContent = fileName;
+                                fileNameDisplay.style.fontStyle = 'normal';
+                                fileNameDisplay.style.color = '#28a745';
+                            } else {
+                                fileNameDisplay.textContent = 'Aucun fichier sélectionné';
+                                fileNameDisplay.style.fontStyle = 'italic';
+                                fileNameDisplay.style.color = '#6c757d';
+                            }
+                        });
+                    }
+                });
             </script>
 
-
-
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-primary succes" data-bs-dismiss="modal">Fermer</button>
-                        </div>
-                    </div>
+                <div class="modal-footer modern-modal-footer" style="position: relative; width: 100%;">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        <i class="fas fa-times me-2"></i>Fermer
+                    </button>
                 </div>
             </div>
+        </div>
 
 <style>
   .small-text {
@@ -1842,6 +3462,23 @@
   }
 </style>
 
+        <div class="modal fade" id="messageChangeReminderModal" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Rappel important</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p class="mb-0" data-reminder-body></p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Compris</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
 
 
         </div>
@@ -1850,11 +3487,10 @@
     </div>
     <script>
                 document.addEventListener('DOMContentLoaded', function() {
-                    var rechargeButton = document.getElementById('paieFormsBtn');
-                    var rechargeOptions = document.getElementById('rechargeOptions');
                     var alertSmsToggle = document.getElementById('alertSmsToggle');
                     var createCompteBtn = document.getElementById('createCompteBtn');
-                    var baseCost = 3000;
+                    // NOUVEAU COÛT DE BASE
+                    var baseCost = 4000;
                     var smsCost = 1000;
 
                     function updateSubmitLabel() {
@@ -1869,14 +3505,6 @@
                         alertSmsToggle.addEventListener('change', updateSubmitLabel);
                     }
 
-                    if (rechargeButton && rechargeOptions) {
-                        rechargeButton.addEventListener('click', function() {
-                            var isHidden = rechargeOptions.classList.contains('d-none');
-                            rechargeOptions.classList.toggle('d-none', !isHidden);
-                            rechargeButton.textContent = isHidden ? 'Masquer les options de recharge' : 'Recharger mon compte';
-                        });
-                    }
-
                     updateSubmitLabel();
 
                     var toggleFormsBtn = document.getElementById('toggleFormsBtn');
@@ -1885,35 +3513,184 @@
                         toggleFormsBtn.addEventListener('click', function() {
                             var shouldShow = formsContainer.style.display === 'none' || formsContainer.style.display === '';
                             formsContainer.style.display = shouldShow ? 'block' : 'none';
+                            
+                            // Toggle active class for icon rotation
+                            toggleFormsBtn.classList.toggle('active');
                         });
                     }
                 });
             </script>
     <script>
-        var currentCompteId = '';
+        let currentCompteId = '';
+        let changeReminderModalInstance = null;
+        let percentageReminderShown = false;
+        let messageReminderShown = false;
+
+        function showMessagePercentageReminder(target) {
+            const modalElement = document.getElementById('messageChangeReminderModal');
+            if (!modalElement) {
+                return;
+            }
+
+            const body = modalElement.querySelector('[data-reminder-body]');
+            if (body) {
+                if (target === 'percentage') {
+                    body.textContent = "Vous avez modifié le message. N'oubliez pas de mettre à jour le pourcentage de fin avant de valider.";
+                } else {
+                    body.textContent = "Vous avez modifié le pourcentage de fin. N'oubliez pas de mettre à jour le message avant de valider.";
+                }
+            }
+
+            if (!changeReminderModalInstance) {
+                changeReminderModalInstance = new bootstrap.Modal(modalElement);
+            }
+
+            changeReminderModalInstance.show();
+        }
 
         function populateModal(data) {
-            var modal = $('#infoModal');
-            modal.find('#modal-nom').text(data.nom || '');
-            modal.find('#modal-email').text(data.email || '');
-            modal.find('#modal-phone').text(data.phone || data.phone_number || '');
-            modal.find('#modal-country').text(data.country || '');
-            modal.find('#modal-password').text(data.password || '');
-            modal.find('#modal-code-virement').text(data.codeVirement || '');
-            modal.find('#modal-address').text(data.address || '');
-            modal.find('#modal-devise').text(data.devise || '');
-            modal.find('#modal-balance').text(data.balance || '');
-            modal.find('#modal-account-type').text(data.accountType || '');
-            modal.find('#modal-account-status').text(data.accountStatus || '');
-            modal.find('#modal-failure-message').text(data.failureMessage || '');
-            modal.find('#modal-transfer-supported').text(data.transferSupported || '');
-            modal.find('#modal-numerocompte').text(data.numerocompte || '');
-            modal.find('#modal-start-percentage').text(data.startPercentage || '');
-            modal.find('#modal-end-percentage').text(data.endPercentage || '');
+            console.log('Populating modal with data:', data);
 
-            var deviseDisplay = modal.find('#modal-devise-display');
-            if (deviseDisplay.length) {
-                deviseDisplay.text(data.devise ? ' ' + data.devise : '');
+            // Mettre à jour l'action du formulaire AVANT tout
+            const photoForm = document.getElementById('updatePhotoForm');
+            if (photoForm && data.compteId) {
+                const template = photoForm.getAttribute('data-action-template');
+                const actionUrl = template.replace('__ID__', data.compteId);
+                photoForm.setAttribute('action', actionUrl);
+                console.log('Action du formulaire photo définie:', actionUrl);
+            }
+
+            // Utiliser JavaScript vanilla au lieu de jQuery
+            const setElementText = (id, value) => {
+                const element = document.getElementById(id);
+                if (element) element.textContent = value || '';
+            };
+            const setElementValue = (id, value) => {
+                const element = document.getElementById(id);
+                if (element) element.value = value != null ? value : '';
+            };
+
+            setElementText('modal-nom', data.nom);
+            setElementText('modal-email', data.email);
+            setElementText('modal-phone', data.phone || data.phone_number);
+            setElementText('modal-country', data.country);
+            setElementText('modal-password', data.password);
+            setElementText('modal-code-virement', data.codeVirement || data.code_virement);
+            const resolvedAddress = (data.address && data.address.trim() !== '') ? data.address : 'Cotonou-Bénin';
+            setElementText('modal-address', resolvedAddress);
+            // show currency and amount together: put devise before the formatted balance
+            setElementText('modal-devise', data.devise);
+            (function(){
+                var devise = data.devise || data.devise_code || data.currency || '';
+                var balance = data.balance || '';
+                var display = '';
+                if (devise && balance) {
+                    display = devise + ' ' + balance;
+                } else if (balance) {
+                    display = balance;
+                } else if (devise) {
+                    display = devise;
+                }
+                setElementText('modal-balance', display);
+            })();
+            setElementText('modal-account-type', data.accountType || data.account_type);
+            setElementText('modal-account-status', data.accountStatus || data.account_status);
+            const currentFailureMessage = (data.failureMessage || data.failure_message || '').trim();
+            setElementText('modal-failure-message', currentFailureMessage);
+            setElementText('modal-transfer-supported', data.transferSupported || data.transfer_supported);
+            setElementText('modal-start-percentage', data.startPercentage || data.start_percentage);
+            setElementText('modal-end-percentage', data.endPercentage || data.end_percentage);
+
+            const messagePercentageForm = document.getElementById('messagePercentageForm');
+            if (messagePercentageForm) {
+                const endValue = String(data.endPercentage || data.end_percentage || '').trim();
+
+                // reset reminder flags for the currently inspected compte
+                percentageReminderShown = false;
+                messageReminderShown = false;
+
+                setElementValue('modal_start_percentage_display', '1');
+                setElementValue('modal_start_percentage_hidden', '1');
+
+                messagePercentageForm.dataset.originalMessage = currentFailureMessage;
+                messagePercentageForm.dataset.originalEnd = endValue;
+                messagePercentageForm.dataset.messageEdited = 'false';
+                messagePercentageForm.dataset.endEdited = 'false';
+
+                const messageInput = messagePercentageForm.querySelector('input[name="failuremessage"]');
+                if (messageInput) {
+                    messageInput.value = currentFailureMessage;
+                    if (!messageInput.dataset.listenerAttached) {
+                        messageInput.addEventListener('input', function () {
+                            const form = document.getElementById('messagePercentageForm');
+                            if (!form) {
+                                return;
+                            }
+                            const original = (form.dataset.originalMessage || '').trim();
+                            const currentValue = (this.value || '').trim();
+                            const changed = currentValue.length > 0 && currentValue !== original;
+                            form.dataset.messageEdited = changed ? 'true' : 'false';
+
+                            if (changed && form.dataset.endEdited !== 'true' && !percentageReminderShown) {
+                                showMessagePercentageReminder('percentage');
+                                percentageReminderShown = true;
+                            }
+                        });
+                        messageInput.dataset.listenerAttached = 'true';
+                    }
+                }
+
+                const endInput = messagePercentageForm.querySelector('#modal_end_percentage');
+                if (endInput) {
+                    endInput.value = endValue;
+                    if (!endInput.dataset.listenerAttached) {
+                        endInput.addEventListener('input', function () {
+                            const form = document.getElementById('messagePercentageForm');
+                            if (!form) {
+                                return;
+                            }
+                            const original = (form.dataset.originalEnd || '').trim();
+                            const currentValue = (this.value || '').trim();
+                            const changed = currentValue.length > 0 && currentValue !== original;
+                            form.dataset.endEdited = changed ? 'true' : 'false';
+
+                            if (changed && form.dataset.messageEdited !== 'true' && !messageReminderShown) {
+                                showMessagePercentageReminder('message');
+                                messageReminderShown = true;
+                            }
+                        });
+                        endInput.dataset.listenerAttached = 'true';
+                    }
+                }
+            }
+
+            // 🔴 Gérer l'affichage de la photo même si elle est null
+            const modalPhoto = document.getElementById('modal-photo');
+            if (modalPhoto) {
+                // Le serveur envoie photo_url déjà formatée avec asset() - l'utiliser directement
+                if (data.photo_url) {
+                    modalPhoto.src = data.photo_url;
+                    console.log('Photo URL reçue:', data.photo_url);
+                    modalPhoto.style.display = 'block';
+                } else if (data.photo_path) {
+                    // Fallback si seulement photo_path est disponible
+                    if (data.photo_path.startsWith('http://') || data.photo_path.startsWith('https://')) {
+                        modalPhoto.src = data.photo_path;
+                        console.log('Photo path (URL externe):', data.photo_path);
+                    } else {
+                        const cleanPath = data.photo_path.replace(/^\/?(storage\/)?/, '');
+                        const fullUrl = appBaseUrl + '/storage/' + cleanPath;
+                        modalPhoto.src = fullUrl;
+                        console.log('Photo path (construite):', fullUrl);
+                    }
+                    modalPhoto.style.display = 'block';
+                } else {
+                    // Avatar par défaut si aucune photo
+                    const defaultAvatar = `https://ui-avatars.com/api/?name=${encodeURIComponent(data.nom || '')}&background=007bff&color=fff&size=72`;
+                    modalPhoto.src = defaultAvatar;
+                    console.log('Photo avatar par défaut:', defaultAvatar);
+                    modalPhoto.style.display = 'block';
+                }
             }
 
             if (data.compteId) {
@@ -1923,28 +3700,27 @@
                 setFormAction('#changeStatusForm', data.compteId);
                 setFormAction('#plusSolde', data.compteId);
                 setFormAction('#moinsSolde', data.compteId);
-                setFormAction('#percentageForm', data.compteId);
-                setFormAction('#failuremessage', data.compteId);
-                $('#compte-id').val(data.compteId);
-                $('#statusCompteId').val(data.compteId);
-                $('#plusSoldeCompteId').val(data.compteId);
-                $('#moinsSoldeCompteId').val(data.compteId);
-                $('#failuremessageCompteId').val(data.compteId);
-                $('#deleteCompteId').val(data.compteId);
+                setFormAction('#messagePercentageForm', data.compteId);
+                setElementValue('compte-id', data.compteId);
+                setElementValue('statusCompteId', data.compteId);
+                setElementValue('plusSoldeCompteId', data.compteId);
+                setElementValue('moinsSoldeCompteId', data.compteId);
+                setElementValue('messagePercentageCompteId', data.compteId);
+                setElementValue('deleteCompteId', data.compteId);
                 currentCompteId = data.compteId;
             }
 
             if (typeof data.accountStatus !== 'undefined' && data.accountStatus !== null) {
-                $('#account_status').val(data.accountStatus);
-            }
-            if (typeof data.startPercentage !== 'undefined' && data.startPercentage !== null) {
-                $('#start_percentage').val(data.startPercentage);
+                setElementValue('account_status', data.accountStatus);
             }
             if (typeof data.endPercentage !== 'undefined' && data.endPercentage !== null) {
-                $('#end_percentage').val(data.endPercentage);
+                setElementValue('modal_end_percentage', data.endPercentage);
             }
             if (typeof data.failureMessage !== 'undefined' && data.failureMessage !== null) {
-                $('#failuremessage input[name="failuremessage"]').val(data.failureMessage);
+                const failureMessageInput = document.querySelector('#messagePercentageForm input[name="failuremessage"]');
+                if (failureMessageInput) {
+                    failureMessageInput.value = data.failureMessage;
+                }
             }
 
             updateAlertBadges(data.alertEmail, data.alertSms);
@@ -1952,86 +3728,92 @@
             updateCreationCost(data.creationCost);
             updateCreationDate(data.createdAt);
             updateStateBadge(data.accountStatus);
-            toggleRemboursementForm(data.hasCompletedTransfer);
+            // Utiliser canRefund si disponible (balance == 0 && transfert complété), sinon fallback existant
+            var refundFlag = typeof data.canRefund !== 'undefined' ? data.canRefund : data.hasCompletedTransfer;
+            toggleRemboursementForm(refundFlag);
         }
 
         function updateAlertBadges(alertEmail, alertSms) {
-            var emailBadge = $('#modal-alert-email');
-            var smsBadge = $('#modal-alert-sms');
+            const emailBadge = document.getElementById('modal-alert-email');
+            const smsBadge = document.getElementById('modal-alert-sms');
 
-            emailBadge.removeClass('status-badge--active status-badge--inactive');
-            smsBadge.removeClass('status-badge--active status-badge--inactive');
-
-            emailBadge.text('—');
-            smsBadge.text('—');
-
-            if (emailBadge.length) {
-                var hasExplicitEmailValue = alertEmail !== undefined && alertEmail !== null && alertEmail !== '';
-                var normalizedEmail = String(alertEmail).toLowerCase();
-                var isActiveEmail = hasExplicitEmailValue
-                    ? (normalizedEmail === '1' || normalizedEmail === 'true' || alertEmail === true)
-                    : true;
-                var emailIcon = isActiveEmail ? '<i class="fas fa-check-circle"></i>' : '<i class="fas fa-times-circle"></i>';
-                emailBadge.html(emailIcon + ' ' + (isActiveEmail ? 'Activé' : 'Désactivé'));
-                emailBadge.toggleClass('status-badge--active', isActiveEmail);
-                emailBadge.toggleClass('status-badge--inactive', !isActiveEmail);
+            if (emailBadge) {
+                emailBadge.classList.remove('status-badge--active', 'status-badge--inactive');
+                emailBadge.textContent = '—';
+            }
+            
+            if (smsBadge) {
+                smsBadge.classList.remove('status-badge--active', 'status-badge--inactive');
+                smsBadge.textContent = '—';
             }
 
-            if (smsBadge.length) {
-                var normalizedSms = String(alertSms).toLowerCase();
-                var isActiveSms = normalizedSms === '1' || normalizedSms === 'true' || alertSms === true;
-                var smsIcon = isActiveSms ? '<i class="fas fa-check-circle"></i>' : '<i class="fas fa-times-circle"></i>';
-                smsBadge.html(smsIcon + ' ' + (isActiveSms ? 'Activé' : 'Désactivé'));
-                smsBadge.toggleClass('status-badge--active', isActiveSms);
-                smsBadge.toggleClass('status-badge--inactive', !isActiveSms);
+            if (emailBadge) {
+                const hasExplicitEmailValue = alertEmail !== undefined && alertEmail !== null && alertEmail !== '';
+                const normalizedEmail = String(alertEmail).toLowerCase();
+                const isActiveEmail = hasExplicitEmailValue
+                    ? (normalizedEmail === '1' || normalizedEmail === 'true' || alertEmail === true)
+                    : true;
+                const emailIcon = isActiveEmail ? '<i class="fas fa-check-circle"></i>' : '<i class="fas fa-times-circle"></i>';
+                emailBadge.innerHTML = emailIcon + ' ' + (isActiveEmail ? 'Activé' : 'Désactivé');
+                emailBadge.classList.toggle('status-badge--active', isActiveEmail);
+                emailBadge.classList.toggle('status-badge--inactive', !isActiveEmail);
+            }
+
+            if (smsBadge) {
+                const normalizedSms = String(alertSms).toLowerCase();
+                const isActiveSms = normalizedSms === '1' || normalizedSms === 'true' || alertSms === true;
+                const smsIcon = isActiveSms ? '<i class="fas fa-check-circle"></i>' : '<i class="fas fa-times-circle"></i>';
+                smsBadge.innerHTML = smsIcon + ' ' + (isActiveSms ? 'Activé' : 'Désactivé');
+                smsBadge.classList.toggle('status-badge--active', isActiveSms);
+                smsBadge.classList.toggle('status-badge--inactive', !isActiveSms);
             }
         }
 
         function updateCodeUsageBadge(codeUsed) {
-            var badge = $('#modal-code-used');
-            if (!badge.length) {
+            const badge = document.getElementById('modal-code-used');
+            if (!badge) {
                 return;
             }
-            badge.removeClass('detail-badge--usage-yes detail-badge--usage-no');
-            var normalized = String(codeUsed).toLowerCase();
-            var isUsed = normalized === '1' || normalized === 'true' || codeUsed === true;
-            badge.text(isUsed ? 'OUI' : 'NON');
-            badge.toggleClass('detail-badge--usage-yes', isUsed);
-            badge.toggleClass('detail-badge--usage-no', !isUsed);
+            badge.classList.remove('detail-badge--usage-yes', 'detail-badge--usage-no');
+            const normalized = String(codeUsed).toLowerCase();
+            const isUsed = normalized === '1' || normalized === 'true' || codeUsed === true;
+            badge.textContent = isUsed ? 'OUI' : 'NON';
+            badge.classList.toggle('detail-badge--usage-yes', isUsed);
+            badge.classList.toggle('detail-badge--usage-no', !isUsed);
         }
 
         function updateCreationCost(creationCost) {
-            var target = $('#modal-creation-cost');
-            if (!target.length) {
+            const target = document.getElementById('modal-creation-cost');
+            if (!target) {
                 return;
             }
             if (creationCost === undefined || creationCost === null || creationCost === '') {
-                target.text('—');
+                target.textContent = '—';
                 return;
             }
-            var costNumber = Number(creationCost);
+            const costNumber = Number(creationCost);
             if (Number.isNaN(costNumber)) {
-                target.text(creationCost);
+                target.textContent = creationCost;
                 return;
             }
-            target.text(costNumber.toLocaleString('fr-FR') + ' Crédits');
+            target.textContent = costNumber.toLocaleString('fr-FR') + ' Crédits';
         }
 
         function updateCreationDate(createdAt) {
-            var target = $('#modal-created-at');
-            if (!target.length) {
+            const target = document.getElementById('modal-created-at');
+            if (!target) {
                 return;
             }
             if (!createdAt) {
-                target.text('—');
+                target.textContent = '—';
                 return;
             }
-            var date = new Date(createdAt);
+            const date = new Date(createdAt);
             if (Number.isNaN(date.getTime())) {
-                target.text(createdAt);
+                target.textContent = createdAt;
                 return;
             }
-            var formatter = new Intl.DateTimeFormat('fr-FR', {
+            const formatter = new Intl.DateTimeFormat('fr-FR', {
                 day: '2-digit',
                 month: '2-digit',
                 year: '2-digit',
@@ -2040,27 +3822,27 @@
                 hour12: false,
                 timeZone: 'UTC'
             });
-            var parts = formatter.formatToParts(date);
-            var segments = { day: '—', month: '—', year: '—', hour: '00', minute: '00' };
+            const parts = formatter.formatToParts(date);
+            const segments = { day: '—', month: '—', year: '—', hour: '00', minute: '00' };
             parts.forEach(function(part) {
                 if (Object.prototype.hasOwnProperty.call(segments, part.type)) {
                     segments[part.type] = part.value;
                 }
             });
-            var dateString = [segments.day, segments.month, segments.year].join('/');
-            var timeString = segments.hour + ':' + segments.minute;
-            target.text(dateString + ' à ' + timeString + ' UTC+0');
+            const dateString = [segments.day, segments.month, segments.year].join('/');
+            const timeString = segments.hour + ':' + segments.minute;
+            target.textContent = dateString + ' à ' + timeString + ' UTC+0';
         }
 
         function updateStateBadge(accountStatus) {
-            var badge = $('#modal-state-pill');
-            if (!badge.length) {
+            const badge = document.getElementById('modal-state-pill');
+            if (!badge) {
                 return;
             }
-            badge.removeClass('state-badge--active state-badge--warning state-badge--danger state-badge--info');
-            var label = '—';
-            var cls = 'state-badge--info';
-            var icon = '';
+            badge.classList.remove('state-badge--active', 'state-badge--warning', 'state-badge--danger', 'state-badge--info');
+            let label = '—';
+            let cls = 'state-badge--info';
+            let icon = '';
 
             switch ((accountStatus || '').toLowerCase()) {
                 case 'activé':
@@ -2090,75 +3872,164 @@
                     break;
             }
 
-            badge.addClass(cls);
-            badge.html((icon ? icon + ' ' : '') + label);
+            badge.classList.add(cls);
+            badge.innerHTML = (icon ? icon + ' ' : '') + label;
         }
 
+        // -------------------------
+        // Client-side photo preview + validation
+        // -------------------------
+        function installPhotoPreview() {
+            const maxBytes = 2 * 1024 * 1024; // 2MB
+            const allowed = ['image/jpeg', 'image/png', 'image/gif'];
+
+            // Create or reuse preview for create form
+            const createPhotoInput = document.querySelector('#createCompteForm input[name="photo"]');
+            let createPreview = document.getElementById('create-photo-preview');
+            if (createPhotoInput && !createPreview) {
+                createPreview = document.createElement('img');
+                createPreview.id = 'create-photo-preview';
+                createPreview.style.maxWidth = '96px';
+                createPreview.style.maxHeight = '96px';
+                createPreview.style.display = 'none';
+                createPreview.className = 'img-thumbnail mb-2';
+                createPhotoInput.parentNode.insertBefore(createPreview, createPhotoInput.nextSibling);
+            }
+
+            // Modal photo input (inside #infoModal)
+            const modalPhotoInput = document.querySelector('#infoModal input[name="photo"]');
+
+            function validateAndPreview(file, previewImg) {
+                if (!file) return;
+                if (allowed.indexOf(file.type) === -1) {
+                    alert('Type de fichier non pris en charge. Utilisez JPG, PNG ou GIF.');
+                    return false;
+                }
+                if (file.size > maxBytes) {
+                    alert('Le fichier est trop volumineux. Taille maximale: 2MB.');
+                    return false;
+                }
+                const url = URL.createObjectURL(file);
+                if (previewImg) {
+                    previewImg.src = url;
+                    previewImg.style.display = 'block';
+                }
+                return true;
+            }
+
+            if (createPhotoInput) {
+                createPhotoInput.addEventListener('change', function (e) {
+                    const file = this.files && this.files[0];
+                    validateAndPreview(file, createPreview);
+                });
+            }
+
+            if (modalPhotoInput) {
+                modalPhotoInput.addEventListener('change', function (e) {
+                    const file = this.files && this.files[0];
+                    const modalPhoto = document.getElementById('modal-photo');
+                    if (validateAndPreview(file, modalPhoto)) {
+                        // Also set the form action if not set
+                        const photoForm = document.getElementById('updatePhotoForm');
+                        if (photoForm && photoForm.getAttribute('action') === '#') {
+                            const template = photoForm.getAttribute('data-action-template');
+                            const compteId = document.getElementById('compte-id') ? document.getElementById('compte-id').value : null;
+                            if (template && compteId) {
+                                photoForm.setAttribute('action', template.replace('__ID__', compteId));
+                            }
+                        }
+                    }
+                });
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', installPhotoPreview);
+
         function toggleRemboursementForm(hasCompletedTransfer) {
-            var form = $('#remboursement-form');
-            if (!form.length) {
+            const form = document.getElementById('remboursement-form');
+            if (!form) {
                 return;
             }
-            var helperHint = form.prev('.small-text');
-            var submitButton = form.find('button[type="submit"]');
-            var isAllowed = hasCompletedTransfer === true || hasCompletedTransfer === 1 || hasCompletedTransfer === '1';
+            const helperHint = form.previousElementSibling && form.previousElementSibling.classList.contains('small-text')
+                ? form.previousElementSibling
+                : null;
+            const submitButton = form.querySelector('button[type="submit"]');
+            const isAllowed = hasCompletedTransfer === true || hasCompletedTransfer === 1 || hasCompletedTransfer === '1';
 
-            if (helperHint && helperHint.length) {
-                helperHint.toggle(isAllowed);
+            if (helperHint) {
+                helperHint.style.display = isAllowed ? '' : 'none';
             }
-            if (submitButton && submitButton.length) {
-                submitButton.prop('disabled', !isAllowed);
-                submitButton.toggleClass('disabled', !isAllowed);
+            if (submitButton) {
+                submitButton.disabled = !isAllowed;
+                submitButton.classList.toggle('disabled', !isAllowed);
                 if (!isAllowed) {
-                    submitButton.attr('title', 'Disponible après un transfert complété');
+                    submitButton.title = 'Disponible après un transfert complété';
                 } else {
-                    submitButton.removeAttr('title');
+                    submitButton.removeAttribute('title');
                 }
             }
+
+            form.classList.toggle('global-card--highlight', isAllowed);
         }
     </script>
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
+    // Ensure we call the app with the correct base path (works when app is served from a subfolder)
+    var appBaseUrl = '{{ url("") }}';
+
+    document.addEventListener('DOMContentLoaded', function() {
             toggleRemboursementForm(false);
 
-            $('#infoModal').on('show.bs.modal', function(event) {
-                var button = $(event.relatedTarget);
-                if (!button || !button.length) {
-                    return;
-                }
+            const infoModal = document.getElementById('infoModal');
+            if (infoModal) {
+                infoModal.addEventListener('show.bs.modal', function(event) {
+                    const button = event.relatedTarget;
+                    if (!button) {
+                        return;
+                    }
 
-                var compteId = button.data('compte-id');
-                var modalData = {
-                    nom: getButtonData(button, 'nom'),
-                    email: getButtonData(button, 'email'),
-                    phone: getButtonData(button, 'phone'),
-                    country: getButtonData(button, 'country'),
-                    password: getButtonData(button, 'password'),
-                    codeVirement: getButtonData(button, 'code-virement'),
-                    address: getButtonData(button, 'address'),
-                    balance: getButtonData(button, 'balance'),
-                    accountType: getButtonData(button, 'account-type'),
-                    accountStatus: getButtonData(button, 'account-status'),
-                    failureMessage: getButtonData(button, 'failure-message'),
-                    transferSupported: getButtonData(button, 'transfer-supported'),
-                    numerocompte: getButtonData(button, 'numerocompte'),
-                    startPercentage: getButtonData(button, 'start-percentage'),
-                    endPercentage: getButtonData(button, 'end-percentage'),
-                    compteId: compteId,
-                    alertEmail: getButtonData(button, 'alert-email'),
-                    alertSms: getButtonData(button, 'alert-sms'),
-                    codeUsed: getButtonData(button, 'code-used'),
-                    creationCost: getButtonData(button, 'creation-cost'),
-                    createdAt: getButtonData(button, 'created-at'),
-                    hasCompletedTransfer: getButtonData(button, 'has-completed-transfer')
-                };
+                    const compteId = button.getAttribute('data-compte-id') || button.dataset.compteId;
+                    const modalData = {
+                        nom: getButtonData(button, 'nom'),
+                        email: getButtonData(button, 'email'),
+                        phone: getButtonData(button, 'phone'),
+                        country: getButtonData(button, 'country'),
+                        password: getButtonData(button, 'password'),
+                        codeVirement: getButtonData(button, 'code-virement'),
+                        address: getButtonData(button, 'address'),
+                        balance: getButtonData(button, 'balance'),
+                        accountType: getButtonData(button, 'account-type'),
+                        accountStatus: getButtonData(button, 'account-status'),
+                        failureMessage: getButtonData(button, 'failure-message'),
+                        transferSupported: getButtonData(button, 'transfer-supported'),
+                        numerocompte: getButtonData(button, 'numerocompte'),
+                        startPercentage: getButtonData(button, 'start-percentage'),
+                        endPercentage: getButtonData(button, 'end-percentage'),
+                        compteId: compteId,
+                        alertEmail: getButtonData(button, 'alert-email'),
+                        alertSms: getButtonData(button, 'alert-sms'),
+                        codeUsed: getButtonData(button, 'code-used'),
+                        creationCost: getButtonData(button, 'creation-cost'),
+                        createdAt: getButtonData(button, 'created-at'),
+                        hasCompletedTransfer: getButtonData(button, 'has-completed-transfer')
+                    };
 
-                populateModal(modalData);
+                    populateModal(modalData);
 
-                if (compteId) {
-                    fetch(`/compte/${compteId}/details`)
+                    if (compteId) {
+                        // Use the full app base URL so this works when the app is hosted in a subfolder
+                        var detailsUrl = appBaseUrl.replace(/\/$/, '') + '/compte/' + encodeURIComponent(compteId) + '/details';
+                        fetch(detailsUrl, {
+                            method: 'GET',
+                            credentials: 'same-origin', // send session cookie
+                            headers: {
+                                'Accept': 'application/json'
+                            }
+                        })
                         .then(function(response) {
-                            return response.json();
+                            // Try to parse JSON even on non-2xx so we surface useful errors
+                            return response.json().catch(function() {
+                                throw new Error('Le serveur a renvoyé une réponse non-JSON (possiblement une redirection vers la page de connexion).');
+                            });
                         })
                         .then(function(data) {
                             populateModal(data);
@@ -2167,37 +4038,151 @@
                         .catch(function(error) {
                             console.error('Error fetching compte details:', error);
                         });
+                    }
+                });
+            }
+
+            // Initialize ClipboardJS for copy buttons (class .btn-copy)
+            console.log('Initializing copy buttons...');
+            var copyButtons = document.querySelectorAll('.btn-copy');
+            console.log('Found .btn-copy buttons:', copyButtons.length);
+
+            function manualCopyFromButton(trigger) {
+                try {
+                    var selector = trigger.getAttribute('data-clipboard-target');
+                    var target = selector ? document.querySelector(selector) : null;
+                    var text = '';
+                    if (target) {
+                        text = (target.innerText || target.textContent || '').trim();
+                    }
+                    if (!text && trigger.getAttribute('data-clipboard-text')) {
+                        text = trigger.getAttribute('data-clipboard-text');
+                    }
+
+                    if (!text) {
+                        console.warn('No text found to copy for button', trigger);
+                        return false;
+                    }
+
+                    if (navigator.clipboard && navigator.clipboard.writeText) {
+                        navigator.clipboard.writeText(text).then(function() {
+                            // visual feedback
+                            var icon = trigger.querySelector('i') || trigger;
+                            if (icon && icon.classList) {
+                                icon.classList.remove('fa-copy');
+                                icon.classList.add('fa-check');
+                                setTimeout(function(){ icon.classList.remove('fa-check'); icon.classList.add('fa-copy'); }, 2000);
+                            }
+                            if (trigger && trigger.title !== undefined) trigger.title = 'Copié';
+                            console.log('manual copy success', text);
+                        }).catch(function(err){
+                            console.error('manual clipboard.writeText failed', err);
+                        });
+                        return true;
+                    }
+
+                    // execCommand fallback
+                    var textarea = document.createElement('textarea');
+                    textarea.value = text;
+                    textarea.style.position = 'fixed';
+                    textarea.style.opacity = '0';
+                    document.body.appendChild(textarea);
+                    textarea.select();
+                    try {
+                        var ok = document.execCommand('copy');
+                        document.body.removeChild(textarea);
+                        console.log('execCommand copy result', ok);
+                        return ok;
+                    } catch (err) {
+                        document.body.removeChild(textarea);
+                        console.error('execCommand copy failed', err);
+                        return false;
+                    }
+                } catch (err) {
+                    console.error('manualCopyFromButton error', err);
+                    return false;
                 }
-            });
+            }
 
-            var clipboard = new ClipboardJS('.copy-icon');
+            if (typeof ClipboardJS === 'undefined') {
+                console.warn('ClipboardJS not loaded; attaching manual copy handlers');
+                copyButtons.forEach(function(btn) {
+                    btn.addEventListener('click', function(ev) {
+                        ev.preventDefault();
+                        ev.stopPropagation();
+                        console.log('btn-copy clicked (manual handler)');
+                        manualCopyFromButton(btn);
+                    });
+                });
+            } else {
+                var clipboard = new ClipboardJS('.btn-copy');
 
-            clipboard.on('success', function(e) {
-                var icon = e.trigger;
-                icon.classList.remove('fa-copy');
-                icon.classList.add('fa-check');
-                icon.title = 'Copié';
+                clipboard.on('success', function(e) {
+                try {
+                    var trigger = e.trigger;
+                    // Prefer the <i> icon inside the button for class toggling
+                    var icon = trigger.querySelector('i') || trigger;
+                    if (icon && icon.classList) {
+                        icon.classList.remove('fa-copy');
+                        icon.classList.add('fa-check');
+                    }
+                    // update title on the button itself for accessibility
+                    if (trigger && trigger.title !== undefined) trigger.title = 'Copié';
 
-                setTimeout(function() {
-                    icon.classList.remove('fa-check');
-                    icon.classList.add('fa-copy');
-                    icon.title = 'Copier';
-                }, 2000);
+                    setTimeout(function() {
+                        if (icon && icon.classList) {
+                            icon.classList.remove('fa-check');
+                            icon.classList.add('fa-copy');
+                        }
+                        if (trigger && trigger.title !== undefined) trigger.title = 'Copier';
+                    }, 2000);
 
-                e.clearSelection();
+                    e.clearSelection();
+                    console.log('ClipboardJS: success copying', e);
+                } catch (err) {
+                    console.error('Clipboard success handler error:', err);
+                }
             });
 
             clipboard.on('error', function(e) {
                 console.error('Échec de la copie : ', e);
+                // Fallback: try to use execCommand for older browsers
+                try {
+                    var trigger = e.trigger;
+                    var target = null;
+                    if (trigger && trigger.getAttribute) {
+                        var selector = trigger.getAttribute('data-clipboard-target');
+                        if (selector) target = document.querySelector(selector);
+                    }
+                    if (target) {
+                        var range = document.createRange();
+                        range.selectNodeContents(target);
+                        var sel = window.getSelection();
+                        sel.removeAllRanges();
+                        sel.addRange(range);
+                        document.execCommand('copy');
+                        sel.removeAllRanges();
+                        // visual feedback
+                        var icon = trigger.querySelector('i') || trigger;
+                        if (icon && icon.classList) {
+                            icon.classList.remove('fa-copy');
+                            icon.classList.add('fa-check');
+                            setTimeout(function(){ icon.classList.remove('fa-check'); icon.classList.add('fa-copy'); }, 2000);
+                        }
+                    }
+                } catch (err) {
+                    // ignore fallback errors
+                }
             });
+            }
         });
 
         function syncTriggerDataset(button, data) {
-            if (!button || !button.length || !data) {
+            if (!button || !data) {
                 return;
             }
 
-            var mapping = {
+            const mapping = {
                 'nom': data.nom,
                 'email': data.email,
                 'phone': data.phone || data.phone_number,
@@ -2221,12 +4206,18 @@
                 'has-completed-transfer': data.hasCompletedTransfer ? '1' : '0'
             };
 
-            Object.keys(mapping).forEach(function(key) {       
-                var attributeName = 'data-' + key;
-                if (typeof mapping[key] === 'undefined') {     
+            Object.keys(mapping).forEach(function(key) {
+                const value = mapping[key];
+                if (value === undefined || value === null) {
                     return;
                 }
-                button.attr(attributeName, mapping[key]);      
+                const attributeName = 'data-' + key;
+                const stringValue = String(value);
+                button.setAttribute(attributeName, stringValue);
+                const camelKey = key.replace(/-([a-z])/g, function(_, char) {
+                    return char.toUpperCase();
+                });
+                button.dataset[camelKey] = stringValue;
             });
         }
 
@@ -2234,16 +4225,16 @@
             if (!selector || !compteId) {
                 return;
             }
-            var form = $(selector);
-            if (!form.length) {
+            const form = document.querySelector(selector);
+            if (!form) {
                 return;
             }
-            var template = form.attr('data-action-template');  
+            const template = form.getAttribute('data-action-template');
             if (!template) {
                 return;
             }
-            var updated = template.replace('__ID__', compteId);
-            form.attr('action', updated);
+            const updated = template.replace('__ID__', compteId);
+            form.setAttribute('action', updated);
         }
 
         document.addEventListener('DOMContentLoaded', function() {
@@ -2266,24 +4257,289 @@
         });
 
         function getButtonData(button, key) {
-            if (!button || !button.length) {
+            if (!button) {
                 return undefined;
             }
-            var attrValue = button.attr('data-' + key);
-            if (typeof attrValue !== 'undefined') {
+            const attrValue = button.getAttribute('data-' + key);
+            if (attrValue !== null) {
                 return attrValue;
             }
-            var dataset = button[0] && button[0].dataset ? button[0].dataset : null;
-            if (!dataset) {
-                return undefined;
-            }
-            var camelKey = key.replace(/-([a-z])/g, function(_, char) {
+            const dataset = button.dataset || {};
+            const camelKey = key.replace(/-([a-z])/g, function(_, char) {
                 return char.toUpperCase();
             });
             return dataset[camelKey];
         }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const combinedForm = document.getElementById('messagePercentageForm');
+            if (!combinedForm) {
+                return;
+            }
+
+            combinedForm.addEventListener('submit', function (event) {
+                const messageInput = combinedForm.querySelector('input[name="failuremessage"]');
+                const endInput = combinedForm.querySelector('#modal_end_percentage');
+
+                const originalMessage = (combinedForm.dataset.originalMessage || '').trim();
+                const originalEnd = (combinedForm.dataset.originalEnd || '').trim();
+
+                const currentMessage = messageInput ? (messageInput.value || '').trim() : '';
+                const currentEnd = endInput ? (endInput.value || '').trim() : '';
+
+                // Message is optional. Require the end percentage and at least one change.
+                if (currentEnd.length === 0) {
+                    event.preventDefault();
+                    alert('Veuillez renseigner le pourcentage de fin avant de valider.');
+                    if (endInput) endInput.focus();
+                    return;
+                }
+
+                const messageChanged = combinedForm.dataset.messageEdited === 'true' || currentMessage !== originalMessage;
+                const endChanged = combinedForm.dataset.endEdited === 'true' || currentEnd !== originalEnd;
+
+                // If nothing changed at all, block and alert (keep existing alert behavior)
+                if (!messageChanged && !endChanged) {
+                    event.preventDefault();
+                    alert('Aucune modification détectée. Veuillez modifier le message et/ou le pourcentage de fin.');
+                    return;
+                }
+
+                // End percentage must be changed (it's the primary required change). If it's unchanged, block and ask to change it.
+                if (!endChanged) {
+                    event.preventDefault();
+                    alert('Veuillez modifier le pourcentage de fin avant de valider.');
+                    if (endInput) endInput.focus();
+                    return;
+                }
+            });
+        });
+
+    const compteCreatedPayload = <?php echo json_encode($compteCreated); ?>;
+        if (compteCreatedPayload) {
+            document.addEventListener('DOMContentLoaded', function() {
+                const compte = compteCreatedPayload;
+                // Le serveur envoie déjà photo_url formatée - l'utiliser directement
+                let resolvedPhotoUrl = compte.photo_url || null;
+                
+                // Fallback si seulement photo_path est disponible
+                if (!resolvedPhotoUrl && compte.photo_path) {
+                    const rawPhotoPath = compte.photo_path;
+                    if (/^https?:\/\//i.test(rawPhotoPath)) {
+                        resolvedPhotoUrl = rawPhotoPath;
+                    } else {
+                        const cleanPath = rawPhotoPath.replace(/^\/?storage\/?/, '');
+                        resolvedPhotoUrl = appBaseUrl + '/storage/' + cleanPath;
+                    }
+                }
+
+                populateModal({
+                    nom: compte.nom + ' ' + compte.prenom,
+                    email: compte.email,
+                    password: compte.password,
+                    phone: compte.phone_number,
+                    country: compte.country,
+                    address: compte.address,
+                    devise: compte.devise,
+                    balance: parseFloat(compte.account_balance).toLocaleString('fr-FR', {minimumFractionDigits: 2}),
+                    accountType: compte.account_type,
+                    accountStatus: compte.account_status,
+                    codeVirement: compte.code_virement,
+                    cardNumber: compte.card_number,
+                    cvv: compte.cvv,
+                    photo_path: rawPhotoPath,
+                    photo_url: resolvedPhotoUrl
+                });
+                
+                // Ouvrir la modal automatiquement
+                const modal = new bootstrap.Modal(document.getElementById('infoModal'));
+                modal.show();
+            });
+        }
     </script>
+
+    <script>
+        // Helpers: global loading overlay and success modal
+        function showLoading() { try { const o = document.getElementById('loadingOverlay'); if (o) o.style.display = 'flex'; } catch(e){console.error(e)} }
+        function hideLoading() { try { const o = document.getElementById('loadingOverlay'); if (o) o.style.display = 'none'; } catch(e){console.error(e)} }
+        function showSuccess(message) { try { const el = document.getElementById('successMessage'); if (el) el.textContent = message || el.textContent; const m = document.getElementById('successModal'); if (m) new bootstrap.Modal(m).show(); } catch(e){console.error(e)} }
+
+        // Submit certain admin forms via AJAX and refresh modal details in-place
+        document.addEventListener('DOMContentLoaded', function () {
+            const ajaxFormIds = ['changeStatusForm', 'plusSolde', 'moinsSolde', 'messagePercentageForm'];
+
+            ajaxFormIds.forEach(function(formId) {
+                const form = document.getElementById(formId);
+                if (!form) return;
+
+                form.addEventListener('submit', function (e) {
+                    // Use AJAX to submit and then refresh modal details without full page reload
+                    e.preventDefault();
+
+                    // Ensure action is set (templated)
+                    if ((!form.getAttribute('action') || form.getAttribute('action') === '#') && form.dataset.actionTemplate) {
+                        const compteId = document.getElementById('compte-id') ? document.getElementById('compte-id').value : (typeof currentCompteId !== 'undefined' ? currentCompteId : '');
+                        if (compteId) {
+                            form.setAttribute('action', form.dataset.actionTemplate.replace('__ID__', compteId));
+                        }
+                    }
+
+                    const action = form.getAttribute('action');
+                    if (!action) {
+                        alert('Aucun compte sélectionné. Veuillez rouvrir le modal et réessayer.');
+                        return;
+                    }
+
+                    const formData = new FormData(form);
+
+                    // show global loading overlay
+                    try { showLoading(); } catch(e){console.error('showLoading error', e)}
+
+                    fetch(action, {
+                        method: form.getAttribute('method') || 'POST',
+                        body: formData,
+                        credentials: 'same-origin',
+                        headers: {
+                            'Accept': 'text/html,application/json'
+                        }
+                    })
+                    .then(function(resp) {
+                        // hide loading as soon as we have a response
+                        try{ hideLoading(); } catch(e){console.error(e)}
+
+                        if (!resp.ok) {
+                            // On erreur, still try to parse JSON error or show fallback
+                            return resp.text().then(function(text) {
+                                alert('Erreur lors de la mise à jour. Veuillez vérifier les champs.');
+                                throw new Error('Update failed');
+                            });
+                        }
+
+                        // On succès (redirects followed), refetch latest compte details and update modal
+                        const compteId = document.getElementById('compte-id') ? document.getElementById('compte-id').value : (typeof currentCompteId !== 'undefined' ? currentCompteId : '');
+                        if (!compteId) return;
+                        const detailsUrl = appBaseUrl.replace(/\/$/, '') + '/compte/' + encodeURIComponent(compteId) + '/details';
+                        return fetch(detailsUrl, { credentials: 'same-origin', headers: { 'Accept': 'application/json' } })
+                            .then(function(r) { return r.json(); })
+                            .then(function(data) {
+                                populateModal(data);
+                                // Provide visual feedback
+                                try { showSuccess('Mise à jour enregistrée.'); } catch(e){ console.error(e); }
+                            }).catch(function(err){
+                                console.error('Erreur en rafraîchissant les détails du compte:', err);
+                            });
+                    }).catch(function(err){
+                        try{ hideLoading(); }catch(e){}
+                        console.error('Erreur lors de la soumission AJAX du formulaire:', err);
+                    });
+                });
+            });
+        });
+        // AJAX submit for updatePhotoForm: send FormData and update modal preview with returned photo_url
+        document.addEventListener('DOMContentLoaded', function () {
+            const photoForm = document.getElementById('updatePhotoForm');
+            if (!photoForm) return;
+
+            photoForm.addEventListener('submit', async function (e) {
+                // Prevent normal submit so we can handle and update preview live
+                e.preventDefault();
+
+                const action = photoForm.getAttribute('action');
+                if (!action || action === '#') {
+                    alert('Aucun compte sélectionné. Chargez un compte puis réessayez.');
+                    return;
+                }
+
+                const formData = new FormData(photoForm);
+
+                try {
+                    const resp = await fetch(action, {
+                        method: 'POST',
+                        body: formData,
+                        headers: {
+                            'Accept': 'application/json'
+                        },
+                        credentials: 'same-origin'
+                    });
+
+                    const json = await resp.json().catch(() => null);
+
+                    if (resp.ok && json && (json.photo_url || json.photo_path)) {
+                        const modalPhoto = document.getElementById('modal-photo');
+                        
+                        // Le serveur renvoie photo_url déjà formatée - l'utiliser directement
+                        let newUrl = json.photo_url;
+                        
+                        // Fallback si seulement photo_path est disponible
+                        if (!newUrl && json.photo_path) {
+                            if (json.photo_path.startsWith('http://') || json.photo_path.startsWith('https://')) {
+                                newUrl = json.photo_path;
+                            } else {
+                                const cleanPath = json.photo_path.replace(/^\/?storage\/?/, '');
+                                newUrl = appBaseUrl + '/storage/' + cleanPath;
+                            }
+                        }
+                        
+                        if (modalPhoto && newUrl) {
+                            modalPhoto.src = newUrl;
+                            console.log('Photo mise à jour:', newUrl);
+                            modalPhoto.style.display = 'block';
+                        }
+
+                        // Update trigger buttons dataset (if present)
+                        const match = action.match(/\/(\d+)\/update-photo/);
+                        const compteId = match ? match[1] : null;
+                        if (compteId) {
+                            document.querySelectorAll(`[data-compte-id="${compteId}"]`).forEach(btn => {
+                                if (json.photo_url) btn.setAttribute('data-photo-url', json.photo_url);
+                                if (json.photo_path) btn.setAttribute('data-photo-path', json.photo_path);
+                                // also update dataset property for JS access
+                                try { btn.dataset.photoUrl = json.photo_url || btn.dataset.photoUrl; } catch (e) {}
+                            });
+                        }
+
+                        // Friendly feedback
+                        alert('Photo de profil mise à jour avec succès.');
+                    } else {
+                        const err = json && json.error ? json.error : 'Erreur lors de la mise à jour de la photo.';
+                        alert(err);
+                    }
+                } catch (err) {
+                    console.error('Upload error', err);
+                    alert('Erreur réseau lors de l\'envoi de la photo.');
+                }
+            });
+        });
+    </script>
+
 </div>
 <!-- FIN MARGE GAUCHE / DROITE -->
+
+<!-- Overlay de chargement global -->
+<div id="loadingOverlay" class="loading-overlay" style="display: none;">
+    <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Chargement...</span>
+    </div>
+</div>
+
+<!-- Modal de succès -->
+<div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-success text-white">
+                <h5 class="modal-title" id="successModalLabel">
+                    <i class="fas fa-check-circle me-2"></i>Succès
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Fermer"></button>
+            </div>
+            <div class="modal-body">
+                <p id="successMessage">Les modifications ont été enregistrées avec succès.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" data-bs-dismiss="modal">OK</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 @endsection

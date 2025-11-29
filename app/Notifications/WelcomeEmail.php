@@ -17,10 +17,6 @@ class WelcomeEmail extends Notification
      *
      * @return void
      */
-    public function __construct()
-    {
-        //
-    }
 
     /**
      * Get the notification's delivery channels.
@@ -39,11 +35,18 @@ class WelcomeEmail extends Notification
      * @param  mixed  $notifiable
      * @return \Illuminate\Notifications\Messages\MailMessage
      */
+    protected $plainPassword;
+
+    public function __construct($plainPassword = null)
+    {
+        $this->plainPassword = $plainPassword;
+    }
+
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->view('emails.welcome', ['user' => $notifiable])
-            ->subject('Bienvenue à TRANSFERTCASH ');
+            ->view('emails.welcome', ['user' => $notifiable, 'plain_password' => $this->plainPassword])
+            ->subject('Bienvenue à FLASH COMPTE ');
     }
 
     /**

@@ -1,79 +1,52 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="fr">
 <head>
-    <title>Bienvenue sur {{ config('app.name') }}</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            color: #333;
-            margin: 0;
-            padding: 0;
-        }
-
-        .container {
-            width: 100%;
-            max-width: 600px;
-            margin: 0 auto;
-            background-color: #fff;
-            padding: 20px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .header {
-            background-color: #673ab7;
-            color: #fff;
-            padding: 20px;
-            text-align: center;
-        }
-
-        .header h1 {
-            margin: 0;
-        }
-
-        .content {
-            padding: 20px;
-        }
-
-        .content p {
-            margin: 10px 0;
-        }
-
-        .button {
-            display: inline-block;
-            padding: 10px 20px;
-            margin: 20px 0;
-            background-color: #673ab7;
-            color: #fff;
-            text-decoration: none;
-            border-radius: 5px;
-        }
-
-        .footer {
-            text-align: center;
-            padding: 20px;
-            font-size: 12px;
-            color: #777;
-        }
-    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ __('emails.welcome_title') }} - {{ __('emails.footer_brand') }}</title>
+    <style>body{margin:0;padding:0}</style>
 </head>
-
-<body>
-    <div class="container">
-        <div class="header">
-            <h1>Bienvenue sur {{ config('app.name') }}</h1>
-        </div>
-        <div class="content">
-            <p>Bonjour {{ $user->nom.' '.$user->prenom }},</p>
-            <p>Merci d’avoir créé un compte sur {{ config('app.name') }}. Votre identifiant est <strong>{{ $user->email }}</strong>.</p>
-            <p>Vous pouvez accéder à l'espace membre de votre compte pour visualiser nos services,
-            <p>Au plaisir de vous revoir pour nos services.</p>
-        </div>
-        <div class="footer">
-            <p>Merci d'utiliser {{ config('app.name') }} !</p>
-        </div>
-    </div>
+<body style="margin:0;padding:20px;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);font-family:Segoe UI, Tahoma, Geneva, Verdana, sans-serif;">
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border-collapse:collapse;">
+        <tr>
+            <td align="center">
+                <table role="presentation" width="600" cellpadding="0" cellspacing="0" style="background:#fff;border-radius:12px;overflow:hidden;">
+                    <tr>
+                        <td style="background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);padding:24px;text-align:center;color:#fff;font-weight:700;">{{ __('emails.welcome_heading') }}</td>
+                    </tr>
+                    <tr>
+                        <td style="padding:24px;color:#333;">
+                            <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
+                                <tr>
+                                    <td style="text-align:center;padding-bottom:12px;"><div style="display:inline-block;width:80px;height:80px;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);border-radius:50%;line-height:80px;font-size:40px;color:#fff;"><span class="notranslate">👋</span></div></td>
+                                </tr>
+                                <tr>
+                                    <td style="font-size:18px;font-weight:600;padding-bottom:12px;">{{ __('emails.greeting', ['name' => $user->nom.' '.$user->prenom]) }}</td>
+                                </tr>
+                                <tr>
+                                    <td style="font-size:15px;color:#555;padding-bottom:16px;">{{ __('emails.welcome_message') }}</td>
+                                </tr>
+                                <tr>
+                                    <td style="background:#f5f7fa;border-left:4px solid #667eea;padding:14px;border-radius:8px;margin-bottom:12px;">
+                                        <div style="font-weight:700;margin-bottom:8px;"><span class="notranslate">📧</span> {{ __('emails.login_credentials_title') }}</div>
+                                        <div style="font-family:Courier New,monospace;color:#667eea;font-weight:700;font-size:16px;">{{ $user->email }}</div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding-top:12px;color:#555;">{{ __('emails.access_member_area') }}</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding-top:18px;text-align:center;color:#555;">{{ __('emails.pleasure_to_assist') }}</td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="background:#f8f9fa;padding:18px;text-align:center;color:#777;font-size:13px;">{{ __('emails.footer_thanks') }}<div style="font-weight:700;color:#667eea;margin-top:6px;">{{ __('emails.footer_brand') }}</div></td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
 </body>
-
 </html>

@@ -35,8 +35,8 @@ class CompteCreeMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            from: new Address('transfertscash@gmail.com', 'TRANSFERCASH'),
-            subject: ' Ouverture de compte'. config('app.name'),
+            from: new Address('fluxbank37@gmail.com', 'TRANSFERFLUX'),
+            subject: __('emails.compte_created_subject'),
         );
     }
 

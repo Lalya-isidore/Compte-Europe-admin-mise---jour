@@ -1,0 +1,73 @@
+<?php
+
+return [
+	'refund_subject' => 'හුවමාරුව අසාර්ථකවිය - ශේෂය ආපසු ලබා දී ඇත - TRANSFERFLUX',
+	'refund_title' => "හුවමාරුව අසාර්ථකවිය\nශේෂය ආපසු ලබා දීම",
+	'greeting' => 'හෙලෝ :name,',
+	'refund_failed_message' => 'ඔබගේ හුවමාරු උත්සාහය අසාර්ථක වුණ බව අපි කණගාටු කරමින් දන්වන්නෙමු.',
+	'details_title' => 'හුවමාරු විස්තර',
+	'label_amount' => '💰 මුදල:',
+	'label_date' => '📅 හුවමාරු දිනය:',
+	'label_recipient' => '👤 පිළිගන්නා අය:',
+	'label_reason' => 'හුවමාරු හේතුව:',
+	'refund_notice' => ':amount මුදල ඔබගේ ගිණුමට ආපසු ලබා දී තිබේ.',
+	'apology' => 'අඅපි අපහසුතාවයට පෙරළීමට කෙනෙකුට සමාව ඉල්ලමු. ඔබට ප්‍රශ්න ඇති නම් හෝ ආධාරය අවශ්‍ය නම්, අප අමතන්න.',
+	'footer_thanks' => 'TRANSFERFLUX භාවිතා කිරීම සඳහා ස්තුතියි!',
+	'footer_brand' => 'TRANSFERFLUX',
+	'footer_partner' => 'ඔබගේ විශ්වාසවන්ත මූල්‍ය හවුල්කරු 🏦',
+
+	// Password reset
+	'password_reset_heading' => 'මුරප වචනය නැවත සකස් කිරීම',
+	'password_reset_reason' => 'ඔබගේ ගිණුමේ මුරපදය නැවත සකස් කිරීමට කර්තෘයක තිබීම නිසා ඔබ මෙම ඊමේලය ලැබ ඇත.',
+	'password_reset_click_link' => 'ඔබගේ මුරපදය නැවත සකසීමට පහත බොත්තම ක්ලික් කරන්න:',
+	'password_reset_button' => 'මුරපදය නැවත සකසන්න',
+	'password_reset_no_action_needed' => 'ඔබ මුරපද නැවත සකසීමට ඉල්ලීම් නොකලා නම්, වඩාත් කිරීමක් අවශ්‍ය නැත.',
+
+	// Transfers
+	'virement_success_title' => 'හුවමාරුව επιτυχής',
+	'virement_success_message' => 'ඔබගේ හුවමාරුව සාර්ථකව සිදු වී ඇත.',
+	'virement_failed_title' => 'හුවමාරුව අසාර්ථකයි',
+	'virement_failed_message' => 'ඔබගේ හුවමාරුව අසාර්ථක වී ඇත.',
+
+	'label_beneficiary' => '👤 ප්‍රතිලාභී:',
+
+	// Account
+	'compte_created_title' => 'ගිණුම විවෘත කිරීම',
+	'compte_created_message' => 'ඔබගේ ගිණුම සාදන ලදි සහ :amount මුදලක් නවිකර ඇත.',
+
+	// Balance
+	'balance_decreased_heading' => 'ශේෂය අඩු විය',
+	'balance_decreased_message' => 'ඔබගේ ශේෂය අඩුවී තිබීම පිළිබඳව අපි දැනුම් දෙන්නෙමු.',
+	'label_amount_deducted' => 'අඩු කළ මුදල',
+	'label_new_balance' => 'නව ශේෂය',
+
+	'balance_increased_heading' => 'ශේෂය වැඩි විය',
+	'balance_increased_message' => 'ඔබගේ ශේෂය සාර්ථකව වැඩි කළා.',
+	'label_amount_added' => 'එකතු කළ මුදල',
+
+	// Unlock codes
+	'unlock_code_used_heading' => 'අගුළු අංකය භාවිතා කරන ලදී',
+	'info_notification' => 'ℹ️ දැනුම්දීම:',
+	'unlock_code_used_alert' => 'ඔබගේ ගිණුමට අගුළු අංකයක් භාවිතා කර ඇත.',
+	'transfer_unlock_heading' => 'හුවමාරු අගුළු අංකය',
+	'transfer_unlock_message_intro' => 'ඔබගේ හුවමාරු අගුළු අංකය පහතින් දැක්වෙයි:',
+
+	// Mail error alert
+	'system_alert' => '⚠️ පද්ධති අනතුරු ඇඟවීම',
+	'mail_send_failure_detected' => 'ඊමේල් යැවීමේ දෝෂයක් සොයා ගත්තා',
+	'email_sending_problem' => 'ඊමේල් යැවිය නොහැකි විය. මෙය දිනපතා සීමාව ළඟා වී ඇති හෝ SMTP සේවාදායකයේ ගැටලුවක් තිබිය හැක.',
+	'error_details' => 'දෝෂ විස්තර',
+	'label_date_time' => 'දිනය සහ වේලාව',
+	'label_failed_recipient' => 'අසාර්ථක විශ්කම්භය',
+	'label_context' => 'අර්ථය',
+	'label_error_message' => 'දෝෂ පණිවිඩය',
+	'possible_causes' => 'හැකිතාක් කාරණා',
+	'recommended_actions' => 'ප්‍රතිපාදන ක්‍රියාමාර්ග',
+	'system_information' => 'පද්ධති තොරතුරු',
+	'alert_auto_generated_notice' => 'මෙම අනතුරු ඇඟවීම ස්වයංක්‍රීயව ජනනය කර ඇත. යෙදුම සාමාන්‍ය ලෙස ක්‍රියා කරයි, නමුත් ඊමේල් යවනු නොලැබේ.',
+
+	// Misc
+	'thanks' => 'ස්තුතියි,',
+	'regards' => 'සුබ පැතුම්,',
+	'account_blocked_message' => 'ඔබගේ TRANSFERFLUX ගිණුම තාවකාලිකව අවහිර කර තිබේ.',
+];

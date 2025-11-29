@@ -1,0 +1,111 @@
+<?php
+
+// DRAFT: 机器翻译（简体中文），请母语者校对。
+// 本文件包含 `fr/emails.php` 中所有键的机器翻译草稿。
+return [
+	// 账户创建
+	'compte_created_subject' => '账户创建 - TRANSFERFLUX',
+	'compte_created_title' => '在 TRANSFERFLUX 上创建账户',
+	'greeting' => '您好 :name，',
+	'compte_created_message' => '我们已成功为您创建账户，初始余额为 :amount。',
+	'credentials_title' => '您的登录凭证：',
+	'label_email' => '📧 电子邮件：',
+	'label_password' => '🔑 密码：',
+	'label_initial_balance' => '💰 初始余额：',
+	'cta_login' => '登录到您的账户',
+	'info_access' => '您现在可以登录并使用我们的服务。',
+	'support_contact' => '如需帮助，请联系我们的支持团队。',
+	'footer_thanks' => '感谢使用 TRANSFERFLUX！',
+	'footer_brand' => 'TRANSFERFLUX',
+
+	// 转账成功
+	'virement_success_subject' => '转账成功 - TRANSFERFLUX',
+	'virement_success_title' => '转账成功',
+	'virement_success_message' => '我们已成功处理您的转账。',
+
+	// 转账失败
+	'virement_failed_subject' => '转账失败 - TRANSFERFLUX',
+	'virement_failed_title' => '转账失败',
+	'virement_failed_message' => '抱歉，您的转账未能完成。',
+
+	// 详情与标签
+	'details_title' => '转账详情',
+	'label_amount' => '💰 金额 :',
+	'label_date' => '📅 日期 :',
+	'label_beneficiary' => '👤 收款人 :',
+	'virement_notice' => '转账将在 1-3 个工作日内处理。',
+	'thanks' => '感谢您，',
+	'contact_support_for_info' => '如需更多信息，请联系客户支持。',
+
+	// Footer / common
+	'footer_brand' => 'TRANSFERFLUX',
+	'footer_partner' => '您值得信赖的金融合作伙伴 🏦',
+	'regards' => '此致，',
+	'service_client' => '客户服务',
+	'auto_generated_notice' => '此邮件为系统自动发送，请勿直接回复。',
+
+	// 账户已激活
+	'compte_activated_title' => '账户已激活 - TRANSFERFLUX',
+	'compte_activated_heading' => '账户已成功激活',
+	'compte_activated_message' => '您的 TRANSFERFLUX 账户已激活并可使用。',
+	'good_news' => '✅ 好消息：',
+	'compte_activated_explanation' => '现在您可以安全地进行所有交易。',
+
+	// 解锁码相关
+	'unlock_code_used_title' => '解锁码已使用 - TRANSFERFLUX',
+	'unlock_code_used_heading' => '解锁码已使用',
+	'unlock_code_used_alert' => '您的账户使用了一个解锁码。',
+	'label_date_time' => '日期和时间',
+	'label_transfer_amount' => '转账金额',
+	'label_recipient' => '收款人',
+	'urgent_if_not_you' => '⚠️ 如果不是您操作，请立即：',
+	'contact_support_immediately' => '立即联系客户支持',
+
+	// 解锁码发送
+	'transfer_unlock_code_title' => '解锁码 - TRANSFERFLUX',
+	'transfer_unlock_heading' => '转账解锁码',
+	'transfer_unlock_message_intro' => '您的转账解锁码如下：',
+	'transfer_unlock_code_label' => '代码为 :',
+	'do_not_share_unlock_code' => '请勿分享您的代码！',
+
+	// 欢迎
+	'welcome_title' => '欢迎 - TRANSFERFLUX',
+	'welcome_heading' => '欢迎加入',
+	'welcome_message' => '感谢您创建账户，我们很高兴为您服务。',
+
+	// 余额变动
+	'balance_decreased_title' => '余额减少 - TRANSFERFLUX',
+	'balance_decreased_heading' => '余额减少',
+	'balance_decreased_message' => '通知您，您的余额已减少。',
+	'operation_details' => '操作详情',
+	'label_amount_deducted' => '扣除金额',
+	'label_new_balance' => '新的余额',
+	'contact_us_if_questions' => '如有疑问或需要帮助，请联系我们。',
+
+	'balance_increased_title' => '余额增加',
+	'balance_increased_heading' => '余额增加',
+	'balance_increased_message' => '通知您，您的余额已成功增加。',
+	'label_amount_added' => '增加金额',
+
+	// 退款
+	'refund_title' => '退款 - TRANSFERFLUX',
+	'refund_heading' => '转账失败',
+	'refund_subject' => '转账失败 - 退款已入账 - TRANSFERFLUX',
+	'refund_failed_message' => ':amount 已退回到您的账户。',
+
+	// 邮件错误报警
+	'mail_error_alert_title' => '邮件发送错误报警',
+	'system_alert' => '⚠️ 系统报警',
+	'mail_send_failure_detected' => '检测到邮件发送失败',
+	'email_sending_problem' => '邮件无法发送，可能达到每日限制或 SMTP 服务器存在问题。',
+	'email_send_failure_explanation' => '错误详情： :error',
+	'alert_auto_generated_notice' => '此报警由系统自动生成。',
+	'contact_technical_team' => '如有疑问，请联系技术团队。',
+
+	// 密码重置
+	'password_reset_title' => '重置密码 - TRANSFERFLUX',
+	'password_reset_heading' => '重置密码',
+	'password_reset_button' => '重置密码',
+
+	'account_blocked_message' => '您的 TRANSFERFLUX 账户已被暂时冻结。',
+];

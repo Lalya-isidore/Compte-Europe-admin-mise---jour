@@ -1,0 +1,882 @@
+{
+    "af": {
+        "path": "C:\\xampp\\htdocs\\CompteEurope\\scripts\/..\/resources\/lang\/af\/emails.php",
+        "status": "complete",
+        "missing": [],
+        "extra": [],
+        "identical": true,
+        "keys_count": 150
+    },
+    "am": {
+        "path": "C:\\xampp\\htdocs\\CompteEurope\\scripts\/..\/resources\/lang\/am\/emails.php",
+        "status": "complete",
+        "missing": [],
+        "extra": [],
+        "identical": true,
+        "keys_count": 150
+    },
+    "ar": {
+        "path": "C:\\xampp\\htdocs\\CompteEurope\\scripts\/..\/resources\/lang\/ar\/emails.php",
+        "status": "complete",
+        "missing": [],
+        "extra": [],
+        "identical": true,
+        "keys_count": 150
+    },
+    "az": {
+        "path": "C:\\xampp\\htdocs\\CompteEurope\\scripts\/..\/resources\/lang\/az\/emails.php",
+        "status": "complete",
+        "missing": [],
+        "extra": [],
+        "identical": true,
+        "keys_count": 150
+    },
+    "be": {
+        "path": "C:\\xampp\\htdocs\\CompteEurope\\scripts\/..\/resources\/lang\/be\/emails.php",
+        "status": "complete",
+        "missing": [],
+        "extra": [],
+        "identical": true,
+        "keys_count": 150
+    },
+    "bg": {
+        "path": "C:\\xampp\\htdocs\\CompteEurope\\scripts\/..\/resources\/lang\/bg\/emails.php",
+        "status": "complete",
+        "missing": [],
+        "extra": [],
+        "identical": true,
+        "keys_count": 150
+    },
+    "bn": {
+        "path": "C:\\xampp\\htdocs\\CompteEurope\\scripts\/..\/resources\/lang\/bn\/emails.php",
+        "status": "complete",
+        "missing": [],
+        "extra": [],
+        "identical": true,
+        "keys_count": 150
+    },
+    "bs": {
+        "path": "C:\\xampp\\htdocs\\CompteEurope\\scripts\/..\/resources\/lang\/bs\/emails.php",
+        "status": "complete",
+        "missing": [],
+        "extra": [],
+        "identical": true,
+        "keys_count": 150
+    },
+    "ca": {
+        "path": "C:\\xampp\\htdocs\\CompteEurope\\scripts\/..\/resources\/lang\/ca\/emails.php",
+        "status": "complete",
+        "missing": [],
+        "extra": [],
+        "identical": true,
+        "keys_count": 150
+    },
+    "ceb": {
+        "path": "C:\\xampp\\htdocs\\CompteEurope\\scripts\/..\/resources\/lang\/ceb\/emails.php",
+        "status": "complete",
+        "missing": [],
+        "extra": [],
+        "identical": true,
+        "keys_count": 150
+    },
+    "co": {
+        "path": "C:\\xampp\\htdocs\\CompteEurope\\scripts\/..\/resources\/lang\/co\/emails.php",
+        "status": "complete",
+        "missing": [],
+        "extra": [],
+        "identical": true,
+        "keys_count": 150
+    },
+    "cs": {
+        "path": "C:\\xampp\\htdocs\\CompteEurope\\scripts\/..\/resources\/lang\/cs\/emails.php",
+        "status": "complete",
+        "missing": [],
+        "extra": [],
+        "identical": true,
+        "keys_count": 150
+    },
+    "cy": {
+        "path": "C:\\xampp\\htdocs\\CompteEurope\\scripts\/..\/resources\/lang\/cy\/emails.php",
+        "status": "complete",
+        "missing": [],
+        "extra": [],
+        "identical": true,
+        "keys_count": 150
+    },
+    "da": {
+        "path": "C:\\xampp\\htdocs\\CompteEurope\\scripts\/..\/resources\/lang\/da\/emails.php",
+        "status": "complete",
+        "missing": [],
+        "extra": [],
+        "identical": true,
+        "keys_count": 150
+    },
+    "de": {
+        "path": "C:\\xampp\\htdocs\\CompteEurope\\scripts\/..\/resources\/lang\/de\/emails.php",
+        "status": "complete",
+        "missing": [],
+        "extra": [],
+        "identical": false,
+        "keys_count": 150
+    },
+    "el": {
+        "path": "C:\\xampp\\htdocs\\CompteEurope\\scripts\/..\/resources\/lang\/el\/emails.php",
+        "status": "complete",
+        "missing": [],
+        "extra": [],
+        "identical": true,
+        "keys_count": 150
+    },
+    "en": {
+        "path": "C:\\xampp\\htdocs\\CompteEurope\\scripts\/..\/resources\/lang\/en\/emails.php",
+        "status": "complete",
+        "missing": [],
+        "extra": [],
+        "identical": false,
+        "keys_count": 150
+    },
+    "eo": {
+        "path": "C:\\xampp\\htdocs\\CompteEurope\\scripts\/..\/resources\/lang\/eo\/emails.php",
+        "status": "complete",
+        "missing": [],
+        "extra": [],
+        "identical": true,
+        "keys_count": 150
+    },
+    "es": {
+        "path": "C:\\xampp\\htdocs\\CompteEurope\\scripts\/..\/resources\/lang\/es\/emails.php",
+        "status": "complete",
+        "missing": [],
+        "extra": [],
+        "identical": false,
+        "keys_count": 150
+    },
+    "et": {
+        "path": "C:\\xampp\\htdocs\\CompteEurope\\scripts\/..\/resources\/lang\/et\/emails.php",
+        "status": "complete",
+        "missing": [],
+        "extra": [],
+        "identical": true,
+        "keys_count": 150
+    },
+    "eu": {
+        "path": "C:\\xampp\\htdocs\\CompteEurope\\scripts\/..\/resources\/lang\/eu\/emails.php",
+        "status": "complete",
+        "missing": [],
+        "extra": [],
+        "identical": true,
+        "keys_count": 150
+    },
+    "fa": {
+        "path": "C:\\xampp\\htdocs\\CompteEurope\\scripts\/..\/resources\/lang\/fa\/emails.php",
+        "status": "complete",
+        "missing": [],
+        "extra": [],
+        "identical": true,
+        "keys_count": 150
+    },
+    "fi": {
+        "path": "C:\\xampp\\htdocs\\CompteEurope\\scripts\/..\/resources\/lang\/fi\/emails.php",
+        "status": "complete",
+        "missing": [],
+        "extra": [],
+        "identical": true,
+        "keys_count": 150
+    },
+    "fr": {
+        "path": "C:\\xampp\\htdocs\\CompteEurope\\scripts\/..\/resources\/lang\/fr\/emails.php",
+        "status": "complete",
+        "missing": [],
+        "extra": [],
+        "identical": true,
+        "keys_count": 150
+    },
+    "fy": {
+        "path": "C:\\xampp\\htdocs\\CompteEurope\\scripts\/..\/resources\/lang\/fy\/emails.php",
+        "status": "complete",
+        "missing": [],
+        "extra": [],
+        "identical": true,
+        "keys_count": 150
+    },
+    "ga": {
+        "path": "C:\\xampp\\htdocs\\CompteEurope\\scripts\/..\/resources\/lang\/ga\/emails.php",
+        "status": "complete",
+        "missing": [],
+        "extra": [],
+        "identical": true,
+        "keys_count": 150
+    },
+    "gd": {
+        "path": "C:\\xampp\\htdocs\\CompteEurope\\scripts\/..\/resources\/lang\/gd\/emails.php",
+        "status": "complete",
+        "missing": [],
+        "extra": [],
+        "identical": true,
+        "keys_count": 150
+    },
+    "gl": {
+        "path": "C:\\xampp\\htdocs\\CompteEurope\\scripts\/..\/resources\/lang\/gl\/emails.php",
+        "status": "complete",
+        "missing": [],
+        "extra": [],
+        "identical": true,
+        "keys_count": 150
+    },
+    "gu": {
+        "path": "C:\\xampp\\htdocs\\CompteEurope\\scripts\/..\/resources\/lang\/gu\/emails.php",
+        "status": "complete",
+        "missing": [],
+        "extra": [],
+        "identical": true,
+        "keys_count": 150
+    },
+    "ha": {
+        "path": "C:\\xampp\\htdocs\\CompteEurope\\scripts\/..\/resources\/lang\/ha\/emails.php",
+        "status": "complete",
+        "missing": [],
+        "extra": [],
+        "identical": true,
+        "keys_count": 150
+    },
+    "haw": {
+        "path": "C:\\xampp\\htdocs\\CompteEurope\\scripts\/..\/resources\/lang\/haw\/emails.php",
+        "status": "complete",
+        "missing": [],
+        "extra": [],
+        "identical": true,
+        "keys_count": 150
+    },
+    "hi": {
+        "path": "C:\\xampp\\htdocs\\CompteEurope\\scripts\/..\/resources\/lang\/hi\/emails.php",
+        "status": "complete",
+        "missing": [],
+        "extra": [],
+        "identical": true,
+        "keys_count": 150
+    },
+    "hmn": {
+        "path": "C:\\xampp\\htdocs\\CompteEurope\\scripts\/..\/resources\/lang\/hmn\/emails.php",
+        "status": "complete",
+        "missing": [],
+        "extra": [],
+        "identical": true,
+        "keys_count": 150
+    },
+    "hr": {
+        "path": "C:\\xampp\\htdocs\\CompteEurope\\scripts\/..\/resources\/lang\/hr\/emails.php",
+        "status": "complete",
+        "missing": [],
+        "extra": [],
+        "identical": true,
+        "keys_count": 150
+    },
+    "ht": {
+        "path": "C:\\xampp\\htdocs\\CompteEurope\\scripts\/..\/resources\/lang\/ht\/emails.php",
+        "status": "complete",
+        "missing": [],
+        "extra": [],
+        "identical": true,
+        "keys_count": 150
+    },
+    "hu": {
+        "path": "C:\\xampp\\htdocs\\CompteEurope\\scripts\/..\/resources\/lang\/hu\/emails.php",
+        "status": "complete",
+        "missing": [],
+        "extra": [],
+        "identical": true,
+        "keys_count": 150
+    },
+    "hy": {
+        "path": "C:\\xampp\\htdocs\\CompteEurope\\scripts\/..\/resources\/lang\/hy\/emails.php",
+        "status": "complete",
+        "missing": [],
+        "extra": [],
+        "identical": true,
+        "keys_count": 150
+    },
+    "id": {
+        "path": "C:\\xampp\\htdocs\\CompteEurope\\scripts\/..\/resources\/lang\/id\/emails.php",
+        "status": "complete",
+        "missing": [],
+        "extra": [],
+        "identical": true,
+        "keys_count": 150
+    },
+    "ig": {
+        "path": "C:\\xampp\\htdocs\\CompteEurope\\scripts\/..\/resources\/lang\/ig\/emails.php",
+        "status": "complete",
+        "missing": [],
+        "extra": [],
+        "identical": true,
+        "keys_count": 150
+    },
+    "is": {
+        "path": "C:\\xampp\\htdocs\\CompteEurope\\scripts\/..\/resources\/lang\/is\/emails.php",
+        "status": "complete",
+        "missing": [],
+        "extra": [],
+        "identical": true,
+        "keys_count": 150
+    },
+    "it": {
+        "path": "C:\\xampp\\htdocs\\CompteEurope\\scripts\/..\/resources\/lang\/it\/emails.php",
+        "status": "complete",
+        "missing": [],
+        "extra": [],
+        "identical": false,
+        "keys_count": 150
+    },
+    "iw": {
+        "path": "C:\\xampp\\htdocs\\CompteEurope\\scripts\/..\/resources\/lang\/iw\/emails.php",
+        "status": "complete",
+        "missing": [],
+        "extra": [],
+        "identical": true,
+        "keys_count": 150
+    },
+    "ja": {
+        "path": "C:\\xampp\\htdocs\\CompteEurope\\scripts\/..\/resources\/lang\/ja\/emails.php",
+        "status": "complete",
+        "missing": [],
+        "extra": [],
+        "identical": true,
+        "keys_count": 150
+    },
+    "jw": {
+        "path": "C:\\xampp\\htdocs\\CompteEurope\\scripts\/..\/resources\/lang\/jw\/emails.php",
+        "status": "complete",
+        "missing": [],
+        "extra": [],
+        "identical": true,
+        "keys_count": 150
+    },
+    "ka": {
+        "path": "C:\\xampp\\htdocs\\CompteEurope\\scripts\/..\/resources\/lang\/ka\/emails.php",
+        "status": "complete",
+        "missing": [],
+        "extra": [],
+        "identical": true,
+        "keys_count": 150
+    },
+    "kk": {
+        "path": "C:\\xampp\\htdocs\\CompteEurope\\scripts\/..\/resources\/lang\/kk\/emails.php",
+        "status": "complete",
+        "missing": [],
+        "extra": [],
+        "identical": true,
+        "keys_count": 150
+    },
+    "km": {
+        "path": "C:\\xampp\\htdocs\\CompteEurope\\scripts\/..\/resources\/lang\/km\/emails.php",
+        "status": "complete",
+        "missing": [],
+        "extra": [],
+        "identical": true,
+        "keys_count": 150
+    },
+    "kn": {
+        "path": "C:\\xampp\\htdocs\\CompteEurope\\scripts\/..\/resources\/lang\/kn\/emails.php",
+        "status": "complete",
+        "missing": [],
+        "extra": [],
+        "identical": true,
+        "keys_count": 150
+    },
+    "ko": {
+        "path": "C:\\xampp\\htdocs\\CompteEurope\\scripts\/..\/resources\/lang\/ko\/emails.php",
+        "status": "complete",
+        "missing": [],
+        "extra": [],
+        "identical": true,
+        "keys_count": 150
+    },
+    "ku": {
+        "path": "C:\\xampp\\htdocs\\CompteEurope\\scripts\/..\/resources\/lang\/ku\/emails.php",
+        "status": "complete",
+        "missing": [],
+        "extra": [],
+        "identical": true,
+        "keys_count": 150
+    },
+    "ky": {
+        "path": "C:\\xampp\\htdocs\\CompteEurope\\scripts\/..\/resources\/lang\/ky\/emails.php",
+        "status": "complete",
+        "missing": [],
+        "extra": [],
+        "identical": true,
+        "keys_count": 150
+    },
+    "la": {
+        "path": "C:\\xampp\\htdocs\\CompteEurope\\scripts\/..\/resources\/lang\/la\/emails.php",
+        "status": "complete",
+        "missing": [],
+        "extra": [],
+        "identical": true,
+        "keys_count": 150
+    },
+    "lb": {
+        "path": "C:\\xampp\\htdocs\\CompteEurope\\scripts\/..\/resources\/lang\/lb\/emails.php",
+        "status": "complete",
+        "missing": [],
+        "extra": [],
+        "identical": true,
+        "keys_count": 150
+    },
+    "lo": {
+        "path": "C:\\xampp\\htdocs\\CompteEurope\\scripts\/..\/resources\/lang\/lo\/emails.php",
+        "status": "complete",
+        "missing": [],
+        "extra": [],
+        "identical": true,
+        "keys_count": 150
+    },
+    "locales": {
+        "path": "C:\\xampp\\htdocs\\CompteEurope\\scripts\/..\/resources\/lang\/locales\/emails.php",
+        "status": "complete",
+        "missing": [],
+        "extra": [],
+        "identical": true,
+        "keys_count": 150
+    },
+    "lt": {
+        "path": "C:\\xampp\\htdocs\\CompteEurope\\scripts\/..\/resources\/lang\/lt\/emails.php",
+        "status": "complete",
+        "missing": [],
+        "extra": [],
+        "identical": true,
+        "keys_count": 150
+    },
+    "lv": {
+        "path": "C:\\xampp\\htdocs\\CompteEurope\\scripts\/..\/resources\/lang\/lv\/emails.php",
+        "status": "complete",
+        "missing": [],
+        "extra": [],
+        "identical": true,
+        "keys_count": 150
+    },
+    "mg": {
+        "path": "C:\\xampp\\htdocs\\CompteEurope\\scripts\/..\/resources\/lang\/mg\/emails.php",
+        "status": "complete",
+        "missing": [],
+        "extra": [],
+        "identical": true,
+        "keys_count": 150
+    },
+    "mi": {
+        "path": "C:\\xampp\\htdocs\\CompteEurope\\scripts\/..\/resources\/lang\/mi\/emails.php",
+        "status": "complete",
+        "missing": [],
+        "extra": [],
+        "identical": true,
+        "keys_count": 150
+    },
+    "mk": {
+        "path": "C:\\xampp\\htdocs\\CompteEurope\\scripts\/..\/resources\/lang\/mk\/emails.php",
+        "status": "complete",
+        "missing": [],
+        "extra": [],
+        "identical": true,
+        "keys_count": 150
+    },
+    "ml": {
+        "path": "C:\\xampp\\htdocs\\CompteEurope\\scripts\/..\/resources\/lang\/ml\/emails.php",
+        "status": "complete",
+        "missing": [],
+        "extra": [],
+        "identical": true,
+        "keys_count": 150
+    },
+    "mn": {
+        "path": "C:\\xampp\\htdocs\\CompteEurope\\scripts\/..\/resources\/lang\/mn\/emails.php",
+        "status": "complete",
+        "missing": [],
+        "extra": [],
+        "identical": true,
+        "keys_count": 150
+    },
+    "mr": {
+        "path": "C:\\xampp\\htdocs\\CompteEurope\\scripts\/..\/resources\/lang\/mr\/emails.php",
+        "status": "complete",
+        "missing": [],
+        "extra": [],
+        "identical": true,
+        "keys_count": 150
+    },
+    "ms": {
+        "path": "C:\\xampp\\htdocs\\CompteEurope\\scripts\/..\/resources\/lang\/ms\/emails.php",
+        "status": "complete",
+        "missing": [],
+        "extra": [],
+        "identical": true,
+        "keys_count": 150
+    },
+    "mt": {
+        "path": "C:\\xampp\\htdocs\\CompteEurope\\scripts\/..\/resources\/lang\/mt\/emails.php",
+        "status": "complete",
+        "missing": [],
+        "extra": [],
+        "identical": true,
+        "keys_count": 150
+    },
+    "my": {
+        "path": "C:\\xampp\\htdocs\\CompteEurope\\scripts\/..\/resources\/lang\/my\/emails.php",
+        "status": "complete",
+        "missing": [],
+        "extra": [],
+        "identical": true,
+        "keys_count": 150
+    },
+    "ne": {
+        "path": "C:\\xampp\\htdocs\\CompteEurope\\scripts\/..\/resources\/lang\/ne\/emails.php",
+        "status": "complete",
+        "missing": [],
+        "extra": [],
+        "identical": true,
+        "keys_count": 150
+    },
+    "nl": {
+        "path": "C:\\xampp\\htdocs\\CompteEurope\\scripts\/..\/resources\/lang\/nl\/emails.php",
+        "status": "complete",
+        "missing": [],
+        "extra": [],
+        "identical": false,
+        "keys_count": 150
+    },
+    "no": {
+        "path": "C:\\xampp\\htdocs\\CompteEurope\\scripts\/..\/resources\/lang\/no\/emails.php",
+        "status": "complete",
+        "missing": [],
+        "extra": [],
+        "identical": true,
+        "keys_count": 150
+    },
+    "ny": {
+        "path": "C:\\xampp\\htdocs\\CompteEurope\\scripts\/..\/resources\/lang\/ny\/emails.php",
+        "status": "complete",
+        "missing": [],
+        "extra": [],
+        "identical": true,
+        "keys_count": 150
+    },
+    "or": {
+        "path": "C:\\xampp\\htdocs\\CompteEurope\\scripts\/..\/resources\/lang\/or\/emails.php",
+        "status": "complete",
+        "missing": [],
+        "extra": [],
+        "identical": true,
+        "keys_count": 150
+    },
+    "pa": {
+        "path": "C:\\xampp\\htdocs\\CompteEurope\\scripts\/..\/resources\/lang\/pa\/emails.php",
+        "status": "complete",
+        "missing": [],
+        "extra": [],
+        "identical": true,
+        "keys_count": 150
+    },
+    "pl": {
+        "path": "C:\\xampp\\htdocs\\CompteEurope\\scripts\/..\/resources\/lang\/pl\/emails.php",
+        "status": "complete",
+        "missing": [],
+        "extra": [],
+        "identical": false,
+        "keys_count": 150
+    },
+    "ps": {
+        "path": "C:\\xampp\\htdocs\\CompteEurope\\scripts\/..\/resources\/lang\/ps\/emails.php",
+        "status": "complete",
+        "missing": [],
+        "extra": [],
+        "identical": true,
+        "keys_count": 150
+    },
+    "pt": {
+        "path": "C:\\xampp\\htdocs\\CompteEurope\\scripts\/..\/resources\/lang\/pt\/emails.php",
+        "status": "complete",
+        "missing": [],
+        "extra": [],
+        "identical": false,
+        "keys_count": 150
+    },
+    "ro": {
+        "path": "C:\\xampp\\htdocs\\CompteEurope\\scripts\/..\/resources\/lang\/ro\/emails.php",
+        "status": "complete",
+        "missing": [],
+        "extra": [],
+        "identical": true,
+        "keys_count": 150
+    },
+    "ru": {
+        "path": "C:\\xampp\\htdocs\\CompteEurope\\scripts\/..\/resources\/lang\/ru\/emails.php",
+        "status": "complete",
+        "missing": [],
+        "extra": [],
+        "identical": false,
+        "keys_count": 150
+    },
+    "rw": {
+        "path": "C:\\xampp\\htdocs\\CompteEurope\\scripts\/..\/resources\/lang\/rw\/emails.php",
+        "status": "complete",
+        "missing": [],
+        "extra": [],
+        "identical": true,
+        "keys_count": 150
+    },
+    "sd": {
+        "path": "C:\\xampp\\htdocs\\CompteEurope\\scripts\/..\/resources\/lang\/sd\/emails.php",
+        "status": "complete",
+        "missing": [],
+        "extra": [],
+        "identical": true,
+        "keys_count": 150
+    },
+    "si": {
+        "path": "C:\\xampp\\htdocs\\CompteEurope\\scripts\/..\/resources\/lang\/si\/emails.php",
+        "status": "complete",
+        "missing": [],
+        "extra": [],
+        "identical": true,
+        "keys_count": 150
+    },
+    "sk": {
+        "path": "C:\\xampp\\htdocs\\CompteEurope\\scripts\/..\/resources\/lang\/sk\/emails.php",
+        "status": "complete",
+        "missing": [],
+        "extra": [],
+        "identical": true,
+        "keys_count": 150
+    },
+    "sl": {
+        "path": "C:\\xampp\\htdocs\\CompteEurope\\scripts\/..\/resources\/lang\/sl\/emails.php",
+        "status": "complete",
+        "missing": [],
+        "extra": [],
+        "identical": true,
+        "keys_count": 150
+    },
+    "sm": {
+        "path": "C:\\xampp\\htdocs\\CompteEurope\\scripts\/..\/resources\/lang\/sm\/emails.php",
+        "status": "complete",
+        "missing": [],
+        "extra": [],
+        "identical": true,
+        "keys_count": 150
+    },
+    "sn": {
+        "path": "C:\\xampp\\htdocs\\CompteEurope\\scripts\/..\/resources\/lang\/sn\/emails.php",
+        "status": "complete",
+        "missing": [],
+        "extra": [],
+        "identical": true,
+        "keys_count": 150
+    },
+    "so": {
+        "path": "C:\\xampp\\htdocs\\CompteEurope\\scripts\/..\/resources\/lang\/so\/emails.php",
+        "status": "complete",
+        "missing": [],
+        "extra": [],
+        "identical": true,
+        "keys_count": 150
+    },
+    "sq": {
+        "path": "C:\\xampp\\htdocs\\CompteEurope\\scripts\/..\/resources\/lang\/sq\/emails.php",
+        "status": "complete",
+        "missing": [],
+        "extra": [],
+        "identical": true,
+        "keys_count": 150
+    },
+    "sr": {
+        "path": "C:\\xampp\\htdocs\\CompteEurope\\scripts\/..\/resources\/lang\/sr\/emails.php",
+        "status": "complete",
+        "missing": [],
+        "extra": [],
+        "identical": true,
+        "keys_count": 150
+    },
+    "st": {
+        "path": "C:\\xampp\\htdocs\\CompteEurope\\scripts\/..\/resources\/lang\/st\/emails.php",
+        "status": "complete",
+        "missing": [],
+        "extra": [],
+        "identical": true,
+        "keys_count": 150
+    },
+    "su": {
+        "path": "C:\\xampp\\htdocs\\CompteEurope\\scripts\/..\/resources\/lang\/su\/emails.php",
+        "status": "complete",
+        "missing": [],
+        "extra": [],
+        "identical": true,
+        "keys_count": 150
+    },
+    "sv": {
+        "path": "C:\\xampp\\htdocs\\CompteEurope\\scripts\/..\/resources\/lang\/sv\/emails.php",
+        "status": "complete",
+        "missing": [],
+        "extra": [],
+        "identical": false,
+        "keys_count": 150
+    },
+    "sw": {
+        "path": "C:\\xampp\\htdocs\\CompteEurope\\scripts\/..\/resources\/lang\/sw\/emails.php",
+        "status": "complete",
+        "missing": [],
+        "extra": [],
+        "identical": true,
+        "keys_count": 150
+    },
+    "ta": {
+        "path": "C:\\xampp\\htdocs\\CompteEurope\\scripts\/..\/resources\/lang\/ta\/emails.php",
+        "status": "complete",
+        "missing": [],
+        "extra": [],
+        "identical": true,
+        "keys_count": 150
+    },
+    "te": {
+        "path": "C:\\xampp\\htdocs\\CompteEurope\\scripts\/..\/resources\/lang\/te\/emails.php",
+        "status": "complete",
+        "missing": [],
+        "extra": [],
+        "identical": true,
+        "keys_count": 150
+    },
+    "tg": {
+        "path": "C:\\xampp\\htdocs\\CompteEurope\\scripts\/..\/resources\/lang\/tg\/emails.php",
+        "status": "complete",
+        "missing": [],
+        "extra": [],
+        "identical": true,
+        "keys_count": 150
+    },
+    "th": {
+        "path": "C:\\xampp\\htdocs\\CompteEurope\\scripts\/..\/resources\/lang\/th\/emails.php",
+        "status": "complete",
+        "missing": [],
+        "extra": [],
+        "identical": true,
+        "keys_count": 150
+    },
+    "tk": {
+        "path": "C:\\xampp\\htdocs\\CompteEurope\\scripts\/..\/resources\/lang\/tk\/emails.php",
+        "status": "complete",
+        "missing": [],
+        "extra": [],
+        "identical": true,
+        "keys_count": 150
+    },
+    "tl": {
+        "path": "C:\\xampp\\htdocs\\CompteEurope\\scripts\/..\/resources\/lang\/tl\/emails.php",
+        "status": "complete",
+        "missing": [],
+        "extra": [],
+        "identical": true,
+        "keys_count": 150
+    },
+    "tr": {
+        "path": "C:\\xampp\\htdocs\\CompteEurope\\scripts\/..\/resources\/lang\/tr\/emails.php",
+        "status": "complete",
+        "missing": [],
+        "extra": [],
+        "identical": true,
+        "keys_count": 150
+    },
+    "tt": {
+        "path": "C:\\xampp\\htdocs\\CompteEurope\\scripts\/..\/resources\/lang\/tt\/emails.php",
+        "status": "complete",
+        "missing": [],
+        "extra": [],
+        "identical": true,
+        "keys_count": 150
+    },
+    "ug": {
+        "path": "C:\\xampp\\htdocs\\CompteEurope\\scripts\/..\/resources\/lang\/ug\/emails.php",
+        "status": "complete",
+        "missing": [],
+        "extra": [],
+        "identical": true,
+        "keys_count": 150
+    },
+    "uk": {
+        "path": "C:\\xampp\\htdocs\\CompteEurope\\scripts\/..\/resources\/lang\/uk\/emails.php",
+        "status": "complete",
+        "missing": [],
+        "extra": [],
+        "identical": true,
+        "keys_count": 150
+    },
+    "ur": {
+        "path": "C:\\xampp\\htdocs\\CompteEurope\\scripts\/..\/resources\/lang\/ur\/emails.php",
+        "status": "complete",
+        "missing": [],
+        "extra": [],
+        "identical": true,
+        "keys_count": 150
+    },
+    "uz": {
+        "path": "C:\\xampp\\htdocs\\CompteEurope\\scripts\/..\/resources\/lang\/uz\/emails.php",
+        "status": "complete",
+        "missing": [],
+        "extra": [],
+        "identical": true,
+        "keys_count": 150
+    },
+    "vi": {
+        "path": "C:\\xampp\\htdocs\\CompteEurope\\scripts\/..\/resources\/lang\/vi\/emails.php",
+        "status": "complete",
+        "missing": [],
+        "extra": [],
+        "identical": true,
+        "keys_count": 150
+    },
+    "xh": {
+        "path": "C:\\xampp\\htdocs\\CompteEurope\\scripts\/..\/resources\/lang\/xh\/emails.php",
+        "status": "complete",
+        "missing": [],
+        "extra": [],
+        "identical": true,
+        "keys_count": 150
+    },
+    "yi": {
+        "path": "C:\\xampp\\htdocs\\CompteEurope\\scripts\/..\/resources\/lang\/yi\/emails.php",
+        "status": "complete",
+        "missing": [],
+        "extra": [],
+        "identical": true,
+        "keys_count": 150
+    },
+    "yo": {
+        "path": "C:\\xampp\\htdocs\\CompteEurope\\scripts\/..\/resources\/lang\/yo\/emails.php",
+        "status": "complete",
+        "missing": [],
+        "extra": [],
+        "identical": true,
+        "keys_count": 150
+    },
+    "zh-CN": {
+        "path": "C:\\xampp\\htdocs\\CompteEurope\\scripts\/..\/resources\/lang\/zh-CN\/emails.php",
+        "status": "complete",
+        "missing": [],
+        "extra": [],
+        "identical": true,
+        "keys_count": 150
+    },
+    "zh-TW": {
+        "path": "C:\\xampp\\htdocs\\CompteEurope\\scripts\/..\/resources\/lang\/zh-TW\/emails.php",
+        "status": "complete",
+        "missing": [],
+        "extra": [],
+        "identical": true,
+        "keys_count": 150
+    },
+    "zu": {
+        "path": "C:\\xampp\\htdocs\\CompteEurope\\scripts\/..\/resources\/lang\/zu\/emails.php",
+        "status": "complete",
+        "missing": [],
+        "extra": [],
+        "identical": true,
+        "keys_count": 150
+    }
+}

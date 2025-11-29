@@ -1,0 +1,114 @@
+<?php
+
+// DRAFT: Machine translation (Igbo). Biko nyochaa site n'aka onye nwe asụsụ.
+// Faịlụ a nwere ntughari igwe nke igodo niile dị na `fr/emails.php`.
+return [
+	// Akụntụ kere
+	'compte_created_subject' => 'Mmepe akaụntụ - TRANSFERFLUX',
+	'compte_created_title' => 'Mmepe akaụntụ na TRANSFERFLUX',
+	'greeting' => 'Ndewo :name,',
+	'compte_created_message' => 'Anyị nwere ọṅụ ịgwa gị na a kere akaụntụ gị nke ọma ma e nyere ya ego :amount.',
+	'credentials_title' => 'Aha nbanye gị bụ:',
+	'label_email' => '📧 Email:',
+	'label_password' => '🔑 Okwuntughari:',
+	'label_initial_balance' => '💰 Ego mbido:',
+	'cta_login' => 'Banye na akaụntụ gị',
+	'info_access' => 'Ugbu a ị nwere ike ịnweta akaụntụ gị ma jiri ọrụ anyị.',
+	'support_contact' => 'kpara anyị nkwado',
+	'footer_thanks' => 'Daalụ maka iji TRANSFERFLUX!',
+
+	// Nyefee gara nke ọma
+	'virement_success_subject' => 'Nyefe gara nke ọma - TRANSFERFLUX',
+	'virement_success_title' => 'Nyefe Gara Nke Ọma',
+	'virement_success_message' => 'Anyị na-agwa gị na nyefe gị arụchala nke ọma.',
+
+	// Nyefee dara
+	'virement_failed_subject' => 'Ọnwụnyefe - TRANSFERFLUX',
+	'virement_failed_title' => 'Nyefe dara',
+	'virement_failed_message' => 'Ndo, nyefe gị dara.',
+
+	// Ozi & akara
+	'details_title' => 'Nkowa nke nyefe',
+	'label_amount' => '💰 Ego :',
+	'label_date' => '📅 Ụbọchị :',
+	'label_beneficiary' => '👤 Nnata :',
+	'virement_notice' => "A ga-ewepụta nyefe n'ime 1-3 ụbọchị ọrụ.",
+	'thanks' => 'Daalụ,',
+	'contact_support_for_info' => 'Maka ozi ndị ọzọ, biko kpọtụrụ ọrụ ndị ahịa anyị.',
+
+	// N'okpuru / nkịtị
+	'footer_brand' => 'TRANSFERFLUX',
+	'footer_partner' => 'Onye mmekọ akụ gị a pụrụ ịtụkwasị obi 🏦',
+	'regards' => 'Nnọọ,',
+	'service_client' => 'Ọrụ Ndị Ahịa',
+	'auto_generated_notice' => 'Email a ezitere site na sistemụ, biko ezaghachighị ya.',
+
+	// Ebe fọdụrụ: draịft igwe
+	'compte_activated_title' => 'Akaụntụ gbanyere - TRANSFERFLUX',
+	'compte_activated_heading' => 'Akaụntụ gbanyere nke ọma',
+	'good_news' => '✅ Ozi ọma :',
+	'compte_activated_message' => 'Akaụntụ gị TRANSFERFLUX ejiri ya kwadoro ma dị ugbu a.',
+	'compte_activated_explanation' => 'Ugbu a ị nwere ike ime transakshọn niile nke ọma.',
+	'label_holder' => 'Nwere',
+	'label_current_balance' => 'Ike ego ugbu a',
+	'label_status' => 'Ọnọdụ',
+	'status_active' => 'AKTIV',
+	'you_can_now' => 'Ugbu a ị nwere ike:',
+	'can_make_transfers' => 'Mee nyefe na ịkwụ ụgwọ',
+	'check_balance' => 'Lelee ụgwọ gị ugbu a',
+	'manage_transactions' => 'Jikwaa azụmahịa gị n&#039;ụzọ dị nchebe',
+	'access_services' => 'Nweta ọrụ akụ niile anyị',
+	'thanks_welcome' => 'Daalụ maka ntụkwasị obi gị, nabata na ezinụlọ TRANSFERFLUX!',
+
+	'unlock_code_used_title' => 'Koodu mkpofu ejiri - TRANSFERFLUX',
+	'unlock_code_used_heading' => 'Koodu mkpofu ejiri',
+	'greeting_simple' => 'Ndewo,',
+	'info_notification' => 'ℹ️ Nkwupụta :',
+	'unlock_code_used_alert' => 'E jiri koodu mkpofu na akaụntụ gị.',
+	'unlock_code_used_explanation' => 'Anyị na-eme ka ị mara na koodu mkpofu etinyere ma kwadoro maka transakshọn.',
+	'label_date_time' => 'Ụbọchị na oge',
+	'label_transfer_amount' => 'Ego nyefe',
+	'label_recipient' => 'Nnata',
+	'urgent_if_not_you' => '⚠️ Ọ bụrụ na ọ bụghị gị, mee nke a:',
+	'contact_support_immediately' => 'Kpọtụrụ nkwado ugbu a',
+
+	'transfer_unlock_code_title' => 'Koodu mkpofu - TRANSFERFLUX',
+	'transfer_unlock_heading' => 'Koodu mkpofu nyefe',
+	'transfer_unlock_message_intro' => "Koodu mkpofu gị maka nyefe nọ n’okpuru:",
+	'transfer_unlock_code_label' => 'Koodu bụ :',
+	'do_not_share_unlock_code' => 'Ekwela ka ị kesaa koodu gị!',
+
+	'welcome_title' => 'Nabata - TRANSFERFLUX',
+	'welcome_heading' => 'Nabata',
+	'welcome_message' => 'Daalụ maka ịmepụta akaụntụ; anyị na-enwe ọṅụ ịnọnyere gị!',
+
+	'balance_decreased_title' => 'Belata ego - TRANSFERFLUX',
+	'balance_decreased_heading' => 'Ego belatara',
+	'balance_decreased_message' => 'Anyị na-agwa gị na ego gị belatara.',
+	'operation_details' => 'Nkowa nke ọrụ',
+	'label_amount_deducted' => 'Ego ewepụrụ',
+	'label_new_balance' => 'Ego ọhụrụ',
+	'contact_us_if_questions' => 'Ọ bụrụ na ịnwere ajụjụ, kpọtụrụ anyị.',
+
+	'balance_increased_title' => 'Ego abawanyela',
+	'balance_increased_heading' => 'Ego abawanyela',
+	'balance_increased_message' => 'Anyị na-agwa gị na ego gị ehichapụrụ nke ọma.',
+	'label_amount_added' => 'Ego agbakwunyere',
+
+	'refund_title' => 'Nkwụghachi - TRANSFERFLUX',
+	'refund_heading' => 'Nyefe dara',
+	'refund_subject' => 'Nyefe dara - TRANSFERFLUX',
+	'refund_failed_message' => ':amount eweghachiri na akaụntụ gị.',
+
+	'mail_error_alert_title' => 'Nkwupụta njehie ozi-e',
+	'system_alert' => '⚠️ NTỤPỤ SỊSTEM',
+	'mail_send_failure_detected' => 'Achọpụtara na izipu email dara',
+	'email_sending_problem' => 'Email enweghị ike iziga; o nwere ike ịbụ oke kwa ụbọchị ma ọ bụ nsogbu SMTP.',
+	'email_send_failure_explanation' => 'Nkọwa njehie: :error',
+
+	'password_reset_title' => 'Tọgharịa okwuntughari - TRANSFERFLUX',
+	'password_reset_heading' => 'Tọgharịa okwuntughari',
+	'password_reset_button' => 'Tọgharịa okwuntughari',
+
+	'account_blocked_message' => 'Akaụntụ TRANSFERFLUX gị ejirila ya kwụsịtụrụ.' ,
+];

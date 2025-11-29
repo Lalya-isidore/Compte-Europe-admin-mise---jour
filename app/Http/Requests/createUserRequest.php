@@ -21,13 +21,21 @@ class createUserRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
+        $rules = [
             'nom'=>'required',
             'prenom'=>'required',
             'email'=>'required|email|unique:users',
             'phone_number'=>'required',
             'password'=>'required|min:8',
+            'code_parrainage'=>'nullable|string|exists:affiliations,code_affiliation',
         ];
+
+        // Si un code de parrainage est en session, il devient obligatoire
+        if (session('referral_code')) {
+            $rules['code_parrainage'] = 'required|string|exists:affiliations,code_affiliation';
+        }
+
+        return $rules;
     }
     public function messages()
     {
@@ -43,6 +51,9 @@ class createUserRequest extends FormRequest
             'phone_number.required'=>'Le numéro de téléphone est obligatoire pour activer votre compte.',
 
             'password.reqired'=>'Le champs password est oblicatoire',
+            
+            'code_parrainage.required'=>'Le code de parrainage est obligatoire pour cette inscription.',
+            'code_parrainage.exists'=>'Ce code de parrainage n\'existe pas ou n\'est pas valide.',
         ];
     }
 }

@@ -2,8 +2,6 @@
 
 namespace App\Mail;
 
-namespace App\Mail;
-
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
@@ -41,8 +39,8 @@ class RemborsementMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            from: new Address('transfertscash@gmail.com', 'TRANSFERCASH'),
-            subject: 'Echec de Transfert. Remboursement du Solde',
+            from: new Address('fluxbank37@gmail.com', 'TRANSFERFLUX'),
+            subject: __('emails.refund_subject'),
         );
     }
 

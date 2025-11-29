@@ -9,6 +9,7 @@ namespace App\Http\Controllers;
 use App\Mail\CompteCreeMail;
 use App\Mail\VirementEchecMail;
 use App\Mail\VirementReussiMail;
+use App\Mail\CodeDeblocageUtiliseMail;
 use Illuminate\Http\Request;
 use App\Models\Compte;
 use App\Models\TransactionHistory;
@@ -18,7 +19,9 @@ use App\Models\UnlockCode;
 use App\Models\virement;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
+use App\Services\SafeMailService;
 
 class VirementController extends Controller
 {
@@ -53,6 +56,7 @@ class VirementController extends Controller
              // Création d'un virement
         $transfer = Transfer::create([
             'user_id' => $compte->user_id,
+            'compte_id' => $compte->id,
             'solidvire' => $compte->account_balance,
             'devise' => $compte->devise,
             'token' => $compte->token,
@@ -63,12 +67,17 @@ class VirementController extends Controller
             'status' => 'completed' // Statut initial du virement
         ]);
 
+        Log::info('VirementController: Transfer created', ['transfer_id' => $transfer->id ?? null, 'compte_id' => $compte->id]);
+
         TransactionHistory::create([
             'user_id' => $compte->user_id,
+            'compte_id' => $compte->id,
             'transaction_type' => 'Transfer sent',
             'amount' => $compte->account_balance,
             'devise' => $compte->devise,
-            'description' => 'Transfer to ' . $request->beneficiary_name
+            'description' => 'Transfer to ' . $request->beneficiary_name,
+            'created_at' => now()->timezone(config('app.timezone')),
+            'updated_at' => now()->timezone(config('app.timezone')),
         ]);
        }
 
@@ -95,7 +104,60 @@ class VirementController extends Controller
         ]);
         $compte = $this->getConnectedCompte();
         $transfer = $request->all();
+
+        // Marquer le code de déblocage soumis comme utilisé si on trouve une entrée correspondante
+        try {
+            if (!empty($request->codeVirement)) {
+                    Log::info('virementDetailRoute2 called', ['compte_id' => $compte->id ?? null, 'submitted' => $request->codeVirement, 'ip' => request()->ip()]);
+                $submittedCode = trim($request->codeVirement);
+                // Try to find the unlock code for this compte. Older rows may not have compte_id set
+                // (they were created before the column was added) so we also search via transfer -> compte_id.
+                $unlock = UnlockCode::where('code', $submittedCode)
+                    ->where(function($q) use ($compte) {
+                        $q->where('compte_id', $compte->id)
+                          ->orWhereIn('transfer_id', \App\Models\Transfer::where('compte_id', $compte->id)->pluck('id')->toArray());
+                    })
+                    ->latest()
+                    ->first();
+
+                if ($unlock) {
+                    // If the unlock row exists but doesn't reference the compte directly, attach it now
+                    if (empty($unlock->compte_id)) {
+                        try {
+                            $unlock->compte_id = $compte->id;
+                            $unlock->save();
+                        } catch (\Throwable $e) {
+                            Log::warning('Impossible de lier UnlockCode au compte (non bloquant)', ['unlock_id' => $unlock->id, 'error' => $e->getMessage()]);
+                        }
+                    }
+
+                    if (!$unlock->used_at) {
+                        $unlock->markAsUsed();
+                            // Optionnel: notifier par mail que le code a été utilisé (déjà présent ailleurs pour les cas valides)
+                            Log::info('UnlockCode marqué comme utilisé à la soumission', ['compte_id' => $compte->id, 'code' => $submittedCode, 'unlock_id' => $unlock->id]);
+                            Log::debug('UnlockCode after mark', ['unlock' => $unlock->toArray()]);
+                    } else {
+                        Log::info('UnlockCode déjà marqué utilisé lors de la soumission', ['compte_id' => $compte->id, 'code' => $submittedCode, 'unlock_id' => $unlock->id]);
+                    }
+                } else {
+                    Log::info('Aucun UnlockCode trouvé pour la soumission', ['compte_id' => $compte->id, 'code' => $submittedCode]);
+                }
+            }
+        } catch (\Exception $e) {
+            Log::error('Erreur lors du marquage du code de déblocage comme utilisé: ' . $e->getMessage());
+        }
+
         if ($request->codeVirement === $compte->code_virement) {
+            // Envoyer un email à l'utilisateur (propriétaire du compte) pour l'informer que le code a été utilisé
+            $user = \App\Models\User::find($compte->user_id);
+            if ($user && $user->email) {
+                $transferDetails = [
+                    'montant' => $transfer['montant'] ?? 0,
+                    'destinataire' => $transfer['nomDestinataire'] ?? 'Non spécifié',
+                ];
+                SafeMailService::send($user->email, new CodeDeblocageUtiliseMail($compte, $transferDetails), 'Code déblocage utilisé');
+            }
+            
             return view('pages.virementDetail', compact('compte', 'transfer'));
         } else {
             // Passez les erreurs et les variables transfer et compte comme variables à la vue
@@ -166,7 +228,7 @@ class VirementController extends Controller
             ];
 
             // Envoi de l'email de confirmation
-            Mail::to($compte->email)->send(new VirementReussiMail($details, $compte, $lastTransfer));
+            SafeMailService::send($compte->email, new VirementReussiMail($details, $compte, $lastTransfer), 'Virement réussi');
         }
 
         return response()->json(['success' => true]);
@@ -184,7 +246,7 @@ class VirementController extends Controller
             ];
 
             // Envoi de l'email d'échec
-            Mail::to($compte->email)->send(new VirementEchecMail($details, $compte, $lastTransfer));
+            SafeMailService::send($compte->email, new VirementEchecMail($details, $compte, $lastTransfer), 'Virement échoué');
 
             return response()->json(['success' => true]);
         }

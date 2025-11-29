@@ -36,8 +36,8 @@ class VirementReussiMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            from: new Address('ggbbpaul@gmail.com', 'TRANSFERTCASH'),
-            subject: 'Virement effectué avec succès!',
+            from: new Address('noreply@flashcompte.com', 'FlashCompte'),
+            subject: __('emails.virement_success_subject'),
         );
     }
 

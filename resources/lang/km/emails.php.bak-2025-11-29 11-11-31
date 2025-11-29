@@ -1,0 +1,115 @@
+<?php
+
+// DRAFT: ការបកប្រែដោយម៉ាស៊ីន (ខ្មែរ)। សូមពិនិត្យឡើងវិញដោយអ្នកដឹងភាសាទាំងមូល។
+// ឯកសារនេះមានកូពីស្វ័យប្រវត្តិសម្រាប់គោលការណ៍ទាំងអស់លើ `fr/emails.php`។
+return [
+	// បណ្តាញគណនី
+	'compte_created_subject' => 'បើកគណនី - TRANSFERFLUX',
+	'compte_created_title' => 'បើកគណនីនៅលើ TRANSFERFLUX',
+	'greeting' => 'សួស្តី :name,',
+	'compte_created_message' => 'យើងមានសេចក្តីរីករាយក្នុងការជូនដំណឹងថា គណនីរបស់អ្នកត្រូវបានបង្កើតដោយជោគជ័យ និងបានបញ្ចូលប្រាក់ :amount។',
+	'credentials_title' => 'ព័ត៌មានចូលរបស់អ្នក:',
+	'label_email' => '📧 អ៊ីមែល:',
+	'label_password' => '🔑 ពាក្យសម្ងាត់:',
+	'label_initial_balance' => '💰 សមតុល្យដំបូង:',
+	'cta_login' => 'ចូលទៅគណនីរបស់អ្នក',
+	'info_access' => 'ឥឡូវនេះអ្នកអាចចូលទៅគណនី និងប្រើសេវាកម្មរបស់យើងបាន។',
+	'support_contact' => 'ទាក់ទងក្រុមគាំទ្រ',
+	'footer_thanks' => 'អរគុណចំពោះការប្រើប្រាស់ TRANSFERFLUX!',
+
+	// ការផ្ទេរជោគជ័យ
+	'virement_success_subject' => 'ការផ្ទេរដែលបានជោគជ័យ - TRANSFERFLUX',
+	'virement_success_title' => 'ការផ្ទេរជោគជ័យ',
+	'virement_success_message' => 'យើងបានជម្រាបអ្នកថា ការផ្ទេររបស់អ្នកបានបញ្ចប់ដោយជោគជ័យ។',
+
+	// ការផ្ទេរបរាជ័យ
+	'virement_failed_subject' => 'ការផ្ទេរបរាជ័យ - TRANSFERFLUX',
+	'virement_failed_title' => 'ការផ្ទេរបរាជ័យ',
+	'virement_failed_message' => 'សូមអភ័យទោស ការផ្ទេររបស់អ្នកមិនបានជោគជ័យ។',
+
+	// ព័ត៌វល័យ និង ស្លាក
+	'details_title' => 'ព័ត៌មានលម្អិតនៃការផ្ទេរ',
+	'label_amount' => '💰 ចំនួន :',
+	'label_date' => '📅 កាលបរិច្ឆេទ :',
+	'label_beneficiary' => '👤 អ្នកទទួល :',
+	'virement_notice' => 'ការក 처리 នឹងធ្វើក្នុងរយៈពេល 1-3 ថ្ងៃធ្វើការ។',
+	'thanks' => 'អរគុណ,',
+	'contact_support_for_info' => 'សម្រាប់ព័ត៌មានបន្ថែម សូមទាក់ទងក្រុមសេវាអតិថិជន។',
+
+	// Footer / ជាទូទៅ
+	'footer_brand' => 'TRANSFERFLUX',
+	'footer_partner' => 'ដៃគូហិរញ្ញវត្ថុដែលអ្នកពឹងផ្អែកបាន 🏦',
+	'regards' => 'ដោយក្តីគោរព,',
+	'service_client' => 'សេវាកម្មអតិថិជន',
+	'auto_generated_notice' => 'អ៊ីមែលនេះត្រូវបានបង្កើតដោយស្វ័យប្រវត្តិ សូមកុំឆ្លើយតបដោយផ្ទាល់។',
+
+	// បន្ថែមគ្រោង
+	'compte_activated_title' => 'គណនីបានដំណើរការ - TRANSFERFLUX',
+	'compte_activated_heading' => 'គណនីដំណើរការជោគជ័យ',
+	'good_news' => '✅ យើងមានដំណឹងល្អ :',
+	'compte_activated_message' => 'គណនី TRANSFERFLUX របស់អ្នកត្រូវបានដំណើរការហើយអាចប្រើបាន។',
+	'compte_activated_explanation' => 'ឥឡូវនេះ អ្នកអាចធ្វើប្រតិបត្តិការទាំងអស់បានយ៉ាងប្រកបដោយសុវត្ថិភាព។',
+	'label_holder' => 'ម្ចាស់',
+	'label_current_balance' => 'សមតុល្យបច្ចុប្បន្ន',
+	'label_status' => 'ស្ថានភាព',
+	'status_active' => 'ដំណើរការ',
+	'you_can_now' => 'ឥឡូវនេះអ្នកអាច:',
+	'can_make_transfers' => 'ធ្វើការផ្ទេរ និង ទូទាត់',
+	'check_balance' => 'ពិនិត្យសមតុល្យរបស់អ្នកា',
+	'manage_transactions' => 'គ្រប់គ្រងប្រតិបត្តិការរបស់អ្នកដោយសុវត្ថិភាព',
+	'access_services' => 'ចូលដំណើរការទៅកាន់សេវាកម្មធនាគារទាំងអស់',
+	'thanks_welcome' => 'អរគុណចំពោះទុកចិត្ត រីឯស្វាគមន៏ទៅ TRANSFERFLUX!',
+
+	'unlock_code_used_title' => 'កូដបើកឃ្លាំងបានប្រើ - TRANSFERFLUX',
+	'unlock_code_used_heading' => 'កូដបើកឃ្លាំងបានប្រើ',
+	'greeting_simple' => 'សួស្តី,',
+	'info_notification' => 'ℹ️ ដំណឹង :',
+	'unlock_code_used_alert' => 'កូដបើកឃ្លាំងត្រូវបានប្រើនៅលើគណនីរបស់អ្នក។',
+	'unlock_code_used_explanation' => 'យើងជូនដំណឹងថាកូដបើកឃ្លាំងត្រូវបានដាក់ និង បានផ្ទៀងផ្ទាត់សម្រាប់ប្រតិបត្តិការ។',
+	'label_date_time' => 'កាលបរិច្ឆេទ និង ពេលវេលា',
+	'label_transfer_amount' => 'ចំនួនផ្ទេរ',
+	'label_recipient' => 'អ្នកទទួល',
+	'urgent_if_not_you' => '⚠️ ប្រសិនបើអ្នកមិនបានធ្វើនេះ សូម:',
+	'contact_support_immediately' => 'ទាក់ទងសេវាកម្មអតិថិជនភ្លាមៗ',
+
+	'transfer_unlock_code_title' => 'កូដបើកឃ្លាំង - TRANSFERFLUX',
+	'transfer_unlock_heading' => 'កូដបើកឃ្លាំងសម្រាប់ការផ្ទេរ',
+	'transfer_unlock_message_intro' => 'កូដបើកឃ្លាំងសម្រាប់ការផ្ទេររបស់អ្នកមានដូចខាងក្រោម:',
+	'transfer_unlock_code_label' => 'កូដគឺ :',
+	'do_not_share_unlock_code' => 'កុំចែករំលែកកូដរបស់អ្នក!',
+
+	'welcome_title' => 'សូមស្វាគមន៍ - TRANSFERFLUX',
+	'welcome_heading' => 'សូមស្វាគមន៍',
+	'welcome_message' => 'អរគុណចំពោះការបង្កើតគណនី យើងរីករាយដែលមានអ្នកជាមួយយើង!',
+
+	'balance_decreased_title' => 'សមតុល្យថយចុះ - TRANSFERFLUX',
+	'balance_decreased_heading' => 'សមតុល្យថយចុះ',
+	'balance_decreased_message' => 'យើងប្រកាសថាសមតុល្យរបស់អ្នកបានថយចុះ។',
+	'operation_details' => 'ព័ត៌មានលំអិតនៃប្រតិបត្តិការ',
+	'label_amount_deducted' => 'ចំនួនបានដក',
+	'label_new_balance' => 'សមតុល្យថ្មី',
+	'contact_us_if_questions' => 'ប្រសិនបើមានសំណួរ ឬ ត្រូវការជំនួយ សូមទាក់ទងពួកយើង។',
+
+	'balance_increased_title' => 'សមតុល្យកើនឡើង',
+	'balance_increased_heading' => 'សមតុល្យកើនឡើង',
+	'balance_increased_message' => 'យើងប្រកាសថាសមតុល្យរបស់អ្នកបានបន្ថែមដោយជោគជ័យ។',
+	'label_amount_added' => 'ចំនួនបានបន្ថែម',
+	'thank_you_trust' => 'អរគុណចំពោះការជឿទុកចិត្ត!',
+
+	'refund_title' => 'ការបង្វិលប្រាក់ - TRANSFERFLUX',
+	'refund_heading' => 'ការផ្ទេរបរាជ័យ',
+	'refund_subject' => 'ការផ្ទេរបរាជ័យ - TRANSFERFLUX',
+	'refund_failed_message' => ':amount ត្រូវបានយង្ដតទៅគណនីរបស់អ្នក។',
+
+	'mail_error_alert_title' => 'ការព្រមានកំហុសអ៊ីមែល',
+	'system_alert' => '⚠️ ការព្រមានប្រព័ន្ធ',
+	'mail_send_failure_detected' => 'បានរកឃើញការបញ្ចូនអ៊ីមែលបរាជ័យ',
+	'email_sending_problem' => 'មិនអាចផ្ញើអ៊ីមែលបាន ដូច្នេះ វាអាចបានឈប់នៅលើកំណត់ប្រចាំថ្ងៃ ឬ មានបញ្ហា SMTP។',
+	'email_send_failure_explanation' => 'ព័ត៌មានកំហុស: :error',
+
+	'password_reset_title' => 'កំណត់ពាក្យសម្ងាត់ឡើងវិញ - TRANSFERFLUX',
+	'password_reset_heading' => 'កំណត់ពាក្យសម្ងាត់ឡើងវិញ',
+	'password_reset_button' => 'កំណត់ពាក្យសម្ងាត់ឡើងវិញ',
+
+	'account_blocked_message' => 'គណនី TRANSFERFLUX របស់អ្នកត្រូវបានផ្អាកបណ្តោះអាសន្ន។',
+];

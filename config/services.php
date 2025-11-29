@@ -41,4 +41,23 @@ return [
         ],
     ],
 
+    // Services de paiement
+    'fedapay' => [
+        'public_key' => env('FEDAPAY_PUBLIC_KEY'),
+        'secret_key' => env('FEDAPAY_SECRET_KEY'),
+        'sandbox' => env('FEDAPAY_SANDBOX', false),
+        'webhook_secret' => env('FEDAPAY_WEBHOOK_SECRET'),
+    ],
+
+    'oosic' => [
+        'api_key' => env('OOSIC_API_KEY'),
+        'sandbox' => env('OOSIC_SANDBOX', false),
+    ],
+
+    'crisp' => [
+        'website_id' => env('CRISP_WEBSITE_ID'),
+        'auto_message' => env('CRISP_AUTO_MESSAGE', 'Bonjour, posez-moi toutes vos questions à propos de KITSCMS.'),
+        'locale' => env('CRISP_LOCALE', 'fr'),
+    ],
+
 ];

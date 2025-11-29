@@ -1,67 +1,73 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 <head>
-    <title>Confirmation de Virement Réussi</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            color: #333;
-            margin: 0;
-            padding: 0;
-        }
-        .container {
-            width: 100%;
-            max-width: 600px;
-            margin: 0 auto;
-            background-color: #fff;
-            padding: 20px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-        .header {
-            background-color: #28a745;
-            color: #fff;
-            padding: 20px;
-            text-align: center;
-        }
-        .header h1 {
-            margin: 0;
-        }
-        .content {
-            padding: 20px;
-        }
-        .content p {
-            margin: 10px 0;
-        }
-        .footer {
-            text-align: center;
-            padding: 20px;
-            font-size: 12px;
-            color: #777;
-        }
-    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ __('emails.virement_success_subject') }} - {{ __('emails.footer_brand') }}</title>
+    <style>body{margin:0;padding:0}</style>
 </head>
-<body>
-    <div class="container">
-        <div class="header">
-            <h1>Confirmation de Virement Réussi</h1>
-        </div>
-        <div class="content">
-            <p>Bonjour {{ $compte->nom }} {{ $compte->prenom }},</p>
-            <p>Nous vous informons que votre virement de {{ $transfer->solidvire }} {{ $transfer->devise }} a été effectué avec succès.</p>
-            <p>Les détails du virement sont les suivants :</p>
-            <ul>
-                <li>Montant : {{ $transfer->solidvire }} {{ $compte->devise }}</li>
-                <li>Date : {{ $transfer->created_at->format('d/m/Y H:i') }}</li>
-                <li>Bénéficiaire : {{ $transfer->beneficiary_name }}</li>
-                <li>Référence : {{ $transfer->numerocompte }}</li>
-            </ul>
-            <i class="text-info mt-2-">Le traitement du transfert sera effectué dans les 1-3 jours ouvrables.</i>
-            <p>Merci d'utiliser nos services.</p>
-        </div>
-        <div class="footer">
-            <p>© {{ date('Y') }} {{ config('app.name') }}. Tous droits réservés.</p>
-        </div>
-    </div>
+<body style="margin:0;padding:20px;background:linear-gradient(135deg,#10b981 0%,#059669 100%);font-family:Segoe UI, Tahoma, Geneva, Verdana, sans-serif;">
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border-collapse:collapse;">
+        <tr>
+            <td align="center">
+                <table role="presentation" width="600" cellpadding="0" cellspacing="0" style="background:#fff;border-radius:12px;overflow:hidden;">
+                    <tr>
+                        <td style="background:linear-gradient(135deg,#10b981 0%,#059669 100%);padding:20px;text-align:center;color:#fff;font-weight:700;">{{ __('emails.virement_success_title') }}</td>
+                    </tr>
+                    <tr>
+                        <td style="padding:24px;color:#333;">
+                            <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
+                                <tr>
+                                    <td style="text-align:center;padding-bottom:12px;"><div style="font-size:48px;line-height:48px;color:#fff;"><span class="notranslate">✓</span></div></td>
+                                </tr>
+                                <tr>
+                                    <td style="font-size:16px;font-weight:600;padding-bottom:12px;">{{ __('emails.greeting', ['name' => $compte->nom . ' ' . $compte->prenom]) }}</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding-bottom:12px;color:#555;">{{ __('emails.virement_success_message') }}</td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border-collapse:separate;border-spacing:0;margin:18px 0;background:#ecfdf5;border-left:4px solid #10b981;border-radius:10px;padding:12px;">
+                                            <tr>
+                                                <td style="font-size:16px;font-weight:700;color:#333;padding-bottom:8px;">{{ __('emails.details_title') }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td style="padding:8px 0;">
+                                                    <table role="presentation" width="100%" cellpadding="4" cellspacing="0" style="border-collapse:collapse;">
+                                                        <tr>
+                                                            <td style="width:50%;color:#666;"><span class="notranslate">💰</span> {{ __('emails.label_amount') }}</td>
+                                                            <td style="width:50%;text-align:right;color:#059669;font-weight:700;">{{ $transfer->solidvire }} {{ $compte->devise }}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style="color:#666;padding-top:6px;"><span class="notranslate">📅</span> {{ __('emails.label_date') }}</td>
+                                                            <td style="text-align:right;padding-top:6px;color:#333;">{{ $transfer->created_at->format('d/m/Y H:i') }}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style="color:#666;padding-top:6px;"><span class="notranslate">👤</span> {{ __('emails.label_beneficiary') }}</td>
+                                                            <td style="text-align:right;padding-top:6px;color:#333;">{{ $transfer->beneficiary_name }}</td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding-top:12px;text-align:center;color:#1e40af;font-style:italic;">{{ __('emails.virement_notice') }}</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding-top:18px;text-align:center;color:#555;">{{ __('emails.thanks') }}</td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="background:#f8f9fa;padding:16px;text-align:center;color:#777;font-size:13px;">{{ __('emails.footer_thanks') }}<div style="font-weight:700;color:#10b981;margin-top:6px;">{{ __('emails.footer_brand') }}</div></td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
 </body>
 </html>
