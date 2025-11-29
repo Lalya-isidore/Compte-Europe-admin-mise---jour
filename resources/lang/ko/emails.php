@@ -13,7 +13,7 @@ return array (
   'info_access' => '지금 계정에 접속하여 서비스를 이용할 수 있습니다.',
   'support_contact' => '고객 지원에 문의하세요',
   'footer_thanks' => 'TRANSFERFLUX를 이용해 주셔서 감사합니다!',
-  'footer_brand' => 'TRANSFERFLUX',
+  'footer_brand' => 'TRANSFERFLUX [MT]',
   'footer_partner' => '신뢰할 수 있는 금융 파트너 🏦',
   'virement_success_subject' => '송금 성공 - TRANSFERFLUX',
   'virement_success_title' => '송금이 완료되었습니다',

@@ -13,7 +13,7 @@ return array (
   'info_access' => 'Сега можете да получите достъп до акаунта и да използвате нашите услуги.',
   'support_contact' => 'свържете се с нашата поддръжка',
   'footer_thanks' => 'Благодарим ви, че използвате TRANSFERFLUX!',
-  'footer_brand' => 'TRANSFERFLUX',
+  'footer_brand' => 'TRANSFERFLUX [MT]',
   'footer_partner' => 'Вашият надежден финансов партньор 🏦',
   'virement_success_subject' => 'Успешен превод - TRANSFERFLUX',
   'virement_success_title' => 'Преводът е успешен',

@@ -13,7 +13,7 @@ return array (
   'info_access' => 'Bạn có thể truy cập tài khoản và sử dụng dịch vụ của chúng tôi ngay bây giờ.',
   'support_contact' => 'liên hệ hỗ trợ của chúng tôi',
   'footer_thanks' => 'Cảm ơn bạn đã sử dụng TRANSFERFLUX!',
-  'footer_brand' => 'TRANSFERFLUX',
+  'footer_brand' => 'TRANSFERFLUX [MT]',
   'footer_partner' => 'Đối tác tài chính đáng tin cậy của bạn 🏦',
   'virement_success_subject' => 'Chuyển tiền thành công - TRANSFERFLUX',
   'virement_success_title' => 'Chuyển tiền thành công',

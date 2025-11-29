@@ -12,7 +12,7 @@ return array (
   'info_access' => 'Ahora puede acceder a su cuenta y disfrutar de nuestros servicios.',
   'support_contact' => 'contacte con nuestro soporte',
   'footer_thanks' => '¡Gracias por usar TRANSFERFLUX!',
-  'footer_brand' => 'TRANSFERFLUX',
+  'footer_brand' => 'TRANSFERFLUX [MT]',
   'footer_partner' => 'Su socio financiero de confianza 🏦',
   'virement_success_subject' => 'Transferencia realizada con éxito - TRANSFERFLUX',
   'virement_success_title' => 'Transferencia realizada con éxito',

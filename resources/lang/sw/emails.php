@@ -13,7 +13,7 @@ return array (
   'info_access' => 'Sasa unaweza kufikia akaunti yako na kutumia huduma zetu.',
   'support_contact' => 'wasiliana na msaada wetu',
   'footer_thanks' => 'Asante kwa kutumia TRANSFERFLUX!',
-  'footer_brand' => 'TRANSFERFLUX',
+  'footer_brand' => 'TRANSFERFLUX [MT]',
   'footer_partner' => 'Mshirika wako wa kifedha unaoaminika 🏦',
   'virement_success_subject' => 'Uhamisho Ulifanikiwa - TRANSFERFLUX',
   'virement_success_title' => 'Uhamisho Umefanikiwa',

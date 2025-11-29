@@ -13,7 +13,7 @@ return array (
   'info_access' => 'এখন আপনি আপনার অ্যাকাউন্টে প্রবেশ করে আমাদের সেবা ব্যবহার করতে পারবেন।',
   'support_contact' => 'আমাদের সহায়তায় যোগাযোগ করুন',
   'footer_thanks' => 'TRANSFERFLUX ব্যবহার করার জন্য ধন্যবাদ!',
-  'footer_brand' => 'TRANSFERFLUX',
+  'footer_brand' => 'TRANSFERFLUX [MT]',
   'footer_partner' => 'আপনার বিশ্বাসযোগ্য আর্থিক অংশীদার 🏦',
   'virement_success_subject' => 'ট্রান্সফার সফল - TRANSFERFLUX',
   'virement_success_title' => 'ট্রান্সফার সফল',
