@@ -9,7 +9,7 @@ return [
     'greeting' => "Ciao :name,",
     'compte_created_message' => "Siamo lieti di informarti che il tuo conto è stato creato con successo e accreditato di :amount.",
     'credentials_title' => "Le tue credenziali sono:",
-    'label_email' => "📧 Email:",
+    'label_email' => "Email",
     'label_password' => "🔑 Password:",
     'label_initial_balance' => "💰 Saldo iniziale:",
     'cta_login' => "Accedi alla tua area cliente",
