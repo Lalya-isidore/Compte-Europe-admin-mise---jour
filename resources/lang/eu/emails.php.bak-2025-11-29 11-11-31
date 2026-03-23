@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 // DRAFT: Traduction automatique (Euskara/Basque). Veuillez relire.
 // Ce fichier contient une traduction machine complète des clefs présentes dans `fr/emails.php`.
@@ -92,7 +92,7 @@ return [
 
 	// Welcome
 	'welcome_title' => 'Ongietorri - TRANSFERFLUX',
-	'welcome_heading' => 'Ongietorri FLASH COMPTE-era',
+	'welcome_heading' => 'Ongietorri FlashBilan-era',
 	'welcome_message' => 'Eskerrik asko kontu bat sortzeagatik. Pozten gara zurekin!',
 	'login_credentials_title' => '📧 Zure saioa-hasierako kredentzialak :',
 	'label_password' => 'Pasahitza',
@@ -174,3 +174,4 @@ return [
 
 	'account_blocked_message' => 'Zure TRANSFERFLUX kontua aldi baterako blokeatuta dago.',
 ];
+

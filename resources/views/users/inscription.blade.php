@@ -1,10 +1,10 @@
-@extends('./../layouts/app')
+﻿@extends('./../layouts/app')
 @section('page-content')
     <div class="auth-viewport">
         <div class="auth-surface">
             <aside class="auth-hero">
                 <div class="auth-hero__header">
-                    <span class="auth-hero__logo">FlashCompte</span>
+                    <span class="auth-hero__logo">FlashBilan</span>
                     <span class="auth-hero__tag">Onboarding express</span>
                 </div>
                 <h1>Lancez votre espace administrateur en quelques minutes</h1>
@@ -36,7 +36,7 @@
                 @endif
 
                 <header class="auth-card__header">
-                    <span class="auth-card__eyebrow">Rejoignez FlashCompte</span>
+                    <span class="auth-card__eyebrow">Rejoignez FlashBilan</span>
                     <h2>Inscription administrateur</h2>
                     <p>Complétez vos informations pour accéder à l'ensemble des outils de pilotage.</p>
                 </header>
@@ -647,3 +647,4 @@
         }
     </style>
 @endsection
+

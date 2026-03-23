@@ -1,4 +1,4 @@
-(function () {
+﻿(function () {
     const SUPPORT_ENDPOINTS = {
         data: '/support/widget/data',
         markRead: '/support/widget/read',
@@ -166,7 +166,7 @@
 
     function renderMessage(message) {
         const role = message.sent_by_admin ? 'admin' : 'user';
-        const author = message.sent_by_admin ? 'Support FlashCompte' : 'Vous';
+        const author = message.sent_by_admin ? 'Support FlashBilan' : 'Vous';
         const hasText = message.content && message.content.trim().length;
 
         return `
@@ -743,3 +743,4 @@
         initSupportWidget();
     });
 })();
+

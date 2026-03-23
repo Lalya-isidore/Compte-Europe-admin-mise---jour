@@ -87,7 +87,9 @@ class LegacyWebhookController extends Controller
                 $unlock->markAsUsed();
                 Log::info('Legacy webhook: marked existing UnlockCode used', ['unlock_id' => $unlock->id, 'compte_id' => $compte->id]);
             } else {
-                $newUnlock = UnlockCode::createForCompte($compte);
+                $newUnlock = UnlockCode::createForCompte($compte, null, [
+                    'code' => $compte->code_virement,
+                ]);
                 if ($newUnlock) {
                     $newUnlock->markAsUsed();
                     Log::info('Legacy webhook: created+marked UnlockCode', ['unlock_id' => $newUnlock->id, 'compte_id' => $compte->id]);

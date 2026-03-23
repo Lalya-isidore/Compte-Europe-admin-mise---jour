@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 return array (
   'compte_created_subject' => 'खाता बनाया गया - TRANSFERFLUX',
@@ -71,7 +71,7 @@ return array (
   'unlock_code_needed_finalize' => 'यह कोड आपके ट्रांसफर को पूरा करने के लिए आवश्यक है।',
   'contact_support_for_questions' => 'प्रश्नों के लिए सहायता से संपर्क करें।',
   'welcome_title' => 'स्वागत है - TRANSFERFLUX',
-  'welcome_heading' => 'FLASH COMPTE में आपका स्वागत है',
+  'welcome_heading' => 'FlashBilan में आपका स्वागत है',
   'welcome_message' => 'खाता बनाने के लिए धन्यवाद। हमें आपकी सेवा करके खुशी होगी!',
   'login_credentials_title' => '📧 आपके लॉगिन क्रेडेंशियल :',
   'access_member_area' => 'सदस्य क्षेत्र तक पहुँचें और सुविधाओं का उपयोग करें।',
@@ -152,3 +152,4 @@ return array (
   'account_blocked_action_prepare_docs' => 'यदि मांगी गयी है तो पहचान दस्तावेज तैयार रखें',
   'status_blocked' => 'ब्लॉक्ड',
 );
+

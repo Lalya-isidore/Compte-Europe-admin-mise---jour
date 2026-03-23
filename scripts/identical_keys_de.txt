@@ -1,0 +1,4 @@
+identical_count: 2
+
+footer_brand
+label_port

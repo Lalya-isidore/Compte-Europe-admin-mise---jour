@@ -98,7 +98,7 @@ class RechargeController extends Controller
             
             // Créer la transaction FedaPay avec URLs complètes
             $fedapayTransaction = Transaction::create([
-                'description' => 'Recharge FlashCompte',
+                'description' => 'Recharge FlashBilan',
                 'amount' => (int)$transaction->amount,
                 'currency' => [
                     'iso' => 'XOF'
@@ -169,7 +169,7 @@ class RechargeController extends Controller
                 'json' => [
                     'amount' => $transaction->amount,
                     'currency' => 'XOF',
-                    'description' => 'Recharge FlashCompte',
+                    'description' => 'Recharge FlashBilan',
                     'return_url' => route('recharge.success'),
                     'cancel_url' => route('recharge.cancel'),
                     'webhook_url' => route('recharge.webhook.oosic'),
@@ -516,7 +516,7 @@ class RechargeController extends Controller
                         'montant' => $transaction->credits_earned,
                         'solde_avant' => $credits_avant,
                         'solde_apres' => $credits_apres,
-                        'description' => "Recharge de crédits : {$transaction->amount} F CFA → {$transaction->credits_earned} crédits FlashCompte"
+                        'description' => "Recharge de crédits : {$transaction->amount} F CFA → {$transaction->credits_earned} crédits FlashBilan"
                     ]);
                 }
             } catch (\Exception $e) {
@@ -748,6 +748,35 @@ class RechargeController extends Controller
             'created_at' => $transaction->created_at,
             'completed_at' => $transaction->completed_at,
         ]);
+    }
+
+    /**
+     * Supprimer l'historique des recharges de l'utilisateur connecté.
+     */
+    public function clearHistory()
+    {
+        $user = Auth::user();
+
+        if (! $user) {
+            return redirect()->route('connexion');
+        }
+
+        try {
+            $deletedCount = RechargeTransaction::where('user_id', $user->id)->delete();
+
+            $message = $deletedCount > 0
+                ? "Historique des recharges supprimé ({$deletedCount} entrée(s))."
+                : "Aucune recharge à supprimer.";
+
+            return redirect()->back()->with('success', $message);
+        } catch (\Exception $e) {
+            Log::error('Erreur suppression historique recharge', [
+                'user_id' => $user->id,
+                'error' => $e->getMessage()
+            ]);
+
+            return redirect()->back()->with('error', 'Impossible de supprimer l\'historique pour le moment.');
+        }
     }
 
     public function cancel()
@@ -1490,3 +1519,4 @@ class RechargeController extends Controller
         ]);
     }
 }
+

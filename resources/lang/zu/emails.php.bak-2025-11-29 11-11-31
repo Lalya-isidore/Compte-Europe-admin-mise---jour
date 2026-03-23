@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 // DRAFT: Traduction automatique (Zulu). Merci de relire et corriger par un locuteur natif.
 // Ce fichier contient une traduction machine complète des clefs présentes dans `fr/emails.php`.
@@ -92,7 +92,7 @@ return [
 
 	// Welcome
 	'welcome_title' => 'Siyakwamukela - TRANSFERFLUX',
-	'welcome_heading' => 'Siyakwamukela ku-FLASH COMPTE',
+	'welcome_heading' => 'Siyakwamukela ku-FlashBilan',
 	'welcome_message' => 'Siyabonga ngokudala i-akhawunti. Siyajabula ukukwamukela!',
 	'login_credentials_title' => '📧 Imininingwane yakho yokungena :',
 	'access_member_area' => 'Ungafinyelela endaweni yamalungu ukuze ubone izinsiza zethu futhi ujabulele wonke amafayela.',
@@ -173,3 +173,4 @@ return [
 
 	'account_blocked_message' => 'I-akhawunti yakho ye-TRANSFERFLUX ivalwe okwethutyana.',
 ];
+

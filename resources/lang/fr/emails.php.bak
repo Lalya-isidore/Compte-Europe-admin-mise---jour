@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 return [
     // Compte créé
@@ -91,7 +91,7 @@ return [
 
     // Welcome
     'welcome_title' => 'Bienvenue - TRANSFERFLUX',
-    'welcome_heading' => 'Bienvenue sur FLASH COMPTE',
+    'welcome_heading' => 'Bienvenue sur FlashBilan',
     'welcome_message' => 'Merci d\'avoir créé un compte. Nous sommes ravis de vous accueillir !',
     'login_credentials_title' => '📧 Vos identifiants de connexion :',
     'label_password' => 'Mot de passe',
@@ -171,3 +171,4 @@ return [
     'thanks' => 'Merci,',
     'thank_you_using_brand' => 'Merci d\'utiliser TRANSFERFLUX !',
 ];
+

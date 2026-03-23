@@ -3,10 +3,11 @@
 return array (
   'compte_created_subject' => 'Apertura de cuenta - TRANSFERFLUX',
   'compte_created_title' => 'Apertura de cuenta en TRANSFERFLUX',
+  'greeting' => 'Hola :name,',
   'compte_created_message' => 'Nos complace informarle que su cuenta ha sido creada con éxito y acreditada con :amount.',
   'credentials_title' => 'Sus credenciales son:',
-  'label_email' => 'Correo electrónico',
-  'label_password' => 'Contraseña',
+  'label_email' => '📧 Correo electrónico',
+  'label_password' => '🔑 Contraseña',
   'label_initial_balance' => '💰 Saldo inicial:',
   'cta_login' => 'Inicie sesión en su área de cliente',
   'info_access' => 'Ahora puede acceder a su cuenta y disfrutar de nuestros servicios.',
@@ -150,4 +151,6 @@ return array (
   'account_blocked_action_check' => 'Compruebe su conformidad con nuestros términos de uso',
   'account_blocked_action_prepare_docs' => 'Prepare sus documentos de identidad si es necesario',
   'status_blocked' => 'BLOQUEADO',
+  'account_blocked_team_available' => 'Nuestro equipo está disponible para ayudarle y resolver esta situación lo antes posible.',
+  'cordially' => 'Atentamente,',
 );

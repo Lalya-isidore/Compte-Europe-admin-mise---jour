@@ -3,13 +3,19 @@
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('users.connexion');
+    return \Illuminate\Support\Facades\Auth::check()
+        ? redirect()->route('dashboard')
+        : view('users.connexion');
 });
 use App\Http\Controllers\CompteController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\SousCompteController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VirementController;
+use App\Http\Controllers\TarifsController;
+use App\Http\Controllers\MailExtractorController;
+use App\Http\Controllers\UrlCheckController;
+use App\Http\Controllers\UrlShortenerController;
 use App\Http\Requests\UserRequest;
 use App\Http\Controllers\SupportController;
 use App\Http\Controllers\Admin\SupportTicketController;
@@ -34,13 +40,54 @@ Route::middleware(['auth'])->group(function () {
         return view('dashboard');
     })->name('dashboard');
 
+    // SMS Pro Routes
+    Route::get('/sms/pro', [App\Http\Controllers\SmsProController::class, 'index'])->name('sms.pro');
+    Route::post('/sms/pro/send', [App\Http\Controllers\SmsProController::class, 'send'])->name('sms.pro.send');
+    Route::get('/sms/pro/history', [App\Http\Controllers\SmsProController::class, 'history'])->name('sms.pro.history');
+    Route::get('/sms/pro/details/{id}', [App\Http\Controllers\SmsProController::class, 'details'])->name('sms.pro.details');
+    Route::delete('/sms/pro/history', [App\Http\Controllers\SmsProController::class, 'deleteHistory'])->name('sms.pro.delete-history');
+
+    // Mail Flash Pro Routes
+    Route::get('/mail/flash-pro', [App\Http\Controllers\MailProController::class, 'index'])->name('mail.flash.pro');
+    Route::post('/mail/flash-pro/send', [App\Http\Controllers\MailProController::class, 'send'])->name('mail.flash.pro.send');
+    Route::get('/mail/flash-pro/details/{id}', [App\Http\Controllers\MailProController::class, 'details'])->name('mail.flash.pro.details');
+    Route::delete('/mail/flash-pro/history', [App\Http\Controllers\MailProController::class, 'deleteHistory'])->name('mail.flash.pro.delete-history');
+    Route::get('/mail/flash-pro/open/{messageId}', [App\Http\Controllers\MailProController::class, 'trackOpen'])
+        ->name('mail.flash.pro.open')
+        ->withoutMiddleware(['auth']);
+    
+    // Mail Pro Privé (placeholder)
+    Route::get('/mail/pro-prive', function() { return view('mail.pro-prive'); })->name('mail.pro.prive');
+    
+    // Collecte de code coupon (placeholder)
+    Route::get('/coupon/collecte', function() { return view('coupon.collecte'); })->name('coupon.collecte');
+
+    // Vente de crypto USDT (placeholder)
+    Route::get('/crypto/vente', function () { return view('crypto.vente'); })->name('crypto.vente');
+
+    // Vérification d'un URL
+    Route::get('/tools/url-check', [UrlCheckController::class, 'index'])->name('tools.url-check');
+    Route::post('/tools/url-check', [UrlCheckController::class, 'check'])->name('tools.url-check.run');
+
+    // Raccourcissement d'URL
+    Route::get('/tools/url-shortener', [UrlShortenerController::class, 'index'])->name('tools.url-shortener');
+    Route::post('/tools/url-shortener', [UrlShortenerController::class, 'store'])->name('tools.url-shortener.store');
+    Route::delete('/tools/url-shortener', [UrlShortenerController::class, 'destroy'])->name('tools.url-shortener.delete');
+
+    // Extraction d'e-mail(s)
+    Route::get('/tools/mail-extractor', [MailExtractorController::class, 'index'])->name('tools.mail-extractor');
+    Route::post('/tools/mail-extractor', [MailExtractorController::class, 'store'])->name('tools.mail-extractor.run');
+    Route::delete('/tools/mail-extractor', [MailExtractorController::class, 'destroy'])->name('tools.mail-extractor.clear');
+
+    Route::get('/tarifs', [TarifsController::class, 'index'])->name('tarifs.index');
+
     // Route::get('/pages/create', [PageController::class, 'create'])->name('pages.create');
     // Route::post('/pages', [PageController::class, 'store'])->name('pages.store');
 
     // Route::get('/pages/show', [compteController::class, 'show'])->name('pagesshow');
     Route::get('logout', [UserController::class, 'logout'])->name('logout');
     // Liste des comptes de l'utilisateur
-    Route::get('/compte', [CompteController::class, 'compteview'])->name('compte.view');
+    Route::get('/compte', [CompteController::class, 'overview'])->name('compte.view');
     // Formulaire de création (affiche la vue de création)
     Route::get('/compte/create', [CompteController::class, 'compteview'])->name('compte.create');
     // Enregistrement du compte (soumission du formulaire)
@@ -59,6 +106,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/recharge', [App\Http\Controllers\RechargeController::class, 'store'])->name('recharge.store');
     Route::get('/recharge/success', [App\Http\Controllers\RechargeController::class, 'success'])->name('recharge.success');
     Route::get('/recharge/cancel', [App\Http\Controllers\RechargeController::class, 'cancel'])->name('recharge.cancel');
+    Route::delete('/recharge/history', [App\Http\Controllers\RechargeController::class, 'clearHistory'])->name('recharge.history.clear');
     // Vérifier le statut d'une transaction par son transaction_id (propriétaire uniquement)
     Route::get('/recharge/status/{transactionId}', [App\Http\Controllers\RechargeController::class, 'status'])->name('recharge.status');
 
@@ -268,6 +316,9 @@ Route::post('/reset-password', [App\Http\Controllers\Auth\ResetPasswordControlle
 
 Route::delete('/delete-account/{id}', [CompteController::class, 'destroy'])->name('account.destroy');
 
+// Route to delete the full User and all related data (used from "Mon compte" page)
+Route::delete('/delete-user/{id}', [CompteController::class, 'destroyUser'])->name('user.destroy');
+
 // route de paiement
 
 Route::post('/payement5000/{id}', [CompteController::class, 'payement5000'])->name('payement.5000');
@@ -277,6 +328,10 @@ Route::post('/payement5000/{id}', [CompteController::class, 'payement5000'])->na
 
     // Route principale admin - affiche login ou dashboard selon l'authentification
     Route::get('/admin', [App\Http\Controllers\Admin\AdminAuthController::class, 'index'])->name('admin.index');
+
+    // Ajout d'un alias GET pour /admin/login afin d'éviter une erreur 405 si une requête GET
+    // atteint /admin/login (affiche le formulaire de connexion)
+    Route::get('/admin/login', [App\Http\Controllers\Admin\AdminAuthController::class, 'showLoginForm'])->name('admin.login');
     
     // Routes d'authentification admin
     Route::post('/admin/login', [App\Http\Controllers\Admin\AdminAuthController::class, 'login'])->name('admin.login.submit');

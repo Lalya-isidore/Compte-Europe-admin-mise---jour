@@ -108,7 +108,7 @@
                                                         <span class="badge bg-secondary">{{ ucfirst($transaction->status) }}</span>
                                                 @endswitch
                                             </td>
-                                            <td>{{ $transaction->created_at->format('d/m/Y H:i') }}</td>
+                                            <td>{{ $transaction->created_at->setTimezone('Europe/Paris')->format('d/m/Y H:i') }}</td>
                                             <td>
                                                 <button class="btn btn-sm btn-outline-info" onclick="showTransactionDetails('{{ $transaction->id }}')">
                                                     <i class="fas fa-eye"></i>

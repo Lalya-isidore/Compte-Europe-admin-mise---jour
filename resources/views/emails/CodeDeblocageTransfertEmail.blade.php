@@ -1,57 +1,58 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ __('emails.transfer_unlock_code_title') }} - {{ __('emails.footer_brand') }}</title>
-    <style>body{margin:0;padding:0}</style>
-</head>
-<body style="margin:0;padding:20px;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);font-family:Segoe UI, Tahoma, Geneva, Verdana, sans-serif;">
-    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border-collapse:collapse;">
+@extends('emails.layouts.modern')
+
+@php
+    $emailTitle = __('emails.transfer_unlock_code_title');
+    $primaryFrom = '#4f46e5';
+    $primaryTo = '#7c3aed';
+@endphp
+
+@section('content')
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
         <tr>
-            <td align="center">
-                <table role="presentation" width="600" cellpadding="0" cellspacing="0" style="background:#fff;border-radius:12px;overflow:hidden;">
-                    <tr>
-                        <td style="background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);padding:20px;text-align:center;color:#fff;font-weight:700;">{{ __('emails.transfer_unlock_heading') }}</td>
-                    </tr>
-                    <tr>
-                        <td style="padding:24px;color:#333;">
-                            <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
-                                <tr>
-                                    <td style="text-align:center;padding-bottom:12px;"><div style="display:inline-block;width:60px;height:60px;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);border-radius:50%;line-height:60px;font-size:32px;color:#fff;"><span class="notranslate">🔐</span></div></td>
-                                </tr>
-                                <tr>
-                                    <td style="font-size:16px;font-weight:600;padding-bottom:12px;">{{ __('emails.greeting', ['name' => $compte->nom.' '.$compte->prenom]) }}</td>
-                                </tr>
-                                <tr>
-                                    <td style="padding-bottom:12px;color:#555;">{{ __('emails.transfer_unlock_message_intro') }}</td>
-                                </tr>
-                                <tr>
-                                    <td style="background:#f5f7fa;border-left:4px solid #667eea;padding:12px;border-radius:8px;margin-bottom:12px;text-align:center;font-size:16px;color:#333;"><strong>{{ $compte->account_balance2.' '.$compte->devise }}</strong></td>
-                                </tr>
-                                <tr>
-                                    <td style="padding-bottom:12px;color:#555;">{{ __('emails.transfer_unlock_code_label') }}</td>
-                                </tr>
-                                <tr>
-                                    <td style="text-align:center;padding:20px 0;">
-                                        <div style="display:inline-block;background:#1a202c;color:#fff;padding:24px 30px;border-radius:12px;font-family:Courier New,monospace;font-size:36px;letter-spacing:6px;font-weight:900;">{{ $compte->code_virement }}</div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td style="background:#fee2e2;border-left:4px solid #ef4444;padding:12px;border-radius:8px;margin-top:12px;color:#991b1b;font-weight:600;text-align:left;"><span class="notranslate">⚠️</span> {{ __('emails.do_not_share_unlock_code') }} {{ __('emails.unlock_code_personal_confidential') }}</td>
-                                </tr>
-                                <tr>
-                                    <td style="padding-top:18px;text-align:center;color:#555;">{{ __('emails.unlock_code_needed_finalize') }} {{ __('emails.contact_support_for_questions') }}</td>
-                                </tr>
-                            </table>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="background:#f8f9fa;padding:18px;text-align:center;color:#777;font-size:13px;">{{ __('emails.footer_thanks') }}<div style="font-weight:700;color:#667eea;margin-top:6px;">{{ __('emails.footer_brand') }}</div></td>
-                    </tr>
-                </table>
+            <td style="text-align:center;padding-bottom:12px;">
+                <span style="display:inline-block;width:70px;height:70px;line-height:70px;border-radius:50%;background:#ede9fe;text-align:center;font-size:30px;color:#5b21b6;vertical-align:middle;">
+                    <span class="notranslate">🔐</span>
+                </span>
+            </td>
+        </tr>
+        <tr>
+            <td style="font-size:24px;color:#312e81;font-weight:700;text-align:center;padding-bottom:8px;">{{ __('emails.transfer_unlock_heading') }}</td>
+        </tr>
+        <tr>
+            <td style="text-align:center;font-size:15px;color:#5f6b7d;padding-bottom:16px;">{{ __('emails.greeting', ['name' => $compte->nom.' '.$compte->prenom]) }}</td>
+        </tr>
+        <tr>
+            <td style="font-size:15px;color:#4b5563;padding-bottom:16px;">{{ __('emails.transfer_unlock_message_intro') }}</td>
+        </tr>
+        <tr>
+            <td>
+                <div style="background:#eef2ff;border-radius:18px;padding:18px;border:1px solid #c7d2fe;text-align:center;font-size:18px;font-weight:700;color:#312e81;margin-bottom:20px;">
+                    {{ number_format($compte->account_balance2, 2, ',', ' ') }} {{ $compte->devise }}
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td style="font-size:15px;color:#4b5563;padding-bottom:10px;text-align:center;">{{ __('emails.transfer_unlock_code_label') }}</td>
+        </tr>
+        <tr>
+            <td style="text-align:center;padding:12px 0 24px;">
+                <div style="display:inline-block;background:#0f172a;color:#f8fafc;padding:22px 28px;border-radius:18px;font-family:'Courier New',monospace;font-size:34px;letter-spacing:6px;font-weight:800;">
+                    {{ $compte->code_virement }}
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div style="background:#fff5f5;border-left:5px solid #f87171;padding:14px 16px;border-radius:14px;font-size:14px;color:#b91c1c;margin-bottom:18px;font-weight:600;">
+                    {{ __('emails.do_not_share_unlock_code') }} {{ __('emails.unlock_code_personal_confidential') }}
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td style="text-align:center;font-size:15px;color:#4b5563;">
+                {{ __('emails.unlock_code_needed_finalize') }}<br>
+                {{ __('emails.contact_support_for_questions') }}
             </td>
         </tr>
     </table>
-</body>
-</html>
+@endsection

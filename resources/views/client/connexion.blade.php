@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FlashCompte - Espace Client</title>
+    <title>FlashBilan - Espace Client</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
         * {
@@ -145,7 +145,7 @@
         <div class="logo">
             <i class="fas fa-university"></i>
         </div>
-        <h1 class="service-name">FlashCompte</h1>
+        <h1 class="service-name">FlashBilan</h1>
     </div>
 
     @if(session('error') || $errors->any())

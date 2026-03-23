@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 return [
     'compte_created_subject' => 'Apertura conto - TRANSFERFLUX',
@@ -82,7 +82,7 @@ return [
     'unlock_code_needed_finalize' => 'Ce code est nécessaire pour finaliser votre opération de transfert.',
     'contact_support_for_questions' => 'Pour toute question, contactez notre service client.',
     'welcome_title' => 'Bienvenue - TRANSFERFLUX',
-    'welcome_heading' => 'Bienvenue sur FLASH COMPTE',
+    'welcome_heading' => 'Bienvenue sur FlashBilan',
     'welcome_message' => 'Merci d\\',
     'login_credentials_title' => '📧 Vos identifiants de connexion :',
     'access_member_area' => 'Vous pouvez accéder à l\\',
@@ -141,3 +141,4 @@ return [
     'password_reset_no_action_needed' => 'Si vous n\\',
     'thank_you_using_brand' => 'Merci d\\',
 ];
+

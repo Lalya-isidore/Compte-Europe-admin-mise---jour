@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 namespace App\Notifications;
 
@@ -41,7 +41,7 @@ class NouvelleCommissionNotification extends Notification
         $montant = number_format($this->commission->montant_commission, 2);
 
         return (new MailMessage)
-            ->subject('🎉 Nouvelle commission de parrainage - FlashCompte')
+            ->subject('🎉 Nouvelle commission de parrainage - FlashBilan')
             ->greeting('Félicitations ' . $notifiable->prenom . ' !')
             ->line("Vous avez reçu une nouvelle commission de **{$montant} F CFA** grâce à votre programme d'affiliation.")
             ->line("**Détails de la commission :**")
@@ -51,7 +51,7 @@ class NouvelleCommissionNotification extends Notification
             ->line("• Date : " . $this->commission->created_at->format('d/m/Y à H:i'))
             ->action('Voir mes commissions', route('affiliation.index'))
             ->line('Continuez à partager votre lien de parrainage pour gagner plus de commissions!')
-            ->line('Merci d\'utiliser FlashCompte !');
+            ->line('Merci d\'utiliser FlashBilan !');
     }
 
     /**
@@ -70,3 +70,4 @@ class NouvelleCommissionNotification extends Notification
         ];
     }
 }
+

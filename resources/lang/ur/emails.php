@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 return array (
   'compte_created_subject' => 'اکاؤنٹ بن گیا - TRANSFERFLUX',
@@ -71,7 +71,7 @@ return array (
   'unlock_code_needed_finalize' => 'یہ کوڈ آپ کی منتقلی مکمل کرنے کیلئے ضروری ہے۔',
   'contact_support_for_questions' => 'سوالات کیلئے سپورٹ سے رابطہ کریں۔',
   'welcome_title' => 'خوش آمدید - TRANSFERFLUX',
-  'welcome_heading' => 'FLASH COMPTE میں خوش آمدید',
+  'welcome_heading' => 'FlashBilan میں خوش آمدید',
   'welcome_message' => 'اکاؤنٹ بنانے کا شکریہ۔ ہمیں آپ کی خدمت کرکے خوشی ہوگا!',
   'login_credentials_title' => '📧 آپ کے لاگ ان کی معلومات :',
   'access_member_area' => 'سروسز اور فیچرز دیکھنے کے لیے ممبر ایریا تک رسائی حاصل کریں',
@@ -152,3 +152,4 @@ return array (
   'account_blocked_action_prepare_docs' => 'درخواست پر شناختی دستاویزات تیار کریں',
   'status_blocked' => 'بلاکڈ',
 );
+

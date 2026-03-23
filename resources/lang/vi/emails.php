@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 return array (
   'compte_created_subject' => 'Mở tài khoản - TRANSFERFLUX',
@@ -71,7 +71,7 @@ return array (
   'unlock_code_needed_finalize' => 'Mã này cần thiết để hoàn tất giao dịch của bạn.',
   'contact_support_for_questions' => 'Mọi câu hỏi hãy liên hệ bộ phận hỗ trợ khách hàng.',
   'welcome_title' => 'Chào mừng - TRANSFERFLUX',
-  'welcome_heading' => 'Chào mừng đến với FLASH COMPTE',
+  'welcome_heading' => 'Chào mừng đến với FlashBilan',
   'welcome_message' => 'Cảm ơn bạn đã tạo tài khoản. Chúng tôi rất hân hạnh được phục vụ bạn!',
   'login_credentials_title' => '📧 Thông tin đăng nhập của bạn :',
   'access_member_area' => 'Bạn có thể truy cập khu vực thành viên để xem dịch vụ và sử dụng toàn bộ tính năng.',
@@ -152,3 +152,4 @@ return array (
   'account_blocked_action_prepare_docs' => 'Chuẩn bị giấy tờ tùy thân nếu cần',
   'status_blocked' => 'BỊ KHÓA',
 );
+

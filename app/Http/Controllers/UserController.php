@@ -11,7 +11,7 @@ use App\Models\User;
 use App\Models\Affiliation;
 use App\Models\TransactionHistory;
 use App\Notifications\WelcomeEmail;
-use App\Services\TwilioService;
+use App\Services\SmsService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -22,36 +22,39 @@ use Illuminate\Support\Str;
 
 class UserController extends Controller
 {
-    public function inscriptionRoute(Request $request){
+    public function inscriptionRoute(Request $request)
+    {
         // Récupérer le code de parrainage depuis l'URL ou la session
         $codeParrainage = $request->get('ref') ?? session('referral_code');
-        
+
         // Si un code est présent dans l'URL, le stocker en session pour persistence
         if ($request->get('ref')) {
             session(['referral_code' => $request->get('ref')]);
             $codeParrainage = $request->get('ref');
-            
+
             // Vérifier si le code existe et récupérer les infos du parrain
             $affiliationParrain = \App\Models\Affiliation::where('code_affiliation', $codeParrainage)->first();
             if ($affiliationParrain) {
                 $parrainInfo = $affiliationParrain->user;
-                session(['parrain_info' => [
-                    'nom' => $parrainInfo->nom,
-                    'prenom' => $parrainInfo->prenom,
-                    'taux_commission' => $affiliationParrain->commission_rate
-                ]]);
+                session([
+                    'parrain_info' => [
+                        'nom' => $parrainInfo->nom,
+                        'prenom' => $parrainInfo->prenom,
+                        'taux_commission' => $affiliationParrain->commission_rate
+                    ]
+                ]);
             }
         }
-        
+
         return view('users.inscription', compact('codeParrainage'));
     }
-    public function inscription(User $user, createUserRequest $request, TwilioService $twilioService)
+    public function inscription(User $user, createUserRequest $request, SmsService $smsService)
     {
         $phoneNumber = preg_replace('/\s+/', '', (string) $request->input('phone_number'));
         // capture le mot de passe en clair pour l'envoyer par email (ne pas le stocker en clair)
         $plainPassword = $request->password;
         $codeParrainage = $request->input('code_parrainage');
-        
+
         // Vérification de sécurité : si un code était en session, il doit correspondre
         if (session('referral_code') && $codeParrainage !== session('referral_code')) {
             return redirect()->back()
@@ -59,7 +62,7 @@ class UserController extends Controller
                 ->withErrors(['code_parrainage' => 'Tentative de manipulation du code de parrainage détectée.']);
         }
 
-    $compte = DB::transaction(function () use ($request, $user, $phoneNumber, $codeParrainage, $plainPassword) {
+        $compte = DB::transaction(function () use ($request, $user, $phoneNumber, $codeParrainage, $plainPassword) {
             // Créer l'utilisateur
             $user->nom = $request->nom;
             $user->prenom = $request->prenom;
@@ -109,13 +112,14 @@ class UserController extends Controller
                 'alert_sms' => 0,
                 'lang' => 'fr',
                 'transfer_supported' => 'Virement bancaire', // ✅ Ajoute cette ligne
-                'start_percentage' => 1,
+                'start_percentage' => 0,
                 'end_percentage' => 100,
                 'failure_message' => 'Transfert échoué. Veuillez contacter le support.',
                 'photo_path' => $defaultAvatar, // ✅ AVATAR PAR DÉFAUT
                 // Marquer comme auto-créé et planifier suppression
                 'is_auto_created' => true,
-                'auto_deletes_at' => now()->addHour(),
+                // Ne pas définir `auto_deletes_at` par défaut : suppression manuelle requise
+                // 'auto_deletes_at' => now()->addHour(),
             ]);
 
             // Enregistrer le solde initial dans l'historique des transactions avec le compte_id
@@ -125,7 +129,7 @@ class UserController extends Controller
                 'transaction_type' => 'Solde initial',
                 'devise' => '€',
                 'amount' => 10000.00,
-                    'description' => "TRANSFERFLUX",
+                'description' => "TRANSFERFLUX",
                 'created_at' => now()->timezone(config('app.timezone')),
                 'updated_at' => now()->timezone(config('app.timezone')),
             ]);
@@ -143,10 +147,10 @@ class UserController extends Controller
                 // CRITIQUE: Assigner le parrain_id à l'utilisateur
                 $user->parrain_id = $parrain->id;
                 $user->save();
-                
+
                 // Incrémenter uniquement le nombre de parrainés (pas les commissions)
                 $affiliationParrain->increment('total_parraines');
-                
+
                 // Note: Les commissions seront créées uniquement lors des recharges
                 Log::info("Nouveau parrainage enregistré", [
                     'parrain_id' => $parrain->id,
@@ -157,29 +161,25 @@ class UserController extends Controller
             return $compte;
         });
 
-        // Dispatcher le job de suppression avec un délai de 1 heure (après commit)
-        try {
-            if ($compte && $compte->id) {
-                DeleteAutoCreatedCompte::dispatch($compte->id)->delay(now()->addHour());
-            }
-        } catch (\Exception $e) {
-            Log::error('Erreur lors du dispatch du job DeleteAutoCreatedCompte: ' . $e->getMessage());
-        }
+        // Ne plus dispatcher de job de suppression automatique : la suppression doit
+        // désormais être faite manuellement par l'utilisateur.
+        // Si vous souhaitez enlever totalement la logique de job, supprimez aussi
+        // la classe `DeleteAutoCreatedCompte` et la commande planifiée.
 
         // Nettoyer les sessions de parrainage après inscription réussie
         session()->forget(['referral_code', 'parrain_info']);
-        
+
         // Notifier l'utilisateur en incluant le mot de passe en clair capturé plus haut
         $user->notify(new WelcomeEmail($plainPassword));
 
         if ($phoneNumber) {
             $message = sprintf(
-                "Bienvenue sur FlashCompte %s %s ! Votre compte client a été créé avec un solde initial de 10 000 F CFA.",
+                "Bienvenue sur FlashBilan %s %s ! Votre compte client a été créé avec un solde initial de 10 000 F CFA.",
                 $user->prenom,
                 $user->nom
             );
 
-            $twilioService->sendWhatsAppMessage($phoneNumber, $message);
+            $smsService->send($phoneNumber, $message);
         }
 
         return redirect()->route('connexion')->with('success', 'Votre compte a bien été creer, Connecter !');
@@ -193,29 +193,33 @@ class UserController extends Controller
 
         return $password;
     }
-    public function connexionRoute  (){
+    public function connexionRoute()
+    {
         return view('users.connexion');
     }
-    public function connexion (loginUserRequest $request){
+    public function connexion(loginUserRequest $request)
+    {
         $credentials = $request->validate([
-            'email'=>['required', 'email'],
-            'password' => [ 'required']
+            'email' => ['required', 'email'],
+            'password' => ['required']
         ]);
         if (Auth::attempt($credentials)) {
-            $request->session()->regenerate(); 
+            $request->session()->regenerate();
 
             return redirect()->intended('dashboard');
-            return ;
+            return;
         } else {
 
-           return redirect()->back()->with('error','Echec d\'authantification' );
+            return redirect()->back()->with('error', 'Echec d\'authantification');
         }
-        return redirect()->back()->with('error','Echec d\'authantification' );
+        return redirect()->back()->with('error', 'Echec d\'authantification');
     }
-    
-    public function logout(){
+
+    public function logout()
+    {
         Auth::logout();
         return redirect('connexion');
 
     }
 }
+

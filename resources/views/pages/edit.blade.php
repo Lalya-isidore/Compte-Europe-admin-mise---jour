@@ -1,4 +1,4 @@
-<!-- resources/views/pages/create.blade.php -->
+﻿<!-- resources/views/pages/create.blade.php -->
 @extends('./../layouts/app')
 @section('page-content')
 
@@ -9,7 +9,7 @@
             @if(session()->has('error'))
             <div class="alert alert-success"> {{session()->get('error')}} </div>
             @endif
-            <h1 class="my-3">Crée un Flash Compte </h1>
+            <h1 class="my-3">Crée un FlashBilan </h1>
 
             <form action="{{ route('compte.edit', $compte->id) }}" method="POST">
                 @method('put')

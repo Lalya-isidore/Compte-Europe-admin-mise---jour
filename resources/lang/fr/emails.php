@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 return [
     // Compte créé
@@ -91,7 +91,7 @@ return [
 
     // Welcome
     'welcome_title' => 'Bienvenue - TRANSFERFLUX',
-    'welcome_heading' => 'Bienvenue sur FLASH COMPTE',
+    'welcome_heading' => 'Bienvenue sur FlashBilan',
     'welcome_message' => 'Merci d\'avoir créé un compte. Nous sommes ravis de vous accueillir !',
     'login_credentials_title' => '📧 Vos identifiants de connexion :',
     'label_password' => 'Mot de passe',
@@ -186,4 +186,7 @@ return [
     'account_blocked_action_check' => 'Vérifiez votre conformité avec nos conditions d\'utilisation',
     'account_blocked_action_prepare_docs' => 'Préparez vos documents d\'identité si nécessaire',
     'status_blocked' => 'BLOQUÉ',
+    'account_blocked_team_available' => 'Notre équipe est disponible pour vous assister et résoudre cette situation dans les meilleurs délais.',
+    'cordially' => 'Cordialement,',
 ];
+

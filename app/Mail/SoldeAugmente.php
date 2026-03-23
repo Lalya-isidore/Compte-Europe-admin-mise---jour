@@ -22,7 +22,7 @@ class SoldeAugmente extends Mailable
     {
         return $this->from('fluxbank37@gmail.com', 'TRANSFERFLUX')
                     ->view('emails.soldeAugmente')
-                        ->subject('Votre solde a été augmenté - TRANSFERFLUX')
+                        ->subject(__('emails.balance_increased_title'))
                     ->with([
                         'compte' => $this->compte,
                         'montant' => $this->montant,

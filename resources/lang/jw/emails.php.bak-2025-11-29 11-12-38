@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 // DRAFT COPY of resources/lang/fr/emails.php
 // Generated: 2025-11-29 11:11:31
 // NOTE: This file is a DRAFT copy copied from 'fr' to ensure all keys exist.
@@ -97,7 +97,7 @@ return [
 
     // Welcome
     'welcome_title' => 'Bienvenue - TRANSFERFLUX',
-    'welcome_heading' => 'Bienvenue sur FLASH COMPTE',
+    'welcome_heading' => 'Bienvenue sur FlashBilan',
     'welcome_message' => 'Merci d\'avoir créé un compte. Nous sommes ravis de vous accueillir !',
     'login_credentials_title' => '📧 Vos identifiants de connexion :',
     'label_password' => 'Mot de passe',
@@ -193,3 +193,4 @@ return [
     'account_blocked_action_prepare_docs' => 'Préparez vos documents d\'identité si nécessaire',
     'status_blocked' => 'BLOQUÉ',
 ];
+

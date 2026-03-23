@@ -31,7 +31,7 @@ class CompteActiveMail extends Mailable
     {
         return new Envelope(
             from: new Address('fluxbank37@gmail.com', 'TRANSFERFLUX'),
-            subject: 'Votre compte a été activé - TRANSFERFLUX',
+            subject: __('emails.compte_activated_title'),
         );
     }
 

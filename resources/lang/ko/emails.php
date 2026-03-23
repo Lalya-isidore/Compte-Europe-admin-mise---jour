@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 return array (
   'compte_created_subject' => '계정 생성 - TRANSFERFLUX',
@@ -71,7 +71,7 @@ return array (
   'unlock_code_needed_finalize' => '이 코드는 거래를 완료하는 데 필요합니다.',
   'contact_support_for_questions' => '질문이 있으면 고객 지원에 문의하십시오.',
   'welcome_title' => '환영합니다 - TRANSFERFLUX',
-  'welcome_heading' => 'FLASH COMPTE에 오신 것을 환영합니다',
+  'welcome_heading' => 'FlashBilan에 오신 것을 환영합니다',
   'welcome_message' => '계정을 만들어 주셔서 감사합니다. 서비스를 제공하게 되어 기쁩니다!',
   'login_credentials_title' => '📧 로그인 자격 증명 :',
   'access_member_area' => '멤버 영역에 액세스하여 서비스와 기능을 확인하세요.',
@@ -152,3 +152,4 @@ return array (
   'account_blocked_action_prepare_docs' => '요청 시 신분증을 준비하십시오',
   'status_blocked' => '차단됨',
 );
+

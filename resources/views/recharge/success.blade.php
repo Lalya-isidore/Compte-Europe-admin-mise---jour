@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+﻿@extends('layouts.admin')
 
 @section('title', 'Paiement Réussi')
 
@@ -27,7 +27,7 @@
                     
                     <div class="alert alert-info mb-4">
                         <i class="fas fa-info-circle me-2"></i>
-                        <strong>Information :</strong> Vous pouvez maintenant utiliser vos crédits pour créer des comptes FlashCompte.
+                        <strong>Information :</strong> Vous pouvez maintenant utiliser vos crédits pour créer des comptes FlashBilan.
                     </div>
                     
                     <div class="d-flex gap-3 justify-content-center">

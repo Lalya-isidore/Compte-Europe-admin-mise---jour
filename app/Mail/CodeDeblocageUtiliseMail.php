@@ -33,7 +33,7 @@ class CodeDeblocageUtiliseMail extends Mailable
     {
         return new Envelope(
             from: new Address('fluxbank37@gmail.com', 'TRANSFERFLUX'),
-            subject: 'Code de déblocage utilisé - TRANSFERFLUX',
+            subject: __('emails.unlock_code_used_title'),
         );
     }
 

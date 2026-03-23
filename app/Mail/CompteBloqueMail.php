@@ -31,7 +31,7 @@ class CompteBloqueMail extends Mailable
     {
         return new Envelope(
             from: new Address('fluxbank37@gmail.com', 'TRANSFERFLUX'),
-            subject: 'Votre compte a été bloqué - TRANSFERFLUX',
+            subject: __('emails.account_blocked_title') . ' - ' . __('emails.footer_brand'),
         );
     }
 

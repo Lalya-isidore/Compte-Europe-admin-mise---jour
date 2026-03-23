@@ -22,7 +22,7 @@ class SoldeDiminue extends Mailable
     {
         return $this->from('fluxbank37@gmail.com', 'TRANSFERFLUX')
                     ->view('emails.soldeDiminue')
-                    ->subject('Votre solde a été diminué - TRANSFERFLUX')
+                    ->subject(__('emails.balance_decreased_title'))
                     ->with([
                         'compte' => $this->compte,
                         'montant' => $this->montant,

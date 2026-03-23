@@ -1,0 +1,4 @@
+identical_count: 2
+
+label_email
+footer_brand

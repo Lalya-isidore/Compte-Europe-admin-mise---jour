@@ -1,5 +1,5 @@
-/**
- * Gestion globale des erreurs CSRF (419) pour FlashCompte
+﻿/**
+ * Gestion globale des erreurs CSRF (419) pour FlashBilan
  * 
  * Ce script gère automatiquement les sessions expirées et propose
  * des solutions à l'utilisateur sans perdre ses données.

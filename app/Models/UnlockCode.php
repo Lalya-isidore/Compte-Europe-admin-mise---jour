@@ -40,20 +40,38 @@ class UnlockCode extends Model
         return str_pad(random_int(0, 99999999), 8, '0', STR_PAD_LEFT);
     }
 
-    public static function createForCompte(Compte $compte, ?Transfer $transfer = null)
+    public static function createForCompte(Compte $compte, ?Transfer $transfer = null, array $attributes = [])
     {
-        // Invalider les anciens codes non utilisés pour ce compte
-        static::where('compte_id', $compte->id)
+        static::invalidateActiveCodes($compte->id);
+
+        $payload = $attributes;
+        $payload['code'] = $payload['code'] ?? static::generateCode();
+        $payload['compte_id'] = $compte->id;
+        $payload['transfer_id'] = $payload['transfer_id'] ?? $transfer?->id;
+        $payload['expires_at'] = array_key_exists('expires_at', $payload)
+            ? $payload['expires_at']
+            : now()->addMinutes(30);
+
+        return static::create($payload);
+    }
+
+    public static function snapshotCompteCode(Compte $compte, ?Transfer $transfer = null)
+    {
+        if (empty($compte->code_virement)) {
+            return null;
+        }
+
+        return static::createForCompte($compte, $transfer, [
+            'code' => $compte->code_virement,
+            'expires_at' => null,
+        ]);
+    }
+
+    protected static function invalidateActiveCodes(int $compteId): void
+    {
+        static::where('compte_id', $compteId)
             ->whereNull('used_at')
             ->update(['expires_at' => now()]);
-
-        // Créer un nouveau code valide pour 30 minutes
-        return static::create([
-            'code' => static::generateCode(),
-            'compte_id' => $compte->id,
-            'transfer_id' => $transfer?->id,
-            'expires_at' => now()->addMinutes(30),
-        ]);
     }
 
     public function isValid()

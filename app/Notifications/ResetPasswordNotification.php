@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 namespace App\Notifications;
 
@@ -33,7 +33,7 @@ class ResetPasswordNotification extends Notification
         $minutes = config('auth.passwords.' . config('auth.defaults.passwords') . '.expire');
 
         return (new MailMessage)
-            ->subject('Réinitialisation de votre mot de passe — FlashCompte')
+            ->subject('Réinitialisation de votre mot de passe — FlashBilan')
             ->markdown('emails.auth.password_reset', [
                 'url' => $url,
                 'user' => $notifiable,
@@ -41,3 +41,4 @@ class ResetPasswordNotification extends Notification
             ]);
     }
 }
+

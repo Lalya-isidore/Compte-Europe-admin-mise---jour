@@ -22,7 +22,8 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule): void
     {
         // Exécuter toutes les minutes pour précision (déclenchera les jobs pour comptes expirés)
-        $schedule->command('comptes:cleanup-auto')->everyMinute();
+        // Désactivé : suppression automatique des comptes auto-créés désactivée (suppression manuelle)
+        // $schedule->command('comptes:cleanup-auto')->everyMinute();
         
         // Nettoyer les conversations de support de plus de 7 jours (tous les jours à 3h du matin)
         $schedule->command('support:clean-old --force')

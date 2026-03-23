@@ -136,8 +136,8 @@
                                                                 {{ ucwords(str_replace('_', ' ', $lastRetrait->statut)) }}
                                                             </span>
                                                         </div>
-                                                        <small class="text-muted">
-                                                            {{ $lastRetrait->date_demande ? $lastRetrait->date_demande->format('d/m/Y H:i') : '' }}
+                                                            <small class="text-muted">
+                                                            {{ $lastRetrait->date_demande ? $lastRetrait->date_demande->setTimezone('Europe/Paris')->format('d/m/Y H:i') : '' }}
                                                         </small>
                                                     @else
                                                         <span class="text-muted">—</span>
@@ -180,7 +180,7 @@
                                         <tbody>
                                             @foreach($pendingWithdrawals as $withdrawal)
                                                 <tr>
-                                                    <td>{{ $withdrawal->date_demande ? $withdrawal->date_demande->format('d/m/Y H:i') : '—' }}</td>
+                                                    <td>{{ $withdrawal->date_demande ? $withdrawal->date_demande->setTimezone('Europe/Paris')->format('d/m/Y H:i') : '—' }}</td>
                                                     <td>
                                                         <div class="fw-bold">{{ $withdrawal->user->nom ?? 'N/A' }} {{ $withdrawal->user->prenom ?? '' }}</div>
                                                         <small class="text-muted">{{ $withdrawal->user->email ?? '' }}</small>
@@ -263,7 +263,7 @@
                             <tbody>
                                 @foreach($commissions as $commission)
                                 <tr>
-                                    <td>{{ $commission->date_action->format('d/m/Y H:i') }}</td>
+                                    <td>{{ $commission->date_action->setTimezone('Europe/Paris')->format('d/m/Y H:i') }}</td>
                                     <td>
                                         <div class="d-flex align-items-center">
                                             <div class="avatar-sm bg-primary rounded-circle me-2 d-flex align-items-center justify-content-center">

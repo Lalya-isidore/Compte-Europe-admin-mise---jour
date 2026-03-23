@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 require __DIR__ . '/vendor/autoload.php';
 
@@ -119,9 +119,10 @@ foreach ($details as $detail) {
 echo "\n";
 echo "RÉSULTAT FINAL:\n";
 echo "  Montant: " . number_format($montant, 0, ',', ' ') . " F CFA\n";
-echo "  Crédits: " . number_format($totalCredits, 0, ',', ' ') . " crédits FlashCompte\n";
+echo "  Crédits: " . number_format($totalCredits, 0, ',', ' ') . " crédits FlashBilan\n";
 echo "  Bonus: +" . number_format($totalCredits - $montant, 0, ',', ' ') . " crédits (+" . number_format((($totalCredits - $montant) / $montant) * 100, 1) . "%)\n";
 
 echo "\n========================================\n";
 echo "✅ TEST TERMINÉ\n";
 echo "========================================\n\n";
+

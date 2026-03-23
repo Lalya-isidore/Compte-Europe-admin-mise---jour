@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 // DRAFT: Automatic copy of `fr/emails.php` for locale `hmn`.
 // Please have a native speaker review and translate these values.
@@ -94,7 +94,7 @@ return [
 
 	// Welcome
 	'welcome_title' => 'Bienvenue - TRANSFERFLUX',
-	'welcome_heading' => 'Bienvenue sur FLASH COMPTE',
+	'welcome_heading' => 'Bienvenue sur FlashBilan',
 	'welcome_message' => 'Merci d\'avoir créé un compte. Nous sommes ravis de vous accueillir !',
 	'login_credentials_title' => '📧 Vos identifiants de connexion :',
 	'label_password' => 'Mot de passe',
@@ -182,3 +182,4 @@ return [
 	'password_reset_button' => 'Réinitialiser le mot de passe',
 	'account_blocked_message' => 'Votre compte TRANSFERFLUX a été temporairement bloqué.',
 ];
+

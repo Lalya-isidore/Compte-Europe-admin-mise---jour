@@ -122,7 +122,7 @@ class AffiliationController extends Controller
                         'compte_id' => $comptePrincipal->id,
                         'transaction_type' => 'Transfert Affiliation',
                         'amount' => $montantDemande,
-                        'description' => "Transfert gains d'affiliation : {$montantDemande} F CFA → {$creditsGagnes} crédits FlashCompte",
+                        'description' => "Transfert gains d'affiliation : {$montantDemande} F CFA → {$creditsGagnes} crédits FlashBilan",
                         'devise' => 'F CFA',
                         'created_at' => now(),
                         'updated_at' => now(),
@@ -140,7 +140,7 @@ class AffiliationController extends Controller
             });
 
             return redirect()->back()->with('success', 
-                sprintf('%.0f F CFA transférés avec succès ! Vous avez reçu %s crédits FlashCompte.', 
+                sprintf('%.0f F CFA transférés avec succès ! Vous avez reçu %s crédits FlashBilan.', 
                     $montantDemande, 
                     number_format($creditsGagnes, 0, ',', ' ')
                 ));
@@ -343,3 +343,4 @@ class AffiliationController extends Controller
         }
     }
 }
+

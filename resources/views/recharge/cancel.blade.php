@@ -35,11 +35,11 @@
                         </ul>
                     </div>
                     
-                    <div class="d-flex gap-3 justify-content-center">
-                        <a href="{{ route('recharge.index') }}" class="btn btn-primary">
+                    <div class="d-flex flex-column flex-sm-row flex-wrap gap-3 justify-content-center">
+                        <a href="{{ route('recharge.index') }}" class="btn btn-primary w-100 w-md-auto">
                             <i class="fas fa-redo me-2"></i>Réessayer le Paiement
                         </a>
-                        <a href="{{ route('dashboard') }}" class="btn btn-outline-secondary">
+                        <a href="{{ route('dashboard') }}" class="btn btn-outline-secondary w-100 w-md-auto">
                             <i class="fas fa-home me-2"></i>Retour au Tableau de Bord
                         </a>
                     </div>

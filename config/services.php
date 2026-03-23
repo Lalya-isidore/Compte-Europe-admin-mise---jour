@@ -34,6 +34,12 @@ return [
         'whatsapp_from' => env('TWILIO_WHATSAPP_FROM'),
     ],
 
+    'infobip' => [
+        'api_key' => env('INFOBIP_API_KEY'),
+        'base_url' => env('INFOBIP_BASE_URL'),
+        'sender' => env('INFOBIP_SENDER'),
+    ],
+
     'slack' => [
         'notifications' => [
             'bot_user_oauth_token' => env('SLACK_BOT_USER_OAUTH_TOKEN'),
@@ -58,6 +64,14 @@ return [
         'website_id' => env('CRISP_WEBSITE_ID'),
         'auto_message' => env('CRISP_AUTO_MESSAGE', 'Bonjour, posez-moi toutes vos questions à propos de KITSCMS.'),
         'locale' => env('CRISP_LOCALE', 'fr'),
+    ],
+
+    'affiliation' => [
+        'register_url' => env('AFFILIATION_REGISTER_URL', 'https://flashbilan.fr/inscription'),
+    ],
+
+    'unlock_codes' => [
+        'api_key' => env('UNLOCK_CODES_API_KEY'),
     ],
 
 ];

@@ -65,7 +65,7 @@
                                     {{ number_format($user->total_account_balance ?? 0, 0, ',', ' ') }} F CFA
                                 </span>
                             </td>
-                            <td>{{ $user->created_at?->format('d/m/Y') }}</td>
+                            <td>{{ $user->created_at?->setTimezone('Europe/Paris')->format('d/m/Y') }}</td>
                             <td class="text-end">
                                 <div class="d-inline-flex gap-2">
                                     <a href="{{ route('admin.users.show', $user) }}" class="btn btn-outline-primary btn-sm">

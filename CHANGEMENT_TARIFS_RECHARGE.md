@@ -1,4 +1,4 @@
-# Changement des Tarifs de Recharge - 11 Novembre 2025
+﻿# Changement des Tarifs de Recharge - 11 Novembre 2025
 
 ## 📋 Résumé des Modifications
 
@@ -88,23 +88,23 @@ Tous les exemples et tableaux mis à jour.
 ### Exemples Concrets
 
 #### Recharge de 5 000 F CFA
-- **Avant:** 6 000 crédits → 6 comptes FlashCompte
-- **Maintenant:** 5 000 crédits → 5 comptes FlashCompte
+- **Avant:** 6 000 crédits → 6 comptes FlashBilan
+- **Maintenant:** 5 000 crédits → 5 comptes FlashBilan
 - **Différence:** -1 compte (-17%)
 
 #### Recharge de 10 000 F CFA
-- **Avant:** 17 000 crédits → 17 comptes FlashCompte
-- **Maintenant:** 15 000 crédits → 15 comptes FlashCompte
+- **Avant:** 17 000 crédits → 17 comptes FlashBilan
+- **Maintenant:** 15 000 crédits → 15 comptes FlashBilan
 - **Différence:** -2 comptes (-12%)
 
 #### Recharge de 25 000 F CFA
-- **Avant:** 40 000 crédits → 40 comptes FlashCompte
-- **Maintenant:** 40 000 crédits → 40 comptes FlashCompte
+- **Avant:** 40 000 crédits → 40 comptes FlashBilan
+- **Maintenant:** 40 000 crédits → 40 comptes FlashBilan
 - **Différence:** Aucune ✓
 
 #### Recharge de 50 000 F CFA
-- **Avant:** 100 000 crédits → 100 comptes FlashCompte
-- **Maintenant:** 100 000 crédits → 100 comptes FlashCompte
+- **Avant:** 100 000 crédits → 100 comptes FlashBilan
+- **Maintenant:** 100 000 crédits → 100 comptes FlashBilan
 - **Différence:** Aucune ✓
 
 ## 🧪 Tests Effectués
@@ -182,3 +182,4 @@ Les anciennes transactions restent inchangées dans la base de données.
 **Date de mise à jour:** 11 novembre 2025
 **Version:** 2.0
 **Status:** ✅ Déployé
+

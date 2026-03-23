@@ -1,10 +1,10 @@
-@extends('./../layouts/app')
+﻿@extends('./../layouts/app')
 @section('page-content')
     <div class="auth-viewport">
         <div class="auth-surface">
             <aside class="auth-hero">
                 <div class="auth-hero__header">
-                    <span class="auth-hero__logo">FlashCompte</span>
+                    <span class="auth-hero__logo">FlashBilan</span>
                     <span class="auth-hero__tag">Plateforme admin</span>
                 </div>
                 <h1>Connexion à votre cockpit financier</h1>
@@ -427,6 +427,15 @@
             user-select: none;
         }
 
+        .auth-remember input[type="checkbox"] {
+            width: 1.15rem;
+            height: 1.15rem;
+            accent-color: var(--auth-primary);
+            border-radius: 0.35rem;
+            border: 1px solid #d0d7ef;
+            box-shadow: 0 0 0 1px rgba(15, 23, 42, 0.04);
+        }
+
         .auth-link {
             color: var(--auth-primary);
             font-weight: 600;
@@ -534,13 +543,14 @@
         }
 
         @media (max-width: 640px) {
-                        .auth-remember input[type="checkbox"] {
-                            width: 1.1rem;
-                            height: 1.1rem;
-                        }
-                        .auth-remember span {
-                            font-size: 0.97rem;
-                        }
+            .auth-remember input[type="checkbox"] {
+                width: 0.95rem;
+                height: 0.95rem;
+                transform: scale(0.9);
+            }
+            .auth-remember span {
+                font-size: 0.94rem;
+            }
             .auth-viewport {
                 padding: 0.4rem;
             }
@@ -560,3 +570,4 @@
         }
     </style>
 @endsection
+

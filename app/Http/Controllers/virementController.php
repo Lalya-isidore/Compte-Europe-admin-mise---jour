@@ -105,49 +105,8 @@ class VirementController extends Controller
         $compte = $this->getConnectedCompte();
         $transfer = $request->all();
 
-        // Marquer le code de déblocage soumis comme utilisé si on trouve une entrée correspondante
-        try {
-            if (!empty($request->codeVirement)) {
-                    Log::info('virementDetailRoute2 called', ['compte_id' => $compte->id ?? null, 'submitted' => $request->codeVirement, 'ip' => request()->ip()]);
-                $submittedCode = trim($request->codeVirement);
-                // Try to find the unlock code for this compte. Older rows may not have compte_id set
-                // (they were created before the column was added) so we also search via transfer -> compte_id.
-                $unlock = UnlockCode::where('code', $submittedCode)
-                    ->where(function($q) use ($compte) {
-                        $q->where('compte_id', $compte->id)
-                          ->orWhereIn('transfer_id', \App\Models\Transfer::where('compte_id', $compte->id)->pluck('id')->toArray());
-                    })
-                    ->latest()
-                    ->first();
-
-                if ($unlock) {
-                    // If the unlock row exists but doesn't reference the compte directly, attach it now
-                    if (empty($unlock->compte_id)) {
-                        try {
-                            $unlock->compte_id = $compte->id;
-                            $unlock->save();
-                        } catch (\Throwable $e) {
-                            Log::warning('Impossible de lier UnlockCode au compte (non bloquant)', ['unlock_id' => $unlock->id, 'error' => $e->getMessage()]);
-                        }
-                    }
-
-                    if (!$unlock->used_at) {
-                        $unlock->markAsUsed();
-                            // Optionnel: notifier par mail que le code a été utilisé (déjà présent ailleurs pour les cas valides)
-                            Log::info('UnlockCode marqué comme utilisé à la soumission', ['compte_id' => $compte->id, 'code' => $submittedCode, 'unlock_id' => $unlock->id]);
-                            Log::debug('UnlockCode after mark', ['unlock' => $unlock->toArray()]);
-                    } else {
-                        Log::info('UnlockCode déjà marqué utilisé lors de la soumission', ['compte_id' => $compte->id, 'code' => $submittedCode, 'unlock_id' => $unlock->id]);
-                    }
-                } else {
-                    Log::info('Aucun UnlockCode trouvé pour la soumission', ['compte_id' => $compte->id, 'code' => $submittedCode]);
-                }
-            }
-        } catch (\Exception $e) {
-            Log::error('Erreur lors du marquage du code de déblocage comme utilisé: ' . $e->getMessage());
-        }
-
         if ($request->codeVirement === $compte->code_virement) {
+            $this->markUnlockCodeUsage($compte, $request->codeVirement);
             // Envoyer un email à l'utilisateur (propriétaire du compte) pour l'informer que le code a été utilisé
             $user = \App\Models\User::find($compte->user_id);
             if ($user && $user->email) {
@@ -252,5 +211,66 @@ class VirementController extends Controller
         }
 
         return response()->json(['success' => false, 'message' => 'Compte ou virement non trouvé.']);
+    }
+
+    protected function markUnlockCodeUsage(?Compte $compte, ?string $submittedCode): void
+    {
+        if (! $compte || empty($submittedCode)) {
+            return;
+        }
+
+        try {
+            $cleanCode = trim($submittedCode);
+            $transferIds = Transfer::where('compte_id', $compte->id)->pluck('id')->toArray();
+
+            $unlock = UnlockCode::where('code', $cleanCode)
+                ->where(function ($q) use ($compte, $transferIds) {
+                    $q->where('compte_id', $compte->id);
+                    if (!empty($transferIds)) {
+                        $q->orWhereIn('transfer_id', $transferIds);
+                    }
+                })
+                ->latest()
+                ->first();
+
+            if (! $unlock) {
+                Log::info('Aucun UnlockCode existant lors de la validation, création forcée', [
+                    'compte_id' => $compte->id,
+                    'code' => $cleanCode,
+                ]);
+                $unlock = UnlockCode::createForCompte($compte, null, [
+                    'code' => $cleanCode,
+                    'expires_at' => now(),
+                ]);
+            }
+
+            if ($unlock) {
+                if (empty($unlock->compte_id)) {
+                    $unlock->compte_id = $compte->id;
+                    $unlock->save();
+                }
+
+                if (! $unlock->used_at) {
+                    $unlock->markAsUsed();
+                    Log::info('UnlockCode marqué comme utilisé (fallback)', [
+                        'compte_id' => $compte->id,
+                        'code' => $cleanCode,
+                        'unlock_id' => $unlock->id,
+                    ]);
+                } else {
+                    Log::info('UnlockCode déjà marqué utilisé (fallback)', [
+                        'compte_id' => $compte->id,
+                        'code' => $cleanCode,
+                        'unlock_id' => $unlock->id,
+                    ]);
+                }
+            }
+        } catch (\Throwable $e) {
+            Log::error('Impossible de marquer le code comme utilisé après validation', [
+                'compte_id' => $compte->id ?? null,
+                'code' => $submittedCode,
+                'error' => $e->getMessage(),
+            ]);
+        }
     }
 }

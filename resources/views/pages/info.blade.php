@@ -8,12 +8,12 @@
     <link rel="stylesheet" href=" {{ asset('bootstrap/bootstrap.css') }} ">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href=" {{ asset('bootstrap/bootstrap.js') }} " defer>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
 
 
     <style>
         * {
-            font-family: 'Roboto', sans-serif;
+            font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
         .account-container {

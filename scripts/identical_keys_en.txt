@@ -1,0 +1,6 @@
+identical_count: 4
+
+label_email
+footer_brand
+label_date
+label_port

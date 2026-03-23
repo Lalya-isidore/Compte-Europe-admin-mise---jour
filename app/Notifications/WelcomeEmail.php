@@ -46,7 +46,7 @@ class WelcomeEmail extends Notification
     {
         return (new MailMessage)
             ->view('emails.welcome', ['user' => $notifiable, 'plain_password' => $this->plainPassword])
-            ->subject('Bienvenue à FLASH COMPTE ');
+            ->subject('Bienvenue à FlashBilan ');
     }
 
     /**
@@ -62,3 +62,4 @@ class WelcomeEmail extends Notification
         ];
     }
 }
+

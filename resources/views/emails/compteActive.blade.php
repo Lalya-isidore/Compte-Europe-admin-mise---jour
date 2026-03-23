@@ -1,61 +1,99 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ __('emails.compte_activated_title') }} - {{ __('emails.footer_brand') }}</title>
-    <style>body{margin:0;padding:0}</style>
-</head>
-<body style="margin:0;padding:20px;font-family:Arial, sans-serif;background:#f4f4f6;">
-    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border-collapse:collapse;">
+@extends('emails.layouts.modern')
+
+@php
+    $emailTitle = __('emails.compte_activated_title');
+    $primaryFrom = '#16a34a';
+    $primaryTo = '#065f46';
+@endphp
+
+@section('content')
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
         <tr>
-            <td align="center">
-                <table role="presentation" width="600" cellpadding="0" cellspacing="0" style="background:#fff;border-radius:10px;overflow:hidden;">
+            <td style="text-align:center;padding-bottom:12px;">
+                <span style="display:inline-block;width:72px;height:72px;line-height:72px;border-radius:50%;background:#ecfdf5;text-align:center;font-size:34px;color:#15803d;vertical-align:middle;">
+                    <span class="notranslate">✅</span>
+                </span>
+            </td>
+        </tr>
+        <tr>
+            <td style="font-size:24px;color:#15803d;font-weight:700;text-align:center;padding-bottom:8px;">
+                {{ __('emails.compte_activated_heading') }}
+            </td>
+        </tr>
+        <tr>
+            <td style="text-align:center;font-size:15px;color:#5f6b7d;padding-bottom:16px;">
+                {{ __('emails.greeting', ['name' => $compte->nom . ' ' . $compte->prenom]) }}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div style="background:#ecfdf5;border-left:5px solid #10b981;padding:16px 18px;border-radius:16px;font-size:15px;color:#065f46;margin-bottom:18px;font-weight:600;">
+                    {{ __('emails.good_news') }} — {{ __('emails.compte_activated_message') }}
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td style="font-size:15px;color:#4b5563;padding-bottom:18px;">
+                {{ __('emails.compte_activated_explanation') }}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#f7f8fc;border-radius:18px;padding:20px;border:1px solid #e4e7f2;margin-bottom:24px;">
                     <tr>
-                        <td style="background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);padding:20px;text-align:center;color:#fff;font-weight:700;"><span class="notranslate">🏦</span> {{ __('emails.footer_brand') }}<p style="margin:6px 0 0;font-size:13px;font-weight:400;">{{ __('emails.footer_partner') }}</p></td>
+                        <td style="font-size:14px;font-weight:600;color:#6b7280;padding-bottom:6px;">{{ __('emails.label_holder') }}</td>
                     </tr>
                     <tr>
-                        <td style="padding:20px;color:#333;">
-                            <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
-                                <tr>
-                                    <td style="text-align:center;padding-bottom:12px;"><div style="font-size:48px;line-height:48px;color:#28a745;"><span class="notranslate">✅</span></div></td>
-                                </tr>
-                                        <tr>
-                                            <td style="font-size:20px;color:#28a745;font-weight:700;padding-bottom:12px;">{{ __('emails.compte_activated_heading') }}</td>
-                                        </tr>
-                                <tr>
-                                    <td style="padding-bottom:12px;">{{ __('emails.greeting', ['name' => $compte->nom . ' ' . $compte->prenom]) }}</td>
-                                </tr>
-                                <tr>
-                                    <td style="background:#d4edda;border-left:4px solid #28a745;padding:12px;border-radius:6px;margin-bottom:12px;"><span class="notranslate">✅</span> <strong>{{ __('emails.good_news') }}</strong> {{ __('emails.compte_activated_message') }}</td>
-                                </tr>
-                                <tr>
-                                    <td style="padding:12px 0;">{{ __('emails.compte_activated_explanation') }}</td>
-                                </tr>
-                                <tr>
-                                    <td style="background:#f8f9fa;padding:12px;border-radius:6px;margin-top:12px;">
-                                        <div style="font-size:14px;margin-bottom:8px;"><strong>{{ __('emails.label_holder') }} :</strong> {{ $compte->nom }} {{ $compte->prenom }}</div>
-                                        <div style="font-size:14px;margin-bottom:8px;"><strong>{{ __('emails.label_email') }} :</strong> {{ $compte->email }}</div>
-                                        <div style="font-size:14px;"><strong>{{ __('emails.label_current_balance') }} :</strong> {{ number_format($compte->account_balance, 2, ',', ' ') }} {{ $compte->devise }}</div>
-                                    </td>
-                                </tr>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td style="padding-top:12px;">{{ __('emails.thanks_welcome') }}</td>
-                                </tr>
-                                <tr>
-                                    <td style="padding-top:18px;color:#333;">{{ __('emails.regards') }}<br><strong>{{ __('emails.footer_brand') }}</strong></td>
-                                </tr>
-                            </table>
+                        <td style="font-size:17px;font-weight:700;color:#111827;padding-bottom:14px;">{{ $compte->nom }} {{ $compte->prenom }}</td>
+                    </tr>
+                    <tr>
+                        <td style="font-size:14px;font-weight:600;color:#6b7280;padding-bottom:6px;">{{ __('emails.label_email') }}</td>
+                    </tr>
+                    <tr>
+                        <td style="font-size:15px;font-weight:600;color:#2563eb;padding-bottom:14px;">{{ $compte->email }}</td>
+                    </tr>
+                    <tr>
+                        <td style="font-size:14px;font-weight:600;color:#6b7280;padding-bottom:6px;">{{ __('emails.label_current_balance') }}</td>
+                    </tr>
+                    <tr>
+                        <td style="font-size:16px;font-weight:700;color:#111827;padding-bottom:14px;">{{ number_format($compte->account_balance, 2, ',', ' ') }} {{ $compte->devise }}</td>
+                    </tr>
+                    <tr>
+                        <td style="font-size:14px;font-weight:600;color:#6b7280;padding-bottom:6px;">{{ __('emails.label_status') }}</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span style="display:inline-flex;align-items:center;gap:6px;background:#dcfce7;color:#15803d;font-weight:700;font-size:13px;border-radius:999px;padding:6px 18px;text-transform:uppercase;">
+                                <span style="font-size:10px;">●</span>{{ __('emails.status_active') }}
+                            </span>
                         </td>
-                    </tr>
-                    <tr>
-                        <td style="background:#f8f9fa;padding:16px;text-align:center;color:#666;font-size:13px;">{{ __('emails.footer_brand') }} - {{ __('emails.service_client') }}<br><span style="font-size:11px;color:#999;">{{ __('emails.alert_auto_generated_notice') }}</span></td>
                     </tr>
                 </table>
             </td>
         </tr>
+        <tr>
+            <td style="font-weight:700;font-size:15px;color:#111827;padding-bottom:8px;">{{ __('emails.you_can_now') }}</td>
+        </tr>
+        <tr>
+            <td>
+                <ul style="margin:0;padding-left:20px;color:#444955;font-size:15px;line-height:1.6;">
+                    <li>{{ __('emails.can_make_transfers') }}</li>
+                    <li>{{ __('emails.check_balance') }}</li>
+                    <li>{{ __('emails.manage_transactions') }}</li>
+                    <li>{{ __('emails.access_services') }}</li>
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <td style="padding-top:20px;font-size:15px;color:#4b5563;">
+                {{ __('emails.thanks_welcome') }}
+            </td>
+        </tr>
+        <tr>
+            <td style="padding-top:20px;font-size:15px;color:#111827;font-weight:600;">
+                {{ __('emails.cordially') }}<br>
+                <span style="font-weight:700;">{{ "L'équipe " . __('emails.footer_brand') }}</span>
+            </td>
+        </tr>
     </table>
-</body>
-</html>
+@endsection

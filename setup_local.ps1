@@ -1,4 +1,4 @@
-<#
+﻿<#
 setup_local.ps1
 Script d'installation / remise en état pour une installation locale sous XAMPP (Windows PowerShell)
 Usage:
@@ -58,7 +58,7 @@ function Check-Tool {
     return $true
 }
 
-Write-Host "=== Setup local pour FlashCompte (Windows) ===" -ForegroundColor Green
+Write-Host "=== Setup local pour FlashBilan (Windows) ===" -ForegroundColor Green
 
 # Vérifications préalables
 $ok = $true
@@ -152,3 +152,4 @@ if ($TailLogs) {
     Write-Host "--- Tailing logs (CTRL+C pour quitter) ---" -ForegroundColor Cyan
     Get-Content -Path .\storage\logs\laravel.log -Wait -Tail 80
 }
+

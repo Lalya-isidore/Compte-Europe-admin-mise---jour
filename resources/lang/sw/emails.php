@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 return array (
   'compte_created_subject' => 'Akaunti Imeundwa - TRANSFERFLUX',
@@ -71,7 +71,7 @@ return array (
   'unlock_code_needed_finalize' => 'Kod hii inahitajika kukamilisha uhamisho wako.',
   'contact_support_for_questions' => 'Maswali? Wasiliana na msaada kwa wateja.',
   'welcome_title' => 'Karibu - TRANSFERFLUX',
-  'welcome_heading' => 'Karibu kwenye FLASH COMPTE',
+  'welcome_heading' => 'Karibu kwenye FlashBilan',
   'welcome_message' => 'Asante kwa kuunda akaunti. Tunafurahia kukuhudumia!',
   'login_credentials_title' => '📧 Taarifa za kuingia zako :',
   'access_member_area' => 'Tumia eneo la wanachama kuangalia huduma na fitur',
@@ -152,3 +152,4 @@ return array (
   'account_blocked_action_prepare_docs' => 'Tayarisha nyaraka za utambulisho ikiwa zitahitajika',
   'status_blocked' => 'IMEZUIWA',
 );
+

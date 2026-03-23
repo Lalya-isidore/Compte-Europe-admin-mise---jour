@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ed298ccea1a6d24415ba6bf56cba96f0",
+    "content-hash": "91ed4bc6b594567777b218ebb61a5cec",
     "packages": [
         {
             "name": "brick/math",
@@ -508,6 +508,59 @@
                 }
             ],
             "time": "2025-03-06T22:45:56+00:00"
+        },
+        {
+            "name": "fedapay/fedapay-php",
+            "version": "0.4.7",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/fedapay/fedapay-php.git",
+                "reference": "150c196ae7778b10ab04dc82cd882cf1a3c332ce"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/fedapay/fedapay-php/zipball/150c196ae7778b10ab04dc82cd882cf1a3c332ce",
+                "reference": "150c196ae7778b10ab04dc82cd882cf1a3c332ce",
+                "shasum": ""
+            },
+            "require": {
+                "ext-curl": "*",
+                "ext-json": "*",
+                "ext-mbstring": "*",
+                "php": ">=5.5"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^4.0 || ^5.7 || ^9.0",
+                "squizlabs/php_codesniffer": "^3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "FedaPay\\": "lib/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "FedaPay and contributors",
+                    "homepage": "https://github.com/fedapay/fedapay-php/contributors"
+                }
+            ],
+            "description": "PHP library for FedaPay https://fedapay.com",
+            "homepage": "https://fedapay.com/",
+            "keywords": [
+                "api",
+                "fedapay",
+                "payment processing"
+            ],
+            "support": {
+                "issues": "https://github.com/fedapay/fedapay-php/issues",
+                "source": "https://github.com/fedapay/fedapay-php/tree/0.4.7"
+            },
+            "time": "2025-05-17T08:05:46+00:00"
         },
         {
             "name": "fruitcake/php-cors",
@@ -5814,16 +5867,16 @@
         },
         {
             "name": "twilio/sdk",
-            "version": "8.8.5",
+            "version": "8.8.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/twilio/twilio-php",
-                "reference": "248dce83f5a0a21905cd4bf445080252cb04a8a6"
+                "reference": "79a0d2a554fbd5baaa5f6d9bfeddaa48255c1ebb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twilio/twilio-php/zipball/248dce83f5a0a21905cd4bf445080252cb04a8a6",
-                "reference": "248dce83f5a0a21905cd4bf445080252cb04a8a6",
+                "url": "https://api.github.com/repos/twilio/twilio-php/zipball/79a0d2a554fbd5baaa5f6d9bfeddaa48255c1ebb",
+                "reference": "79a0d2a554fbd5baaa5f6d9bfeddaa48255c1ebb",
                 "shasum": ""
             },
             "require": {
@@ -5860,7 +5913,7 @@
                 "sms",
                 "twilio"
             ],
-            "time": "2025-10-28T10:01:47+00:00"
+            "time": "2025-11-20T04:31:00+00:00"
         },
         {
             "name": "vlucas/phpdotenv",

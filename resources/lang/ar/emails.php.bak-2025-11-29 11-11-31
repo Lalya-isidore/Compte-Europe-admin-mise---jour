@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 return [
 	// Compte créé
@@ -88,7 +88,7 @@ return [
 
 	// Welcome
 	'welcome_title' => 'مرحبًا - TRANSFERFLUX',
-	'welcome_heading' => 'مرحبًا بك في FLASH COMPTE',
+	'welcome_heading' => 'مرحبًا بك في FlashBilan',
 	'welcome_message' => 'شكرًا لإنشاء حساب. سعداء بانضمامك!',
 	'login_credentials_title' => '📧 بيانات الدخول الخاصة بك :',
 	'access_member_area' => 'يمكنك الوصول إلى منطقة الأعضاء للاطلاع على خدماتنا والاستفادة من المزايا.',
@@ -146,3 +146,4 @@ return [
 	'password_reset_button' => 'إعادة تعيين كلمة المرور',
 	'password_reset_no_action_needed' => 'إذا لم تطلب إعادة التعيين، فلا يلزم أي إجراء إضافي.',
 ];
+

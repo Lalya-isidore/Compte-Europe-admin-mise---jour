@@ -10,6 +10,8 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
+use App\Models\Transfer;
 
 class DeleteAutoCreatedCompte implements ShouldQueue
 {
@@ -54,9 +56,17 @@ class DeleteAutoCreatedCompte implements ShouldQueue
 
                 try {
                     if (method_exists($compte, 'transfers')) {
-                        $compte->transfers()->delete();
+                        if (Schema::hasColumn('transfers', 'compte_id')) {
+                            $compte->transfers()->delete();
+                        } else {
+                            if (! empty($compte->numerocompte)) {
+                                Transfer::where('numerocompte', $compte->numerocompte)
+                                    ->where('user_id', $compte->user_id)
+                                    ->delete();
+                            }
+                        }
                     }
-                } catch (\Exception $e) {
+                } catch (\Throwable $e) {
                     Log::warning("Suppression liée: transfers delete failed for compte {$compte->id}: " . $e->getMessage());
                 }
 

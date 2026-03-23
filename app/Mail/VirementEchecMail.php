@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 namespace App\Mail;
 
@@ -36,7 +36,7 @@ class VirementEchecMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            from: new Address('noreply@flashcompte.com', 'FlashCompte'),
+            from: new Address('noreply@FlashBilan.com', 'FlashBilan'),
             subject: __('emails.virement_failed_subject'),
         );
     }
@@ -64,3 +64,4 @@ class VirementEchecMail extends Mailable
         return [];
     }
 }
+

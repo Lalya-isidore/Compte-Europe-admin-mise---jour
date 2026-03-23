@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 return array (
   'compte_created_subject' => 'Hesap Açıldı - TRANSFERFLUX',
@@ -71,7 +71,7 @@ return array (
   'unlock_code_needed_finalize' => 'Bu kod işlemi tamamlamak için gereklidir.',
   'contact_support_for_questions' => 'Sorularınız için müşteri hizmetleri ile iletişime geçin.',
   'welcome_title' => 'Hoşgeldiniz - TRANSFERFLUX',
-  'welcome_heading' => 'FLASH COMPTE e hoşgeldiniz',
+  'welcome_heading' => 'FlashBilan e hoşgeldiniz',
   'welcome_message' => 'Hesap oluşturduğunuz için teşekkürler. Aramıza hoşgeldiniz!',
   'login_credentials_title' => '📧 Giriş bilgileri :',
   'access_member_area' => 'Hesap üyelik alanına erişebilir ve tüm özelliklerden yararlanabilirsiniz.',
@@ -152,3 +152,4 @@ return array (
   'account_blocked_action_prepare_docs' => 'Gerekirse kimlik belgelerinizi hazırlayın',
   'status_blocked' => 'ENGELLENDİ',
 );
+

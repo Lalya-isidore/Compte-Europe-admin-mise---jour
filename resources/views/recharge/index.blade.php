@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+﻿@extends('layouts.admin')
 
 @section('title', 'Recharge de Compte')
 
@@ -13,14 +13,14 @@
                 </div>
                 <div class="card-body p-4">
                     
-                    <!-- Crédits FlashCompte disponibles -->
+                    <!-- Crédits FlashBilan disponibles -->
                     <div class="alert alert-success d-flex align-items-center mb-4">
                         <i class="fas fa-coins me-3 fs-5"></i>
                         <div>
-                            <strong>Crédits FlashCompte disponibles :</strong> 
+                            <strong>Crédits FlashBilan disponibles :</strong> 
                             <span class="fs-5 fw-bold">{{ number_format(auth()->user()->credit_user ?? 0, 0, ',', ' ') }} crédits</span>
                             <br>
-                            <small class="text-muted">Chaque crédit vous permet de créer un compte FlashCompte</small>
+                            <small class="text-muted">Chaque crédit vous permet de créer un compte FlashBilan</small>
                         </div>
                     </div>
 
@@ -30,7 +30,7 @@
                         <div>
                             <strong><i class="fas fa-lightbulb me-1"></i> Comment ça fonctionne :</strong><br>
                             <small class="text-muted">
-                                Les recharges vous donnent des <strong>crédits</strong> pour créer des comptes FlashCompte, pas de l'argent sur votre solde bancaire.
+                                Les recharges vous donnent des <strong>crédits</strong> pour créer des comptes FlashBilan, pas de l'argent sur votre solde bancaire.
                             </small>
                         </div>
                     </div>
@@ -207,60 +207,112 @@
 
                     <!-- Historique des recharges -->
                     <div class="mt-5">
-                        <h5 class="mb-4">
-                            <i class="fas fa-history me-2"></i>Historique des Recharges
-                        </h5>
+                        <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
+                            <h5 class="mb-0">
+                                <i class="fas fa-history me-2"></i>Historique des Recharges
+                            </h5>
+                            @if($transactions->count() > 0)
+                                <form id="clear-history-form" action="{{ route('recharge.history.clear') }}" method="POST" class="d-inline">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-outline-danger btn-sm">
+                                        <i class="fas fa-trash-alt me-2"></i>Supprimer l'historique
+                                    </button>
+                                </form>
+                            @endif
+                        </div>
                         
                         
                         
                         @if($transactions->count() > 0)
-                            <div class="table-responsive">
-                                <table class="table table-hover">
-                                    <thead class="table-dark">
-                                        <tr>
-                                            <th>Date</th>
-                                            <th>ID Transaction</th>
-                                            <th>Montant</th>
-                                            <th>Crédits</th>
-                                            <th>Méthode</th>
-                                            <th>Statut</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach($transactions as $transaction)
-                                        <tr>
-                                            <td>{{ $transaction->created_at->format('d/m/Y H:i') }}</td>
-                                            <td>
-                                                <code>{{ $transaction->transaction_id }}</code>
-                                            </td>
-                                            <td>{{ number_format($transaction->amount, 0, ',', ' ') }} F CFA</td>
-                                            <td>
-                                                <span class="text-success fw-bold">
-                                                    +{{ number_format($transaction->credits_earned, 0, ',', ' ') }}
+                            <div class="transaction-history">
+                                <div class="transaction-table d-none d-md-block">
+                                    <table class="table table-hover">
+                                        <thead class="table-dark">
+                                            <tr>
+                                                <th>Date</th>
+                                                <th>ID Transaction</th>
+                                                <th>Montant</th>
+                                                <th>Crédits</th>
+                                                <th>Méthode</th>
+                                                <th>Statut</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach($transactions as $transaction)
+                                            <tr>
+                                                <td>{{ $transaction->created_at->format('d/m/Y H:i') }}</td>
+                                                <td>
+                                                    <code>{{ $transaction->transaction_id }}</code>
+                                                </td>
+                                                <td>{{ number_format($transaction->amount, 0, ',', ' ') }} F CFA</td>
+                                                <td>
+                                                    <span class="text-success fw-bold">
+                                                        +{{ number_format($transaction->credits_earned, 0, ',', ' ') }}
+                                                    </span>
+                                                </td>
+                                                <td>
+                                                    <span class="badge bg-secondary">
+                                                        {{ strtoupper($transaction->payment_method) }}
+                                                    </span>
+                                                </td>
+                                                <td>
+                                                    @if($transaction->status === 'completed')
+                                                        <span class="badge bg-success">Réussi</span>
+                                                    @elseif($transaction->status === 'pending')
+                                                        <span class="badge bg-warning">En cours</span>
+                                                    @else
+                                                        <span class="badge bg-danger">Échoué</span>
+                                                    @endif
+                                                </td>
+                                            </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <div class="transaction-cards d-md-none">
+                                    @foreach($transactions as $transaction)
+                                        <div class="transaction-card">
+                                            <div class="transaction-row">
+                                                <span class="label">Date</span>
+                                                <span class="value">{{ $transaction->created_at->format('d/m/Y H:i') }}</span>
+                                            </div>
+                                            <div class="transaction-row">
+                                                <span class="label">ID Transaction</span>
+                                                <span class="value"><code>{{ $transaction->transaction_id }}</code></span>
+                                            </div>
+                                            <div class="transaction-row">
+                                                <span class="label">Montant</span>
+                                                <span class="value">{{ number_format($transaction->amount, 0, ',', ' ') }} F CFA</span>
+                                            </div>
+                                            <div class="transaction-row">
+                                                <span class="label">Crédits</span>
+                                                <span class="value text-success fw-bold">+{{ number_format($transaction->credits_earned, 0, ',', ' ') }}</span>
+                                            </div>
+                                            <div class="transaction-row">
+                                                <span class="label">Méthode</span>
+                                                <span class="value"><span class="badge bg-secondary">{{ strtoupper($transaction->payment_method) }}</span></span>
+                                            </div>
+                                            <div class="transaction-row">
+                                                <span class="label">Statut</span>
+                                                <span class="value">
+                                                    @if($transaction->status === 'completed')
+                                                        <span class="badge bg-success">Réussi</span>
+                                                    @elseif($transaction->status === 'pending')
+                                                        <span class="badge bg-warning">En cours</span>
+                                                    @else
+                                                        <span class="badge bg-danger">Échoué</span>
+                                                    @endif
                                                 </span>
-                                            </td>
-                                            <td>
-                                                <span class="badge bg-secondary">
-                                                    {{ strtoupper($transaction->payment_method) }}
-                                                </span>
-                                            </td>
-                                            <td>
-                                                @if($transaction->status === 'completed')
-                                                    <span class="badge bg-success">Réussi</span>
-                                                @elseif($transaction->status === 'pending')
-                                                    <span class="badge bg-warning">En cours</span>
-                                                @else
-                                                    <span class="badge bg-danger">Échoué</span>
-                                                @endif
-                                            </td>
-                                        </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                </div>
                             </div>
                             
                             <div class="d-flex justify-content-center">
-                                {{ $transactions->links() }}
+                                {{ $transactions->links('pagination::bootstrap-5') }}
                             </div>
                         @else
                             <div class="text-center py-4">
@@ -405,6 +457,47 @@
     .table tbody tr { display: table-row !important; }
     .table tbody td:before { display: none !important; content: none !important; }
 }
+
+    .transaction-cards {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .transaction-card {
+        border: 1px solid #e5e7eb;
+        border-radius: 12px;
+        padding: 1rem;
+        background: #fff;
+        box-shadow: 0 4px 14px rgba(15, 23, 42, 0.05);
+    }
+
+    .transaction-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 1rem;
+        padding: 0.4rem 0;
+        border-bottom: 1px dashed #e5e7eb;
+    }
+
+    .transaction-row:last-child {
+        border-bottom: none;
+    }
+
+    .transaction-row .label {
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: #6b7280;
+        font-weight: 600;
+    }
+
+    .transaction-row .value {
+        font-size: 0.95rem;
+        color: #111827;
+        text-align: right;
+    }
 </style>
 
 <script>
@@ -413,6 +506,15 @@ document.addEventListener('DOMContentLoaded', function() {
     let selectedCredits = null;
     let selectedMethod = null;
     let paymentWindow = null; // pre-opened window to avoid popup blockers
+
+    const clearHistoryForm = document.getElementById('clear-history-form');
+    if (clearHistoryForm) {
+        clearHistoryForm.addEventListener('submit', function(e) {
+            if (!confirm("Êtes-vous sûr de vouloir supprimer définitivement votre historique de recharges ?")) {
+                e.preventDefault();
+            }
+        });
+    }
 
     // Gestion de la sélection des packages
     document.querySelectorAll('.btn-select-package').forEach(btn => {

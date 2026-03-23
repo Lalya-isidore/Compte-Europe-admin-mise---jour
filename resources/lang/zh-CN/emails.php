@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 return array (
   'compte_created_subject' => '开户通知 - TRANSFERFLUX',
@@ -71,7 +71,7 @@ return array (
   'unlock_code_needed_finalize' => '此代码用于完成您的转账操作。',
   'contact_support_for_questions' => '有任何疑问请联系客户服务。',
   'welcome_title' => '欢迎 - TRANSFERFLUX',
-  'welcome_heading' => '欢迎使用 FLASH COMPTE',
+  'welcome_heading' => '欢迎使用 FlashBilan',
   'welcome_message' => '感谢您创建账户。我们很高兴为您服务！',
   'login_credentials_title' => '📧 您的登录信息：',
   'access_member_area' => '您可以访问会员区查看我们的服务并使用全部功能。',
@@ -152,3 +152,4 @@ return array (
   'account_blocked_action_prepare_docs' => '如有必要，请准备身份证件',
   'status_blocked' => '已锁定',
 );
+

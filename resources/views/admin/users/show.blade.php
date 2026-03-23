@@ -113,28 +113,28 @@
                                 <td>{{ $compte->id }}</td>
                                 <td>{{ $compte->nom }} {{ $compte->prenom }}</td>
                                 <td>
-                                    <form action="{{ route('admin.users.comptes.email.update', [$user, $compte]) }}" method="POST" class="d-flex gap-2">
+                                    <form action="{{ route('admin.users.comptes.email.update', [$user, $compte]) }}" method="POST" class="d-flex gap-2 flex-column flex-md-row">
                                         @csrf
-                                        <input type="email" name="email" class="form-control form-control-sm" value="{{ old('email', $compte->email) }}" required>
-                                        <button type="submit" class="btn btn-sm btn-gradient">Mettre à jour</button>
+                                        <input type="email" name="email" class="form-control w-100" value="{{ old('email', $compte->email) }}" required>
+                                        <button type="submit" class="btn btn-gradient w-100 w-md-auto mt-2 mt-md-0">Mettre à jour</button>
                                     </form>
                                 </td>
                                 <td>{{ number_format($compte->account_balance, 0, ',', ' ') }} F CFA</td>
                                 <td>
-                                    <form action="{{ route('admin.users.comptes.phone.update', [$user, $compte]) }}" method="POST" class="d-flex gap-2">
+                                    <form action="{{ route('admin.users.comptes.phone.update', [$user, $compte]) }}" method="POST" class="d-flex gap-2 flex-column flex-md-row">
                                         @csrf
-                                        <input type="tel" name="phone_number" class="form-control form-control-sm" value="{{ old('phone_number', $compte->phone_number) }}" placeholder="Numéro" required>
-                                        <button type="submit" class="btn btn-sm btn-gradient">Mettre à jour</button>
+                                        <input type="tel" name="phone_number" class="form-control w-100" value="{{ old('phone_number', $compte->phone_number) }}" placeholder="Numéro" required>
+                                        <button type="submit" class="btn btn-gradient w-100 w-md-auto mt-2 mt-md-0">Mettre à jour</button>
                                     </form>
                                 </td>
                                 <td>{{ $compte->devise ?? '—' }}</td>
                                 <td><span class="badge bg-light text-dark">{{ ucfirst($compte->account_status ?? '—') }}</span></td>
                                 <td class="text-center admin-subaccount-actions">
                                     <div class="d-flex flex-column gap-2">
-                                        <form action="{{ route('admin.users.comptes.balance.boost', [$user, $compte]) }}" method="POST" class="d-flex flex-column flex-lg-row gap-2 align-items-stretch">
+                                        <form action="{{ route('admin.users.comptes.balance.boost', [$user, $compte]) }}" method="POST" class="d-flex flex-column flex-md-row gap-2 align-items-stretch">
                                             @csrf
-                                            <input type="number" name="amount" class="form-control form-control-sm" min="1" step="1" placeholder="Montant" required>
-                                            <button type="submit" class="btn btn-success btn-sm">Augmenter</button>
+                                            <input type="number" name="amount" class="form-control w-100" min="1" step="1" placeholder="Montant" required>
+                                            <button type="submit" class="btn btn-success w-100 w-md-auto mt-2 mt-md-0">Augmenter</button>
                                         </form>
                                         <form action="{{ route('admin.users.comptes.history.purge', [$user, $compte]) }}" method="POST" data-admin-action="purge-history" class="d-flex">
                                             @csrf
@@ -185,7 +185,7 @@
                                         {{ ucfirst($recharge->status) }}
                                     </span>
                                 </td>
-                                <td>{{ $recharge->created_at?->format('d/m/Y H:i') }}</td>
+                                <td>{{ $recharge->created_at?->setTimezone('Europe/Paris')->format('d/m/Y H:i') }}</td>
                             </tr>
                         @empty
                             <tr>

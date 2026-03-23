@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 return array (
   'compte_created_subject' => 'Akun Dibuat - TRANSFERFLUX',
@@ -71,7 +71,7 @@ return array (
   'unlock_code_needed_finalize' => 'Kode ini diperlukan untuk menyelesaikan transfer Anda.',
   'contact_support_for_questions' => 'Untuk pertanyaan, hubungi dukungan pelanggan.',
   'welcome_title' => 'Selamat Datang - TRANSFERFLUX',
-  'welcome_heading' => 'Selamat datang di FLASH COMPTE',
+  'welcome_heading' => 'Selamat datang di FlashBilan',
   'welcome_message' => 'Terima kasih telah membuat akun. Kami siap melayani Anda!',
   'login_credentials_title' => '📧 Kredensial Masuk Anda :',
   'access_member_area' => 'Anda dapat mengakses area anggota untuk melihat layanan dan fitur.',
@@ -152,3 +152,4 @@ return array (
   'account_blocked_action_prepare_docs' => 'Siapkan dokumen identitas jika diminta',
   'status_blocked' => 'DIBLOKIR',
 );
+

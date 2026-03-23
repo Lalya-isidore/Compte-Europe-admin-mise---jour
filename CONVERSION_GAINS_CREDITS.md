@@ -1,8 +1,8 @@
-# Conversion des Gains d'Affiliation en Crédits FlashCompte
+﻿# Conversion des Gains d'Affiliation en Crédits FlashBilan
 
 ## 📋 Vue d'ensemble
 
-Le système de transfert des gains d'affiliation vers la balance FlashCompte applique **les mêmes bonus** que lors d'une recharge directe.
+Le système de transfert des gains d'affiliation vers la balance FlashBilan applique **les mêmes bonus** que lors d'une recharge directe.
 
 ## 💰 Barème de Conversion
 
@@ -88,7 +88,7 @@ Paliers (du plus grand au plus petit):
 ## 🎯 Flux Utilisateur
 
 1. **Utilisateur** consulte ses gains sur la page Affiliation
-2. Clique sur **"Transférer mes gains vers ma balance FlashCompte"**
+2. Clique sur **"Transférer mes gains vers ma balance FlashBilan"**
 3. **Modal s'ouvre** et affiche:
    - Montant disponible en F CFA
    - Crédits qu'il recevra (avec animation)
@@ -143,19 +143,20 @@ Après un transfert réussi, l'utilisateur voit:
 
 ```
 9 000 F CFA transférés avec succès ! 
-Vous avez reçu 9 000 crédits FlashCompte.
+Vous avez reçu 9 000 crédits FlashBilan.
 ```
 
 Pour 10 000 F CFA:
 ```
 10 000 F CFA transférés avec succès ! 
-Vous avez reçu 15 000 crédits FlashCompte.
+Vous avez reçu 15 000 crédits FlashBilan.
 ```
 
 ## 🚀 Prochaines Étapes
 
 Le système est maintenant opérationnel. Les parrains peuvent:
 1. ✅ Voir leurs gains d'affiliation
-2. ✅ Transférer vers leur balance FlashCompte
+2. ✅ Transférer vers leur balance FlashBilan
 3. ✅ Recevoir les mêmes bonus qu'une recharge normale
-4. ✅ Utiliser les crédits pour créer des FlashCompte
+4. ✅ Utiliser les crédits pour créer des FlashBilan
+

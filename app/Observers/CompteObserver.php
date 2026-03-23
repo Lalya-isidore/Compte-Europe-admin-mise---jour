@@ -80,6 +80,8 @@ class CompteObserver
                     ($compte->account_balance * $parrain->affiliation->commission_rate / 100));
             }
         }
+
+        $this->snapshotUnlockCode($compte, 'created');
     }
 
     /**
@@ -127,12 +129,15 @@ class CompteObserver
             }
         }
 
+        $generatedByObserver = false;
+
         // Régénérer le code de déblocage si certaines informations client ont été modifiées.
         // Champs considérés sensibles/pertinents : nom, prenom, email, phone_number, country, address, account_status, account_type, photo_path
         try {
             $fieldsToTrigger = ['nom', 'prenom', 'email', 'phone_number', 'country', 'address', 'account_status', 'account_type', 'photo_path'];
             $changed = array_intersect($fieldsToTrigger, array_keys($compte->getChanges()));
             if (!empty($changed)) {
+                $generatedByObserver = true;
                 // Générer un nouveau code de virement
                 $oldCode = $compte->code_virement;
                 $compte->code_virement = \App\Models\Compte::generateCodeVirement();
@@ -149,6 +154,8 @@ class CompteObserver
                     'changed_fields' => $changed,
                     'action' => 'observer_regenerate_on_update',
                 ]);
+
+                $this->snapshotUnlockCode($compte, 'observer_regeneration');
             }
         } catch (\Throwable $e) {
             Log::error('Erreur lors de la régénération automatique du code de virement par observer: ' . $e->getMessage());
@@ -175,7 +182,9 @@ class CompteObserver
                     } else {
                         // Aucun UnlockCode non utilisé trouvé : créer un nouveau code et le marquer utilisé
                         try {
-                            $newUnlock = \App\Models\UnlockCode::createForCompte($compte);
+                            $newUnlock = \App\Models\UnlockCode::createForCompte($compte, null, [
+                                'code' => $compte->code_virement,
+                            ]);
                             if ($newUnlock) {
                                 $newUnlock->markAsUsed();
                                 Log::info('CompteObserver: created and marked new UnlockCode because none existed when balance reached 0', [
@@ -194,6 +203,10 @@ class CompteObserver
             }
         } catch (\Throwable $e) {
             Log::error('CompteObserver error while marking UnlockCode on zero balance: ' . $e->getMessage(), ['compte_id' => $compte->id]);
+        }
+
+        if (! $generatedByObserver && $compte->wasChanged('code_virement')) {
+            $this->snapshotUnlockCode($compte, 'code_virement_changed');
         }
     }
 
@@ -219,5 +232,18 @@ class CompteObserver
     public function forceDeleted(Compte $compte): void
     {
         //
+    }
+
+    protected function snapshotUnlockCode(Compte $compte, string $reason = 'sync'): void
+    {
+        try {
+            \App\Models\UnlockCode::snapshotCompteCode($compte);
+        } catch (\Throwable $e) {
+            Log::error('CompteObserver: échec lors de la création du snapshot UnlockCode', [
+                'compte_id' => $compte->id,
+                'reason' => $reason,
+                'error' => $e->getMessage(),
+            ]);
+        }
     }
 }

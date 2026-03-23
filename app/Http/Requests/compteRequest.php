@@ -47,7 +47,7 @@ class compteRequest extends FormRequest
             'transfer_supported' => 'required|string|max:255',
             'iban' => 'nullable|string|max:34',
             'parameters' => 'nullable|json',
-            'start_percentage' => 'required|integer|min:1|max:100',
+            'start_percentage' => 'required|integer|min:0|max:100',
             'end_percentage' => 'required|integer|min:1|max:100',
             'failure_message' => 'required|string',
             // Optional profile photo when creating/updating a compte
@@ -60,7 +60,7 @@ class compteRequest extends FormRequest
             'nom.required' =>'Le champs nom est requis',
             'prenom.required' =>'Le champs prenom est requis',
             'email.required' =>'Le champs email est requis',
-            'email.unique' =>"Cette adresse e-mail a déjà été utilisée pour créer un Flash compte. Merci d'en choisir une autre.",
+            'email.unique' =>"Cette adresse e-mail a déjà été utilisée pour créer un FlashBilan. Merci d'en choisir une autre.",
             'phone_number.required' => 'Le champs téléphone est requis',
             'country.required' =>'Le champs pays est requis',
             'devise.required' =>'Le champs devise est requis',
@@ -71,7 +71,7 @@ class compteRequest extends FormRequest
             'account_status.required' =>'Le champs statut est requis',
             'transfer_supported.required' =>'Le champs transferts supportés est requis',
             'start_percentage.required' => 'Le champs % début est requis',
-            'start_percentage.min' => 'Le champs % début doit être supérieur ou égal à 1',
+            'start_percentage.min' => 'Le champs % début doit être supérieur ou égal à 0',
             'end_percentage.required' => 'Le champs % fin est requis',
             'end_percentage.min' => 'Le champs % fin doit être supérieur ou égal à 1',
             'failure_message.required' => 'Le message à afficher est requis',
@@ -80,3 +80,4 @@ class compteRequest extends FormRequest
 
     }
 }
+

@@ -181,7 +181,7 @@
                                 </div>
                             @endif
                             <small>
-                                {{ $message->sent_by_admin ? 'Administrateur' : ($message->user?->nom . ' ' . $message->user?->prenom) }} • {{ $message->created_at->format('d/m/Y H:i') }}
+                                {{ $message->sent_by_admin ? 'Administrateur' : ($message->user?->nom . ' ' . $message->user?->prenom) }} • {{ $message->created_at->setTimezone('Europe/Paris')->format('d/m/Y H:i') }}
                             </small>
                         </div>
                     @endforeach

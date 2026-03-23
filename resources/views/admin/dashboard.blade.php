@@ -31,7 +31,7 @@
         <h2>🛡️ Tableau de bord Administration</h2>
         <p>
             <strong>Administrateur :</strong> {{ $admin_email ?? 'Non défini' }}<br>
-            <strong>Dernière connexion :</strong> {{ $login_time ? $login_time->format('d/m/Y à H:i') : 'Non disponible' }}<br>
+            <strong>Dernière connexion :</strong> {{ $login_time ? $login_time->setTimezone('Europe/Paris')->format('d/m/Y à H:i') : 'Non disponible' }}<br>
             <strong>Statut :</strong> <span class="badge bg-success">Connecté</span>
         </p>
     </div>

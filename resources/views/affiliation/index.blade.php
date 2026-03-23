@@ -1,4 +1,4 @@
-<style>
+﻿<style>
 @media (max-width: 480px) {
     #lienParrainage {
         font-size: 0.97rem;
@@ -46,7 +46,7 @@
 </style>
 @extends('layouts.admin')
 
-@section('title', 'Service d\'Affiliation - FlashCompte')
+@section('title', 'Service d\'Affiliation - FlashBilan')
 
 @section('breadcrumb')
     <ol class="breadcrumb">
@@ -86,7 +86,7 @@
                         </p>
                         <p class="mb-0 small">
                             Les gains sont retirables par <strong>Mobile Money</strong> 
-                            instantanément ou peuvent être transférés vers votre balance FlashCompte.
+                            instantanément ou peuvent être transférés vers votre balance FlashBilan.
                         </p>
                     </div>
                     
@@ -165,7 +165,7 @@
                         Mes statistiques
                     </h5>
                 </div>
-                <div class="card-body d-flex flex-column justify-content-center">
+                <div class="card-body d-flex flex-column gap-3">
                     <!-- Gain disponible -->
                     <div class="stat-card mb-3 p-3 text-center bg-light rounded">
                         <div class="stat-icon mb-2">
@@ -296,10 +296,10 @@
                         <!-- Bouton de transfert vers balance -->
                         <div class="col-12 mb-4">
                             @if($commissionsValidees >= $minimumRetrait)
-                                <!-- Bouton de transfert vers balance FlashCompte -->
+                                <!-- Bouton de transfert vers balance FlashBilan -->
                                 <button class="btn btn-success btn-lg w-100" data-bs-toggle="modal" data-bs-target="#transferModal">
                                     <i class="fas fa-exchange-alt me-2"></i>
-                                    <span class="d-none d-sm-inline">Transférer mes gains vers ma balance FlashCompte</span>
+                                    <span class="d-none d-sm-inline">Transférer mes gains vers ma balance FlashBilan</span>
                                     <span class="d-inline d-sm-none">Transférer vers balance</span>
                                     <i class="fas fa-arrow-right ms-2"></i>
                                 </button>
@@ -491,7 +491,7 @@
                             <div class="card-body">
                                 <h6 class="card-title text-center mb-3">
                                     <i class="fas fa-gift text-primary me-2"></i>
-                                    Conversion en Crédits FlashCompte
+                                    Conversion en Crédits FlashBilan
                                 </h6>
                                 <div id="creditsPreview" class="text-center">
                                     <div class="d-flex justify-content-between align-items-center mb-2 px-3">
@@ -515,7 +515,7 @@
                         
                         <div class="alert alert-info">
                             <i class="fas fa-info-circle me-2"></i>
-                            Les crédits seront ajoutés à votre <strong>credit_user</strong> pour créer des FlashCompte.
+                            Les crédits seront ajoutés à votre <strong>credit_user</strong> pour créer des FlashBilan.
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -848,7 +848,7 @@ function showMinimumAlert() {
 // Partage WhatsApp
 function shareWhatsApp() {
     const link = document.getElementById('lienParrainage').value;
-    const message = `🎉 Rejoignez FlashCompte avec mon code de parrainage !
+    const message = `🎉 Rejoignez FlashBilan avec mon code de parrainage !
 
 💰 Obtenez un compte avec 10 000 F CFA offerts à l'inscription
 🎯 Profitez de tous nos services bancaires
@@ -856,7 +856,7 @@ function shareWhatsApp() {
 
 Cliquez ici pour vous inscrire : ${link}
 
-#FlashCompte #Parrainage #BanqueNumérique`;
+#FlashBilan #Parrainage #BanqueNumérique`;
 
     const whatsappURL = `https://wa.me/?text=${encodeURIComponent(message)}`;
     window.open(whatsappURL, '_blank');
@@ -865,10 +865,10 @@ Cliquez ici pour vous inscrire : ${link}
 // Partage Email
 function shareEmail() {
     const link = document.getElementById('lienParrainage').value;
-    const subject = "Invitation FlashCompte - Recevez 10 000 F CFA offerts !";
+    const subject = "Invitation FlashBilan - Recevez 10 000 F CFA offerts !";
     const body = `Salut !
 
-Je t'invite à rejoindre FlashCompte, la meilleure solution bancaire numérique !
+Je t'invite à rejoindre FlashBilan, la meilleure solution bancaire numérique !
 
 🎁 Avantages de l'inscription :
 • 10 000 F CFA offerts à l'inscription
@@ -879,7 +879,7 @@ Je t'invite à rejoindre FlashCompte, la meilleure solution bancaire numérique 
 Pour profiter de cette offre, clique simplement sur ce lien :
 ${link}
 
-À bientôt sur FlashCompte !`;
+À bientôt sur FlashBilan !`;
 
     const emailURL = `mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
     window.location.href = emailURL;
@@ -888,7 +888,7 @@ ${link}
 // Partage SMS
 function shareSMS() {
     const link = document.getElementById('lienParrainage').value;
-    const message = `🎉 FlashCompte t'offre 10 000 F CFA ! Inscris-toi avec mon lien de parrainage : ${link}`;
+    const message = `🎉 FlashBilan t'offre 10 000 F CFA ! Inscris-toi avec mon lien de parrainage : ${link}`;
     
     const smsURL = `sms:?body=${encodeURIComponent(message)}`;
     window.location.href = smsURL;
@@ -946,7 +946,7 @@ function generateQRCode() {
 function downloadQRCode(url) {
     const link = document.createElement('a');
     link.href = url;
-    link.download = 'qr-code-parrainage-flashcompte.png';
+    link.download = 'qr-code-parrainage-FlashBilan.png';
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);

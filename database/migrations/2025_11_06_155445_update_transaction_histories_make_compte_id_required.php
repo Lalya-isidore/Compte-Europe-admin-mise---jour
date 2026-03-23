@@ -12,6 +12,10 @@ return new class extends Migration
      */
     public function up(): void
     {
+        if (Schema::getConnection()->getDriverName() === 'sqlite') {
+            return;
+        }
+
             // Supprimer la contrainte FK existante si elle existe (via information_schema)
             $database = env('DB_DATABASE') ?: DB::getDatabaseName();
             $fk = DB::selectOne(
@@ -48,6 +52,10 @@ return new class extends Migration
      */
     public function down(): void
     {
+        if (Schema::getConnection()->getDriverName() === 'sqlite') {
+            return;
+        }
+
         // Supprimer la contrainte FK RESTRICT si elle existe
         $database = env('DB_DATABASE') ?: DB::getDatabaseName();
         $fk = DB::selectOne(

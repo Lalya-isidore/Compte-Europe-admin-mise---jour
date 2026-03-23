@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 return array (
   'compte_created_subject' => 'アカウント開設 - TRANSFERFLUX',
@@ -71,7 +71,7 @@ return array (
   'unlock_code_needed_finalize' => 'このコードは取引完了に必要です。',
   'contact_support_for_questions' => 'ご質問がある場合はサポートまでご連絡ください。',
   'welcome_title' => 'ようこそ - TRANSFERFLUX',
-  'welcome_heading' => 'FLASH COMPTEへようこそ',
+  'welcome_heading' => 'FlashBilanへようこそ',
   'welcome_message' => 'アカウント作成ありがとうございます。歓迎いたします！',
   'login_credentials_title' => '📧 ログイン情報：',
   'access_member_area' => '会員エリアにアクセスしてサービスを確認し、全機能を利用できます。',
@@ -152,3 +152,4 @@ return array (
   'account_blocked_action_prepare_docs' => '必要に応じて身分証明書を準備してください',
   'status_blocked' => 'ブロックされました',
 );
+

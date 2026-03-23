@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 return array (
   'compte_created_subject' => 'Deschidere cont - TRANSFERFLUX',
@@ -71,7 +71,7 @@ return array (
   'unlock_code_needed_finalize' => 'Acest cod este necesar pentru finalizarea operațiunii.',
   'contact_support_for_questions' => 'Pentru întrebări, contactați serviciul clienți.',
   'welcome_title' => 'Bine ați venit - TRANSFERFLUX',
-  'welcome_heading' => 'Bine ați venit la FLASH COMPTE',
+  'welcome_heading' => 'Bine ați venit la FlashBilan',
   'welcome_message' => 'Vă mulțumim pentru crearea contului. Ne bucurăm să vă avem!',
   'login_credentials_title' => '📧 Datele dvs. de autentificare :',
   'access_member_area' => 'Puteți accesa zona membrilor pentru a vedea serviciile noastre și a beneficia de toate funcționalitățile.',
@@ -152,3 +152,4 @@ return array (
   'account_blocked_action_prepare_docs' => 'Pregătiți documentele de identitate dacă este necesar',
   'status_blocked' => 'BLOCAT',
 );
+

@@ -42,7 +42,7 @@ class TestAutoDeleteCompte extends Command
             'alert_sms' => 0,
             'lang' => 'fr',
             'transfer_supported' => 'Non',
-            'start_percentage' => 1,
+            'start_percentage' => 0,
             'end_percentage' => 1,
             'failure_message' => '',
             'photo_path' => null,

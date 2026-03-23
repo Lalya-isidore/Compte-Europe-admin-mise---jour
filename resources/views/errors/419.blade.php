@@ -1,6 +1,6 @@
-@extends('layouts.auth-hero')
+﻿@extends('layouts.auth-hero')
 
-@section('title', 'Session expirée - FlashCompte')
+@section('title', 'Session expirée - FlashBilan')
 
 @section('content')
 <div class="container-fluid">
@@ -9,7 +9,7 @@
         <div class="col-lg-6 d-none d-lg-flex auth-hero">
             <div class="auth-hero__content">
                 <div class="auth-hero__brand">
-                    <h2 class="auth-hero__title">FlashCompte</h2>
+                    <h2 class="auth-hero__title">FlashBilan</h2>
                     <p class="auth-hero__subtitle">Votre partenaire financier de confiance</p>
                 </div>
                 
@@ -64,7 +64,7 @@
                 </div>
 
                 <p class="auth-card__meta text-center">
-                    Besoin d'aide ? <a href="mailto:support@flashcompte.com">Contactez notre support</a>
+                    Besoin d'aide ? <a href="mailto:support@FlashBilan.com">Contactez notre support</a>
                 </p>
             </section>
         </div>

@@ -1,39 +1,57 @@
+@extends('emails.layouts.modern')
 
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ __('emails.password_reset_title') }} - {{ __('emails.footer_brand') }}</title>
-    <style>body{margin:0;padding:0}</style>
-</head>
-<body style="margin:0;padding:20px;font-family:Segoe UI, Tahoma, Geneva, Verdana, sans-serif;background:#f5f5f7;">
-    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border-collapse:collapse;">
+@php
+    $emailTitle = __('emails.password_reset_title');
+    $primaryFrom = '#4c6ef5';
+    $primaryTo = '#5f3dc4';
+@endphp
+
+@section('content')
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
         <tr>
-            <td align="center">
-                <table role="presentation" width="600" cellpadding="0" cellspacing="0" style="background:#ffffff;border-radius:10px;overflow:hidden;">
-                    <tr>
-                        <td style="background:#667eea;padding:24px 30px;text-align:center;color:#fff;font-weight:700;font-size:20px;">{{ __('emails.footer_brand') }}</td>
-                    </tr>
-                    <tr>
-                        <td style="padding:28px 30px;color:#333;font-size:15px;line-height:1.6;">
-                            <div style="font-size:18px;font-weight:600;margin-bottom:12px;">{{ __('emails.password_reset_heading') }}</div>
-                            <div style="margin-bottom:12px;">{{ __('emails.greeting', ['name' => $user->name]) }}</div>
-                            <div style="margin-bottom:12px;">{{ __('emails.password_reset_reason') }}</div>
-                            <div style="margin-bottom:12px;">{{ __('emails.password_reset_click_link') }}</div>
-                            <div style="text-align:center;margin:18px 0;">
-                                <a href="{{ $url }}" style="display:inline-block;padding:12px 20px;background:#667eea;color:#fff;text-decoration:none;border-radius:6px;font-weight:600;">{{ __('emails.password_reset_button') }}</a>
-                            </div>
-                            <div style="color:#666;font-size:13px;margin-top:8px;">{{ __('emails.password_reset_no_action_needed') }}</div>
-                            <div style="margin-top:18px;color:#333;">{{ __('emails.thanks') }}<br>{{ __('emails.footer_brand') }}</div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="background:#f8f9fa;padding:18px 30px;text-align:center;color:#777;font-size:13px;">{{ __('emails.footer_brand') }} - {{ __('emails.service_client') }}</td>
-                    </tr>
-                </table>
+            <td style="text-align:center;padding-bottom:12px;">
+                <span style="display:inline-block;width:68px;height:68px;line-height:68px;border-radius:50%;background:#e0e7ff;text-align:center;font-size:28px;color:#3730a3;vertical-align:middle;">
+                    <span class="notranslate">🔑</span>
+                </span>
+            </td>
+        </tr>
+        <tr>
+            <td style="font-size:22px;color:#312e81;font-weight:700;text-align:center;padding-bottom:8px;">
+                {{ __('emails.password_reset_heading') }}
+            </td>
+        </tr>
+        <tr>
+            <td style="text-align:center;font-size:15px;color:#5f6b7d;padding-bottom:16px;">
+                {{ __('emails.greeting', ['name' => $user->name]) }}
+            </td>
+        </tr>
+        <tr>
+            <td style="font-size:15px;color:#4b5563;padding-bottom:14px;">
+                {{ __('emails.password_reset_reason') }}
+            </td>
+        </tr>
+        <tr>
+            <td style="font-size:15px;color:#4b5563;padding-bottom:24px;">
+                {{ __('emails.password_reset_click_link') }}
+            </td>
+        </tr>
+        <tr>
+            <td style="text-align:center;padding-bottom:22px;">
+                <a href="{{ $url }}" style="display:inline-block;background:#111827;color:#f8fafc;padding:13px 28px;border-radius:999px;font-size:15px;font-weight:700;text-decoration:none;">
+                    {{ __('emails.password_reset_button') }}
+                </a>
+            </td>
+        </tr>
+        <tr>
+            <td style="font-size:13px;color:#6b7280;text-align:center;padding-bottom:18px;">
+                {{ __('emails.password_reset_no_action_needed') }}
+            </td>
+        </tr>
+        <tr>
+            <td style="font-size:15px;color:#4b5563;text-align:center;">
+                {{ __('emails.thanks') }}<br>
+                <strong>{{ __('emails.footer_brand') }}</strong>
             </td>
         </tr>
     </table>
-</body>
-</html>
+@endsection

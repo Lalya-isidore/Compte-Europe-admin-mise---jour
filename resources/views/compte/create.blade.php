@@ -1,6 +1,6 @@
-@extends('layouts.admin')
+﻿@extends('layouts.admin')
 
-@section('title', 'Gestion des Comptes - FlashCompte')
+@section('title', 'Gestion des Comptes - Flash Compte')
 
 @section('breadcrumb')
     <ol class="breadcrumb">
@@ -43,13 +43,14 @@
 
     .info-cards-row {
         display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 1rem;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 1.25rem;
         margin-bottom: 2rem;
     }
     @media (max-width: 900px) {
         .info-cards-row {
-            grid-template-columns: 1fr;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
         }
     }
 
@@ -60,6 +61,19 @@
         box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
         border: 2px solid transparent;
         transition: all 0.3s ease;
+    }
+
+    .summary-card {
+        display: flex;
+        flex-direction: column;
+        gap: 0.35rem;
+        height: 100%;
+    }
+
+    .summary-card .summary-card-content {
+        display: flex;
+        flex-direction: column;
+        gap: 0.15rem;
     }
 
     .info-card:hover {
@@ -262,15 +276,72 @@
     }
 
     .form-switch-modern .form-check-input {
-        width: 3rem;
-        height: 1.5rem;
+        -webkit-appearance: none;
+        appearance: none;
+        width: 44px;
+        height: 26px;
+        background: #e6e6e6;
+        border-radius: 999px;
+        position: relative;
         cursor: pointer;
-        border: 2px solid #ccc;
+        border: 0;
+        transition: background-color 0.18s ease, box-shadow 0.18s ease;
+        box-shadow: inset 0 0 0 1px rgba(0,0,0,0.03);
+        display: inline-block;
+    }
+
+    /* Label inside the track: changes between OFF / ON */
+    .form-switch-modern .form-check-input::before {
+        content: 'OFF';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 0.72rem;
+        font-weight: 700;
+        color: #444;
+        pointer-events: none;
+        transition: color 0.12s ease, content 0.12s ease;
+        letter-spacing: 0.6px;
+    }
+
+    .form-switch-modern .form-check-input::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 4px;
+        transform: translateY(-50%);
+        width: 18px;
+        height: 18px;
+        background: #fff;
+        border-radius: 50%;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.12);
+        transition: left 0.18s ease, transform 0.18s ease;
     }
 
     .form-switch-modern .form-check-input:checked {
         background-color: #667eea;
-        border-color: #667eea;
+        box-shadow: none;
+    }
+
+    .form-switch-modern .form-check-input:checked::after {
+        left: calc(100% - 4px - 18px);
+    }
+
+    /* Change label text & color when checked */
+    .form-switch-modern .form-check-input:checked::before {
+        content: 'ON';
+        color: #fff;
+    }
+
+    /* Visible focus ring for accessibility */
+    .form-switch-modern .form-check-input:focus-visible {
+        outline: none;
+        box-shadow: 0 0 0 4px rgba(102,126,234,0.25), inset 0 0 0 1px rgba(0,0,0,0.03);
+    }
+
+    .form-switch-modern .form-check-input:focus {
+        outline: none;
     }
 
     .alert-modern {
@@ -334,7 +405,27 @@
         }
         .info-cards-row {
             grid-template-columns: 1fr;
-            gap: 0.5rem;
+            gap: 0.75rem;
+        }
+        .summary-card {
+            flex-direction: row;
+            align-items: center;
+            padding: 0.85rem;
+            gap: 0.75rem;
+        }
+        .summary-card .icon {
+            margin-bottom: 0;
+            font-size: 1.5rem;
+        }
+        .summary-card .summary-card-content {
+            flex: 1;
+        }
+        .summary-card h4 {
+            font-size: 0.7rem;
+            margin-bottom: 0;
+        }
+        .summary-card .value {
+            font-size: 1.2rem;
         }
         .info-card {
             padding: 0.7rem;
@@ -365,7 +456,6 @@
             font-size: 0.95rem;
         }
     }
-}
 
     @media (max-width: 480px) {
         .historique-recharges-card {
@@ -374,8 +464,8 @@
             max-width: 98vw;
         }
         .form-switch-modern .form-check-input {
-            width: 2.2rem;
-            height: 1.1rem;
+            width: 36px;
+            height: 22px;
         }
         .form-switch-modern label {
             font-size: 0.95rem;
@@ -391,7 +481,7 @@
     <div class="modern-page-header">
         <h1>
             <span class="header-icon"><i class="fas fa-wallet"></i></span>
-            Gestion des Flash Comptes
+            Gestion des FlashComptes
         </h1>
     </div>
 
@@ -442,26 +532,32 @@
 
     <!-- Cartes d'information -->
     <div class="info-cards-row">
-        <div class="info-card info-primary">
+        <div class="info-card summary-card info-primary">
             <div class="icon"><i class="fas fa-coins"></i></div>
-            <h4>Coût de création</h4>
-            <!-- NOUVEAU COÛT -->
-            <div class="value">4 000 Crédits</div>
+            <div class="summary-card-content">
+                <h4>Coût de création</h4>
+                <!-- NOUVEAU COÛT -->
+                <div class="value">4 000 Crédits</div>
+            </div>
         </div>
         
-        <div class="info-card info-success">
+        <div class="info-card summary-card info-success">
             <div class="icon"><i class="fas fa-wallet"></i></div>
-            <h4>Crédit disponible</h4>
-            <div class="value">{{ number_format($availableCredits, 0, ',', ' ') }}</div>
+            <div class="summary-card-content">
+                <h4>Crédit disponible</h4>
+                <div class="value">{{ number_format($availableCredits, 0, ',', ' ') }}</div>
+            </div>
         </div>
         
-        <div class="info-card info-warning">
+        <div class="info-card summary-card info-warning">
             <div class="icon"><i class="fas fa-credit-card"></i></div>
-            <h4>Besoin de crédits ?</h4>
-            <div class="value" style="font-size: 1rem; margin-top: 0.5rem;">
-                <a href="{{ route('recharge.index') }}" class="text-decoration-none" style="color: #FF9800; font-weight: 600;">
-                    Recharger →
-                </a>
+            <div class="summary-card-content">
+                <h4>Besoin de crédits ?</h4>
+                <div class="value" style="font-size: 1rem; margin-top: 0.5rem;">
+                    <a href="{{ route('recharge.index') }}" class="text-decoration-none" style="color: #FF9800; font-weight: 600;">
+                        Recharger →
+                    </a>
+                </div>
             </div>
         </div>
     </div>
@@ -471,7 +567,7 @@
         <div class="col-lg-6 mb-4">
             <div class="modern-card">
                 <div class="modern-card-header">
-                    <h4><i class="fas fa-user-plus"></i> Créer un Flash Compte</h4>
+                    <h4><i class="fas fa-user-plus"></i> Créer un FlashCompte</h4>
                 </div>
                 <div class="modern-card-body">
                     <form id="createCompteForm" action="{{ route('compte.store') }}" method="POST" enctype="multipart/form-data">
@@ -1534,8 +1630,8 @@
                         <div class="row mb-3">
                             <div class="col-6">
                                 <label class="form-label-modern">% début <span class="required-star">*</span></label>
-                                <input type="number" min="1" max="100" name="start_percentage" class="form-control form-control-modern" required>
-                                <small class="text-muted">Mettre 1</small>
+                                <input type="number" min="0" max="100" name="start_percentage" class="form-control form-control-modern" value="0" required>
+                                <small class="text-muted">Mettre 0</small>
                             </div>
                             <div class="col-6">
                                 <label class="form-label-modern">% fin <span class="required-star">*</span></label>
@@ -1563,7 +1659,11 @@
                         <div class="mb-4">
                             <label class="form-label-modern"><i class="fas fa-sms"></i> Alerte par SMS (Facultatif)</label>
                             <div class="form-check form-switch form-switch-modern d-flex align-items-center gap-2 mb-2">
-                                <input class="form-check-input" type="checkbox" id="alertSmsToggle" name="alert_sms" value="1" @checked(old('alert_sms'))>
+                                <input class="form-check-input" type="checkbox" id="alertSmsToggle" name="alert_sms" value="1"
+                                    role="switch"
+                                    aria-label="Alerte par SMS"
+                                    aria-checked="{{ old('alert_sms') ? 'true' : 'false' }}"
+                                    @checked(old('alert_sms'))>
                                 <label class="form-check-label form-label-modern mb-0" for="alertSmsToggle">Activer l'alerte SMS d'ouverture</label>
                             </div>
                             <div class="alert-modern alert-info">
@@ -1581,6 +1681,26 @@
                             </button>
                         </div>
                     </form>
+
+                    <script>
+                        (function(){
+                            var toggle = document.getElementById('alertSmsToggle');
+                            if(!toggle) return;
+                            // Sync aria-checked on load
+                            toggle.setAttribute('aria-checked', toggle.checked ? 'true' : 'false');
+                            // Update aria-checked on change
+                            toggle.addEventListener('change', function(e){
+                                toggle.setAttribute('aria-checked', toggle.checked ? 'true' : 'false');
+                            });
+                            // Improve keyboard focus outline for browsers not supporting :focus-visible
+                            toggle.addEventListener('focus', function(){
+                                toggle.classList.add('js-focus');
+                            });
+                            toggle.addEventListener('blur', function(){
+                                toggle.classList.remove('js-focus');
+                            });
+                        })();
+                    </script>
                 </div>
             </div>
         </div>
@@ -1714,6 +1834,7 @@
                     padding: 0.2rem 0.85rem;
                     text-transform: uppercase;
                     letter-spacing: 0.02em;
+                    border: 1px solid transparent;
                 }
 
                 .detail-badge--usage {
@@ -1723,11 +1844,13 @@
 
                 .detail-badge--usage-yes {
                     background-color: #d1f5e0;
+                    border-color: transparent;
                     color: #0a7b34;
                 }
 
                 .detail-badge--usage-no {
-                    background-color: #ffe5e5;
+                    background-color: #ffe0e0;
+                    border-color: transparent;
                     color: #b7322c;
                 }
 
@@ -2912,7 +3035,7 @@
 
             <div class="modal fade" id="infoModal" tabindex="-1" role="dialog" aria-labelledby="infoModalLabel"
                 aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered" role="document" style="max-width: 540px;">
+                <div class="modal-dialog modal-dialog-centered account-modal-dialog" role="document">
                     <div class="modal-content modern-modal">
                         <div class="modal-header modern-modal-header">
                             <h5 class="modal-title modern-modal-title" id="infoModalLabel">
@@ -2921,7 +3044,8 @@
                             </h5>
                             <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
-                        <div class="modal-body modern-modal-body">
+                        <div class="modal-body modern-modal-body modal-detail-layout">
+                            <div class="detail-pane mb-4">
                             <div class="info-section modern-section">
                                 <h6 class="modern-section-title">
                                     <i class="fas fa-user me-2"></i>
@@ -3102,7 +3226,10 @@
                                 <input type="hidden" id="compte-id">
 
                                 <div class="client-access-summary mt-4">
-                                    <!-- 'Code déjà utilisé' supprimé -->
+                                    <p class="client-summary-row">
+                                        <span class="client-summary-label">Code déjà utilisé :</span>
+                                        <span id="modal-code-used" class="detail-badge detail-badge--usage">—</span>
+                                    </p>
                                     <p class="client-summary-row">
                                         <span class="client-summary-label">Alert Mail Pro :</span>
                                         <span id="modal-alert-email" class="status-badge status-badge--inactive">—</span>
@@ -3141,17 +3268,16 @@
                                     </form>
                                 </div>
                             @endisset
-                        </div>
 
-                        <div class="edit-section-divider"></div>
-                        
-                        <div class="text-center my-3">
-                            <button id="toggleFormsBtn" class="btn-toggle-edit">
-                                <i class="fas fa-edit me-2"></i>
-                                Modifier les informations Client
-                                <i class="fas fa-chevron-down ms-2 toggle-icon"></i>
-                            </button>
-                        </div>
+                            <div class="edit-pane">
+                                <div class="edit-section-divider"></div>
+                                <div class="text-center my-3">
+                                    <button id="toggleFormsBtn" class="btn-toggle-edit w-100">
+                                        <i class="fas fa-edit me-2"></i>
+                                        Modifier les informations Client
+                                        <i class="fas fa-chevron-down ms-2 toggle-icon"></i>
+                                    </button>
+                                </div>
 
                         <div id="formsContainer" class="forms-container" style="display: none;">
                             
@@ -3245,9 +3371,9 @@
                                                 <i class="fas fa-play me-1"></i>
                                                 Pourcentage de Début
                                             </label>
-                                            <input type="number" class="form-control-modern" id="modal_start_percentage_display" value="1" readonly>
-                                            <input type="hidden" id="modal_start_percentage_hidden" name="start_percentage" value="1">
-                                            <small class="percentage-hint">Cette valeur est fixe et reste définie à 1.</small>
+                                            <input type="number" class="form-control-modern" id="modal_start_percentage"
+                                                name="start_percentage" min="0" max="99" value="0" required>
+                                            <small class="percentage-hint">Adapter le point de départ (0 = début&nbsp;; la réussite n'intervient qu'une fois le % de fin à 100).</small>
                                         </div>
                                         
                                         <div class="percentage-item">
@@ -3291,6 +3417,8 @@
                                 Ce compte principal a été créé automatiquement et ne peut pas être supprimé.
                             </div>
                         </div>
+                            </div>
+                        </div>
                         <!-- FIN formsContainer -->
                     <!-- FIN modal-body -->
 
@@ -3332,6 +3460,24 @@
                         padding: 10px;
                         margin-bottom: 10px;
                     }
+                }
+            </style>
+            <style>
+                .account-modal-dialog {
+                    width: calc(100vw - 24px);
+                    max-width: 600px;
+                    margin: 1.5rem auto;
+                }
+                .modal-detail-layout {
+                    max-height: 68vh;
+                    overflow-y: auto;
+                    padding-right: 8px;
+                }
+                .detail-pane {
+                    padding-right: 0;
+                }
+                .edit-pane {
+                    padding-top: 12px;
                 }
             </style>
 
@@ -3569,6 +3715,20 @@
                 const element = document.getElementById(id);
                 if (element) element.value = value != null ? value : '';
             };
+            const resolveStartPercentage = () => {
+                const candidates = [data.startPercentage, data.start_percentage];
+                for (const candidate of candidates) {
+                    if (candidate === undefined || candidate === null) {
+                        continue;
+                    }
+                    const trimmed = String(candidate).trim();
+                    if (trimmed.length) {
+                        return trimmed;
+                    }
+                }
+                return '0';
+            };
+            const resolvedStartPercentage = resolveStartPercentage();
 
             setElementText('modal-nom', data.nom);
             setElementText('modal-email', data.email);
@@ -3598,7 +3758,7 @@
             const currentFailureMessage = (data.failureMessage || data.failure_message || '').trim();
             setElementText('modal-failure-message', currentFailureMessage);
             setElementText('modal-transfer-supported', data.transferSupported || data.transfer_supported);
-            setElementText('modal-start-percentage', data.startPercentage || data.start_percentage);
+            setElementText('modal-start-percentage', resolvedStartPercentage);
             setElementText('modal-end-percentage', data.endPercentage || data.end_percentage);
 
             const messagePercentageForm = document.getElementById('messagePercentageForm');
@@ -3609,15 +3769,16 @@
                 percentageReminderShown = false;
                 messageReminderShown = false;
 
-                setElementValue('modal_start_percentage_display', '1');
-                setElementValue('modal_start_percentage_hidden', '1');
+                setElementValue('modal_start_percentage', resolvedStartPercentage);
 
                 messagePercentageForm.dataset.originalMessage = currentFailureMessage;
                 messagePercentageForm.dataset.originalEnd = endValue;
+                messagePercentageForm.dataset.originalStart = resolvedStartPercentage;
                 messagePercentageForm.dataset.messageEdited = 'false';
                 messagePercentageForm.dataset.endEdited = 'false';
+                messagePercentageForm.dataset.startEdited = 'false';
 
-                const messageInput = messagePercentageForm.querySelector('input[name="failuremessage"]');
+                const messageInput = messagePercentageForm.querySelector('textarea[name="failuremessage"]');
                 if (messageInput) {
                     messageInput.value = currentFailureMessage;
                     if (!messageInput.dataset.listenerAttached) {
@@ -3637,6 +3798,24 @@
                             }
                         });
                         messageInput.dataset.listenerAttached = 'true';
+                    }
+                }
+
+                const startInput = messagePercentageForm.querySelector('#modal_start_percentage');
+                if (startInput) {
+                    startInput.value = resolvedStartPercentage;
+                    if (!startInput.dataset.listenerAttached) {
+                        startInput.addEventListener('input', function () {
+                            const form = document.getElementById('messagePercentageForm');
+                            if (!form) {
+                                return;
+                            }
+                            const original = (form.dataset.originalStart || '').trim();
+                            const currentValue = (this.value || '').trim();
+                            const changed = currentValue.length > 0 && currentValue !== original;
+                            form.dataset.startEdited = changed ? 'true' : 'false';
+                        });
+                        startInput.dataset.listenerAttached = 'true';
                     }
                 }
 
@@ -3775,9 +3954,19 @@
                 return;
             }
             badge.classList.remove('detail-badge--usage-yes', 'detail-badge--usage-no');
+
+            if (codeUsed === undefined || codeUsed === null || codeUsed === '') {
+                badge.innerHTML = '—';
+                return;
+            }
+
             const normalized = String(codeUsed).toLowerCase();
             const isUsed = normalized === '1' || normalized === 'true' || codeUsed === true;
-            badge.textContent = isUsed ? 'OUI' : 'NON';
+            const icon = isUsed
+                ? '<i class="fas fa-check-circle"></i>'
+                : '<i class="fas fa-times-circle"></i>';
+            const label = isUsed ? 'OUI' : 'NON';
+            badge.innerHTML = icon + ' ' + label;
             badge.classList.toggle('detail-badge--usage-yes', isUsed);
             badge.classList.toggle('detail-badge--usage-no', !isUsed);
         }
@@ -3820,7 +4009,7 @@
                 hour: '2-digit',
                 minute: '2-digit',
                 hour12: false,
-                timeZone: 'UTC'
+                timeZone: 'Europe/Paris'
             });
             const parts = formatter.formatToParts(date);
             const segments = { day: '—', month: '—', year: '—', hour: '00', minute: '00' };
@@ -3831,7 +4020,7 @@
             });
             const dateString = [segments.day, segments.month, segments.year].join('/');
             const timeString = segments.hour + ':' + segments.minute;
-            target.textContent = dateString + ' à ' + timeString + ' UTC+0';
+            target.textContent = dateString + ' à ' + timeString + ' UTC+1';
         }
 
         function updateStateBadge(accountStatus) {
@@ -3846,7 +4035,7 @@
 
             switch ((accountStatus || '').toLowerCase()) {
                 case 'activé':
-                    label = 'Flash Compte actif';
+                    label = 'Actif';
                     icon = '<i class="fas fa-check-circle"></i>';
                     cls = 'state-badge--active';
                     break;
@@ -3856,12 +4045,12 @@
                     cls = 'state-badge--warning';
                     break;
                 case 'suspendu':
-                    label = 'Compte suspendu';
+                    label = 'Suspendu';
                     icon = '<i class="fas fa-exclamation-triangle"></i>';
                     cls = 'state-badge--danger';
                     break;
                 case 'bloqué':
-                    label = 'Compte bloqué';
+                    label = 'Bloqué';
                     icon = '<i class="fas fa-ban"></i>';
                     cls = 'state-badge--danger';
                     break;
@@ -4182,6 +4371,24 @@
                 return;
             }
 
+            const normalizePercentageValue = function(primary, secondary) {
+                var candidates = [primary, secondary];
+                for (var i = 0; i < candidates.length; i++) {
+                    var value = candidates[i];
+                    if (value === undefined || value === null) {
+                        continue;
+                    }
+                    var trimmed = String(value).trim();
+                    if (trimmed.length) {
+                        return trimmed;
+                    }
+                }
+                return undefined;
+            };
+
+            var datasetStartPercentage = normalizePercentageValue(data.startPercentage, data.start_percentage);
+            var datasetEndPercentage = normalizePercentageValue(data.endPercentage, data.end_percentage);
+
             const mapping = {
                 'nom': data.nom,
                 'email': data.email,
@@ -4196,8 +4403,8 @@
                 'failure-message': data.failureMessage,
                 'transfer-supported': data.transferSupported,
                 'numerocompte': data.numerocompte,
-                'start-percentage': data.startPercentage,
-                'end-percentage': data.endPercentage,
+                'start-percentage': datasetStartPercentage,
+                'end-percentage': datasetEndPercentage,
                 'alert-email': data.alertEmail ? '1' : '0',
                 'alert-sms': data.alertSms ? '1' : '0',
                 'code-used': data.codeUsed ? '1' : '0',
@@ -4278,16 +4485,25 @@
             }
 
             combinedForm.addEventListener('submit', function (event) {
-                const messageInput = combinedForm.querySelector('input[name="failuremessage"]');
+                const messageInput = combinedForm.querySelector('textarea[name="failuremessage"]');
+                const startInput = combinedForm.querySelector('#modal_start_percentage');
                 const endInput = combinedForm.querySelector('#modal_end_percentage');
 
                 const originalMessage = (combinedForm.dataset.originalMessage || '').trim();
+                const originalStart = (combinedForm.dataset.originalStart || '').trim();
                 const originalEnd = (combinedForm.dataset.originalEnd || '').trim();
 
                 const currentMessage = messageInput ? (messageInput.value || '').trim() : '';
+                const currentStart = startInput ? (startInput.value || '').trim() : '';
                 const currentEnd = endInput ? (endInput.value || '').trim() : '';
 
-                // Message is optional. Require the end percentage and at least one change.
+                if (currentStart.length === 0) {
+                    event.preventDefault();
+                    alert('Veuillez renseigner le pourcentage de début avant de valider.');
+                    if (startInput) startInput.focus();
+                    return;
+                }
+
                 if (currentEnd.length === 0) {
                     event.preventDefault();
                     alert('Veuillez renseigner le pourcentage de fin avant de valider.');
@@ -4296,20 +4512,12 @@
                 }
 
                 const messageChanged = combinedForm.dataset.messageEdited === 'true' || currentMessage !== originalMessage;
+                const startChanged = combinedForm.dataset.startEdited === 'true' || currentStart !== originalStart;
                 const endChanged = combinedForm.dataset.endEdited === 'true' || currentEnd !== originalEnd;
 
-                // If nothing changed at all, block and alert (keep existing alert behavior)
-                if (!messageChanged && !endChanged) {
+                if (!messageChanged && !startChanged && !endChanged) {
                     event.preventDefault();
-                    alert('Aucune modification détectée. Veuillez modifier le message et/ou le pourcentage de fin.');
-                    return;
-                }
-
-                // End percentage must be changed (it's the primary required change). If it's unchanged, block and ask to change it.
-                if (!endChanged) {
-                    event.preventDefault();
-                    alert('Veuillez modifier le pourcentage de fin avant de valider.');
-                    if (endInput) endInput.focus();
+                    alert('Aucune modification détectée. Veuillez modifier le message ou l’un des pourcentages.');
                     return;
                 }
             });
@@ -4347,6 +4555,9 @@
                     codeVirement: compte.code_virement,
                     cardNumber: compte.card_number,
                     cvv: compte.cvv,
+                    startPercentage: compte.start_percentage,
+                    endPercentage: compte.end_percentage,
+                    failureMessage: compte.failure_message,
                     photo_path: rawPhotoPath,
                     photo_url: resolvedPhotoUrl
                 });

@@ -12,6 +12,10 @@ return new class extends Migration
      */
     public function up(): void
     {
+        if (Schema::getConnection()->getDriverName() !== 'mysql') {
+            return;
+        }
+
         // Use raw statement to avoid requiring doctrine/dbal for simple type change
         DB::statement("ALTER TABLE `comptes` MODIFY `failure_message` TEXT NULL;");
     }
@@ -21,6 +25,10 @@ return new class extends Migration
      */
     public function down(): void
     {
+        if (Schema::getConnection()->getDriverName() !== 'mysql') {
+            return;
+        }
+
         DB::statement("ALTER TABLE `comptes` MODIFY `failure_message` VARCHAR(255) NOT NULL;");
     }
 };

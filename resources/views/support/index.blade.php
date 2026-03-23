@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+﻿@extends('layouts.admin')
 
 @section('title', 'Support & Réclamations')
 
@@ -216,7 +216,7 @@
                                 </div>
                             @endif
                             <small>
-                                {{ $message->sent_by_admin ? 'Support FlashCompte' : 'Vous' }} • {{ $message->created_at->format('d/m/Y H:i') }}
+                                {{ $message->sent_by_admin ? 'Support FlashBilan' : 'Vous' }} • {{ $message->created_at->format('d/m/Y H:i') }}
                             </small>
                         </div>
                     @endforeach
@@ -302,3 +302,4 @@
     });
 </script>
 @endpush
+
