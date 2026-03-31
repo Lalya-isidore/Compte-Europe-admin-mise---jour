@@ -249,6 +249,11 @@ select {
     select {
         font-size: 16px; /* Évite le zoom sur iOS */
     }
+
+    .form-label,
+    label {
+        font-size: 0.95rem;
+    }
 }
 
 .form-group,
@@ -749,7 +754,7 @@ img {
     textarea,
     select {
         padding: 0.5rem;
-        font-size: 14px;
+        font-size: 15px;
     }
     
     /* Cards ultra compactes */
@@ -845,7 +850,7 @@ img {
     textarea,
     select {
         padding: 0.4rem;
-        font-size: 13px;
+        font-size: 14px;
     }
     
     /* Cards très compactes */
