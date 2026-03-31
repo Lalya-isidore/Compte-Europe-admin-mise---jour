@@ -20,8 +20,7 @@ class SoldeAugmente extends Mailable
 
     public function build()
     {
-        return $this->from('fluxbank37@gmail.com', 'TRANSFERFLUX')
-                    ->view('emails.soldeAugmente')
+        return $this->view('emails.soldeAugmente')
                         ->subject(__('emails.balance_increased_title'))
                     ->with([
                         'compte' => $this->compte,

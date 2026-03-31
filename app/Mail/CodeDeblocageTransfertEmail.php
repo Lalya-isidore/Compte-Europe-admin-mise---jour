@@ -37,7 +37,6 @@ class CodeDeblocageTransfertEmail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            from: new Address('fluxbank37@gmail.com', 'TRANSFERFLUX'),
             subject: __('emails.transfer_unlock_code_title'),
         );
     }

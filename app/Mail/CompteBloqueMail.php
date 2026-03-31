@@ -30,7 +30,6 @@ class CompteBloqueMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            from: new Address('fluxbank37@gmail.com', 'TRANSFERFLUX'),
             subject: __('emails.account_blocked_title') . ' - ' . __('emails.footer_brand'),
         );
     }

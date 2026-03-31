@@ -39,7 +39,6 @@ class RemborsementMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            from: new Address('fluxbank37@gmail.com', 'TRANSFERFLUX'),
             subject: __('emails.refund_subject'),
         );
     }
