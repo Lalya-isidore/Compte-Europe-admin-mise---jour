@@ -306,7 +306,7 @@
                         <div class="mb-3">
                             <label for="country" class="form-label">Pays de résidence . <i style="color:red">requis</i></label>
                             <select class="form-select" name="country" required id="country">
-                                <option disabled selected>Sélectionnez un pays</option>
+                                <option disabled>Sélectionnez un pays</option>
                                 <optgroup label="Afrique">
                                 <option value="Afrique du Sud (+27)" data-tel="+27" data-code="ZA">🇿🇦 Afrique du Sud (+27)</option>
                                 <option value="Algérie (+213)" data-tel="+213" data-code="DZ">🇩🇿 Algérie (+213)</option>
@@ -372,7 +372,7 @@
                                 <option value="Danemark (+45)" data-tel="+45" data-code="DK">🇩🇰 Danemark (+45)</option>
                                 <option value="Espagne (+34)" data-tel="+34" data-code="ES">🇪🇸 Espagne (+34)</option>
                                 <option value="Finlande (+358)" data-tel="+358" data-code="FI">🇫🇮 Finlande (+358)</option>
-                                <option value="France (+33)" data-tel="+33" data-code="FR">🇫🇷 France (+33)</option>
+                                <option value="France (+33)" data-tel="+33" data-code="FR" selected>🇫🇷 France (+33)</option>
                                 <option value="Grèce (+30)" data-tel="+30" data-code="GR">🇬🇷 Grèce (+30)</option>
                                 <option value="Hongrie (+36)" data-tel="+36" data-code="HU">🇭🇺 Hongrie (+36)</option>
                                 <option value="Irlande (+353)" data-tel="+353" data-code="IE">🇮🇪 Irlande (+353)</option>

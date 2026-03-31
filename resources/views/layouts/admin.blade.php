@@ -245,6 +245,9 @@
             padding: 1rem 2rem;
             background: linear-gradient(135deg, #fef3e2 0%, #fde8d0 100%);
             border-bottom: 1px solid rgba(245,166,35,.12);
+            position: sticky;
+            top: 0;
+            z-index: 1020;
         }
         .top-header__left {
             display: none;
