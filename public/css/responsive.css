@@ -247,12 +247,12 @@ select {
     input,
     textarea,
     select {
-        font-size: 16px; /* Évite le zoom sur iOS */
+        font-size: 18px;
     }
 
     .form-label,
     label {
-        font-size: 0.95rem;
+        font-size: 1rem;
     }
 }
 
@@ -754,7 +754,7 @@ img {
     textarea,
     select {
         padding: 0.5rem;
-        font-size: 15px;
+        font-size: 16px;
     }
     
     /* Cards ultra compactes */
@@ -850,7 +850,7 @@ img {
     textarea,
     select {
         padding: 0.4rem;
-        font-size: 14px;
+        font-size: 15px;
     }
     
     /* Cards très compactes */
