@@ -12,7 +12,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
-    <link rel="stylesheet" href="{{ asset('css/responsive.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/responsive.css') }}?v={{ time() }}">
     <link rel="stylesheet" href="{{ asset('css/support-widget.css') }}">
     <script src="{{ asset('js/support-widget.js') }}" defer></script>
     <link rel="icon" type="image/svg+xml" href="{{ asset('images/favicon.svg') }}">
