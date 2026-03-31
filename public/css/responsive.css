@@ -983,39 +983,23 @@ img {
     }
 }
 
-/* ===== FORM CHECK / SWITCH MOBILE ===== */
-@media (max-width: 575px) {
-    .form-check {
-        display: flex;
-        align-items: flex-start;
-        gap: 0.5rem;
-    }
+/* ===== FORM CHECK / SWITCH FIX ===== */
+.form-check .form-check-input[type="checkbox"]:not(.form-switch .form-check-input) {
+    width: 1em !important;
+    height: 1em !important;
+    min-width: 1em;
+    min-height: 1em;
+    max-width: 1em;
+    max-height: 1em;
+}
 
-    .form-check .form-check-input[type="checkbox"] {
-        width: 18px !important;
-        height: 18px !important;
-        min-width: 18px;
-        min-height: 18px;
-        max-width: 18px;
-        max-height: 18px;
-        margin-top: 3px;
-        flex-shrink: 0;
-    }
-
-    .form-check .form-check-label {
-        font-size: 0.9rem;
-        line-height: 1.4;
-    }
-
-    .form-switch .form-check-input {
-        width: 40px !important;
-        height: 22px !important;
-        min-width: 40px;
-        min-height: 22px;
-        max-width: 40px;
-        max-height: 22px;
-        margin-top: 2px;
-    }
+.form-switch .form-check-input {
+    width: 2em !important;
+    height: 1.1em !important;
+    min-width: 2em;
+    min-height: 1.1em;
+    max-width: 2em;
+    max-height: 1.1em;
 }
 
 /* ===== DARK MODE SUPPORT (bonus) ===== */
