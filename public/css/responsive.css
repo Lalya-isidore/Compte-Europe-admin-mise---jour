@@ -977,8 +977,8 @@ img {
 
 /* ===== TOUCH TARGETS (Accessibilité tactile) ===== */
 @media (pointer: coarse) {
-    .btn,
-    button:not(.form-check-input) {
+    .btn:not(.fcp-copy-btn):not(.btn-sm):not(.password-toggle),
+    button:not(.form-check-input):not(.fcp-copy-btn):not(.btn-sm):not(.password-toggle):not(.btn-close) {
         min-height: 44px;
     }
 
