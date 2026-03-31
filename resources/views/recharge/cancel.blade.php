@@ -2,6 +2,11 @@
 
 @section('title', 'Paiement Annulé')
 
+@section('breadcrumb')
+    <li class="breadcrumb-item"><i class="fas fa-wallet me-1"></i>Recharge</li>
+    <li class="breadcrumb-item active"><i class="fas fa-times-circle me-1"></i>Paiement Annulé</li>
+@endsection
+
 @section('content')
 <div class="container-fluid py-4">
     <div class="row justify-content-center">

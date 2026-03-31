@@ -9,7 +9,7 @@
             @if(session()->has('error'))
             <div class="alert alert-success"> {{session()->get('error')}} </div>
             @endif
-            <h1 class="my-3">Crée un FlashBilan </h1>
+            <h1 class="my-3">Crée un {{ app('region')->appName() }} </h1>
 
             <form action="{{ route('compte.edit', $compte->id) }}" method="POST">
                 @method('put')

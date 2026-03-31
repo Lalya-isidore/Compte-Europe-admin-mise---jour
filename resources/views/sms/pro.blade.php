@@ -1,5 +1,12 @@
 @extends('layouts.admin')
 
+@section('title', 'SMS Pro')
+
+@section('breadcrumb')
+    <li class="breadcrumb-item"><i class="fas fa-briefcase me-1"></i>Outils</li>
+    <li class="breadcrumb-item active"><i class="fas fa-sms me-1"></i>SMS Pro</li>
+@endsection
+
 @push('styles')
 <style>
     .sms-pro-wrapper {

@@ -2,6 +2,11 @@
 
 @section('title', 'Recharge de Compte')
 
+@section('breadcrumb')
+    <li class="breadcrumb-item"><i class="fas fa-wallet me-1"></i>Recharge</li>
+    <li class="breadcrumb-item active"><i class="fas fa-credit-card me-1"></i>Recharge de Compte</li>
+@endsection
+
 @section('content')
 <div class="container-fluid py-4">
     <div class="row">
@@ -50,21 +55,19 @@
 
                     <!-- Packages de recharge -->
                     <div class="row g-3 mb-5">
-                        <!-- Package Test removed -->
 
-                        <div class="col-md-6 col-lg-3">
+                        <div class="col-md-6 col-lg-4">
                             <div class="card border-primary h-100 package-card" data-amount="5000" data-credits="5000">
                                 <div class="card-body text-center p-4">
                                     <div class="package-icon mb-3">
                                         <i class="fas fa-star text-primary fs-1"></i>
                                     </div>
-                                    <h5 class="card-title text-primary fw-bold">Package Starter</h5>
+                                    <h5 class="card-title text-primary fw-bold">Pack Starter</h5>
                                     <p class="card-text mb-3">
                                         <span class="fs-4 fw-bold">5 000</span> F CFA
                                     </p>
                                     <div class="bonus-info mb-3">
-                                        <span class="badge bg-secondary fs-6">+0% Bonus</span>
-                                        <p class="small text-muted mt-1">Recevez 5 000 crédits</p>
+                                        <p class="small text-muted mt-1">Recevez <strong>5 000</strong> crédits</p>
                                     </div>
                                     <button class="btn btn-primary btn-select-package w-100">
                                         <i class="fas fa-plus-circle me-2"></i>Choisir
@@ -73,19 +76,19 @@
                             </div>
                         </div>
 
-                        <div class="col-md-6 col-lg-3">
+                        <div class="col-md-6 col-lg-4">
                             <div class="card border-success h-100 package-card" data-amount="10000" data-credits="15000">
                                 <div class="card-body text-center p-4">
                                     <div class="package-icon mb-3">
                                         <i class="fas fa-gem text-success fs-1"></i>
                                     </div>
-                                    <h5 class="card-title text-success fw-bold">Package Premium</h5>
+                                    <h5 class="card-title text-success fw-bold">Pack Premium</h5>
                                     <p class="card-text mb-3">
                                         <span class="fs-4 fw-bold">10 000</span> F CFA
                                     </p>
                                     <div class="bonus-info mb-3">
                                         <span class="badge bg-success fs-6">+50% Bonus</span>
-                                        <p class="small text-muted mt-1">Recevez 15 000 crédits</p>
+                                        <p class="small text-muted mt-1">Recevez <strong>15 000</strong> crédits</p>
                                     </div>
                                     <button class="btn btn-success btn-select-package w-100">
                                         <i class="fas fa-plus-circle me-2"></i>Choisir
@@ -94,19 +97,40 @@
                             </div>
                         </div>
 
-                        <div class="col-md-6 col-lg-3">
+                        <div class="col-md-6 col-lg-4">
+                            <div class="card border-info h-100 package-card" data-amount="15000" data-credits="25000">
+                                <div class="card-body text-center p-4">
+                                    <div class="package-icon mb-3">
+                                        <i class="fas fa-bolt text-info fs-1"></i>
+                                    </div>
+                                    <h5 class="card-title text-info fw-bold">Pack Pro</h5>
+                                    <p class="card-text mb-3">
+                                        <span class="fs-4 fw-bold">15 000</span> F CFA
+                                    </p>
+                                    <div class="bonus-info mb-3">
+                                        <span class="badge bg-info fs-6">+67% Bonus</span>
+                                        <p class="small text-muted mt-1">Recevez <strong>25 000</strong> crédits</p>
+                                    </div>
+                                    <button class="btn btn-info btn-select-package w-100">
+                                        <i class="fas fa-plus-circle me-2"></i>Choisir
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 col-lg-4">
                             <div class="card border-warning h-100 package-card" data-amount="25000" data-credits="40000">
                                 <div class="card-body text-center p-4">
                                     <div class="package-icon mb-3">
                                         <i class="fas fa-crown text-warning fs-1"></i>
                                     </div>
-                                    <h5 class="card-title text-warning fw-bold">Package Gold</h5>
+                                    <h5 class="card-title text-warning fw-bold">Pack Gold</h5>
                                     <p class="card-text mb-3">
                                         <span class="fs-4 fw-bold">25 000</span> F CFA
                                     </p>
                                     <div class="bonus-info mb-3">
                                         <span class="badge bg-warning fs-6">+60% Bonus</span>
-                                        <p class="small text-muted mt-1">Recevez 40 000 crédits</p>
+                                        <p class="small text-muted mt-1">Recevez <strong>40 000</strong> crédits</p>
                                     </div>
                                     <button class="btn btn-warning btn-select-package w-100">
                                         <i class="fas fa-plus-circle me-2"></i>Choisir
@@ -115,19 +139,19 @@
                             </div>
                         </div>
 
-                        <div class="col-md-6 col-lg-3">
+                        <div class="col-md-6 col-lg-4">
                             <div class="card border-danger h-100 package-card" data-amount="50000" data-credits="100000">
                                 <div class="card-body text-center p-4">
                                     <div class="package-icon mb-3">
                                         <i class="fas fa-trophy text-danger fs-1"></i>
                                     </div>
-                                    <h5 class="card-title text-danger fw-bold">Package VIP</h5>
+                                    <h5 class="card-title text-danger fw-bold">Pack VIP</h5>
                                     <p class="card-text mb-3">
                                         <span class="fs-4 fw-bold">50 000</span> F CFA
                                     </p>
                                     <div class="bonus-info mb-3">
                                         <span class="badge bg-danger fs-6">+100% Bonus</span>
-                                        <p class="small text-muted mt-1">Recevez 100 000 crédits</p>
+                                        <p class="small text-muted mt-1">Recevez <strong>100 000</strong> crédits</p>
                                     </div>
                                     <button class="btn btn-danger btn-select-package w-100">
                                         <i class="fas fa-plus-circle me-2"></i>Choisir
@@ -544,7 +568,8 @@ document.addEventListener('DOMContentLoaded', function() {
             // Déterminer le nom du package
             const packageNames = {
                 '5000': 'Starter',
-                '10000': 'Premium', 
+                '10000': 'Premium',
+                '15000': 'Pro',
                 '25000': 'Gold',
                 '50000': 'VIP'
             };

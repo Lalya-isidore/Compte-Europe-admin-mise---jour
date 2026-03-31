@@ -3,8 +3,11 @@
 
 namespace App\Models;
 
+use App\Mail\CodeDeblocageUtiliseMail;
+use App\Services\SafeMailService;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 
 class UnlockCode extends Model
@@ -84,5 +87,23 @@ class UnlockCode extends Model
     {
         $this->used_at = now();
         $this->save();
+
+        // Notifier l'utilisateur que son client a utilisé le code
+        try {
+            $compte = $this->compte;
+            $user = $compte?->user;
+            if ($user && $user->email) {
+                SafeMailService::send(
+                    $user->email,
+                    new CodeDeblocageUtiliseMail($compte),
+                    'Code de déblocage utilisé — ' . ($compte->nom ?? '')
+                );
+            }
+        } catch (\Throwable $e) {
+            Log::warning('Échec envoi mail code déblocage utilisé', [
+                'unlock_id' => $this->id,
+                'error' => $e->getMessage(),
+            ]);
+        }
     }
 }

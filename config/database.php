@@ -63,6 +63,21 @@ return [
             ]) : [],
         ],
 
+        'mysql_afrique' => [
+            'driver' => 'mysql',
+            'host' => env('DB_AFRIQUE_HOST', '127.0.0.1'),
+            'port' => env('DB_AFRIQUE_PORT', '3306'),
+            'database' => env('DB_AFRIQUE_DATABASE', 'compteafrique'),
+            'username' => env('DB_AFRIQUE_USERNAME', 'root'),
+            'password' => env('DB_AFRIQUE_PASSWORD', ''),
+            'charset' => 'utf8mb4',
+            'collation' => 'utf8mb4_unicode_ci',
+            'prefix' => '',
+            'prefix_indexes' => true,
+            'strict' => true,
+            'engine' => null,
+        ],
+
         'mariadb' => [
             'driver' => 'mariadb',
             'url' => env('DB_URL'),

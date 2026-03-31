@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 
 namespace App\Mail;
 
@@ -20,9 +20,6 @@ class VirementReussiMail extends Mailable
     public $compte;
     public $transfer;
 
-    /**
-     * Create a new message instance.
-     */
     public function __construct($details, Compte $compte, Transfer $transfer)
     {
         $this->details = $details;
@@ -30,9 +27,6 @@ class VirementReussiMail extends Mailable
         $this->transfer = $transfer;
     }
 
-    /**
-     * Get the message envelope.
-     */
     public function envelope(): Envelope
     {
         return new Envelope(
@@ -41,9 +35,6 @@ class VirementReussiMail extends Mailable
         );
     }
 
-    /**
-     * Get the message content definition.
-     */
     public function content(): Content
     {
         return new Content(
@@ -56,12 +47,8 @@ class VirementReussiMail extends Mailable
         );
     }
 
-    /**
-     * Get the attachments for the message.
-     */
     public function attachments(): array
     {
         return [];
     }
 }
-

@@ -1,221 +1,186 @@
-﻿@extends('layouts.admin')
+@extends('layouts.admin')
 
 @section('title', 'Liste des outils')
 
 @section('breadcrumb')
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="{{ route('dashboard') }}"><i class="fas fa-home"></i></a></li>
-        <li class="breadcrumb-item"><i class="fas fa-briefcase me-1"></i>Liste des outils</li>
-        <li class="breadcrumb-item active"><i class="fas fa-wallet me-1"></i>Recharge</li>
-    </ol>
+    <li class="breadcrumb-item"><a href="{{ route('dashboard') }}"><i class="ri-briefcase-line me-1"></i>Liste des outils</a></li>
+    <li class="breadcrumb-item active"><a href="{{ route('recharge.index') }}"><i class="ri-wallet-line me-1"></i>Recharge</a></li>
 @endsection
 
 @section('content')
 @php
-    $toolSections = [
-        [
-            'title' => 'Outils à accès payant',
-            'icon' => 'fas fa-id-card',
-            'tools' => [
-                ['label' => 'SMS Pro', 'icon' => 'fas fa-sms text-primary', 'route' => route('sms.pro')],
-                ['label' => 'Mail Flash Pro', 'icon' => 'fas fa-envelope-open-text text-warning', 'route' => route('mail.flash.pro')],
-                [
-                    'label' => 'Mail Pro Privé',
-                    'icon' => 'fas fa-shield-alt text-success',
-                    'route' => route('mail.pro.prive'),
-                    'badge' => 'Bientôt'
-                ],
-                ['label' => 'Flash Compte Pro V1', 'icon' => 'fas fa-university text-info', 'route' => route('compte.create')],
-                ['label' => 'Flash Compte Pro Afrique', 'icon' => 'fas fa-exchange-alt text-primary', 'route' => 'https://flashcompte.world/', 'is_external' => true, 'badge' => 'NEW'],
-                [
-                    'label' => 'Collecte de code coupon',
-                    'icon' => 'fas fa-ticket-alt text-danger',
-                    'route' => route('coupon.collecte'),
-                    'badge' => 'Bientôt'
-                ]
-            ]
-        ],
-        [
-            'title' => 'Outils à accès libre',
-            'icon' => 'fas fa-feather',
-            'tools' => [
-                [
-                    'label' => 'Mail Extractor',
-                    'icon' => 'fas fa-envelope-open text-secondary',
-                    'route' => route('tools.mail-extractor'),
-                    'badge' => 'NEW'
-                ],
-                [
-                    'label' => "Vérification d'un URL",
-                    'icon' => 'fas fa-globe text-primary',
-                    'route' => route('tools.url-check'),
-                    'badge' => 'NEW'
-                ],
-                [
-                    'label' => "Raccourcissement d'URL",
-                    'icon' => 'fas fa-link text-success',
-                    'route' => route('tools.url-shortener'),
-                    'badge' => 'NEW'
-                ],
-                [
-                    'label' => 'Vente de Crypto USDT',
-                    'icon' => 'fas fa-coins text-warning',
-                    'badge' => 'Bientôt',
-                    'route' => route('crypto.vente')
-                ],
-                [
-                    'label' => 'Numéros virtuels',
-                    'icon' => 'fas fa-phone-alt text-primary',
-                    'badge' => 'Accès Libre',
-                    'route' => 'https://console.whatsago.com/partners/45575',
-                    'is_external' => true
-                ],
-                [
-                    'label' => 'Cartes virtuelles',
-                    'icon' => 'fas fa-credit-card text-success',
-                    'badge' => 'NEW',
-                    'route' => 'https://neutrocard.com/new-login/',
-                    'is_external' => true
-                ]
-            ]
-        ],
+    $paidTools = [
+        ['label' => 'SMS Pro', 'image' => 'sms-pro.png', 'route' => route('sms.pro')],
+        ['label' => 'Flash Compte Pro', 'image' => 'flash-compte-v1.png', 'route' => route('compte.create')],
+        ['label' => 'Mail Flash Pro', 'image' => 'mail-flash-pro.png', 'route' => route('mail.flash.pro')],
+        ['label' => 'Mail Pro Prive', 'image' => 'mail-pro-prive.png', 'route' => route('mail.pro.prive'), 'badge' => 'Bientot'],
+        ['label' => 'Collecte de code coupon', 'image' => 'code-coupon.png', 'route' => route('coupon.collecte'), 'badge' => 'Bientot'],
+        ['label' => 'Verification IBAN / CB', 'image' => 'iban-check.png', 'route' => route('tools.iban-check'), 'badge' => 'NEW'],
+        ['label' => 'Verification telephone', 'image' => 'phone-verify.png', 'route' => route('tools.phone-verify'), 'badge' => 'NEW'],
+    ];
+
+    $freeTools = [
+        ['label' => 'Mail Extractor', 'image' => 'mail-extractor.png', 'route' => route('tools.mail-extractor'), 'badge' => 'NEW'],
+        ['label' => "Verification d'un site web", 'image' => 'url-check.png', 'route' => route('tools.url-check'), 'badge' => 'NEW'],
+        ['label' => "Raccourcissement d'URL", 'image' => 'url-shortener.png', 'route' => route('tools.url-shortener'), 'badge' => 'NEW'],
+        ['label' => 'Vente de Crypto USDT', 'image' => 'crypto-usdt.png', 'route' => route('crypto.vente'), 'badge' => 'Bientot'],
+        ['label' => 'Numeros virtuelles', 'image' => 'virtual-numbers.png', 'badge' => 'NEW', 'route' => 'https://console.whatsago.com/partners/45575', 'is_external' => true],
+        ['label' => 'Cartes virtuelles', 'image' => 'virtual-cards.png', 'badge' => 'NEW', 'route' => 'https://neutrocard.com/new-login/', 'is_external' => true],
     ];
 @endphp
 
-<div class="tools-wrapper container-fluid px-lg-4 px-3 py-4">
-    <div class="row g-4">
-        @foreach($toolSections as $section)
-            <div class="col-12 col-lg-6">
-                <div class="tools-panel">
-                    <div class="tools-panel__header">
-                        <i class="{{ $section['icon'] }}"></i>
-                        {{ $section['title'] }}
-                    </div>
-                    <div class="tools-grid">
-                        @foreach($section['tools'] as $tool)
-                            @php
-                                $href = $tool['route'] ?? null;
-                                $isExternal = $tool['is_external'] ?? false;
-                            @endphp
-                            @if($href)
-                                <a href="{{ $href }}" class="tool-card" {!! $isExternal ? 'target="_blank" rel="noopener noreferrer"' : '' !!}>
-                                    @if(isset($tool['badge']))
-                                        <span class="tool-card__badge {{ $tool['badge'] === 'Bientôt' ? 'tool-card__badge--soon' : '' }}">{{ $tool['badge'] }}</span>
-                                    @endif
-                                    <span class="tool-card__icon">
-                                        <i class="{{ $tool['icon'] ?? 'fas fa-tools text-secondary' }}"></i>
-                                    </span>
-                                    <span class="tool-card__label">{{ $tool['label'] }}</span>
-                                </a>
-                            @else
-                                <div class="tool-card tool-card--disabled">
-                                    @if(isset($tool['badge']))
-                                        <span class="tool-card__badge">{{ $tool['badge'] }}</span>
-                                    @endif
-                                    <span class="tool-card__icon">
-                                        <i class="{{ $tool['icon'] ?? 'fas fa-tools text-secondary' }}"></i>
-                                    </span>
-                                    <span class="tool-card__label">{{ $tool['label'] }}</span>
-                                </div>
-                            @endif
-                        @endforeach
-                    </div>
-                </div>
+<div class="row g-4">
+    {{-- Outils payants --}}
+    <div class="col-12 col-lg-6">
+        <div class="tools-section">
+            <div class="tools-section__header">
+                <i class="fas fa-id-card"></i>
+                <strong>Outils a acces payant</strong>
             </div>
-        @endforeach
+            <div class="tools-grid">
+                @foreach($paidTools as $tool)
+                    @php $href = $tool['route'] ?? '#'; $isExternal = $tool['is_external'] ?? false; @endphp
+                    <a href="{{ $href }}" class="tool-card" {!! $isExternal ? 'target="_blank" rel="noopener noreferrer"' : '' !!}>
+                        @if(isset($tool['badge']))
+                            <span class="tool-badge {{ $tool['badge'] === 'Bientot' ? 'tool-badge--soon' : '' }}">{{ $tool['badge'] }}</span>
+                        @endif
+                        <img src="{{ asset('images/tools/' . $tool['image']) }}" alt="{{ $tool['label'] }}" class="tool-icon">
+                        <span class="tool-label">{{ $tool['label'] }}</span>
+                    </a>
+                @endforeach
+            </div>
+        </div>
+    </div>
+
+    {{-- Outils gratuits --}}
+    <div class="col-12 col-lg-6">
+        <div class="tools-section">
+            <div class="tools-section__header">
+                <i class="fas fa-feather"></i>
+                <strong>Outils a acces libre</strong>
+            </div>
+            <div class="tools-grid">
+                @foreach($freeTools as $tool)
+                    @php $href = $tool['route'] ?? '#'; $isExternal = $tool['is_external'] ?? false; @endphp
+                    <a href="{{ $href }}" class="tool-card" {!! $isExternal ? 'target="_blank" rel="noopener noreferrer"' : '' !!}>
+                        @if(isset($tool['badge']))
+                            <span class="tool-badge {{ $tool['badge'] === 'Bientot' ? 'tool-badge--soon' : '' }}">{{ $tool['badge'] }}</span>
+                        @endif
+                        <img src="{{ asset('images/tools/' . $tool['image']) }}" alt="{{ $tool['label'] }}" class="tool-icon">
+                        <span class="tool-label">{{ $tool['label'] }}</span>
+                    </a>
+                @endforeach
+            </div>
+        </div>
     </div>
 </div>
 
 <style>
-    .tools-wrapper {
-        background: #f8f9fd;
-        border-radius: 24px;
-    }
-    .tools-panel {
-        background: #fff;
-        border-radius: 20px;
-        border: 1px solid #e5e7eb;
-        box-shadow: 0 15px 30px rgba(15,23,42,0.08);
+    .tools-section {
+        background: var(--bg-card, #fff);
+        border-radius: 14px;
+        border: 1px solid var(--border-color, #e8e8e8);
         padding: 1.5rem;
         height: 100%;
     }
-    .tools-panel__header {
-        font-weight: 700;
-        font-size: 1.05rem;
+
+    .tools-section__header {
+        font-size: 0.95rem;
+        font-weight: 500;
+        color: var(--text-primary, #333);
         display: flex;
         align-items: center;
-        gap: 0.5rem;
-        margin-bottom: 1.4rem;
+        gap: 0.6rem;
+        padding-bottom: 0.85rem;
+        margin-bottom: 1rem;
+        border-bottom: 1px solid var(--border-color, #e8e8e8);
     }
+
+    .tools-section__header i {
+        font-size: 1.1rem;
+        color: var(--text-secondary, #888);
+    }
+
     .tools-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-        gap: 1rem;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.25rem;
     }
-    @media (max-width: 575px) {
-        .tools-grid {
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-            gap: 0.75rem;
-        }
-    }
+
     .tool-card {
         position: relative;
-        border: 1px solid #e2e8f0;
-        border-radius: 18px;
-        padding: 1.25rem;
-        background: #fff;
-        text-decoration: none;
-        color: #0f172a;
         display: flex;
         flex-direction: column;
         align-items: center;
-        gap: 0.8rem;
+        justify-content: center;
+        gap: 0.75rem;
+        padding: 1.5rem 1rem;
+        background: #fff;
+        border: 1px solid #eee;
+        border-radius: 12px;
+        text-decoration: none;
+        color: var(--text-primary, #333);
         transition: all 0.2s ease;
-        min-height: 150px;
+        min-height: 155px;
     }
+
     .tool-card:hover {
-        border-color: #c3d4ff;
-        box-shadow: 0 10px 20px rgba(99,102,241,0.1);
+        border-color: #ccc;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+        transform: translateY(-2px);
+        color: var(--text-primary, #333);
     }
-    .tool-card__icon i {
-        font-size: 2.2rem;
+
+    .tool-icon {
+        width: 56px;
+        height: 56px;
+        object-fit: contain;
     }
-    .tool-card__label {
-        font-weight: 600;
+
+    .tool-label {
+        font-size: 0.85rem;
+        font-weight: 500;
         text-align: center;
+        line-height: 1.3;
     }
-    .tool-card__badge {
+
+    .tool-badge {
         position: absolute;
-        top: 0.7rem;
-        left: 0.7rem;
-        background: #2563eb;
+        top: 8px;
+        left: 8px;
+        background: #2196F3;
         color: #fff;
-        font-size: 0.7rem;
-        padding: 0.15rem 0.5rem;
-        border-radius: 999px;
+        font-size: 0.65rem;
         font-weight: 700;
+        padding: 2px 8px;
+        border-radius: 4px;
+        text-transform: uppercase;
+        letter-spacing: 0.03em;
     }
-    .tool-card__badge--soon {
+
+    .tool-badge--soon {
         background: #fbbf24;
         color: #7c2d12;
     }
+
     @media (max-width: 575px) {
-        .tool-card__badge {
-            font-size: 0.65rem;
-            padding: 0.1rem 0.45rem;
-            top: 0.5rem;
-            left: 0.5rem;
+        .tools-grid {
+            gap: 0.75rem;
         }
-    }
-    .tool-card--disabled {
-        cursor: default;
-        opacity: 0.9;
-    }
-    @media (max-width: 991px) {
-        .tools-wrapper {
-            border-radius: 12px;
+
+        .tool-card {
+            padding: 1rem 0.5rem;
+            min-height: 120px;
+        }
+
+        .tool-icon {
+            width: 44px;
+            height: 44px;
+        }
+
+        .tool-label {
+            font-size: 0.8rem;
         }
     }
 </style>
 @endsection
-

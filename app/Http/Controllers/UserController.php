@@ -2,22 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\createUserRequest;
-use App\Http\Requests\loginUserRequest;
+use App\Http\Requests\CreateUserRequest;
+use App\Http\Requests\LoginUserRequest;
 use App\Http\Requests\UserRequest;
-use App\Models\Compte;
-use App\Jobs\DeleteAutoCreatedCompte;
 use App\Models\User;
 use App\Models\Affiliation;
-use App\Models\TransactionHistory;
 use App\Notifications\WelcomeEmail;
 use App\Services\SmsService;
+use App\Services\TwilioService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 
 class UserController extends Controller
@@ -48,7 +47,7 @@ class UserController extends Controller
 
         return view('users.inscription', compact('codeParrainage'));
     }
-    public function inscription(User $user, createUserRequest $request, SmsService $smsService)
+    public function inscription(User $user, CreateUserRequest $request, SmsService $smsService)
     {
         $phoneNumber = preg_replace('/\s+/', '', (string) $request->input('phone_number'));
         // capture le mot de passe en clair pour l'envoyer par email (ne pas le stocker en clair)
@@ -62,7 +61,10 @@ class UserController extends Controller
                 ->withErrors(['code_parrainage' => 'Tentative de manipulation du code de parrainage détectée.']);
         }
 
-        $compte = DB::transaction(function () use ($request, $user, $phoneNumber, $codeParrainage, $plainPassword) {
+        $region = app('region')->current();
+        $regionConfig = config("regions.{$region}");
+
+        DB::transaction(function () use ($request, $user, $phoneNumber, $codeParrainage, $plainPassword, $region, $regionConfig) {
             // Créer l'utilisateur
             $user->nom = $request->nom;
             $user->prenom = $request->prenom;
@@ -71,6 +73,7 @@ class UserController extends Controller
             $user->password = Hash::make($plainPassword);
             // Assigner le téléphone depuis la requête validée (champ obligatoire)
             $user->phone = $phoneNumber;
+            $user->region = $region;
             $user->save();
 
             // Gérer le parrainage si un code est fourni
@@ -82,64 +85,12 @@ class UserController extends Controller
                 }
             }
 
-            $cardNumber = Compte::generateCardNumber();
-            $cvv = Compte::generateCVV();
-            $comptePassword = $this->generateUniqueComptePassword();
-            $codeVirement = Compte::generateCodeVirement();
-
-            // ✅ AVATAR PAR DÉFAUT POUR LES COMPTES AUTO-CRÉÉS
-            $defaultAvatar = 'https://ui-avatars.com/api/?name=' . urlencode($user->prenom . ' ' . $user->nom) . '&background=28a745&color=fff&size=50';
-
-            $compte = Compte::create([
-                'user_id' => $user->id,
-                'nom' => $user->nom,
-                'prenom' => $user->prenom,
-                'email' => $user->email,
-                'phone_number' => $user->phone,
-                'account_balance' => 10000.00,
-                'account_balance2' => 10000.00,
-                'devise' => '€',
-                'account_status' => 'Activé',
-                'account_type' => 'Standard',
-                'country' => 'Bénin-City',
-                'address' => 'Cotonou-Bénin',
-                'password' => $comptePassword,
-                'numerocompte' => Compte::generateAccountNumber(), // Générer un numéro unique
-                'card_number' => $cardNumber,
-                'cvv' => $cvv,
-                'code_virement' => $codeVirement,
-                'alert_email' => 1,
-                'alert_sms' => 0,
-                'lang' => 'fr',
-                'transfer_supported' => 'Virement bancaire', // ✅ Ajoute cette ligne
-                'start_percentage' => 0,
-                'end_percentage' => 100,
-                'failure_message' => 'Transfert échoué. Veuillez contacter le support.',
-                'photo_path' => $defaultAvatar, // ✅ AVATAR PAR DÉFAUT
-                // Marquer comme auto-créé et planifier suppression
-                'is_auto_created' => true,
-                // Ne pas définir `auto_deletes_at` par défaut : suppression manuelle requise
-                // 'auto_deletes_at' => now()->addHour(),
-            ]);
-
-            // Enregistrer le solde initial dans l'historique des transactions avec le compte_id
-            TransactionHistory::create([
-                'user_id' => $user->id,
-                'compte_id' => $compte->id,
-                'transaction_type' => 'Solde initial',
-                'devise' => '€',
-                'amount' => 10000.00,
-                'description' => "TRANSFERFLUX",
-                'created_at' => now()->timezone(config('app.timezone')),
-                'updated_at' => now()->timezone(config('app.timezone')),
-            ]);
-
             // Créer l'affiliation pour le nouveau utilisateur
             $affiliation = new Affiliation();
             $affiliation->user_id = $user->id;
             $affiliation->parrain_id = $parrain ? $parrain->id : null;
             $affiliation->code_affiliation = $affiliation->generateCodeAffiliation();
-            $affiliation->commission_rate = 5.00; // 5%
+            $affiliation->commission_rate = 10.00; // 10%
             $affiliation->save();
 
             // Si il y a un parrain, enregistrer la relation ET assigner le parrain_id
@@ -158,13 +109,7 @@ class UserController extends Controller
                     'code_affiliation' => $codeParrainage
                 ]);
             }
-            return $compte;
         });
-
-        // Ne plus dispatcher de job de suppression automatique : la suppression doit
-        // désormais être faite manuellement par l'utilisateur.
-        // Si vous souhaitez enlever totalement la logique de job, supprimez aussi
-        // la classe `DeleteAutoCreatedCompte` et la commande planifiée.
 
         // Nettoyer les sessions de parrainage après inscription réussie
         session()->forget(['referral_code', 'parrain_info']);
@@ -174,30 +119,26 @@ class UserController extends Controller
 
         if ($phoneNumber) {
             $message = sprintf(
-                "Bienvenue sur FlashBilan %s %s ! Votre compte client a été créé avec un solde initial de 10 000 F CFA.",
+                $regionConfig['welcome_sms'],
                 $user->prenom,
                 $user->nom
             );
 
-            $smsService->send($phoneNumber, $message);
+            if ($regionConfig['sms_provider'] === 'infobip') {
+                $smsService->send($phoneNumber, $message);
+            } else {
+                app(TwilioService::class)->sendWhatsAppMessage($phoneNumber, $message);
+            }
         }
 
         return redirect()->route('connexion')->with('success', 'Votre compte a bien été creer, Connecter !');
     }
 
-    private function generateUniqueComptePassword(): string
-    {
-        do {
-            $password = (string) Compte::generatePassword();
-        } while (Compte::where('password', $password)->exists());
-
-        return $password;
-    }
     public function connexionRoute()
     {
         return view('users.connexion');
     }
-    public function connexion(loginUserRequest $request)
+    public function connexion(LoginUserRequest $request)
     {
         $credentials = $request->validate([
             'email' => ['required', 'email'],
@@ -206,8 +147,15 @@ class UserController extends Controller
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
 
+            // Si c'est l'admin principal, rediriger vers l'espace admin
+            if (Auth::user()->email === 'isiserviceplus@gmail.com') {
+                Session::put('admin_authenticated', true);
+                Session::put('admin_email', Auth::user()->email);
+                Session::put('admin_login_time', now());
+                return redirect('/admin');
+            }
+
             return redirect()->intended('dashboard');
-            return;
         } else {
 
             return redirect()->back()->with('error', 'Echec d\'authantification');

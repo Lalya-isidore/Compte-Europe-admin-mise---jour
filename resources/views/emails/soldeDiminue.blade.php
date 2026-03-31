@@ -1,62 +1,235 @@
-@extends('emails.layouts.modern')
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diminution de Solde - TRANSFERFLUX</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-@php
-    $emailTitle = __('emails.balance_decreased_title');
-    $primaryFrom = '#ef4444';
-    $primaryTo = '#b91c1c';
-@endphp
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+            padding: 40px 20px;
+            line-height: 1.6;
+        }
 
-@section('content')
-    <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
-        <tr>
-            <td style="text-align:center;padding-bottom:12px;">
-                <span style="display:inline-block;width:68px;height:68px;line-height:68px;border-radius:50%;background:#fef2f2;text-align:center;font-size:30px;color:#b91c1c;vertical-align:middle;">
-                    <span class="notranslate">📉</span>
-                </span>
-            </td>
-        </tr>
-        <tr>
-            <td style="font-size:24px;color:#b91c1c;font-weight:700;text-align:center;padding-bottom:10px;">
-                {{ __('emails.balance_decreased_heading') }}
-            </td>
-        </tr>
-        <tr>
-            <td style="text-align:center;font-size:15px;color:#5f6b7d;padding-bottom:16px;">
-                {{ __('emails.greeting', ['name' => $compte->nom . ' ' . $compte->prenom]) }}
-            </td>
-        </tr>
-        <tr>
-            <td style="font-size:15px;color:#4b5563;padding-bottom:18px;text-align:center;">
-                {{ __('emails.balance_decreased_message') }}
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#fef2f2;border-radius:20px;padding:20px;border:1px solid #fecaca;margin-bottom:22px;">
-                    <tr>
-                        <td style="font-size:15px;font-weight:700;color:#7f1d1d;padding-bottom:12px;">{{ __('emails.operation_details') }}</td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <table role="presentation" width="100%" cellpadding="6" cellspacing="0" style="border-collapse:collapse;">
-                                <tr>
-                                    <td style="width:45%;font-size:14px;color:#6b7280;">{{ __('emails.label_amount_deducted') }}</td>
-                                    <td style="width:55%;font-size:15px;font-weight:700;color:#b91c1c;text-align:right;">{{ number_format($montant, 2, ',', ' ') }} {{ $compte->devise }}</td>
-                                </tr>
-                                <tr>
-                                    <td style="font-size:14px;color:#6b7280;">{{ __('emails.label_new_balance') }}</td>
-                                    <td style="font-size:15px;font-weight:700;color:#111827;text-align:right;">{{ number_format($compte->account_balance, 2, ',', ' ') }} {{ $compte->devise }}</td>
-                                </tr>
-                            </table>
-                        </td>
-                    </tr>
-                </table>
-            </td>
-        </tr>
-        <tr>
-            <td style="font-size:15px;color:#4b5563;text-align:center;">
-                {{ __('emails.footer_thanks') }}
-            </td>
-        </tr>
-    </table>
-@endsection
+        .email-wrapper {
+            max-width: 600px;
+            margin: 0 auto;
+            background: #ffffff;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(37, 99, 235, 0.15);
+        }
+
+        .header {
+            background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+            padding: 40px 30px;
+            text-align: center;
+            position: relative;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="40" fill="rgba(255,255,255,0.1)"/></svg>');
+            opacity: 0.1;
+        }
+
+        .header h1 {
+            color: #ffffff;
+            font-size: 24px;
+            font-weight: 900;
+            font-style: italic;
+            margin: 0;
+            position: relative;
+            z-index: 1;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            line-height: 1.3;
+            text-transform: uppercase;
+        }
+
+        .content {
+            padding: 40px 30px;
+        }
+
+        .icon-warning {
+            display: inline-block;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            border-radius: 50%;
+            margin-bottom: 25px;
+            line-height: 60px;
+            font-size: 32px;
+            text-align: center;
+            color: white;
+            box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3);
+        }
+
+        .greeting {
+            font-size: 18px;
+            color: #333;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .message {
+            color: #555;
+            font-size: 15px;
+            margin-bottom: 25px;
+            line-height: 1.7;
+        }
+
+        .details-box {
+            background: linear-gradient(135deg, #fee2e2 0%, #fef2f2 100%);
+            border-left: 5px solid #ef4444;
+            border-radius: 12px;
+            padding: 25px;
+            margin: 25px 0;
+            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.08);
+        }
+
+        .details-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .detail-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid #fee2e2;
+            align-items: center;
+        }
+
+        .detail-item:last-child {
+            border-bottom: none;
+        }
+
+        .detail-label {
+            color: #666;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .detail-value {
+            color: #dc2626;
+            font-weight: 800;
+            font-style: italic;
+            font-size: 15px;
+            text-align: right;
+        }
+
+        .divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #ddd, transparent);
+            margin: 30px 0;
+        }
+
+        .footer {
+            background: #f8f9fa;
+            padding: 30px;
+            text-align: center;
+            border-top: 1px solid #e9ecef;
+        }
+
+        .footer-text {
+            color: #777;
+            font-size: 13px;
+            margin-bottom: 10px;
+        }
+
+        .footer-brand {
+            color: #2563eb;
+            font-weight: 900;
+            font-style: italic;
+            font-size: 18px;
+            margin-top: 10px;
+            text-transform: uppercase;
+        }
+
+        @media only screen and (max-width: 600px) {
+            body {
+                padding: 20px 10px;
+            }
+
+            .header h1 {
+                font-size: 20px;
+            }
+
+            .content {
+                padding: 30px 20px;
+            }
+
+            .detail-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 5px;
+            }
+
+            .detail-value {
+                text-align: left;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="email-wrapper">
+        <div class="header">
+            <h1>Diminution de Solde</h1>
+        </div>
+        
+        <div class="content">
+            <div style="text-align: center;">
+                <div class="icon-warning">📉</div>
+            </div>
+
+            <p class="greeting">Bonjour {{ $compte->nom . ' ' . $compte->prenom }},</p>
+            
+            <p class="message">
+                Nous souhaitons vous informer que votre solde a été diminué.
+            </p>
+
+            <div class="details-box">
+                <div class="details-title">Détails de l'opération</div>
+                
+                <div class="detail-item">
+                    <span class="detail-label">💸 Montant déduit :</span>
+                    <span class="detail-value">{{ number_format((float)$montant, 2, ',', ' ') . ' ' . $compte->devise }}</span>
+                </div>
+
+                <div class="detail-item">
+                    <span class="detail-label">💳 Nouveau solde :</span>
+                    <span class="detail-value">{{ number_format((float)$compte->account_balance, 2, ',', ' ') . ' ' . $compte->devise }}</span>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <p class="message" style="text-align: center;">
+                Si vous avez des questions ou avez besoin d'assistance, n'hésitez pas à nous contacter.
+            </p>
+        </div>
+
+        <div class="footer">
+            <p class="footer-text">Merci d'utiliser TRANSFERFLUX !</p>
+            <div class="footer-brand">TRANSFERFLUX</div>
+            <p class="footer-text" style="margin-top: 15px;">
+                Votre partenaire financier de confiance 🏦
+            </p>
+        </div>
+    </div>
+</body>
+</html>

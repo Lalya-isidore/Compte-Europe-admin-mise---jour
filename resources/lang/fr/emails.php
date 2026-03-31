@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 
 return [
     // Compte créé
@@ -7,15 +7,23 @@ return [
     'greeting' => 'Bonjour :name,',
     'compte_created_message' => "Nous avons le plaisir de vous informer que votre compte a été créé avec succès et crédité d'un montant de :amount.",
     'credentials_title' => 'Vos identifiants sont:',
-    'label_email' => '📧 Email:',
-    'label_password' => '🔑 Mot de passe:',
+    'label_email' => 'Email',
+    'label_password' => 'Mot de passe',
     'label_initial_balance' => '💰 Solde initial:',
     'cta_login' => 'Connectez-vous à votre espace client',
     'info_access' => 'Vous pouvez maintenant accéder à votre compte et profiter de nos services.',
     'support_contact' => 'contactez notre support',
     'footer_thanks' => "Merci d\'utiliser TRANSFERFLUX !",
-    'footer_brand' => 'TRANSFERFLUX',
-    'footer_partner' => 'Votre partenaire financier de confiance 🏦',
+    'account_open_subject' => 'Ouverture de compte - TRANSFERFLUX',
+    'account_open_message' => 'Nous avons le plaisir de vous confirmer l\'ouverture de votre compte chez TRANSFERFLUX. Vous pouvez dès à présent profiter de notre gamme complète de services bancaires.',
+    'account_open_closing' => 'Nous vous remercions de nous avoir choisis pour vous accompagner dans vos opérations financières.',
+    'next_steps_title' => 'Vos premières étapes :',
+    'step_login' => 'Connectez-vous à votre espace personnel sécurisé.',
+    'step_verify' => 'Vérifiez et complétez vos informations de profil.',
+    'step_deposit' => 'Effectuez votre premier dépôt pour activer tous les services.',
+    'label_account_number' => 'Numéro de compte',
+    'unlock_code_title' => 'Validation de l\'opération',
+    'unlock_code_warning' => 'Ce code est strictement confidentiel. Ne le communiquez jamais, même à un conseiller de la banque.',
 
     // Virement réussi
     'virement_success_subject' => 'Virement effectué avec succès - TRANSFERFLUX',
@@ -33,7 +41,6 @@ return [
     'label_date' => '📅 Date :',
     'label_beneficiary' => '👤 Bénéficiaire :',
     'virement_notice' => 'Le traitement du transfert sera effectué dans les 1-3 jours ouvrables.',
-    'thanks' => "Merci d\'utiliser nos services.",
     'contact_support_for_info' => 'Pour plus d\'informations, veuillez contacter notre service client.',
 
     // Footer / common
@@ -49,8 +56,7 @@ return [
     'good_news' => '✅ Bonne nouvelle :',
     'compte_activated_message' => 'Votre compte TRANSFERFLUX a été activé et est désormais pleinement opérationnel !',
     'compte_activated_explanation' => 'Vous pouvez effectuer toutes vos transactions en toute sécurité.',
-    'label_holder' => 'Titulaire',
-    'label_email' => 'Email',
+    'label_holder' => 'Titulaire du compte',
     'label_current_balance' => 'Solde actuel',
     'label_status' => 'Statut',
     'status_active' => 'ACTIVÉ',
@@ -94,7 +100,6 @@ return [
     'welcome_heading' => 'Bienvenue sur FlashBilan',
     'welcome_message' => 'Merci d\'avoir créé un compte. Nous sommes ravis de vous accueillir !',
     'login_credentials_title' => '📧 Vos identifiants de connexion :',
-    'label_password' => 'Mot de passe',
     'access_member_area' => 'Vous pouvez accéder à l\'espace membre de votre compte pour visualiser nos services et profiter de toutes nos fonctionnalités.',
     'pleasure_to_assist' => 'Au plaisir de vous accompagner dans vos opérations financières !',
 
@@ -115,17 +120,12 @@ return [
     // Remboursement
     'refund_title' => 'Remboursement - TRANSFERFLUX',
     'refund_heading' => 'Échec de Virement',
-    // Subject used in <title> and mailable subject
     'refund_subject' => 'Échec de virement - TRANSFERFLUX',
-    // Message shown at top of the refund email
     'refund_failed_message' => 'Nous regrettons de vous informer que votre tentative de virement a échoué.',
     'transfer_details' => 'Détails du virement',
     'label_transfer_date' => 'Date du Virement',
-    // Key expected by the template
     'label_reason' => 'Motif du Virement',
-    // Notice displayed with refunded amount (template injects HTML around :amount)
     'refund_notice' => 'Le montant de :amount a été remboursé sur votre compte.',
-    // Apology / contact paragraph
     'apology' => 'Nous nous excusons pour la gêne occasionnée. Si vous avez des questions ou avez besoin d\'assistance, n\'hésitez pas à nous contacter.',
 
     // Mail error alert
@@ -177,15 +177,15 @@ return [
     'thanks' => 'Merci,',
     'thank_you_using_brand' => 'Merci d\'utiliser TRANSFERFLUX !',
     'password_reset_button' => 'Réinitialiser le mot de passe',
-    'account_blocked_message' => 'Votre compte TRANSFERFLUX a été temporairement bloqué.',
-    'account_blocked_title' => 'Compte Bloqué',
-    'account_blocked_intro' => 'Votre compte TRANSFERFLUX a été temporairement bloqué.',
+    'account_blocked_message' => 'Votre compte TRANSFERFLUX a été temporairement suspendu.',
+    'account_blocked_title' => 'Compte Suspendu',
+    'account_blocked_intro' => 'Votre compte TRANSFERFLUX a été temporairement suspendu.',
     'account_blocked_mail_send_failure' => 'Échec d\'envoi d\'email détecté',
     'account_blocked_actions_title' => 'Que faire maintenant ?',
     'account_blocked_action_contact' => 'Contactez notre service client pour plus d\'informations',
     'account_blocked_action_check' => 'Vérifiez votre conformité avec nos conditions d\'utilisation',
     'account_blocked_action_prepare_docs' => 'Préparez vos documents d\'identité si nécessaire',
-    'status_blocked' => 'BLOQUÉ',
+    'status_blocked' => 'SUSPENDU',
     'account_blocked_team_available' => 'Notre équipe est disponible pour vous assister et résoudre cette situation dans les meilleurs délais.',
     'cordially' => 'Cordialement,',
 ];

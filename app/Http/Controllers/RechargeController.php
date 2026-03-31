@@ -98,7 +98,7 @@ class RechargeController extends Controller
             
             // Créer la transaction FedaPay avec URLs complètes
             $fedapayTransaction = Transaction::create([
-                'description' => 'Recharge FlashBilan',
+                'description' => app('region')->config('fedapay_description', 'Recharge'),
                 'amount' => (int)$transaction->amount,
                 'currency' => [
                     'iso' => 'XOF'
@@ -169,7 +169,7 @@ class RechargeController extends Controller
                 'json' => [
                     'amount' => $transaction->amount,
                     'currency' => 'XOF',
-                    'description' => 'Recharge FlashBilan',
+                    'description' => app('region')->config('fedapay_description', 'Recharge'),
                     'return_url' => route('recharge.success'),
                     'cancel_url' => route('recharge.cancel'),
                     'webhook_url' => route('recharge.webhook.oosic'),
@@ -341,7 +341,13 @@ class RechargeController extends Controller
         }
 
         // Vérification HMAC (si configurée) - supporte plusieurs noms de header usuels
-        $webhookSecret = config('services.fedapay.webhook_secret');
+        // Essayer les secrets des deux régions (europe + afrique)
+        $webhookSecrets = array_filter([
+            config('regions.europe.fedapay_webhook_secret'),
+            config('regions.afrique.fedapay_webhook_secret'),
+            config('services.fedapay.webhook_secret'), // fallback legacy
+        ]);
+        $webhookSecret = !empty($webhookSecrets) ? true : false;
         if ($webhookSecret) {
             // Récupérer et normaliser la signature (supporte plusieurs formats :
             // "sha256=<hex>", plain hex, ou Faraday style "t=...,s=<hex>")
@@ -377,12 +383,19 @@ class RechargeController extends Controller
 
             // Préparer le payload utilisé pour la vérification
             $payloadToVerify = $raw ?: json_encode($request->all());
-            $expected = strtolower(hash_hmac('sha256', $payloadToVerify, $webhookSecret));
 
-            // Comparer la signature normalisée (lowercase) avec l'attendue
-            if (!is_string($receivedSignature) || !hash_equals($expected, strtolower($receivedSignature))) {
-                Log::warning('FedaPay webhook signature mismatch', [
-                    'expected' => $expected,
+            // Essayer chaque secret de région jusqu'à trouver une correspondance
+            $signatureValid = false;
+            foreach ($webhookSecrets as $secret) {
+                $expected = strtolower(hash_hmac('sha256', $payloadToVerify, $secret));
+                if (is_string($receivedSignature) && hash_equals($expected, strtolower($receivedSignature))) {
+                    $signatureValid = true;
+                    break;
+                }
+            }
+
+            if (!$signatureValid) {
+                Log::warning('FedaPay webhook signature mismatch for all region secrets', [
                     'received_normalized' => $receivedSignature,
                     'received_raw' => $receivedSignatureRaw,
                     'payload_sample' => substr($payloadToVerify, 0, 1000),

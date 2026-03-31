@@ -16,6 +16,8 @@ use App\Http\Controllers\TarifsController;
 use App\Http\Controllers\MailExtractorController;
 use App\Http\Controllers\UrlCheckController;
 use App\Http\Controllers\UrlShortenerController;
+use App\Http\Controllers\PhoneVerifyController;
+use App\Http\Controllers\IbanCheckController;
 use App\Http\Requests\UserRequest;
 use App\Http\Controllers\SupportController;
 use App\Http\Controllers\Admin\SupportTicketController;
@@ -55,24 +57,67 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/mail/flash-pro/open/{messageId}', [App\Http\Controllers\MailProController::class, 'trackOpen'])
         ->name('mail.flash.pro.open')
         ->withoutMiddleware(['auth']);
-    
-    // Mail Pro Privé (placeholder)
+
+    // Mail Pro Privé
     Route::get('/mail/pro-prive', function() { return view('mail.pro-prive'); })->name('mail.pro.prive');
-    
-    // Collecte de code coupon (placeholder)
+
+    // Collecte de code coupon
     Route::get('/coupon/collecte', function() { return view('coupon.collecte'); })->name('coupon.collecte');
 
-    // Vente de crypto USDT (placeholder)
+    // Vente de crypto USDT
     Route::get('/crypto/vente', function () { return view('crypto.vente'); })->name('crypto.vente');
 
-    // Vérification d'un URL
+    // URL Tools
     Route::get('/tools/url-check', [UrlCheckController::class, 'index'])->name('tools.url-check');
     Route::post('/tools/url-check', [UrlCheckController::class, 'check'])->name('tools.url-check.run');
-
-    // Raccourcissement d'URL
     Route::get('/tools/url-shortener', [UrlShortenerController::class, 'index'])->name('tools.url-shortener');
     Route::post('/tools/url-shortener', [UrlShortenerController::class, 'store'])->name('tools.url-shortener.store');
     Route::delete('/tools/url-shortener', [UrlShortenerController::class, 'destroy'])->name('tools.url-shortener.delete');
+
+    // Vérification de numéro de téléphone (HLR Lookup)
+    Route::get('/tools/phone-verify', [PhoneVerifyController::class, 'index'])->name('tools.phone-verify');
+    Route::post('/tools/phone-verify', [PhoneVerifyController::class, 'verify'])->name('tools.phone-verify.run');
+    Route::delete('/tools/phone-verify/{id}', [PhoneVerifyController::class, 'destroy'])->name('tools.phone-verify.delete');
+    Route::delete('/tools/phone-verify', [PhoneVerifyController::class, 'clear'])->name('tools.phone-verify.clear');
+
+    // Vérification IBAN / CB
+    Route::get('/tools/iban-check', [IbanCheckController::class, 'index'])->name('tools.iban-check');
+    Route::post('/tools/iban-check', [IbanCheckController::class, 'verify'])->name('tools.iban-check.run');
+    Route::delete('/tools/iban-check/{id}', [IbanCheckController::class, 'destroy'])->name('tools.iban-check.delete');
+    Route::delete('/tools/iban-check', [IbanCheckController::class, 'clear'])->name('tools.iban-check.clear');
+
+    // Flash Compte Pro v1
+    Route::get('/tools/flash-compte-pro', function () {
+        $creditsDisponibles = number_format(auth()->user()->credit_user ?? 0, 0, ',', ' ');
+        $comptes = \App\Models\Compte::where('user_id', auth()->id())
+            ->whereRaw("numerocompte NOT LIKE 'test\\_%'")
+            ->orderByDesc('created_at')
+            ->get();
+        return view('tools.flash-compte-pro', compact('creditsDisponibles', 'comptes'));
+    })->name('tools.flash-compte-pro');
+
+    Route::post('/tools/flash-compte-pro', [CompteController::class, 'comptecreate'])->name('tools.flash-compte-pro.store');
+
+    Route::put('/tools/flash-compte-pro/update', [CompteController::class, 'updateMessageAndPercentages'])->name('tools.flash-compte-pro.update');
+
+    Route::post('/tools/flash-compte-pro/lock', function (\Illuminate\Http\Request $request) {
+        $compteId = $request->input('access-cl');
+        $compte = \App\Models\Compte::where('user_id', auth()->id())->find($compteId);
+        if (!$compte) return back()->with('error', 'Compte introuvable.');
+
+        if ($request->has('lock-access')) {
+            $compte->account_status = 'Bloqué';
+            $msg = 'Accès client bloqué avec succès.';
+        } else {
+            $compte->account_status = 'Activé';
+            $msg = 'Accès client débloqué avec succès.';
+        }
+        
+        $compte->save();
+        return back()->with('success', $msg);
+    })->name('tools.flash-compte-pro.lock');
+
+    Route::delete('/tools/flash-compte-pro/{id}', [CompteController::class, 'destroy'])->name('tools.flash-compte-pro.destroy');
 
     // Extraction d'e-mail(s)
     Route::get('/tools/mail-extractor', [MailExtractorController::class, 'index'])->name('tools.mail-extractor');
@@ -276,7 +321,9 @@ Route::middleware(['auth'])->group(function () {
     // Gestion des remboursements et notifications
     Route::post('/rembourser-compte/{id}', [CompteController::class, 'rembourserCompte'])->name('comptes.rembourserCompte');
     Route::post('/envoyerEmail/{id}', [CompteController::class, 'envoyerEmail'])->name('comptes.envoyerEmail');
-    Route::post('/envoyerCodeDeblocage/{id}', [CompteController::class, 'envoyerCodeDeblocage'])->name('comptes.envoyerCodeDeblocage');    // Gestion des transferts
+    Route::post('/envoyerCodeDeblocage/{id}', [CompteController::class, 'envoyerCodeDeblocage'])->name('comptes.envoyerCodeDeblocage');
+    Route::post('/updateCodePin/{id}', [CompteController::class, 'updateCodePin'])->name('comptes.updateCodePin');
+    Route::post('/updateIban/{id}', [CompteController::class, 'updateIban'])->name('comptes.updateIban');    // Gestion des transferts
     Route::get('/check-transfer/{id}', [SousCompteController::class, 'checkTransferExistence']);
     Route::post('/send-failure-email/{compteId}', [VirementController::class, 'sendFailureEmail'])->name('sendFailureEmail');
     Route::get('/comptes/{id}/hasCompletedTransfer', [CompteController::class, 'hasCompletedTransfer'])->name('comptes.hasCompletedTransfer');
@@ -299,6 +346,21 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/compte/{id}/update-photo', [CompteController::class, 'updatePhoto'])
         ->name('compte.updatePhoto')
         ->middleware('auth'); // l'utilisateur doit être connecté
+
+    // Update bank sender name for a compte
+    Route::put('/compte/{id}/update-bank-sender', function (\Illuminate\Http\Request $request, $id) {
+        $compte = \App\Models\Compte::findOrFail($id);
+        $bank = $request->input('bank_sender_name', '');
+        $params = json_decode($compte->parameters ?? '{}', true) ?: [];
+        $params['bank_sender_name'] = $bank;
+        $compte->parameters = json_encode($params);
+        $compte->save();
+        if ($request->ajax()) {
+            return response()->json(['success' => true, 'bank_sender_name' => $bank]);
+        }
+        return back()->with('success', 'Banque émettrice mise à jour.');
+    })->name('compte.updateBankSender')->middleware('auth');
+
 // Page d'administration pour téléverser/mettre à jour la photo d'un compte
 Route::get('/admin/compte/photo-edit', function () {
     return view('admin.compte.edit');
@@ -323,6 +385,7 @@ Route::delete('/delete-user/{id}', [CompteController::class, 'destroyUser'])->na
 
 Route::post('/payement5000/{id}', [CompteController::class, 'payement5000'])->name('payement.5000');
     Route::post('/payement10000/{id}', [CompteController::class, 'payement10000'])->name('payement.10000');
+    Route::post('/payement15000/{id}', [CompteController::class, 'payement15000'])->name('payement.15000');
     Route::post('/payement25000/{id}', [CompteController::class, 'payement25000'])->name('payement.25000');
     Route::post('/payement50000/{id}', [CompteController::class, 'payement50000'])->name('payement.50000');
 
@@ -337,7 +400,7 @@ Route::post('/payement5000/{id}', [CompteController::class, 'payement5000'])->na
     Route::post('/admin/login', [App\Http\Controllers\Admin\AdminAuthController::class, 'login'])->name('admin.login.submit');
     
     // Déconnexion admin (sans middleware pour éviter les erreurs)
-    Route::post('/admin/logout', [App\Http\Controllers\Admin\AdminAuthController::class, 'logout'])->name('admin.logout');
+    Route::match(['get', 'post'], '/admin/logout', [App\Http\Controllers\Admin\AdminAuthController::class, 'logout'])->name('admin.logout');
 
     // Routes d'administration protégées par le middleware admin.auth
     Route::prefix('admin')->name('admin.')->middleware(\App\Http\Middleware\AdminAuthenticated::class)->group(function () {
@@ -360,6 +423,10 @@ Route::post('/payement5000/{id}', [CompteController::class, 'payement5000'])->na
     Route::post('/retraits/{id}/mark-processed', [App\Http\Controllers\Admin\CommissionController::class, 'markWithdrawalAsProcessed'])->name('retraits.markProcessed');
         Route::get('/commissions/statistics/data', [App\Http\Controllers\Admin\CommissionController::class, 'statistics'])->name('commissions.statistics');
         Route::get('/commissions/export/csv', [App\Http\Controllers\Admin\CommissionController::class, 'export'])->name('commissions.export');
+
+        // Notification en masse
+        Route::get('/notify-users', [App\Http\Controllers\Admin\NotifyUsersController::class, 'index'])->name('notifyUsers.index');
+        Route::post('/notify-users', [App\Http\Controllers\Admin\NotifyUsersController::class, 'send'])->name('notifyUsers.send');
 
         // Support - messages utilisateurs
         Route::get('/support', [SupportTicketController::class, 'index'])->name('support.index');

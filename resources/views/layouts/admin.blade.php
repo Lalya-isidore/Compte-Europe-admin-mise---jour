@@ -1,195 +1,223 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>@yield('title', 'FlashBilan Admin')</title>
+    <title>@yield('title', app('region')->appName() . ' Admin')</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.1.0/fonts/remixicon.css" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&family=Righteous&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('css/responsive.css') }}">
     <link rel="stylesheet" href="{{ asset('css/support-widget.css') }}">
     <script src="{{ asset('js/support-widget.js') }}" defer></script>
     <style>
         :root {
-            --sidebar-width: 240px;
-            --primary-color: #4f46e5;
-            --secondary-color: #f8fafc;
-            --text-primary: #1e293b;
-            --text-secondary: #64748b;
-            --border-color: #e2e8f0;
+            --sidebar-width: 220px;
+            --bg-page: #f5f3ef;
+            --bg-sidebar: #ffffff;
+            --bg-card: #ffffff;
+            --text-primary: #333333;
+            --text-secondary: #888888;
+            --border-color: #e8e8e8;
+            --accent-blue: #2196F3;
+            --credit-red: #e53935;
             --mobile-padding: 1rem;
         }
 
-        @media (max-width: 991px) {
-            :root {
-                --sidebar-width: 220px;
-            }
-        }
+        * { box-sizing: border-box; }
 
         body {
-            font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f8fafc;
+            font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-page);
             min-height: 100vh;
+            margin: 0;
         }
 
+        /* ========== SIDEBAR ========== */
         .sidebar {
             position: fixed;
             top: 0;
             left: 0;
             height: 100vh;
-            width: min(var(--sidebar-width), 90vw);
+            width: var(--sidebar-width);
             max-width: 320px;
-            background: linear-gradient(180deg, #5b6be6 0%, #6c4fd5 65%, #7c3dbb 100%);
-            padding: 0 0.5rem;
+            background: var(--bg-sidebar);
+            border-right: 1px solid var(--border-color);
             z-index: 1000;
             overflow-y: auto;
             transition: transform 0.3s ease;
-            border-radius: 0 24px 24px 0;
-            box-shadow: 0 10px 40px rgba(83, 56, 181, 0.35);
+            display: flex;
+            flex-direction: column;
         }
 
-        .sidebar::-webkit-scrollbar {
-            width: 6px;
+        .sidebar::-webkit-scrollbar { width: 4px; }
+        .sidebar::-webkit-scrollbar-thumb { background: #ddd; border-radius: 999px; }
+
+        /* Logo */
+        .sidebar-logo {
+            padding: 0.85rem 1rem;
+            border-bottom: 1px solid var(--border-color);
         }
 
-        .sidebar::-webkit-scrollbar-thumb {
-            background: rgba(255, 255, 255, 0.3);
-            border-radius: 999px;
-        }
-
-        .sidebar-header {
-            padding: 1.75rem 1rem 1rem;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-        }
-
-        .sidebar-profile {
+        .sidebar-logo a {
+            text-decoration: none;
             display: flex;
             align-items: center;
-            gap: 1rem;
+            gap: 0.5rem;
         }
 
-        .sidebar-avatar-large {
-            width: 70px;
-            height: 70px;
-            border-radius: 18px;
-            background: rgba(255, 255, 255, 0.35);
+        .sidebar-logo-icon {
+            width: 34px;
+            height: 34px;
+            background: linear-gradient(135deg, #FF6B35, #F7C948, #4ECDC4, #6C5CE7);
+            border-radius: 8px;
             display: flex;
             align-items: center;
             justify-content: center;
-            overflow: hidden;
-            padding: 6px;
         }
 
-        .sidebar-avatar-large img {
+        .sidebar-logo-icon i {
+            color: white;
+            font-size: 1rem;
+        }
+
+        .sidebar-logo-text {
+            font-family: 'Righteous', cursive;
+            font-size: 1.2rem;
+            color: var(--text-primary);
+        }
+
+        .sidebar-logo-text span {
+            color: #e53935;
+        }
+
+        /* User profile */
+        .sidebar-user {
+            padding: 0.85rem 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.65rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .sidebar-avatar {
+            width: 46px;
+            height: 46px;
+            border-radius: 50%;
+            overflow: hidden;
+            flex-shrink: 0;
+            background: #f0f0f0;
+        }
+
+        .sidebar-avatar img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            border-radius: 12px;
         }
 
-        .sidebar-profile-info {
+        .sidebar-user-info {
             display: flex;
             flex-direction: column;
-            gap: 0.35rem;
+            gap: 0.1rem;
+            min-width: 0;
         }
 
         .sidebar-credit {
-            font-weight: 600;
-            color: #fff;
             display: flex;
             align-items: center;
-            gap: 0.4rem;
-            font-size: 1rem;
-            text-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+            gap: 0.3rem;
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: var(--credit-red);
         }
 
         .sidebar-credit i {
-            font-size: 1.1rem;
-            color: #ffe9a1;
+            font-size: 0.85rem;
         }
 
         .sidebar-username {
-            color: rgba(255, 255, 255, 0.9);
-            font-size: 0.95rem;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
             display: flex;
-            flex-direction: column;
-            gap: 0.15rem;
-            line-height: 1.15;
-        }
-
-        .sidebar-user-id {
-            display: inline-flex;
             align-items: center;
-            gap: 0.35rem;
-            font-size: 0.75rem;
-            letter-spacing: 0.08em;
-            text-transform: uppercase;
-            color: rgba(255, 255, 255, 0.8);
-            background: rgba(255, 255, 255, 0.18);
-            padding: 0.25rem 0.55rem;
-            border-radius: 999px;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            align-self: flex-start;
+            gap: 0.25rem;
         }
 
+        .sidebar-username i { font-size: 0.75rem; }
+
+        /* Navigation */
         .sidebar-nav {
-            padding: 0.5rem 0 1rem;
+            flex: 1;
+            padding: 0.5rem 0;
         }
 
         .sidebar-nav-item {
-            margin: 0.25rem 0;
+            position: relative;
         }
 
         .sidebar-nav-link {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 0.8rem 1.2rem;
-            color: rgba(255, 255, 255, 0.92);
+            padding: 0.75rem 1rem;
+            color: #374151;
             text-decoration: none;
-            transition: all 0.25s ease;
-            border: none;
-            background: none;
-            width: 100%;
-            border-radius: 12px;
-            margin: 0.15rem 0.4rem;
+            font-family: 'Inter', -apple-system, sans-serif;
+            font-size: 0.95rem;
+            font-weight: 450;
+            letter-spacing: -0.01em;
+            transition: all 0.2s ease;
+            border-left: 4px solid transparent;
+        }
+
+        .sidebar-nav-link:hover {
+            background: #f8f8f8;
+            color: var(--text-primary);
+        }
+
+        .sidebar-nav-link.active {
+            border-left-color: var(--accent-blue);
+            background: #f0f7ff;
+            color: var(--accent-blue);
+            font-weight: 500;
         }
 
         .sidebar-link-main {
             display: flex;
             align-items: center;
             gap: 0.75rem;
-            font-size: 0.98rem;
-        }
-
-        .sidebar-link-arrow {
-            font-size: 1rem;
-            color: rgba(255, 255, 255, 0.75);
-        }
-
-        .sidebar-nav-link:hover,
-        .sidebar-nav-link.active {
-            background: rgba(255, 255, 255, 0.2);
-            color: white;
-            transform: translateX(6px);
         }
 
         .sidebar-nav-link i {
             width: 20px;
-            margin-right: 0.75rem;
+            text-align: center;
             font-size: 1.05rem;
+            color: inherit;
         }
 
+        .sidebar-link-arrow {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .sidebar-nav-link.active .sidebar-link-arrow {
+            color: var(--accent-blue);
+        }
+
+        .sidebar-logout {
+            border-top: 1px solid var(--border-color);
+            padding: 0.5rem 0;
+        }
+
+        /* Backdrop mobile */
         .sidebar-backdrop {
             position: fixed;
             inset: 0;
-            background: rgba(15, 23, 42, 0.45);
+            background: rgba(0, 0, 0, 0.4);
             opacity: 0;
             pointer-events: none;
             transition: opacity 0.3s ease;
@@ -201,271 +229,212 @@
             pointer-events: auto;
         }
 
-        body.sidebar-open {
-            overflow: hidden;
-        }
+        body.sidebar-open { overflow: hidden; }
 
+        /* ========== MAIN CONTENT ========== */
         .main-content {
             margin-left: var(--sidebar-width);
             min-height: 100vh;
         }
 
-        .top-navbar {
-            background: linear-gradient(135deg, #f7f9ff 0%, #ffffff 55%);
+        /* Top header bar */
+        .top-header {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding: 1rem 2rem;
+            background: linear-gradient(135deg, #fef3e2 0%, #fde8d0 100%);
+            border-bottom: 1px solid rgba(245,166,35,.12);
+        }
+        .top-header__left {
+            display: none;
+            align-items: center;
+            gap: 0.6rem;
+        }
+        .top-header__logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+        }
+        .top-header__menu {
+            width: 42px;
+            height: 42px;
+            border-radius: 12px;
             border: 1px solid var(--border-color);
-            border-radius: 26px;
-            margin: 1.5rem 1.5rem 0;
-            padding: 1.2rem 1.75rem;
-            display: grid;
-            grid-template-columns: auto 1fr auto;
-            align-items: center;
-            gap: 1.5rem;
-            box-shadow: 0 25px 60px rgba(15, 23, 42, 0.08);
-        }
-
-        .top-navbar__brand {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .brand-chip {
-            display: flex;
-            align-items: center;
-            gap: 0.85rem;
-            padding: 0.65rem 0.9rem;
-            background: rgba(99, 102, 241, 0.15);
-            border-radius: 16px;
-        }
-
-        .brand-chip__logo {
-            width: 46px;
-            height: 46px;
-            border-radius: 15px;
-            background: linear-gradient(135deg, #4f46e5, #7c3aed);
-            color: #fff;
-            font-weight: 700;
+            background: #fff;
+            color: var(--text-primary);
             display: flex;
             align-items: center;
             justify-content: center;
-            letter-spacing: 1px;
-            box-shadow: 0 6px 14px rgba(79, 70, 229, 0.35);
+            cursor: pointer;
+            font-size: 1.2rem;
         }
-
-        .brand-chip__logo i {
-            font-size: 1.4rem;
-        }
-
-        .brand-chip__title {
-            font-weight: 700;
-            color: var(--text-primary);
-        }
-
-        .brand-chip__subtitle {
-            font-size: 0.85rem;
-            color: var(--text-secondary);
-        }
-
-        .top-navbar__breadcrumb {
-            display: flex;
-            flex-direction: column;
-            gap: 0.35rem;
-        }
-
-        .breadcrumb-label {
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 0.08em;
-            color: var(--text-secondary);
-        }
-
-        .breadcrumb {
-            background: none;
-            margin-bottom: 0;
-            padding: 0;
-            font-weight: 600;
-        }
-
-        .top-navbar__actions {
+        .top-header__actions {
             display: flex;
             align-items: center;
             gap: 0.6rem;
         }
-
-        .hero-action {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.4rem;
-            padding: 0.65rem 1.1rem;
+        .top-header__btn {
+            width: 50px;
+            height: 50px;
             border-radius: 14px;
-            border: 1px solid rgba(79, 70, 229, 0.3);
-            background: rgba(79, 70, 229, 0.08);
-            color: #312e81;
-            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-secondary);
+            font-size: 1.4rem;
             text-decoration: none;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            transition: all 0.2s ease;
+            background: #fff;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 2px 8px rgba(0,0,0,.04);
         }
-
-        .hero-action--accent {
-            background: linear-gradient(135deg, #22d3ee, #4f46e5);
+        .top-header__btn:hover {
+            color: var(--accent-blue);
+            border-color: var(--accent-blue);
+            background: #f0f7ff;
+        }
+        .top-header__btn.active {
             color: #fff;
-            border-color: transparent;
-            box-shadow: 0 10px 25px rgba(79, 70, 229, 0.35);
+            background: var(--accent-blue);
+            border-color: var(--accent-blue);
+            box-shadow: 0 4px 12px rgba(33,150,243,.25);
+        }
+        .top-header__btn--toggle {
+            color: #fff;
+            background: var(--accent-blue);
+            border-color: var(--accent-blue);
+            box-shadow: 0 4px 12px rgba(33,150,243,.25);
+            cursor: pointer;
+        }
+        .top-header__btn--toggle:hover {
+            background: #1976d2;
+            border-color: #1976d2;
+        }
+        .top-header__btn--logout {
+            color: #e53935;
+            background: #fff5f5;
+            border-color: #fed7d7;
+        }
+        .top-header__btn--logout:hover {
+            color: #fff;
+            background: #e53935;
+            border-color: #e53935;
+            box-shadow: 0 4px 12px rgba(229,57,53,.25);
         }
 
-        .hero-action:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 12px 24px rgba(15, 23, 42, 0.1);
+        /* Breadcrumb bar */
+        .breadcrumb-bar {
+            background: var(--bg-card);
+            border-radius: 14px;
+            margin: 1rem 1.5rem 0;
+            padding: 0.85rem 1.5rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,.03);
+            border: 1px solid var(--border-color);
         }
 
+        .breadcrumb-bar .breadcrumb {
+            margin: 0;
+            padding: 0;
+            background: none;
+            font-size: 0.95rem;
+        }
+
+        .breadcrumb-bar .breadcrumb-item a {
+            color: var(--text-secondary);
+            text-decoration: none;
+        }
+
+        .breadcrumb-bar .breadcrumb-item a:hover {
+            color: var(--text-primary);
+        }
+
+        .breadcrumb-bar .breadcrumb-item.active {
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        .breadcrumb-bar .breadcrumb-item + .breadcrumb-item::before {
+            content: ">";
+            color: var(--text-secondary);
+        }
+
+        .breadcrumb-bar .breadcrumb-item i {
+            font-size: 0.85rem;
+        }
+
+        /* Page content */
         .page-content {
-            padding: 2rem;
+            padding: 1rem 0.75rem;
         }
 
+        /* Mobile toggle */
         .mobile-sidebar-toggle {
             display: none;
             width: 44px;
             height: 44px;
-            border-radius: 12px;
+            border-radius: 10px;
             border: 1px solid var(--border-color);
             background: white;
             color: var(--text-primary);
             align-items: center;
             justify-content: center;
+            cursor: pointer;
+            margin-right: 0.75rem;
         }
 
         .mobile-sidebar-toggle:focus {
             outline: none;
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.35);
-        }
-        .user-avatar {
-            width: 56px;
-            height: 56px;
-            border-radius: 18px;
-            border: 1px solid rgba(148, 163, 184, 0.5);
-            background: #eef2ff;
-            padding: 6px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            box-shadow: 0 0 0 3px rgba(33, 150, 243, 0.3);
         }
 
-        .user-avatar img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            border-radius: 14px;
-        }
-
-        .user-summary-card {
-            display: none;
-        }
-
-        .app-card {
-            background: white;
-            border-radius: 15px;
-            padding: 2rem;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-            border: 1px solid var(--border-color);
-            transition: all 0.3s ease;
-            text-align: center;
-            cursor: pointer;
-        }
-
-        .app-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
-        }
-
-        .app-icon {
-            width: 80px;
-            height: 80px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border-radius: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 1.5rem;
-            font-size: 2rem;
-            color: white;
-        }
-
-        .app-title {
-            font-size: 1.25rem;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-            color: var(--text-primary);
-        }
-
-        .app-description {
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-        }
-
+        /* ========== RESPONSIVE ========== */
         @media (max-width: 991px) {
+            :root { --sidebar-width: 260px; }
+
             .sidebar {
                 transform: translateX(-100%);
             }
 
             .sidebar.is-open {
                 transform: translateX(0);
+                box-shadow: 4px 0 20px rgba(0, 0, 0, 0.15);
             }
-            
+
             .main-content {
                 margin-left: 0;
             }
-        }
 
-        @media (max-width: 991px) {
-            .top-navbar {
-                grid-template-columns: 1fr;
-                margin: 1rem;
-                padding: 1rem 1.25rem;
+            .top-header {
+                justify-content: space-between;
+                padding: 0.75rem 1rem;
+            }
+            .top-header__left {
+                display: flex;
+            }
+            .top-header__btn {
+                width: 44px;
+                height: 44px;
             }
 
-            .top-navbar__actions {
-                flex-wrap: wrap;
-            }
-
-            .hero-action {
-                flex: 1 1 180px;
-                justify-content: center;
+            .breadcrumb-bar {
+                padding: 0.75rem 1rem;
+                margin: 0.75rem 0.75rem 0;
             }
 
             .page-content {
-                padding: 1.25rem 1rem 2rem;
-            }
-
-            .mobile-sidebar-toggle {
-                display: inline-flex;
-            }
-
-            .user-summary-card {
-                margin: 1rem;
+                padding: 1.25rem 1rem;
             }
         }
 
         @media (max-width: 575px) {
-            .top-navbar {
-                gap: 0.75rem;
-            }
-
-            .hero-action {
-                flex: 1 1 140px;
-                font-size: 0.92rem;
-            }
-
-            .user-summary-card {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-
-            .user-summary-card__stats {
-                width: 100%;
-            }
-
             .page-content {
                 padding: var(--mobile-padding);
+            }
+
+            .breadcrumb-bar {
+                padding: 0.6rem 0.75rem;
             }
         }
     </style>
@@ -476,7 +445,6 @@
         $userFirstName = $currentUser->prenom ?? 'Utilisateur';
         $userLastInitial = $currentUser && $currentUser->nom ? mb_substr($currentUser->nom, 0, 1) . '.' : '';
         $sidebarDisplayName = trim($userFirstName . ' ' . $userLastInitial);
-        $sidebarInitial = strtoupper(mb_substr($currentUser->prenom ?: ($currentUser->nom ?? 'U'), 0, 1));
         $sidebarCredits = number_format($currentUser->credit_user ?? 0, 0, ',', ' ');
         $dashboardUrl = \Illuminate\Support\Facades\Route::has('dashboard') ? route('dashboard') : url('/');
         $tarifsUrl = \Illuminate\Support\Facades\Route::has('tarifs.index')
@@ -484,61 +452,70 @@
             : (\Illuminate\Support\Facades\Route::has('recharge.index') ? route('recharge.index') : url('/'));
         $rechargeUrl = \Illuminate\Support\Facades\Route::has('recharge.index') ? route('recharge.index') : $tarifsUrl;
     @endphp
+
+    {{-- SIDEBAR --}}
     <div class="sidebar">
-        <div class="sidebar-header">
-            <div class="sidebar-profile">
-                <div class="sidebar-avatar-large">
-                    <img src="{{ asset('images/avatar-default.svg') }}" alt="Avatar menu">
+        {{-- Logo --}}
+        <div class="sidebar-logo">
+            <a href="{{ $dashboardUrl }}">
+                <div class="sidebar-logo-icon">
+                    <i class="fas fa-chart-pie"></i>
                 </div>
-                <div class="sidebar-profile-info">
-                    <div class="sidebar-credit">
-                        <i class="fas fa-coins"></i>
-                        <span>{{ $sidebarCredits }} Crédit(s)</span>
-                    </div>
-                    <div class="sidebar-username">
-                        <span>{{ $sidebarDisplayName }}</span>
-                        <span class="sidebar-user-id">
-                            <i class="fas fa-hashtag"></i>
-                            ID {{ $currentUser->id ?? '—' }}
-                        </span>
-                    </div>
+                <div class="sidebar-logo-text">Flash<span>Bilan</span></div>
+            </a>
+        </div>
+
+        {{-- User --}}
+        <div class="sidebar-user">
+            <div class="sidebar-avatar">
+                <img src="{{ asset('images/avatar-default.svg') }}" alt="Avatar">
+            </div>
+            <div class="sidebar-user-info">
+                <div class="sidebar-credit">
+                    <i class="ri-copper-coin-line"></i>
+                    {{ $sidebarCredits }} Credit(s)
+                </div>
+                <div class="sidebar-username">
+                    <i class="ri-user-3-line"></i>
+                    {{ $sidebarDisplayName }}
                 </div>
             </div>
         </div>
-        
+
+        {{-- Nav --}}
         <nav class="sidebar-nav">
             <div class="sidebar-nav-item">
                 <a href="{{ route('compte.view') }}" class="sidebar-nav-link {{ request()->routeIs('compte.*') ? 'active' : '' }}">
                     <div class="sidebar-link-main">
-                        <i class="fas fa-user-circle"></i>
+                        <i class="ri-user-line"></i>
                         <span>Mon compte</span>
                     </div>
                 </a>
             </div>
-            
+
             <div class="sidebar-nav-item">
                 <a href="{{ route('recharge.index') }}" class="sidebar-nav-link {{ request()->routeIs('recharge.*') ? 'active' : '' }}">
                     <div class="sidebar-link-main">
-                        <i class="fas fa-wallet"></i>
+                        <i class="ri-wallet-line"></i>
                         <span>Recharge</span>
                     </div>
                     <span class="sidebar-link-arrow">&rarr;</span>
                 </a>
             </div>
-            
+
             <div class="sidebar-nav-item">
                 <a href="{{ route('dashboard') }}" class="sidebar-nav-link {{ request()->routeIs('dashboard') ? 'active' : '' }}">
                     <div class="sidebar-link-main">
-                        <i class="fas fa-briefcase"></i>
+                        <i class="ri-briefcase-line"></i>
                         <span>Outils</span>
                     </div>
                 </a>
             </div>
-            
+
             <div class="sidebar-nav-item">
                 <a href="{{ $tarifsUrl }}" class="sidebar-nav-link {{ request()->routeIs('tarifs.*') ? 'active' : '' }}">
                     <div class="sidebar-link-main">
-                        <i class="fas fa-tags"></i>
+                        <i class="ri-price-tag-3-line"></i>
                         <span>Tarifs</span>
                     </div>
                 </a>
@@ -547,76 +524,62 @@
             <div class="sidebar-nav-item">
                 <a href="{{ route('affiliation.index') }}" class="sidebar-nav-link {{ request()->routeIs('affiliation.*') ? 'active' : '' }}">
                     <div class="sidebar-link-main">
-                        <i class="fas fa-users"></i>
+                        <i class="ri-team-line"></i>
                         <span>Affiliation</span>
                     </div>
                 </a>
             </div>
 
-            @if (\Illuminate\Support\Facades\Route::has('admin.index'))
+        </nav>
+
+        {{-- Logout --}}
+        <div class="sidebar-logout">
             <div class="sidebar-nav-item">
-                <a href="{{ route('admin.index') }}" target="_blank" rel="noopener noreferrer" class="sidebar-nav-link {{ request()->is('admin*') ? 'active' : '' }}">
-                    <div class="sidebar-link-main">
-                        <i class="fas fa-shield-alt"></i>
-                        <span>Administration</span>
-                    </div>
-                </a>
-            </div>
-            @endif
-            
-            <div class="sidebar-nav-item mt-4">
                 <a href="{{ route('logout') }}" class="sidebar-nav-link">
                     <div class="sidebar-link-main">
-                        <i class="fas fa-sign-out-alt"></i>
-                        <span>Déconnexion</span>
+                        <i class="ri-logout-box-r-line"></i>
+                        <span>Deconnexion</span>
                     </div>
                 </a>
             </div>
-        </nav>
+        </div>
     </div>
 
     <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
 
+    {{-- MAIN --}}
     <div class="main-content">
-        <div class="top-navbar">
-            <div class="top-navbar__brand">
-                <button type="button" class="mobile-sidebar-toggle" id="mobileSidebarToggle" aria-label="Afficher le menu">
-                    <i class="fas fa-bars"></i>
-                </button>
-                <div class="brand-chip">
-                    <div class="brand-chip__logo" aria-hidden="true">
-                        <i class="fas fa-chart-pie"></i>
-                    </div>
-                    <div>
-                        <div class="brand-chip__title">{{ config('app.name', 'FlashBilan') }}</div>
-                        <div class="brand-chip__subtitle">Centre d'outils sécurisé</div>
-                    </div>
-                </div>
+        {{-- Top header bar --}}
+        <div class="top-header">
+            <div class="top-header__left">
+                <a href="{{ $dashboardUrl }}" class="top-header__logo">
+                    <div class="sidebar-logo-icon"><i class="fas fa-chart-pie"></i></div>
+                    <div class="sidebar-logo-text">Flash<span>Bilan</span></div>
+                </a>
             </div>
+            <div class="top-header__actions">
+                <button type="button" class="top-header__btn top-header__btn--toggle" id="topHeaderToggle" title="Menu / Outils">
+                    <i class="ri-apps-2-line" id="topHeaderToggleIcon"></i>
+                </button>
+                <a href="{{ route('logout') }}" class="top-header__btn top-header__btn--logout" title="Deconnexion">
+                    <i class="ri-logout-box-r-line"></i>
+                </a>
+            </div>
+        </div>
 
-            <div class="top-navbar__breadcrumb">
-                <span class="breadcrumb-label">Navigation</span>
-                <nav class="breadcrumb">
-                    @yield('breadcrumb')
+        {{-- Breadcrumb --}}
+        <div class="breadcrumb-bar" @if(!trim($__env->yieldContent('breadcrumb'))) style="display:none" @endif>
+            <div class="d-flex align-items-center">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="{{ $dashboardUrl }}"><i class="ri-home-4-line"></i></a></li>
+                        @yield('breadcrumb')
+                    </ol>
                 </nav>
             </div>
-
-            <div class="top-navbar__actions">
-                <a href="{{ $dashboardUrl }}" class="hero-action">
-                    <i class="fas fa-grip"></i>
-                    <span>Liste des outils</span>
-                </a>
-                <a href="{{ $rechargeUrl }}" class="hero-action hero-action--accent">
-                    <i class="fas fa-bolt"></i>
-                    <span>Recharge rapide</span>
-                </a>
-            </div>
         </div>
 
-        <div class="user-summary-card">
-        </div>
-
-        <!-- Messages d'erreur et de succès -->
+        {{-- Alerts --}}
         @if(session('error'))
         <div class="alert alert-danger alert-dismissible fade show mx-3 mt-3" role="alert">
             <i class="fas fa-exclamation-circle me-2"></i>
@@ -663,10 +626,9 @@
             const backdrop = document.getElementById('sidebarBackdrop');
             const links = document.querySelectorAll('.sidebar-nav-link');
             const mobileBreakpoint = 991;
+
             const setExpanded = (value) => {
-                if (toggleButton) {
-                    toggleButton.setAttribute('aria-expanded', value ? 'true' : 'false');
-                }
+                if (toggleButton) toggleButton.setAttribute('aria-expanded', value ? 'true' : 'false');
             };
             const closeSidebar = () => {
                 sidebar.classList.remove('is-open');
@@ -684,44 +646,56 @@
             if (toggleButton) {
                 setExpanded(false);
                 toggleButton.addEventListener('click', function () {
-                    if (sidebar.classList.contains('is-open')) {
-                        closeSidebar();
+                    sidebar.classList.contains('is-open') ? closeSidebar() : openSidebar();
+                });
+            }
+
+            // Top header toggle button (blue grid icon)
+            const topToggle = document.getElementById('topHeaderToggle');
+            const topToggleIcon = document.getElementById('topHeaderToggleIcon');
+            const updateToggleIcon = () => {
+                if (!topToggleIcon) return;
+                if (sidebar.classList.contains('is-open')) {
+                    topToggleIcon.className = 'ri-close-line';
+                } else {
+                    topToggleIcon.className = 'ri-apps-2-line';
+                }
+            };
+            if (topToggle) {
+                topToggle.addEventListener('click', function () {
+                    if (window.innerWidth <= mobileBreakpoint) {
+                        sidebar.classList.contains('is-open') ? closeSidebar() : openSidebar();
+                        updateToggleIcon();
                     } else {
-                        openSidebar();
+                        window.location.href = '{{ route("dashboard") }}';
                     }
                 });
             }
 
-            if (backdrop) {
-                backdrop.addEventListener('click', closeSidebar);
-            }
+            // Update icon when sidebar closes by other means
+            const origClose = closeSidebar;
+            const origOpen = openSidebar;
 
-            document.addEventListener('keyup', function (event) {
-                if (event.key === 'Escape') {
-                    closeSidebar();
-                }
+            if (backdrop) backdrop.addEventListener('click', function() { closeSidebar(); updateToggleIcon(); });
+
+            document.addEventListener('keyup', function (e) {
+                if (e.key === 'Escape') { closeSidebar(); updateToggleIcon(); }
             });
 
             links.forEach(function (link) {
                 link.addEventListener('click', function () {
-                    if (window.innerWidth <= mobileBreakpoint) {
-                        closeSidebar();
-                    }
+                    if (window.innerWidth <= mobileBreakpoint) { closeSidebar(); updateToggleIcon(); }
                 });
             });
 
             window.addEventListener('resize', function () {
-                if (window.innerWidth > mobileBreakpoint) {
-                    closeSidebar();
-                }
+                if (window.innerWidth > mobileBreakpoint) { closeSidebar(); updateToggleIcon(); }
             });
 
-            // Auto-dismiss only the dismissible alerts after 5 seconds
-            const alerts = document.querySelectorAll('.alert.alert-dismissible');
-            alerts.forEach(function(alert) {
+            // Auto-dismiss alerts
+            document.querySelectorAll('.alert.alert-dismissible').forEach(function(alert) {
                 setTimeout(function() {
-                    const bsAlert = new bootstrap.Alert(alert);
-                    bsAlert.close();
+                    new bootstrap.Alert(alert).close();
                 }, 5000);
             });
         });

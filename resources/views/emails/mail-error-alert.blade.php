@@ -1,120 +1,164 @@
-@extends('emails.layouts.modern')
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alerte Échec Email</title>
+</head>
+<body style="margin: 0; padding: 0; font-family: 'Segoe UI', Arial, sans-serif; background-color: #f5f5f5;">
+    <table width="100%" cellpadding="0" cellspacing="0" style="background-color: #f5f5f5; padding: 40px 20px;">
+        <tr>
+            <td align="center">
+                <table width="600" cellpadding="0" cellspacing="0" style="background-color: #ffffff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.1);">
+                    
+                    <!-- Header avec gradient de marque -->
+                    <tr>
+                        <td style="background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); padding: 30px 40px; text-align: center;">
+                            <h1 style="margin: 0; color: #ffffff; font-size: 26px; font-weight: 900; font-style: italic; text-transform: uppercase;">
+                                ⚠️ ALERTE SYSTÈME
+                            </h1>
+                            <p style="margin: 10px 0 0; color: rgba(255,255,255,0.9); font-size: 16px;">
+                                Échec d'envoi d'email détecté
+                            </p>
+                        </td>
+                    </tr>
 
-@php
-    $emailTitle = __('emails.system_alert');
-    $primaryFrom = '#dc2626';
-    $primaryTo = '#b91c1c';
-@endphp
+                    <!-- Contenu principal -->
+                    <tr>
+                        <td style="padding: 40px;">
+                            
+                            <!-- Message principal -->
+                            <div style="background: #fff3cd; border-left: 4px solid #ffc107; padding: 20px; margin-bottom: 30px; border-radius: 8px;">
+                                <h2 style="margin: 0 0 10px; color: #856404; font-size: 18px; font-weight: 600;">
+                                    ⚠️ Problème d'envoi d'email
+                                </h2>
+                                <p style="margin: 0; color: #856404; font-size: 14px; line-height: 1.6;">
+                                    Un email n'a pas pu être envoyé. Cela peut indiquer que la limite quotidienne de 500 emails a été atteinte ou qu'il y a un problème avec le serveur SMTP.
+                                </p>
+                            </div>
 
-@section('content')
-    <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
-        <tr>
-            <td style="text-align:center;padding-bottom:12px;">
-                <span style="display:inline-block;width:74px;height:74px;line-height:74px;border-radius:50%;background:#fef2f2;text-align:center;font-size:32px;color:#b91c1c;vertical-align:middle;">
-                    <span class="notranslate">🚨</span>
-                </span>
-            </td>
-        </tr>
-        <tr>
-            <td style="font-size:24px;color:#b91c1c;font-weight:700;text-align:center;padding-bottom:8px;">
-                {{ __('emails.mail_send_failure_detected') }}
-            </td>
-        </tr>
-        <tr>
-            <td style="text-align:center;font-size:15px;color:#5f6b7d;padding-bottom:18px;">
-                {{ __('emails.email_send_failure_explanation') }}
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <div style="background:#fff6da;border-left:5px solid #facc15;padding:18px 20px;border-radius:16px;font-size:14px;color:#854d0e;margin-bottom:22px;">
-                    {{ __('emails.system_alert') }} · {{ __('emails.mail_send_failure_detected') }}
-                </div>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#f8fafc;border-radius:20px;border:1px solid #e2e8f0;padding:22px;margin-bottom:24px;">
-                    <tr>
-                        <td style="font-size:13px;font-weight:700;color:#64748b;letter-spacing:0.08em;text-transform:uppercase;padding-bottom:14px;">{{ __('emails.error_details') }}</td>
-                    </tr>
-                    <tr>
-                        <td style="font-size:14px;color:#1f2937;padding-bottom:10px;">
-                            <strong>{{ __('emails.label_date_time') }}:</strong> {{ now()->format('d/m/Y \à H:i:s') }}
+                            <!-- Détails de l'erreur -->
+                            <div style="background: #f8f9fa; padding: 25px; border-radius: 8px; margin-bottom: 20px;">
+                                <h3 style="margin: 0 0 20px; color: #212529; font-size: 16px; font-weight: 600; border-bottom: 2px solid #dee2e6; padding-bottom: 10px;">
+                                    📋 Détails de l'erreur
+                                </h3>
+                                
+                                <table width="100%" cellpadding="8" cellspacing="0">
+                                    <tr>
+                                        <td style="color: #6c757d; font-size: 14px; font-weight: 600; width: 40%;">
+                                            🕐 Date et heure:
+                                        </td>
+                                        <td style="color: #212529; font-size: 14px;">
+                                            {{ now()->format('d/m/Y à H:i:s') }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="color: #6c757d; font-size: 14px; font-weight: 600; padding-top: 15px;">
+                                            📧 Destinataire concerné:
+                                        </td>
+                                        <td style="color: #212529; font-size: 14px; padding-top: 15px;">
+                                            {{ $failedRecipient }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="color: #6c757d; font-size: 14px; font-weight: 600; padding-top: 15px;">
+                                            📝 Contexte:
+                                        </td>
+                                        <td style="color: #212529; font-size: 14px; padding-top: 15px;">
+                                            {{ $context }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="color: #6c757d; font-size: 14px; font-weight: 600; padding-top: 15px; vertical-align: top;">
+                                            ❌ Message d'erreur:
+                                        </td>
+                                        <td style="color: #dc3545; font-size: 13px; padding-top: 15px; font-family: monospace; background: #fff; padding: 10px; border-radius: 4px;">
+                                            {{ $errorMessage }}
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+
+                            <!-- Causes possibles -->
+                            <div style="background: #e7f3ff; padding: 25px; border-radius: 8px; margin-bottom: 20px; border-left: 4px solid #0d6efd;">
+                                <h3 style="margin: 0 0 15px; color: #004085; font-size: 16px; font-weight: 600;">
+                                    🔍 Causes possibles
+                                </h3>
+                                <ul style="margin: 0; padding-left: 20px; color: #004085; font-size: 14px; line-height: 1.8;">
+                                    <li><strong>Limite quotidienne atteinte:</strong> Gmail limite à 500 emails/jour pour les comptes Google Workspace (100/jour pour les comptes gratuits)</li>
+                                    <li><strong>Problème de connexion SMTP:</strong> Le serveur Gmail peut être temporairement indisponible</li>
+                                    <li><strong>Authentification échouée:</strong> Vérifiez les identifiants dans le fichier .env</li>
+                                    <li><strong>Mot de passe d'application expiré:</strong> Le mot de passe d'application Gmail peut avoir été révoqué</li>
+                                </ul>
+                            </div>
+
+                            <!-- Actions recommandées -->
+                            <div style="background: #d1ecf1; padding: 25px; border-radius: 8px; margin-bottom: 20px; border-left: 4px solid #17a2b8;">
+                                <h3 style="margin: 0 0 15px; color: #0c5460; font-size: 16px; font-weight: 600;">
+                                    ✅ Actions recommandées
+                                </h3>
+                                <ol style="margin: 0; padding-left: 20px; color: #0c5460; font-size: 14px; line-height: 1.8;">
+                                    <li><strong>Si limite atteinte:</strong> Attendez jusqu'à demain (réinitialisation à minuit PST)</li>
+                                    <li><strong>Vérifier les logs:</strong> Consultez <code style="background: #fff; padding: 2px 6px; border-radius: 3px; font-family: monospace;">storage/logs/laravel.log</code></li>
+                                    <li><strong>Tester la connexion:</strong> Exécutez <code style="background: #fff; padding: 2px 6px; border-radius: 3px; font-family: monospace;">php artisan email:test</code></li>
+                                    <li><strong>Vérifier la configuration:</strong> Contrôlez les paramètres SMTP dans le fichier .env</li>
+                                    <li><strong>Régénérer le mot de passe:</strong> Si nécessaire, créez un nouveau mot de passe d'application Gmail</li>
+                                </ol>
+                            </div>
+
+                            <!-- Informations système -->
+                            <div style="background: #f8f9fa; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
+                                <h3 style="margin: 0 0 15px; color: #212529; font-size: 14px; font-weight: 600;">
+                                    🖥️ Informations système
+                                </h3>
+                                <table width="100%" cellpadding="5" cellspacing="0" style="font-size: 13px;">
+                                    <tr>
+                                        <td style="color: #6c757d; width: 40%;">Serveur SMTP:</td>
+                                        <td style="color: #212529;">{{ config('mail.host') }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="color: #6c757d;">Port:</td>
+                                        <td style="color: #212529;">{{ config('mail.port') }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="color: #6c757d;">Compte:</td>
+                                        <td style="color: #212529;">{{ config('mail.username') }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="color: #6c757d;">Environnement:</td>
+                                        <td style="color: #212529;">{{ config('app.env') }}</td>
+                                    </tr>
+                                </table>
+                            </div>
+
+                            <!-- Note importante -->
+                            <div style="background: #fff; border: 2px solid #dc3545; padding: 20px; border-radius: 8px;">
+                                <p style="margin: 0; color: #dc3545; font-size: 14px; font-weight: 600; text-align: center;">
+                                    ⚠️ Cette alerte est automatique. L'application continue de fonctionner normalement, mais les emails ne sont pas envoyés.
+                                </p>
+                            </div>
+
                         </td>
                     </tr>
+
+                    <!-- Footer -->
                     <tr>
-                        <td style="font-size:14px;color:#1f2937;padding-bottom:10px;">
-                            <strong>{{ __('emails.label_failed_recipient') }}:</strong> {{ $failedRecipient }}
+                        <td style="background: #f8f9fa; padding: 30px 40px; text-align: center; border-top: 1px solid #dee2e6;">
+                            <p style="margin: 0 0 10px; color: #6c757d; font-size: 14px;">
+                                <strong>TRANSFERFLUX</strong> - Système de gestion des comptes
+                            </p>
+                            <p style="margin: 0; color: #adb5bd; font-size: 12px;">
+                                Cette alerte a été générée automatiquement par le système SafeMailService
+                            </p>
+                            <p style="margin: 10px 0 0; color: #adb5bd; font-size: 12px;">
+                                Pour toute question, contactez votre équipe technique
+                            </p>
                         </td>
                     </tr>
-                    <tr>
-                        <td style="font-size:14px;color:#1f2937;padding-bottom:10px;">
-                            <strong>{{ __('emails.label_context') }}:</strong> {{ $context }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="font-size:14px;color:#b91c1c;background:#fff;border-radius:14px;padding:14px;border:1px solid #fee2e2;font-family:'Courier New',monospace;">
-                            <strong>{{ __('emails.label_error_message') }}:</strong><br>{{ $errorMessage }}
-                        </td>
-                    </tr>
+
                 </table>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <div style="background:#eff6ff;border-left:5px solid #2563eb;border-radius:16px;padding:18px 20px;margin-bottom:20px;">
-                    <div style="font-size:15px;font-weight:700;color:#1d4ed8;margin-bottom:10px;">{{ __('emails.possible_causes') }}</div>
-                    <ul style="margin:0;padding-left:20px;color:#1e3a8a;font-size:14px;line-height:1.7;">
-                        <li><strong>{{ __('emails.cause_daily_limit') }}:</strong> {{ __('emails.cause_daily_limit_details') }}</li>
-                        <li><strong>{{ __('emails.cause_smtp_connection') }}:</strong> {{ __('emails.cause_smtp_connection_details') }}</li>
-                        <li><strong>{{ __('emails.cause_auth_failed') }}:</strong> {{ __('emails.cause_auth_failed_details') }}</li>
-                        <li><strong>{{ __('emails.cause_app_password_revoked') }}:</strong> {{ __('emails.cause_app_password_revoked_details') }}</li>
-                    </ul>
-                </div>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <div style="background:#ecfeff;border-left:5px solid #0f766e;border-radius:16px;padding:18px 20px;margin-bottom:20px;">
-                    <div style="font-size:15px;font-weight:700;color:#115e59;margin-bottom:10px;">{{ __('emails.recommended_actions') }}</div>
-                    <ol style="margin:0;padding-left:20px;color:#134e4a;font-size:14px;line-height:1.7;">
-                        <li><strong>{{ __('emails.action_if_limit') }}:</strong> {{ __('emails.action_if_limit_details') }}</li>
-                        <li><strong>{{ __('emails.action_check_logs') }}:</strong> {{ __('emails.action_check_logs_details') }}</li>
-                        <li><strong>{{ __('emails.action_test_connection') }}:</strong> {{ __('emails.action_test_connection') }}</li>
-                        <li><strong>{{ __('emails.action_check_config') }}:</strong> {{ __('emails.action_check_config_details') }}</li>
-                        <li><strong>{{ __('emails.action_regenerate_password') }}:</strong> {{ __('emails.action_regenerate_password_details') }}</li>
-                    </ol>
-                </div>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#f9fafb;border-radius:18px;border:1px solid #e5e7eb;padding:18px 20px;margin-bottom:20px;">
-                    <tr>
-                        <td style="font-size:14px;font-weight:700;color:#374151;padding-bottom:10px;text-transform:uppercase;letter-spacing:0.08em;">{{ __('emails.system_information') }}</td>
-                    </tr>
-                    <tr>
-                        <td style="font-size:14px;color:#4b5563;padding-bottom:6px;"><strong>{{ __('emails.label_smtp_server') }}:</strong> {{ config('mail.host') }}</td>
-                    </tr>
-                    <tr>
-                        <td style="font-size:14px;color:#4b5563;padding-bottom:6px;"><strong>{{ __('emails.label_port') }}:</strong> {{ config('mail.port') }}</td>
-                    </tr>
-                    <tr>
-                        <td style="font-size:14px;color:#4b5563;padding-bottom:6px;"><strong>{{ __('emails.label_account') }}:</strong> {{ config('mail.username') }}</td>
-                    </tr>
-                    <tr>
-                        <td style="font-size:14px;color:#4b5563;"><strong>{{ __('emails.label_environment') }}:</strong> {{ config('app.env') }}</td>
-                    </tr>
-                </table>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <div style="text-align:center;border:2px solid #dc2626;border-radius:18px;padding:16px;font-size:13px;font-weight:700;color:#b91c1c;">
-                    {{ __('emails.alert_auto_generated_notice') }}
-                </div>
             </td>
         </tr>
     </table>
-@endsection
+</body>
+</html>

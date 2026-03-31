@@ -1,85 +1,280 @@
-@extends('emails.layouts.modern')
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Échec de Virement. Remboursement du Solde - TRANSFERFLUX</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-@php
-    $emailLang = $compte->lang ?? app()->getLocale();
-    $emailDir = in_array($emailLang, ['ar','he','fa']) ? 'rtl' : 'ltr';
-    $emailTitle = __('emails.refund_subject');
-    $primaryFrom = '#f59e0b';
-    $primaryTo = '#d97706';
-    $amountFormatted = number_format($compte->account_balance2, 2, ',', ' ') . ' ' . $compte->devise;
-    $amountHtml = '<strong>' . $amountFormatted . '</strong>';
-    $refundRaw = str_replace(':amount', $amountHtml, __('emails.refund_notice'));
-@endphp
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+            padding: 40px 20px;
+            line-height: 1.6;
+        }
 
-@section('content')
-    <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
-        <tr>
-            <td style="text-align:center;padding-bottom:12px;">
-                <span style="display:inline-block;width:70px;height:70px;line-height:70px;border-radius:50%;background:#fff7ed;text-align:center;font-size:32px;color:#c2410c;vertical-align:middle;">
-                    <span class="notranslate">⚠️</span>
-                </span>
-            </td>
-        </tr>
-        <tr>
-            <td style="font-size:24px;color:#c2410c;font-weight:700;text-align:center;padding-bottom:8px;">
-                {{ __('emails.refund_title') }}
-            </td>
-        </tr>
-        <tr>
-            <td style="text-align:center;font-size:15px;color:#5f6b7d;padding-bottom:16px;">
-                {{ __('emails.greeting', ['name' => $compte->nom . ' ' . $compte->prenom]) }}
-            </td>
-        </tr>
-        <tr>
-            <td style="font-size:15px;color:#4b5563;padding-bottom:18px;">
-                {{ __('emails.refund_failed_message') }}
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#fff7e5;border-left:5px solid #f59e0b;border-radius:20px;padding:20px;border:1px solid #fde7c3;margin-bottom:22px;">
-                    <tr>
-                        <td style="font-size:15px;font-weight:700;color:#92400e;padding-bottom:12px;">{{ __('emails.details_title') }}</td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <table role="presentation" width="100%" cellpadding="8" cellspacing="0" style="border-collapse:collapse;">
-                                <tr>
-                                    <td style="width:45%;font-size:14px;color:#6b7280;">{{ __('emails.label_amount') }}</td>
-                                    <td style="width:55%;font-size:15px;font-weight:700;color:#c2410c;text-align:{{ $emailDir === 'rtl' ? 'left' : 'right' }};">{{ $amountFormatted }}</td>
-                                </tr>
-                                <tr>
-                                    <td style="font-size:14px;color:#6b7280;">{{ __('emails.label_date') }}</td>
-                                    <td style="font-size:14px;color:#111827;text-align:{{ $emailDir === 'rtl' ? 'left' : 'right' }};">{{ optional($transfer)->created_at }}</td>
-                                </tr>
-                                <tr>
-                                    <td style="font-size:14px;color:#6b7280;">{{ __('emails.label_recipient') }}</td>
-                                    <td style="font-size:14px;color:#111827;text-align:{{ $emailDir === 'rtl' ? 'left' : 'right' }};">{{ optional($transfer)->beneficiary_name }}</td>
-                                </tr>
-                                <tr>
-                                    <td style="font-size:14px;color:#6b7280;">{{ __('emails.label_reason') }}</td>
-                                    <td style="font-size:14px;color:#111827;text-align:{{ $emailDir === 'rtl' ? 'left' : 'right' }};">{{ optional($transfer)->reason }}</td>
-                                </tr>
-                            </table>
-                        </td>
-                    </tr>
-                </table>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <div style="background:#e0edff;border-left:5px solid #2563eb;border-radius:18px;padding:18px 20px;margin-bottom:20px;font-size:15px;color:#1d4ed8;font-weight:600;">
-                    <span class="notranslate">💳&nbsp;&nbsp;</span>{!! $refundRaw !!}
+        .email-wrapper {
+            max-width: 600px;
+            margin: 0 auto;
+            background: #ffffff;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(37, 99, 235, 0.15);
+        }
+
+        .header {
+            background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+            padding: 40px 30px;
+            text-align: center;
+            position: relative;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="40" fill="rgba(255,255,255,0.1)"/></svg>');
+            opacity: 0.1;
+        }
+
+        .header h1 {
+            color: #ffffff;
+            font-size: 24px;
+            font-weight: 900;
+            font-style: italic;
+            margin: 0;
+            position: relative;
+            z-index: 1;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            line-height: 1.3;
+            text-transform: uppercase;
+        }
+
+        .content {
+            padding: 40px 30px;
+        }
+
+        .icon-refund {
+            display: inline-block;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            border-radius: 50%;
+            margin-bottom: 25px;
+            line-height: 60px;
+            font-size: 32px;
+            text-align: center;
+            color: white;
+            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3);
+        }
+
+        .greeting {
+            font-size: 18px;
+            color: #333;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .message {
+            color: #555;
+            font-size: 15px;
+            margin-bottom: 25px;
+            line-height: 1.7;
+        }
+
+        .details-box {
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+            border-left: 5px solid #2563eb;
+            border-radius: 12px;
+            padding: 25px;
+            margin: 25px 0;
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.08);
+        }
+
+        .details-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .detail-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid #e2e8f0;
+            align-items: center;
+        }
+
+        .detail-item:last-child {
+            border-bottom: none;
+        }
+
+        .detail-label {
+            color: #666;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .detail-value {
+            color: #2563eb;
+            font-weight: 800;
+            font-style: italic;
+            font-size: 15px;
+            text-align: right;
+        }
+
+        .refund-notice {
+            background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+            border-left: 5px solid #3b82f6;
+            border-radius: 12px;
+            padding: 20px 25px;
+            margin: 25px 0;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .refund-icon {
+            font-size: 32px;
+            flex-shrink: 0;
+        }
+
+        .refund-text {
+            color: #1e40af;
+            font-size: 15px;
+            font-weight: 600;
+            line-height: 1.5;
+        }
+
+        .divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #ddd, transparent);
+            margin: 30px 0;
+        }
+
+        .footer {
+            background: #f8f9fa;
+            padding: 30px;
+            text-align: center;
+            border-top: 1px solid #e9ecef;
+        }
+
+        .footer-text {
+            color: #777;
+            font-size: 13px;
+            margin-bottom: 10px;
+        }
+
+        .footer-brand {
+            color: #2563eb;
+            font-weight: 900;
+            font-style: italic;
+            font-size: 18px;
+            margin-top: 10px;
+            text-transform: uppercase;
+        }
+
+        @media only screen and (max-width: 600px) {
+            body {
+                padding: 20px 10px;
+            }
+
+            .header h1 {
+                font-size: 20px;
+            }
+
+            .content {
+                padding: 30px 20px;
+            }
+
+            .detail-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 5px;
+            }
+
+            .detail-value {
+                text-align: left;
+            }
+
+            .refund-notice {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="email-wrapper">
+        <div class="header">
+            <h1>Échec de Virement<br>Remboursement du Solde</h1>
+        </div>
+        
+        <div class="content">
+            <div style="text-align: center;">
+                <div class="icon-refund">⚠️</div>
+            </div>
+
+            <p class="greeting">Bonjour {{ $compte->nom . ' ' . $compte->prenom }},</p>
+            
+            <p class="message">
+                Nous regrettons de vous informer que votre tentative de virement a échoué.
+            </p>
+
+            <div class="details-box">
+                <div class="details-title">Détails du virement</div>
+                
+                <div class="detail-item">
+                    <span class="detail-label">💰 Montant du Virement :</span>
+                    <span class="detail-value">{{ number_format((float)$compte->account_balance2, 2, ',', ' ') . ' ' . $compte->devise }}</span>
                 </div>
-            </td>
-        </tr>
-        <tr>
-            <td style="height:1px;background:#e5e7eb;margin:22px 0;display:block;"></td>
-        </tr>
-        <tr>
-            <td style="font-size:15px;color:#4b5563;text-align:center;">
-                {{ __('emails.apology') }}
-            </td>
-        </tr>
-    </table>
-@endsection
+
+                <div class="detail-item">
+                    <span class="detail-label">📅 Date du Virement :</span>
+                    <span class="detail-value">{{ $transfer->created_at }}</span>
+                </div>
+
+                <div class="detail-item">
+                    <span class="detail-label">👤 Destinataire :</span>
+                    <span class="detail-value">{{ $transfer->beneficiary_name }}</span>
+                </div>
+
+                <div class="detail-item">
+                    <span class="detail-label">📝 Motif du Virement :</span>
+                    <span class="detail-value">{{ $transfer->reason }}</span>
+                </div>
+            </div>
+
+            <div class="refund-notice">
+                <div class="refund-icon">💳</div>
+                <div class="refund-text">
+                    Le montant de <strong>{{ number_format((float)$compte->account_balance2, 2, ',', ' ') . ' ' . $compte->devise }}</strong> a été remboursé sur votre compte.
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <p class="message" style="text-align: center;">
+                Nous nous excusons pour la gêne occasionnée. Si vous avez des questions ou avez besoin d'assistance, n'hésitez pas à nous contacter.
+            </p>
+        </div>
+
+        <div class="footer">
+            <p class="footer-text">Merci d'utiliser TRANSFERFLUX !</p>
+            <div class="footer-brand">TRANSFERFLUX</div>
+            <p class="footer-text" style="margin-top: 15px;">
+                Votre partenaire financier de confiance 🏦
+            </p>
+        </div>
+    </div>
+</body>
+</html>

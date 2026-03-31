@@ -6,7 +6,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
-use Illuminate\Mail\Mailables\Address;
+
 use Illuminate\Queue\SerializesModels;
 use App\Models\Compte;
 
@@ -32,7 +32,6 @@ class CodeDeblocageUtiliseMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            from: new Address('fluxbank37@gmail.com', 'TRANSFERFLUX'),
             subject: __('emails.unlock_code_used_title'),
         );
     }

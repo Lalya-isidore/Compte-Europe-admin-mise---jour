@@ -1,0 +1,2286 @@
+<!DOCTYPE html>
+<!-- saved from url=(0055)https://www.kitscms.com/account/tools/flash-account-v1/ -->
+<html lang="fr"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!--<base href="https://www.kitscms.com">--><base href=".">
+    
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flash Compte Pro v1 - Kitscms</title>    
+    <link rel="shortcut icon" href="https://www.kitscms.com/favicon.png" type="image/png">
+    <link rel="icon" href="https://www.kitscms.com/favicon.ico">
+    <link rel="apple-touch-icon" href="https://www.kitscms.com/favicon.ico">
+    <!-- CSS only -->
+    <link href="./Flash Compte Pro v1 - Kitscms_files/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+    <!-- ICONS only -->
+    <link rel="stylesheet" href="./Flash Compte Pro v1 - Kitscms_files/bootstrap-icons.css">
+    <!-- Include stylesheet -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cabin:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&family=Righteous&family=Roboto+Condensed:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&family=Roboto+Flex:opsz,wght@8..144,100;8..144,200;8..144,300;8..144,400;8..144,500;8..144,600;8..144,700;8..144,800;8..144,900;8..144,1000&family=Roboto+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+@import url('https://cdn-uicons.flaticon.com/uicons-solid-rounded/css/uicons-solid-rounded.css');
+@import url('https://cdn-uicons.flaticon.com/uicons-bold-rounded/css/uicons-bold-rounded.css');
+@import url('https://cdn-uicons.flaticon.com/uicons-regular-rounded/css/uicons-regular-rounded.css');
+
+/*
+    font-family: 'Cabin', sans-serif;
+    font-family: 'Lato', sans-serif;
+    font-family: 'Open Sans', sans-serif;
+    font-family: 'Righteous', cursive;
+    font-family: 'Roboto', sans-serif;
+    font-family: 'Roboto Condensed', sans-serif;
+    font-family: 'Roboto Flex', sans-serif;
+    font-family: 'Roboto Mono', monospace;
+*/
+
+* {
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    -webkit-outline: none;
+    outline: none;
+}
+
+html,body{
+    position: relative;
+    width: 100%;
+    min-height: 100%;
+    margin: 0;
+    overflow-x: hidden;
+    font-family: 'Cabin', sans-serif;
+}
+.ctt,.box{
+    position: relative;
+    max-width: 1920px !important;
+    margin: auto;
+}
+/* .history-item{
+    background-color: #ececed !important;
+} */
+.modal{
+    z-index: 9999999999 !important;
+}
+.modal .btn-close:focus{
+    background-color: #dc3545 !important;
+    color: white !important;
+    box-shadow: 0 0 0 .25rem #dc354590 !important;
+}
+.modal-footer .btn-danger{
+    font-size: .8em !important;
+}.modal{
+    z-index: 999999;
+    padding-right: 0 !important;
+}
+#data-box .modal-dialog{
+    max-width: 600px;
+}
+.modal-body{
+    font-family: 'Cabin', sans-serif;
+}
+#account{
+    position: relative;
+}
+header{
+    position: fixed;
+    background-color: white;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 10px 20px;
+    box-shadow: 0 0 12px 0 rgba(0,0,0,.14);
+    z-index: 500;
+    /* min-height: 60px !important; */
+    /* border-top: 5px solid #4285f4; */
+}
+.logo > img{
+    position: relative;
+    width: 180px;
+}
+header nav{
+    position: absolute;
+    right: 0px;
+    top: -2px;
+}
+header nav > a{
+    position: relative;
+    display: inline-block;
+    padding: 8px 10px;
+    margin: 0px 5px;
+    box-shadow: 0 0 12px 0 rgba(0,0,0,.2);
+    border-radius: 12px;
+    -webkit-transition: all 100ms ease;
+    transition: all 100ms ease;
+}
+header nav > a:hover{
+    -webkit-transform: scale(1.04);
+    transform: scale(1.04);
+}
+header nav > a:active:focus{
+    -webkit-transform: scale(.96);
+    transform: scale(.96);
+}
+header nav > a > img{
+    width: 36px;
+}
+section{
+    position: relative;
+    display: -webkit-box-flex;
+    display: -ms-flex;
+    display: flex;
+    -ms-flex-wrap: nowrap;
+    flex-wrap: nowrap;
+}
+#menu{
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 200;
+    width: 280px;
+    box-shadow: 0 0 12px 0px rgba(0,0,0,.14);
+    padding: 80px 0px 20px;
+    flex: none;
+    min-height: 100vh;
+    -webkit-transition: all 300ms ease;
+    transition: all 300ms ease;
+    background-color: white;
+}
+#content{
+    position: relative;
+    padding: 90px 20px 20px;
+    min-height: 100vh;
+    width: calc(100% - 280px);
+    left: 280px;
+    -webkit-transition: all 300ms ease;
+    transition: all 300ms ease;
+    background-color: #ededee;
+    overflow: hidden !important;
+}
+#menu > *{
+    position: relative;
+    width: 100%;
+}
+#menu i{
+    position: relative;
+    top: 1px;
+}
+.user{
+    position: relative;
+    padding: 20px;
+    border-bottom: 1px solid #e2e2e2;
+}
+.balance{
+    position: absolute;
+    top: 30px;
+    left: 100px;
+    font-family: 'Righteous', cursive;
+    font-size: 1.1em;
+    color: #4285f4;
+}
+.list-menu{
+    position: relative;
+}
+.list-menu > a{
+    position: relative;
+    font-family: 'Cabin', sans-serif;
+    text-decoration: none;
+    display: block;
+    font-size: 1.1em;
+    padding: 14px 20px;
+    color: black;
+    border-bottom: 1px solid #e2e2e2;
+    -webkit-transition: all 150ms ease;
+    transition: all 150ms ease;
+}
+.list-menu > a > i.bi{
+    display: none;
+}
+.list-menu > a:hover > i.bi{
+    display: inline;
+}
+.list-menu > a:active > i.bi{
+    display: inline;
+}
+.list-menu > a:focus > i.bi{
+    display: inline;
+}
+.list-menu > a:hover,.list-menu > a:focus,.list-menu > a:active{
+    background-color: #4285f4;
+    color: white;
+    padding-left: 30px;
+}
+/* CONTENT STYLE */
+.account{
+    position: relative;
+}
+.page-title{
+    background-color: white;
+    box-shadow: 0 0 12px 0px rgba(0,0,0,.14);
+    font-family: 'Righteous', cursive;
+    margin-bottom: 20px;
+    padding: 20px;
+    font-size: .9em;
+}
+.page-title a,.page-title span{
+    text-decoration: none;
+    color: black;
+    -webkit-transition: all 150ms ease;
+    transition: all 150ms ease;
+}
+.page-title a:hover,.page-title span:hover{
+    color: #4285f4;
+}
+.u-data{
+    position: relative;
+    display: -webkit-box-flex;
+    display: -ms-flex;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin: 0px 0px 20px;
+}
+.u-data > div{
+    position: relative;
+    width: 49%;
+    background-color: white;
+    padding-bottom: 60px !important;
+}
+.u-title{
+    font-family: 'Righteous', cursive;
+    padding: 20px;
+    border-bottom: 1px solid black;
+}
+.u-content{
+    padding: 20px 10px;
+}
+.u-key{
+    font-family: 'Cabin', sans-serif;
+    margin-bottom: 5px;
+}
+.u-value{
+    padding-left: 20px;
+}
+.u-value > span{
+    font-family: 'Lato', sans-serif;
+    border-radius: 4px;
+    padding: 10px 20px;
+    background-color: #ededee;
+    font-size: .86em;
+    display: inline-block;
+    font-weight: bold;
+}
+.ud-1 .r-content{
+    padding: 20px;
+    font-family: 'Cabin', sans-serif;
+}
+.r-balance{
+    margin-bottom: 20px;
+}
+.r-about{
+    color: #4285f4;
+    margin-left: 10px;
+    text-decoration: underline;
+}
+.r-about:hover{
+    color: #4285f480;
+}
+#buy-credit{
+    position: relative;
+}
+.r-box{
+    position: relative;
+    /* padding: 10px; */
+}
+#list-pack{
+    position: relative;
+    display: -webkit-box-flex;
+    display: -ms-flex;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+.r-pack{
+    display: inline-block;
+    width: 48%;
+    padding: 20px;
+    background-color: white;
+    font-family: 'Righteous', cursive;
+    font-size: 1em;
+    letter-spacing: 1px;
+    margin: 10px 0px;
+    text-align: center;
+    box-shadow: 0 0 12px 0px rgba(0,0,0,.14);
+    -webkit-transition: all 100ms linear;
+    transition: all 100ms linear;
+    -webkit-user-select: none;
+    user-select: none;
+}
+.r-pack:hover{
+    background-color: #ededee;
+    -webkit-transform: scale(1.06);
+    transform: scale(1.06);
+}
+.r-pack:active{
+    background-color: #05954920;
+}
+#select{
+    background-color: #049748;
+    border: 1px solid black;
+}
+#select > *{
+    color: white;
+}
+.r-value{
+    color: #4285f4;
+    text-decoration: none !important;
+}
+.r-box-2,.r-box-3{
+    margin: 20px 0 0;
+}
+.r-box-2 #pay-by-qosic-img,.r-box-2 #pay-by-fedapay{
+    -webkit-transition: all 150ms ease;
+    transition: all 150ms ease;
+    margin-top: 10px;
+    border: 1px solid #4285f4;
+    padding: 5px;
+}
+.r-box-2 #pay-by-qosic-img:hover,.r-box-2 #pay-by-fedapay:hover{
+    -webkit-transform: scale(1.03);
+    transform: scale(1.03);
+}
+.r-box-2 #pay-by-qosic-img:active,.r-box-2 #pay-by-fedapay:active{
+    -webkit-transform: scale(1);
+    transform: scale(1);
+}
+#buy-credit label{
+    display: block;
+    margin: 10px 0 5px;
+}
+#buy-credit input,#buy-credit select,#buy-credit button,#withdrawal{
+    display: block;
+    width: 100%;
+    padding: 10px 20px;
+}
+#buy-credit button,#withdrawal{
+    margin-top: 20px;
+    padding: 15px 20px;
+}
+.btn-card:focus{
+    box-shadow: 0 0 0 4px #6a5acd80 !important;
+}
+.alert-card-info{
+    font-size: .84em;
+    margin: 20px auto;
+    border: 1px solid #806925;
+    text-align: justify;
+}
+.t-content{
+    padding: 20px 40px;
+    font-family: 'Cabin', sans-serif;
+    display: -webkit-box-flex;
+    display: -ms-flex;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+.t-box{
+    position: relative;
+    display: inline-block;
+    margin: 10px 0;
+    padding: 20px 10px;
+    width: 48%;
+    text-align: center;
+    box-shadow: 0 0 6px 0px rgba(0,0,0,.1);
+    text-decoration: none;
+    color: black;
+    -webkit-transition: all 150ms ease;
+    transition: all 150ms ease;
+    border-radius: 12px;
+    -webkit-user-select: none;
+    user-select: none;
+}
+.t-box:hover{
+    -webkit-transform: scale(1.05);
+    transform: scale(1.05);
+    color: black !important;
+}
+.t-box:active{
+    /*background-color: #4285f4;*/
+    -webkit-transform: scale(1);
+    transform: scale(1);
+    color: #558bda !important;
+}
+.t-box:active{
+    -webkit-transform: scale(1);
+    transform: scale(1);
+}
+.t-box > i{
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+.t-box[data-tool-active=true] > i{
+    color: green;
+    display: none;
+}
+.t-box[data-tool-active=false] > i{
+    color: red;
+}
+.t-logo{
+    width: 38px;
+}
+.t-box > div{
+    font-size: .9em;
+}
+.p-content .u-key{
+    margin-bottom: 5px !important;
+}
+.p-content .u-value{
+    padding-left: 5px !important;
+}
+.p-content .u-value > span{
+    border: 1px solid #4285f4;
+    border-radius: 4px;
+    padding: 6px 20px;
+    font-weight: normal;
+    font-family: 'Cabin', sans-serif;
+}
+.membership{
+    margin: 5px 0 20px;
+}
+/* .membership > *{
+    margin: 5px 0 0px !important;
+} */
+.link{
+    padding: 15px 20px;
+    border-radius: 4px;
+    background-color: #ededee;
+    display: inline-block;
+}
+#active_copy{
+    position: relative;
+    padding: 12px 20px;
+    top: -4px;
+}
+.m-content .r-balance{
+    margin-bottom: 10px !important;
+}
+.history a{
+    padding: 10px 20px;
+    font-size: .9em;
+}
+.m-content .alert{
+    font-family: 'Cabin', sans-serif;
+    font-size: .9em;
+    margin-bottom: 20px;
+}
+.delete-link{
+    margin-top: 20px !important;
+    font-size: 1em;
+}
+.history-item{
+    font-family: 'Cabin', sans-serif;
+    font-size: .9em;
+    padding: 10px;
+    border-bottom: 1px solid black;
+    background-color: white !important;
+}
+.history-item:hover{
+    background-color: #d4d4d420 !important;
+}
+.history-item:active{
+    background-color: #e2e2e2 !important;
+}
+.tooltip *{
+    font-size: .98em !important;
+    font-family: 'Cabin', sans-serif !important;
+}
+.tool-info span{
+    border-radius: 0px 16px !important;
+    background-color: #01a2b4 !important;
+    padding: 8px !important;
+    border-radius: none !important ;
+}
+#showInfo{
+    font-size: .9em;
+    padding: 10px
+}
+#pay-by-qosic-card,#pay-by-stripe-card{
+    background-color: #6a5acd !important;
+    border: none !important;
+}
+#pay-by-qosic-card button:hover, #pay-by-qosic-card button:focus{
+    box-shadow: 0 0 0 3px #6a5acd70 !important;
+    border: none !important;
+}
+/* END */
+@media screen and (max-width: 1000px){
+    #menu{
+        left: -280px;
+    }
+    #content{
+        left: 0 !important;
+    }
+    #content{
+        width: 100%;
+    }
+}
+@media screen and (max-width: 700px){
+    .u-data > div{
+        display: block;
+        width: 100%;
+        margin-bottom: 20px;
+    }
+}
+@media screen and (max-width: 500px){
+    header{
+        padding: 10px;
+    }
+    header nav{
+        position: absolute;
+        right: 0px;
+    }
+    header nav > a{
+        padding: 8px 10px;
+        margin: 0px 5px;
+    }
+    header nav > a > img{
+        width: 28px;
+    }
+    .logo > img{
+        width: 150px;
+    }
+    .u-title{
+        padding: 14px 20px;
+    }
+    .modal-header{
+        padding: 10px 15px;
+    }
+    .modal-title{
+        font-size: 1em;
+    }
+    .modal-content{
+        width: 90%;
+        margin: auto;
+    }
+    .modal-body{
+        font-size: .9em;
+    }
+    .list-menu > a{
+        font-size: 1em;
+    }
+    #content{
+        padding: 80px 10px 20px;
+    }
+    .u-content{
+        padding: 18px 12px;
+    }
+    .page-title{
+        font-size: .8em;
+    }
+    .u-key{
+        font-size: .9em;
+    }
+    .u-value{
+        padding-left: 10px;
+    }
+    .u-value > span{
+        font-size: .82em;
+    }
+    .p-content .u-value{
+        padding-left: 0px;
+    }
+    .p-content .u-value > span{
+        font-size: .80em;
+        padding: 6px 10px;
+    }
+    .r-pack{
+        font-size: .9 !important;
+    }
+    .t-content{
+        padding: 20px;
+    }
+    .t-box > div,.history-item{
+        font-size: .8em;
+    }
+    .m-content .alert{
+        font-size: .8em;
+    }
+    .r-balance > span,.withdrawal *{
+        font-size: .9em !important;
+    }
+    .ling{
+        font-size: .86em;
+        padding: 10px 20px;
+    }
+    .tool-info span{
+        display: inline-block !important;
+        font-size: .8em !important;
+    }
+    #showInfo{
+        font-size: .8em !important;
+    }
+    .link{
+        display: block;
+    }
+    #active_copy{
+        padding: 6px 10px;
+        top: 2px;
+        font-size: .9em;
+    }
+    .delete-link{
+        max-width: 60%;
+        line-height: 17px !important;
+        padding: 8px 16px !important;
+    }
+}.tool-info span{
+    position: relative;
+    display: inline-block;
+    border: none;
+    background-color: #4f429b;
+    box-shadow: 0 0 12px rgba(0,0,0,.12);
+    font-size: .9em;
+    font-family: 'Cabin', sans-serif;
+    text-align: center;
+    border-radius: 4px;
+    padding: 10px 20px;
+    -webkit-transition: all 200ms ease;
+    transition: all 200ms ease;
+    -webkit-user-select: none;
+    user-select: none;
+    color: white;
+}
+.tool-info span i{
+    position: relative;
+    top: 1px;
+}
+.tool-info span:hover{
+    -webkit-transform: scale(1.02);
+    transform: scale(1.02);
+}
+.tool-info span:active{
+    -webkit-transform: scale(.98);
+    transform: scale(.98);
+}
+.ttb-title{
+    position: relative;
+    top: -30px;
+    display: inline-block;
+    background-color: white;
+    padding: 10px;
+    border-radius: 4px;
+    left: 10px;
+    box-shadow: 0 0 12px 0 rgba(0,0,0,.15);
+    font-family: 'Roboto Condensed', sans-serif;
+}
+form{
+    box-shadow: 0 0 12px 0 rgba(0,0,0,.15);
+    border-radius: 4px;
+    padding: 10px;
+    margin-top: 40px;
+}
+.form-test .ttb-title{
+    color: #0d6efd;
+    border: 1px solid #0d6efd;
+}
+.form-real .ttb-title{
+    color: #198754;
+    border: 1px solid #198754;
+}
+#form-create{
+    border: 1px solid #198754;
+}
+#form-update{
+    border: 1px solid #0d6efd;
+}
+#form-lock{
+    border: 1px solid #ff8900;
+}
+.info-cl{
+    padding: 0px !important;
+    border-radius: 4px;
+    margin: 0px auto 30px !important;
+}
+label{
+    font-size: .9em;
+    color: #555;
+}
+button > i{
+    position: relative;
+    top: 1px;
+}
+.ql-toolbar{
+    background-color: white !important;
+}
+#editor{
+    background-color: white;
+    font-size: .9em;
+    padding: 20px 0;
+    font-family: 'Roboto', sans-serif;
+}
+input{
+    font-size: .9em !important;
+    padding: 10px !important;
+    font-family: 'Roboto', sans-serif;
+}
+.popover-header{
+    font-size: .86em !important;
+    padding: 3px 10px 5px !important;
+    font-family: 'Cabin', sans-serif !important;
+    font-weight: bold !important;
+}
+.popover-body{
+    font-size: .8em !important;
+    padding: 10px !important;
+    font-family: 'Cabin', sans-serif !important;
+    letter-spacing: .5px !important;
+}
+.modal-footer{
+    font-size: .9em;
+}
+#data-box .modal-body > p{
+    padding: 10px;
+}
+#data-box .modal-body h2{
+    font-family: 'Roboto', sans-serif;
+    position: relative;
+    top: 10px;
+    font-size: 1.2em;
+    color: #0d6efd;
+    margin-bottom: 10px;
+}
+#data-box .modal-body .info{
+    font-family: 'Cabin', sans-serif !important;
+    font-size: .9em;
+    margin: 15px auto;
+    text-align: justify;
+}
+#data-box .modal-body > p p{
+    font-family: 'Cabin', sans-serif !important;
+    font-size: .9em;
+}
+.u-data > div{
+    padding-bottom: 20px !important;
+}
+.history-item{
+    background-color: #e2e2e275;
+    transition: all 200ms ease;
+}
+.history-item:hover{
+    background-color: #d4d4d4;
+}
+.history-item:active{
+    background-color: #e2e2e2;
+}
+.modal-footer{
+    justify-content: flex-start !important;
+}
+.ud-1 .u-title{
+    color: #0d6efd !important;
+}
+.ud-2 .u-title{
+    color: #ff9214 !important;
+}
+#messageInput{
+    position: relative;
+    top: -10px;
+    font-size: .8em;
+}
+#modal .modal-body > p{
+    font-size: .9em;
+    text-align: center;
+}
+#link-app{
+    font-family: 'Cabin', sans-serif !important;
+}
+.error-domain,.error-name{
+    font-size: .9em;
+    color: red;
+    font-style: italic;
+    display: none
+}
+textarea.form-control{
+    min-height: 100px !important;
+}
+#loading{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,.3);
+    z-index: 9999999;
+    text-align: center;
+    transition: all 200 ease;
+     visibility: hidden;
+    opacity: 0; 
+}
+#loading > button{
+    position: relative;
+    font-family: 'Cabin', sans-serif;
+    font-size: .9em;
+}
+.btn-group-action{
+    position: relative;
+    display: -webkit-box-flex;
+    display: -ms-flex;
+    display: flex;
+    -ms-flex-wrap: nowrap;
+    flex-wrap: nowrap;
+}
+.btn-group-action > a{
+    display: inline-block;
+    width: 48%;
+    line-height: 16px;
+    font-size: .96em;
+    padding: 10px;
+}
+.btn-group-action > .btn-1{
+    margin: 0px 1% 10px 0%;
+}
+.btn-group-action > .btn-2{
+    margin: 0px 0% 10px 1%;
+}
+#form-update select,#form-lock select{
+    font-family: 'Roboto', sans-serif !important;
+}
+#form-lock .d-grid > button{
+    flex: 1 auto;
+}
+@media screen and (max-width : 500px){
+    #data-box .modal-content{
+        width: 100% !important;
+    }
+    input,select,textarea{
+        font-size: .9em !important;
+    }
+    #editor{
+        background-color: white;
+        font-size: .9em;
+        padding: 10px 0
+    }
+    #data-box .modal-body{
+        padding: 16px 10px !important;
+    }
+    #data-box .modal-body > p{
+        padding: 6px !important;
+    }
+    .tool-info span{
+        display: block;
+        text-align: center;
+    }
+    #link-app{
+        font-size: .9em !important;
+    }
+}*[data-cursor=pointer]{
+                    cursor: pointer !important;
+                }    </style>
+    <script type="text/javascript">
+            window.$crisp = [];
+            window.CRISP_WEBSITE_ID = "b62eb39b-bbcc-4614-a58c-be86d5aa8775";
+            (function(){
+                d = document;
+                s = d.createElement("script");
+                s.src="https://client.crisp.chat/l.js";
+                s.async = 1; 
+                d.getElementsByTagName("head")[0].appendChild(s);
+            })();
+            $crisp.push(["set", "session:data", [[
+                ["user-balance", "0"],
+                ["user-ref-balance", "1000"],
+                ["user-id", "7053"]
+            ]]]);
+            $crisp.push(["set", "user:email", ["fabiollaguilaine784@gmail.com"]]);
+            $crisp.push(["set", "user:phone", ["+22998201610"]]);
+            
+            var crisp_timeout = false;
+            var crisp_count = 0;
+            
+            crisp_timeout = setInterval(function(){
+                if (!!document.querySelector(".cc-1si9v")){
+                    document.querySelector(".cc-1si9v").remove();
+                    clearInterval(crisp_timeout);
+                    return;
+                }
+                
+                crisp_count += 1;
+                
+                if (crisp_count == 60)
+                    clearInterval(crisp_timeout);
+            }, 1000)
+        </script><script src="./Flash Compte Pro v1 - Kitscms_files/l.js.téléchargement" async=""></script><link href="https://client.relay.crisp.chat/" rel="dns-prefetch" crossorigin=""><link href="https://client.crisp.chat/" rel="preconnect" crossorigin=""><script src="./Flash Compte Pro v1 - Kitscms_files/client_default_508c63f.js.téléchargement" type="module" async=""></script><link href="./Flash Compte Pro v1 - Kitscms_files/client_default_508c63f.css" type="text/css" rel="stylesheet"></head>
+<body class="" style="">
+    <!-- JavaScript Bundle with Popper -->
+    <script src="./Flash Compte Pro v1 - Kitscms_files/bootstrap.bundle.min.js.téléchargement" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
+        <div id="account">
+        <header>
+            <div class="box">
+                <a href="https://www.kitscms.com/account/" class="logo">
+                    <img src="./Flash Compte Pro v1 - Kitscms_files/logo.png" alt="Kitscms">
+                </a>
+                <nav>
+                    <a href="https://www.kitscms.com/account/?#menu" id="toggleMenu" data-cursor="pointer" title="Menu"><img src="./Flash Compte Pro v1 - Kitscms_files/menu.png"></a>
+                    <a href="https://www.kitscms.com/account/?get=tools" data-cursor="pointer" title="Outils"><img src="./Flash Compte Pro v1 - Kitscms_files/tools.png"></a>
+                </nav>
+            </div>
+        </header>
+        <section class="box">
+            <div id="menu">
+                <div class="user">
+                    <img src="./Flash Compte Pro v1 - Kitscms_files/user.png">
+                    <span class="balance" title="Crédit disponible" data-cursor="pointer"><i class="fi fi-rr-coins"></i> 0 Crédit(s)</span>
+                </div>
+                <div class="list-menu">
+                    <a href="https://www.kitscms.com/account/?get=account"><i class="fi fi-rr-user"></i> Mon compte<i class="bi bi-arrow-right-short"></i></a>
+                    <a href="https://www.kitscms.com/account/?get=refill"><i class="fi fi-rr-credit-card"></i> Recharge<i class="bi bi-arrow-right-short"></i></a>
+                    <a href="https://www.kitscms.com/account/?get=tools" style="border-left:5px solid #4285f4 !important"><i class="fi fi-rr-tool-box"></i> Outils<i class="bi bi-arrow-right-short"></i></a>
+                    <a href="https://www.kitscms.com/account/?get=prices"><i class="fi fi-rr-tags"></i> Tarifs<i class="bi bi-arrow-right-short"></i></a>
+                    <a href="https://www.kitscms.com/account/?get=membership"><i class="fi fi-br-users-alt"></i> Affiliation<i class="bi bi-arrow-right-short"></i></a>
+                    <a href="https://www.kitscms.com/account/?logout=true"><i class="fi fi-br-sign-out-alt"></i> Déconnexion<i class="bi bi-arrow-right-short"></i></a>
+                </div>
+            </div>
+            <div id="content">
+                <div class="tools-box">
+                    <div class="page-title">
+                        <a href="https://www.kitscms.com/account/"><i class="fi fi-rr-home"></i></a>
+                        &nbsp;<i class="fi fi-rr-angle-right"></i>&nbsp;
+                        <a href="https://www.kitscms.com/account/?get=tools"><i class="fi fi-rr-tool-box"></i> Outils</a>
+                        &nbsp;<i class="fi fi-rr-angle-right"></i>&nbsp;
+                        <a href="https://www.kitscms.com/account/tools/flash-account-v1/"><i class="fi fi-rr-data-transfer"></i> Flash Compte Pro v1</a>
+                    </div>
+                    <div class="u-data">
+                        <div class="ud-1">
+                            <div class="u-title">
+                                <span><i class="fi fi-rr-data-transfer"></i> Flash Compte Pro v1
+                            </span></div>  
+                            <div class="u-content">
+                                <p class="r-balance">
+                                    <span>Crédit(s) disponible : <b>0</b></span>
+                                    <span class="r-about" data-cursor="pointer" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-html="true" tabindex="0">à savoir</span>
+                                </p>
+                                <p class="tool-info" style="display:none">
+                                    <span data-cursor="pointer">
+                                        <i class="fi fi-rr-info"></i> Utilité et Fonctionnement<i class="bi bi-arrow-right-short"></i>
+                                    </span>  
+                                    </p><div class="tool-info-data" style="display:none !important">
+                                        <div>
+                                            <h2>Utilité</h2>
+                                            <p class="info">
+                                                
+                                            </p>
+                                            <h2>Fonctionnement</h2>
+                                            <p class="info">
+                                                
+                                            </p>
+                                        </div>
+                                    </div> 
+                                <p></p>
+                                <form method="GET" action="https://www.kitscms.com/account/tools/flash-account-v1/" class="form-test" style="margin-top:20px">
+                                    <br>
+                                    <div class="alert alert-warning" role="alert" id="showInfo" style="display:none"> 
+                                        <p style="margin:0 !important"><i class="bi bi-bell"></i> Nous avons été contraints de mettre à jour les liens de vos accès flash compte v1. Veuillez désormais utiliser les nouveaux liens.
+                                    </p></div>
+                                    <div class="alert alert-primary" role="alert" id="showInfo"> 
+                                        <p><i class="bi bi-info-circle"></i> Cet outil vous permet de créer des <b>accès flash compte v1</b> pour vos clients à l'international. Les fonctionnalités et opérations disponibles dans le compte : <b>(Solde de compte, Crédit/Débit de compte, Remboursement de solde, Carte virtuelle, Virement, Profil client, Alerte par sms et par e-mail en temps réel).</b></p>
+                                        <b>NB :</b> Un accès <b>flash compte pro v1</b> doit être créé pour un <b>client</b>. Cet outil est payant (4000 crédits pour un accès client, 1000 crédits pour les alertes par SMS, les alertes par e-mail sont gratuites).
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="telephone" class="form-label">Votre lien de test personnel :</label>
+                                        <div class="form-control" id="link-app" style="text-align:center;background-color:#e2e2e2;padding:10px">https://transferwireworld.com/?c=test.NzA1Mw==&amp;hash=ok</div>
+                                    </div>
+                                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                                        <a href="https://transferwireworld.com/?c=test.7053" class="btn btn-primary" target="blank">Tester le système flash compte v1 <i class="bi bi-arrow-right-short"></i></a>
+                                    </div>
+                                    <br>
+                                </form>
+                                <form method="POST" action="https://www.kitscms.com/account/tools/flash-account-v1/" class="form-real" id="form-create">
+                                    <div class="ttb-title"><i class="fi fi-br-layer-plus"></i> Créer un accès flash compte client v1</div>
+                                    <div class="info-cl">
+                                        <label for="info-cl" class="form-label" style="font-size:1em !important;color:black !important">Informations sur le client :</label>
+                                        <div class="row" style="margin-bottom:20px !important">
+                                            <div class="col">
+                                                <label for="lastname" class="form-label">Nom . <i style="color:red">requis</i></label>
+                                                <input type="text" class="form-control" placeholder="*********" autocapitalize="words" id="lastname" name="lastname" required="">
+                                            </div>
+                                            <div class="col">
+                                                <label for="firstname" class="form-label">Prénom . <i style="color:red">requis</i></label>
+                                                <input type="text" class="form-control" placeholder="**********" autocapitalize="words" id="firstname" name="firstname" required="">
+                                            </div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="country" class="form-label">Pays de résidence  . <i style="color:red">requis</i></label>
+                                            <select class="form-select" name="country" required="" id="country">
+                                                <option disabled="" selected="">Sélectionnez un pays</option>
+                                                <option value="Afghanistan (+93)" data-tel="+93" data-code="AF">🇦🇫 Afghanistan (+93)</option><option value="Afrique du Sud (+27)" data-tel="+27" data-code="ZA">🇿🇦 Afrique du Sud (+27)</option><option value="Albanie (+355)" data-tel="+355" data-code="AL">🇦🇱 Albanie (+355)</option><option value="Algérie (+213)" data-tel="+213" data-code="DZ">🇩🇿 Algérie (+213)</option><option value="Allemagne (+49)" data-tel="+49" data-code="DE">🇩🇪 Allemagne (+49)</option><option value="Andorre (+376)" data-tel="+376" data-code="AD">🇦🇩 Andorre (+376)</option><option value="Angola (+244)" data-tel="+244" data-code="AO">🇦🇴 Angola (+244)</option><option value="Anguilla (+1264)" data-tel="+1264" data-code="AI">🇦🇮 Anguilla (+1264)</option><option value="Antarctique (+672)" data-tel="+672" data-code="AQ">🇦🇶 Antarctique (+672)</option><option value="Antigua-et-Barbuda (+1268)" data-tel="+1268" data-code="AG">🇦🇬 Antigua-et-Barbuda (+1268)</option><option value="Arabie saoudite (+966)" data-tel="+966" data-code="SA">🇸🇦 Arabie saoudite (+966)</option><option value="Argentine (+54)" data-tel="+54" data-code="AR">🇦🇷 Argentine (+54)</option><option value="Arménie (+374)" data-tel="+374" data-code="AM">🇦🇲 Arménie (+374)</option><option value="Aruba (+297)" data-tel="+297" data-code="AW">🇦🇼 Aruba (+297)</option><option value="Australie (+61)" data-tel="+61" data-code="AU">🇦🇺 Australie (+61)</option><option value="Autriche (+43)" data-tel="+43" data-code="AT">🇦🇹 Autriche (+43)</option><option value="Azerbaïdjan (+994)" data-tel="+994" data-code="AZ">🇦🇿 Azerbaïdjan (+994)</option><option value="Bahamas (+1242)" data-tel="+1242" data-code="BS">🇧🇸 Bahamas (+1242)</option><option value="Bahreïn (+973)" data-tel="+973" data-code="BH">🇧🇭 Bahreïn (+973)</option><option value="Bangladesh (+880)" data-tel="+880" data-code="BD">🇧🇩 Bangladesh (+880)</option><option value="Barbade (+1246)" data-tel="+1246" data-code="BB">🇧🇧 Barbade (+1246)</option><option value="Belgique (+32)" data-tel="+32" data-code="BE">🇧🇪 Belgique (+32)</option><option value="Belize (+501)" data-tel="+501" data-code="BZ">🇧🇿 Belize (+501)</option><option value="Bermudes (+1441)" data-tel="+1441" data-code="BM">🇧🇲 Bermudes (+1441)</option><option value="Bhoutan (+975)" data-tel="+975" data-code="BT">🇧🇹 Bhoutan (+975)</option><option value="Bolivie (+591)" data-tel="+591" data-code="BO">🇧🇴 Bolivie (+591)</option><option value="Bonaire, Saint Eustache et Saba (+599)" data-tel="+599" data-code="BQ">🇧🇶 Bonaire, Saint Eustache et Saba (+599)</option><option value="Bosnie-Herzégovine (+387)" data-tel="+387" data-code="BA">🇧🇦 Bosnie-Herzégovine (+387)</option><option value="Botswana (+267)" data-tel="+267" data-code="BW">🇧🇼 Botswana (+267)</option><option value="Brunéi Darussalam (+673)" data-tel="+673" data-code="BN">🇧🇳 Brunéi Darussalam (+673)</option><option value="Brésil (+55)" data-tel="+55" data-code="BR">🇧🇷 Brésil (+55)</option><option value="Bulgarie (+359)" data-tel="+359" data-code="BG">🇧🇬 Bulgarie (+359)</option><option value="Burkina Faso (+226)" data-tel="+226" data-code="BF">🇧🇫 Burkina Faso (+226)</option><option value="Burundi (+257)" data-tel="+257" data-code="BI">🇧🇮 Burundi (+257)</option><option value="Bélarus (+375)" data-tel="+375" data-code="BY">🇧🇾 Bélarus (+375)</option><option value="Bénin (+229)" data-tel="+229" data-code="BJ">🇧🇯 Bénin (+229)</option><option value="Cambodge (+855)" data-tel="+855" data-code="KH">🇰🇭 Cambodge (+855)</option><option value="Cameroun (+237)" data-tel="+237" data-code="CM">🇨🇲 Cameroun (+237)</option><option value="Canada (+1)" data-tel="+1" data-code="CA">🇨🇦 Canada (+1)</option><option value="Cap-Vert (+238)" data-tel="+238" data-code="CV">🇨🇻 Cap-Vert (+238)</option><option value="Chili (+56)" data-tel="+56" data-code="CL">🇨🇱 Chili (+56)</option><option value="Chine (+86)" data-tel="+86" data-code="CN">🇨🇳 Chine (+86)</option><option value="Chypre (+357)" data-tel="+357" data-code="CY">🇨🇾 Chypre (+357)</option><option value="Colombie (+57)" data-tel="+57" data-code="CO">🇨🇴 Colombie (+57)</option><option value="Comores (+269)" data-tel="+269" data-code="KM">🇰🇲 Comores (+269)</option><option value="Congo-Brazzaville (+242)" data-tel="+242" data-code="CG">🇨🇬 Congo-Brazzaville (+242)</option><option value="Corée du Nord (+850)" data-tel="+850" data-code="KP">🇰🇵 Corée du Nord (+850)</option><option value="Corée du Sud (+82)" data-tel="+82" data-code="KR">🇰🇷 Corée du Sud (+82)</option><option value="Costa Rica (+506)" data-tel="+506" data-code="CR">🇨🇷 Costa Rica (+506)</option><option value="Croatie (+385)" data-tel="+385" data-code="HR">🇭🇷 Croatie (+385)</option><option value="Cuba (+53)" data-tel="+53" data-code="CU">🇨🇺 Cuba (+53)</option><option value="Curacao (+599)" data-tel="+599" data-code="CW">🇨🇼 Curacao (+599)</option><option value="Côte d’Ivoire (+225)" data-tel="+225" data-code="CI">🇨🇮 Côte d’Ivoire (+225)</option><option value="Danemark (+45)" data-tel="+45" data-code="DK">🇩🇰 Danemark (+45)</option><option value="Djibouti (+253)" data-tel="+253" data-code="DJ">🇩🇯 Djibouti (+253)</option><option value="Dominique (+1767)" data-tel="+1767" data-code="DM">🇩🇲 Dominique (+1767)</option><option value="Égypte (+20)" data-tel="+20" data-code="EG">🇪🇬 Égypte (+20)</option><option value="El Salvador (+503)" data-tel="+503" data-code="SV">🇸🇻 El Salvador (+503)</option><option value="Émirats arabes unis (+971)" data-tel="+971" data-code="AE">🇦🇪 Émirats arabes unis (+971)</option><option value="Équateur (+593)" data-tel="+593" data-code="EC">🇪🇨 Équateur (+593)</option><option value="Érythrée (+291)" data-tel="+291" data-code="ER">🇪🇷 Érythrée (+291)</option><option value="Espagne (+34)" data-tel="+34" data-code="ES">🇪🇸 Espagne (+34)</option><option value="Estonie (+372)" data-tel="+372" data-code="EE">🇪🇪 Estonie (+372)</option><option value="État de la Cité du Vatican (+379)" data-tel="+379" data-code="VA">🇻🇦 État de la Cité du Vatican (+379)</option><option value="États fédérés de Micronésie (+691)" data-tel="+691" data-code="FM">🇫🇲 États fédérés de Micronésie (+691)</option><option value="États-Unis (+1)" data-tel="+1" data-code="US">🇺🇸 États-Unis (+1)</option><option value="Éthiopie (+251)" data-tel="+251" data-code="ET">🇪🇹 Éthiopie (+251)</option><option value="Fidji (+679)" data-tel="+679" data-code="FJ">🇫🇯 Fidji (+679)</option><option value="Finlande (+358)" data-tel="+358" data-code="FI">🇫🇮 Finlande (+358)</option><option value="France (+33)" data-tel="+33" data-code="FR" selected="">🇫🇷 France (+33)</option><option value="Gabon (+241)" data-tel="+241" data-code="GA">🇬🇦 Gabon (+241)</option><option value="Gambie (+220)" data-tel="+220" data-code="GM">🇬🇲 Gambie (+220)</option><option value="Ghana (+233)" data-tel="+233" data-code="GH">🇬🇭 Ghana (+233)</option><option value="Gibraltar (+350)" data-tel="+350" data-code="GI">🇬🇮 Gibraltar (+350)</option><option value="Grenade (+1473)" data-tel="+1473" data-code="GD">🇬🇩 Grenade (+1473)</option><option value="Groenland (+299)" data-tel="+299" data-code="GL">🇬🇱 Groenland (+299)</option><option value="Grèce (+30)" data-tel="+30" data-code="GR">🇬🇷 Grèce (+30)</option><option value="Guadeloupe (+590)" data-tel="+590" data-code="GP">🇬🇵 Guadeloupe (+590)</option><option value="Guam (+1671)" data-tel="+1671" data-code="GU">🇬🇺 Guam (+1671)</option><option value="Guatemala (+502)" data-tel="+502" data-code="GT">🇬🇹 Guatemala (+502)</option><option value="Guernesey (+44)" data-tel="+44" data-code="GG">🇬🇬 Guernesey (+44)</option><option value="Guinée (+224)" data-tel="+224" data-code="GN">🇬🇳 Guinée (+224)</option><option value="Guinée équatoriale (+240)" data-tel="+240" data-code="GQ">🇬🇶 Guinée équatoriale (+240)</option><option value="Guinée-Bissau (+245)" data-tel="+245" data-code="GW">🇬🇼 Guinée-Bissau (+245)</option><option value="Guyana (+592)" data-tel="+592" data-code="GY">🇬🇾 Guyana (+592)</option><option value="Guyane française (+594)" data-tel="+594" data-code="GF">🇬🇫 Guyane française (+594)</option><option value="Géorgie (+995)" data-tel="+995" data-code="GE">🇬🇪 Géorgie (+995)</option><option value="Géorgie du Sud et les îles Sandwich du Sud (+500)" data-tel="+500" data-code="GS">🇬🇸 Géorgie du Sud et les îles Sandwich du Sud (+500)</option><option value="Haïti (+509)" data-tel="+509" data-code="HT">🇭🇹 Haïti (+509)</option><option value="Honduras (+504)" data-tel="+504" data-code="HN">🇭🇳 Honduras (+504)</option><option value="Hongrie (+36)" data-tel="+36" data-code="HU">🇭🇺 Hongrie (+36)</option><option value="Île Bouvet (+47)" data-tel="+47" data-code="BV">🇧🇻 Île Bouvet (+47)</option><option value="Île Christmas (+61)" data-tel="+61" data-code="CX">🇨🇽 Île Christmas (+61)</option><option value="Île Norfolk (+672)" data-tel="+672" data-code="NF">🇳🇫 Île Norfolk (+672)</option><option value="Île de Man (+44)" data-tel="+44" data-code="IM">🇮🇲 Île de Man (+44)</option><option value="Îles Caïmans (+1345)" data-tel="+1345" data-code="KY">🇰🇾 Îles Caïmans (+1345)</option><option value="Îles Cocos - Keeling (+61)" data-tel="+61" data-code="CC">🇨🇨 Îles Cocos - Keeling (+61)</option><option value="Îles Cook (+682)" data-tel="+682" data-code="CK">🇨🇰 Îles Cook (+682)</option><option value="Îles Féroé (+298)" data-tel="+298" data-code="FO">🇫🇴 Îles Féroé (+298)</option><option value="Îles Heard et MacDonald (+577)" data-tel="+577" data-code="HM">🇭🇲 Îles Heard et MacDonald (+577)</option><option value="Îles Malouines (+500)" data-tel="+500" data-code="FK">🇫🇰 Îles Malouines (+500)</option><option value="Îles Mariannes du Nord (+1670)" data-tel="+1670" data-code="MP">🇲🇵 Îles Mariannes du Nord (+1670)</option><option value="Îles Marshall (+692)" data-tel="+692" data-code="MH">🇲🇭 Îles Marshall (+692)</option><option value="Îles Mineures Éloignées des États-Unis (+1)" data-tel="+1" data-code="UM">🇺🇲 Îles Mineures Éloignées des États-Unis (+1)</option><option value="Îles Salomon (+677)" data-tel="+677" data-code="SB">🇸🇧 Îles Salomon (+677)</option><option value="Îles Turks et Caïques (+1649)" data-tel="+1649" data-code="TC">🇹🇨 Îles Turks et Caïques (+1649)</option><option value="Îles Vierges britanniques (+1284)" data-tel="+1284" data-code="VG">🇻🇬 Îles Vierges britanniques (+1284)</option><option value="Îles Vierges des États-Unis (+1340)" data-tel="+1340" data-code="VI">🇻🇮 Îles Vierges des États-Unis (+1340)</option><option value="Îles Åland (+358)" data-tel="+358" data-code="AX">🇦🇽 Îles Åland (+358)</option><option value="Inde (+91)" data-tel="+91" data-code="IN">🇮🇳 Inde (+91)</option><option value="Indonésie (+62)" data-tel="+62" data-code="ID">🇮🇩 Indonésie (+62)</option><option value="Irak (+964)" data-tel="+964" data-code="IQ">🇮🇶 Irak (+964)</option><option value="Iran (+98)" data-tel="+98" data-code="IR">🇮🇷 Iran (+98)</option><option value="Irlande (+353)" data-tel="+353" data-code="IE">🇮🇪 Irlande (+353)</option><option value="Islande (+354)" data-tel="+354" data-code="IS">🇮🇸 Islande (+354)</option><option value="Israël (+972)" data-tel="+972" data-code="IL">🇮🇱 Israël (+972)</option><option value="Italie (+39)" data-tel="+39" data-code="IT">🇮🇹 Italie (+39)</option><option value="Jamaïque (+1876)" data-tel="+1876" data-code="JM">🇯🇲 Jamaïque (+1876)</option><option value="Japon (+81)" data-tel="+81" data-code="JP">🇯🇵 Japon (+81)</option><option value="Jersey (+44)" data-tel="+44" data-code="JE">🇯🇪 Jersey (+44)</option><option value="Jordanie (+962)" data-tel="+962" data-code="JO">🇯🇴 Jordanie (+962)</option><option value="Kazakhstan (+7)" data-tel="+7" data-code="KZ">🇰🇿 Kazakhstan (+7)</option><option value="Kenya (+254)" data-tel="+254" data-code="KE">🇰🇪 Kenya (+254)</option><option value="Kirghizistan (+996)" data-tel="+996" data-code="KG">🇰🇬 Kirghizistan (+996)</option><option value="Kiribati (+686)" data-tel="+686" data-code="KI">🇰🇮 Kiribati (+686)</option><option value="Kosovo (+383)" data-tel="+383" data-code="XK">🇽🇰 Kosovo (+383)</option><option value="Koweït (+965)" data-tel="+965" data-code="KW">🇰🇼 Koweït (+965)</option><option value="Laos (+856)" data-tel="+856" data-code="LA">🇱🇦 Laos (+856)</option><option value="Lesotho (+266)" data-tel="+266" data-code="LS">🇱🇸 Lesotho (+266)</option><option value="Lettonie (+371)" data-tel="+371" data-code="LV">🇱🇻 Lettonie (+371)</option><option value="Liban (+961)" data-tel="+961" data-code="LB">🇱🇧 Liban (+961)</option><option value="Libye (+218)" data-tel="+218" data-code="LY">🇱🇾 Libye (+218)</option><option value="Libéria (+231)" data-tel="+231" data-code="LR">🇱🇷 Libéria (+231)</option><option value="Liechtenstein (+423)" data-tel="+423" data-code="LI">🇱🇮 Liechtenstein (+423)</option><option value="Lituanie (+370)" data-tel="+370" data-code="LT">🇱🇹 Lituanie (+370)</option><option value="Luxembourg (+352)" data-tel="+352" data-code="LU">🇱🇺 Luxembourg (+352)</option><option value="Macédoine (+389)" data-tel="+389" data-code="MK">🇲🇰 Macédoine (+389)</option><option value="Madagascar (+261)" data-tel="+261" data-code="MG">🇲🇬 Madagascar (+261)</option><option value="Malaisie (+60)" data-tel="+60" data-code="MY">🇲🇾 Malaisie (+60)</option><option value="Malawi (+265)" data-tel="+265" data-code="MW">🇲🇼 Malawi (+265)</option><option value="Maldives (+960)" data-tel="+960" data-code="MV">🇲🇻 Maldives (+960)</option><option value="Mali (+223)" data-tel="+223" data-code="ML">🇲🇱 Mali (+223)</option><option value="Malte (+356)" data-tel="+356" data-code="MT">🇲🇹 Malte (+356)</option><option value="Maroc (+212)" data-tel="+212" data-code="MA">🇲🇦 Maroc (+212)</option><option value="Martinique (+596)" data-tel="+596" data-code="MQ">🇲🇶 Martinique (+596)</option><option value="Maurice (+230)" data-tel="+230" data-code="MU">🇲🇺 Maurice (+230)</option><option value="Mauritanie (+222)" data-tel="+222" data-code="MR">🇲🇷 Mauritanie (+222)</option><option value="Mayotte (+262)" data-tel="+262" data-code="YT">🇾🇹 Mayotte (+262)</option><option value="Mexique (+52)" data-tel="+52" data-code="MX">🇲🇽 Mexique (+52)</option><option value="Moldavie (+373)" data-tel="+373" data-code="MD">🇲🇩 Moldavie (+373)</option><option value="Monaco (+377)" data-tel="+377" data-code="MC">🇲🇨 Monaco (+377)</option><option value="Mongolie (+976)" data-tel="+976" data-code="MN">🇲🇳 Mongolie (+976)</option><option value="Montserrat (+354)" data-tel="+354" data-code="MS">🇲🇸 Montserrat (+354)</option><option value="Monténégro (+382)" data-tel="+382" data-code="ME">🇲🇪 Monténégro (+382)</option><option value="Mozambique (+258)" data-tel="+258" data-code="MZ">🇲🇿 Mozambique (+258)</option><option value="Myanmar (+95)" data-tel="+95" data-code="MM">🇲🇲 Myanmar (+95)</option><option value="Namibie (+264)" data-tel="+264" data-code="NA">🇳🇦 Namibie (+264)</option><option value="Nauru (+674)" data-tel="+674" data-code="NR">🇳🇷 Nauru (+674)</option><option value="Nicaragua (+505)" data-tel="+505" data-code="NI">🇳🇮 Nicaragua (+505)</option><option value="Niger (+227)" data-tel="+227" data-code="NE">🇳🇪 Niger (+227)</option><option value="Nigéria (+234)" data-tel="+234" data-code="NG">🇳🇬 Nigéria (+234)</option><option value="Niue (+683)" data-tel="+683" data-code="NU">🇳🇺 Niue (+683)</option><option value="Norvège (+47)" data-tel="+47" data-code="NO">🇳🇴 Norvège (+47)</option><option value="Nouvelle-Calédonie (+687)" data-tel="+687" data-code="NC">🇳🇨 Nouvelle-Calédonie (+687)</option><option value="Nouvelle-Zélande (+64)" data-tel="+64" data-code="NZ">🇳🇿 Nouvelle-Zélande (+64)</option><option value="Népal (+977)" data-tel="+977" data-code="NP">🇳🇵 Népal (+977)</option><option value="Oman (+968)" data-tel="+968" data-code="OM">🇴🇲 Oman (+968)</option><option value="Ouganda (+256)" data-tel="+256" data-code="UG">🇺🇬 Ouganda (+256)</option><option value="Ouzbékistan (+998)" data-tel="+998" data-code="UZ">🇺🇿 Ouzbékistan (+998)</option><option value="Pakistan (+92)" data-tel="+92" data-code="PK">🇵🇰 Pakistan (+92)</option><option value="Palaos (+680)" data-tel="+680" data-code="PW">🇵🇼 Palaos (+680)</option><option value="Panama (+507)" data-tel="+507" data-code="PA">🇵🇦 Panama (+507)</option><option value="Papouasie-Nouvelle-Guinée (+675)" data-tel="+675" data-code="PG">🇵🇬 Papouasie-Nouvelle-Guinée (+675)</option><option value="Paraguay (+595)" data-tel="+595" data-code="PY">🇵🇾 Paraguay (+595)</option><option value="Pays-Bas (+31)" data-tel="+31" data-code="NL">🇳🇱 Pays-Bas (+31)</option><option value="Philippines (+63)" data-tel="+63" data-code="PH">🇵🇭 Philippines (+63)</option><option value="Pitcairn (+672)" data-tel="+672" data-code="PN">🇵🇳 Pitcairn (+672)</option><option value="Pologne (+48)" data-tel="+48" data-code="PL">🇵🇱 Pologne (+48)</option><option value="Polynésie française (+689)" data-tel="+689" data-code="PF">🇵🇫 Polynésie française (+689)</option><option value="Porto Rico (+1)" data-tel="+1" data-code="PR">🇵🇷 Porto Rico (+1)</option><option value="Portugal (+351)" data-tel="+351" data-code="PT">🇵🇹 Portugal (+351)</option><option value="Pérou (+51)" data-tel="+51" data-code="PE">🇵🇪 Pérou (+51)</option><option value="Qatar (+974)" data-tel="+974" data-code="QA">🇶🇦 Qatar (+974)</option><option value="R.A.S. chinoise de Hong Kong (+852)" data-tel="+852" data-code="HK">🇭🇰 R.A.S. chinoise de Hong Kong (+852)</option><option value="R.A.S. chinoise de Macao (+853)" data-tel="+853" data-code="MO">🇲🇴 R.A.S. chinoise de Macao (+853)</option><option value="Roumanie (+40)" data-tel="+40" data-code="RO">🇷🇴 Roumanie (+40)</option><option value="Royaume-Uni (+44)" data-tel="+44" data-code="GB">🇬🇧 Royaume-Uni (+44)</option><option value="Russie (+7)" data-tel="+7" data-code="RU">🇷🇺 Russie (+7)</option><option value="Rwanda (+250)" data-tel="+250" data-code="RW">🇷🇼 Rwanda (+250)</option><option value="République centrafricaine (+236)" data-tel="+236" data-code="CF">🇨🇫 République centrafricaine (+236)</option><option value="République dominicaine (+1)" data-tel="+1" data-code="DO">🇩🇴 République dominicaine (+1)</option><option value="République démocratique du Congo (+243)" data-tel="+243" data-code="CD">🇨🇩 République démocratique du Congo (+243)</option><option value="République tchèque (+420)" data-tel="+420" data-code="CZ">🇨🇿 République tchèque (+420)</option><option value="Réunion (+262)" data-tel="+262" data-code="RE">🇷🇪 Réunion (+262)</option><option value="Sahara occidental (+212)" data-tel="+212" data-code="EH">🇪🇭 Sahara occidental (+212)</option><option value="Saint-Barthélémy (+590)" data-tel="+590" data-code="BL">🇧🇱 Saint-Barthélémy (+590)</option><option value="Saint-Kitts-et-Nevis (+1869)" data-tel="+1869" data-code="KN">🇰🇳 Saint-Kitts-et-Nevis (+1869)</option><option value="Saint-Marin (+378)" data-tel="+378" data-code="SM">🇸🇲 Saint-Marin (+378)</option><option value="Saint-Martin (+590)" data-tel="+590" data-code="MF">🇲🇫 Saint-Martin (+590)</option><option value="Saint-Martin (+1721)" data-tel="+1721" data-code="SX">🇸🇽 Saint-Martin (+1721)</option><option value="Saint-Pierre-et-Miquelon (+508)" data-tel="+508" data-code="PM">🇵🇲 Saint-Pierre-et-Miquelon (+508)</option><option value="Saint-Vincent-et-les Grenadines (+1784)" data-tel="+1784" data-code="VC">🇻🇨 Saint-Vincent-et-les Grenadines (+1784)</option><option value="Sainte-Hélène (+290)" data-tel="+290" data-code="SH">🇸🇭 Sainte-Hélène (+290)</option><option value="Sainte-Lucie (+358)" data-tel="+358" data-code="LC">🇱🇨 Sainte-Lucie (+358)</option><option value="Samoa (+685)" data-tel="+685" data-code="WS">🇼🇸 Samoa (+685)</option><option value="Samoa américaines (+1684)" data-tel="+1684" data-code="AS">🇦🇸 Samoa américaines (+1684)</option><option value="Sao Tomé-et-Principe (+239)" data-tel="+239" data-code="ST">🇸🇹 Sao Tomé-et-Principe (+239)</option><option value="Serbie (+381)" data-tel="+381" data-code="RS">🇷🇸 Serbie (+381)</option><option value="Seychelles (+248)" data-tel="+248" data-code="SC">🇸🇨 Seychelles (+248)</option><option value="Sierra Leone (+232)" data-tel="+232" data-code="SL">🇸🇱 Sierra Leone (+232)</option><option value="Singapour (+65)" data-tel="+65" data-code="SG">🇸🇬 Singapour (+65)</option><option value="Slovaquie (+421)" data-tel="+421" data-code="SK">🇸🇰 Slovaquie (+421)</option><option value="Slovénie (+386)" data-tel="+386" data-code="SI">🇸🇮 Slovénie (+386)</option><option value="Somalie (+252)" data-tel="+252" data-code="SO">🇸🇴 Somalie (+252)</option><option value="Soudan (+249)" data-tel="+249" data-code="SD">🇸🇩 Soudan (+249)</option><option value="Soudan du sud (+211)" data-tel="+211" data-code="SS">🇸🇸 Soudan du sud (+211)</option><option value="Sri Lanka (+94)" data-tel="+94" data-code="LK">🇱🇰 Sri Lanka (+94)</option><option value="Suisse (+41)" data-tel="+41" data-code="CH">🇨🇭 Suisse (+41)</option><option value="Suriname (+597)" data-tel="+597" data-code="SR">🇸🇷 Suriname (+597)</option><option value="Suède (+46)" data-tel="+46" data-code="SE">🇸🇪 Suède (+46)</option><option value="Svalbard et Île Jan Mayen (+47)" data-tel="+47" data-code="SJ">🇸🇯 Svalbard et Île Jan Mayen (+47)</option><option value="Swaziland (+268)" data-tel="+268" data-code="SZ">🇸🇿 Swaziland (+268)</option><option value="Syrie (+963)" data-tel="+963" data-code="SY">🇸🇾 Syrie (+963)</option><option value="Sénégal (+221)" data-tel="+221" data-code="SN">🇸🇳 Sénégal (+221)</option><option value="Tadjikistan (+992)" data-tel="+992" data-code="TJ">🇹🇯 Tadjikistan (+992)</option><option value="Tanzanie (+255)" data-tel="+255" data-code="TZ">🇹🇿 Tanzanie (+255)</option><option value="Taïwan (+886)" data-tel="+886" data-code="TW">🇹🇼 Taïwan (+886)</option><option value="Tchad (+235)" data-tel="+235" data-code="TD">🇹🇩 Tchad (+235)</option><option value="Terres australes françaises (+262)" data-tel="+262" data-code="TF">🇹🇫 Terres australes françaises (+262)</option><option value="Territoire britannique de l&#39;océan Indien (+246)" data-tel="+246" data-code="IO">🇮🇴 Territoire britannique de l'océan Indien (+246)</option><option value="Territoire palestinien (+970)" data-tel="+970" data-code="PS">🇵🇸 Territoire palestinien (+970)</option><option value="Thaïlande (+66)" data-tel="+66" data-code="TH">🇹🇭 Thaïlande (+66)</option><option value="Timor oriental (+670)" data-tel="+670" data-code="TL">🇹🇱 Timor oriental (+670)</option><option value="Togo (+228)" data-tel="+228" data-code="TG">🇹🇬 Togo (+228)</option><option value="Tokelau (+690)" data-tel="+690" data-code="TK">🇹🇰 Tokelau (+690)</option><option value="Tonga (+676)" data-tel="+676" data-code="TO">🇹🇴 Tonga (+676)</option><option value="Trinité-et-Tobago (+1868)" data-tel="+1868" data-code="TT">🇹🇹 Trinité-et-Tobago (+1868)</option><option value="Tunisie (+216)" data-tel="+216" data-code="TN">🇹🇳 Tunisie (+216)</option><option value="Turkménistan (+993)" data-tel="+993" data-code="TM">🇹🇲 Turkménistan (+993)</option><option value="Turquie (+90)" data-tel="+90" data-code="TR">🇹🇷 Turquie (+90)</option><option value="Tuvalu (+688)" data-tel="+688" data-code="TV">🇹🇻 Tuvalu (+688)</option><option value="Ukraine (+380)" data-tel="+380" data-code="UA">🇺🇦 Ukraine (+380)</option><option value="Uruguay (+598)" data-tel="+598" data-code="UY">🇺🇾 Uruguay (+598)</option><option value="Vanuatu (+678)" data-tel="+678" data-code="VU">🇻🇺 Vanuatu (+678)</option><option value="Venezuela (+58)" data-tel="+58" data-code="VE">🇻🇪 Venezuela (+58)</option><option value="Viêt Nam (+84)" data-tel="+84" data-code="VN">🇻🇳 Viêt Nam (+84)</option><option value="Wallis-et-Futuna (+681)" data-tel="+681" data-code="WF">🇼🇫 Wallis-et-Futuna (+681)</option><option value="Yémen (+967)" data-tel="+967" data-code="YE">🇾🇪 Yémen (+967)</option><option value="Zambie (+260)" data-tel="+260" data-code="ZM">🇿🇲 Zambie (+260)</option><option value="Zimbabwe (+263)" data-tel="+263" data-code="ZW">🇿🇼 Zimbabwe (+263)</option>                                            </select>
+                                        </div>
+                                        <div class="row" style="margin-bottom:20px !important">
+                                            <div class="col">
+                                                <label for="tel" class="form-label">Numéro de téléphone  . <i style="color:red">requis</i></label>
+                                                <input type="tel" class="form-control" id="telephone" placeholder="**********" name="telephone" required="" data-bs-toggle="popover" data-bs-trigger="focus" data-bs-content="Le numéro de téléphone de votre client doit être au format international. Ex : +XXXXXXXXXX" data-bs-placement="top" data-bs-original-title="Numéro de téléphone" aria-label="Numéro de téléphone">
+                                            </div>
+                                            <div class="col">
+                                                <label for="email" class="form-label">Adresse e-mail  . <i style="color:red">requis</i></label>
+                                                <input type="email" class="form-control" id="email" placeholder="**********" name="email" required="">
+                                            </div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="adress-home" class="form-label">Adresse complète de résidence . <i style="color:red">requis</i></label>
+                                            <input type="text" class="form-control" id="adress-home" placeholder="**********" name="adress-home" required="">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="lang" class="form-label">Langue d'affichage du compte . <i style="color:red">requis</i></label>
+                                            <select name="lang" id="lang" class="form-select" required="">
+                                                <option value="" disabled="" selected="">Langue parlée par le client</option>
+                                                <option value="af">Afrikaans</option>
+<option value="sq">Albanais</option>
+<option value="de">Allemand</option>
+<option value="am">Amharique</option>
+<option value="en">Anglais</option>
+<option value="ar">Arabe</option>
+<option value="hy">Arménien</option>
+<option value="az">Azéri</option>
+<option value="eu">Basque</option>
+<option value="bn">Bengali</option>
+<option value="be">Biélorusse</option>
+<option value="my">Birman</option>
+<option value="bs">Bosniaque</option>
+<option value="bg">Bulgare</option>
+<option value="ca">Catalan</option>
+<option value="ceb">Cebuano</option>
+<option value="ny">Chichewa</option>
+<option value="zh-CN">Chinois (simplifié)</option>
+<option value="zh-TW">Chinois (traditionnel)</option>
+<option value="si">Cingalais</option>
+<option value="ko">Coréen</option>
+<option value="co">Corse</option>
+<option value="ht">Créole haïtien</option>
+<option value="hr">Croate</option>
+<option value="da">Danois</option>
+<option value="es">Espagnol</option>
+<option value="eo">Espéranto</option>
+<option value="et">Estonien</option>
+<option value="fr">Français</option>
+<option value="fi">Finnois</option>
+<option value="fy">Frison</option>
+<option value="gd">Gaélique (Écosse)</option>
+<option value="gl">Galicien</option>
+<option value="cy">Gallois</option>
+<option value="ka">Géorgien</option>
+<option value="el">Grec</option>
+<option value="gu">Gujarati</option>
+<option value="ha">Haoussa</option>
+<option value="haw">Hawaïen</option>
+<option value="iw">Hébreu</option>
+<option value="hi">Hindi</option>
+<option value="hmn">Hmong</option>
+<option value="hu">Hongrois</option>
+<option value="ig">Igbo</option>
+<option value="id">Indonésien</option>
+<option value="ga">Irlandais</option>
+<option value="is">Islandais</option>
+<option value="it">Italien</option>
+<option value="ja">Japonais</option>
+<option value="jw">Javanais</option>
+<option value="kn">Kannada</option>
+<option value="kk">Kazakh</option>
+<option value="km">Khmer</option>
+<option value="rw">Kinyarwanda</option>
+<option value="ky">Kirghiz</option>
+<option value="ku">Kurde</option>
+<option value="lo">Laotien</option>
+<option value="la">Latin</option>
+<option value="lv">Letton</option>
+<option value="lt">Lituanien</option>
+<option value="lb">Luxembourgeois</option>
+<option value="mk">Macédonien</option>
+<option value="ms">Malaisien</option>
+<option value="ml">Malayalam</option>
+<option value="mg">Malgache</option>
+<option value="mt">Maltais</option>
+<option value="mi">Maori</option>
+<option value="mr">Marathi</option>
+<option value="mn">Mongol</option>
+<option value="nl">Néerlandais</option>
+<option value="ne">Népalais</option>
+<option value="no">Norvégien</option>
+<option value="or">Odia (oriya)</option>
+<option value="ug">Ouïgour</option>
+<option value="uz">Ouzbek</option>
+<option value="ps">Pachtô</option>
+<option value="pa">Panjabi</option>
+<option value="fa">Persan</option>
+<option value="tl">Philippin</option>
+<option value="pl">Polonais</option>
+<option value="pt">Portugais</option>
+<option value="ro">Roumain</option>
+<option value="ru">Russe</option>
+<option value="sm">Samoan</option>
+<option value="sr">Serbe</option>
+<option value="st">Sesotho</option>
+<option value="sn">Shona</option>
+<option value="sd">Sindhî</option>
+<option value="sk">Slovaque</option>
+<option value="sl">Slovène</option>
+<option value="so">Somali</option>
+<option value="su">Soundanais</option>
+<option value="sv">Suédois</option>
+<option value="sw">Swahili</option>
+<option value="tg">Tadjik</option>
+<option value="ta">Tamoul</option>
+<option value="tt">Tatar</option>
+<option value="cs">Tchèque</option>
+<option value="te">Telugu</option>
+<option value="th">Thaï</option>
+<option value="tr">Turc</option>
+<option value="tk">Turkmène</option>
+<option value="uk">Ukrainien</option>
+<option value="ur">Urdu</option>
+<option value="vi">Vietnamien</option>
+<option value="xh">Xhosa</option>
+<option value="yi">Yiddish</option>
+<option value="yo">Yorouba</option>
+<option value="zu">Zoulou</option>                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="info-cl">
+                                        <label for="info-cl" class="form-label" style="font-size:1em !important;color:black !important">Solde du compte et virement :</label>
+                                        <div class="mb-3">
+                                            <label for="adress-home" class="form-label">Banque émettrice des virements entrants . <i style="color:#53459a">facultatif</i></label>
+                                            <input type="text" class="form-control" id="bank-sender" placeholder="Nom de la banque" name="bank-sender" maxlength="30">
+                                        </div>
+                                        <div class="row" style="margin-bottom:20px !important">
+                                            <div class="col">
+                                                <label for="amount" class="form-label">Montant à crédité . <i style="color:red">requis</i></label>
+                                                <input type="tel" class="form-control" placeholder="**********" id="amount" name="amount" required="" data-bs-toggle="popover" data-bs-trigger="focus" data-bs-content="Le montant saisi dans ce champ sera crédité sur le compte client. Exemple : 50000" data-bs-placement="top" data-bs-original-title="Solde sur le compte" aria-label="Solde sur le compte">
+                                            </div>
+                                            <div class="col">
+                                                <label for="currency" class="form-label">Devise . <i style="color:red">requis</i></label>
+                                                <select name="currency" id="currency" class="form-select" required="">
+                                                    <option value="" disabled="" selected="">Devise disponible...</option>
+                                                    <optgroup label="Europe">
+                                                        <option value="€">Euro (EUR)</option>
+                                                        <option value="£">Livre sterling (GBP)</option>
+                                                        <option value="CHF">Franc suisse (CHF)</option>
+                                                        <option value="kr">Couronne norvégienne (NOK)</option>
+                                                        <option value="kr">Couronne suédoise (SEK)</option>
+                                                        <option value="krD">Couronne danoise (DKK)</option>
+                                                        <option value="zł">Złoty polonais (PLN)</option>
+                                                        <option value="Kč">Couronne tchèque (CZK)</option>
+                                                        <option value="Ft">Forint hongrois (HUF)</option>
+                                                        <option value="XPF">Franc Pacifique (XPF)</option>
+                                                        <option value="ALL">Lek albanais (ALL)</option>
+                                                        <option value="RON">Leu roumain (RON)</option>
+                                                        <option value="лв">Lev bulgare (BGN)</option>
+                                                        <option value="kn">Kuna croate (HRK)</option>
+                                                        <option value="дин">Dinar serbe (RSD)</option>
+                                                        <option value="£">Livre sterling de Jersey (JEP)</option>
+                                                        <option value="MDL">Leu moldave (MDL)</option>
+                                                        <option value="ден">Denier macédonien (MKD)</option>
+                                                        <option value="MK">Mark convertible de Bosnie-Herzégovine (MK)</option>
+                                                    </optgroup>
+                                                    <optgroup label="Asie">
+                                                        <option value="¥">Yen japonais (JPY)</option>
+                                                        <option value="￥">Yuan chinois (CNY)</option>
+                                                        <option value="₩">Won sud-coréen (KRW)</option>
+                                                        <option value="₹">Roupie indienne (INR)</option>
+                                                        <option value="Rp">Rupiah indonésienne (IDR)</option>
+                                                        <option value="RM">Ringgit malaisien (MYR)</option>
+                                                        <option value="₮">Tugrik Mongol (MNT)</option>
+                                                        <option value="₱">Peso philippin (PHP)</option>
+                                                        <option value="S$">Dollar de Singapour (SGD)</option>
+                                                        <option value="HKD">Dollar de Hong Kong (HKD)</option>
+                                                        <option value="AED">Dirham arabes (AED)</option>
+                                                        <option value="฿">Baht thaïlandais (THB)</option>
+                                                        <option value="₪">Shekel israélien (ILS)</option>
+                                                        <option value="JOD">Dinar jordanien (JOD)</option>
+                                                        <option value="KGS">Som (KGS)</option>
+                                                        <option value="KHR">Riel cambodgien (KHR)</option>
+                                                        <option value="KWD">Dinar koweïtien (KWD)</option>
+                                                        <option value="Ks">Kyat (MMK)</option>
+                                                        <option value="P">Pataca de Macao (MOP)</option>
+                                                        <option value="MVR">Rufiyaa maldivien (MVR)</option>
+                                                        <option value="Rs">Roupie népalais (NPR)</option>
+                                                        <option value="OMR">Rial omani (OMR)</option>
+                                                        <option value="QAR">Rial qatarien (QAR)</option>
+                                                        <option value="₽">Rouble russe (RUB)</option>
+                                                        <option value="SAR">Rial saoudien (SAR)</option>
+                                                        <option value="£S">Livre syrien (SYP)</option>
+                                                        <option value="ЅМ">Somoni (TJS)</option>
+                                                        <option value="₺">Livre turque (TRY)</option>
+                                                        <option value="YER">Rial yéménite (YER)</option>
+                                                        <option value="AMD">Dram arménien (AMD)</option>
+                                                        <option value="₸">Tenge kazakh (KZT)</option>
+                                                        <option value="₭">Kip laotien (LAK)</option>
+                                                    </optgroup>
+                                                    <optgroup label="Amérique du Nord">
+                                                        <option value="₡">Colón costaricien (CRC)</option>
+                                                        <option value="$">Dollar américain (USD)</option>
+                                                        <option value="$ CA">Dollar canadien (CAD)</option>
+                                                        <option value="RD$"> Peso dominicain (DOP)</option>
+                                                        <option value="$">Peso mexicain (MXN)</option>
+                                                        <option value="C$">Oro de cordoue (NIO)</option>
+                                                        <option value="฿">Balboa panaméen (PAB)</option>
+                                                        <option value="Gtq">Quetzal (Gtq)</option>
+                                                    </optgroup>
+                                        <optgroup label="Amérique Centrale">
+                                                        <option value="HNL">Honduran Lempira (HNL)</option>
+                                                    </optgroup>
+                                                    <optgroup label="Amérique du Sud">
+                                                        <option value="R$">Réai brésilien (BRL)</option>
+                                                        <option value="$">Peso argentin (ARS)</option>
+                                                        <option value="Bs">Peso boliviano (BOB)</option>
+                                                        <option value="$">Peso chilien (CLP)</option>
+                                                        <option value="COL$">Peso colombien (COP)</option>
+                                                        <option value="S/">Sol péruvien (PEN)</option>
+                                                        <option value="$U">Peso uruguayen (UYU)</option>
+                                                        <option value="₲">Guaraní (PYG)</option>
+                                                    </optgroup>
+                                                    <optgroup label="Afrique">
+                                                        <option value="R">Rand sud-africain (ZAR)</option>
+                                                        <option value="E£">Livre égyptienne (EGP)</option>
+                                                        <option value="DA">Dinar algérien (DZD)</option>
+                                                        <option value="DT">Dinar tunisien (TND)</option>
+                                                        <option value="DH">Dirham marocain (MAD)</option>
+                                                        <option value="₦">Nigerian naira (NGN)</option>
+                                                        <option value="Rs">Roupie mauricienne (MUR)</option>
+                                                        <option value="KSh">Shilling kényan (KES)</option>
+                                                        <option value="₵">Cedi ghanéen (GHS)</option>
+                                                        <option value="XOF">Franc CFA (XOF)</option>
+                                                        <option value="FC">Franc comorien (KMF)</option>
+                                                        <option value="GNF">Francs Guinéen (GNF)</option>
+                                                        <option value="Ar">Ariary malgache (MGA)</option>
+                                                        <option value="UM">Ouguiya mauritanien (MRO)</option>
+                                                        <option value="MK">Kwacha malawite (MWK)</option>
+                                                        <option value="FRw">Franc rwandais (RWF)</option>
+                                                    </optgroup>
+                                                    <optgroup label="Océanie">
+                                                        <option value="AU$">Dollar australien (AUD)</option>
+                                                        <option value="FJ$">Dollar fidjien (FJD)</option>
+                                                        <option value="$NZ">Dollar néo-zélandais (NZD)</option>
+                                                        <option value="K">Kina (PGK)</option>
+                                                    </optgroup>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="row" style="margin-bottom:20px !important">
+                                            <div class="col">
+                                                <label for="percent-start" class="form-label">Pourcentage de départ . <i style="color:red">requis</i></label>
+                                                <input type="tel" class="form-control" placeholder="Entre 0 et 100" id="percent-start" name="percent-start" required="" data-bs-toggle="popover" data-bs-trigger="focus" data-bs-content="Le pourcentage de départ du virement doit être inférieur au pourcentage d&#39;arrêt et doit être obligatoirement entre 0 et 100" data-bs-placement="top" data-bs-original-title="Pourcentage de départ du virement" aria-label="Pourcentage de départ du virement" maxlength="3">
+                                            </div>
+                                            <div class="col">
+                                                <label for="percent-end" class="form-label">Pourcentage d'arrêt . <i style="color:red">requis</i></label>
+                                                <input type="tel" class="form-control" placeholder="Entre 0 et 100" id="percent-end" name="percent-end" required="" data-bs-toggle="popover" data-bs-trigger="focus" data-bs-content="Le pourcentage d&#39;arrêt du virement doit être supérieur au pourcentage de départ et doit être obligatoirement entre 0 et 100" data-bs-placement="top" data-bs-original-title="Pourcentage d&#39;arrêt du virement" aria-label="Pourcentage d&#39;arrêt du virement" maxlength="3">
+                                            </div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="message-vr" class="form-label">Message à affiché . <i style="color:red">requis</i></label>
+                                            <textarea name="message-vr" id="message-vr" class="form-control" placeholder="Message à affiché à la fin du virement..." spellcheck="false" required="" maxlength="510"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="info-cl">
+                                        <label for="info-cl" class="form-label" style="font-size:1em !important;color:black !important">Alerte par e-mail (Obligatoire) : </label>
+                                        <div class="alert alert-info" role="alert" id="showInfo"> 
+                                            <div style="margin-bottom:4px">Les alertes par e-mail sont envoyées à l'adresse e-mail du client.</div>
+                                            <div><b>NB :</b> Les messages d'alerte par e-mail sont gratuites et sont intégrés par défaut.</div>
+                                        </div>
+                                    </div>
+                                    <div class="info-cl">
+                                        <label for="info-cl" class="form-label" style="font-size:1em !important;color:black !important">Alerte par SMS (Facultatif) : </label>
+                                        <div class="form-check form-switch" style="margin: 10px 0px 20px">
+                                            <input class="form-check-input" type="checkbox" role="switch" id="alert-sms" name="alert-sms">
+                                            <label class="form-check-label" for="alert-sms">Activé les alertes par SMS</label>
+                                        </div>
+                                        <div class="alert alert-info" role="alert" id="showInfo"> 
+                                            <div style="margin-bottom:4px">Les alertes par SMS sont envoyées vers le numéro de téléphone du client.</div>
+                                            <div><b>NB :</b> 1000 Crédits pour les alertes par SMS.</div>
+                                        </div>
+                                        
+                                    </div>
+                                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                                        <button class="btn btn-success" type="submit" name="create-access" value="true" id="create-access" disabled="">Créer l'accès client (4000 Crédits) <i class="bi bi-arrow-right-short"></i></button>
+                                    </div>
+                                    <br>
+                                </form>
+                                <form method="POST" action="https://www.kitscms.com/account/tools/flash-account-v1/" class="form-test" style="margin-top:50px" id="form-update">
+                                    <div class="ttb-title"><i class="fi fi-rr-magic-wand"></i> Modifier les informations d'un accès client v1</div>
+                                    <div class="mb-3">
+                                        <label for="access-cl" class="form-label">Sélectionner l'accès client . <i style="color:red">requis</i></label>
+                                        <select name="access-cl" id="access-cl" class="form-select" required="">
+                                            <option value="" disabled="" selected="">Vos Flash Compte Client(s) Créés...</option>
+                                            <option value="44858" data-currency="XOF">Tene.Charlotte Guissou - guissouchalotte@gmail.com</option><option value="22099" data-currency="€">Edmond BROU - tiekoubrou@live.fr</option><option value="22036" data-currency="€">Alice Rosa GOBLET - fabiollaguilaine784@gmail.com</option><option value="20576" data-currency="XOF">PERNAT ANAJA - haroldlalya@gmail.com</option><option value="20568" data-currency="€">PERNAT ANAJA - anajapernat@yahoo.com</option><option value="20517" data-currency="XOF">BANDA SAMUEL - candide730@gmail.com</option>                                        </select>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="update-data" class="form-label">Action(s) possible(s) sur l'accès choisi . <i style="color:red">requis</i></label>
+                                        <select name="update-data" id="update-data" class="form-select" required=""><option value="add-amount">Ajouter de l'argent au solde actuel du compte client</option><option value="update-codepin">Changer le code PIN de connexion du compte client</option><option value="update-bank-sender">Modifier la banque émettrice des virements entrants</option><option value="update-pp-msg" selected="">Modifier les pourcentages et le message à affiché</option></select>
+                                    </div>
+                                    <div class="update-pp-msg">
+                                        <div class="row" style="margin-bottom:20px !important">
+                                            <div class="col">
+                                                <label for="update-percent-start" class="form-label">Pourcentage de départ . <i style="color:red">requis</i></label>
+                                                <input type="tel" class="form-control" placeholder="Entre 0 et 100" id="update-percent-start" name="update-percent-start" required="" data-bs-toggle="popover" data-bs-trigger="focus" data-bs-content="Le pourcentage de départ du virement doit être inférieur au pourcentage d&#39;arrêt et obligatoirement entre 0 et 100" data-bs-placement="top" data-bs-original-title="Pourcentage de départ" aria-label="Pourcentage de départ" maxlength="3">
+                                            </div>
+                                            <div class="col">
+                                                <label for="update-percent-end" class="form-label">Pourcentage d'arrêt . <i style="color:red">requis</i></label>
+                                                <input type="tel" class="form-control" placeholder="Entre 0 et 100" id="update-percent-end" name="update-percent-end" required="" data-bs-toggle="popover" data-bs-trigger="focus" data-bs-content="Le pourcentage d&#39;arrêt du virement doit être supérieur au pourcentage de départ et obligatoirement entre 0 et 100" data-bs-placement="top" data-bs-original-title="Pourcentage d&#39;arrêt" aria-label="Pourcentage d&#39;arrêt" maxlength="3">
+                                            </div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="update-message-vr" class="form-label">Message à affiché . <i style="color:red">requis</i></label>
+                                            <textarea name="update-message-vr" id="update-message-vr" class="form-control" placeholder="Message à affiché à la fin du virement..." spellcheck="false" required="" maxlength="510"></textarea>
+                                        </div>
+                                        <div class="alert alert-info" role="alert" id="showInfo" style="margin:20px auto;"> 
+                                            <div style="margin-bottom:8px"><i class="bi bi-bag-check"></i> Récapitulatif de la mise à jour : </div>
+                                            <div style="margin-bottom:8px" id="show-cl-access"><i class="bi bi-signpost"></i>Accès client à mettre à jour : <b>Tene.Charlotte Guissou </b></div>
+                                            <div style="margin-bottom:8px" id="show-update-percent-start"><i class="bi bi-signpost"></i>Nouveau pourcentage de départ : <b>N/A</b></div>
+                                            <div style="margin-bottom:8px" id="show-update-percent-end"><i class="bi bi-signpost"></i> Nouveau pourcentage d'arrêt : <b>N/A</b></div>
+                                            <div style="margin-bottom:12px" id="show-update-message-vr"><i class="bi bi-signpost"></i> Nouveau message à affiché : <b>N/A</b></div>
+                                            <div style="margin-bottom:8px" id="show-nb">NB : Un nouveau code de déblocage du virement est généré automatiquement à chaque mise à jour.</div>
+                                        </div>
+                                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                                            <button class="btn btn-primary" type="submit" name="update-access" value="true" id="update-access">Mise à jour<i class="bi bi-arrow-right-short"></i></button>
+                                        </div>
+                                    </div>
+                                    <br>
+                                </form>
+                                <form method="POST" action="https://www.kitscms.com/account/tools/flash-account-v1/" class="form-real" id="form-lock">
+                                    <div class="ttb-title" style="border:1px solid #ff8900;color:#ff8900"><i class="bi bi-shield-lock"></i> Bloquer ou débloquer un accès client v1</div>
+                                    <div class="mb-3">
+                                        <label for="access-cl" class="form-label">Sélectionner l'accès client . <i style="color:red">requis</i></label>
+                                        <select name="access-cl" id="access-cl" class="form-select" required="">
+                                            <option value="" disabled="" selected="">Vos Flash Compte Client(s) Créés...</option>
+                                            <option value="44858">Tene.Charlotte Guissou - guissouchalotte@gmail.com</option><option value="22099">Edmond BROU - tiekoubrou@live.fr</option><option value="22036">Alice Rosa GOBLET - fabiollaguilaine784@gmail.com</option><option value="20576">PERNAT ANAJA - haroldlalya@gmail.com</option><option value="20568">PERNAT ANAJA - anajapernat@yahoo.com</option><option value="20517">BANDA SAMUEL - candide730@gmail.com</option>                                        </select>
+                                    </div>
+                                    <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+                                        <button class="btn btn-danger" type="submit" name="lock-access" value="lock" id="lock-access"><i class="fi fi-rr-lock"></i> Bloquer l'accès client</button>
+                                        <button class="btn btn-success" type="submit" name="unlock-access" value="unlock" id="unlock-access"><i class="fi fi-rr-unlock"></i> Débloquer l'accès client</button>
+                                    </div>
+                                    <br>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="ud-2">
+                                                        <div class="u-title">
+                                <span><i class="fi fi-br-clipboard-list-check"></i> Liste des accès flash compte v1 (6)</span>
+                            </div> 
+                            <div class="u-content">
+                                <p style="padding:40px 10px;text-align:center;display:none">
+                                    <img src="./Flash Compte Pro v1 - Kitscms_files/box.png" alt="HISTORIQUE VIDE">
+                                </p>
+                                <div class="history" style="">
+                                    <div class="history-content">
+                                        <div class="history-item" title="Voir plus de détails">
+                                            <div class="h-line" data-cursor="pointer">
+                                                Lien d'accès : <b>https://transferwireworld.com/?c=aa5c27</b> généré le 03/06/24 à 08:29 UTC+0 <br><b style="color:#ff3333;background-color:#ff333340;padding:4px 8px;border-radius:30px;display:inline-block;font-size:.9em"><i class="bi bi-lock-fill"></i> Flash Compte bloqué</b>
+                                            </div>
+                                            <div class="h-data" style="display:none" id="0">
+                                                <b><i class="bi bi-link-45deg"></i>Hash du lien : </b>aa5c27
+                                                <div style="padding:15px;background-color:#e2e2e2f5;margin:20px auto;border-radius:12px;">
+                                                    <p style="margin-bottom:5px">Utilisez le <b>lien de connexion</b> et les <b>identifiants</b> définis ci-dessous pour la connexion à l'accès flash compte client.</p>
+                                                    <p style="margin-bottom:5px"><b>Lien de connexion : </b><span>https://transferwireworld.com/?c=aa5c27</span>&nbsp;&nbsp;&nbsp;<span class="btn btn-secondary" type="button" style="padding: 2px 8px 4px;font-size: 1.1em;border-radius: 12px;" data-copy="true" data-value="https://transferwireworld.com/?c=aa5c27"><i class="bi bi-clipboard"></i></span></p>
+                                                    <p style="margin-bottom:5px"><b>Adresse e-mail : </b><span style="font-family:&#39;roboto&#39;, sans-serif !important">guissouchalotte@gmail.com</span>&nbsp;&nbsp;&nbsp;<span class="btn btn-secondary" type="button" style="padding: 2px 8px 4px;font-size: 1.1em;border-radius: 12px;" data-copy="true" data-value="guissouchalotte@gmail.com"><i class="bi bi-clipboard"></i></span></p>
+                                                    <p style="margin-bottom:5px"><b>Code Pin : </b><span>411077</span>&nbsp;&nbsp;&nbsp;<span class="btn btn-secondary" type="button" style="padding: 2px 8px 4px;font-size: 1.1em;border-radius: 12px;" data-copy="true" data-value="411077"><i class="bi bi-clipboard"></i></span></p>
+                                                </div>
+                                                <p class="btn-group-action">
+                                                    <a href="https://www.kitscms.com/account/tools/flash-account-v1/?hash_link=aa5c27&amp;name=Tene.Charlotte+Guissou&amp;email=guissouchalotte@gmail.com&amp;login_code=411077&amp;lang=fr&amp;alert-login-data=true" class="btn btn-1 btn-primary btn-sm">Envoyer les identifiants de connexion au client par e-mail <i class="bi bi-envelope"></i></a>
+                                                    <a href="https://www.kitscms.com/account/tools/flash-account-v1/?hash_link=aa5c27&amp;name=Tene.Charlotte+Guissou&amp;email=guissouchalotte@gmail.com&amp;transfer_code=9013DE&amp;lang=fr&amp;alert-unlock-code=true" class="btn btn-2 btn-warning btn-sm">Envoyer le code de déblocage du virement au client par e-mail <i class="bi bi-envelope"></i></a>
+                                                </p>
+                                                <b><i class="bi bi-person-check"></i> Informations sur le client :</b>
+                                                <br><br>
+                                                &nbsp;&nbsp;<b>Prénom Nom : </b>Tene.Charlotte Guissou
+                                                <br><br>
+                                                &nbsp;&nbsp;<b>Adresse e-mail : </b><span style="font-family:Roboto,sans-serif">guissouchalotte@gmail.com</span>
+                                                <br><br>
+                                                &nbsp;&nbsp;<b>Numéro de téléphone : </b>+22676596792
+                                                <br><br>
+                                                &nbsp;&nbsp;<b>Pays : </b>Burkina Faso (+226)
+                                                <br><br>
+                                                &nbsp;&nbsp;<b>Adresse de résidence : </b> Bobo Dioulasso secteur 20
+                                                <br><br>
+                                                &nbsp;&nbsp;<b>Langue du client : </b>FR (Code ISO)
+                                                <br><br><br>
+                                                <b><i class="bi bi-bank"></i> Solde du compte et virement :</b>
+                                                <br><br>
+                                                
+                                                &nbsp;&nbsp;<b>Banque émettrice : </b>TRANSFERWIRE
+                                                <br><br>
+                                                &nbsp;&nbsp;<b>Solde du compte  : </b>2 000 000,00 XOF
+                                                <br><br>
+                                                &nbsp;&nbsp;<b>Pourcentage de départ du virement : </b>1%
+                                                <br><br>
+                                                &nbsp;&nbsp;<b>Pourcentage d'arrêt du virement : </b>98%
+                                                <br><br>
+                                                <span style="position: relative;left: 7px;"><b>Message à affiché : </b>Trops de tentative. Veuillez réessayer plus tard</span>
+                                                <br><br>
+                                                &nbsp;&nbsp;<b>Code de déblocage du virement : </b><span style="margin: 0 5px 0;border-radius: 2px 16px 2px 16px;background-color: #001529;color: white;padding: 6px;font-weight: bold;letter-spacing: 1px;">9013DE</span><span class="btn btn-secondary" type="button" style="padding: 2px 8px 4px;font-size: 1.1em;border-radius: 12px;" data-copy="true" data-value="9013DE"><i class="bi bi-clipboard"></i></span>
+                                                <br><br>
+                                                &nbsp;&nbsp;<b>Code déjà utilisé : </b><span style="color:white;background-color:#54469b;padding:4px 8px;border-radius:4px;font-weight:bold">OUI</span>
+                                                <br><br>
+                                                <b>Alert Mail Pro : </b><span style="color:#198754"><i class="bi bi-check-circle"></i> Activé</span>
+                                                <br><br>
+                                                <b>Alert SMS Pro : </b><span style="color:#ff3333"><i class="bi bi-x-circle"></i> Désactivé</span>
+                                                <br><br>
+                                                <b>Coût de création : </b>4000 Crédits
+                                                <br><br>
+                                                <b>Date de création : </b>03/06/24 à 08:29 UTC+0
+                                                <br><br>
+                                                <b>Etat : </b><b style="color:#ff3333;background-color:#ff333340;padding:4px 8px;border-radius:30px;display:inline-block;font-size:.9em"><i class="bi bi-lock-fill"></i> Flash Compte bloqué</b>
+                                                <br><br>
+                                                <p class="d-grid gap-2 d-md-flex justify-content-md-end">
+                                                <a href="https://www.kitscms.com/account/tools/flash-account-v1/?delete=history-flashaccount&amp;id=44858" class="btn btn-danger delete-link" type="button" data-alert="Confirmez-vous la suppression de ce lien d&#39;accès client ?" data-id="h44858" onclick="delete_history(event);"><i class="fi fi-br-trash" style="position:relative;top:1px"></i> Supprimer ce lien d'accès</a>
+                                            </p>
+                                            </div>
+                                        </div><div class="history-item" title="Voir plus de détails">
+                                            <div class="h-line" data-cursor="pointer">
+                                                Lien d'accès : <b>https://transferwireworld.com/?c=327ff0</b> généré le 28/12/23 à 14:19 UTC+0 <br><b style="color:#198754;background-color:#19875440;padding:4px 8px;border-radius:30px;display:inline-block;font-size:.9em"><i class="bi bi-check2-circle"></i> Flash Compte actif</b>
+                                            </div>
+                                            <div class="h-data" style="display:none" id="1">
+                                                <b><i class="bi bi-link-45deg"></i>Hash du lien : </b>327ff0
+                                                <div style="padding:15px;background-color:#e2e2e2f5;margin:20px auto;border-radius:12px;">
+                                                    <p style="margin-bottom:5px">Utilisez le <b>lien de connexion</b> et les <b>identifiants</b> définis ci-dessous pour la connexion à l'accès flash compte client.</p>
+                                                    <p style="margin-bottom:5px"><b>Lien de connexion : </b><span>https://transferwireworld.com/?c=327ff0</span>&nbsp;&nbsp;&nbsp;<span class="btn btn-secondary" type="button" style="padding: 2px 8px 4px;font-size: 1.1em;border-radius: 12px;" data-copy="true" data-value="https://transferwireworld.com/?c=327ff0"><i class="bi bi-clipboard"></i></span></p>
+                                                    <p style="margin-bottom:5px"><b>Adresse e-mail : </b><span style="font-family:&#39;roboto&#39;, sans-serif !important">tiekoubrou@live.fr</span>&nbsp;&nbsp;&nbsp;<span class="btn btn-secondary" type="button" style="padding: 2px 8px 4px;font-size: 1.1em;border-radius: 12px;" data-copy="true" data-value="tiekoubrou@live.fr"><i class="bi bi-clipboard"></i></span></p>
+                                                    <p style="margin-bottom:5px"><b>Code Pin : </b><span>707713</span>&nbsp;&nbsp;&nbsp;<span class="btn btn-secondary" type="button" style="padding: 2px 8px 4px;font-size: 1.1em;border-radius: 12px;" data-copy="true" data-value="707713"><i class="bi bi-clipboard"></i></span></p>
+                                                </div>
+                                                <p class="btn-group-action">
+                                                    <a href="https://www.kitscms.com/account/tools/flash-account-v1/?hash_link=327ff0&amp;name=Edmond+BROU&amp;email=tiekoubrou@live.fr&amp;login_code=707713&amp;lang=fr&amp;alert-login-data=true" class="btn btn-1 btn-primary btn-sm">Envoyer les identifiants de connexion au client par e-mail <i class="bi bi-envelope"></i></a>
+                                                    <a href="https://www.kitscms.com/account/tools/flash-account-v1/?hash_link=327ff0&amp;name=Edmond+BROU&amp;email=tiekoubrou@live.fr&amp;transfer_code=3C5F05&amp;lang=fr&amp;alert-unlock-code=true" class="btn btn-2 btn-warning btn-sm">Envoyer le code de déblocage du virement au client par e-mail <i class="bi bi-envelope"></i></a>
+                                                </p>
+                                                <b><i class="bi bi-person-check"></i> Informations sur le client :</b>
+                                                <br><br>
+                                                &nbsp;&nbsp;<b>Prénom Nom : </b>Edmond BROU
+                                                <br><br>
+                                                &nbsp;&nbsp;<b>Adresse e-mail : </b><span style="font-family:Roboto,sans-serif">tiekoubrou@live.fr</span>
+                                                <br><br>
+                                                &nbsp;&nbsp;<b>Numéro de téléphone : </b>+33625122503
+                                                <br><br>
+                                                &nbsp;&nbsp;<b>Pays : </b>France (+33)
+                                                <br><br>
+                                                &nbsp;&nbsp;<b>Adresse de résidence : </b>45 rue des meuniers 75012 paris
+                                                <br><br>
+                                                &nbsp;&nbsp;<b>Langue du client : </b>FR (Code ISO)
+                                                <br><br><br>
+                                                <b><i class="bi bi-bank"></i> Solde du compte et virement :</b>
+                                                <br><br>
+                                                
+                                                &nbsp;&nbsp;<b>Banque émettrice : </b>TRANSFERWIRE
+                                                <br><br>
+                                                &nbsp;&nbsp;<b>Solde du compte  : </b>40 000,00 €
+                                                <br><br>
+                                                &nbsp;&nbsp;<b>Pourcentage de départ du virement : </b>1%
+                                                <br><br>
+                                                &nbsp;&nbsp;<b>Pourcentage d'arrêt du virement : </b>100%
+                                                <br><br>
+                                                <span style="position: relative;left: 7px;"><b>Message à affiché : </b>Virement envoyé avec succès. Le compte du bénéficiaire sera crédité d'un montant de 40 000,00€ en 3-4 jours ouvrables. Cordialement</span>
+                                                <br><br>
+                                                &nbsp;&nbsp;<b>Code de déblocage du virement : </b><span style="margin: 0 5px 0;border-radius: 2px 16px 2px 16px;background-color: #001529;color: white;padding: 6px;font-weight: bold;letter-spacing: 1px;">3C5F05</span><span class="btn btn-secondary" type="button" style="padding: 2px 8px 4px;font-size: 1.1em;border-radius: 12px;" data-copy="true" data-value="3C5F05"><i class="bi bi-clipboard"></i></span>
+                                                <br><br>
+                                                &nbsp;&nbsp;<b>Code déjà utilisé : </b><span style="color:white;background-color:#54469b;padding:4px 8px;border-radius:4px;font-weight:bold">OUI</span>
+                                                <br><br>
+                                                <b>Alert Mail Pro : </b><span style="color:#198754"><i class="bi bi-check-circle"></i> Activé</span>
+                                                <br><br>
+                                                <b>Alert SMS Pro : </b><span style="color:#ff3333"><i class="bi bi-x-circle"></i> Désactivé</span>
+                                                <br><br>
+                                                <b>Coût de création : </b>4000 Crédits
+                                                <br><br>
+                                                <b>Date de création : </b>28/12/23 à 14:19 UTC+0
+                                                <br><br>
+                                                <b>Etat : </b><b style="color:#198754;background-color:#19875440;padding:4px 8px;border-radius:30px;display:inline-block;font-size:.9em"><i class="bi bi-check2-circle"></i> Flash Compte actif</b>
+                                                <br><br>
+                                                <p class="d-grid gap-2 d-md-flex justify-content-md-end">
+                                                <a href="https://www.kitscms.com/account/tools/flash-account-v1/?delete=history-flashaccount&amp;id=22099" class="btn btn-danger delete-link" type="button" data-alert="Confirmez-vous la suppression de ce lien d&#39;accès client ?" data-id="h22099" onclick="delete_history(event);"><i class="fi fi-br-trash" style="position:relative;top:1px"></i> Supprimer ce lien d'accès</a>
+                                            </p>
+                                            </div>
+                                        </div><div class="history-item" title="Voir plus de détails">
+                                            <div class="h-line" data-cursor="pointer">
+                                                Lien d'accès : <b>https://transferwireworld.com/?c=5e96b7</b> généré le 28/12/23 à 20:25 UTC+0 <br><b style="color:#198754;background-color:#19875440;padding:4px 8px;border-radius:30px;display:inline-block;font-size:.9em"><i class="bi bi-check2-circle"></i> Flash Compte actif</b>
+                                            </div>
+                                            <div class="h-data" style="display:none" id="2">
+                                                <b><i class="bi bi-link-45deg"></i>Hash du lien : </b>5e96b7
+                                                <div style="padding:15px;background-color:#e2e2e2f5;margin:20px auto;border-radius:12px;">
+                                                    <p style="margin-bottom:5px">Utilisez le <b>lien de connexion</b> et les <b>identifiants</b> définis ci-dessous pour la connexion à l'accès flash compte client.</p>
+                                                    <p style="margin-bottom:5px"><b>Lien de connexion : </b><span>https://transferwireworld.com/?c=5e96b7</span>&nbsp;&nbsp;&nbsp;<span class="btn btn-secondary" type="button" style="padding: 2px 8px 4px;font-size: 1.1em;border-radius: 12px;" data-copy="true" data-value="https://transferwireworld.com/?c=5e96b7"><i class="bi bi-clipboard"></i></span></p>
+                                                    <p style="margin-bottom:5px"><b>Adresse e-mail : </b><span style="font-family:&#39;roboto&#39;, sans-serif !important">fabiollaguilaine784@gmail.com</span>&nbsp;&nbsp;&nbsp;<span class="btn btn-secondary" type="button" style="padding: 2px 8px 4px;font-size: 1.1em;border-radius: 12px;" data-copy="true" data-value="fabiollaguilaine784@gmail.com"><i class="bi bi-clipboard"></i></span></p>
+                                                    <p style="margin-bottom:5px"><b>Code Pin : </b><span>277104</span>&nbsp;&nbsp;&nbsp;<span class="btn btn-secondary" type="button" style="padding: 2px 8px 4px;font-size: 1.1em;border-radius: 12px;" data-copy="true" data-value="277104"><i class="bi bi-clipboard"></i></span></p>
+                                                </div>
+                                                <p class="btn-group-action">
+                                                    <a href="https://www.kitscms.com/account/tools/flash-account-v1/?hash_link=5e96b7&amp;name=Alice+Rosa+GOBLET&amp;email=fabiollaguilaine784@gmail.com&amp;login_code=277104&amp;lang=fr&amp;alert-login-data=true" class="btn btn-1 btn-primary btn-sm">Envoyer les identifiants de connexion au client par e-mail <i class="bi bi-envelope"></i></a>
+                                                    <a href="https://www.kitscms.com/account/tools/flash-account-v1/?hash_link=5e96b7&amp;name=Alice+Rosa+GOBLET&amp;email=fabiollaguilaine784@gmail.com&amp;transfer_code=F276D5&amp;lang=fr&amp;alert-unlock-code=true" class="btn btn-2 btn-warning btn-sm">Envoyer le code de déblocage du virement au client par e-mail <i class="bi bi-envelope"></i></a>
+                                                </p>
+                                                <b><i class="bi bi-person-check"></i> Informations sur le client :</b>
+                                                <br><br>
+                                                &nbsp;&nbsp;<b>Prénom Nom : </b>Alice Rosa GOBLET
+                                                <br><br>
+                                                &nbsp;&nbsp;<b>Adresse e-mail : </b><span style="font-family:Roboto,sans-serif">fabiollaguilaine784@gmail.com</span>
+                                                <br><br>
+                                                &nbsp;&nbsp;<b>Numéro de téléphone : </b>+33774070647
+                                                <br><br>
+                                                &nbsp;&nbsp;<b>Pays : </b>France (+33)
+                                                <br><br>
+                                                &nbsp;&nbsp;<b>Adresse de résidence : </b>Alice Rosa 784 rue Montfort BP 159 Paris 
+                                                <br><br>
+                                                &nbsp;&nbsp;<b>Langue du client : </b>FR (Code ISO)
+                                                <br><br><br>
+                                                <b><i class="bi bi-bank"></i> Solde du compte et virement :</b>
+                                                <br><br>
+                                                
+                                                &nbsp;&nbsp;<b>Banque émettrice : </b>TRANSFERWIRE
+                                                <br><br>
+                                                &nbsp;&nbsp;<b>Solde du compte  : </b>590 000,00 €
+                                                <br><br>
+                                                &nbsp;&nbsp;<b>Pourcentage de départ du virement : </b>1%
+                                                <br><br>
+                                                &nbsp;&nbsp;<b>Pourcentage d'arrêt du virement : </b>100%
+                                                <br><br>
+                                                <span style="position: relative;left: 7px;"><b>Message à affiché : </b>Virement envoyé avec succès. Le compte du bénéficiaire sera crédité d'un montant de 455450,00 € en 2-3 jours ouvrables. Coordialement</span>
+                                                <br><br>
+                                                &nbsp;&nbsp;<b>Code de déblocage du virement : </b><span style="margin: 0 5px 0;border-radius: 2px 16px 2px 16px;background-color: #001529;color: white;padding: 6px;font-weight: bold;letter-spacing: 1px;">F276D5</span><span class="btn btn-secondary" type="button" style="padding: 2px 8px 4px;font-size: 1.1em;border-radius: 12px;" data-copy="true" data-value="F276D5"><i class="bi bi-clipboard"></i></span>
+                                                <br><br>
+                                                &nbsp;&nbsp;<b>Code déjà utilisé : </b><span style="color:white;background-color:#54469b;padding:4px 8px;border-radius:4px;font-weight:bold">OUI</span>
+                                                <br><br>
+                                                <b>Alert Mail Pro : </b><span style="color:#198754"><i class="bi bi-check-circle"></i> Activé</span>
+                                                <br><br>
+                                                <b>Alert SMS Pro : </b><span style="color:#ff3333"><i class="bi bi-x-circle"></i> Désactivé</span>
+                                                <br><br>
+                                                <b>Coût de création : </b>4000 Crédits
+                                                <br><br>
+                                                <b>Date de création : </b>28/12/23 à 20:25 UTC+0
+                                                <br><br>
+                                                <b>Etat : </b><b style="color:#198754;background-color:#19875440;padding:4px 8px;border-radius:30px;display:inline-block;font-size:.9em"><i class="bi bi-check2-circle"></i> Flash Compte actif</b>
+                                                <br><br>
+                                                <p class="d-grid gap-2 d-md-flex justify-content-md-end">
+                                                <a href="https://www.kitscms.com/account/tools/flash-account-v1/?delete=history-flashaccount&amp;id=22036" class="btn btn-danger delete-link" type="button" data-alert="Confirmez-vous la suppression de ce lien d&#39;accès client ?" data-id="h22036" onclick="delete_history(event);"><i class="fi fi-br-trash" style="position:relative;top:1px"></i> Supprimer ce lien d'accès</a>
+                                            </p>
+                                            </div>
+                                        </div><div class="history-item" title="Voir plus de détails">
+                                            <div class="h-line" data-cursor="pointer">
+                                                Lien d'accès : <b>https://transferwireworld.com/?c=fb0aff</b> généré le 18/12/23 à 12:09 UTC+0 <br><b style="color:#198754;background-color:#19875440;padding:4px 8px;border-radius:30px;display:inline-block;font-size:.9em"><i class="bi bi-check2-circle"></i> Flash Compte actif</b>
+                                            </div>
+                                            <div class="h-data" style="display:none" id="3">
+                                                <b><i class="bi bi-link-45deg"></i>Hash du lien : </b>fb0aff
+                                                <div style="padding:15px;background-color:#e2e2e2f5;margin:20px auto;border-radius:12px;">
+                                                    <p style="margin-bottom:5px">Utilisez le <b>lien de connexion</b> et les <b>identifiants</b> définis ci-dessous pour la connexion à l'accès flash compte client.</p>
+                                                    <p style="margin-bottom:5px"><b>Lien de connexion : </b><span>https://transferwireworld.com/?c=fb0aff</span>&nbsp;&nbsp;&nbsp;<span class="btn btn-secondary" type="button" style="padding: 2px 8px 4px;font-size: 1.1em;border-radius: 12px;" data-copy="true" data-value="https://transferwireworld.com/?c=fb0aff"><i class="bi bi-clipboard"></i></span></p>
+                                                    <p style="margin-bottom:5px"><b>Adresse e-mail : </b><span style="font-family:&#39;roboto&#39;, sans-serif !important">haroldlalya@gmail.com</span>&nbsp;&nbsp;&nbsp;<span class="btn btn-secondary" type="button" style="padding: 2px 8px 4px;font-size: 1.1em;border-radius: 12px;" data-copy="true" data-value="haroldlalya@gmail.com"><i class="bi bi-clipboard"></i></span></p>
+                                                    <p style="margin-bottom:5px"><b>Code Pin : </b><span>709201</span>&nbsp;&nbsp;&nbsp;<span class="btn btn-secondary" type="button" style="padding: 2px 8px 4px;font-size: 1.1em;border-radius: 12px;" data-copy="true" data-value="709201"><i class="bi bi-clipboard"></i></span></p>
+                                                </div>
+                                                <p class="btn-group-action">
+                                                    <a href="https://www.kitscms.com/account/tools/flash-account-v1/?hash_link=fb0aff&amp;name=PERNAT+ANAJA&amp;email=haroldlalya@gmail.com&amp;login_code=709201&amp;lang=en&amp;alert-login-data=true" class="btn btn-1 btn-primary btn-sm">Envoyer les identifiants de connexion au client par e-mail <i class="bi bi-envelope"></i></a>
+                                                    <a href="https://www.kitscms.com/account/tools/flash-account-v1/?hash_link=fb0aff&amp;name=PERNAT+ANAJA&amp;email=haroldlalya@gmail.com&amp;transfer_code=9FDCC1&amp;lang=en&amp;alert-unlock-code=true" class="btn btn-2 btn-warning btn-sm">Envoyer le code de déblocage du virement au client par e-mail <i class="bi bi-envelope"></i></a>
+                                                </p>
+                                                <b><i class="bi bi-person-check"></i> Informations sur le client :</b>
+                                                <br><br>
+                                                &nbsp;&nbsp;<b>Prénom Nom : </b>PERNAT ANAJA
+                                                <br><br>
+                                                &nbsp;&nbsp;<b>Adresse e-mail : </b><span style="font-family:Roboto,sans-serif">haroldlalya@gmail.com</span>
+                                                <br><br>
+                                                &nbsp;&nbsp;<b>Numéro de téléphone : </b>+38671542033
+                                                <br><br>
+                                                &nbsp;&nbsp;<b>Pays : </b>Slovénie (+386)
+                                                <br><br>
+                                                &nbsp;&nbsp;<b>Adresse de résidence : </b>Anaja Pernat Finzgarjeva ulica 4a 4248 Lesce, Slovenia
+                                                <br><br>
+                                                &nbsp;&nbsp;<b>Langue du client : </b>EN (Code ISO)
+                                                <br><br><br>
+                                                <b><i class="bi bi-bank"></i> Solde du compte et virement :</b>
+                                                <br><br>
+                                                
+                                                &nbsp;&nbsp;<b>Banque émettrice : </b>TRANSFERWIRE
+                                                <br><br>
+                                                &nbsp;&nbsp;<b>Solde du compte  : </b>265 000,00 XOF
+                                                <br><br>
+                                                &nbsp;&nbsp;<b>Pourcentage de départ du virement : </b>1%
+                                                <br><br>
+                                                &nbsp;&nbsp;<b>Pourcentage d'arrêt du virement : </b>100%
+                                                <br><br>
+                                                <span style="position: relative;left: 7px;"><b>Message à affiché : </b>Transfert envoyé avec succès. Le compte Mobile money du bénéficiaire sera crédité d'un montant de 150.000 FCFA dans quelques minutes.&nbsp;Cordialement</span>
+                                                <br><br>
+                                                &nbsp;&nbsp;<b>Code de déblocage du virement : </b><span style="margin: 0 5px 0;border-radius: 2px 16px 2px 16px;background-color: #001529;color: white;padding: 6px;font-weight: bold;letter-spacing: 1px;">9FDCC1</span><span class="btn btn-secondary" type="button" style="padding: 2px 8px 4px;font-size: 1.1em;border-radius: 12px;" data-copy="true" data-value="9FDCC1"><i class="bi bi-clipboard"></i></span>
+                                                <br><br>
+                                                &nbsp;&nbsp;<b>Code déjà utilisé : </b><span style="color:white;background-color:#54469b;padding:4px 8px;border-radius:4px;font-weight:bold">OUI</span>
+                                                <br><br>
+                                                <b>Alert Mail Pro : </b><span style="color:#198754"><i class="bi bi-check-circle"></i> Activé</span>
+                                                <br><br>
+                                                <b>Alert SMS Pro : </b><span style="color:#198754"><i class="bi bi-check-circle"></i> Activé</span>
+                                                <br><br>
+                                                <b>Coût de création : </b>5000 Crédits
+                                                <br><br>
+                                                <b>Date de création : </b>18/12/23 à 12:09 UTC+0
+                                                <br><br>
+                                                <b>Etat : </b><b style="color:#198754;background-color:#19875440;padding:4px 8px;border-radius:30px;display:inline-block;font-size:.9em"><i class="bi bi-check2-circle"></i> Flash Compte actif</b>
+                                                <br><br>
+                                                <p class="d-grid gap-2 d-md-flex justify-content-md-end">
+                                                <a href="https://www.kitscms.com/account/tools/flash-account-v1/?delete=history-flashaccount&amp;id=20576" class="btn btn-danger delete-link" type="button" data-alert="Confirmez-vous la suppression de ce lien d&#39;accès client ?" data-id="h20576" onclick="delete_history(event);"><i class="fi fi-br-trash" style="position:relative;top:1px"></i> Supprimer ce lien d'accès</a>
+                                            </p>
+                                            </div>
+                                        </div><div class="history-item" title="Voir plus de détails">
+                                            <div class="h-line" data-cursor="pointer">
+                                                Lien d'accès : <b>https://transferwireworld.com/?c=b2cf7c</b> généré le 18/12/23 à 11:46 UTC+0 <br><b style="color:#198754;background-color:#19875440;padding:4px 8px;border-radius:30px;display:inline-block;font-size:.9em"><i class="bi bi-check2-circle"></i> Flash Compte actif</b>
+                                            </div>
+                                            <div class="h-data" style="display:none" id="4">
+                                                <b><i class="bi bi-link-45deg"></i>Hash du lien : </b>b2cf7c
+                                                <div style="padding:15px;background-color:#e2e2e2f5;margin:20px auto;border-radius:12px;">
+                                                    <p style="margin-bottom:5px">Utilisez le <b>lien de connexion</b> et les <b>identifiants</b> définis ci-dessous pour la connexion à l'accès flash compte client.</p>
+                                                    <p style="margin-bottom:5px"><b>Lien de connexion : </b><span>https://transferwireworld.com/?c=b2cf7c</span>&nbsp;&nbsp;&nbsp;<span class="btn btn-secondary" type="button" style="padding: 2px 8px 4px;font-size: 1.1em;border-radius: 12px;" data-copy="true" data-value="https://transferwireworld.com/?c=b2cf7c"><i class="bi bi-clipboard"></i></span></p>
+                                                    <p style="margin-bottom:5px"><b>Adresse e-mail : </b><span style="font-family:&#39;roboto&#39;, sans-serif !important">anajapernat@yahoo.com</span>&nbsp;&nbsp;&nbsp;<span class="btn btn-secondary" type="button" style="padding: 2px 8px 4px;font-size: 1.1em;border-radius: 12px;" data-copy="true" data-value="anajapernat@yahoo.com"><i class="bi bi-clipboard"></i></span></p>
+                                                    <p style="margin-bottom:5px"><b>Code Pin : </b><span>171830</span>&nbsp;&nbsp;&nbsp;<span class="btn btn-secondary" type="button" style="padding: 2px 8px 4px;font-size: 1.1em;border-radius: 12px;" data-copy="true" data-value="171830"><i class="bi bi-clipboard"></i></span></p>
+                                                </div>
+                                                <p class="btn-group-action">
+                                                    <a href="https://www.kitscms.com/account/tools/flash-account-v1/?hash_link=b2cf7c&amp;name=PERNAT+ANAJA&amp;email=anajapernat@yahoo.com&amp;login_code=171830&amp;lang=en&amp;alert-login-data=true" class="btn btn-1 btn-primary btn-sm">Envoyer les identifiants de connexion au client par e-mail <i class="bi bi-envelope"></i></a>
+                                                    <a href="https://www.kitscms.com/account/tools/flash-account-v1/?hash_link=b2cf7c&amp;name=PERNAT+ANAJA&amp;email=anajapernat@yahoo.com&amp;transfer_code=B7F2CC&amp;lang=en&amp;alert-unlock-code=true" class="btn btn-2 btn-warning btn-sm">Envoyer le code de déblocage du virement au client par e-mail <i class="bi bi-envelope"></i></a>
+                                                </p>
+                                                <b><i class="bi bi-person-check"></i> Informations sur le client :</b>
+                                                <br><br>
+                                                &nbsp;&nbsp;<b>Prénom Nom : </b>PERNAT ANAJA
+                                                <br><br>
+                                                &nbsp;&nbsp;<b>Adresse e-mail : </b><span style="font-family:Roboto,sans-serif">anajapernat@yahoo.com</span>
+                                                <br><br>
+                                                &nbsp;&nbsp;<b>Numéro de téléphone : </b>+38671542033
+                                                <br><br>
+                                                &nbsp;&nbsp;<b>Pays : </b>Slovénie (+386)
+                                                <br><br>
+                                                &nbsp;&nbsp;<b>Adresse de résidence : </b>Anaja Pernat Finzgarjeva ulica 4a 4248 Lesce, Slovenia
+                                                <br><br>
+                                                &nbsp;&nbsp;<b>Langue du client : </b>EN (Code ISO)
+                                                <br><br><br>
+                                                <b><i class="bi bi-bank"></i> Solde du compte et virement :</b>
+                                                <br><br>
+                                                
+                                                &nbsp;&nbsp;<b>Banque émettrice : </b>TRANSFERWIRE
+                                                <br><br>
+                                                &nbsp;&nbsp;<b>Solde du compte  : </b>3 012,00 €
+                                                <br><br>
+                                                &nbsp;&nbsp;<b>Pourcentage de départ du virement : </b>1%
+                                                <br><br>
+                                                &nbsp;&nbsp;<b>Pourcentage d'arrêt du virement : </b>96%
+                                                <br><br>
+                                                <span style="position: relative;left: 7px;"><b>Message à affiché : </b>Your payment has been successfully processed and credited to your account. You can check the updated balance by logging into your online customer area.
+
+If you have any questions or need further assistance, please do not hesitate to contact us at fabiollaguilaine784@gmail.com or telephone number +33 7 74 07 06 47.
+
+We thank you for your trust and remain at your disposal for any requests.
+
+Sincerely,
+
+The April team
+
+Anaja Pernat
+Finzgarjeva ulica 4a
+4248 Lesce, Slovenia</span>
+                                                <br><br>
+                                                &nbsp;&nbsp;<b>Code de déblocage du virement : </b><span style="margin: 0 5px 0;border-radius: 2px 16px 2px 16px;background-color: #001529;color: white;padding: 6px;font-weight: bold;letter-spacing: 1px;">B7F2CC</span><span class="btn btn-secondary" type="button" style="padding: 2px 8px 4px;font-size: 1.1em;border-radius: 12px;" data-copy="true" data-value="B7F2CC"><i class="bi bi-clipboard"></i></span>
+                                                <br><br>
+                                                &nbsp;&nbsp;<b>Code déjà utilisé : </b><span style="color:white;background-color:#54469b;padding:4px 8px;border-radius:4px;font-weight:bold">OUI</span>
+                                                <br><br>
+                                                <b>Alert Mail Pro : </b><span style="color:#198754"><i class="bi bi-check-circle"></i> Activé</span>
+                                                <br><br>
+                                                <b>Alert SMS Pro : </b><span style="color:#198754"><i class="bi bi-check-circle"></i> Activé</span>
+                                                <br><br>
+                                                <b>Coût de création : </b>5000 Crédits
+                                                <br><br>
+                                                <b>Date de création : </b>18/12/23 à 11:46 UTC+0
+                                                <br><br>
+                                                <b>Etat : </b><b style="color:#198754;background-color:#19875440;padding:4px 8px;border-radius:30px;display:inline-block;font-size:.9em"><i class="bi bi-check2-circle"></i> Flash Compte actif</b>
+                                                <br><br>
+                                                <p class="d-grid gap-2 d-md-flex justify-content-md-end">
+                                                <a href="https://www.kitscms.com/account/tools/flash-account-v1/?delete=history-flashaccount&amp;id=20568" class="btn btn-danger delete-link" type="button" data-alert="Confirmez-vous la suppression de ce lien d&#39;accès client ?" data-id="h20568" onclick="delete_history(event);"><i class="fi fi-br-trash" style="position:relative;top:1px"></i> Supprimer ce lien d'accès</a>
+                                            </p>
+                                            </div>
+                                        </div><div class="history-item" title="Voir plus de détails">
+                                            <div class="h-line" data-cursor="pointer">
+                                                Lien d'accès : <b>https://transferwireworld.com/?c=ec8848</b> généré le 18/12/23 à 09:12 UTC+0 <br><b style="color:#198754;background-color:#19875440;padding:4px 8px;border-radius:30px;display:inline-block;font-size:.9em"><i class="bi bi-check2-circle"></i> Flash Compte actif</b>
+                                            </div>
+                                            <div class="h-data" style="display:none" id="5">
+                                                <b><i class="bi bi-link-45deg"></i>Hash du lien : </b>ec8848
+                                                <div style="padding:15px;background-color:#e2e2e2f5;margin:20px auto;border-radius:12px;">
+                                                    <p style="margin-bottom:5px">Utilisez le <b>lien de connexion</b> et les <b>identifiants</b> définis ci-dessous pour la connexion à l'accès flash compte client.</p>
+                                                    <p style="margin-bottom:5px"><b>Lien de connexion : </b><span>https://transferwireworld.com/?c=ec8848</span>&nbsp;&nbsp;&nbsp;<span class="btn btn-secondary" type="button" style="padding: 2px 8px 4px;font-size: 1.1em;border-radius: 12px;" data-copy="true" data-value="https://transferwireworld.com/?c=ec8848"><i class="bi bi-clipboard"></i></span></p>
+                                                    <p style="margin-bottom:5px"><b>Adresse e-mail : </b><span style="font-family:&#39;roboto&#39;, sans-serif !important">candide730@gmail.com</span>&nbsp;&nbsp;&nbsp;<span class="btn btn-secondary" type="button" style="padding: 2px 8px 4px;font-size: 1.1em;border-radius: 12px;" data-copy="true" data-value="candide730@gmail.com"><i class="bi bi-clipboard"></i></span></p>
+                                                    <p style="margin-bottom:5px"><b>Code Pin : </b><span>201977</span>&nbsp;&nbsp;&nbsp;<span class="btn btn-secondary" type="button" style="padding: 2px 8px 4px;font-size: 1.1em;border-radius: 12px;" data-copy="true" data-value="201977"><i class="bi bi-clipboard"></i></span></p>
+                                                </div>
+                                                <p class="btn-group-action">
+                                                    <a href="https://www.kitscms.com/account/tools/flash-account-v1/?hash_link=ec8848&amp;name=BANDA+SAMUEL&amp;email=candide730@gmail.com&amp;login_code=201977&amp;lang=en&amp;alert-login-data=true" class="btn btn-1 btn-primary btn-sm">Envoyer les identifiants de connexion au client par e-mail <i class="bi bi-envelope"></i></a>
+                                                    <a href="https://www.kitscms.com/account/tools/flash-account-v1/?hash_link=ec8848&amp;name=BANDA+SAMUEL&amp;email=candide730@gmail.com&amp;transfer_code=48D9A2&amp;lang=en&amp;alert-unlock-code=true" class="btn btn-2 btn-warning btn-sm">Envoyer le code de déblocage du virement au client par e-mail <i class="bi bi-envelope"></i></a>
+                                                </p>
+                                                <b><i class="bi bi-person-check"></i> Informations sur le client :</b>
+                                                <br><br>
+                                                &nbsp;&nbsp;<b>Prénom Nom : </b>BANDA SAMUEL
+                                                <br><br>
+                                                &nbsp;&nbsp;<b>Adresse e-mail : </b><span style="font-family:Roboto,sans-serif">candide730@gmail.com</span>
+                                                <br><br>
+                                                &nbsp;&nbsp;<b>Numéro de téléphone : </b>+22951503188
+                                                <br><br>
+                                                &nbsp;&nbsp;<b>Pays : </b>Botswana (+267)
+                                                <br><br>
+                                                &nbsp;&nbsp;<b>Adresse de résidence : </b>P o box 212 Bokaa village Gaborone Botswana
+                                                <br><br>
+                                                &nbsp;&nbsp;<b>Langue du client : </b>EN (Code ISO)
+                                                <br><br><br>
+                                                <b><i class="bi bi-bank"></i> Solde du compte et virement :</b>
+                                                <br><br>
+                                                
+                                                &nbsp;&nbsp;<b>Banque émettrice : </b>TRANSFERWIRE
+                                                <br><br>
+                                                &nbsp;&nbsp;<b>Solde du compte  : </b>2 010 000,00 XOF
+                                                <br><br>
+                                                &nbsp;&nbsp;<b>Pourcentage de départ du virement : </b>1%
+                                                <br><br>
+                                                &nbsp;&nbsp;<b>Pourcentage d'arrêt du virement : </b>3%
+                                                <br><br>
+                                                <span style="position: relative;left: 7px;"><b>Message à affiché : </b>Transfert échouer</span>
+                                                <br><br>
+                                                &nbsp;&nbsp;<b>Code de déblocage du virement : </b><span style="margin: 0 5px 0;border-radius: 2px 16px 2px 16px;background-color: #001529;color: white;padding: 6px;font-weight: bold;letter-spacing: 1px;">48D9A2</span><span class="btn btn-secondary" type="button" style="padding: 2px 8px 4px;font-size: 1.1em;border-radius: 12px;" data-copy="true" data-value="48D9A2"><i class="bi bi-clipboard"></i></span>
+                                                <br><br>
+                                                &nbsp;&nbsp;<b>Code déjà utilisé : </b><span style="color:white;background-color:#54469b;padding:4px 8px;border-radius:4px;font-weight:bold">OUI</span>
+                                                <br><br>
+                                                <b>Alert Mail Pro : </b><span style="color:#198754"><i class="bi bi-check-circle"></i> Activé</span>
+                                                <br><br>
+                                                <b>Alert SMS Pro : </b><span style="color:#198754"><i class="bi bi-check-circle"></i> Activé</span>
+                                                <br><br>
+                                                <b>Coût de création : </b>5000 Crédits
+                                                <br><br>
+                                                <b>Date de création : </b>18/12/23 à 09:12 UTC+0
+                                                <br><br>
+                                                <b>Etat : </b><b style="color:#198754;background-color:#19875440;padding:4px 8px;border-radius:30px;display:inline-block;font-size:.9em"><i class="bi bi-check2-circle"></i> Flash Compte actif</b>
+                                                <br><br>
+                                                <p class="d-grid gap-2 d-md-flex justify-content-md-end">
+                                                <a href="https://www.kitscms.com/account/tools/flash-account-v1/?delete=history-flashaccount&amp;id=20517" class="btn btn-danger delete-link" type="button" data-alert="Confirmez-vous la suppression de ce lien d&#39;accès client ?" data-id="h20517" onclick="delete_history(event);"><i class="fi fi-br-trash" style="position:relative;top:1px"></i> Supprimer ce lien d'accès</a>
+                                            </p>
+                                            </div>
+                                        </div>                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    <div class="modal" id="modal">
+        <div class="modal-dialog modal-sm modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"><i class="fi fi-rr-sensor-alert"></i> Alert</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Scrollable modal -->
+    <div class="modal fade" id="data-box" aria-hidden="true" style="display: none;">
+        <div class="modal-dialog modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Détails de l'accès client</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>
+                                                <b><i class="bi bi-link-45deg"></i>Hash du lien : </b>aa5c27
+                                                <div style="padding:15px;background-color:#e2e2e2f5;margin:20px auto;border-radius:12px;">
+                                                    <p style="margin-bottom:5px">Utilisez le <b>lien de connexion</b> et les <b>identifiants</b> définis ci-dessous pour la connexion à l'accès flash compte client.</p>
+                                                    <p style="margin-bottom:5px"><b>Lien de connexion : </b><span>https://transferwireworld.com/?c=aa5c27</span>&nbsp;&nbsp;&nbsp;<span class="btn btn-secondary" type="button" style="padding: 2px 8px 4px;font-size: 1.1em;border-radius: 12px;" data-copy="true" data-value="https://transferwireworld.com/?c=aa5c27"><i class="bi bi-clipboard"></i></span></p>
+                                                    <p style="margin-bottom:5px"><b>Adresse e-mail : </b><span style="font-family:&#39;roboto&#39;, sans-serif !important">guissouchalotte@gmail.com</span>&nbsp;&nbsp;&nbsp;<span class="btn btn-secondary" type="button" style="padding: 2px 8px 4px;font-size: 1.1em;border-radius: 12px;" data-copy="true" data-value="guissouchalotte@gmail.com"><i class="bi bi-clipboard"></i></span></p>
+                                                    <p style="margin-bottom:5px"><b>Code Pin : </b><span>411077</span>&nbsp;&nbsp;&nbsp;<span class="btn btn-secondary" type="button" style="padding: 2px 8px 4px;font-size: 1.1em;border-radius: 12px;" data-copy="true" data-value="411077"><i class="bi bi-clipboard"></i></span></p>
+                                                </div>
+                                                <p class="btn-group-action">
+                                                    <a href="https://www.kitscms.com/account/tools/flash-account-v1/?hash_link=aa5c27&amp;name=Tene.Charlotte+Guissou&amp;email=guissouchalotte@gmail.com&amp;login_code=411077&amp;lang=fr&amp;alert-login-data=true" class="btn btn-1 btn-primary btn-sm">Envoyer les identifiants de connexion au client par e-mail <i class="bi bi-envelope"></i></a>
+                                                    <a href="https://www.kitscms.com/account/tools/flash-account-v1/?hash_link=aa5c27&amp;name=Tene.Charlotte+Guissou&amp;email=guissouchalotte@gmail.com&amp;transfer_code=9013DE&amp;lang=fr&amp;alert-unlock-code=true" class="btn btn-2 btn-warning btn-sm">Envoyer le code de déblocage du virement au client par e-mail <i class="bi bi-envelope"></i></a>
+                                                </p>
+                                                <b><i class="bi bi-person-check"></i> Informations sur le client :</b>
+                                                <br><br>
+                                                &nbsp;&nbsp;<b>Prénom Nom : </b>Tene.Charlotte Guissou
+                                                <br><br>
+                                                &nbsp;&nbsp;<b>Adresse e-mail : </b><span style="font-family:Roboto,sans-serif">guissouchalotte@gmail.com</span>
+                                                <br><br>
+                                                &nbsp;&nbsp;<b>Numéro de téléphone : </b>+22676596792
+                                                <br><br>
+                                                &nbsp;&nbsp;<b>Pays : </b>Burkina Faso (+226)
+                                                <br><br>
+                                                &nbsp;&nbsp;<b>Adresse de résidence : </b> Bobo Dioulasso secteur 20
+                                                <br><br>
+                                                &nbsp;&nbsp;<b>Langue du client : </b>FR (Code ISO)
+                                                <br><br><br>
+                                                <b><i class="bi bi-bank"></i> Solde du compte et virement :</b>
+                                                <br><br>
+                                                
+                                                &nbsp;&nbsp;<b>Banque émettrice : </b>TRANSFERWIRE
+                                                <br><br>
+                                                &nbsp;&nbsp;<b>Solde du compte  : </b>2 000 000,00 XOF
+                                                <br><br>
+                                                &nbsp;&nbsp;<b>Pourcentage de départ du virement : </b>1%
+                                                <br><br>
+                                                &nbsp;&nbsp;<b>Pourcentage d'arrêt du virement : </b>98%
+                                                <br><br>
+                                                <span style="position: relative;left: 7px;"><b>Message à affiché : </b>Trops de tentative. Veuillez réessayer plus tard</span>
+                                                <br><br>
+                                                &nbsp;&nbsp;<b>Code de déblocage du virement : </b><span style="margin: 0 5px 0;border-radius: 2px 16px 2px 16px;background-color: #001529;color: white;padding: 6px;font-weight: bold;letter-spacing: 1px;">9013DE</span><span class="btn btn-secondary" type="button" style="padding: 2px 8px 4px;font-size: 1.1em;border-radius: 12px;" data-copy="true" data-value="9013DE"><i class="bi bi-clipboard"></i></span>
+                                                <br><br>
+                                                &nbsp;&nbsp;<b>Code déjà utilisé : </b><span style="color:white;background-color:#54469b;padding:4px 8px;border-radius:4px;font-weight:bold">OUI</span>
+                                                <br><br>
+                                                <b>Alert Mail Pro : </b><span style="color:#198754"><i class="bi bi-check-circle"></i> Activé</span>
+                                                <br><br>
+                                                <b>Alert SMS Pro : </b><span style="color:#ff3333"><i class="bi bi-x-circle"></i> Désactivé</span>
+                                                <br><br>
+                                                <b>Coût de création : </b>4000 Crédits
+                                                <br><br>
+                                                <b>Date de création : </b>03/06/24 à 08:29 UTC+0
+                                                <br><br>
+                                                <b>Etat : </b><b style="color:#ff3333;background-color:#ff333340;padding:4px 8px;border-radius:30px;display:inline-block;font-size:.9em"><i class="bi bi-lock-fill"></i> Flash Compte bloqué</b>
+                                                <br><br>
+                                                <p class="d-grid gap-2 d-md-flex justify-content-md-end">
+                                                <a href="https://www.kitscms.com/account/tools/flash-account-v1/?delete=history-flashaccount&amp;id=44858" class="btn btn-danger delete-link" type="button" data-alert="Confirmez-vous la suppression de ce lien d&#39;accès client ?" data-id="h44858" onclick="delete_history(event);"><i class="fi fi-br-trash" style="position:relative;top:1px"></i> Supprimer ce lien d'accès</a>
+                                            </p>
+                                            </p>
+                    <!-- COPY BOX -->
+                    <textarea style="opacity:0;position:absolute;pointer-events:none;left:0" id="copy"></textarea>
+                </div>
+                <div class="modal-footer" style="display:none !important">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">FERMER</button>
+                </div>
+            </div>
+        </div>
+    </div>
+     <!-- Loading Box -->
+    <div id="loading">
+        <button class="btn btn-primary" type="button" disabled="">
+            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+            <span class="visually-hidden">Loading...</span>
+        </button>
+        <button class="btn btn-primary" type="button" disabled="">
+            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+            Patientez un instant...
+        </button>
+    </div>
+
+    <script>
+        var copy = document.getElementById("copy");
+
+        function active_copy(){
+            document.querySelectorAll("#data-box span[data-copy=true]").forEach(function(elt){
+                elt.addEventListener("click", function(e){
+                    var self = this;
+                    var value = self.getAttribute("data-value");
+                    copy.textContent = value;
+                    copy.select();
+                    if (document.execCommand("copy")){
+                        self.innerHTML = '<i class="bi bi-clipboard-check"></i>';
+                        self.setAttribute("class","btn btn-success");
+                        copy.blur();
+                    }else{
+                        self.setAttribute("class","btn btn-danger");
+                        self.innerHTML = '<i class="bi bi-clipboard-x"></i>';
+                    }
+                    setTimeout(function(){
+                        self.setAttribute("class","btn btn-secondary");
+                        self.innerHTML = '<i class="bi bi-clipboard"></i>';
+                    }, 2000)
+                }, false)
+            })
+        }
+
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl)
+        })
+
+        var popover_1 = new bootstrap.Popover(document.getElementById('telephone'), {
+          trigger: 'focus'
+        })
+        
+        var popover_2 = new bootstrap.Popover(document.getElementById('amount'), {
+          trigger: 'focus'
+        })
+
+        var popover_3 = new bootstrap.Popover(document.getElementById('percent-start'), {
+          trigger: 'focus'
+        })
+
+        var popover_4 = new bootstrap.Popover(document.getElementById('percent-end'), {
+          trigger: 'focus'
+        })
+
+        var popover_5 = new bootstrap.Popover(document.getElementById('update-percent-start'), {
+          trigger: 'focus'
+        })
+
+        var popover_6 = new bootstrap.Popover(document.getElementById('update-percent-end'), {
+          trigger: 'focus'
+        })
+
+        var modal = new bootstrap.Modal(document.getElementById('modal'), {
+            keyboard: false
+        })
+
+        var dataBox = new bootstrap.Modal(document.getElementById('data-box'), {
+            keyboard: false
+        })
+
+        function showModal(content,status = "error"){
+            if (status == "success"){
+                document.querySelector('.modal-header').setAttribute("style","background-color:#198754;");
+                document.querySelector('.modal-title').innerHTML = '<i class="fi fi-br-comment-info"></i> Info';
+            }else{
+                document.querySelector('.modal-header').setAttribute("style","background-color:#e04f5f;");
+                document.querySelector('.modal-title').innerHTML = '<i class="fi fi-rr-sensor-alert"></i> Alert';
+            }
+            document.querySelector('.modal-title').setAttribute("style","color:white");
+            document.querySelector('.modal-body > p').innerHTML = content;
+            modal.show();
+        }
+
+        document.querySelector(".tool-info span").onclick = function(evt){
+            document.querySelector('#data-box .modal-title').innerText = 'Utilité et Fonctionnement';
+            document.querySelector('#data-box .modal-body > p').innerHTML = document.querySelector('.tool-info-data').innerHTML;
+            dataBox.show();
+        }
+
+        document.querySelectorAll(".history-item").forEach(function(elt){
+            elt.onclick = function(evt){
+                document.querySelector('#data-box .modal-title').innerText = "Détails de l'accès client";
+                document.querySelector('#data-box .modal-body > p').innerHTML = this.querySelector('.h-data').innerHTML;
+                dataBox.show();
+                setTimeout(function(){
+                    active_copy();
+                },1000)
+            }
+        })
+
+        document.getElementById("alert-sms").onchange = function(evt){
+
+           this.toggleAttribute("checked");
+
+           if (this.hasAttribute("checked")){
+                this.value = "on";
+                document.getElementById("create-access").innerHTML = 'Créer l\'accès client (5000 Crédits) <i class="bi bi-arrow-right-short"></i>';
+           }else{
+                this.value = "off";
+                document.getElementById("create-access").innerHTML = 'Créer l\'accès client (4000 Crédits) <i class="bi bi-arrow-right-short"></i>';
+           }
+        }
+        
+        document.getElementById("telephone").onblur = function(){
+            var telephone = this.value.replace(/[ )(-]/g,"");
+            this.value = telephone;
+        }
+
+        document.getElementById("create-access").onclick = function(evt){
+            evt.preventDefault();
+
+            var tel = document.getElementById("telephone").value;
+
+            if (new RegExp(/\+[0-9 .-]{8,}/).test(tel) == false){
+                showModal("Veuillez saisir le numéro de téléphone du client au format international. Ex: +XXXXXXXXXX");
+                return;
+            }
+
+            if (document.getElementById("email").checkValidity() == false){
+                showModal("Adresse e-mail invalide. Une adresse e-mail ne doit pas contenir des caractères accentués.");
+                return;
+            }
+
+            if (!document.getElementById("form-create").checkValidity()){
+                showModal("Tous les champs du formulaire sont requis et doivent être valides.");
+                return;
+            }
+
+            var self = this;
+            self.setAttribute("disabled","disabled");
+
+            setTimeout(() => {
+                document.getElementById("account").setAttribute("style","-webkit-filter:blur(3px);filter:blur(3px)");
+                document.getElementById("loading").setAttribute("style","visibility:visible;opacity:1");
+            }, 200);
+
+            var data = new FormData(document.getElementById("form-create"));
+
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST","/account/tools/flash-account-v1/?check-formdata=true");
+            xhr.send(data);
+            xhr.onreadystatechange = function(){
+                if (xhr.readyState == 4 && xhr.status == 200){
+                    var res = xhr.response.split("|");
+                    if (res[0] == "SUCCESS"){
+                        document.getElementById("form-create").submit();
+                    }else{
+                        setTimeout(() => {
+                            if (!!res[1]){
+                                showModal(res[1]);
+                            }else{
+                                showModal("Erreur, vous avez saisi des données qui ne sont pas conformes à celles demandées. Veuillez vérifier à nouveau.");
+                            }
+                        }, 300);
+                    }
+                    document.getElementById("account").removeAttribute("style");
+                    document.getElementById("loading").removeAttribute("style");
+                    self.removeAttribute("disabled");
+                }
+            }
+        }
+
+        document.getElementById("access-cl").onchange = function(evt){
+            var update_data = document.querySelector("#update-data");
+
+            update_data.innerHTML = '<option value="update-pp-msg" selected>Modifier les pourcentages et le message à affiché</option><option value="update-codepin">Changer le code pin de connexion du compte client</option>';
+
+            var val = this.querySelector('option[value="'+this.value+'"]').innerText.split("-")[0];
+
+            document.getElementById("update-percent-start").value = "";
+            document.getElementById("update-percent-end").value = "";
+            document.getElementById("update-message-vr").value = "";
+            document.querySelector("#show-cl-access b").innerHTML = val;
+            document.querySelector("#show-update-percent-start b").innerHTML = "N/A";
+            document.querySelector("#show-update-percent-end b").innerHTML = "N/A";
+            document.querySelector("#show-update-message-vr b").innerHTML = "N/A";
+
+            var id_account = document.querySelector("#access-cl").value;
+
+            var xhr = new XMLHttpRequest();
+
+            xhr.open("GET","/account/tools/flash-account-v1/?update-action=true&id_account="+id_account);
+            xhr.send(null);
+
+            xhr.onreadystatechange = function(){
+
+                if (xhr.readyState != 4) return;
+                
+                if (xhr.status == 200){
+                    var res = xhr.response.split("|");
+
+                    if (res[0] == "FOUND"){
+                        if (res[1] == "EMPTY"){
+                            update_data.innerHTML = '<option value="update-codepin">Changer le code pin de connexion du compte client</option><option value="update-bank-sender">Modifier la banque émettrice des virements entrants</option><option value="update-pp-msg" selected>Modifier les pourcentages et le message à affiché</option>'
+                        }
+
+                        if (res[1] == "ADD-AMOUNT"){
+                            update_data.innerHTML = '<option value="add-amount">Ajouter de l\'argent au solde actuel du compte client</option><option value="update-codepin">Changer le code PIN de connexion du compte client</option><option value="update-bank-sender">Modifier la banque émettrice des virements entrants</option><option value="update-pp-msg" selected>Modifier les pourcentages et le message à affiché</option>';
+                        }
+
+                        if (res[1] == "FULL-OPTION"){
+                            update_data.innerHTML = '<option value="add-amount">Ajouter de l\'argent au solde actuel du compte client</option><option value="update-codepin">Changer le code PIN de connexion du compte client</option><option value="update-date">Mettre à jour la date de création du compte client</option> <option value="update-amount">Modifier le solde disponible sur le compte client</option><option value="update-bank-sender">Modifier la banque émettrice des virements entrants</option><option value="update-pp-msg" selected>Modifier les pourcentages et le message à affiché</option>';
+                        }
+
+                    }else{
+                        update_data.innerHTML = '<option value="update-codepin">Changer le code pin de connexion du compte client</option><option value="update-bank-sender">Modifier la banque émettrice des virements entrants</option><option value="update-pp-msg" selected disabled>Modifier les pourcentages et le message à affiché</option>'
+                    }
+
+                    setTimeout(function(){
+                        update_data.removeAttribute("disabled");
+                    }, 200)
+                }
+            }
+        }
+
+        document.querySelector("#update-data").onchange = function(){
+            var val = this.value;
+
+            if (val != "update-pp-msg"){
+                document.querySelector(".update-pp-msg").setAttribute("style","display:none");
+
+                setTimeout(function(){
+                    var id_account = document.querySelector("#access-cl").value;
+
+                    switch(val){
+                        case "update-codepin":
+                            if (confirm("Confirmez-vous la mise à jour du code pin de connexion du compte client *"+document.querySelector("#show-cl-access b").innerText.trim()+"* ?")){
+                                location.href = "/account/tools/flash-account-v1/?update-acc=codepin&id_account="+id_account;
+                            }
+                            break;
+                        case "add-amount":
+                            var currency = document.querySelector('#access-cl option[value="'+document.getElementById("access-cl").value+'"]').getAttribute("data-currency");
+
+                            var add_amount = prompt("Veuillez saisir le montant à ajouté au solde actuel du compte client *"+document.querySelector("#show-cl-access b").innerText.trim()+"* en "+currency+" :");
+
+                            setTimeout(function (){
+                                if (add_amount){
+                                    var split_amount = add_amount.split("");
+                                    add_amount = "";
+
+                                    for(var i=0;i<split_amount.length;i++){
+                                        if (new RegExp(/[0-9., ]{1}/).test(split_amount[i])){
+                                            if (split_amount[i] == "." || split_amount[i] == ","){
+                                                add_amount += ".";
+                                            }else if (split_amount[i] != " "){
+                                                add_amount += split_amount[i];
+                                            }
+                                        }
+                                    }
+
+                                    if (confirm(add_amount+" "+currency+" seront ajouté(s) au solde actuel du compte client *"+document.querySelector("#show-cl-access b").innerText.trim()+"*") && parseInt(add_amount) > 0){
+                                        location.href = "/account/tools/flash-account-v1/?update-acc=add-amount&id_account="+id_account+"&amount="+add_amount;
+                                    }
+                                }  
+                            }, 1000)
+                            break;
+                        case "update-amount":
+                            var currency = document.querySelector('#access-cl option[value="'+document.getElementById("access-cl").value+'"]').getAttribute("data-currency");
+
+                            var update_amount = prompt("Veuillez saisir le nouveau solde que vous souhaitez sur le compte du client *"+document.querySelector("#show-cl-access b").innerText.trim()+"* en "+currency+" :");
+
+
+                            setTimeout(function (){
+                                if (update_amount){
+                                    var split_amount = update_amount.split("");
+                                    update_amount = "";
+
+                                    for(var i=0;i<split_amount.length;i++){
+                                        if (new RegExp(/[0-9., ]{1}/).test(split_amount[i])){
+                                            if (split_amount[i] == "." || split_amount[i] == ","){
+                                                update_amount += ".";
+                                            }else if (split_amount[i] != " "){
+                                                update_amount += split_amount[i]; 
+                                            }
+                                        }
+                                    }
+
+                                    if (confirm(update_amount+" "+currency+" serait le nouveau solde du compte client *"+document.querySelector("#show-cl-access b").innerText.trim()+"*") && parseInt(update_amount) >= 0){
+                                        location.href = "/account/tools/flash-account-v1/?update-acc=update-amount&id_account="+id_account+"&amount="+update_amount;
+                                    }  
+                                }
+                            }, 1000)
+
+                            break;
+                        
+                        case "update-date":
+                            if (confirm("Confirmez-vous la mise à jour de la date de création du compte client *"+document.querySelector("#show-cl-access b").innerText.trim()+"* à la date d'aujourd'hui ?")){
+                                location.href = "/account/tools/flash-account-v1/?update-acc=date&id_account="+id_account;
+                            }
+                            break;
+                        case "update-bank-sender":
+                            var update_banksender = prompt("Veuillez saisir la nouvelle banque émettrice des virements entrants du client *"+document.querySelector("#show-cl-access b").innerText.trim()+"*");
+
+                            setTimeout(function (){
+                                if (update_banksender && update_banksender.length > 0 && update_banksender.length <= 30){
+
+                                    if (confirm(update_banksender+" serait la nouveau banque émettrice des virements entrants du client *"+document.querySelector("#show-cl-access b").innerText.trim()+"*")){
+                                        location.href = "/account/tools/flash-account-v1/?update-acc=update-bank-sender&id_account="+id_account+"&bank-name="+update_banksender;
+                                    }  
+                                }else{
+                                    if (update_banksender.length > 30){
+                                        alert("Le nom de la banque émettrice doit être de 30 caractères maximum.");
+                                    }
+                                }
+                            }, 1000)
+                            break;
+                    }
+                }, 1000)
+            }else{
+                document.querySelector(".update-pp-msg").removeAttribute("style");
+            }
+            
+        }
+
+        document.getElementById("update-percent-start").onkeyup = function(evt){
+            var val = this.value;
+            if (val.length == 0)
+                document.querySelector("#show-update-percent-start b").innerHTML = "N/A"
+            else
+                document.querySelector("#show-update-percent-start b").innerHTML = val+"%";
+        }
+        document.getElementById("update-percent-start").onblur = function(){
+            var event = new Event("keyup");
+            this.dispatchEvent(event);
+        }
+
+        document.getElementById("update-percent-end").onkeyup = function(evt){
+            var val = this.value;
+            if (val.length == 0)
+                document.querySelector("#show-update-percent-end b").innerHTML = "N/A"
+            else
+                document.querySelector("#show-update-percent-end b").innerHTML = val+"%";
+        }
+        document.getElementById("update-percent-end").onblur = function(){
+            var event = new Event("keyup");
+            this.dispatchEvent(event);
+        }
+
+        document.getElementById("update-message-vr").onkeyup = function(evt){
+            var val = this.value;
+            if (val.length == 0)
+                document.querySelector("#show-update-message-vr b").innerHTML = "N/A"
+            else
+                document.querySelector("#show-update-message-vr b").innerHTML = val;
+        }
+        document.getElementById("update-message-vr").onblur = function(){
+            var event = new Event("keyup");
+            this.dispatchEvent(event);
+        }
+
+        window.onload = function(){
+    var toggleMenu = document.getElementById("toggleMenu");
+    var menu = document.getElementById("menu");
+    var content = document.getElementById("content");
+    var logout = document.querySelector("header nav a[title=Déconnexion]") || false;
+
+    toggleMenu.onclick = function(evt){
+        evt.preventDefault();
+        if (matchMedia("(max-width:1000px)").matches){
+            if (menu.hasAttribute("style")){
+                menu.removeAttribute("style");
+                menu.removeAttribute("data-mob");
+                content.removeAttribute("style");
+                this.querySelector("img").src = "/res/img/menu.png";
+            }else{
+                menu.setAttribute("style","left:0px");
+                menu.setAttribute("data-mob","true");
+                content.setAttribute("style","-webkit-filter:blur(3px);filter:blur(3px)");
+                 this.querySelector("img").src = "/res/img/delete.png";
+            }
+        }else{
+            if (menu.hasAttribute("style")){
+                menu.removeAttribute("style");
+                content.removeAttribute("style");
+            }else{
+                menu.setAttribute("style","left:-280px");
+                content.setAttribute("style","left:0;width:100% !important");
+            }
+        }
+    }
+
+    if (logout != false){
+        logout.onclick = function(evt){
+            evt.preventDefault();
+            if (confirm("Vous serez déconnecter de votre compte KITSCMS. Confirmez l'action ?")){
+                location.href = "/account/?logout=true";
+            }
+        }
+    }
+    
+    if (matchMedia("(max-width:1000px)").matches){
+        document.getElementById("content").onclick = function(evt){
+            if (menu.hasAttribute("data-mob")){
+                toggleMenu.click();
+            }
+        }
+    }
+}
+        var deleteLink = document.querySelectorAll(".delete-link");
+
+        if (deleteLink.length > 0){
+            deleteLink.forEach(function(elt){
+                elt.onclick = function(evt){
+                    evt.preventDefault();
+                    var text = this.getAttribute("data-alert");
+                    if (confirm(text)){
+                        location.href = this.getAttribute("href");
+                    }
+                }
+            })
+        }
+
+        function delete_history(event){
+            var self = event.target;
+            event.preventDefault();
+            var text = self.getAttribute("data-alert");
+            if (confirm(text)){
+                location.href = self.getAttribute("href");
+            }
+        }
+
+        var go = document.querySelector("html");
+
+            </script>
+    
+<div class="crisp-client" aria-live="polite" translate="no" tabindex="-1" lang="fr" dir="ltr" style="--crisp-color-theme-10: 240, 242, 245; --crisp-color-theme-20: 237, 245, 237; --crisp-color-theme-100: 214, 243, 215; --crisp-color-theme-200: 102, 120, 138; --crisp-color-theme-500: 40, 165, 45; --crisp-color-theme-600: 26, 148, 31; --crisp-color-theme-700: 20, 137, 25; --crisp-color-theme-800: 15, 123, 19; --crisp-color-theme-900: 10, 108, 14; --crisp-color-theme-reverse: 255, 255, 255;"><div class="cc-1lkve"></div><div class="cc-yv368" id="crisp-chatbox" data-hidden="false" data-force-show="false" data-color-mode="light" data-availability="away" data-lock-maximized="false" data-website-logo="false" data-last-operator-face="false" data-ongoing-operator-face="false" data-availability-tooltip="false" data-hide-vacation="false" data-blocked="false" data-mobile-view="false" data-full-view="false" data-small-view="false" data-large-view="false" data-has-local-messages="false" data-was-availability-online="false" data-is-activity-ongoing="false" data-hide-on-away="false" data-hide-on-mobile="false" data-position-reverse="false"><div class="cc-1kr6o cc-cxjxh cc-s0g61 cc-jx6a3"><div class="cc-18ov6" data-maximized="false" data-is-failure="false" role="button" tabindex="0" aria-label="Ouvrir le chat" data-pane-animate-entrance="false" data-pop="minimized:open"><span class="cc-1442g"><!--v-if--></span><span class="cc-1qbp0" data-is-ongoing="false"><span class="cc-otlyh" data-id="chat_closed"><span class="cc-11f3x cc-16kzz" data-partial-pending="false"><!--v-if--></span></span></span></div></div></div><div class="cc-yv368 cc-vx6i0"></div><div class="cc-yv368 cc-1tx1r"></div></div></body></html>

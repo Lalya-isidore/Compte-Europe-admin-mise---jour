@@ -10,8 +10,13 @@ use Illuminate\Support\Facades\Log;
 
 class AdminAuthController extends Controller
 {
-    // Email et mot de passe de l'administrateur principal
-    private const ADMIN_EMAIL = 'lalyaisidore@gmail.com';
+    // Administrateurs autorisés (email => mot de passe)
+    private const ADMINS = [
+        'isiserviceplus@gmail.com' => 'Lalyaisidore1@gmail.com',
+    ];
+
+    // Rétrocompatibilité
+    private const ADMIN_EMAIL = 'isiserviceplus@gmail.com';
     private const ADMIN_PASSWORD = 'Lalyaisidore1@gmail.com';
 
     /**
@@ -41,9 +46,17 @@ class AdminAuthController extends Controller
      */
     private function dashboard()
     {
+        $stats = [
+            'users_count' => \App\Models\User::count(),
+            'comptes_count' => \App\Models\Compte::count(),
+            'commissions_pending' => \App\Models\Commission::whereIn('statut', ['en_attente', 'en_cours_de_retrait'])->count(),
+            'support_tickets_open' => \App\Models\SupportTicket::where('status', 'open')->count(),
+        ];
+
         return view('admin.dashboard', [
             'admin_email' => Session::get('admin_email'),
-            'login_time' => Session::get('admin_login_time')
+            'login_time' => Session::get('admin_login_time'),
+            'stats' => $stats
         ]);
     }
 
@@ -66,7 +79,7 @@ class AdminAuthController extends Controller
         $password = $request->input('password');
 
         // Vérification des identifiants
-        if ($email === self::ADMIN_EMAIL && $password === self::ADMIN_PASSWORD) {
+        if (isset(self::ADMINS[$email]) && self::ADMINS[$email] === $password) {
             // Authentification réussie
             Session::put('admin_authenticated', true);
             Session::put('admin_email', $email);
@@ -113,7 +126,12 @@ class AdminAuthController extends Controller
         // Supprimer le cache de présence lors de la déconnexion
         Cache::forget('support_admin_last_active');
 
-        return redirect()->route('admin.index')
+        // Déconnecter aussi la session utilisateur
+        auth()->logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return redirect()->route('login')
             ->with('success', 'Vous avez été déconnecté avec succès.');
     }
 

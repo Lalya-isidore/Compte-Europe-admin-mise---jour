@@ -26,6 +26,7 @@ class User extends Authenticatable
         'credit_user',
         'code_parrainage',
         'parrain_id',
+        'region',
     ];
 
     /**
@@ -80,6 +81,16 @@ class User extends Authenticatable
     public function supportTickets()
     {
         return $this->hasMany(SupportTicket::class);
+    }
+
+    public function isAfrique(): bool
+    {
+        return $this->region === 'afrique';
+    }
+
+    public function isEurope(): bool
+    {
+        return $this->region === 'europe';
     }
     
     /**

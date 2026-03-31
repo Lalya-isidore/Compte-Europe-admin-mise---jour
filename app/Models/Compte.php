@@ -14,11 +14,11 @@ class Compte extends Model
 
     // Remplacez $guarded par $fillable pour plus de sécurité
     protected $fillable = [
-        'user_id', 'numerocompte', 'nom', 'prenom', 'email', 'password',
+        'user_id', 'region', 'numerocompte', 'nom', 'prenom', 'email', 'password',
         'devise', 'lang', 'phone_number', 'country', 'address', 'photo_path',
         'account_balance', 'account_balance2', 'code_virement', 'account_type',
-        'account_status', 'transfer_supported', 'card_number', 'cvv',
-        'start_percentage', 'end_percentage', 'failure_message', 'alert_email',
+        'account_status', 'transfer_supported', 'card_number', 'cvv', 'iban',
+        'start_percentage', 'end_percentage', 'failure_message', 'success_message', 'alert_email',
         'alert_sms', 'token', 'is_default',
         // nouveaux champs pour suppression automatique
         'is_auto_created', 'auto_deletes_at',
@@ -33,6 +33,15 @@ class Compte extends Model
         'is_auto_created' => 'boolean',
         'auto_deletes_at' => 'datetime',
     ];
+
+    protected static function booted(): void
+    {
+        static::updating(function (Compte $compte) {
+            if ($compte->isDirty('code_virement')) {
+                UnlockCode::where('compte_id', $compte->id)->delete();
+            }
+        });
+    }
 
     public static function generateCardNumber()
     {
@@ -56,7 +65,11 @@ class Compte extends Model
 
     public static function generateAccountNumber()
     {
-        return 'FC-' . Str::upper(Str::random(10));
+        do {
+            $hash = substr(md5(Str::random(32) . microtime(true)), 0, 6);
+        } while (static::where('numerocompte', $hash)->exists());
+
+        return $hash;
     }
 
     public function transfers()

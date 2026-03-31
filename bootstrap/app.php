@@ -12,7 +12,13 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
-        //
+        $middleware->web(append: [
+            \App\Http\Middleware\DetectRegion::class,
+        ]);
+
+        $middleware->alias([
+            'feature' => \App\Http\Middleware\RequireFeature::class,
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         // Gestion globale des erreurs - redirection avec message au lieu de pages d'erreur

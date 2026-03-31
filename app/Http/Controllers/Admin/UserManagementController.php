@@ -43,10 +43,18 @@ class UserManagementController extends Controller
                 });
             })
             ->orderByDesc('created_at')
-            ->paginate(15)
+            ->paginate(16)
             ->withQueryString();
 
-        return view('admin.users.index', compact('users', 'search'));
+        // Global Stats
+        $globalStats = [
+            'total_users' => User::count(),
+            'total_comptes' => Compte::count(),
+            'total_credits' => User::sum('credit_user'),
+            'total_solde' => Compte::sum('account_balance'),
+        ];
+
+        return view('admin.users.index', compact('users', 'search', 'globalStats'));
     }
 
     /**

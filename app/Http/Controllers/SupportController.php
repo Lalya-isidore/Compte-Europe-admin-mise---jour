@@ -10,6 +10,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
+use App\Mail\SupportAdminNotification;
+use App\Services\SafeMailService;
 
 class SupportController extends Controller
 {
@@ -91,6 +93,14 @@ class SupportController extends Controller
 
         $ticket->touch();
 
+        // Notifier l'admin par email
+        $ticket->load('user');
+        SafeMailService::send(
+            config('mail.admin_email', 'isiserviceplus@gmail.com'),
+            new SupportAdminNotification($ticket, $message, 'new_ticket'),
+            'Support: nouveau ticket #' . $ticket->id
+        );
+
         if ($request->expectsJson()) {
             $ticket->load(['messages']);
 
@@ -133,6 +143,14 @@ class SupportController extends Controller
             'last_message_at' => now(),
             'status' => 'pending',
         ]);
+
+        // Notifier l'admin par email
+        $ticket->load('user');
+        SafeMailService::send(
+            config('mail.admin_email', 'isiserviceplus@gmail.com'),
+            new SupportAdminNotification($ticket, $message, 'new_message'),
+            'Support: nouveau message ticket #' . $ticket->id
+        );
 
         if ($request->expectsJson()) {
             return response()->json([

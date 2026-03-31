@@ -3,11 +3,8 @@
 @section('title', "Raccourcissement d'URL")
 
 @section('breadcrumb')
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="{{ route('dashboard') }}"><i class="fas fa-home"></i></a></li>
         <li class="breadcrumb-item"><i class="fas fa-briefcase me-1"></i>Outils</li>
         <li class="breadcrumb-item active"><i class="fas fa-link me-1"></i>Raccourcissement d'URL</li>
-    </ol>
 @endsection
 
 @section('content')

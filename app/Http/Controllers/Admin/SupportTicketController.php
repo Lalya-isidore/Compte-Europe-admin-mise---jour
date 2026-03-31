@@ -10,6 +10,8 @@ use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use Illuminate\View\View;
 use Illuminate\Support\Facades\Storage;
+use App\Mail\SupportUserReply;
+use App\Services\SafeMailService;
 
 class SupportTicketController extends Controller
 {
@@ -70,7 +72,7 @@ class SupportTicketController extends Controller
 
         $payload = $this->handleUploads($request);
 
-        SupportMessage::create(array_merge([
+        $message = SupportMessage::create(array_merge([
             'support_ticket_id' => $ticket->id,
             'sent_by_admin' => true,
             'content' => $data['message'] ?? '',
@@ -82,9 +84,19 @@ class SupportTicketController extends Controller
             'updated_at' => now(),
         ]);
 
+        // Notifier l utilisateur par email
+        $ticket->load('user');
+        if ($ticket->user && $ticket->user->email) {
+            SafeMailService::send(
+                $ticket->user->email,
+                new SupportUserReply($ticket, $message),
+                'Support: reponse ticket #' . $ticket->id
+            );
+        }
+
         return redirect()
             ->route('admin.support.index', ['ticket' => $ticket->id])
-            ->with('success', 'Réponse envoyée à l’utilisateur.');
+            ->with('success', 'Reponse envoyee.');
     }
 
     public function updateStatus(Request $request, SupportTicket $ticket): RedirectResponse
@@ -99,7 +111,7 @@ class SupportTicketController extends Controller
 
         return redirect()
             ->route('admin.support.index', ['ticket' => $ticket->id])
-            ->with('success', 'Statut de la demande mis à jour.');
+            ->with('success', 'Statut de la demande mis a jour.');
     }
 
     protected function handleUploads(Request $request): array

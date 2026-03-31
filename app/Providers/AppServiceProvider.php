@@ -7,6 +7,7 @@ use App\Models\Compte;
 use App\Observers\CompteObserver;
 use App\Models\Transfer;
 use App\Observers\TransferObserver;
+use App\Services\RegionManager;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -15,7 +16,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        $this->app->singleton('region', RegionManager::class);
+        $this->app->singleton(RegionManager::class);
     }
 
     /**

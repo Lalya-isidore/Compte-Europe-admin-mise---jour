@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FlashBilan - Espace Client</title>
+    <title>{{ app('region')->appName() }} - Espace Client</title>
+    <link rel="icon" type="image/svg+xml" href="{{ asset('images/favicon.svg') }}">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
         * {
@@ -142,10 +143,17 @@
 </head>
 <body>
     <div class="logo-container">
-        <div class="logo">
-            <i class="fas fa-university"></i>
-        </div>
-        <h1 class="service-name">FlashBilan</h1>
+        @php
+            $logoUrl = !empty($compte) ? config('regions.' . ($compte->region ?: 'europe') . '.client_logo_url') : null;
+        @endphp
+        @if($logoUrl)
+            <img src="{{ $logoUrl }}" alt="Logo" style="max-width:200px;margin-bottom:1rem;">
+        @else
+            <div class="logo">
+                <i class="fas fa-university"></i>
+            </div>
+        @endif
+        <h1 class="service-name">{{ app('region')->appName() }}</h1>
     </div>
 
     @if(session('error') || $errors->any())
@@ -155,35 +163,58 @@
     @endif
 
     <div class="login-container">
-        <h2 class="login-title">Connexion Compte</h2>
-        
+        <h2 class="login-title">Connexion à votre compte</h2>
+
+        @if(!empty($compte))
+            <div style="text-align:center;margin-bottom:1.5rem;">
+                <span style="display:inline-flex;align-items:center;gap:8px;background:#f0f0f0;padding:8px 20px;border-radius:30px;font-weight:600;color:#333;font-size:.95rem;">
+                    <i class="fas fa-user-circle" style="font-size:1.2rem;color:#888;"></i>
+                    {{ strtoupper($compte->prenom) }} {{ strtoupper($compte->nom) }}
+                </span>
+            </div>
+        @endif
+
+        @if(!empty($isTestMode))
+            <div style="background:#fff8e1;border:1px solid #ffe082;border-radius:12px;padding:16px 20px;margin-bottom:1.5rem;font-size:.88rem;color:#5d4037;line-height:1.6;">
+                <strong style="color:#e65100;">Vous etes en mode Test.</strong> Ce message est automatiquement supprime avec un vrai flash compte client.<br><br>
+                Pour simuler un <strong>echec virement</strong> a 50%, veuillez utiliser le code de deblocage du virement : <strong>000000</strong><br>
+                Pour simuler un <strong>virement effectue avec succes</strong> a 100%, veuillez utiliser le code de deblocage du virement : <strong>111111</strong>
+            </div>
+        @endif
+
         <form action="{{ route('client.auth') }}" method="POST">
             @csrf
             <div class="form-group">
-                <input type="email" 
-                       name="email" 
-                       class="form-control" 
-                       placeholder="Adresse email" 
-                       value="{{ old('email') }}"
-                       required>
+                <div style="position:relative;">
+                    <i class="fas fa-envelope" style="position:absolute;left:15px;top:50%;transform:translateY(-50%);color:#aaa;"></i>
+                    <input type="email"
+                           name="email"
+                           class="form-control"
+                           style="padding-left:45px;"
+                           placeholder="Votre adresse e-mail"
+                           value="{{ old('email') }}"
+                           required>
+                </div>
             </div>
-            
+
             <div class="form-group">
                 <div class="password-container">
-                    <input type="password" 
-                           name="password" 
+                    <i class="fas fa-shield-alt" style="position:absolute;left:15px;top:50%;transform:translateY(-50%);color:#aaa;z-index:1;"></i>
+                    <input type="password"
+                           name="password"
                            id="password"
-                           class="form-control" 
-                           placeholder="Mot de passe" 
+                           class="form-control"
+                           style="padding-left:45px;"
+                           placeholder="Votre code d'accès"
                            required>
                     <button type="button" class="password-toggle" onclick="togglePassword()">
                         <i class="fas fa-eye" id="toggleIcon"></i>
                     </button>
                 </div>
             </div>
-            
+
             <button type="submit" class="btn-login">
-                Connexion
+                Se connecter &rarr;
             </button>
         </form>
     </div>

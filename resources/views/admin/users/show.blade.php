@@ -1,225 +1,320 @@
 @extends('admin.layout')
 
-@section('title', 'Détails utilisateur')
-
-@push('styles')
-<style>
-    .user-summary {
-        display: grid;
-        gap: 1.5rem;
-    }
-    @media (min-width: 768px) {
-        .user-summary {
-            grid-template-columns: repeat(3, minmax(0, 1fr));
-        }
-    }
-    .summary-card {
-        background: #fff;
-        border-radius: 15px;
-        padding: 20px;
-        box-shadow: 0 7px 24px rgba(76, 81, 191, 0.12);
-    }
-    .summary-card h3 {
-        font-size: 1.15rem;
-        margin-bottom: 0.5rem;
-    }
-    .summary-card p {
-        margin: 0;
-        color: #555;
-    }
-    .table-section {
-        margin-top: 2.5rem;
-    }
-    .badge-credit {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        color: #fff;
-        padding: 0.4rem 0.9rem;
-        border-radius: 999rem;
-        font-weight: 500;
-    }
-    .admin-subaccount-actions {
-        min-width: 210px;
-    }
-    .admin-subaccount-actions form input[type="number"] {
-        min-width: 120px;
-    }
-</style>
-@endpush
+@section('title', ($user->nom ?? '') . ' ' . ($user->prenom ?? '') . ' - Détail utilisateur')
 
 @section('content')
-    <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-3 mb-4">
-        <div>
-            <h1 class="h3 mb-1">👤 {{ $user->nom }} {{ $user->prenom }}</h1>
-            <p class="text-muted mb-0">État civil, sous-comptes et recharges de l'utilisateur.</p>
+@php
+    $initials = mb_substr($user->prenom ?? '', 0, 1) . mb_substr($user->nom ?? '', 0, 1);
+    $statusColors = [
+        'completed' => 'success',
+        'pending' => 'warning',
+        'failed' => 'danger'
+    ];
+@endphp
+
+{{-- Profile Header Card --}}
+<div class="card-premium mb-5 border-0 shadow-sm p-4">
+    <div class="row align-items-center g-4">
+        <div class="col-auto">
+            <div class="avatar bg-primary bg-opacity-10 text-primary rounded-4 d-flex align-items-center justify-content-center shadow-soft" 
+                 style="width: 80px; height: 80px; font-size: 1.8rem; font-weight: 800;">
+                {{ $initials ?: '?' }}
+            </div>
         </div>
-        <div class="d-flex gap-2">
-            <a href="{{ route('admin.users.index') }}" class="btn btn-outline-secondary">
-                ← Retour à la liste
-            </a>
-            <form action="{{ route('admin.users.destroy', $user) }}" method="POST" class="delete-user-form" data-user-name="{{ trim($user->nom . ' ' . $user->prenom) }}">
-                @csrf
-                @method('DELETE')
-                <button type="submit" class="btn btn-outline-danger">
-                    Supprimer l'utilisateur
-                </button>
-            </form>
+        <div class="col">
+            <div class="d-flex justify-content-between align-items-start flex-wrap gap-3">
+                <div>
+                    <h2 class="h3 fw-bold text-dark mb-1">{{ $user->nom }} {{ $user->prenom }}</h2>
+                    <div class="d-flex align-items-center gap-3 text-secondary smaller">
+                        <span class="d-flex align-items-center gap-1">
+                            <i data-lucide="mail" style="width: 14px;"></i> {{ $user->email }}
+                        </span>
+                        @if($user->phone)
+                            <span class="d-flex align-items-center gap-1">
+                                <i data-lucide="phone" style="width: 14px;"></i> {{ $user->phone }}
+                            </span>
+                        @endif
+                        <span class="d-flex align-items-center gap-1">
+                            <i data-lucide="calendar" style="width: 14px;"></i> Inscrit le {{ $user->created_at?->setTimezone('Europe/Paris')->format('d/m/Y') }}
+                        </span>
+                    </div>
+                </div>
+                <div class="d-flex gap-2">
+                    <a href="{{ route('admin.users.index') }}" class="btn btn-light btn-premium btn-sm border">
+                        <i data-lucide="arrow-left" class="me-1"></i> Retour
+                    </a>
+                    <form action="{{ route('admin.users.destroy', $user) }}" method="POST" class="js-delete-user" data-name="{{ $user->nom }} {{ $user->prenom }}">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-outline-danger btn-premium btn-sm">
+                            <i data-lucide="trash-2" class="me-1"></i> Supprimer
+                        </button>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
+</div>
 
-    <div class="user-summary">
-        <div class="summary-card">
-            <h3>Crédit utilisateur</h3>
-            <p class="display-6 mb-3">{{ number_format($user->credit_user ?? 0, 0, ',', ' ') }} crédits</p>
-            <form action="{{ route('admin.users.credit.update', $user) }}" method="POST" class="d-flex gap-2">
+{{-- Stats Grid --}}
+<div class="stats-grid mb-5">
+    <div class="card-premium stat-card border-start border-primary border-4">
+        <div class="stat-info">
+            <h3>Crédits Disponibles</h3>
+            <p class="stat-value">{{ number_format($user->credit_user ?? 0, 0, ',', ' ') }}</p>
+            <form action="{{ route('admin.users.credit.update', $user) }}" method="POST" class="mt-3">
                 @csrf
-                <input type="number" name="credit_user" class="form-control" min="0"
-                       value="{{ old('credit_user', $user->credit_user ?? 0) }}" required>
-                <button type="submit" class="btn btn-gradient">Mettre à jour</button>
+                <div class="input-group input-group-sm">
+                    <input type="number" name="credit_user" class="form-control border-end-0 fs-7" min="0" value="{{ $user->credit_user }}" placeholder="Nouveau montant">
+                    <button class="btn btn-primary btn-sm px-3" type="submit">Mise à jour</button>
+                </div>
             </form>
         </div>
-        <div class="summary-card">
+        <div class="stat-icon bg-primary bg-opacity-10 text-primary">
+            <i data-lucide="wallet"></i>
+        </div>
+    </div>
+    
+    <div class="card-premium stat-card border-start border-success border-4">
+        <div class="stat-info">
             <h3>Sous-comptes</h3>
-            <p class="display-6 mb-0">{{ $user->comptes->count() }}</p>
-            <p class="text-muted">Total des comptes créés par l'utilisateur.</p>
+            <p class="stat-value">{{ $user->comptes->count() }}</p>
+            <p class="smaller text-secondary">Comptes bancaires créés</p>
         </div>
-        <div class="summary-card">
-            <h3>Recharges validées</h3>
-            <p class="display-6 mb-0">{{ number_format($totalRechargeAmount, 0, ',', ' ') }} F CFA</p>
-            <p class="text-muted">Montant total des recharges acceptées pour l'achat de crédits.</p>
+        <div class="stat-icon bg-success bg-opacity-10 text-success">
+            <i data-lucide="layout-grid"></i>
         </div>
     </div>
+    
+    <div class="card-premium stat-card border-start border-warning border-4">
+        <div class="stat-info">
+            <h3>Total Recharges</h3>
+            <p class="stat-value">{{ number_format($totalRechargeAmount ?? 0, 0, ',', ' ') }} F</p>
+            <p class="smaller text-secondary">Montant validé accepté</p>
+        </div>
+        <div class="stat-icon bg-warning bg-opacity-10 text-warning">
+            <i data-lucide="badge-dollar-sign"></i>
+        </div>
+    </div>
+</div>
 
-    <div class="table-section" id="comptes">
-        <h2 class="h4 mb-3">📂 Sous-comptes</h2>
-        <div class="card-admin">
-            <div class="table-responsive">
-                <table class="table align-middle mb-0">
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Nom</th>
-                            <th>Email</th>
-                            <th>Solde</th>
-                            <th>Téléphone</th>
-                            <th>Devise</th>
-                            <th>Statut</th>
-                            <th class="text-center">Gestion admin</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @forelse($user->comptes as $compte)
-                            <tr id="compte-{{ $compte->id }}">
-                                <td>{{ $compte->id }}</td>
-                                <td>{{ $compte->nom }} {{ $compte->prenom }}</td>
-                                <td>
-                                    <form action="{{ route('admin.users.comptes.email.update', [$user, $compte]) }}" method="POST" class="d-flex gap-2 flex-column flex-md-row">
-                                        @csrf
-                                        <input type="email" name="email" class="form-control w-100" value="{{ old('email', $compte->email) }}" required>
-                                        <button type="submit" class="btn btn-gradient w-100 w-md-auto mt-2 mt-md-0">Mettre à jour</button>
-                                    </form>
-                                </td>
-                                <td>{{ number_format($compte->account_balance, 0, ',', ' ') }} F CFA</td>
-                                <td>
-                                    <form action="{{ route('admin.users.comptes.phone.update', [$user, $compte]) }}" method="POST" class="d-flex gap-2 flex-column flex-md-row">
-                                        @csrf
-                                        <input type="tel" name="phone_number" class="form-control w-100" value="{{ old('phone_number', $compte->phone_number) }}" placeholder="Numéro" required>
-                                        <button type="submit" class="btn btn-gradient w-100 w-md-auto mt-2 mt-md-0">Mettre à jour</button>
-                                    </form>
-                                </td>
-                                <td>{{ $compte->devise ?? '—' }}</td>
-                                <td><span class="badge bg-light text-dark">{{ ucfirst($compte->account_status ?? '—') }}</span></td>
-                                <td class="text-center admin-subaccount-actions">
-                                    <div class="d-flex flex-column gap-2">
-                                        <form action="{{ route('admin.users.comptes.balance.boost', [$user, $compte]) }}" method="POST" class="d-flex flex-column flex-md-row gap-2 align-items-stretch">
-                                            @csrf
-                                            <input type="number" name="amount" class="form-control w-100" min="1" step="1" placeholder="Montant" required>
-                                            <button type="submit" class="btn btn-success w-100 w-md-auto mt-2 mt-md-0">Augmenter</button>
-                                        </form>
-                                        <form action="{{ route('admin.users.comptes.history.purge', [$user, $compte]) }}" method="POST" data-admin-action="purge-history" class="d-flex">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn btn-outline-danger btn-sm w-100">Effacer l'historique</button>
-                                        </form>
-                                    </div>
-                                </td>
-                                <td class="text-end">
-                                    <a href="{{ route('compte.edit', $compte->id) }}" class="btn btn-outline-primary btn-sm">Ouvrir</a>
-                                </td>
-                            </tr>
-                        @empty
-                            <tr>
-                                <td colspan="8" class="text-center text-muted py-4">Aucun sous-compte créé.</td>
-                            </tr>
-                        @endforelse
-                    </tbody>
-                </table>
+{{-- Sub-accounts Listing --}}
+<div class="mb-4 d-flex justify-content-between align-items-center">
+    <h3 class="h5 fw-bold text-dark d-flex align-items-center gap-2 mb-0">
+        <i data-lucide="credit-card" class="text-primary"></i>
+        Sous-comptes Clients
+        <span class="badge bg-primary bg-opacity-10 text-primary rounded-pill px-3 fs-7 ms-2">{{ $user->comptes->count() }}</span>
+    </h3>
+</div>
+
+<div class="row g-4 mb-5">
+    @forelse($user->comptes as $compte)
+        @php
+            $ci = mb_substr($compte->prenom ?? '', 0, 1) . mb_substr($compte->nom ?? '', 0, 1);
+            $accountStatusColor = match($compte->account_status) {
+                'active' => 'success',
+                'blocked', 'suspended' => 'danger',
+                default => 'secondary',
+            };
+        @endphp
+        <div class="col-xl-6 col-lg-12">
+            <div class="card-premium shadow-sm border p-0 overflow-hidden h-100">
+                <div class="p-3 border-bottom bg-light bg-opacity-50 d-flex justify-content-between align-items-center">
+                    <div class="d-flex align-items-center gap-2">
+                        <div class="avatar bg-success bg-opacity-10 text-success rounded-circle d-flex align-items-center justify-content-center smaller fw-bold" style="width: 32px; height: 32px;">
+                            {{ $ci ?: '?' }}
+                        </div>
+                        <div>
+                            <div class="fw-bold text-dark">{{ $compte->nom }} {{ $compte->prenom }}</div>
+                            <div class="smaller text-secondary opacity-75">ID: #{{ $compte->id }} — {{ $compte->devise ?? 'EUR' }}</div>
+                        </div>
+                    </div>
+                    <span class="badge bg-{{ $accountStatusColor }} bg-opacity-10 text-{{ $accountStatusColor }} rounded-pill px-3">
+                        {{ ucfirst($compte->account_status ?? 'inconnu') }}
+                    </span>
+                </div>
+                <div class="p-4">
+                    <div class="row g-3 mb-4">
+                        <div class="col-6">
+                            <label class="smaller text-secondary text-uppercase fw-bold opacity-50 d-block mb-1">Solde Actuel</label>
+                            <div class="h5 fw-bold text-primary mb-0">{{ number_format($compte->account_balance, 0, ',', ' ') }} F CFA</div>
+                        </div>
+                        <div class="col-6">
+                            <label class="smaller text-secondary text-uppercase fw-bold opacity-50 d-block mb-1">IBAN</label>
+                            <div class="smaller fw-medium text-dark text-truncate" title="{{ $compte->iban }}">{{ $compte->iban ?: '—' }}</div>
+                        </div>
+                        <div class="col-6">
+                            <label class="smaller text-secondary text-uppercase fw-bold opacity-50 d-block mb-1">Email Client</label>
+                            <div class="smaller fw-medium text-dark">{{ $compte->email ?: '—' }}</div>
+                        </div>
+                        <div class="col-6">
+                            <label class="smaller text-secondary text-uppercase fw-bold opacity-50 d-block mb-1">Téléphone Client</label>
+                            <div class="smaller fw-medium text-dark">{{ $compte->phone_number ?: '—' }}</div>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-4 pt-3 border-top">
+                        <label class="smaller text-secondary text-uppercase fw-bold opacity-50 d-block mb-2">Actions Rapides</label>
+                        <div class="d-flex flex-wrap gap-2">
+                            <button class="btn btn-outline-primary btn-premium btn-sm" onclick="toggleEdit('email', {{ $compte->id }})">
+                                <i data-lucide="mail-edit" class="me-1"></i> Email
+                            </button>
+                            <button class="btn btn-outline-primary btn-premium btn-sm" onclick="toggleEdit('phone', {{ $compte->id }})">
+                                <i data-lucide="phone-forwarded" class="me-1"></i> Tél.
+                            </button>
+                            <button class="btn btn-outline-success btn-premium btn-sm" onclick="toggleEdit('boost', {{ $compte->id }})">
+                                <i data-lucide="trending-up" class="me-1"></i> Booster solde
+                            </button>
+                            <a href="{{ route('compte.edit', $compte->id) }}" class="btn btn-primary-premium btn-premium btn-sm ms-auto px-4">
+                                <i data-lucide="external-link" class="me-1"></i> Ouvrir
+                            </a>
+                        </div>
+                    </div>
+
+                    {{-- Formulaires Inline Cachés --}}
+                    <div id="edit-forms-{{ $compte->id }}">
+                        <form action="{{ route('admin.users.comptes.email.update', [$user, $compte]) }}" method="POST" id="form-email-{{ $compte->id }}" style="display:none;" class="mb-2">
+                            @csrf
+                            <div class="input-group input-group-sm border rounded-pill overflow-hidden bg-light shadow-sm">
+                                <input type="email" name="email" class="form-control border-0 bg-transparent fs-7 px-3" value="{{ $compte->email }}" placeholder="Nouvel email client" required>
+                                <button type="submit" class="btn btn-primary px-3">Valider</button>
+                            </div>
+                        </form>
+                        
+                        <form action="{{ route('admin.users.comptes.phone.update', [$user, $compte]) }}" method="POST" id="form-phone-{{ $compte->id }}" style="display:none;" class="mb-2">
+                            @csrf
+                            <div class="input-group input-group-sm border rounded-pill overflow-hidden bg-light shadow-sm">
+                                <input type="tel" name="phone_number" class="form-control border-0 bg-transparent fs-7 px-3" value="{{ $compte->phone_number }}" placeholder="Nouveau numéro client" required>
+                                <button type="submit" class="btn btn-primary px-3">Valider</button>
+                            </div>
+                        </form>
+                        
+                        <form action="{{ route('admin.users.comptes.balance.boost', [$user, $compte]) }}" method="POST" id="form-boost-{{ $compte->id }}" style="display:none;" class="mb-2">
+                            @csrf
+                            <div class="input-group input-group-sm border rounded-pill overflow-hidden bg-light shadow-sm">
+                                <input type="number" name="amount" class="form-control border-0 bg-transparent fs-7 px-3" placeholder="Montant à ajouter" required>
+                                <button type="submit" class="btn btn-success px-3">Ajouter</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                
+                <div class="px-4 py-2 bg-light border-top d-flex justify-content-between align-items-center">
+                    <span class="smaller text-secondary">Attention : Action irréversible</span>
+                    <form action="{{ route('admin.users.comptes.history.purge', [$user, $compte]) }}" method="POST" class="js-purge-history" data-name="{{ $compte->nom }}">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-link link-danger p-0 fs-7 fw-bold text-decoration-none">
+                            <i data-lucide="eraser"></i> Effacer historique
+                        </button>
+                    </form>
+                </div>
             </div>
         </div>
-    </div>
-
-    <div class="table-section" id="recharges">
-        <h2 class="h4 mb-3">💰 Recharges</h2>
-        <div class="card-admin">
-            <div class="table-responsive">
-                <table class="table align-middle mb-0">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Montant</th>
-                            <th>Crédits obtenus</th>
-                            <th>Méthode</th>
-                            <th>Statut</th>
-                            <th>Date</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @forelse($recharges as $recharge)
-                            <tr>
-                                <td>{{ $recharge->transaction_id }}</td>
-                                <td>{{ number_format($recharge->amount, 0, ',', ' ') }} F CFA</td>
-                                <td><span class="badge badge-credit">{{ number_format($recharge->credits_earned, 0, ',', ' ') }} crédits</span></td>
-                                <td>{{ $recharge->payment_method ?? '—' }}</td>
-                                <td>
-                                    <span class="badge bg-{{ $recharge->status === 'completed' ? 'success' : ($recharge->status === 'pending' ? 'warning' : 'danger') }}">
-                                        {{ ucfirst($recharge->status) }}
-                                    </span>
-                                </td>
-                                <td>{{ $recharge->created_at?->setTimezone('Europe/Paris')->format('d/m/Y H:i') }}</td>
-                            </tr>
-                        @empty
-                            <tr>
-                                <td colspan="6" class="text-center text-muted py-4">Aucune recharge enregistrée.</td>
-                            </tr>
-                        @endforelse
-                    </tbody>
-                </table>
+    @empty
+        <div class="col-12">
+            <div class="card-premium p-5 text-center text-secondary opacity-50">
+                <i data-lucide="frown" class="mb-2" style="width: 48px; height: 48px;"></i>
+                <p class="mb-0">Aucun sous-compte créé pour cet utilisateur.</p>
             </div>
         </div>
+    @endforelse
+</div>
+
+{{-- Recharges Table --}}
+<div class="mb-4">
+    <h3 class="h5 fw-bold text-dark d-flex align-items-center gap-2 mb-0">
+        <i data-lucide="history" class="text-warning"></i>
+        Historique des Recharges
+    </h3>
+</div>
+
+<div class="card-premium shadow-sm border p-0 overflow-hidden mb-5">
+    <div class="table-responsive">
+        <table class="table table-hover mb-0">
+            <thead class="bg-light">
+                <tr class="smaller text-secondary text-uppercase fw-bold">
+                    <th class="ps-4">ID Transaction</th>
+                    <th>Montant</th>
+                    <th>Crédits</th>
+                    <th>Méthode</th>
+                    <th>Statut</th>
+                    <th class="pe-4 text-end">Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                @forelse($recharges as $recharge)
+                    <tr>
+                        <td class="ps-4 py-3 smaller fw-medium text-dark font-monospace">{{ $recharge->transaction_id }}</td>
+                        <td class="py-3">
+                            <span class="fw-bold text-dark">{{ number_format($recharge->amount, 0, ',', ' ') }} F</span>
+                        </td>
+                        <td class="py-3">
+                            <span class="badge bg-primary bg-opacity-10 text-primary rounded-pill px-3">+{{ number_format($recharge->credits_earned, 0, ',', ' ') }} cr.</span>
+                        </td>
+                        <td class="py-3 smaller text-secondary">{{ $recharge->payment_method ?: '—' }}</td>
+                        <td class="py-3">
+                            <span class="badge bg-{{ $statusColors[$recharge->status] ?? 'secondary' }} bg-opacity-10 text-{{ $statusColors[$recharge->status] ?? 'secondary' }} rounded-pill px-3">
+                                {{ ucfirst($recharge->status) }}
+                            </span>
+                        </td>
+                        <td class="pe-4 py-3 text-end smaller text-secondary">
+                            {{ $recharge->created_at?->setTimezone('Europe/Paris')->format('d/m/Y H:i') }}
+                        </td>
+                    </tr>
+                @empty
+                    <tr>
+                        <td colspan="6" class="p-5 text-center text-secondary opacity-50">Aucune recharge enregistrée.</td>
+                    </tr>
+                @endforelse
+            </tbody>
+        </table>
     </div>
+</div>
+
+<style>
+    .shadow-soft {
+        box-shadow: 0 10px 25px -5px rgba(99, 102, 241, 0.2);
+    }
+    .fs-7 { font-size: 0.8rem; }
+    .stat-card form .input-group:focus-within {
+        box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+    }
+</style>
 @endsection
 
 @push('scripts')
 <script>
-document.addEventListener('DOMContentLoaded', () => {
-    const deleteForm = document.querySelector('.delete-user-form');
-    if (deleteForm) {
-        deleteForm.addEventListener('submit', (event) => {
-            const displayName = (deleteForm.dataset.userName || '').trim() || 'cet utilisateur';
-            const message = `Confirmez-vous la suppression définitive de ${displayName} ? Cette action supprimera également ses comptes, recharges et affiliations.`;
-            if (!confirm(message)) {
-                event.preventDefault();
-            }
-        });
-    }
+function toggleEdit(type, id) {
+    const types = ['email', 'phone', 'boost'];
+    types.forEach(t => {
+        const form = document.getElementById(`form-${t}-${id}`);
+        if(t === type) {
+            form.style.display = form.style.display === 'none' ? 'block' : 'none';
+            if(form.style.display === 'block') form.querySelector('input').focus();
+        } else {
+            form.style.display = 'none';
+        }
+    });
+}
 
-    document.querySelectorAll('form[data-admin-action="purge-history"]').forEach((form) => {
-        form.addEventListener('submit', (event) => {
-            const row = form.closest('tr');
-            const compteLabel = row ? row.querySelector('td:nth-child(2)')?.textContent.trim() : 'ce sous-compte';
-            const message = `Supprimer tout l'historique lié à ${compteLabel || 'ce sous-compte'} ? Cette action est irréversible.`;
-            if (!confirm(message)) {
-                event.preventDefault();
+document.addEventListener('DOMContentLoaded', () => {
+    lucide.createIcons();
+    
+    // Suppression Utilisateur
+    document.querySelector('.js-delete-user')?.addEventListener('submit', function(e) {
+        const name = this.getAttribute('data-name');
+        if(!confirm(`Supprimer l'utilisateur "${name}" et TOUTES ses données ? Cette action est irréversible.`)) {
+            e.preventDefault();
+        }
+    });
+
+    // Purge Historique
+    document.querySelectorAll('.js-purge-history').forEach(form => {
+        form.addEventListener('submit', function(e) {
+            const name = this.getAttribute('data-name');
+            if(!confirm(`⚠️ ATTENTION : Effacer TOUT l'historique du compte de "${name}" ? Action irréversible.`)) {
+                e.preventDefault();
             }
         });
     });

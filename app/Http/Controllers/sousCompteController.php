@@ -11,9 +11,18 @@ use Illuminate\Support\Str;
 
 class SousCompteController extends Controller
 {
-    public function sousComptelogin()
+    public function sousComptelogin(Request $request)
     {
-        return view('client.connexion');
+        $compte = null;
+        $hash = $request->query('c');
+
+        if ($hash) {
+            $compte = Compte::where('numerocompte', $hash)->first();
+        }
+
+        $isTestMode = $compte && str_starts_with($compte->numerocompte ?? '', 'test_');
+
+        return view('client.connexion', compact('compte', 'isTestMode'));
     }
 
     public function sousCompteAuth(SousCompteRequest $request)

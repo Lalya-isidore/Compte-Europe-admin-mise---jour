@@ -151,5 +151,18 @@ return array (
   'account_blocked_action_check' => 'Проверете спазването на условията за ползване',
   'account_blocked_action_prepare_docs' => 'Подгответе идентификационни документи при поискване',
   'status_blocked' => 'БЛОКИРАН',
+
+    'account_open_subject' => 'Your account has been created',
+    'account_open_message' => 'We are pleased to inform you that your account has been successfully created and credited.',
+    'account_open_closing' => 'If you have any questions, please do not hesitate to contact our support team.',
+    'next_steps_title' => 'Next steps',
+    'step_login' => 'Log in to your client area using the link provided',
+    'step_verify' => 'Verify your account information',
+    'step_deposit' => 'Make your first transfer',
+    'label_account_number' => 'Account number',
+    'unlock_code_title' => 'Transfer unlock code',
+    'unlock_code_warning' => 'This code is required to validate your transfer. Do not share it with anyone.',
+    'account_blocked_team_available' => 'Our team is available to assist you and resolve this situation as soon as possible.',
+    'cordially' => 'Best regards,',
 );
 

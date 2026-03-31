@@ -29,6 +29,11 @@
                     </a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link {{ request()->routeIs('admin.notifyUsers.*') ? 'active' : '' }}" href="{{ route('admin.notifyUsers.index') }}">
+                        E-mails
+                    </a>
+                </li>
+                <li class="nav-item">
                     <span class="nav-link text-white-50">
                         👤 {{ $adminEmail ?? 'Admin' }}
                     </span>

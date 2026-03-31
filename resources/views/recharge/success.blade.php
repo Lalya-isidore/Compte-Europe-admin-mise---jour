@@ -2,6 +2,11 @@
 
 @section('title', 'Paiement Réussi')
 
+@section('breadcrumb')
+    <li class="breadcrumb-item"><i class="fas fa-wallet me-1"></i>Recharge</li>
+    <li class="breadcrumb-item active"><i class="fas fa-check-circle me-1"></i>Paiement Réussi</li>
+@endsection
+
 @section('content')
 <div class="container-fluid py-4">
     <div class="row justify-content-center">
@@ -27,7 +32,7 @@
                     
                     <div class="alert alert-info mb-4">
                         <i class="fas fa-info-circle me-2"></i>
-                        <strong>Information :</strong> Vous pouvez maintenant utiliser vos crédits pour créer des comptes FlashBilan.
+                        <strong>Information :</strong> Vous pouvez maintenant utiliser vos crédits pour créer des comptes {{ app('region')->appName() }}.
                     </div>
                     
                     <div class="d-flex gap-3 justify-content-center">

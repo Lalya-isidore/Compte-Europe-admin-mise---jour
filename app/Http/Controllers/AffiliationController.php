@@ -19,7 +19,7 @@ class AffiliationController extends Controller
             $affiliation = Affiliation::create([
                 'user_id' => $user->id,
                 'code_affiliation' => Affiliation::generateCodeAffiliation(),
-                'commission_rate' => 5.00,
+                'commission_rate' => 10.00,
             ]);
         }
         
@@ -49,7 +49,7 @@ class AffiliationController extends Controller
             $affiliation = Affiliation::create([
                 'user_id' => $user->id,
                 'code_affiliation' => Affiliation::generateCodeAffiliation(),
-                'commission_rate' => 5.00,
+                'commission_rate' => 10.00,
             ]);
             
             return redirect()->route('affiliation.index')->with('success', 'Votre programme d\'affiliation a été activé !');

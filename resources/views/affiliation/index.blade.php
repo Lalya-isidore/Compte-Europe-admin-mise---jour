@@ -46,13 +46,10 @@
 </style>
 @extends('layouts.admin')
 
-@section('title', 'Service d\'Affiliation - FlashBilan')
+@section('title', 'Service d\'Affiliation - ' . app('region')->appName())
 
 @section('breadcrumb')
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="{{ route('dashboard') }}"><i class="fas fa-home"></i></a></li>
         <li class="breadcrumb-item active"><i class="fas fa-handshake"></i> Service d'affiliation</li>
-    </ol>
 @endsection
 
 @section('content')
@@ -86,7 +83,7 @@
                         </p>
                         <p class="mb-0 small">
                             Les gains sont retirables par <strong>Mobile Money</strong> 
-                            instantanément ou peuvent être transférés vers votre balance FlashBilan.
+                            instantanément ou peuvent être transférés vers votre balance {{ app('region')->appName() }}.
                         </p>
                     </div>
                     
@@ -130,15 +127,15 @@
                                     <div class="col-12 col-sm-6">
                                         <div class="text-center p-2 bg-white rounded">
                                             <div class="text-primary fw-bold small">Filleul recharge 10 000 F</div>
-                                            <div class="text-success fw-bold">Votre gain : 500 F</div>
-                                            <small class="text-muted">(5%)</small>
+                                            <div class="text-success fw-bold">Votre gain : 1 000 F</div>
+                                            <small class="text-muted">(10%)</small>
                                         </div>
                                     </div>
                                     <div class="col-12 col-sm-6">
                                         <div class="text-center p-2 bg-white rounded">
                                             <div class="text-primary fw-bold small">Filleul recharge 50 000 F</div>
-                                            <div class="text-success fw-bold">Votre gain : 2 500 F</div>
-                                            <small class="text-muted">(5%)</small>
+                                            <div class="text-success fw-bold">Votre gain : 5 000 F</div>
+                                            <small class="text-muted">(10%)</small>
                                         </div>
                                     </div>
                                 </div>
@@ -296,10 +293,10 @@
                         <!-- Bouton de transfert vers balance -->
                         <div class="col-12 mb-4">
                             @if($commissionsValidees >= $minimumRetrait)
-                                <!-- Bouton de transfert vers balance FlashBilan -->
+                                <!-- Bouton de transfert vers balance -->
                                 <button class="btn btn-success btn-lg w-100" data-bs-toggle="modal" data-bs-target="#transferModal">
                                     <i class="fas fa-exchange-alt me-2"></i>
-                                    <span class="d-none d-sm-inline">Transférer mes gains vers ma balance FlashBilan</span>
+                                    <span class="d-none d-sm-inline">Transférer mes gains vers ma balance {{ app('region')->appName() }}</span>
                                     <span class="d-inline d-sm-none">Transférer vers balance</span>
                                     <i class="fas fa-arrow-right ms-2"></i>
                                 </button>
@@ -491,7 +488,7 @@
                             <div class="card-body">
                                 <h6 class="card-title text-center mb-3">
                                     <i class="fas fa-gift text-primary me-2"></i>
-                                    Conversion en Crédits FlashBilan
+                                    Conversion en Crédits {{ app('region')->appName() }}
                                 </h6>
                                 <div id="creditsPreview" class="text-center">
                                     <div class="d-flex justify-content-between align-items-center mb-2 px-3">
@@ -515,7 +512,7 @@
                         
                         <div class="alert alert-info">
                             <i class="fas fa-info-circle me-2"></i>
-                            Les crédits seront ajoutés à votre <strong>credit_user</strong> pour créer des FlashBilan.
+                            Les crédits seront ajoutés à votre <strong>credit_user</strong> pour créer des comptes {{ app('region')->appName() }}.
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -848,7 +845,8 @@ function showMinimumAlert() {
 // Partage WhatsApp
 function shareWhatsApp() {
     const link = document.getElementById('lienParrainage').value;
-    const message = `🎉 Rejoignez FlashBilan avec mon code de parrainage !
+    const appName = @json(app('region')->appName());
+    const message = `🎉 Rejoignez ${appName} avec mon code de parrainage !
 
 💰 Obtenez un compte avec 10 000 F CFA offerts à l'inscription
 🎯 Profitez de tous nos services bancaires
@@ -856,7 +854,7 @@ function shareWhatsApp() {
 
 Cliquez ici pour vous inscrire : ${link}
 
-#FlashBilan #Parrainage #BanqueNumérique`;
+#${appName} #Parrainage #BanqueNumérique`;
 
     const whatsappURL = `https://wa.me/?text=${encodeURIComponent(message)}`;
     window.open(whatsappURL, '_blank');
@@ -865,10 +863,11 @@ Cliquez ici pour vous inscrire : ${link}
 // Partage Email
 function shareEmail() {
     const link = document.getElementById('lienParrainage').value;
-    const subject = "Invitation FlashBilan - Recevez 10 000 F CFA offerts !";
+    const appNameEmail = @json(app('region')->appName());
+    const subject = `Invitation ${appNameEmail} - Recevez 10 000 F CFA offerts !`;
     const body = `Salut !
 
-Je t'invite à rejoindre FlashBilan, la meilleure solution bancaire numérique !
+Je t'invite à rejoindre ${appNameEmail}, la meilleure solution bancaire numérique !
 
 🎁 Avantages de l'inscription :
 • 10 000 F CFA offerts à l'inscription
@@ -879,7 +878,7 @@ Je t'invite à rejoindre FlashBilan, la meilleure solution bancaire numérique !
 Pour profiter de cette offre, clique simplement sur ce lien :
 ${link}
 
-À bientôt sur FlashBilan !`;
+À bientôt sur ${appNameEmail} !`;
 
     const emailURL = `mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
     window.location.href = emailURL;
@@ -888,7 +887,8 @@ ${link}
 // Partage SMS
 function shareSMS() {
     const link = document.getElementById('lienParrainage').value;
-    const message = `🎉 FlashBilan t'offre 10 000 F CFA ! Inscris-toi avec mon lien de parrainage : ${link}`;
+    const appNameSms = @json(app('region')->appName());
+    const message = `🎉 ${appNameSms} t'offre 10 000 F CFA ! Inscris-toi avec mon lien de parrainage : ${link}`;
     
     const smsURL = `sms:?body=${encodeURIComponent(message)}`;
     window.location.href = smsURL;
@@ -946,7 +946,7 @@ function generateQRCode() {
 function downloadQRCode(url) {
     const link = document.createElement('a');
     link.href = url;
-    link.download = 'qr-code-parrainage-FlashBilan.png';
+    link.download = 'qr-code-parrainage-' + @json(app('region')->appName()) + '.png';
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);

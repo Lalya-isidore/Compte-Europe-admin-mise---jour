@@ -1,42 +1,355 @@
 @extends('./../layouts/app')
-@section('page-content')
-    @if (session()->has('success'))
-        <div class="alert alert-success"> {{ session()->get('success') }} </div>
-    @endif
-    @if (session()->has('error'))
-        <div class="alert alert-danger"> {{ session()->get('error') }} </div>
-    @endif
 
-    <div class="request-wrapper" style="display:flex;justify-content:center;padding:40px 20px;">
-        <div class="request-card" style="width:100%;max-width:520px;background:#fff;border-radius:12px;box-shadow:0 10px 30px rgba(0,0,0,0.08);padding:28px;">
-            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;">
-                <h2 style="margin:0;color:#0b74c9;font-weight:700;font-size:22px;">Réinitialiser le mot de passe</h2>
-                <a href="{{ route('connexion') }}" class="btn btn-outline-secondary" style="font-size:14px;padding:6px 12px;border-radius:8px;">← Retour</a>
+@section('page-content')
+<div class="fb-auth-container">
+    <div class="fb-auth-card animate-fade-in">
+        <!-- 💎 Brand Header -->
+        <div class="fb-brand-header">
+            <div class="fb-logo-icon">
+                <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="40" height="40" rx="10" fill="url(#fb_grad_pwd)" />
+                    <path d="M20 10C14.4772 10 10 14.4772 10 20C10 25.5228 14.4772 30 20 30C25.5228 30 30 25.5228 30 20C30 14.4772 25.5228 10 20 10ZM20 27.5C15.8579 27.5 12.5 24.1421 12.5 20C12.5 15.8579 15.8579 12.5 20 12.5V20H27.5C27.5 24.1421 24.1421 27.5 20 27.5Z" fill="white"/>
+                    <defs>
+                        <linearGradient id="fb_grad_pwd" x1="0" y1="0" x2="40" y2="40" gradientUnits="userSpaceOnUse">
+                            <stop stop-color="#F59E0B"/>
+                            <stop offset="1" stop-color="#10B981"/>
+                        </linearGradient>
+                    </defs>
+                </svg>
+            </div>
+            <h1 class="fb-brand-text">Flash<span>Bilan</span></h1>
+            <p class="fb-subtitle">Récupération de compte sécurisée</p>
+        </div>
+
+        <form action="{{ route('password.email') }}" method="POST" class="fb-form" id="emailForm">
+            @csrf
+
+            @if(session('status'))
+                <div class="fb-alert fb-alert-success">
+                    <i class="fas fa-check-circle"></i>
+                    <span>{{ session('status') }}</span>
+                </div>
+            @endif
+
+            <div class="fb-input-group">
+                <label for="email" class="fb-label">Adresse E-mail</label>
+                <div class="fb-input-wrapper">
+                    <i class="far fa-envelope fb-input-icon"></i>
+                    <input type="email" id="email" name="email" value="{{ old('email') }}" 
+                           class="fb-input @error('email') is-invalid @enderror" 
+                           placeholder="Entrez votre email FlashBilan" required autocomplete="email" autofocus>
+                </div>
+                @error('email') <span class="fb-error">{{ $message }}</span> @enderror
             </div>
 
-            <p class="text-muted" style="margin-bottom:18px;">Saisissez l'adresse e‑mail associée à votre compte. Nous vous enverrons un lien pour réinitialiser votre mot de passe.</p>
+            <button type="submit" class="fb-btn-primary" id="submitBtn">
+                <span class="btn-text">Envoyer le lien de récupération <i class="fas fa-arrow-right ml-2"></i></span>
+                <div class="btn-loader"></div>
+            </button>
 
-            <form action="{{ route('password.email') }}" method="post" class="form-product form">
-                @csrf
-                <div style="margin-bottom:12px;">
-                    <label for="email" style="display:block;font-weight:600;margin-bottom:6px;color:#333;">Adresse e‑mail</label>
-                    <input type="email" placeholder="E-mail" class="form-control my-2 input @error('email') is-invalid @enderror" name="email" id="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
-                    @error('email')
-                        <div class="text text-danger" style="margin-top:6px;">{{ $message }}</div>
-                    @enderror
-                </div>
+            <a href="{{ route('connexion') }}" class="fb-btn-text-only">
+                <i class="fas fa-arrow-left"></i> Retour à la connexion
+            </a>
 
-                <div style="display:flex;gap:12px;align-items:center;">
-                    <button type="submit" class="btn btn-primary" style="flex:1;padding:12px 18px;border-radius:10px;background:linear-gradient(90deg,#1676d2,#2fb1e6);border:none;color:#fff;font-weight:700;">Envoyer le lien de réinitialisation</button>
-                    <a href="{{ route('connexion') }}" class="btn btn-link" style="color:#666;text-decoration:none;">Annuler</a>
-                </div>
-            </form>
-        </div>
+            <!-- 🔗 Footer Links (KitsCMS Style) -->
+            <div class="fb-auth-footer">
+                <a href="{{ route('home') }}" class="fb-footer-link">
+                    <i class="fas fa-home"></i> Accueil
+                </a>
+                <span class="fb-footer-sep">|</span>
+                <a href="{{ route('inscription') }}" class="fb-footer-link">
+                    <i class="fas fa-user-plus"></i> Inscription
+                </a>
+                <span class="fb-footer-sep">|</span>
+                <a href="#" class="fb-footer-link">
+                    <i class="fas fa-question-circle"></i> Aide
+                </a>
+            </div>
+        </form>
     </div>
+</div>
 
-    <style>
-        .form .input { width:100%; padding:12px 14px; border-radius:8px; border:1px solid #e6eef6; box-shadow:none; }
-        .form .input:focus { outline:none; border-color:#bfe6ff; box-shadow:0 4px 18px rgba(47,177,230,0.12); }
-        @media (max-width:480px){ .request-card{ padding:18px; } }
-    </style>
+<style>
+/* 🎨 FlashBilan Ultra-Premium Auth Design System */
+:root {
+    --fb-primary: #0D6EFD;
+    --fb-primary-dark: #0a58ca;
+    --fb-secondary: #EF4444;
+    --fb-success: #10B981;
+    --fb-bg-input: #F8FAFC;
+    --fb-text-main: #1E293B;
+    --fb-text-muted: #64748B;
+    --fb-border: #E2E8F0;
+    --fb-radius: 12px;
+    --fb-glass-bg: rgba(255, 255, 255, 0.85);
+}
+
+.fb-auth-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 85vh;
+    padding: 20px;
+}
+
+.fb-auth-card {
+    background: var(--fb-glass-bg);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    width: 100%;
+    max-width: 440px;
+    padding: 40px;
+    border-radius: 28px;
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    box-shadow: 
+        0 20px 25px -5px rgba(0, 0, 0, 0.05),
+        0 10px 10px -5px rgba(0, 0, 0, 0.02),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.4);
+    animation: authCardEntrance 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes authCardEntrance {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.fb-brand-header {
+    text-align: center;
+    margin-bottom: 35px;
+}
+
+.fb-logo-icon svg {
+    width: 60px;
+    height: 60px;
+    margin-bottom: 18px;
+    filter: drop-shadow(0 4px 12px rgba(245, 158, 11, 0.3));
+}
+
+.fb-brand-text {
+    font-size: 2.4rem;
+    font-weight: 800;
+    color: var(--fb-text-main);
+    letter-spacing: -1px;
+    margin: 0;
+}
+
+.fb-brand-text span {
+    color: var(--fb-secondary);
+}
+
+.fb-subtitle {
+    color: var(--fb-text-muted);
+    font-size: 1rem;
+    margin-top: 10px;
+}
+
+.fb-form {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+}
+
+.fb-input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.fb-label {
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--fb-text-main);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.fb-input-wrapper {
+    position: relative;
+}
+
+.fb-input-icon {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--fb-text-muted);
+    font-size: 1rem;
+    pointer-events: none;
+    transition: all 0.3s ease;
+}
+
+.fb-input {
+    width: 100%;
+    padding: 13px 15px 13px 44px;
+    background: var(--fb-bg-input);
+    border: 1.5px solid var(--fb-border);
+    border-radius: var(--fb-radius);
+    font-size: 1rem;
+    color: var(--fb-text-main);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.fb-input:focus {
+    outline: none;
+    background: #fff;
+    border-color: var(--fb-primary);
+    box-shadow: 0 0 0 4px rgba(13, 110, 253, 0.1);
+}
+
+.fb-input:focus + .fb-input-icon {
+    color: var(--fb-primary);
+    transform: translateY(-50%) scale(1.1);
+}
+
+.fb-error {
+    font-size: 0.8rem;
+    color: var(--fb-secondary);
+    font-weight: 500;
+    margin-top: 4px;
+}
+
+/* ⚡ Primary Button */
+.fb-btn-primary {
+    width: 100%;
+    background: var(--fb-primary);
+    color: white;
+    border: none;
+    padding: 16px;
+    border-radius: var(--fb-radius);
+    font-size: 1.1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 4px 12px rgba(13, 110, 253, 0.2);
+}
+
+.fb-btn-primary:hover {
+    background: var(--fb-primary-dark);
+    transform: translateY(-3px);
+    box-shadow: 0 12px 24px rgba(13, 110, 253, 0.35);
+}
+
+.fb-btn-primary i {
+    transition: transform 0.3s ease;
+    margin-left: 8px;
+}
+
+.fb-btn-primary:hover i {
+    transform: translateX(5px);
+}
+
+.fb-btn-text-only {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--fb-text-muted);
+    text-decoration: none;
+    margin-top: 10px;
+    transition: all 0.3s ease;
+}
+
+.fb-btn-text-only:hover {
+    color: var(--fb-primary);
+    transform: translateX(-3px);
+}
+
+/* 🔗 Footer KitsCMS style */
+.fb-auth-footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    margin-top: 15px;
+    padding-top: 20px;
+    border-top: 1px solid var(--fb-border);
+}
+
+.fb-footer-link {
+    color: var(--fb-text-muted);
+    font-size: 0.88rem;
+    font-weight: 600;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.2s ease;
+}
+
+.fb-footer-link:hover {
+    color: var(--fb-primary);
+}
+
+.fb-footer-sep {
+    color: var(--fb-border);
+    font-weight: 300;
+}
+
+.fb-alert {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 18px;
+    border-radius: 14px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    margin-bottom: 25px;
+    background: #F0FDF4;
+    color: #166534;
+    border: 1px solid #DCFCE7;
+}
+
+.btn-loader {
+    display: none;
+    width: 22px;
+    height: 22px;
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top-color: white;
+    animation: fb-spin 0.8s linear infinite;
+}
+
+@keyframes fb-spin {
+    to { transform: rotate(360deg); }
+}
+
+/* 📱 Responsive */
+@media (max-width: 480px) {
+    .fb-auth-container {
+        padding: 15px 2px;
+    }
+    .fb-auth-card {
+        padding: 35px 18px;
+        border-radius: 20px;
+        margin: 0;
+    }
+    .fb-btn-primary {
+        padding: 14px 10px;
+        font-size: 0.95rem;
+    }
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('emailForm');
+    const submitBtn = document.getElementById('submitBtn');
+    const btnText = submitBtn.querySelector('.btn-text');
+    const btnLoader = submitBtn.querySelector('.btn-loader');
+
+    if (form) {
+        form.addEventListener('submit', function() {
+            submitBtn.disabled = true;
+            btnText.style.display = 'none';
+            btnLoader.style.display = 'block';
+        });
+    }
+});
+</script>
 @endsection

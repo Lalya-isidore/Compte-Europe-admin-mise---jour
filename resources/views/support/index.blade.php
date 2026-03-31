@@ -2,33 +2,38 @@
 
 @section('title', 'Support & Réclamations')
 
+@section('breadcrumb')
+    <li class="breadcrumb-item"><i class="fas fa-headset me-1"></i>Support</li>
+    <li class="breadcrumb-item active"><i class="fas fa-life-ring me-1"></i>Support & Réclamations</li>
+@endsection
+
 @push('styles')
 <style>
     .support-card {
         background: #fff;
         border-radius: 16px;
         padding: 20px;
-        box-shadow: 0 12px 35px rgba(102, 126, 234, 0.15);
+        box-shadow: 0 8px 28px rgba(27, 140, 62, 0.1);
     }
     .ticket-list-item {
         border: 1px solid transparent;
         border-radius: 12px;
         padding: 0.9rem 1rem;
         margin-bottom: 0.8rem;
-        background: #f7f8ff;
+        background: #f5faf7;
         transition: all 0.2s ease;
         display: block;
         text-decoration: none;
         color: inherit;
     }
     .ticket-list-item:hover {
-        border-color: #665af0;
-        box-shadow: 0 10px 24px rgba(102, 90, 240, 0.18);
+        border-color: #1b8c3e;
+        box-shadow: 0 8px 20px rgba(27, 140, 62, 0.15);
         transform: translateY(-2px);
     }
     .ticket-list-item.active {
-        border-color: #665af0;
-        background: linear-gradient(135deg, rgba(102, 90, 240, 0.12), rgba(118, 75, 162, 0.08));
+        border-color: #1b8c3e;
+        background: linear-gradient(135deg, rgba(27, 140, 62, 0.1), rgba(34, 168, 74, 0.06));
     }
     .conversation-wrapper {
         max-height: 520px;
@@ -45,7 +50,7 @@
         box-shadow: 0 6px 18px rgba(15, 23, 42, 0.08);
     }
     .support-message.user {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        background: linear-gradient(135deg, #1b8c3e 0%, #147032 100%);
         color: #fff;
         margin-left: auto;
         border-bottom-right-radius: 4px;
@@ -216,7 +221,7 @@
                                 </div>
                             @endif
                             <small>
-                                {{ $message->sent_by_admin ? 'Support FlashBilan' : 'Vous' }} • {{ $message->created_at->format('d/m/Y H:i') }}
+                                {{ $message->sent_by_admin ? 'Support ' . app('region')->appName() : 'Vous' }} • {{ $message->created_at->format('d/m/Y H:i') }}
                             </small>
                         </div>
                     @endforeach

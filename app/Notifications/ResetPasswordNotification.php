@@ -34,7 +34,7 @@ class ResetPasswordNotification extends Notification
 
         return (new MailMessage)
             ->subject('Réinitialisation de votre mot de passe — FlashBilan')
-            ->markdown('emails.auth.password_reset', [
+            ->view('emails.password_reset', [
                 'url' => $url,
                 'user' => $notifiable,
                 'minutes' => $minutes,

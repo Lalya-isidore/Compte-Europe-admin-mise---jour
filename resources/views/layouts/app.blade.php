@@ -1,11 +1,11 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="fr">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>FlashBilan - Administration</title>
+    <title>{{ app('region')->appName() }} - Administration</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" defer></script>
@@ -15,10 +15,7 @@
     <link rel="stylesheet" href="{{ asset('css/responsive.css') }}">
     <link rel="stylesheet" href="{{ asset('css/support-widget.css') }}">
     <script src="{{ asset('js/support-widget.js') }}" defer></script>
-    <!--<link rel="icon" type="image/png" sizes="32x32" href="{{ asset('/image/1.jpg') }} ">-->
-    <!--<link rel="icon" type="image/png" sizes="16x16" href="{{ asset('/image/1.jpg') }} ">-->
-    <!--<link rel="apple-touch-icon" sizes="180x180" href="{{ asset('/image/1.jpg') }} ">-->
-    <link rel="manifest" href="/path/to/site.webmanifest">
+    <link rel="icon" type="image/svg+xml" href="{{ asset('images/favicon.svg') }}">
 </head>
 <style>
     * {
@@ -98,6 +95,63 @@
         font-weight: 600;
     }
 
+    /* 💎 KitsCMS-Inspired "Pro" Mesh Background */
+    .auth-bg {
+        position: fixed;
+        inset: 0;
+        z-index: -1;
+        background-color: #f8fafc;
+        background-image: 
+            radial-gradient(at 0% 0%, hsla(253, 100%, 75%, 0.12) 0, transparent 50%), 
+            radial-gradient(at 50% 0%, hsla(225, 100%, 77%, 0.15) 0, transparent 50%), 
+            radial-gradient(at 100% 0%, hsla(339, 49%, 71%, 0.1) 0, transparent 50%);
+        overflow: hidden;
+    }
+
+    .auth-blob {
+        position: absolute;
+        width: 500px;
+        height: 500px;
+        background: radial-gradient(circle, rgba(96, 165, 250, 0.15) 0%, rgba(96, 165, 250, 0) 70%);
+        border-radius: 50%;
+        filter: blur(80px);
+        animation: float 25s infinite alternate;
+        z-index: -1;
+    }
+
+    .auth-blob:nth-child(2) {
+        width: 400px;
+        height: 400px;
+        background: radial-gradient(circle, rgba(139, 92, 246, 0.1) 0%, rgba(139, 92, 246, 0) 70%);
+        top: 20%;
+        right: -10%;
+        animation-duration: 30s;
+        animation-delay: -5s;
+    }
+
+    .auth-blob:nth-child(3) {
+        width: 600px;
+        height: 600px;
+        background: radial-gradient(circle, rgba(236, 72, 153, 0.08) 0%, rgba(236, 72, 153, 0) 70%);
+        bottom: -10%;
+        left: 20%;
+        animation-duration: 35s;
+        animation-delay: -10s;
+    }
+
+    @keyframes float {
+        0% { transform: translate(0, 0) rotate(0deg); }
+        100% { transform: translate(100px, 50px) rotate(90deg); }
+    }
+
+    /* Abstract Lines (SVG mimics KitsCMS but improved) */
+    .auth-lines {
+        position: absolute;
+        inset: 0;
+        opacity: 0.4;
+        pointer-events: none;
+        z-index: -1;
+    }
     @media (max-width: 991.98px) {
         .app-header-shell {
             margin: 1rem 1.25rem 2rem;
@@ -114,13 +168,27 @@
     }
 </style>
 <body data-support-enabled="{{ auth()->check() ? '1' : '0' }}">
+    
+    @if(request()->routeIs('connexion', 'inscription', 'password.request', 'password.reset'))
+    <div class="auth-bg">
+        <div class="auth-blob"></div>
+        <div class="auth-blob"></div>
+        <div class="auth-blob"></div>
+        <svg class="auth-lines" viewBox="0 0 100 100" preserveAspectRatio="none">
+            <path d="M0,20 Q50,0 100,20" fill="none" stroke="rgba(99, 102, 241, 0.05)" stroke-width="0.5"/>
+            <path d="M0,50 Q50,30 100,50" fill="none" stroke="rgba(99, 102, 241, 0.03)" stroke-width="0.5"/>
+            <path d="M0,80 Q50,60 100,80" fill="none" stroke="rgba(99, 102, 241, 0.04)" stroke-width="0.5"/>
+        </svg>
+    </div>
+    @endif
 
+    @if(!request()->routeIs('connexion', 'inscription', 'login', 'password.request', 'password.reset') && !request()->is('/'))
     <header class="app-header-shell">
         <nav class="app-navbar navbar navbar-expand-lg">
             <div class="container-fluid p-0" style="display: flex; justify-content: space-between; align-items: center;">
                 <a class="navbar-brand" href="#">
                     <span class="brand-dot"></span>
-                    FlashBilan
+                    {{ app('region')->appName() }}
                 </a>
 
                 <div class="d-flex align-items-center">
@@ -139,6 +207,7 @@
             </div>
         </nav>
     </header>
+    @endif
 
     <!-- Messages d'erreur et de succès -->
     @if(session('error'))
@@ -192,7 +261,8 @@
 
     <script>
         // Écoute l'événement du clic sur le bouton de remboursement
-        document.querySelector('.remboursement').addEventListener('click', function() {
+        var remboursementBtn = document.querySelector('.remboursement');
+        if (remboursementBtn) remboursementBtn.addEventListener('click', function() {
             // Récupère l'ID du compte à rembourser depuis les données attribuées au bouton
             var compteId = this.getAttribute('data-compte-id');
 
@@ -223,19 +293,10 @@
         });
 
         document.addEventListener('DOMContentLoaded', function() {
-            // Récupère l'élément du bouton de remboursement
             var remboursementBtn = document.querySelector('.remboursement');
-
-            // Récupère la valeur de l'attribut data-virement-effectue
-            var virementEffectue = remboursementBtn.getAttribute('data-virement-effectue');
-
-            // Vérifie si un virement a été effectué
-            if (virementEffectue === 'true') {
-                // Affiche le bouton de remboursement
-                remboursementBtn.style.display = 'block';
-            } else {
-                // Cache le bouton de remboursement
-                remboursementBtn.style.display = 'none';
+            if (remboursementBtn) {
+                var virementEffectue = remboursementBtn.getAttribute('data-virement-effectue');
+                remboursementBtn.style.display = (virementEffectue === 'true') ? 'block' : 'none';
             }
         });
 
@@ -254,4 +315,3 @@
 </body>
 
 </html>
-

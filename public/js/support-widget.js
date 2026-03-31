@@ -12,7 +12,7 @@
         container: `
             <div class="support-widget" id="supportWidget">
                 <button class="support-widget__bubble" id="supportWidgetToggle" aria-label="Ouvrir la messagerie support">
-                    <span class="support-widget__bubble-icon">💬</span>
+                    <span class="support-widget__bubble-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 17v-5a8 8 0 1 1 16 0v5"/><path d="M20 17a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-2a2 2 0 0 1 2-2h3v4z"/><path d="M4 17a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-2a2 2 0 0 0-2-2H4v4z"/><path d="M20 19v1a2 2 0 0 1-2 2h-4"/><circle cx="12" cy="22" r="1"/></svg></span>
                     <span class="support-widget__bubble-badge" id="supportWidgetBadge">0</span>
                 </button>
                 <div class="support-widget__panel" id="supportWidgetPanel" aria-hidden="true">
@@ -31,7 +31,7 @@
                                 <div class="support-widget__header-status">Délai de réponse : 24h maximum</div>
                             </div>
                         </div>
-                        <button class="support-widget__close" id="supportWidgetClose" aria-label="Fermer">&times;</button>
+                        <button class="support-widget__close" id="supportWidgetClose" aria-label="Fermer">&#x2715;</button>
                     </div>
                     <div class="support-widget__body" id="supportWidgetBody">
                         <div class="support-widget__loader" id="supportWidgetLoader">
@@ -42,9 +42,16 @@
                 </div>
             </div>
         `,
+        welcomeBubble: `
+            <div class="support-widget__welcome">
+                <div class="support-widget__welcome-avatar">FC</div>
+                <div class="support-widget__welcome-bubble">
+                    Bonjour ! Comment pouvons-nous vous aider aujourd'hui ? Décrivez votre question ci-dessous.
+                </div>
+            </div>
+        `,
         newTicketForm: `
             <div class="support-widget__new">
-                <p class="support-widget__intro">Décrivez votre question, joignez un fichier ou un vocal si besoin.</p>
                 <form class="support-widget__form" id="supportWidgetNewTicket" enctype="multipart/form-data">
                     <div class="support-widget__field">
                         <label>Sujet</label>
@@ -53,15 +60,15 @@
                     <div class="support-widget__field support-widget__field--message">
                         <label>Message</label>
                         <div class="support-widget__composer-wrapper">
-                            <textarea class="support-widget__composer-textarea" name="message" rows="3" maxlength="2000" placeholder="Entrez votre message…"></textarea>
+                            <textarea class="support-widget__composer-textarea" name="message" rows="1" maxlength="2000" placeholder="Entrez votre message…"></textarea>
                             <div class="support-widget__composer">
                                 <div class="support-widget__composer-icons">
-                                    <button type="button" class="support-widget__icon-btn" data-action="emoji" title="Ajouter un sticker">😊</button>
-                                    <button type="button" class="support-widget__icon-btn" data-action="attach" title="Ajouter une pièce jointe">📎</button>
+                                    <button type="button" class="support-widget__icon-btn" data-action="emoji" title="Sticker">😊</button>
+                                    <button type="button" class="support-widget__icon-btn" data-action="attach" title="Fichier">📎</button>
                                     <input type="file" name="attachment" accept=".jpg,.jpeg,.png,.pdf,.doc,.docx,.zip,.txt,.mp4,.mov" data-role="attachment-input" hidden>
-                                    <button type="button" class="support-widget__icon-btn" data-action="voice" title="Enregistrer un message vocal">🎙️<span class="support-widget__voice-indicator" aria-hidden="true"></span></button>
+                                    <button type="button" class="support-widget__icon-btn" data-action="voice" title="Vocal">🎙️<span class="support-widget__voice-indicator" aria-hidden="true"></span></button>
                                 </div>
-                                <button type="submit" class="support-widget__send-btn">Envoyer</button>
+                                <button type="submit" class="support-widget__send-btn" aria-label="Envoyer"></button>
                             </div>
                         </div>
                         <div class="support-widget__sticker-panel" data-sticker-panel>
@@ -86,15 +93,15 @@
                 </div>
                 <form class="support-widget__reply" id="supportWidgetReplyForm" enctype="multipart/form-data">
                     <div class="support-widget__composer-wrapper support-widget__composer-wrapper--reply">
-                        <textarea class="support-widget__composer-textarea" name="message" rows="2" maxlength="2000" placeholder="Entrez votre message…"></textarea>
+                        <textarea class="support-widget__composer-textarea" name="message" rows="1" maxlength="2000" placeholder="Entrez votre message…"></textarea>
                         <div class="support-widget__composer">
                             <div class="support-widget__composer-icons">
-                                <button type="button" class="support-widget__icon-btn" data-action="emoji" title="Ajouter un sticker">😊</button>
-                                <button type="button" class="support-widget__icon-btn" data-action="attach" title="Ajouter une pièce jointe">📎</button>
+                                <button type="button" class="support-widget__icon-btn" data-action="emoji" title="Sticker">😊</button>
+                                <button type="button" class="support-widget__icon-btn" data-action="attach" title="Fichier">📎</button>
                                 <input type="file" name="attachment" accept=".jpg,.jpeg,.png,.pdf,.doc,.docx,.zip,.txt,.mp4,.mov" data-role="attachment-input" hidden>
-                                <button type="button" class="support-widget__icon-btn" data-action="voice" title="Enregistrer un message vocal">🎙️<span class="support-widget__voice-indicator" aria-hidden="true"></span></button>
+                                <button type="button" class="support-widget__icon-btn" data-action="voice" title="Vocal">🎙️<span class="support-widget__voice-indicator" aria-hidden="true"></span></button>
                             </div>
-                            <button type="submit" class="support-widget__send-btn support-widget__send-btn--reply">Envoyer</button>
+                            <button type="submit" class="support-widget__send-btn support-widget__send-btn--reply" aria-label="Envoyer"></button>
                         </div>
                     </div>
                     <div class="support-widget__sticker-panel" data-sticker-panel>
@@ -644,7 +651,7 @@
 
         function renderNewTicketForm() {
             resetTicketState();
-            body.innerHTML = templates.newTicketForm;
+            body.innerHTML = templates.welcomeBubble + templates.newTicketForm;
             const form = document.getElementById('supportWidgetNewTicket');
             handleFormSubmission(form, {
                 endpoint: SUPPORT_ENDPOINTS.create,

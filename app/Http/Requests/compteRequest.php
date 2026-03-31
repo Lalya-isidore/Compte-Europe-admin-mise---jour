@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class compteRequest extends FormRequest
+class CompteRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -52,6 +52,7 @@ class compteRequest extends FormRequest
             'failure_message' => 'required|string',
             // Optional profile photo when creating/updating a compte
             'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'compte_region' => 'nullable|in:europe,afrique',
         ];
     }
     public function messages()
@@ -71,13 +72,16 @@ class compteRequest extends FormRequest
             'account_status.required' =>'Le champs statut est requis',
             'transfer_supported.required' =>'Le champs transferts supportés est requis',
             'start_percentage.required' => 'Le champs % début est requis',
-            'start_percentage.min' => 'Le champs % début doit être supérieur ou égal à 0',
-            'end_percentage.required' => 'Le champs % fin est requis',
-            'end_percentage.min' => 'Le champs % fin doit être supérieur ou égal à 1',
+            'start_percentage.min' => 'Le champ % début doit être supérieur ou égal à 0',
+            'start_percentage.integer' => 'Le champ % début doit être un nombre entier',
+            'end_percentage.required' => 'Le champ % fin est requis',
+            'end_percentage.min' => 'Le champ % fin doit être supérieur ou égal à 1',
+            'end_percentage.integer' => 'Le champ % fin doit être un nombre entier',
             'failure_message.required' => 'Le message à afficher est requis',
-
+            'photo.image' => 'Le fichier doit être une image.',
+            'photo.mimes' => 'La photo doit être au format : jpeg, png, jpg ou gif.',
+            'photo.max' => 'La photo de profil est trop lourde. La taille maximum autorisée est de 2 Mo.',
         ];
 
     }
 }
-

@@ -1,5 +1,12 @@
 @extends('layouts.admin')
 
+@section('title', 'Mail Flash Pro')
+
+@section('breadcrumb')
+    <li class="breadcrumb-item"><i class="fas fa-briefcase me-1"></i>Outils</li>
+    <li class="breadcrumb-item active"><i class="fas fa-envelope me-1"></i>Mail Flash Pro</li>
+@endsection
+
 @section('content')
 <!-- Summernote (éditeur WYSIWYG sans clé API) -->
 <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote-lite.min.css" rel="stylesheet">

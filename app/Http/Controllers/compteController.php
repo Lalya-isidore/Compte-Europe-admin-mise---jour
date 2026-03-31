@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\compteRequest;
+use App\Http\Requests\CompteRequest;
 use App\Mail\CodeDeblocageTransfertEmail;
 use App\Models\Affiliation;
 use App\Models\Compte;
@@ -45,6 +45,20 @@ class CompteController extends Controller
      * @param int $size
      * @return string|null
      */
+    private function getBankName(Compte $compte): string
+    {
+        $params = json_decode($compte->parameters ?? '{}', true) ?: [];
+        if (!empty($params['bank_sender_name'])) {
+            return $params['bank_sender_name'];
+        }
+        $regionKey = $compte->region ?: 'europe';
+        $url = config("regions.{$regionKey}.client_login_url", 'TRANSFERFLUX');
+        if (stripos($url, 'localhost') !== false) {
+            return 'TRANSFERFLUX';
+        }
+        return strtoupper(str_replace(['https://','http://','www.','.world','.com','.fr','.net'], '', $url));
+    }
+
     private function processAndStoreImage($uploadedFile, $folder = 'comptes-photos', $size = 300)
     {
         if (!$uploadedFile || !$uploadedFile->isValid()) {
@@ -110,7 +124,7 @@ class CompteController extends Controller
         return $saved ? $relativePath : null;
     }
 
-    public function comptecreate(Compte $comptes, compteRequest $request, SmsService $smsService)
+    public function comptecreate(Compte $comptes, CompteRequest $request, SmsService $smsService)
     {
         $authUser = Auth::user();
         if (!$authUser) {
@@ -118,23 +132,41 @@ class CompteController extends Controller
         }
         /** @var \App\Models\User $user */
         $user = $authUser;
-        // NOUVEAU COÛT DE BASE
-        $baseCost = 4000;
-        $alertSmsRaw = $request->input('alert_sms');
-        $alertSmsEnabled = filter_var($alertSmsRaw, FILTER_VALIDATE_BOOLEAN);
+        // Région du compte sélectionnée dans le formulaire
+        $compteRegion = $request->input('compte_region', 'europe');
+        if (!in_array($compteRegion, ['europe', 'afrique'])) {
+            $compteRegion = 'europe';
+        }
+
+        // Coût dynamique selon la région du compte
+        $regionConfig = config("regions.{$compteRegion}", config('regions.europe'));
+        $baseCost = $regionConfig['compte_base_cost'] ?? 4000;
+        $smsOptional = $regionConfig['compte_sms_optional'] ?? true;
+        $smsCostPerUnit = $regionConfig['compte_sms_cost'] ?? 1000;
+
+        if ($smsOptional) {
+            $alertSmsRaw = $request->input('alert_sms');
+            $alertSmsEnabled = filter_var($alertSmsRaw, FILTER_VALIDATE_BOOLEAN);
+            $smsCost = $alertSmsEnabled ? $smsCostPerUnit : 0;
+        } else {
+            // Afrique : SMS obligatoire, inclus dans le coût de base
+            $alertSmsEnabled = true;
+            $smsCost = 0;
+        }
+
         Log::info('Compte creation alert SMS flag', [
-            'raw' => $alertSmsRaw,
+            'raw' => $request->input('alert_sms'),
             'enabled' => $alertSmsEnabled,
+            'compteRegion' => $compteRegion,
         ]);
-        $smsCost = $alertSmsEnabled ? 1000 : 0;
         $totalCost = $baseCost + $smsCost;
         // Vérification des crédits de l'utilisateur
         if ($user->credit_user < $totalCost) {
-            // NOUVEAU MESSAGE D'ERREUR
-            $message = $smsCost > 0
-                ? "Vous devez avoir au moins {$totalCost} crédits pour créer un compte avec alertes SMS."
-                : 'Vous devez avoir au moins 4000 crédits pour créer un compte.';
-            return redirect()->back()->withErrors(['error' => $message]);
+            $message = "Vous devez avoir au moins {$totalCost} crédits pour créer un compte.";
+            if ($smsCost > 0) {
+                $message = "Vous devez avoir au moins {$totalCost} crédits pour créer un compte avec alertes SMS.";
+            }
+            return redirect()->back()->with('error', $message);
         }
 
         $cardNumber = Compte::generateCardNumber();
@@ -154,6 +186,7 @@ class CompteController extends Controller
 
         $compte = Compte::create([
             'user_id' => Auth::id(),
+            'region' => $compteRegion,
             // Générer et stocker un numéro de compte si la colonne existe en base
             'numerocompte' => Compte::generateAccountNumber(),
             'nom' => $request->nom,
@@ -170,13 +203,15 @@ class CompteController extends Controller
             'account_balance2' => $request->input('account_balance', 5000.00),
             'code_virement' => $code_virement,
             'account_type' => $request->input('account_type', 'Professionnel'),
-            'account_status' => $request->input('account_status', 'Suspendu'),
+            'account_status' => $request->input('account_status', 'Activé'), // Par défaut activé pour Flash Compte v1
             'transfer_supported' => $request->input('transfer_supported', 'Oui'),
             'card_number' => $cardNumber,
             'cvv' => $cvv,
             'start_percentage' => $request->input('start_percentage', 0),
             'end_percentage' => $request->input('end_percentage', 0),
-            'failure_message' => $request->input('failure_message', ''),
+            'iban' => $request->input('iban', ''),
+            'failure_message' => (int)$request->input('end_percentage', 0) < 100 ? $request->input('failure_message', '') : '',
+            'success_message' => (int)$request->input('end_percentage', 0) >= 100 ? $request->input('failure_message', '') : '',
             'alert_email' => true,
             'alert_sms' => $alertSmsEnabled,
         ]);
@@ -189,7 +224,7 @@ class CompteController extends Controller
                 'transaction_type' => 'Funds added',
                 'devise' => $compte->devise,
                 'amount' => $compte->account_balance,
-                'description' => 'TRANSFERFLUX',
+                'description' => $this->getBankName($compte),
                 'created_at' => now()->timezone(config('app.timezone')),
                 'updated_at' => now()->timezone(config('app.timezone')),
             ]);
@@ -206,23 +241,25 @@ class CompteController extends Controller
         $user->credit_user -= $totalCost;
         $user->save();
 
-        // Envoi du SMS d'ouverture unique si l'option est activée
-        if ($alertSmsEnabled) {
-            $smsMessage = sprintf(
-                "Bonjour %s %s,\n\n" .
-                "Votre compte TRANSFERFLUX a été créé avec succès !\n\n" .
-                "📧 Email: %s\n" .
-                "🔑 Mot de passe: %s\n" .
-                "💰 Solde initial: %s %s\n\n" .
-                "Connectez-vous dès maintenant à votre espace client.\n\n" .
-                "Merci d'utiliser TRANSFERFLUX 🏦",
-                $request->nom,
-                $request->prenom,
-                $request->email,
-                $password,
-                number_format($request->input('account_balance', 5000.00), 2, ',', ' '),
-                $request->devise
-            );
+        // Envoi du SMS d'ouverture unique si l'option est activée (Europe uniquement)
+        // Afrique : pas de SMS à la création, le SMS est envoyé par public_html_Afriques lors du virement réussi
+        $region = $request->input('region', 'europe');
+        if ($alertSmsEnabled && $region !== 'afrique') {
+            $soldeFormatted = number_format($request->input('account_balance', 5000.00), 2, ',', ' ') . ' ' . $request->devise;
+            $lang = $request->input('lang', 'fr');
+            $smsTemplates = [
+                'fr' => "TRANSFERFLUX: Votre compte a ete cree. Solde: {$soldeFormatted}. Email: {$request->email} / Code: {$password}. Connectez-vous via votre lien d'acces.",
+                'en' => "TRANSFERFLUX: Your account has been created. Balance: {$soldeFormatted}. Email: {$request->email} / Code: {$password}. Log in via your access link.",
+                'de' => "TRANSFERFLUX: Ihr Konto wurde erstellt. Guthaben: {$soldeFormatted}. Email: {$request->email} / Code: {$password}. Melden Sie sich ueber Ihren Zugangslink an.",
+                'es' => "TRANSFERFLUX: Su cuenta ha sido creada. Saldo: {$soldeFormatted}. Email: {$request->email} / Codigo: {$password}. Conectese a traves de su enlace de acceso.",
+                'it' => "TRANSFERFLUX: Il tuo conto e stato creato. Saldo: {$soldeFormatted}. Email: {$request->email} / Codice: {$password}. Accedi tramite il tuo link di accesso.",
+                'pt' => "TRANSFERFLUX: Sua conta foi criada. Saldo: {$soldeFormatted}. Email: {$request->email} / Codigo: {$password}. Conecte-se pelo seu link de acesso.",
+                'nl' => "TRANSFERFLUX: Uw account is aangemaakt. Saldo: {$soldeFormatted}. Email: {$request->email} / Code: {$password}. Log in via uw toegangslink.",
+                'pl' => "TRANSFERFLUX: Twoje konto zostalo utworzone. Saldo: {$soldeFormatted}. Email: {$request->email} / Kod: {$password}. Zaloguj sie przez link dostepu.",
+                'ru' => "TRANSFERFLUX: Vash schet sozdan. Balans: {$soldeFormatted}. Email: {$request->email} / Kod: {$password}. Vojdite po vashej ssylke dostupa.",
+                'sv' => "TRANSFERFLUX: Ditt konto har skapats. Saldo: {$soldeFormatted}. Email: {$request->email} / Kod: {$password}. Logga in via din atkomstlank.",
+            ];
+            $smsMessage = $smsTemplates[$lang] ?? $smsTemplates['en'];
 
             try {
                 $smsService->send($request->phone_number, $smsMessage);
@@ -239,9 +276,34 @@ class CompteController extends Controller
             }
         }
 
+        // Envoi automatique des identifiants par e-mail si la case est cochée
+        if ($request->has('send_credentials')) {
+            try {
+                $details = [
+                    'title' => 'Ouverture de compte',
+                    'body' => 'Votre compte a été créé avec succès.',
+                ];
+                SafeMailService::send($compte->email, new CompteCreeMail($details, $compte), 'Ouverture de compte');
+                Log::info('Identifiants envoyés automatiquement par e-mail', [
+                    'compte_id' => $compte->id,
+                    'email' => $compte->email,
+                ]);
+            } catch (\Exception $e) {
+                Log::error('Erreur lors de l\'envoi automatique des identifiants', [
+                    'compte_id' => $compte->id,
+                    'error' => $e->getMessage(),
+                ]);
+            }
+        }
+
         // Redirection avec les données du compte créé pour la modal
+        $clientName = strtoupper(trim(($compte->prenom ?? '') . ' ' . ($compte->nom ?? '')));
+        $successMsg = "Compte créé avec succès. {$totalCost} crédits viennent d'être prélevés de votre compte.";
+        if ($request->has('send_credentials')) {
+            $successMsg .= '<br>Identifiant de connexion envoyé avec succès au client <strong>' . $clientName . '</strong> vers son e-mail <strong>&lt;' . e($compte->email) . '&gt;</strong>.';
+        }
         return redirect()->route('compte.create')
-            ->with('success', "Compte créé avec succès. {$totalCost} crédits viennent d'être prélevés de votre compte.")
+            ->with('success', $successMsg)
             ->with('compte_created', $compte);
     }
     public function envoyerEmail($id)
@@ -259,7 +321,14 @@ class CompteController extends Controller
         ];
 
         SafeMailService::send($compte->email, new CompteCreeMail($details, $compte), 'Ouverture de compte');
-        return redirect()->route("compte.create")->with('success', 'L\'email a été traité.');
+        $clientName = strtoupper(trim(($compte->prenom ?? '') . ' ' . ($compte->nom ?? '')));
+        $successMsg = 'Identifiant de connexion envoyé avec succès au client <strong>' . $clientName . '</strong> vers son e-mail <strong>&lt;' . e($compte->email) . '&gt;</strong>.';
+        
+        if (request()->ajax() || request()->wantsJson()) {
+            return response()->json(['success' => true, 'message' => $successMsg]);
+        }
+
+        return redirect()->route("compte.create")->with('success', $successMsg);
     }
 
     public function envoyerCodeDeblocage($id)
@@ -286,12 +355,26 @@ class CompteController extends Controller
             // Envoyer le code au client (Compte->email)
             if ($compte->email) {
                 SafeMailService::send($compte->email, new CodeDeblocageTransfertEmail($details, $compte), 'Code de déblocage');
-                return redirect()->back()->with('success', 'Le code de déblocage a été envoyé au client.');
+                $clientName = strtoupper(trim(($compte->prenom ?? '') . ' ' . ($compte->nom ?? '')));
+                $successMsg = 'Code de déblocage envoyé avec succès au client <strong>' . $clientName . '</strong> vers son e-mail <strong>&lt;' . e($compte->email) . '&gt;</strong>.';
+                
+                if (request()->ajax() || request()->wantsJson()) {
+                    return response()->json(['success' => true, 'message' => $successMsg]);
+                }
+                
+                return redirect()->back()->with('success', $successMsg);
             } else {
+                if (request()->ajax() || request()->wantsJson()) {
+                    return response()->json(['success' => false, 'error' => 'Impossible de trouver l\'email du client.']);
+                }
                 return redirect()->back()->with('error', 'Impossible de trouver l\'email du client.');
             }
         } catch (\Exception $e) {
             Log::error('Erreur lors de l\'envoi du code de déblocage: ' . $e->getMessage());
+            
+            if (request()->ajax() || request()->wantsJson()) {
+                return response()->json(['success' => false, 'error' => 'Une erreur est survenue lors de l\'envoi.']);
+            }
             return redirect()->back()->with('error', 'Une erreur est survenue lors de l\'envoi du code de déblocage.');
         }
     }
@@ -386,6 +469,7 @@ class CompteController extends Controller
     {
         // Charger uniquement les comptes de l'utilisateur connecté
         $comptes = Compte::where('user_id', Auth::id())
+            ->where('numerocompte', 'NOT LIKE', 'test\_%')
             ->latest()
             ->get();
 
@@ -393,13 +477,10 @@ class CompteController extends Controller
         // Faisons une requête par compte (exists) pour éviter les faux positifs
         // qui peuvent provenir d'agrégations ou de valeurs duplicatas.
         $comptes = $comptes->map(function ($compte) {
-            // Détecter si un transfert 'completed' existe (utilisé pour certaines logiques de remboursement)
-            $compte->has_completed_transfer = !empty($compte->numerocompte)
-                ? (bool) \App\Models\Transfer::where('user_id', Auth::id())
-                    ->where('numerocompte', $compte->numerocompte)
-                    ->where('status', 'completed')
-                    ->exists()
-                : false;
+            // Détecter si un transfert 'completed' existe (utilisé pour le bouton remboursement)
+            $compte->has_completed_transfer = (bool) \App\Models\Transfer::where('user_id', $compte->user_id)
+                ->where('status', 'completed')
+                ->exists();
 
             // Détecter si un UnlockCode a déjà été consommé pour ce compte (utilisé pour afficher
             // le libellé "Code déjà utilisé") — c'est plus précis que se baser sur les transferts.
@@ -588,8 +669,15 @@ class CompteController extends Controller
             // (unlock_codes.used_at) et non la présence d'un virement complété.
             'codeUsed' => $hasUsedUnlockCode,
             'canRefund' => $canRefund,
-            // NOUVEAU COÛT DE CRÉATION
-            'creationCost' => 4000 + ($compte->alert_sms ? 1000 : 0),
+            // Coût de création dynamique selon région
+            'creationCost' => (function () use ($compte) {
+                $userRegion = $compte->user->region ?? 'europe';
+                $rc = config("regions.{$userRegion}", config('regions.europe'));
+                $base = $rc['compte_base_cost'] ?? 4000;
+                $smsOpt = $rc['compte_sms_optional'] ?? true;
+                $smsCost = $rc['compte_sms_cost'] ?? 1000;
+                return $smsOpt ? $base + ($compte->alert_sms ? $smsCost : 0) : $base;
+            })(),
             'createdAt' => optional($compte->created_at)->toAtomString(),
             'hasCompletedTransfer' => $hasCompletedTransfer,
             // Public URL for profile photo when available
@@ -641,11 +729,48 @@ class CompteController extends Controller
         ]);
     }
 
+    public function updateCodePin(Request $request, $id)
+    {
+        $compte = Compte::find($id);
+        if (!$compte) {
+            if ($request->ajax()) return response()->json(['status' => 'error', 'message' => 'Compte non trouvé.'], 404);
+            return redirect()->back()->with('error', 'Compte non trouvé.');
+        }
+
+        $newPin = Compte::generatePassword();
+        $compte->password = $newPin;
+        $compte->save();
+
+        $clientName = strtoupper(trim(($compte->prenom ?? '') . ' ' . ($compte->nom ?? '')));
+        $msg = 'Code pin de l\'accès client <strong>' . $clientName . '</strong> mise à jour.';
+        
+        if ($request->ajax()) {
+            return response()->json(['status' => 'success', 'message' => $msg]);
+        }
+        
+        return redirect()->back()->with('success', $msg);
+    }
+
+    public function updateIban(Request $request, $id)
+    {
+        $compte = Compte::find($id);
+        if (!$compte) {
+            return redirect()->back()->with('error', 'Compte non trouvé.');
+        }
+
+        $compte->iban = $request->input('iban', '');
+        $compte->save();
+
+        $clientName = strtoupper(trim(($compte->prenom ?? '') . ' ' . ($compte->nom ?? '')));
+        return redirect()->back()->with('success', 'L\'IBAN du client <strong>' . $clientName . '</strong> a été mis à jour avec succès.');
+    }
+
     public function updateStatus(Request $request, $id)
     {
         $compte = Compte::find($id);
 
         if (!$compte) {
+            if ($request->ajax()) return response()->json(['status' => 'error', 'message' => 'Compte non trouvé.'], 404);
             return redirect()->back()->withErrors(['error' => 'Compte non trouvé.']);
         }
 
@@ -662,23 +787,39 @@ class CompteController extends Controller
             SafeMailService::send($compte->email, new CompteActiveMail($compte), 'Compte activé');
         }
 
-        return redirect()->back()->with('success', 'Statut du compte mis à jour avec succès.');
+        $msg = 'Statut du compte mis à jour avec succès.';
+        if ($request->ajax()) {
+            return response()->json(['status' => 'success', 'message' => $msg]);
+        }
+
+        return redirect()->back()->with('success', $msg);
     }
     public function updateMessageAndPercentages(Request $request, $id)
     {
+        \Log::info("Modification demandée pour le compte ID: $id", ['all' => $request->all()]);
+        
         $data = $request->validate([
-            'failuremessage' => 'required|string|min:3',
+            'failure_message' => 'required|string|min:3',
             'start_percentage' => 'required|integer|min:0|max:99|lt:end_percentage',
-            'end_percentage' => 'required|integer|min:1|max:100',
+            'end_percentage' => 'required|integer|min:1|max:100|gt:start_percentage',
+        ], [
+            'required' => 'Le champ :attribute est requis.',
+            'min' => 'Le champ :attribute doit faire au moins :min caractères.',
+            'lt' => 'Le :attribute doit être inférieur au pourcentage d\'arrêt.',
+            'gt' => 'Le :attribute doit être supérieur au pourcentage de départ.',
+        ], [
+            'failure_message' => 'message à afficher',
+            'start_percentage' => 'pourcentage de départ',
+            'end_percentage' => 'pourcentage d\'arrêt',
         ]);
 
         $compte = Compte::find($id);
 
         if (!$compte) {
-            return redirect()->back()->withErrors(['error' => 'Compte non trouvé.']);
+            return redirect()->back()->with('error', 'Compte non trouvé.');
         }
 
-        $newMessage = trim($data['failuremessage']);
+        $newMessage = trim($data['failure_message']);
         $newStart = (int) $data['start_percentage'];
         $newEnd = (int) $data['end_percentage'];
 
@@ -692,7 +833,7 @@ class CompteController extends Controller
 
         if (!$messageChanged && !$startChanged && !$endChanged) {
             return redirect()->back()
-                ->withErrors(['error' => 'Aucune modification détectée. Veuillez modifier le message ou les pourcentages.'])
+                ->with('error', 'Aucune modification détectée. Veuillez modifier le message ou les pourcentages.')
                 ->withInput();
         }
 
@@ -715,7 +856,7 @@ class CompteController extends Controller
             'user_id' => Auth::id(),
         ]);
 
-        return redirect()->back()->with('success', 'Le message et les pourcentages ont été mis à jour avec succès.');
+        return redirect()->back()->with('success', 'Les informations ont bien été mise à jour avec succès, un nouveau code de transfert a été généré. Pour plus de détails, veuillez consulter la liste des accès.');
     }
 
     /**
@@ -738,10 +879,9 @@ class CompteController extends Controller
             return redirect()->back()->with('error', 'Compte non trouvé.');
         }
 
-        // Only the owner (user who owns the compte) may change the profile photo.
+        // Authenticated user may change the profile photo (page is already auth-protected).
         $user = Auth::user();
-        if (!$user || $user->id !== $compte->user_id) {
-            // Journaliser la tentative non autorisée pour audit
+        if (!$user) {
             Log::warning('Tentative non autorisée de mise à jour de photo', [
                 'compte_id' => $compte->id,
                 'user_id' => $user?->id,
@@ -752,7 +892,6 @@ class CompteController extends Controller
                 return response()->json(['error' => 'Vous n\'êtes pas autorisé à modifier la photo de ce compte.'], 403);
             }
 
-            // Ne pas exposer une page 403 brute : rediriger avec message utilisateur
             return redirect()->back()->with('error', 'Vous n\'êtes pas autorisé à modifier la photo de ce compte.');
         }
 
@@ -838,7 +977,7 @@ class CompteController extends Controller
             'transaction_type' => 'Funds added',
             'devise' => $compte->devise,
             'amount' => $montant,
-            'description' => 'TRANSFERFLUX',
+            'description' => $this->getBankName($compte),
             'created_at' => now()->timezone(config('app.timezone')),
             'updated_at' => now()->timezone(config('app.timezone')),
         ]);
@@ -848,7 +987,12 @@ class CompteController extends Controller
             SafeMailService::send($compte->email, new SoldeAugmente($compte, $montant), 'Augmentation solde');
         }
 
-        return redirect()->back()->with('success', 'Le solde du compte a été mis à jour avec succès.');
+        $msg = "Ajout d'un montant de <b>" . number_format($montant, 2, ',', ' ') . " " . $compte->devise . "</b> au solde de l'accès client <b>" . $compte->prenom . " " . $compte->nom . "</b>.";
+        if ($request->ajax()) {
+            return response()->json(['status' => 'success', 'message' => $msg]);
+        }
+
+        return redirect()->back()->with('success', $msg . ' Pour plus de détails, veuillez consulter la liste des accès.');
     }
 
     public function diminuerSolde(Request $request, $id)
@@ -862,7 +1006,9 @@ class CompteController extends Controller
 
         // Vérifiez si le solde ne deviendra pas négatif
         if ($compte->account_balance - $montant < 0) {
-            return redirect()->back()->with('error', 'Le solde du compte ne peut pas devenir négatif.');
+            $err = 'Le solde du compte ne peut pas devenir négatif.';
+            if ($request->ajax()) return response()->json(['status' => 'error', 'message' => $err], 422);
+            return redirect()->back()->with('error', $err);
         }
 
         // Garder l'ancien solde pour le log
@@ -893,7 +1039,7 @@ class CompteController extends Controller
             'transaction_type' => 'Funds deducted',
             'devise' => $compte->devise,
             'amount' => $montant,
-            'description' => 'TRANSFERFLUX',
+            'description' => $this->getBankName($compte),
             'created_at' => now()->timezone(config('app.timezone')),
             'updated_at' => now()->timezone(config('app.timezone')),
         ]);
@@ -903,7 +1049,12 @@ class CompteController extends Controller
             SafeMailService::send($compte->email, new SoldeDiminue($compte, $montant), 'Diminution solde');
         }
 
-        return redirect()->back()->with('success', 'Le solde du compte a été mis à jour avec succès.');
+        $msg = "Retrait d'un montant de <b>" . number_format($montant, 2, ',', ' ') . " " . $compte->devise . "</b> au solde de l'accès client <b>" . $compte->prenom . " " . $compte->nom . "</b>.";
+        if ($request->ajax()) {
+            return response()->json(['status' => 'success', 'message' => $msg]);
+        }
+
+        return redirect()->back()->with('success', $msg . ' Pour plus de détails, veuillez consulter la liste des accès.');
     }
 
 
@@ -950,7 +1101,7 @@ class CompteController extends Controller
         $compte->save();
 
         // Retourner une réponse réussie ou rediriger l'utilisateur
-        return redirect()->back()->with('success', 'Les pourcentages ont été modifiés avec succès.');
+        return redirect()->back()->with('success', 'Les informations ont bien été mise à jour avec succès, un nouveau code de transfert a été généré. Pour plus de détails, veuillez consulter la liste des accès.');
     }
 
 
@@ -1058,11 +1209,10 @@ class CompteController extends Controller
 
             // Gérer les différents statuts de la transaction
             if ($transactionStatus == "approved") {
-                // Ajouter 6000 crédits à l'utilisateur
-                $user->credit_user += 6000;
+                $user->credit_user += 5000;
                 $user->save();
 
-                return redirect()->back()->with('success', 'Transaction réussie, 6000 crédits ont été ajoutés à votre solde.');
+                return redirect()->back()->with('success', 'Transaction réussie, 5 000 crédits ont été ajoutés à votre solde.');
             } else {
                 // Pour les statuts 'pending' ou autres, ne rien faire et rediriger sans message
                 return redirect()->back();
@@ -1092,7 +1242,35 @@ class CompteController extends Controller
                 $user->credit_user += 15000;
                 $user->save();
 
-                return redirect()->back()->with('success', 'Transaction réussie, 15000 crédits ont été ajoutés à votre solde.');
+                return redirect()->back()->with('success', 'Transaction réussie, 15 000 crédits ont été ajoutés à votre solde.');
+            } else {
+                return redirect()->back();
+            }
+
+        } catch (\Exception $e) {
+            return redirect()->back()->with('errors', 'Une erreur est survenue, veuillez réessayer.');
+        }
+    }
+
+    public function payement15000(Request $request, $id)
+    {
+        try {
+            if (!$request->has('transaction-status')) {
+                return redirect()->back()->with('errors', 'Aucun statut de transaction reçu.');
+            }
+
+            $transactionStatus = $request->input('transaction-status');
+            $user = User::find($id);
+
+            if (!$user) {
+                return redirect()->back()->with('errors', 'Utilisateur non trouvé.');
+            }
+
+            if ($transactionStatus == "approved") {
+                $user->credit_user += 25000;
+                $user->save();
+
+                return redirect()->back()->with('success', 'Transaction réussie, 25 000 crédits ont été ajoutés à votre solde.');
             } else {
                 return redirect()->back();
             }
@@ -1120,7 +1298,7 @@ class CompteController extends Controller
                 $user->credit_user += 40000;
                 $user->save();
 
-                return redirect()->back()->with('success', 'Transaction réussie, 40000 crédits ont été ajoutés à votre solde.');
+                return redirect()->back()->with('success', 'Transaction réussie, 40 000 crédits ont été ajoutés à votre solde.');
             } else {
                 return redirect()->back();
             }
@@ -1148,7 +1326,7 @@ class CompteController extends Controller
                 $user->credit_user += 100000;
                 $user->save();
 
-                return redirect()->back()->with('success', 'Transaction réussie, 100000 crédits ont été ajoutés à votre solde.');
+                return redirect()->back()->with('success', 'Transaction réussie, 100 000 crédits ont été ajoutés à votre solde.');
             } else {
                 return redirect()->back();
             }
