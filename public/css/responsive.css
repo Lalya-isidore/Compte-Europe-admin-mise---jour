@@ -972,16 +972,49 @@ img {
 
 /* ===== TOUCH TARGETS (Accessibilité tactile) ===== */
 @media (pointer: coarse) {
-    /* Augmenter la zone tactile sur mobile */
     .btn,
-    button {
+    button:not(.form-check-input) {
         min-height: 44px;
     }
 
-    /* Espacement entre éléments tactiles */
     .btn + .btn,
     button + button {
         margin-left: 8px;
+    }
+}
+
+/* ===== FORM CHECK / SWITCH MOBILE ===== */
+@media (max-width: 575px) {
+    .form-check {
+        display: flex;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+
+    .form-check .form-check-input[type="checkbox"] {
+        width: 18px !important;
+        height: 18px !important;
+        min-width: 18px;
+        min-height: 18px;
+        max-width: 18px;
+        max-height: 18px;
+        margin-top: 3px;
+        flex-shrink: 0;
+    }
+
+    .form-check .form-check-label {
+        font-size: 0.9rem;
+        line-height: 1.4;
+    }
+
+    .form-switch .form-check-input {
+        width: 40px !important;
+        height: 22px !important;
+        min-width: 40px;
+        min-height: 22px;
+        max-width: 40px;
+        max-height: 22px;
+        margin-top: 2px;
     }
 }
 
