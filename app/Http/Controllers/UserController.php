@@ -8,6 +8,7 @@ use App\Http\Requests\UserRequest;
 use App\Models\User;
 use App\Models\Affiliation;
 use App\Notifications\WelcomeEmail;
+use App\Services\SafeMailService;
 use App\Services\SmsService;
 use App\Services\TwilioService;
 use Illuminate\Http\Request;
@@ -116,6 +117,22 @@ class UserController extends Controller
 
         // Notifier l'utilisateur en incluant le mot de passe en clair capturé plus haut
         $user->notify(new WelcomeEmail($plainPassword));
+
+        // Notifier l'admin d'une nouvelle inscription
+        try {
+            $adminEmail = 'isiserviceplus@gmail.com';
+            SafeMailService::send(
+                $adminEmail,
+                new \App\Mail\MassNotification(
+                    'Nouvelle inscription sur ' . config('app.name'),
+                    "Un nouvel utilisateur vient de s'inscrire sur la plateforme.\n\nNom : {$user->nom}\nPrénom : {$user->prenom}\nEmail : {$user->email}\nTéléphone : {$user->phone_number}\nDate : " . now()->format('d/m/Y à H:i'),
+                    $user
+                ),
+                'Notification nouvelle inscription'
+            );
+        } catch (\Throwable $e) {
+            Log::warning('Échec notification admin nouvelle inscription', ['error' => $e->getMessage()]);
+        }
 
         if ($phoneNumber) {
             $message = sprintf(
