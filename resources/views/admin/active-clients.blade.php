@@ -46,6 +46,7 @@
                         <th class="border-0 py-3">Email</th>
                         <th class="border-0 py-3">Telephone</th>
                         <th class="border-0 py-3 text-end">Credits</th>
+                        <th class="border-0 py-3 text-center">Dernier credit</th>
                         <th class="border-0 py-3 text-center">Inscription</th>
                     </tr>
                 </thead>
@@ -64,6 +65,13 @@
                             <span class="badge bg-primary bg-opacity-10 text-primary fw-bold fs-6">
                                 {{ number_format($user->credit_user, 0, ',', ' ') }}
                             </span>
+                        </td>
+                        <td class="py-3 text-center small">
+                            @if($user->last_recharge_at)
+                                <span class="text-success fw-semibold">{{ \Carbon\Carbon::parse($user->last_recharge_at)->format('d/m/Y H:i') }}</span>
+                            @else
+                                <span class="text-muted">-</span>
+                            @endif
                         </td>
                         <td class="py-3 text-center text-muted small">
                             {{ $user->created_at ? $user->created_at->format('d/m/Y') : '-' }}
