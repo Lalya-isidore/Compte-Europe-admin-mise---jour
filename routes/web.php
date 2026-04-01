@@ -424,6 +424,9 @@ Route::post('/payement5000/{id}', [CompteController::class, 'payement5000'])->na
         Route::get('/commissions/statistics/data', [App\Http\Controllers\Admin\CommissionController::class, 'statistics'])->name('commissions.statistics');
         Route::get('/commissions/export/csv', [App\Http\Controllers\Admin\CommissionController::class, 'export'])->name('commissions.export');
 
+        // Clients actifs
+        Route::get('/active-clients', [App\Http\Controllers\Admin\ActiveClientsController::class, 'index'])->name('activeClients.index');
+
         // Notification en masse
         Route::get('/notify-users', [App\Http\Controllers\Admin\NotifyUsersController::class, 'index'])->name('notifyUsers.index');
         Route::post('/notify-users', [App\Http\Controllers\Admin\NotifyUsersController::class, 'send'])->name('notifyUsers.send');

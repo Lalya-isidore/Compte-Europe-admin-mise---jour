@@ -26,6 +26,10 @@
             <i class="lucide-percent"></i>
             <span>Commissions</span>
         </a>
+        <a href="{{ route('admin.activeClients.index') }}" class="menu-item {{ request()->routeIs('admin.activeClients.*') ? 'active' : '' }}">
+            <i class="lucide-user-check"></i>
+            <span>Clients actifs</span>
+        </a>
         
         <p class="menu-label">Communication</p>
         <a href="{{ route('admin.support.index') }}" class="menu-item {{ request()->routeIs('admin.support.*') ? 'active' : '' }}">
