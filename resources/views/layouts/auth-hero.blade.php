@@ -4,11 +4,11 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <meta name="description" content="Kits FlashBilan — SMS Pro, Flash Compte Pro (Europe & Afrique), Mail Flash Pro, Verification de numero et bien plus encore.">
+    <meta name="description" content="Kits FlashBilan — SMS Pro, Flash Compte Pro (Europe & Afrique), Mail Flash Pro, Numero virtuel (a partir de 3 200 CFA), Verification de numero de telephone, Verification d'IBAN/CB.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="{{ url()->current() }}">
     <meta property="og:title" content="Kits FlashBilan">
-    <meta property="og:description" content="SMS Pro, Flash Compte Pro (Europe & Afrique), Mail Flash Pro, Verification de numero et bien plus encore.">
+    <meta property="og:description" content="SMS Pro, Flash Compte Pro (Europe & Afrique), Mail Flash Pro, Numero virtuel (a partir de 3 200 CFA), Verification de numero de telephone, Verification d'IBAN/CB.">
     <meta property="og:image" content="{{ asset('images/og-preview1.png') }}">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
