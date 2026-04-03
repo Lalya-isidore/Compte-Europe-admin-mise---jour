@@ -15,7 +15,7 @@
     <meta property="og:url" content="{{ url()->current() }}">
     <meta property="og:title" content="Kits FlashBilan">
     <meta property="og:description" content="SMS Pro, Flash Compte Pro (Europe & Afrique), Mail Flash Pro, Verification de numero et bien plus encore.">
-    <meta property="og:image" content="{{ asset('images/og-preview.jpeg') }}">
+    <meta property="og:image" content="{{ asset('images/og-preview1.png') }}">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
     <meta property="og:site_name" content="FlashBilan">
@@ -25,7 +25,7 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Kits FlashBilan">
     <meta name="twitter:description" content="SMS Pro, Flash Compte Pro (Europe & Afrique), Mail Flash Pro, Verification de numero et bien plus encore.">
-    <meta name="twitter:image" content="{{ asset('images/og-preview.jpeg') }}">
+    <meta name="twitter:image" content="{{ asset('images/og-preview1.png') }}">
 
     <title>Kits FlashBilan - {{ app('region')->appName() }}</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
