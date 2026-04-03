@@ -1,2 +1,8 @@
 User-agent: *
-Disallow:
+Allow: /
+Disallow: /admin/
+Disallow: /api/
+Disallow: /storage/
+Disallow: /compte/
+
+Sitemap: https://flashbilan.fr/sitemap.xml

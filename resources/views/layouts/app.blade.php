@@ -5,7 +5,29 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>{{ app('region')->appName() }} - Administration</title>
+    <meta name="description" content="Kits FlashBilan — SMS Pro, Flash Compte Pro (Europe & Afrique), Mail Flash Pro, Verification de numero et bien plus encore.">
+    <meta name="keywords" content="FlashBilan, SMS Pro, Flash Compte Pro, Mail Flash Pro, transfert argent, gestion financiere, Europe, Afrique">
+    <meta name="author" content="FlashBilan">
+    <meta name="robots" content="index, follow">
+
+    <!-- Open Graph / Facebook / WhatsApp / Messenger -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ url()->current() }}">
+    <meta property="og:title" content="Kits FlashBilan">
+    <meta property="og:description" content="SMS Pro, Flash Compte Pro (Europe & Afrique), Mail Flash Pro, Verification de numero et bien plus encore.">
+    <meta property="og:image" content="{{ asset('images/og-preview.jpeg') }}">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:site_name" content="FlashBilan">
+    <meta property="og:locale" content="fr_FR">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Kits FlashBilan">
+    <meta name="twitter:description" content="SMS Pro, Flash Compte Pro (Europe & Afrique), Mail Flash Pro, Verification de numero et bien plus encore.">
+    <meta name="twitter:image" content="{{ asset('images/og-preview.jpeg') }}">
+
+    <title>Kits FlashBilan - {{ app('region')->appName() }}</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" defer></script>
