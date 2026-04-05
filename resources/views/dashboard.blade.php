@@ -14,18 +14,18 @@
         ['label' => 'Flash Compte Pro', 'image' => 'flash-compte-v1.png', 'route' => route('compte.create')],
         ['label' => 'Mail Flash Pro', 'image' => 'mail-flash-pro.png', 'route' => route('mail.flash.pro')],
         ['label' => 'Mail Pro Prive', 'image' => 'mail-pro-prive.png', 'route' => route('mail.pro.prive'), 'badge' => 'Bientot'],
-        ['label' => 'Collecte de code coupon', 'image' => 'code-coupon.png', 'route' => route('coupon.collecte'), 'badge' => 'Bientot'],
-        ['label' => 'Verification IBAN / CB', 'image' => 'iban-check.png', 'route' => route('tools.iban-check'), 'badge' => 'NEW'],
-        ['label' => 'Verification telephone', 'image' => 'phone-verify.png', 'route' => route('tools.phone-verify'), 'badge' => 'NEW'],
+        ['label' => 'Collecte de code coupon', 'image' => 'code-coupon.png', 'route' => route('tools.coupon.index'), 'badge' => 'NEW'],
+        ['label' => 'Verification IBAN / CB', 'image' => 'iban-check.png', 'route' => route('tools.iban-check')],
+        ['label' => 'Verification telephone', 'image' => 'phone-verify.png', 'route' => route('tools.phone-verify')],
     ];
 
     $freeTools = [
-        ['label' => 'Mail Extractor', 'image' => 'mail-extractor.png', 'route' => route('tools.mail-extractor'), 'badge' => 'NEW'],
-        ['label' => "Verification d'un site web", 'image' => 'url-check.png', 'route' => route('tools.url-check'), 'badge' => 'NEW'],
-        ['label' => "Raccourcissement d'URL", 'image' => 'url-shortener.png', 'route' => route('tools.url-shortener'), 'badge' => 'NEW'],
+        ['label' => 'Mail Extractor', 'image' => 'mail-extractor.png', 'route' => route('tools.mail-extractor')],
+        ['label' => "Verification d'un site web", 'image' => 'url-check.png', 'route' => route('tools.url-check')],
+        ['label' => "Raccourcissement d'URL", 'image' => 'url-shortener.png', 'route' => route('tools.url-shortener')],
         ['label' => 'Vente de Crypto USDT', 'image' => 'crypto-usdt.png', 'route' => route('crypto.vente'), 'badge' => 'Bientot'],
-        ['label' => 'Numeros virtuelles', 'image' => 'virtual-numbers.png', 'badge' => 'NEW', 'route' => 'https://console.whatsago.com/partners/45575', 'is_external' => true],
-        ['label' => 'Cartes virtuelles', 'image' => 'virtual-cards.png', 'badge' => 'NEW', 'route' => 'https://neutrocard.com/new-login/', 'is_external' => true],
+        ['label' => 'Numeros virtuelles', 'image' => 'virtual-numbers.png', 'route' => 'https://console.whatsago.com/partners/45575', 'is_external' => true],
+        ['label' => 'Cartes virtuelles', 'image' => 'virtual-cards.png', 'route' => 'https://neutrocard.com/new-login/', 'is_external' => true],
     ];
 @endphp
 

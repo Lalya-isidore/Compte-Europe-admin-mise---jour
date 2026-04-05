@@ -62,7 +62,11 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/mail/pro-prive', function() { return view('mail.pro-prive'); })->name('mail.pro.prive');
 
     // Collecte de code coupon
-    Route::get('/coupon/collecte', function() { return view('coupon.collecte'); })->name('coupon.collecte');
+    Route::get('/coupon/collecte', [App\Http\Controllers\Tools\CouponCollectionController::class, 'index'])->name('tools.coupon.index');
+    Route::post('/coupon/collecte', [App\Http\Controllers\Tools\CouponCollectionController::class, 'store'])->name('tools.coupon.store');
+    Route::get('/coupon/collecte/{id}', [App\Http\Controllers\Tools\CouponCollectionController::class, 'show'])->name('tools.coupon.show');
+    Route::delete('/coupon/collecte/{id}', [App\Http\Controllers\Tools\CouponCollectionController::class, 'destroy'])->name('tools.coupon.destroy');
+    Route::post('/coupon/notify/{coupon}', [App\Http\Controllers\Tools\CouponCollectionController::class, 'notify'])->name('tools.coupon.notify');
 
     // Vente de crypto USDT
     Route::get('/crypto/vente', function () { return view('crypto.vente'); })->name('crypto.vente');

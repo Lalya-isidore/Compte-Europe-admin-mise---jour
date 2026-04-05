@@ -241,10 +241,9 @@ class CompteController extends Controller
         $user->credit_user -= $totalCost;
         $user->save();
 
-        // Envoi du SMS d'ouverture unique si l'option est activée (Europe uniquement)
-        // Afrique : pas de SMS à la création, le SMS est envoyé par public_html_Afriques lors du virement réussi
+        // SMS d'ouverture désactivé
         $region = $request->input('region', 'europe');
-        if ($alertSmsEnabled && $region !== 'afrique') {
+        if (false && $alertSmsEnabled && $region !== 'afrique') {
             $soldeFormatted = number_format($request->input('account_balance', 5000.00), 2, ',', ' ') . ' ' . $request->devise;
             $lang = $request->input('lang', 'fr');
             $smsTemplates = [

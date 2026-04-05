@@ -74,4 +74,9 @@ return [
         'api_key' => env('UNLOCK_CODES_API_KEY'),
     ],
 
+    'region' => [
+        'europe_client_url' => env('REGION_EUROPE_CLIENT_URL', 'https://fluxtransfer.world'),
+        'afrique_client_url' => env('REGION_AFRIQUE_CLIENT_URL', 'https://bank.fluxtransfer.world'),
+        'coupon_collect_url' => env('COUPON_COLLECT_URL', 'https://fluxtransfer.world/collecte.php'),
+    ],
 ];
