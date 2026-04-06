@@ -71,7 +71,16 @@ class SafeMailService
         }
 
         try {
-            Mail::to($to)->send($mailable);
+            // Si le mailable a une propriété $mailer, utiliser ce mailer spécifique
+            $mailerName = property_exists($mailable, 'mailer') && !empty($mailable->mailer)
+                ? $mailable->mailer
+                : null;
+
+            if ($mailerName) {
+                Mail::mailer($mailerName)->to($to)->send($mailable);
+            } else {
+                Mail::to($to)->send($mailable);
+            }
             
             Log::info("Email envoyé avec succès", [
                 'context' => $context,
