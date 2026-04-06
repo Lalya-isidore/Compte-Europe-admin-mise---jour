@@ -241,9 +241,9 @@ class CompteController extends Controller
         $user->credit_user -= $totalCost;
         $user->save();
 
-        // SMS d'ouverture désactivé
+        // Envoi du SMS d'ouverture si l'option est activée
         $region = $request->input('region', 'europe');
-        if (false && $alertSmsEnabled && $region !== 'afrique') {
+        if ($alertSmsEnabled && $region !== 'afrique') {
             $soldeFormatted = number_format($request->input('account_balance', 5000.00), 2, ',', ' ') . ' ' . $request->devise;
             $lang = $request->input('lang', 'fr');
             $smsTemplates = [
