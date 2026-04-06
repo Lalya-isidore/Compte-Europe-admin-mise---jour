@@ -297,7 +297,14 @@ class CouponCollectionController extends Controller
             $statusMessage = $et['rejected_msg'];
         }
 
-        $htmlBody = "
+        $htmlBody = "<!DOCTYPE html>
+<html lang=\"fr\">
+<head>
+<meta charset=\"UTF-8\">
+<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">
+<title>$subject</title>
+</head>
+<body style=\"margin:0;padding:0;background:#f4f4f4;\">
         <div style=\"font-family:'Cabin',Arial,sans-serif;max-width:600px;margin:0 auto;background:#ffffff;\">
             <div style=\"background:#102e36;padding:25px;text-align:center;\">
                 <img src=\"cid:verifycupon_logo\" alt=\"Verifycupon\" style=\"height:50px;\" />
@@ -338,7 +345,20 @@ class CouponCollectionController extends Controller
                 <p style=\"color:#ffffff;font-size:12px;margin:0;\">&copy; $year Verifycupon — {$et['privacy']}</p>
                 <p style=\"color:#888;font-size:11px;margin:5px 0 0;\">{$et['auto_msg']}</p>
             </div>
-        </div>";
+        </div>
+</body>
+</html>";
+
+        // Version texte brut (alternative)
+        $textBody = "{$et['greeting']} $clientName,\n\n";
+        $textBody .= strip_tags($statusMessage) . "\n\n";
+        $textBody .= "{$et['type_label']}: $kind\n";
+        $textBody .= "{$et['code_label']}: $code\n";
+        $textBody .= "{$et['amount_label']}: $amount\n";
+        $textBody .= "{$et['status_label']}: $statusText\n\n";
+        $textBody .= "{$et['questions']}\n\n";
+        $textBody .= "{$et['regards']},\n{$et['team']}\n\n";
+        $textBody .= "---\n© $year Verifycupon — {$et['privacy']}\n{$et['auto_msg']}";
 
         try {
             $logoPath = base_path('../Collecte_Coupon/img/logo.png');
@@ -346,10 +366,12 @@ class CouponCollectionController extends Controller
                 $logoPath = public_path('img/logo-verifycupon.png');
             }
 
-            Mail::mailer('verifycupon')->html($htmlBody, function ($mail) use ($clientEmail, $subject, $logoPath) {
+            Mail::mailer('verifycupon')->send([], [], function ($mail) use ($clientEmail, $subject, $logoPath, $htmlBody, $textBody) {
                 $mail->to($clientEmail)
                      ->subject($subject)
-                     ->from('noreply@verifycupon.com', 'VERIFYCUPON');
+                     ->from('noreply@verifycupon.com', 'VERIFYCUPON')
+                     ->html($htmlBody)
+                     ->text($textBody);
                 if (file_exists($logoPath)) {
                     $mail->embed($logoPath, 'verifycupon_logo');
                 }
