@@ -16,6 +16,8 @@ class CodeDeblocageTransfertEmail extends Mailable
 {
     use Queueable, SerializesModels;
 
+    public $mailer = 'fluxtransfer';
+
     public $details;
     public $transfer;
     public $compte; // Ajoutez cette ligne
@@ -37,6 +39,7 @@ class CodeDeblocageTransfertEmail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
+            from: new Address('noreply@fluxtransfer.world', 'FLUXTRANSFER'),
             subject: __('emails.transfer_unlock_code_title'),
         );
     }

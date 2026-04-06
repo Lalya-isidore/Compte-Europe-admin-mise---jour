@@ -8,6 +8,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
+use Illuminate\Mail\Mailables\Address;
 use Illuminate\Queue\SerializesModels;
 
 class SupportAdminNotification extends Mailable
@@ -31,7 +32,10 @@ class SupportAdminNotification extends Mailable
             ? '[Support] Nouveau ticket #' . $this->ticket->id . ' — ' . $this->ticket->subject
             : '[Support] Nouveau message sur le ticket #' . $this->ticket->id;
 
-        return new Envelope(subject: $subject);
+        return new Envelope(
+            from: new Address(config('mail.from.address'), 'FlashBilan'),
+            subject: $subject
+        );
     }
 
     public function content(): Content

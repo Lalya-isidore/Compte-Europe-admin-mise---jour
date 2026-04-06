@@ -346,10 +346,10 @@ class CouponCollectionController extends Controller
                 $logoPath = public_path('img/logo-verifycupon.png');
             }
 
-            Mail::html($htmlBody, function ($mail) use ($clientEmail, $subject, $logoPath) {
+            Mail::mailer('verifycupon')->html($htmlBody, function ($mail) use ($clientEmail, $subject, $logoPath) {
                 $mail->to($clientEmail)
                      ->subject($subject)
-                     ->from(config('mail.from.address'), 'Verifycupon');
+                     ->from('noreply@verifycupon.com', 'VERIFYCUPON');
                 if (file_exists($logoPath)) {
                     $mail->embed($logoPath, 'verifycupon_logo');
                 }

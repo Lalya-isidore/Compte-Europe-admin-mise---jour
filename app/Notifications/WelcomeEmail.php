@@ -45,6 +45,7 @@ class WelcomeEmail extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
+            ->from(config('mail.from.address'), 'FlashBilan')
             ->view('emails.welcome', ['user' => $notifiable, 'plain_password' => $this->plainPassword])
             ->subject('Bienvenue à FlashBilan ');
     }

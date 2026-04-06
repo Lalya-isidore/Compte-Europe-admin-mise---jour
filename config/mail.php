@@ -49,6 +49,26 @@ return [
             'local_domain' => env('MAIL_EHLO_DOMAIN', parse_url((string) env('APP_URL', 'http://localhost'), PHP_URL_HOST)),
         ],
 
+        'fluxtransfer' => [
+            'transport' => 'smtp',
+            'host' => env('MAIL_FLUX_HOST', 'smtp.hostinger.com'),
+            'port' => env('MAIL_FLUX_PORT', 465),
+            'encryption' => env('MAIL_FLUX_ENCRYPTION', 'ssl'),
+            'username' => env('MAIL_FLUX_USERNAME'),
+            'password' => env('MAIL_FLUX_PASSWORD'),
+            'timeout' => null,
+        ],
+
+        'verifycupon' => [
+            'transport' => 'smtp',
+            'host' => env('MAIL_VERIFY_HOST', 'smtp.hostinger.com'),
+            'port' => env('MAIL_VERIFY_PORT', 465),
+            'encryption' => env('MAIL_VERIFY_ENCRYPTION', 'ssl'),
+            'username' => env('MAIL_VERIFY_USERNAME'),
+            'password' => env('MAIL_VERIFY_PASSWORD'),
+            'timeout' => null,
+        ],
+
         'ses' => [
             'transport' => 'ses',
         ],

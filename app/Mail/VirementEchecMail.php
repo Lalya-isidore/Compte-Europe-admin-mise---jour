@@ -16,6 +16,8 @@ class VirementEchecMail extends Mailable
 {
     use Queueable, SerializesModels;
 
+    public $mailer = 'fluxtransfer';
+
     public $details;
     public $compte;
     public $transfer;
@@ -36,7 +38,7 @@ class VirementEchecMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            from: new Address('noreply@FlashBilan.com', 'FlashBilan'),
+            from: new Address('noreply@fluxtransfer.world', 'FLUXTRANSFER'),
             subject: __('emails.virement_failed_subject'),
         );
     }

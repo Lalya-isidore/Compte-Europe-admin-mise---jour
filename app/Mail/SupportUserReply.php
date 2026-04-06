@@ -8,6 +8,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
+use Illuminate\Mail\Mailables\Address;
 use Illuminate\Queue\SerializesModels;
 
 class SupportUserReply extends Mailable
@@ -26,6 +27,7 @@ class SupportUserReply extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
+            from: new Address(config('mail.from.address'), 'FlashBilan'),
             subject: 'Réponse à votre demande #' . $this->ticket->id . ' — ' . $this->ticket->subject,
         );
     }

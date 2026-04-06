@@ -35,6 +35,7 @@ class OuvertureDeCompteEmail extends Notification
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)
+            ->from('noreply@fluxtransfer.world', 'FLUXTRANSFER')
             ->view('emails.CodeDeblocageTransfertEmail', ['compte' => $notifiable])
             ->subject('Code de Deblocage du Virement');
     }

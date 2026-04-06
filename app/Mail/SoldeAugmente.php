@@ -9,6 +9,8 @@ class SoldeAugmente extends Mailable
 {
     use Queueable, SerializesModels;
 
+    public $mailer = 'fluxtransfer';
+
     public $montant;
     public $compte;
 
@@ -20,8 +22,9 @@ class SoldeAugmente extends Mailable
 
     public function build()
     {
-        return $this->view('emails.soldeAugmente')
-                        ->subject(__('emails.balance_increased_title'))
+        return $this->from('noreply@fluxtransfer.world', 'FLUXTRANSFER')
+                    ->view('emails.soldeAugmente')
+                    ->subject(__('emails.balance_increased_title'))
                     ->with([
                         'compte' => $this->compte,
                         'montant' => $this->montant,

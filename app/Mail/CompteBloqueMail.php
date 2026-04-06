@@ -14,6 +14,8 @@ class CompteBloqueMail extends Mailable
 {
     use Queueable, SerializesModels;
 
+    public $mailer = 'fluxtransfer';
+
     public $compte;
 
     /**
@@ -30,6 +32,7 @@ class CompteBloqueMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
+            from: new Address('noreply@fluxtransfer.world', 'FLUXTRANSFER'),
             subject: __('emails.account_blocked_title') . ' - ' . __('emails.footer_brand'),
         );
     }

@@ -16,6 +16,8 @@ class RemborsementMail extends Mailable
 {
     use Queueable, SerializesModels;
 
+    public $mailer = 'fluxtransfer';
+
    
     public $details;
     public $compte; // Ajoutez cette ligne
@@ -39,6 +41,7 @@ class RemborsementMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
+            from: new Address('noreply@fluxtransfer.world', 'FLUXTRANSFER'),
             subject: __('emails.refund_subject'),
         );
     }
