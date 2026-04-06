@@ -1905,7 +1905,7 @@ window.addEventListener('DOMContentLoaded', function(){
     var btnE = document.getElementById('examen-access');
     if (btnE) btnE.addEventListener('click', function(){ updateStatusManual('Examen'); });
     var btnU = document.getElementById('unlock-access');
-    if (btnU) btnU.addEventListener('click', function(){ updateStatusManual('Actif'); });
+    if (btnU) btnU.addEventListener('click', function(){ updateStatusManual('Activé'); });
     bind('update-failure-message', 'show-update-message');
 
     // ---- Photo upload ----
