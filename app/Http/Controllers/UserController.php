@@ -134,20 +134,6 @@ class UserController extends Controller
             Log::warning('Échec notification admin nouvelle inscription', ['error' => $e->getMessage()]);
         }
 
-        if ($phoneNumber) {
-            $message = sprintf(
-                $regionConfig['welcome_sms'],
-                $user->prenom,
-                $user->nom
-            );
-
-            if ($regionConfig['sms_provider'] === 'infobip') {
-                $smsService->send($phoneNumber, $message);
-            } else {
-                app(TwilioService::class)->sendWhatsAppMessage($phoneNumber, $message);
-            }
-        }
-
         return redirect()->route('connexion')->with('success', 'Votre compte a bien été creer, Connecter !');
     }
 
