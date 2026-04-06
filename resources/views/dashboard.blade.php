@@ -24,7 +24,7 @@
         ['label' => "Verification d'un site web", 'image' => 'url-check.png', 'route' => route('tools.url-check')],
         ['label' => "Raccourcissement d'URL", 'image' => 'url-shortener.png', 'route' => route('tools.url-shortener')],
         ['label' => 'Vente de Crypto USDT', 'image' => 'crypto-usdt.png', 'route' => route('crypto.vente'), 'badge' => 'Bientot'],
-        ['label' => 'Numeros virtuelles', 'image' => 'virtual-numbers.png', 'route' => 'https://console.whatsago.com/partners/45575', 'is_external' => true],
+        ['label' => 'Numeros virtuelles', 'image' => 'telephone.png', 'route' => 'https://console.whatsago.com/partners/45575', 'is_external' => true],
         ['label' => 'Cartes virtuelles', 'image' => 'virtual-cards.png', 'route' => 'https://neutrocard.com/new-login/', 'is_external' => true],
     ];
 @endphp
