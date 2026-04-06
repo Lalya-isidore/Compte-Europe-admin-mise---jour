@@ -48,15 +48,11 @@ class RechargeController extends Controller
 
         $user = Auth::user();
         $compte = Compte::where('user_id', $user->id)->first();
-        
-        if (!$compte) {
-            return response()->json(['error' => 'Compte non trouvé'], 404);
-        }
 
-        // Créer la transaction
+        // Créer la transaction (compte_id optionnel)
         $transaction = RechargeTransaction::create([
             'user_id' => $user->id,
-            'compte_id' => $compte->id,
+            'compte_id' => $compte->id ?? null,
             'transaction_id' => RechargeTransaction::generateTransactionId(),
             'amount' => $request->amount,
             'credits_earned' => RechargeTransaction::calculateCredits($request->amount),
