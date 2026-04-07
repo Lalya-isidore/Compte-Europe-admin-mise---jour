@@ -254,6 +254,14 @@ select {
     label {
         font-size: 1rem;
     }
+
+    body, p, .alert, .info-cl, span, div {
+        font-size: 1rem;
+    }
+
+    .alert {
+        font-size: 0.95rem;
+    }
 }
 
 .form-group,
