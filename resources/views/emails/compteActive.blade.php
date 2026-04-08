@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Compte Activé</title>
+    <title>{{ __('emails.compte_activated_title') }}</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -127,8 +127,8 @@
 <body>
     <div class="email-wrapper">
         <div class="email-header">
-            <h1>TRANSFERFLUX</h1>
-            <p>Votre partenaire financier de confiance</p>
+            <h1>{{ __('emails.footer_brand') }}</h1>
+            <p>{{ __('emails.footer_partner') }}</p>
         </div>
 
         <div class="email-body">
@@ -136,40 +136,40 @@
                 <div class="success-icon">✅</div>
             </div>
 
-            <h2>Compte Activé avec Succès</h2>
+            <h2>{{ __('emails.compte_activated_heading') }}</h2>
 
-            <p>Bonjour <strong>{{ $compte->nom }} {{ $compte->prenom }}</strong>,</p>
+            <p>{{ __('emails.greeting', ['name' => $compte->nom . ' ' . $compte->prenom]) }}</p>
 
             <div class="info-box">
-                <strong>✅ Bonne nouvelle :</strong> Votre compte TRANSFERFLUX a été activé et est désormais pleinement opérationnel !
+                <strong>{{ __('emails.good_news') }}</strong> {{ __('emails.compte_activated_message') }}
             </div>
 
-            <p>Nous sommes heureux de vous informer que votre compte bancaire est maintenant actif. Vous pouvez effectuer toutes vos transactions en toute sécurité.</p>
+            <p>{{ __('emails.compte_activated_explanation') }}</p>
 
             <div class="account-details">
-                <p><strong>Titulaire :</strong> <span class="detail-value">{{ $compte->nom }} {{ $compte->prenom }}</span></p>
-                <p><strong>Email :</strong> <span class="detail-value">{{ $compte->email }}</span></p>
-                <p><strong>Solde actuel :</strong> <span class="detail-value">{{ number_format((float)$compte->account_balance, 2, ',', ' ') }} {{ $compte->devise }}</span></p>
-                <p><strong>Statut :</strong> <span class="detail-value" style="color: #10b981;">ACTIVÉ</span></p>
+                <p><strong>{{ __('emails.label_holder') }} :</strong> <span class="detail-value">{{ $compte->nom }} {{ $compte->prenom }}</span></p>
+                <p><strong>{{ __('emails.label_email') }} :</strong> <span class="detail-value">{{ $compte->email }}</span></p>
+                <p><strong>{{ __('emails.label_current_balance') }} :</strong> <span class="detail-value">{{ number_format((float)$compte->account_balance, 2, ',', ' ') }} {{ $compte->devise }}</span></p>
+                <p><strong>{{ __('emails.label_status') }} :</strong> <span class="detail-value" style="color: #10b981;">{{ __('emails.status_active') }}</span></p>
             </div>
 
-            <p><strong>Vous pouvez maintenant :</strong></p>
+            <p><strong>{{ __('emails.you_can_now') }}</strong></p>
             <ul style="margin-bottom: 20px;">
-                <li>Effectuer des virements et transferts</li>
-                <li>Consulter votre solde en temps réel</li>
-                <li>Gérer vos transactions en toute sécurité</li>
-                <li>Accéder à tous nos services bancaires</li>
+                <li>{{ __('emails.can_make_transfers') }}</li>
+                <li>{{ __('emails.check_balance') }}</li>
+                <li>{{ __('emails.manage_transactions') }}</li>
+                <li>{{ __('emails.access_services') }}</li>
             </ul>
 
-            <p>Merci de votre confiance et bienvenue dans la famille TRANSFERFLUX !</p>
+            <p>{{ __('emails.thanks_welcome') }}</p>
 
-            <p style="margin-top: 30px;">Cordialement,<br><strong class="footer-brand">TRANSFERFLUX</strong></p>
+            <p style="margin-top: 30px;">{{ __('emails.regards') }}<br><strong class="footer-brand">{{ __('emails.footer_brand') }}</strong></p>
         </div>
 
         <div class="email-footer">
-            <p><strong class="footer-brand">TRANSFERFLUX</strong> - Service Client</p>
+            <p><strong class="footer-brand">{{ __('emails.footer_brand') }}</strong> - {{ __('emails.service_client') }}</p>
             <p style="margin-top: 15px; font-size: 11px; color: #777;">
-                Cet email a été envoyé automatiquement, merci de ne pas y répondre directement.
+                {{ __('emails.auto_generated_notice') }}
             </p>
         </div>
     </div>

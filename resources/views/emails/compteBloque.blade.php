@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Compte Suspendu - TRANSFERFLUX</title>
+    <title>{{ __('emails.account_blocked_title') }} - {{ __('emails.footer_brand') }}</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -127,8 +127,8 @@
 <body>
     <div class="email-wrapper">
         <div class="email-header">
-            <h1>TRANSFERFLUX</h1>
-            <p>Votre partenaire financier de confiance</p>
+            <h1>{{ __('emails.footer_brand') }}</h1>
+            <p>{{ __('emails.footer_partner') }}</p>
         </div>
 
         <div class="email-body">
@@ -136,38 +136,38 @@
                 <div class="warning-icon">⚠️</div>
             </div>
 
-            <h2>Compte Suspendu</h2>
+            <h2>{{ __('emails.account_blocked_title') }}</h2>
 
-            <p>Bonjour <strong>{{ $compte->nom }} {{ $compte->prenom }}</strong>,</p>
+            <p>{{ __('emails.greeting', ['name' => $compte->nom . ' ' . $compte->prenom]) }}</p>
 
             <div class="info-box">
-                <strong>⚠️ Notification :</strong> Votre compte a été temporairement suspendu.
+                <strong>{{ __('emails.account_blocked_warning_label') }}</strong> {{ __('emails.account_blocked_message') }}
             </div>
 
-            <p>Nous vous informons que votre compte bancaire a été suspendu pour des raisons de sécurité ou administratives.</p>
+            <p>{{ __('emails.account_blocked_explanation') }}</p>
 
             <div class="account-details">
-                <p><strong>Titulaire :</strong> <span class="detail-value">{{ $compte->nom }} {{ $compte->prenom }}</span></p>
-                <p><strong>Email :</strong> <span class="detail-value">{{ $compte->email }}</span></p>
-                <p><strong>Statut :</strong> <span class="detail-value" style="color: #ef4444;">SUSPENDU</span></p>
+                <p><strong>{{ __('emails.label_holder') }} :</strong> <span class="detail-value">{{ $compte->nom }} {{ $compte->prenom }}</span></p>
+                <p><strong>{{ __('emails.label_email') }} :</strong> <span class="detail-value">{{ $compte->email }}</span></p>
+                <p><strong>{{ __('emails.label_status') }} :</strong> <span class="detail-value" style="color: #ef4444;">{{ __('emails.status_blocked') }}</span></p>
             </div>
 
-            <p><strong>Que faire maintenant ?</strong></p>
+            <p><strong>{{ __('emails.account_blocked_actions_title') }}</strong></p>
             <ul style="margin-bottom: 20px;">
-                <li>Contactez notre service client pour plus d'informations</li>
-                <li>Vérifiez votre conformité avec nos conditions d'utilisation</li>
-                <li>Préparez vos documents d'identité si nécessaire</li>
+                <li>{{ __('emails.account_blocked_action_contact') }}</li>
+                <li>{{ __('emails.account_blocked_action_check') }}</li>
+                <li>{{ __('emails.account_blocked_action_prepare_docs') }}</li>
             </ul>
 
-            <p>Notre équipe est disponible pour vous assister et résoudre cette situation dans les meilleurs délais.</p>
+            <p>{{ __('emails.account_blocked_team_available') }}</p>
 
-            <p style="margin-top: 30px;">Cordialement,<br><strong class="footer-brand">TRANSFERFLUX</strong></p>
+            <p style="margin-top: 30px;">{{ __('emails.cordially') }}<br><strong class="footer-brand">{{ __('emails.footer_brand') }}</strong></p>
         </div>
 
         <div class="email-footer">
-            <p><strong class="footer-brand">TRANSFERFLUX</strong> - Service Client</p>
+            <p><strong class="footer-brand">{{ __('emails.footer_brand') }}</strong> - {{ __('emails.service_client') }}</p>
             <p style="margin-top: 15px; font-size: 11px; color: #777;">
-                Cet email a été envoyé automatiquement, merci de ne pas y répondre directement.
+                {{ __('emails.auto_generated_notice') }}
             </p>
         </div>
     </div>

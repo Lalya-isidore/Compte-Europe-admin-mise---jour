@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Confirmation de Virement Réussi - TRANSFERFLUX</title>
+    <title>{{ __('emails.virement_success_subject') }}</title>
     <style>
         * {
             margin: 0;
@@ -216,35 +216,35 @@
 <body>
     <div class="email-wrapper">
         <div class="header">
-            <h1>Virement Effectué avec Succès</h1>
+            <h1>{{ __('emails.virement_success_title') }}</h1>
         </div>
-        
+
         <div class="content">
             <div style="text-align: center;">
                 <div class="icon-success">✓</div>
             </div>
 
-            <p class="greeting">Bonjour {{ $compte->nom }} {{ $compte->prenom }},</p>
-            
+            <p class="greeting">{{ __('emails.greeting', ['name' => $compte->nom . ' ' . $compte->prenom]) }}</p>
+
             <p class="message">
-                Nous vous informons que votre virement a été effectué avec succès.
+                {{ __('emails.virement_success_message') }}
             </p>
 
             <div class="details-box">
-                <div class="details-title">Détails du virement</div>
-                
+                <div class="details-title">{{ __('emails.transfer_details') }}</div>
+
                 <div class="detail-item">
-                    <span class="detail-label">💰 Montant :</span>
+                    <span class="detail-label">{{ __('emails.label_amount') }}</span>
                     <span class="detail-value">{{ $transfer->solidvire }} {{ $compte->devise }}</span>
                 </div>
 
                 <div class="detail-item">
-                    <span class="detail-label">📅 Date :</span>
+                    <span class="detail-label">{{ __('emails.label_date') }}</span>
                     <span class="detail-value">{{ $transfer->created_at->format('d/m/Y H:i') }}</span>
                 </div>
 
                 <div class="detail-item">
-                    <span class="detail-label">👤 Bénéficiaire :</span>
+                    <span class="detail-label">{{ __('emails.label_beneficiary') }}</span>
                     <span class="detail-value">{{ $transfer->beneficiary_name }}</span>
                 </div>
 
@@ -253,22 +253,22 @@
             <div class="info-notice">
                 <div class="info-icon">ℹ️</div>
                 <div class="info-text">
-                    Le traitement du transfert sera effectué dans les 1-3 jours ouvrables.</div>
+                    {{ __('emails.virement_notice') }}</div>
                 </div>
             </div>
 
             <div class="divider"></div>
 
             <p class="message" style="text-align: center;">
-                Merci d'utiliser nos services.
+                {{ __('emails.thanks_using_services') }}
             </p>
         </div>
 
         <div class="footer">
-            <p class="footer-text">© {{ date('Y') }} TRANSFERFLUX. Tous droits réservés.</p>
-            <div class="footer-brand">TRANSFERFLUX</div>
+            <p class="footer-text">{{ __('emails.copyright_all_rights', ['year' => date('Y')]) }}</p>
+            <div class="footer-brand">{{ __('emails.footer_brand') }}</div>
             <p class="footer-text" style="margin-top: 15px;">
-                Votre partenaire financier de confiance 🏦
+                {{ __('emails.footer_partner') }}
             </p>
         </div>
     </div>

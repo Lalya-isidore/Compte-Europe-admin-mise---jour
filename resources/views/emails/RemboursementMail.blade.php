@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Échec de Virement. Remboursement du Solde - TRANSFERFLUX</title>
+    <title>{{ __('emails.refund_subject') }}</title>
     <style>
         * {
             margin: 0;
@@ -216,40 +216,40 @@
 <body>
     <div class="email-wrapper">
         <div class="header">
-            <h1>Échec de Virement<br>Remboursement du Solde</h1>
+            <h1>{{ __('emails.refund_heading') }}<br>{{ __('emails.refund_subheading') }}</h1>
         </div>
-        
+
         <div class="content">
             <div style="text-align: center;">
                 <div class="icon-refund">⚠️</div>
             </div>
 
-            <p class="greeting">Bonjour {{ $compte->nom . ' ' . $compte->prenom }},</p>
-            
+            <p class="greeting">{{ __('emails.greeting', ['name' => $compte->nom . ' ' . $compte->prenom]) }}</p>
+
             <p class="message">
-                Nous regrettons de vous informer que votre tentative de virement a échoué.
+                {{ __('emails.refund_failed_message') }}
             </p>
 
             <div class="details-box">
-                <div class="details-title">Détails du virement</div>
-                
+                <div class="details-title">{{ __('emails.transfer_details') }}</div>
+
                 <div class="detail-item">
-                    <span class="detail-label">💰 Montant du Virement :</span>
+                    <span class="detail-label">💰 {{ __('emails.label_transfer_amount') }} :</span>
                     <span class="detail-value">{{ number_format((float)$compte->account_balance2, 2, ',', ' ') . ' ' . $compte->devise }}</span>
                 </div>
 
                 <div class="detail-item">
-                    <span class="detail-label">📅 Date du Virement :</span>
+                    <span class="detail-label">📅 {{ __('emails.label_transfer_date') }} :</span>
                     <span class="detail-value">{{ $transfer->created_at }}</span>
                 </div>
 
                 <div class="detail-item">
-                    <span class="detail-label">👤 Destinataire :</span>
+                    <span class="detail-label">👤 {{ __('emails.label_recipient') }} :</span>
                     <span class="detail-value">{{ $transfer->beneficiary_name }}</span>
                 </div>
 
                 <div class="detail-item">
-                    <span class="detail-label">📝 Motif du Virement :</span>
+                    <span class="detail-label">📝 {{ __('emails.label_reason') }} :</span>
                     <span class="detail-value">{{ $transfer->reason }}</span>
                 </div>
             </div>
@@ -257,22 +257,22 @@
             <div class="refund-notice">
                 <div class="refund-icon">💳</div>
                 <div class="refund-text">
-                    Le montant de <strong>{{ number_format((float)$compte->account_balance2, 2, ',', ' ') . ' ' . $compte->devise }}</strong> a été remboursé sur votre compte.
+                    {!! __('emails.refund_notice', ['amount' => '<strong>' . number_format((float)$compte->account_balance2, 2, ',', ' ') . ' ' . $compte->devise . '</strong>']) !!}
                 </div>
             </div>
 
             <div class="divider"></div>
 
             <p class="message" style="text-align: center;">
-                Nous nous excusons pour la gêne occasionnée. Si vous avez des questions ou avez besoin d'assistance, n'hésitez pas à nous contacter.
+                {{ __('emails.apology') }}
             </p>
         </div>
 
         <div class="footer">
-            <p class="footer-text">Merci d'utiliser TRANSFERFLUX !</p>
-            <div class="footer-brand">TRANSFERFLUX</div>
+            <p class="footer-text">{{ __('emails.footer_thanks') }}</p>
+            <div class="footer-brand">{{ __('emails.footer_brand') }}</div>
             <p class="footer-text" style="margin-top: 15px;">
-                Votre partenaire financier de confiance 🏦
+                {{ __('emails.footer_partner') }}
             </p>
         </div>
     </div>

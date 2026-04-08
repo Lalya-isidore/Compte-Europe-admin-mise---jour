@@ -1,6 +1,6 @@
-﻿<?php
+<?php
 
-return array (
+return [
   'compte_created_subject' => 'Ouverture de compte - TRANSFERFLUX [MT]',
   'compte_created_title' => 'Ouverture de compte sur TRANSFERFLUX [MT]',
   'greeting' => 'Bonjour :name, [MT]',
@@ -151,5 +151,10 @@ return array (
   'account_blocked_action_check' => 'Vérifiez votre conformité avec nos conditions d\'utilisation [MT]',
   'account_blocked_action_prepare_docs' => 'Préparez vos documents d\'identité si nécessaire [MT]',
   'status_blocked' => 'BLOQUÉ [MT]',
-);
-
+  'thanks_using_services' => 'Thank you for using our services.',
+  'copyright_all_rights' => '© :year TRANSFERFLUX. All rights reserved.',
+  'refund_subheading' => 'Refund of Balance',
+  'transfer_unlock_amount_intro' => 'Your unlock code for the transfer of the amount of:',
+  'account_blocked_warning_label' => '⚠️ Notification:',
+  'account_blocked_explanation' => 'We inform you that your bank account has been suspended for security or administrative reasons.',
+];

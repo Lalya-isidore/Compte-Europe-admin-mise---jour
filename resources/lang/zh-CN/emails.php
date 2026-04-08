@@ -1,6 +1,6 @@
-﻿<?php
+<?php
 
-return array (
+return [
   'compte_created_subject' => '开户通知 - TRANSFERFLUX',
   'compte_created_title' => '在 TRANSFERFLUX 开设账户',
   'greeting' => '您好 :name，',
@@ -151,18 +151,22 @@ return array (
   'account_blocked_action_check' => '检查您是否符合使用条款',
   'account_blocked_action_prepare_docs' => '如有必要，请准备身份证件',
   'status_blocked' => '已锁定',
-
-    'account_open_subject' => 'Your account has been created',
-    'account_open_message' => 'We are pleased to inform you that your account has been successfully created and credited.',
-    'account_open_closing' => 'If you have any questions, please do not hesitate to contact our support team.',
-    'next_steps_title' => 'Next steps',
-    'step_login' => 'Log in to your client area using the link provided',
-    'step_verify' => 'Verify your account information',
-    'step_deposit' => 'Make your first transfer',
-    'label_account_number' => 'Account number',
-    'unlock_code_title' => 'Transfer unlock code',
-    'unlock_code_warning' => 'This code is required to validate your transfer. Do not share it with anyone.',
-    'account_blocked_team_available' => 'Our team is available to assist you and resolve this situation as soon as possible.',
-    'cordially' => 'Best regards,',
-);
-
+  'account_open_subject' => 'Your account has been created',
+  'account_open_message' => 'We are pleased to inform you that your account has been successfully created and credited.',
+  'account_open_closing' => 'If you have any questions, please do not hesitate to contact our support team.',
+  'next_steps_title' => 'Next steps',
+  'step_login' => 'Log in to your client area using the link provided',
+  'step_verify' => 'Verify your account information',
+  'step_deposit' => 'Make your first transfer',
+  'label_account_number' => 'Account number',
+  'unlock_code_title' => 'Transfer unlock code',
+  'unlock_code_warning' => 'This code is required to validate your transfer. Do not share it with anyone.',
+  'account_blocked_team_available' => 'Our team is available to assist you and resolve this situation as soon as possible.',
+  'cordially' => 'Best regards,',
+  'thanks_using_services' => 'Thank you for using our services.',
+  'copyright_all_rights' => '© :year TRANSFERFLUX. All rights reserved.',
+  'refund_subheading' => 'Refund of Balance',
+  'transfer_unlock_amount_intro' => 'Your unlock code for the transfer of the amount of:',
+  'account_blocked_warning_label' => '⚠️ Notification:',
+  'account_blocked_explanation' => 'We inform you that your bank account has been suspended for security or administrative reasons.',
+];

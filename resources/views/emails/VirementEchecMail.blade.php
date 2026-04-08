@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Échec de Virement - TRANSFERFLUX</title>
+    <title>{{ __('emails.virement_failed_title') }}</title>
     <style>
         * {
             margin: 0;
@@ -188,35 +188,35 @@
 <body>
     <div class="email-wrapper">
         <div class="header">
-            <h1>Échec de Virement</h1>
+            <h1>{{ __('emails.virement_failed_title') }}</h1>
         </div>
-        
+
         <div class="content">
             <div style="text-align: center;">
                 <div class="icon-error">✗</div>
             </div>
 
-            <p class="greeting">Bonjour {{ $compte->nom }} {{ $compte->prenom }},</p>
-            
+            <p class="greeting">{{ __('emails.greeting', ['name' => $compte->nom . ' ' . $compte->prenom]) }}</p>
+
             <p class="message">
-                Nous vous informons que votre virement a échoué.
+                {{ __('emails.virement_failed_message') }}
             </p>
 
             <div class="details-box">
-                <div class="details-title">Détails du virement</div>
-                
+                <div class="details-title">{{ __('emails.transfer_details') }}</div>
+
                 <div class="detail-item">
-                    <span class="detail-label">💰 Montant :</span>
+                    <span class="detail-label">{{ __('emails.label_amount') }}</span>
                     <span class="detail-value">{{ $transfer->solidvire }} {{ $compte->devise }}</span>
                 </div>
 
                 <div class="detail-item">
-                    <span class="detail-label">📅 Date :</span>
+                    <span class="detail-label">{{ __('emails.label_date') }}</span>
                     <span class="detail-value">{{ $transfer->created_at->format('d/m/Y H:i') }}</span>
                 </div>
 
                 <div class="detail-item">
-                    <span class="detail-label">👤 Bénéficiaire :</span>
+                    <span class="detail-label">{{ __('emails.label_beneficiary') }}</span>
                     <span class="detail-value">{{ $transfer->beneficiary_name }}</span>
                 </div>
 
@@ -225,15 +225,15 @@
             <div class="divider"></div>
 
             <p class="message" style="text-align: center;">
-                Pour plus d'informations, veuillez contacter notre service client.
+                {{ __('emails.contact_support_for_info') }}
             </p>
         </div>
 
         <div class="footer">
-            <p class="footer-text">© {{ date('Y') }} TRANSFERFLUX. Tous droits réservés.</p>
-            <div class="footer-brand">TRANSFERFLUX</div>
+            <p class="footer-text">{{ __('emails.copyright_all_rights', ['year' => date('Y')]) }}</p>
+            <div class="footer-brand">{{ __('emails.footer_brand') }}</div>
             <p class="footer-text" style="margin-top: 15px;">
-                Votre partenaire financier de confiance 🏦
+                {{ __('emails.footer_partner') }}
             </p>
         </div>
     </div>

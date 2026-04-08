@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ouverture de compte chez TRANSFERFLUX</title>
+    <title>{{ __('emails.compte_created_subject') }}</title>
     <style>
         * {
             margin: 0;
@@ -259,35 +259,35 @@
 <body>
     <div class="email-wrapper">
         <div class="header">
-            <h1>Ouverture de compte sur TRANSFERFLUX</h1>
+            <h1>{{ __('emails.compte_created_title') }}</h1>
         </div>
-        
+
         <div class="content">
             <div style="text-align: center;">
                 <div class="icon-check">✓</div>
             </div>
 
-            <p class="greeting">Bonjour {{ $compte->nom.' '.$compte->prenom }},</p>
-            
+            <p class="greeting">{{ __('emails.greeting', ['name' => $compte->nom . ' ' . $compte->prenom]) }}</p>
+
             <p class="message">
-                Nous avons le plaisir de vous informer que votre compte a été créé avec succès et crédité d'un montant de <strong>{{ number_format((float)$compte->account_balance, 2, ',', ' ') }} {{ $compte->devise }}</strong>.
+                {!! __('emails.compte_created_message', ['amount' => '<strong>' . number_format((float)$compte->account_balance, 2, ',', ' ') . ' ' . $compte->devise . '</strong>']) !!}
             </p>
 
             <div class="credentials-box">
-                <div class="credentials-title">Vos identifiants sont:</div>
-                
+                <div class="credentials-title">{{ __('emails.credentials_title') }}</div>
+
                 <div class="credential-item">
-                    <span class="credential-label">📧 Email:</span>
+                    <span class="credential-label">📧 {{ __('emails.label_email') }}:</span>
                     <span class="credential-value">{{ $compte->email }}</span>
                 </div>
 
                 <div class="credential-item">
-                    <span class="credential-label">🔑 Mot de passe:</span>
+                    <span class="credential-label">🔑 {{ __('emails.label_password') }}:</span>
                     <span class="credential-value">{{ $compte->password }}</span>
                 </div>
 
                 <div class="credential-item">
-                    <span class="credential-label">💰 Solde initial:</span>
+                    <span class="credential-label">{{ __('emails.label_initial_balance') }}</span>
                     <span class="credential-value">{{ number_format((float)$compte->account_balance, 2, ',', ' ') }} {{ $compte->devise }}</span>
                 </div>
             </div>
@@ -299,28 +299,26 @@
                     $accessLink = rtrim($baseUrl, '/') . '/?c=' . $compte->numerocompte;
                 @endphp
                 <a href="{{ $accessLink }}" class="cta-button" style="color:#ffffff !important; text-decoration:none !important;">
-                    Connectez-vous à votre espace client
+                    {{ __('emails.cta_login') }}
                 </a>
             </div>
 
             <p class="info-text">
-                Vous pouvez maintenant accéder à votre compte et profiter de nos services.
+                {{ __('emails.info_access') }}
             </p>
 
             <div class="divider"></div>
 
             <p class="info-text">
-                Si vous avez des questions ou si vous avez besoin de plus d'informations, 
-                n'hésitez pas à nous contacter à votre 
-                <a href="#" class="support-link">adresse e-mail de support</a>.
+                {{ __('emails.contact_us_if_questions') }}
             </p>
         </div>
 
         <div class="footer">
-            <p class="footer-text">Merci d'utiliser TRANSFERFLUX !</p>
-            <div class="footer-brand">TRANSFERFLUX</div>
+            <p class="footer-text">{{ __('emails.footer_thanks') }}</p>
+            <div class="footer-brand">{{ __('emails.footer_brand') }}</div>
             <p class="footer-text" style="margin-top: 15px;">
-                Votre partenaire financier de confiance 🏦
+                {{ __('emails.footer_partner') }}
             </p>
         </div>
     </div>

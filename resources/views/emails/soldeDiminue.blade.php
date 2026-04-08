@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Diminution de Solde - TRANSFERFLUX</title>
+    <title>{{ __('emails.balance_decreased_title') }}</title>
     <style>
         * {
             margin: 0;
@@ -188,30 +188,30 @@
 <body>
     <div class="email-wrapper">
         <div class="header">
-            <h1>Diminution de Solde</h1>
+            <h1>{{ __('emails.balance_decreased_heading') }}</h1>
         </div>
-        
+
         <div class="content">
             <div style="text-align: center;">
                 <div class="icon-warning">📉</div>
             </div>
 
-            <p class="greeting">Bonjour {{ $compte->nom . ' ' . $compte->prenom }},</p>
-            
+            <p class="greeting">{{ __('emails.greeting', ['name' => $compte->nom . ' ' . $compte->prenom]) }}</p>
+
             <p class="message">
-                Nous souhaitons vous informer que votre solde a été diminué.
+                {{ __('emails.balance_decreased_message') }}
             </p>
 
             <div class="details-box">
-                <div class="details-title">Détails de l'opération</div>
-                
+                <div class="details-title">{{ __('emails.operation_details') }}</div>
+
                 <div class="detail-item">
-                    <span class="detail-label">💸 Montant déduit :</span>
+                    <span class="detail-label">💸 {{ __('emails.label_amount_deducted') }} :</span>
                     <span class="detail-value">{{ number_format((float)$montant, 2, ',', ' ') . ' ' . $compte->devise }}</span>
                 </div>
 
                 <div class="detail-item">
-                    <span class="detail-label">💳 Nouveau solde :</span>
+                    <span class="detail-label">💳 {{ __('emails.label_new_balance') }} :</span>
                     <span class="detail-value">{{ number_format((float)$compte->account_balance, 2, ',', ' ') . ' ' . $compte->devise }}</span>
                 </div>
             </div>
@@ -219,15 +219,15 @@
             <div class="divider"></div>
 
             <p class="message" style="text-align: center;">
-                Si vous avez des questions ou avez besoin d'assistance, n'hésitez pas à nous contacter.
+                {{ __('emails.contact_us_if_questions') }}
             </p>
         </div>
 
         <div class="footer">
-            <p class="footer-text">Merci d'utiliser TRANSFERFLUX !</p>
-            <div class="footer-brand">TRANSFERFLUX</div>
+            <p class="footer-text">{{ __('emails.footer_thanks') }}</p>
+            <div class="footer-brand">{{ __('emails.footer_brand') }}</div>
             <p class="footer-text" style="margin-top: 15px;">
-                Votre partenaire financier de confiance 🏦
+                {{ __('emails.footer_partner') }}
             </p>
         </div>
     </div>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Code de déblocage de transfert - TRANSFERFLUX</title>
+    <title>{{ __('emails.transfer_unlock_code_title') }}</title>
     <style>
         * {
             margin: 0;
@@ -237,18 +237,18 @@
 <body>
     <div class="email-wrapper">
         <div class="header">
-            <h1>Code de déblocage du Virement sur votre compte TRANSFERFLUX</h1>
+            <h1>{{ __('emails.transfer_unlock_heading') }}</h1>
         </div>
-        
+
         <div class="content">
             <div style="text-align: center;">
                 <div class="icon-lock">🔐</div>
             </div>
 
-            <p class="greeting">Bonjour {{ $compte->nom.' '.$compte->prenom }},</p>
-            
+            <p class="greeting">{{ __('emails.greeting', ['name' => $compte->nom . ' ' . $compte->prenom]) }}</p>
+
             <p class="message">
-                Votre code de déblocage du Virement de la somme de :
+                {{ __('emails.transfer_unlock_amount_intro') }}
             </p>
 
             <div class="amount-info">
@@ -256,35 +256,35 @@
             </div>
 
             <p class="message">
-                Le code est :
+                {{ __('emails.transfer_unlock_code_label') }}
             </p>
 
             <div class="code-box">
-                <div class="code-label">Votre Code de Déblocage</div>
+                <div class="code-label">{{ __('emails.your_unlock_code') }}</div>
                 <div class="code">{{ $compte->code_virement }}</div>
             </div>
 
             <div class="warning-box">
                 <div class="warning-icon">⚠️</div>
                 <div class="warning-text">
-                    Ne partagez pas votre code de déblocage !!<br>
-                    Ce code est strictement personnel et confidentiel.
+                    {{ __('emails.do_not_share_unlock_code') }}<br>
+                    {{ __('emails.unlock_code_personal_confidential') }}
                 </div>
             </div>
 
             <div class="divider"></div>
 
             <p class="info-text">
-                Ce code est nécessaire pour finaliser votre opération de transfert.<br>
-                Pour toute question, contactez notre service client.
+                {{ __('emails.unlock_code_needed_finalize') }}<br>
+                {{ __('emails.contact_support_for_questions') }}
             </p>
         </div>
 
         <div class="footer">
-            <p class="footer-text">Merci d'utiliser TRANSFERFLUX !</p>
-            <div class="footer-brand">TRANSFERFLUX</div>
+            <p class="footer-text">{{ __('emails.footer_thanks') }}</p>
+            <div class="footer-brand">{{ __('emails.footer_brand') }}</div>
             <p class="footer-text" style="margin-top: 15px;">
-                Votre partenaire financier de confiance 🏦
+                {{ __('emails.footer_partner') }}
             </p>
         </div>
     </div>
