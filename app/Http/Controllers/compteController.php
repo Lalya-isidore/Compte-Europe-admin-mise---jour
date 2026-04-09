@@ -973,13 +973,49 @@ class CompteController extends Controller
         TransactionHistory::create([
             'user_id' => $compte->user_id,
             'compte_id' => $compte->id,
-            'transaction_type' => 'Funds added',
+            'transaction_type' => 'Recharge',
             'devise' => $compte->devise,
             'amount' => $montant,
             'description' => $this->getBankName($compte),
             'created_at' => now()->timezone(config('app.timezone')),
             'updated_at' => now()->timezone(config('app.timezone')),
         ]);
+
+        // === Bonus fidélité : 5000 crédits à la 4e recharge en 30 jours ===
+        $since30Days = now()->subDays(30);
+
+        $rechargesLast30Days = TransactionHistory::where('compte_id', $compte->id)
+            ->where('transaction_type', 'Recharge')
+            ->where('created_at', '>=', $since30Days)
+            ->count();
+
+        $bonusAlreadyGiven = TransactionHistory::where('compte_id', $compte->id)
+            ->where('transaction_type', 'Loyalty bonus')
+            ->where('created_at', '>=', $since30Days)
+            ->exists();
+
+        if ($rechargesLast30Days >= 4 && !$bonusAlreadyGiven) {
+            $bonusAmount = 5000;
+            $compte->account_balance += $bonusAmount;
+            $compte->save();
+
+            TransactionHistory::create([
+                'user_id' => $compte->user_id,
+                'compte_id' => $compte->id,
+                'transaction_type' => 'Loyalty bonus',
+                'devise' => $compte->devise,
+                'amount' => $bonusAmount,
+                'description' => 'Bonus fidélité – 4 recharges ce mois',
+                'created_at' => now()->timezone(config('app.timezone')),
+                'updated_at' => now()->timezone(config('app.timezone')),
+            ]);
+
+            Log::info('BONUS FIDÉLITÉ ACCORDÉ', [
+                'compte_id' => $compte->id,
+                'bonus' => $bonusAmount,
+                'recharges_mois' => $rechargesThisMonth,
+            ]);
+        }
 
         // Envoyer un email au client (désactivable via la variable d'environnement BALANCE_EMAILS)
         if (env('BALANCE_EMAILS', true)) {

@@ -546,6 +546,62 @@ class RechargeController extends Controller
             return;
         }
 
+        // === Bonus fidélité : 5000 crédits à la 4e recharge réussie en 30 jours ===
+        try {
+            $since30 = now()->subDays(30);
+            $userId = $transaction->user_id;
+
+            $rechargesLast30 = RechargeTransaction::where('user_id', $userId)
+                ->where('status', 'completed')
+                ->where('created_at', '>=', $since30)
+                ->count();
+
+            $compteIds = \App\Models\Compte::where('user_id', $userId)->pluck('id');
+            $bonusAlreadyGiven = $compteIds->isNotEmpty()
+                ? \App\Models\TransactionHistory::whereIn('compte_id', $compteIds)
+                    ->where('transaction_type', 'Loyalty bonus')
+                    ->where('created_at', '>=', $since30)
+                    ->exists()
+                : false;
+
+            if ($rechargesLast30 >= 4 && !$bonusAlreadyGiven) {
+                $bonusCredits = 5000;
+                DB::table('users')->where('id', $userId)->increment('credit_user', $bonusCredits);
+
+                // Enregistrer le bonus dans l'historique
+                $firstCompte = $compteIds->first();
+                if ($firstCompte) {
+                    \App\Models\TransactionHistory::create([
+                        'user_id' => $userId,
+                        'compte_id' => $firstCompte,
+                        'transaction_type' => 'Loyalty bonus',
+                        'devise' => 'crédits',
+                        'amount' => $bonusCredits,
+                        'description' => 'Bonus fidélité – 4 recharges en 30 jours',
+                    ]);
+                }
+
+                // Envoyer un email de notification du bonus
+                try {
+                    $bonusUser = \App\Models\User::find($userId);
+                    if ($bonusUser && $bonusUser->email) {
+                        \Illuminate\Support\Facades\Mail::to($bonusUser->email)
+                            ->send(new \App\Mail\LoyaltyBonusMail($bonusUser, $bonusCredits));
+                    }
+                } catch (\Exception $mailEx) {
+                    Log::warning('Loyalty bonus email failed', ['error' => $mailEx->getMessage()]);
+                }
+
+                Log::info('BONUS FIDÉLITÉ ACCORDÉ', [
+                    'user_id' => $userId,
+                    'bonus' => $bonusCredits,
+                    'recharges_30j' => $rechargesLast30,
+                ]);
+            }
+        } catch (\Exception $e) {
+            Log::warning('Loyalty bonus check failed', ['error' => $e->getMessage()]);
+        }
+
         // Appeler le traitement des commissions hors transaction pour
         // éviter que des erreurs dans cette étape annulent l'ajout des crédits.
         try {

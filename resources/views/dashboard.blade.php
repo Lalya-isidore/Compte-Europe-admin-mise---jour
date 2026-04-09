@@ -29,6 +29,59 @@
     ];
 @endphp
 
+{{-- === Bannière Bonus Fidélité === --}}
+@php
+    $user = auth()->user();
+    $totalRechargesLast30 = 0;
+    $totalBonusGiven = 0;
+    if ($user) {
+        $since30 = now()->subDays(30);
+        // Compter les recharges crédits RÉUSSIES des 30 derniers jours
+        $totalRechargesLast30 = \App\Models\RechargeTransaction::where('user_id', $user->id)
+            ->where('status', 'completed')
+            ->where('created_at', '>=', $since30)
+            ->count();
+        // Vérifier si le bonus a déjà été accordé
+        $compteIds = \App\Models\Compte::where('user_id', $user->id)->pluck('id');
+        if ($compteIds->isNotEmpty()) {
+            $totalBonusGiven = \App\Models\TransactionHistory::whereIn('compte_id', $compteIds)
+                ->where('transaction_type', 'Loyalty bonus')
+                ->where('created_at', '>=', $since30)
+                ->count();
+        }
+    }
+    $loyaltyProgress = min($totalRechargesLast30, 4);
+    $bonusClaimed = $totalBonusGiven > 0;
+@endphp
+
+<div class="loyalty-banner">
+    <div class="loyalty-banner__left">
+        <div class="loyalty-banner__icon">🎁</div>
+        <div>
+            <div class="loyalty-banner__title">🎉 Bonus Fidélité</div>
+            <div class="loyalty-banner__desc">Effectuez 4 recharges de crédits en 30 jours et recevez <strong>5 000 crédits gratuits</strong> 🎊</div>
+        </div>
+    </div>
+    <div class="loyalty-banner__right">
+        <div class="loyalty-banner__steps">
+            @for($i = 1; $i <= 4; $i++)
+                <span class="loyalty-dot {{ $i <= $loyaltyProgress ? 'filled' : '' }} {{ $i === 4 && $bonusClaimed ? 'claimed' : '' }}">
+                    @if($i === 4 && $bonusClaimed) ✅ @else {{ $i }} @endif
+                </span>
+                @if($i < 4) <span class="loyalty-bar {{ $i < $loyaltyProgress ? 'filled' : '' }}"></span> @endif
+            @endfor
+        </div>
+        <div class="loyalty-banner__status">
+            <span class="loyalty-banner__count">{{ $loyaltyProgress }}/4</span>
+            @if($bonusClaimed)
+                <span class="loyalty-badge-ok">🏆 +5 000 crédits obtenus !</span>
+            @else
+                <span class="loyalty-badge-wait">🎁 +5 000 crédits à la 4e recharge</span>
+            @endif
+        </div>
+    </div>
+</div>
+
 <div class="row g-4">
     {{-- Outils payants --}}
     <div class="col-12 col-lg-6">
@@ -76,6 +129,160 @@
 </div>
 
 <style>
+    /* === Bannière Bonus Fidélité === */
+    .loyalty-banner {
+        background: linear-gradient(135deg, #fefce8 0%, #fef9c3 40%, #fde68a 100%);
+        border: 1px solid #fbbf24;
+        border-radius: 16px;
+        padding: 20px 24px;
+        margin-bottom: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+        flex-wrap: wrap;
+    }
+    .loyalty-banner__left {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        flex: 1;
+        min-width: 220px;
+    }
+    .loyalty-banner__icon {
+        font-size: 2.2rem;
+        flex-shrink: 0;
+    }
+    .loyalty-banner__title {
+        font-size: 1.05rem;
+        font-weight: 700;
+        color: #92400e;
+    }
+    .loyalty-banner__desc {
+        font-size: 0.82rem;
+        color: #78350f;
+        margin-top: 2px;
+    }
+    .loyalty-banner__right {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        gap: 10px;
+        min-width: 200px;
+    }
+    .loyalty-banner__steps {
+        display: flex;
+        align-items: center;
+        gap: 0;
+    }
+    .loyalty-dot {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        background: #fef3c7;
+        border: 2px solid #d97706;
+        color: #92400e;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+        font-size: 0.8rem;
+        transition: all 0.3s;
+        flex-shrink: 0;
+    }
+    .loyalty-dot.filled {
+        background: linear-gradient(135deg, #f59e0b, #d97706);
+        color: #fff;
+        border-color: #b45309;
+        box-shadow: 0 2px 8px rgba(217,119,6,0.35);
+    }
+    .loyalty-dot.claimed {
+        background: linear-gradient(135deg, #10b981, #059669);
+        border-color: #047857;
+        color: #fff;
+        box-shadow: 0 2px 8px rgba(16,185,129,0.35);
+        font-size: 0.85rem;
+    }
+    .loyalty-bar {
+        width: 24px;
+        height: 3px;
+        background: #fde68a;
+        transition: background 0.3s;
+    }
+    .loyalty-bar.filled {
+        background: linear-gradient(90deg, #f59e0b, #d97706);
+    }
+    .loyalty-banner__status {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+    .loyalty-banner__count {
+        font-weight: 700;
+        font-size: 1rem;
+        color: #92400e;
+    }
+    .loyalty-badge-ok {
+        font-size: 0.78rem;
+        font-weight: 600;
+        padding: 3px 12px;
+        border-radius: 999px;
+        background: rgba(16,185,129,0.15);
+        color: #047857;
+    }
+    .loyalty-badge-wait {
+        font-size: 0.78rem;
+        font-weight: 600;
+        padding: 3px 12px;
+        border-radius: 999px;
+        background: rgba(217,119,6,0.12);
+        color: #92400e;
+    }
+    @media (max-width: 768px) {
+        .loyalty-banner {
+            flex-direction: column;
+            align-items: stretch;
+            padding: 16px;
+            gap: 14px;
+        }
+        .loyalty-banner__left {
+            gap: 10px;
+        }
+        .loyalty-banner__icon {
+            font-size: 1.6rem;
+        }
+        .loyalty-banner__title {
+            font-size: 0.95rem;
+        }
+        .loyalty-banner__desc {
+            font-size: 0.75rem;
+        }
+        .loyalty-banner__right {
+            align-items: stretch;
+            width: 100%;
+        }
+        .loyalty-banner__steps {
+            justify-content: center;
+            width: 100%;
+        }
+        .loyalty-dot {
+            width: 36px;
+            height: 36px;
+            font-size: 0.85rem;
+        }
+        .loyalty-bar {
+            flex: 1;
+            max-width: 40px;
+        }
+        .loyalty-banner__status {
+            justify-content: space-between;
+            width: 100%;
+        }
+        .loyalty-banner__count {
+            font-size: 1.1rem;
+        }
+    }
+
     .tools-section {
         background: var(--bg-card, #fff);
         border-radius: 14px;

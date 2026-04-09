@@ -1173,6 +1173,41 @@
                                                     </form>
                                                 @endif
                                             </div>
+                                            {{-- Widget Bonus Fidélité --}}
+                                            @php
+                                                $since30 = now()->subDays(30);
+                                                $rechargesLast30 = \App\Models\TransactionHistory::where('compte_id', $compte->id)
+                                                    ->where('transaction_type', 'Recharge')
+                                                    ->where('created_at', '>=', $since30)
+                                                    ->count();
+                                                $bonusClaimed = \App\Models\TransactionHistory::where('compte_id', $compte->id)
+                                                    ->where('transaction_type', 'Loyalty bonus')
+                                                    ->where('created_at', '>=', $since30)
+                                                    ->exists();
+                                                $loyaltyProgress = min($rechargesLast30, 4);
+                                            @endphp
+                                            <div class="fcp-detail-card">
+                                                <strong><i class="bi bi-gift"></i> Bonus fidélité :</strong>
+                                                <div style="display:flex;align-items:center;gap:6px;margin-top:8px;">
+                                                    @for($i = 1; $i <= 4; $i++)
+                                                        <span style="width:30px;height:30px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-weight:700;font-size:.8rem;
+                                                            {{ $i <= $loyaltyProgress ? 'background:linear-gradient(135deg,#3b82f6,#8b5cf6);color:#fff;box-shadow:0 2px 6px rgba(59,130,246,.3);' : 'background:#e2e8f0;color:#94a3b8;' }}
+                                                            {{ $i === 4 && $bonusClaimed ? 'background:linear-gradient(135deg,#10b981,#059669);color:#fff;' : '' }}">
+                                                            @if($i === 4 && $bonusClaimed) <i class="bi bi-check-lg"></i> @else {{ $i }} @endif
+                                                        </span>
+                                                        @if($i < 4) <div style="flex:1;height:3px;{{ $i < $loyaltyProgress ? 'background:linear-gradient(90deg,#3b82f6,#8b5cf6);' : 'background:#e2e8f0;' }}"></div> @endif
+                                                    @endfor
+                                                </div>
+                                                <div style="display:flex;align-items:center;justify-content:space-between;margin-top:8px;">
+                                                    <span style="font-weight:700;color:#1e293b;">{{ $loyaltyProgress }}/4 recharges</span>
+                                                    @if($bonusClaimed)
+                                                        <span style="font-size:.8rem;font-weight:600;padding:3px 10px;border-radius:999px;background:rgba(16,185,129,.12);color:#059669;"><i class="bi bi-check-circle"></i> +5 000 crédits obtenus</span>
+                                                    @else
+                                                        <span style="font-size:.8rem;font-weight:600;padding:3px 10px;border-radius:999px;background:rgba(139,92,246,.12);color:#7c3aed;"><i class="bi bi-coins"></i> +5 000 crédits à la 4e</span>
+                                                    @endif
+                                                </div>
+                                            </div>
+
                                             <div class="fcp-detail-card"><strong>Pourcentage de départ du virement :</strong> {{ $compte->start_percentage ?? '—' }}%</div>
                                             <div class="fcp-detail-card"><strong>Pourcentage d'arrêt du virement :</strong> {{ $compte->end_percentage ?? '—' }}%</div>
                                             <div class="fcp-detail-card"><strong>Message à affiché :</strong> <span style="background:#f0f4ff;padding:4px 10px;border-radius:6px;color:#2563eb;font-weight:600;">{{ $compte->failure_message ?? '—' }}</span></div>
