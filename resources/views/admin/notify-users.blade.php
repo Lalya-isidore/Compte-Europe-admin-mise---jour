@@ -67,11 +67,23 @@
                         <div class="smaller text-secondary mt-1 ms-1">Tapez pour rechercher un utilisateur précis.</div>
                     </div>
 
+                    {{-- Modèles pré-remplis --}}
+                    <div class="mb-4">
+                        <label class="form-label fw-bold text-dark d-flex align-items-center gap-2 mb-2">
+                            <i data-lucide="zap" style="width: 16px;"></i> Modèles rapides
+                        </label>
+                        <div class="d-flex gap-2 flex-wrap">
+                            <button type="button" class="btn btn-outline-warning btn-sm rounded-pill px-3" id="tpl-loyalty">
+                                🎁 Bonus Fidélité
+                            </button>
+                        </div>
+                    </div>
+
                     <div class="mb-4">
                         <label class="form-label fw-bold text-dark d-flex align-items-center gap-2 mb-2">
                             <i data-lucide="type" style="width: 16px;"></i> Sujet de l'e-mail
                         </label>
-                        <input type="text" name="subject" class="form-control form-control-lg border rounded-3 fs-6 py-3 bg-light bg-opacity-50" 
+                        <input type="text" name="subject" id="email-subject" class="form-control form-control-lg border rounded-3 fs-6 py-3 bg-light bg-opacity-50"
                                value="Mise à jour requise - Photo de profil client" required>
                     </div>
 
@@ -79,7 +91,7 @@
                         <label class="form-label fw-bold text-dark d-flex align-items-center gap-2 mb-2">
                             <i data-lucide="align-left" style="width: 16px;"></i> Message
                         </label>
-                        <textarea name="message" class="form-control border rounded-3 fs-6 p-4 bg-light bg-opacity-50" rows="12" required
+                        <textarea name="message" id="email-message" class="form-control border rounded-3 fs-6 p-4 bg-light bg-opacity-50" rows="12" required
                                   style="resize: none;">Bonjour,
 
 Suite à une mise à jour de notre plateforme, nous vous invitons à mettre à jour la photo de profil de vos comptes clients.
@@ -146,6 +158,30 @@ document.addEventListener('DOMContentLoaded', () => {
         if(!confirm('Attention : Vous êtes sur le point d\'envoyer un message à vos utilisateurs. Confirmer l\'envoi ?')) {
             e.preventDefault();
         }
+    });
+
+    // Modèle Bonus Fidélité
+    document.getElementById('tpl-loyalty')?.addEventListener('click', function() {
+        document.getElementById('email-subject').value = '🎁 Nouveau : Gagnez 5 000 crédits gratuits avec le Bonus Fidélité !';
+        document.getElementById('email-message').value = `Bonjour,
+
+Nous sommes ravis de vous annoncer le lancement de notre programme Bonus Fidélité sur FlashBilan ! 🎉
+
+Le principe est simple :
+
+✅ Effectuez 4 recharges de crédits en 30 jours
+✅ Recevez automatiquement 5 000 crédits gratuits
+✅ Suivez votre progression en temps réel sur votre tableau de bord
+✅ Le compteur se réinitialise tous les 30 jours
+
+Votre progression est visible dès maintenant sur votre page d'accueil. Connectez-vous pour voir où vous en êtes ! 🚀
+
+👉 Accédez à votre compte : https://flashbilan.fr
+
+Cordialement,
+L'équipe FlashBilan`;
+        document.getElementById('target-select').value = 'all';
+        singleUserBlock.style.display = 'none';
     });
 });
 </script>
