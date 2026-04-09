@@ -116,7 +116,7 @@
     --fb-glass-bg: rgba(255, 255, 255, 0.85);
 }
 
-.fb-auth-container * {
+.fb-auth-container *:not(i):not(.fas):not(.far):not(.fab):not(.fa) {
     font-family: 'Inter', 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
 
