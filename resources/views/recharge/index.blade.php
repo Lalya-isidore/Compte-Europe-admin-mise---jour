@@ -22,7 +22,7 @@
                     <div class="alert alert-success d-flex align-items-center mb-4">
                         <i class="fas fa-coins me-3 fs-5"></i>
                         <div>
-                            <strong>Crédits FlashBilan disponibles :</strong> 
+                            <strong>Crédits disponibles :</strong>
                             <span class="fs-5 fw-bold">{{ number_format(auth()->user()->credit_user ?? 0, 0, ',', ' ') }} crédits</span>
                             <br>
                             <small class="text-muted">Chaque crédit vous permet de créer un compte FlashBilan</small>

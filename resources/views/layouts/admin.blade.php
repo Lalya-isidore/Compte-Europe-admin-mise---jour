@@ -345,12 +345,14 @@
         }
 
         .breadcrumb-bar .breadcrumb-item a {
-            color: var(--text-secondary);
+            color: var(--primary);
             text-decoration: none;
+            font-weight: 500;
         }
 
         .breadcrumb-bar .breadcrumb-item a:hover {
-            color: var(--text-primary);
+            color: var(--primary);
+            text-decoration: underline;
         }
 
         .breadcrumb-bar .breadcrumb-item.active {
