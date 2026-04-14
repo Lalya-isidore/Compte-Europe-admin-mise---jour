@@ -519,7 +519,7 @@ class RechargeController extends Controller
             // Enregistrer dans l'historique des transactions si la relation existe
             try {
                 $compte = $transaction->compte;
-                if (method_exists($compte, 'historiques')) {
+                if ($compte && method_exists($compte, 'historiques')) {
                     $compte->historiques()->create([
                         'type' => 'credit_recharge',
                         'montant' => $transaction->credits_earned,
