@@ -3,7 +3,7 @@
 @section('title', 'Paiement Réussi')
 
 @section('breadcrumb')
-    <li class="breadcrumb-item"><i class="fas fa-wallet me-1"></i>Recharge</li>
+    <li class="breadcrumb-item"><a href="{{ route('recharge.index') }}"><i class="fas fa-wallet me-1"></i>Recharge</a></li>
     <li class="breadcrumb-item active"><i class="fas fa-check-circle me-1"></i>Paiement Réussi</li>
 @endsection
 
@@ -35,7 +35,7 @@
                         <strong>Information :</strong> Vous pouvez maintenant utiliser vos crédits pour créer des comptes {{ app('region')->appName() }}.
                     </div>
                     
-                    <div class="d-flex gap-3 justify-content-center">
+                    <div class="d-grid gap-3 d-sm-flex justify-content-sm-center px-0">
                         <a href="{{ route('recharge.index') }}" class="btn btn-primary">
                             <i class="fas fa-history me-2"></i>Voir l'Historique
                         </a>

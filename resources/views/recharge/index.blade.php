@@ -8,15 +8,15 @@
 @endsection
 
 @section('content')
-<div class="container-fluid py-4">
-    <div class="row">
+<div class="container-fluid py-4 px-0 px-sm-3">
+    <div class="row g-0 g-sm-3">
         <div class="col-12">
-            <div class="card shadow-lg border-0">
+            <div class="card shadow-lg border-0 rounded-0 rounded-sm-3">
                 <div class="card-header bg-primary text-white d-flex align-items-center">
                     <i class="fas fa-credit-card me-3 fs-4"></i>
                     <h4 class="mb-0">Recharge de Compte</h4>
                 </div>
-                <div class="card-body p-4">
+                <div class="card-body p-2 p-sm-4">
                     
                     <!-- Crédits FlashBilan disponibles -->
                     <div class="alert alert-success d-flex align-items-center mb-4">

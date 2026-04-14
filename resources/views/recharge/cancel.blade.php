@@ -3,7 +3,7 @@
 @section('title', 'Paiement Annulé')
 
 @section('breadcrumb')
-    <li class="breadcrumb-item"><i class="fas fa-wallet me-1"></i>Recharge</li>
+    <li class="breadcrumb-item"><a href="{{ route('recharge.index') }}"><i class="fas fa-wallet me-1"></i>Recharge</a></li>
     <li class="breadcrumb-item active"><i class="fas fa-times-circle me-1"></i>Paiement Annulé</li>
 @endsection
 

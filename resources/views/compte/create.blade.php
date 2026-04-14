@@ -604,8 +604,8 @@
                         <div class="mb-3">
                             <label for="account_status" class="form-label">Statut du compte . <i style="color:red">requis</i></label>
                             <select class="form-select" name="account_status" id="account_status" required>
-                                <option value="Activé" {{ old('account_status') == 'Activé' ? 'selected' : '' }} style="color:#198754">Activé</option>
-                                <option value="Suspendu" {{ old('account_status', 'Suspendu') == 'Suspendu' ? 'selected' : '' }} style="color:#dc3545">Suspendu</option>
+                                <option value="Activé" {{ old('account_status', 'Activé') == 'Activé' ? 'selected' : '' }} style="color:#198754">Activé</option>
+                                <option value="Suspendu" {{ old('account_status') == 'Suspendu' ? 'selected' : '' }} style="color:#dc3545">Suspendu</option>
                                 <option value="Examen" {{ old('account_status') == 'Examen' ? 'selected' : '' }} style="color:#856404">En examen</option>
                             </select>
                             @error('account_status')
