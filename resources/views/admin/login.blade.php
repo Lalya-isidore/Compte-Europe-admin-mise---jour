@@ -1,140 +1,194 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" translate="no">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>Connexion Administrateur | Admin Panel</title>
+    <meta name="google" content="notranslate">
+    <title>Connexion Administrateur</title>
     <link rel="icon" type="image/svg+xml" href="{{ asset('images/favicon.svg') }}">
-
-    <!-- Fonts & Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="{{ asset('css/admin-premium.css') }}">
     <script src="https://unpkg.com/lucide@latest"></script>
-    
+
     <style>
+        * { box-sizing: border-box; }
+
         body {
-            background: radial-gradient(circle at top right, #6366f1, transparent),
-                        radial-gradient(circle at bottom left, #4f46e5, transparent),
-                        #0f172a;
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
+            background: linear-gradient(135deg, #1e1b4b 0%, #312e81 50%, #1e1b4b 100%);
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            padding: 1rem;
         }
-        
-        .login-card {
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 24px;
-            padding: 48px;
+
+        .login-wrapper {
             width: 100%;
-            max-width: 480px;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-            color: white;
+            max-width: 420px;
         }
-        
-        .form-control {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            color: white;
-            padding: 14px 16px;
-            border-radius: 12px;
+
+        .login-card {
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 40px 36px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
         }
-        
-        .form-control:focus {
-            background: rgba(255, 255, 255, 0.08);
-            border-color: #6366f1;
-            color: white;
-            box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.2);
+
+        .login-icon {
+            width: 64px;
+            height: 64px;
+            background: linear-gradient(135deg, #4f46e5, #7c3aed);
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
         }
-        
-        .form-label {
-            color: #94a3b8;
+
+        .login-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #111827;
+            text-align: center;
+            margin-bottom: 6px;
+        }
+
+        .login-subtitle {
             font-size: 0.875rem;
-            font-weight: 500;
-            margin-bottom: 8px;
+            color: #6b7280;
+            text-align: center;
+            margin-bottom: 28px;
         }
-        
-        .btn-login {
-            background: #6366f1;
-            border: none;
-            padding: 14px;
-            border-radius: 12px;
+
+        .form-label {
+            font-size: 0.875rem;
             font-weight: 600;
-            transition: all 0.2s;
-            color: white;
+            color: #374151;
+            margin-bottom: 6px;
         }
-        
+
+        .form-control {
+            background: #f9fafb;
+            border: 1.5px solid #d1d5db;
+            border-radius: 10px;
+            padding: 12px 14px;
+            font-size: 0.95rem;
+            color: #111827;
+            transition: all 0.2s;
+        }
+
+        .form-control::placeholder {
+            color: #9ca3af;
+        }
+
+        .form-control:focus {
+            background: #fff;
+            border-color: #4f46e5;
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15);
+            outline: none;
+            color: #111827;
+        }
+
+        .btn-login {
+            width: 100%;
+            background: linear-gradient(135deg, #4f46e5, #7c3aed);
+            border: none;
+            border-radius: 10px;
+            padding: 13px;
+            font-size: 1rem;
+            font-weight: 600;
+            color: #fff;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-top: 8px;
+        }
+
         .btn-login:hover {
-            background: #4f46e5;
+            opacity: 0.92;
             transform: translateY(-1px);
-            box-shadow: 0 10px 20px -5px rgba(99, 102, 241, 0.5);
+            box-shadow: 0 8px 20px rgba(79, 70, 229, 0.4);
+        }
+
+        .alert-error {
+            background: #fef2f2;
+            border: 1px solid #fecaca;
+            border-radius: 10px;
+            padding: 12px 14px;
+            color: #dc2626;
+            font-size: 0.875rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+
+        .login-footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 0.78rem;
+            color: #9ca3af;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
         }
     </style>
 </head>
 <body>
-    <div class="login-card animate-fade-up">
-        <div class="text-center mb-5">
-            <div class="d-inline-flex p-3 bg-primary bg-opacity-10 rounded-4 mb-4">
-                <i data-lucide="shield-check" class="text-primary" style="width: 40px; height: 40px;"></i>
+    <div class="login-wrapper">
+        <div class="login-card">
+            <div class="login-icon">
+                <i data-lucide="shield-check" style="width:30px;height:30px;color:#fff;"></i>
             </div>
-            <h2 class="fw-bold h3 mb-2">Espace Admin</h2>
-            <p class="text-secondary small">Veuillez vous identifier pour continuer</p>
-        </div>
 
-        @if(session('error'))
-            <div class="alert alert-danger bg-danger bg-opacity-10 border-0 text-white small mb-4 py-3 rounded-4">
-                <i data-lucide="alert-circle" class="me-2" style="width: 16px; height: 16px;"></i>
-                {{ session('error') }}
-            </div>
-        @endif
+            <h1 class="login-title">Espace Admin</h1>
+            <p class="login-subtitle">Veuillez vous identifier pour continuer</p>
 
-        <form method="POST" action="{{ route('admin.login.submit') }}">
-            @csrf
-            
-            <div class="mb-4">
-                <label for="email" class="form-label">Email</label>
-                <div class="position-relative">
-                    <input type="email" 
-                           class="form-control" 
-                           id="email" 
-                           name="email" 
+            @if(session('error'))
+                <div class="alert-error">
+                    <i data-lucide="alert-circle" style="width:16px;height:16px;flex-shrink:0;"></i>
+                    {{ session('error') }}
+                </div>
+            @endif
+
+            <form method="POST" action="{{ route('admin.login.submit') }}">
+                @csrf
+
+                <div class="mb-3">
+                    <label for="email" class="form-label">Adresse e-mail</label>
+                    <input type="email"
+                           class="form-control"
+                           id="email"
+                           name="email"
                            placeholder="admin@example.com"
                            value="{{ old('email') }}"
-                           required 
+                           required
                            autofocus>
                 </div>
-            </div>
 
-            <div class="mb-5">
-                <div class="d-flex justify-content-between align-items-center mb-2">
-                    <label for="password" class="form-label mb-0">Mot de passe</label>
+                <div class="mb-4">
+                    <label for="password" class="form-label">Mot de passe</label>
+                    <input type="password"
+                           class="form-control"
+                           id="password"
+                           name="password"
+                           placeholder="••••••••"
+                           required>
                 </div>
-                <input type="password" 
-                       class="form-control" 
-                       id="password" 
-                       name="password" 
-                       placeholder="••••••••"
-                       required>
+
+                <button type="submit" class="btn-login">
+                    Se connecter
+                </button>
+            </form>
+
+            <div class="login-footer">
+                <i data-lucide="lock" style="width:12px;height:12px;"></i>
+                Accès restreint — chiffrement AES-256
             </div>
-
-            <button type="submit" class="btn btn-login w-100 mb-4">
-                Connexion
-            </button>
-        </form>
-
-        <div class="text-center">
-            <p class="text-secondary smaller mb-0">
-                <i data-lucide="lock" class="me-1" style="width: 12px; height: 12px;"></i>
-                Accès restreint par chiffrement AES-256
-            </p>
         </div>
     </div>
 
-    <script>
-        lucide.createIcons();
-    </script>
+    <script>lucide.createIcons();</script>
 </body>
 </html>
