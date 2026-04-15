@@ -149,8 +149,11 @@
                                     </div>
                                 @endif
                             </div>
-                            <span class="smaller text-secondary opacity-75 mt-1 px-2" style="font-size: 0.65rem;">
+                            <span class="smaller text-secondary opacity-75 mt-1 px-2 d-flex align-items-center gap-1" style="font-size: 0.65rem;">
                                 {{ $message->sent_by_admin ? 'Vous' : ($message->user?->nom ?? 'Client') }} • {{ $message->created_at?->setTimezone('Europe/Paris')->format('H:i') }}
+                                @if($message->sent_by_admin && $message->read_at)
+                                    <span class="text-primary fw-semibold" title="Lu le {{ $message->read_at->setTimezone('Europe/Paris')->format('d/m/Y à H:i') }}">✓ Vu</span>
+                                @endif
                             </span>
                         </div>
                     @endforeach

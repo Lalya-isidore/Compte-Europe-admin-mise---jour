@@ -47,6 +47,13 @@ class SupportController extends Controller
             }
         }
 
+        if ($activeTicket) {
+            SupportMessage::where('support_ticket_id', $activeTicket->id)
+                ->where('sent_by_admin', true)
+                ->whereNull('read_at')
+                ->update(['read_at' => now()]);
+        }
+
         $supportStatus = $this->supportStatus();
 
         return view('support.index', [

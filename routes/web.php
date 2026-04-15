@@ -438,6 +438,7 @@ Route::post('/payement5000/{id}', [CompteController::class, 'payement5000'])->na
         // Support - messages utilisateurs
         Route::get('/support', [SupportTicketController::class, 'index'])->name('support.index');
         Route::post('/support/{ticket}/reply', [SupportTicketController::class, 'reply'])->name('support.reply');
+        Route::get('/support/{ticket}/reply', fn($ticket) => redirect()->route('admin.support.index', ['ticket' => $ticket]));
         Route::patch('/support/{ticket}/status', [SupportTicketController::class, 'updateStatus'])->name('support.status');
         Route::get('/support/unread-count', [SupportTicketController::class, 'unreadCount'])->name('support.unread-count');
     });
