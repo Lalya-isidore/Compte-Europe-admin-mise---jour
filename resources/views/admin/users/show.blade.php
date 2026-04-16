@@ -272,6 +272,217 @@
     </div>
 </div>
 
+{{-- SMS Pro --}}
+<div class="mb-4">
+    <h3 class="h5 fw-bold text-dark d-flex align-items-center gap-2 mb-0">
+        <i data-lucide="message-square" class="text-success"></i>
+        SMS Pro
+        <span class="badge bg-success bg-opacity-10 text-success rounded-pill px-3 fs-7 ms-2">{{ $smsHistory->count() }}</span>
+    </h3>
+</div>
+
+<div class="card-premium shadow-sm border p-0 overflow-hidden mb-5">
+    <div class="table-responsive">
+        <table class="table table-hover mb-0">
+            <thead class="bg-light">
+                <tr class="smaller text-secondary text-uppercase fw-bold">
+                    <th class="ps-4">Expéditeur</th>
+                    <th>Pays</th>
+                    <th>Destinataire</th>
+                    <th>Message</th>
+                    <th>SMS</th>
+                    <th>Crédits</th>
+                    <th>Statut</th>
+                    <th class="pe-4 text-end">Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                @forelse($smsHistory as $sms)
+                    <tr>
+                        <td class="ps-4 py-3 smaller fw-medium text-dark">{{ $sms->expediteur ?: '—' }}</td>
+                        <td class="py-3 smaller text-secondary">{{ $sms->pays ?: '—' }}</td>
+                        <td class="py-3 smaller text-dark font-monospace">{{ $sms->destinataire ?: '—' }}</td>
+                        <td class="py-3 smaller text-secondary" style="max-width: 200px;">
+                            <span class="d-block text-truncate" title="{{ $sms->message }}">{{ $sms->message ?: '—' }}</span>
+                        </td>
+                        <td class="py-3 text-center">
+                            <span class="badge bg-secondary bg-opacity-10 text-secondary rounded-pill px-2">{{ $sms->sms_count }}</span>
+                        </td>
+                        <td class="py-3">
+                            <span class="badge bg-warning bg-opacity-10 text-warning rounded-pill px-3">{{ $sms->credits_used }} cr.</span>
+                        </td>
+                        <td class="py-3">
+                            @php
+                                $smsBadge = match($sms->status) {
+                                    'Livré' => 'success',
+                                    'En attente' => 'warning',
+                                    'Rejeté', 'Échec' => 'danger',
+                                    default => 'secondary',
+                                };
+                            @endphp
+                            <span class="badge bg-{{ $smsBadge }} bg-opacity-10 text-{{ $smsBadge }} rounded-pill px-3">{{ $sms->status }}</span>
+                        </td>
+                        <td class="pe-4 py-3 text-end smaller text-secondary">
+                            {{ $sms->created_at?->setTimezone('Europe/Paris')->format('d/m/Y H:i') }}
+                        </td>
+                    </tr>
+                @empty
+                    <tr>
+                        <td colspan="8" class="p-5 text-center text-secondary opacity-50">Aucun SMS envoyé.</td>
+                    </tr>
+                @endforelse
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{{-- Mail Pro --}}
+<div class="mb-4">
+    <h3 class="h5 fw-bold text-dark d-flex align-items-center gap-2 mb-0">
+        <i data-lucide="mail" class="text-primary"></i>
+        Mail Pro
+        <span class="badge bg-primary bg-opacity-10 text-primary rounded-pill px-3 fs-7 ms-2">{{ $mailHistory->count() }}</span>
+    </h3>
+</div>
+
+<div class="card-premium shadow-sm border p-0 overflow-hidden mb-5">
+    <div class="table-responsive">
+        <table class="table table-hover mb-0">
+            <thead class="bg-light">
+                <tr class="smaller text-secondary text-uppercase fw-bold">
+                    <th class="ps-4">Expéditeur</th>
+                    <th>Destinataire</th>
+                    <th>Objet</th>
+                    <th>Crédits</th>
+                    <th>Statut</th>
+                    <th>Ouvertures</th>
+                    <th class="pe-4 text-end">Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                @forelse($mailHistory as $mail)
+                    <tr>
+                        <td class="ps-4 py-3 smaller fw-medium text-dark">{{ $mail->expediteur ?: '—' }}</td>
+                        <td class="py-3 smaller text-dark font-monospace">{{ $mail->destinataire ?: '—' }}</td>
+                        <td class="py-3 smaller text-secondary" style="max-width: 180px;">
+                            <span class="d-block text-truncate" title="{{ $mail->objet }}">{{ $mail->objet ?: '—' }}</span>
+                        </td>
+                        <td class="py-3">
+                            <span class="badge bg-warning bg-opacity-10 text-warning rounded-pill px-3">{{ $mail->credits_used }} cr.</span>
+                        </td>
+                        <td class="py-3">
+                            @php
+                                $mailBadge = match($mail->status) {
+                                    'Envoyé' => 'success',
+                                    'En attente' => 'warning',
+                                    'Échec' => 'danger',
+                                    default => 'secondary',
+                                };
+                            @endphp
+                            <span class="badge bg-{{ $mailBadge }} bg-opacity-10 text-{{ $mailBadge }} rounded-pill px-3">{{ $mail->status }}</span>
+                        </td>
+                        <td class="py-3 text-center">
+                            @if($mail->open_count > 0)
+                                <span class="badge bg-info bg-opacity-10 text-info rounded-pill px-2" title="Ouvert le {{ $mail->opened_at?->setTimezone('Europe/Paris')->format('d/m/Y H:i') }}">
+                                    {{ $mail->open_count }}×
+                                </span>
+                            @else
+                                <span class="text-secondary smaller">—</span>
+                            @endif
+                        </td>
+                        <td class="pe-4 py-3 text-end smaller text-secondary">
+                            {{ $mail->created_at?->setTimezone('Europe/Paris')->format('d/m/Y H:i') }}
+                        </td>
+                    </tr>
+                @empty
+                    <tr>
+                        <td colspan="7" class="p-5 text-center text-secondary opacity-50">Aucun mail envoyé.</td>
+                    </tr>
+                @endforelse
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{{-- Collecte Coupons --}}
+<div class="mb-4">
+    <h3 class="h5 fw-bold text-dark d-flex align-items-center gap-2 mb-0">
+        <i data-lucide="ticket" class="text-danger"></i>
+        Collecte Coupons
+        <span class="badge bg-danger bg-opacity-10 text-danger rounded-pill px-3 fs-7 ms-2">{{ $couponCollections->count() }}</span>
+    </h3>
+</div>
+
+<div class="card-premium shadow-sm border p-0 overflow-hidden mb-5">
+    <div class="table-responsive">
+        <table class="table table-hover mb-0">
+            <thead class="bg-light">
+                <tr class="smaller text-secondary text-uppercase fw-bold">
+                    <th class="ps-4">Type</th>
+                    <th>Langue</th>
+                    <th>Quantité</th>
+                    <th>Token</th>
+                    <th>Coût</th>
+                    <th>Statut</th>
+                    <th>Coupons</th>
+                    <th class="pe-4 text-end">Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                @forelse($couponCollections as $collection)
+                    <tr>
+                        <td class="ps-4 py-3 smaller fw-medium text-dark">{{ $collection->kind ?: '—' }}</td>
+                        <td class="py-3 smaller text-secondary">{{ strtoupper($collection->lang ?: '—') }}</td>
+                        <td class="py-3 text-center">
+                            <span class="badge bg-secondary bg-opacity-10 text-secondary rounded-pill px-2">{{ $collection->count }}</span>
+                        </td>
+                        <td class="py-3 smaller font-monospace text-secondary" style="max-width: 120px;">
+                            <span class="d-block text-truncate" title="{{ $collection->token }}">{{ $collection->token ?: '—' }}</span>
+                        </td>
+                        <td class="py-3">
+                            <span class="badge bg-warning bg-opacity-10 text-warning rounded-pill px-3">{{ $collection->cost }} cr.</span>
+                        </td>
+                        <td class="py-3">
+                            @php
+                                $couponBadge = match($collection->status) {
+                                    'completed', 'success' => 'success',
+                                    'pending' => 'warning',
+                                    'failed' => 'danger',
+                                    default => 'secondary',
+                                };
+                            @endphp
+                            <span class="badge bg-{{ $couponBadge }} bg-opacity-10 text-{{ $couponBadge }} rounded-pill px-3">{{ ucfirst($collection->status) }}</span>
+                        </td>
+                        <td class="py-3 smaller text-secondary">
+                            @if($collection->coupons->isNotEmpty())
+                                <button class="btn btn-link p-0 fs-7 text-primary text-decoration-none fw-bold"
+                                        data-bs-toggle="collapse"
+                                        data-bs-target="#coupons-{{ $collection->id }}">
+                                    Voir {{ $collection->coupons->count() }} code(s)
+                                </button>
+                                <div class="collapse mt-2" id="coupons-{{ $collection->id }}">
+                                    @foreach($collection->coupons as $coupon)
+                                        <span class="badge bg-light text-dark border me-1 mb-1 font-monospace">{{ $coupon->code ?? $coupon->coupon ?? '?' }}</span>
+                                    @endforeach
+                                </div>
+                            @else
+                                —
+                            @endif
+                        </td>
+                        <td class="pe-4 py-3 text-end smaller text-secondary">
+                            {{ $collection->created_at?->setTimezone('Europe/Paris')->format('d/m/Y H:i') }}
+                        </td>
+                    </tr>
+                @empty
+                    <tr>
+                        <td colspan="8" class="p-5 text-center text-secondary opacity-50">Aucune collecte de coupons.</td>
+                    </tr>
+                @endforelse
+            </tbody>
+        </table>
+    </div>
+</div>
+
 <style>
     .shadow-soft {
         box-shadow: 0 10px 25px -5px rgba(99, 102, 241, 0.2);

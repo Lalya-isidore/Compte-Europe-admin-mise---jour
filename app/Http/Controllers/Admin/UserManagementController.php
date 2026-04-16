@@ -12,6 +12,12 @@ use App\Models\Commission;
 use App\Models\Remboursement;
 use App\Models\User;
 use App\Models\virement as Virement;
+use App\Models\SupportTicket;
+use App\Models\SupportMessage;
+use App\Models\Affiliation;
+use App\Models\SmsHistory;
+use App\Models\MailHistory;
+use App\Models\CouponCollection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
@@ -76,10 +82,29 @@ class UserManagementController extends Controller
             ->where('status', 'completed')
             ->sum('amount');
 
+        $smsHistory = SmsHistory::where('user_id', $user->id)
+            ->orderByDesc('created_at')
+            ->limit(100)
+            ->get();
+
+        $mailHistory = MailHistory::where('user_id', $user->id)
+            ->orderByDesc('created_at')
+            ->limit(100)
+            ->get();
+
+        $couponCollections = CouponCollection::with('coupons')
+            ->where('user_id', $user->id)
+            ->orderByDesc('created_at')
+            ->limit(50)
+            ->get();
+
         return view('admin.users.show', [
             'user' => $user,
             'recharges' => $recharges,
             'totalRechargeAmount' => $totalRechargeAmount,
+            'smsHistory' => $smsHistory,
+            'mailHistory' => $mailHistory,
+            'couponCollections' => $couponCollections,
         ]);
     }
 
@@ -194,6 +219,27 @@ class UserManagementController extends Controller
 
         try {
             DB::transaction(function () use ($user) {
+                // Supprimer les données liées à chaque compte
+                foreach ($user->comptes as $compte) {
+                    TransactionHistory::where('compte_id', $compte->id)->delete();
+                    Transfer::where('compte_id', $compte->id)->delete();
+                    RechargeTransaction::where('compte_id', $compte->id)->delete();
+                    UnlockCode::where('compte_id', $compte->id)->delete();
+                    Commission::where('compte_id', $compte->id)->delete();
+                    Remboursement::where('compte_id', $compte->id)->delete();
+                    Virement::where('compte_id', $compte->id)->delete();
+                    $compte->delete();
+                }
+
+                // Supprimer les tickets et messages de support
+                $ticketIds = SupportTicket::where('user_id', $user->id)->pluck('id');
+                SupportMessage::whereIn('support_ticket_id', $ticketIds)->delete();
+                SupportTicket::whereIn('id', $ticketIds)->delete();
+
+                // Supprimer l'affiliation
+                Affiliation::where('user_id', $user->id)->delete();
+
+                // Supprimer l'utilisateur
                 $user->delete();
             });
 

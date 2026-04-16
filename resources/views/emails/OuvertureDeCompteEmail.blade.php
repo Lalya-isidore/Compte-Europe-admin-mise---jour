@@ -130,6 +130,7 @@
             font-size: 14px;
             color: #666;
             font-weight: 500;
+            flex-shrink: 0;
         }
 
         .credential-value {
@@ -137,6 +138,10 @@
             color: #2563eb;
             font-weight: 700;
             font-family: 'Courier New', monospace;
+            word-break: break-all;
+            overflow-wrap: anywhere;
+            min-width: 0;
+            max-width: 100%;
         }
 
         .button-container {

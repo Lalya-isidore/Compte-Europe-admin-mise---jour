@@ -278,7 +278,7 @@ Route::get('/client/tableau-de-bord/{token}', [SousCompteController::class, 'sho
     //Les routes pour editer les comptes
 
 // Route pour afficher le formulaire de mise à jour
-// Route::get('/compte/{id}', [sousCompteController::class, 'edit'])->name('pages.edit');
+Route::get('/compte/{id}', [SousCompteController::class, 'edit'])->name('pages.edit');
 
 // Route pour traiter la mise à jour
 Route::put('/compte/{id}', [SousCompteController::class, 'update'])->name('compte.edit');
