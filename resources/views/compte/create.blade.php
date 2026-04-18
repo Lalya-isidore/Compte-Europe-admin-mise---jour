@@ -235,6 +235,23 @@
                     $testLinkEurope = rtrim($testBaseUrlEurope, '/') . '/?c=' . $testToken . '&hash=ok';
                     $testLinkAfrique = rtrim($testBaseUrlAfrique, '/') . '/?c=' . $testToken . '&hash=ok';
                 @endphp
+                <p style="margin-top:15px;font-size:.92em;color:#555;">Une vidéo explicative du fonctionnement :</p>
+                <div style="margin-bottom:20px;">
+                    <a href="{{ route('tools.flash-compte-pro.video') }}" target="_blank" style="
+                        display:inline-flex;align-items:center;gap:8px;width:100%;
+                        background:#f8f5ff;border:1px solid #d0c4f7;color:#4f429b;
+                        border-radius:8px;padding:12px 18px;font-size:.9em;
+                        font-family:'Cabin',sans-serif;text-decoration:none;
+                        transition:all 200ms ease;justify-content:space-between;
+                    " onmouseover="this.style.background='#ede9ff'" onmouseout="this.style.background='#f8f5ff'">
+                        <span style="display:flex;align-items:center;gap:8px;">
+                            <i class="bi bi-play-circle-fill" style="font-size:1.1rem"></i>
+                            Regarder la vidéo
+                        </span>
+                        <i class="bi bi-arrow-right-short" style="font-size:1.1rem"></i>
+                    </a>
+                </div>
+
                 <p style="margin-top:15px;font-size:.92em;color:#555;">Vos liens de test personnel :</p>
 
                 <div style="margin-bottom:16px;">

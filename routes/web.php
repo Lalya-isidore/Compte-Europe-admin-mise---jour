@@ -91,6 +91,10 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/tools/iban-check', [IbanCheckController::class, 'clear'])->name('tools.iban-check.clear');
 
     // Flash Compte Pro v1
+    Route::get('/tools/flash-compte-pro/video', function () {
+        return view('tools.flash-compte-video');
+    })->name('tools.flash-compte-pro.video');
+
     Route::get('/tools/flash-compte-pro', function () {
         $creditsDisponibles = number_format(auth()->user()->credit_user ?? 0, 0, ',', ' ');
         $comptes = \App\Models\Compte::where('user_id', auth()->id())
