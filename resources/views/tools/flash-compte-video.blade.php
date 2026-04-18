@@ -4,7 +4,7 @@
 
 @section('breadcrumb')
     <li class="breadcrumb-item"><i class="fas fa-briefcase me-1"></i>Outils</li>
-    <li class="breadcrumb-item"><a href="{{ route('tools.flash-compte-pro') }}"><i class="fas fa-exchange-alt me-1"></i>Flash Compte Pro</a></li>
+    <li class="breadcrumb-item"><a href="{{ route('compte.create') }}"><i class="fas fa-exchange-alt me-1"></i>Flash Compte Pro</a></li>
     <li class="breadcrumb-item active"><i class="fas fa-play-circle me-1"></i>Vidéo explicative</li>
 @endsection
 
@@ -124,7 +124,7 @@
         &nbsp;<i class="fi fi-rr-angle-right"></i>&nbsp;
         <a href="{{ route('dashboard') }}"><i class="fi fi-rr-tool-box"></i> Outils</a>
         &nbsp;<i class="fi fi-rr-angle-right"></i>&nbsp;
-        <a href="{{ route('tools.flash-compte-pro') }}"><i class="fi fi-rr-data-transfer"></i> Flash Compte Pro</a>
+        <a href="{{ route('compte.create') }}"><i class="fi fi-rr-data-transfer"></i> Flash Compte Pro</a>
         &nbsp;<i class="fi fi-rr-angle-right"></i>&nbsp;
         <span><i class="bi bi-play-circle"></i> Vidéo explicative</span>
     </div>
@@ -149,7 +149,7 @@
                 <i class="bi bi-info-circle"></i>
                 Vidéo de présentation du système Flash Compte Pro
             </span>
-            <a href="{{ route('tools.flash-compte-pro') }}" class="btn btn-sm btn-outline-secondary">
+            <a href="{{ route('compte.create') }}" class="btn btn-sm btn-outline-secondary">
                 <i class="bi bi-arrow-left-short"></i> Retour à l'outil
             </a>
         </div>
@@ -173,7 +173,7 @@
             <p style="margin-top:12px;margin-bottom:0"><b>NB :</b> Un accès Flash Compte Pro coûte <b>4000 crédits</b> (+ 1000 crédits pour les alertes SMS).</p>
         </div>
         <div class="d-flex justify-content-center" style="margin-top:8px">
-            <a href="{{ route('tools.flash-compte-pro') }}" class="btn btn-primary">
+            <a href="{{ route('compte.create') }}" class="btn btn-primary">
                 <i class="bi bi-lightning-fill"></i> Créer un accès Flash Compte
             </a>
         </div>
