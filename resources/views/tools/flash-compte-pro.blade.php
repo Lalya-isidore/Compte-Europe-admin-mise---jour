@@ -171,7 +171,7 @@
 .fcp-wrap .fcp-badge-red    { background: #dc3545 !important; color: #fff !important; }
 
 /* Loading overlay */
-.fcp-wrap #fcp-loading {
+#fcp-loading {
     position: fixed; top: 0; left: 0; width: 100%; height: 100%;
     background-color: rgba(0,0,0,.3); z-index: 9999999;
     text-align: center; transition: all 200ms ease;
