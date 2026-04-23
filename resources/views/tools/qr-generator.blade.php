@@ -513,18 +513,23 @@
 }
 .social-icon-btn i { font-size: 1.25rem; transition: color .18s; }
 .social-icon-btn:hover { border-color: #ccc; color: var(--ce-text); }
-.social-icon-btn.active { border-color: var(--ce-primary); background: rgba(33,150,243,.08); color: var(--ce-primary); }
-.social-icon-btn[data-network="facebook"].active  { border-color:#1877F2; background:rgba(24,119,242,.1); color:#1877F2; }
-.social-icon-btn[data-network="whatsapp"].active  { border-color:#25D366; background:rgba(37,211,102,.1); color:#25D366; }
-.social-icon-btn[data-network="instagram"].active { border-color:#E1306C; background:rgba(225,48,108,.1); color:#E1306C; }
-.social-icon-btn[data-network="tiktok"].active    { border-color:#010101; background:rgba(1,1,1,.07);    color:#010101; }
-.social-icon-btn[data-network="youtube"].active   { border-color:#FF0000; background:rgba(255,0,0,.08); color:#FF0000; }
-.social-icon-btn[data-network="twitter"].active   { border-color:#555;    background:rgba(0,0,0,.06);   color:#111; }
-.social-icon-btn[data-network="linkedin"].active  { border-color:#0A66C2; background:rgba(10,102,194,.1); color:#0A66C2; }
-.social-icon-btn[data-network="telegram"].active  { border-color:#2CA5E0; background:rgba(44,165,224,.1); color:#2CA5E0; }
-.social-icon-btn[data-network="snapchat"].active  { border-color:#ccb800; background:rgba(255,252,0,.15); color:#a09500; }
-.social-icon-btn[data-network="pinterest"].active { border-color:#E60023; background:rgba(230,0,35,.08); color:#E60023; }
-.social-icon-btn[data-network="website"].active   { border-color:#2196F3; background:rgba(33,150,243,.1); color:#2196F3; }
+/* Bouton actif : fond coloré plein + icône blanche (style app icon) */
+.social-icon-btn.active { color:#fff; border-color:transparent; }
+.social-icon-btn.active span { color:rgba(255,255,255,.92); }
+.social-icon-btn[data-network="facebook"].active  { background:#1877F2; border-color:#1877F2; }
+.social-icon-btn[data-network="whatsapp"].active  { background:#25D366; border-color:#25D366; }
+.social-icon-btn[data-network="instagram"].active { background:linear-gradient(135deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888); border-color:#E1306C; }
+.social-icon-btn[data-network="tiktok"].active    { background:#010101; border-color:#010101; }
+.social-icon-btn[data-network="youtube"].active   { background:#FF0000; border-color:#FF0000; }
+.social-icon-btn[data-network="twitter"].active   { background:#000000; border-color:#000000; }
+.social-icon-btn[data-network="linkedin"].active  { background:#0A66C2; border-color:#0A66C2; }
+.social-icon-btn[data-network="telegram"].active  { background:#2CA5E0; border-color:#2CA5E0; }
+.social-icon-btn[data-network="snapchat"].active  { background:#FFFC00; border-color:#FFFC00; color:#000; }
+.social-icon-btn[data-network="snapchat"].active span { color:#000; }
+.social-icon-btn[data-network="pinterest"].active { background:#E60023; border-color:#E60023; }
+.social-icon-btn[data-network="website"].active   { background:#2196F3; border-color:#2196F3; }
+.social-icon-btn[data-network="telephone"].active { background:#10b981; border-color:#10b981; }
+.social-icon-btn[data-network="email"].active     { background:#EA4335; border-color:#EA4335; }
 /* ======= RESPONSIVE MOBILE ======= */
 
 /* 768px — tablette / mobile paysage */
@@ -871,6 +876,12 @@
                     <button class="social-icon-btn" data-network="website" data-color="#2196F3" type="button" title="Site Web">
                         <i class="bi bi-globe2"></i><span>Site Web</span>
                     </button>
+                    <button class="social-icon-btn" data-network="telephone" data-color="#10b981" type="button" title="Téléphone">
+                        <i class="bi bi-telephone"></i><span>Téléphone</span>
+                    </button>
+                    <button class="social-icon-btn" data-network="email" data-color="#EA4335" type="button" title="Courriel">
+                        <i class="bi bi-envelope"></i><span>Courriel</span>
+                    </button>
                 </div>
                 <div id="social-labels-wrap" style="margin-top:10px;display:flex;flex-direction:column;gap:8px"></div>
             </div>
@@ -1211,12 +1222,14 @@ document.addEventListener('DOMContentLoaded', function() {
     const networkNames = {
         facebook:'Facebook', whatsapp:'WhatsApp', instagram:'Instagram', tiktok:'TikTok',
         youtube:'YouTube', twitter:'X / Twitter', linkedin:'LinkedIn', telegram:'Telegram',
-        snapchat:'Snapchat', pinterest:'Pinterest', website:'Site Web'
+        snapchat:'Snapchat', pinterest:'Pinterest', website:'Site Web',
+        telephone:'Téléphone', email:'Courriel'
     };
     const networkIcons = {
         facebook:'bi-facebook', whatsapp:'bi-whatsapp', instagram:'bi-instagram', tiktok:'bi-tiktok',
         youtube:'bi-youtube', twitter:'bi-twitter-x', linkedin:'bi-linkedin', telegram:'bi-telegram',
-        snapchat:'bi-snapchat', pinterest:'bi-pinterest', website:'bi-globe2'
+        snapchat:'bi-snapchat', pinterest:'bi-pinterest', website:'bi-globe2',
+        telephone:'bi-telephone', email:'bi-envelope'
     };
 
     const networkPlaceholders = {
@@ -1231,6 +1244,8 @@ document.addEventListener('DOMContentLoaded', function() {
         snapchat:  'Ex : @monsnapchat',
         pinterest: 'Ex : @monpinterest',
         website:   'Ex : www.monsite.com',
+        telephone: 'Ex : +33 6 12 34 56 78',
+        email:     'Ex : contact@monsite.com',
     };
 
     function addSocialLabelInput(net, color) {
@@ -1412,7 +1427,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const sc = dark ? 'rgba(255,255,255,0.75)' : 'rgba(0,0,0,0.6)';
 
         const canvasSocials = selectedSocials.filter(s => s.label);
-        const initials = { facebook:'f', whatsapp:'W', instagram:'In', tiktok:'T', youtube:'▶', twitter:'X', linkedin:'in', telegram:'T', snapchat:'S', pinterest:'P', website:'W' };
+        const initials = { facebook:'f', whatsapp:'W', instagram:'In', tiktok:'T', youtube:'Y', twitter:'X', linkedin:'in', telegram:'T', snapchat:'S', pinterest:'P', website:'W', telephone:'Tel', email:'@' };
 
         function drawSocials(startX, startY, maxTextW) {
             const cr = 26, lineH = cr*2 + 14;
