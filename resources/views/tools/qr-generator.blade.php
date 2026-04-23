@@ -504,7 +504,9 @@
 .poster-cta-area p { font-size: 32px; font-weight: 700; margin: 0; word-break: break-word; }
 
 .poster-socials-area { display: flex; flex-direction: column; align-items: flex-start; gap: 12px; padding: 16px 0 4px; width: 100%; }
+.poster-socials-area.layout-horizontal { flex-direction: row; flex-wrap: wrap; gap: 14px 20px; align-items: flex-start; }
 .pv-social-item { display: flex; align-items: center; gap: 10px; }
+.layout-horizontal .pv-social-item { flex: 0 0 calc(50% - 10px); min-width: 0; }
 .pv-social-dot { width: 52px; height: 52px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; color: #fff; flex-shrink: 0; }
 .pv-social-name { font-size: 24px; font-weight: 600; }
 
@@ -891,6 +893,13 @@
                     </button>
                 </div>
                 <div id="social-labels-wrap" style="margin-top:10px;display:flex;flex-direction:column;gap:8px"></div>
+                <div id="socials-layout-row" style="margin-top:12px;display:none">
+                    <label class="form-label" style="margin-bottom:6px;font-size:.78rem"><i class="bi bi-layout-wtf me-1"></i> Disposition des réseaux</label>
+                    <div class="format-tabs" id="socials-layout-tabs">
+                        <button class="format-tab active" data-layout="vertical" type="button"><i class="bi bi-list-ul"></i> Vertical</button>
+                        <button class="format-tab" data-layout="horizontal" type="button"><i class="bi bi-columns-gap"></i> 2 par ligne</button>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -1237,6 +1246,17 @@ document.addEventListener('DOMContentLoaded', function() {
         updatePosterPreview();
     });
     let selectedSocials = []; // {network, color}
+    let socialsLayout = 'vertical'; // 'vertical' | 'horizontal'
+
+    // Sélecteur disposition réseaux
+    document.querySelectorAll('#socials-layout-tabs .format-tab').forEach(tab => {
+        tab.addEventListener('click', () => {
+            document.querySelectorAll('#socials-layout-tabs .format-tab').forEach(t => t.classList.remove('active'));
+            tab.classList.add('active');
+            socialsLayout = tab.dataset.layout;
+            updatePosterPreview();
+        });
+    });
 
     // Social icon toggle
     const networkNames = {
@@ -1319,6 +1339,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 selectedSocials.push({ network: net, color: color, label: '' });
                 addSocialLabelInput(net, color);
             }
+            document.getElementById('socials-layout-row').style.display = selectedSocials.length > 0 ? 'block' : 'none';
             updatePosterPreview();
         });
     });
@@ -1410,31 +1431,44 @@ document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('pv-qr-placeholder').style.display = 'flex';
         }
 
-        // Social items in preview (circle + user-typed name) — grouped block centered
+        // Social items in preview
         const pvSocials = document.getElementById('pv-socials');
         pvSocials.innerHTML = '';
+        pvSocials.classList.toggle('layout-horizontal', socialsLayout === 'horizontal');
         const activeSocials = selectedSocials.filter(s => s.label);
         if (activeSocials.length > 0) {
             const nameTc = _darkPreview ? '#ffffff' : '#111111';
-            // Aligner le bloc sous le "S" de "Scannez pour accéder"
-            const pvCtaText = document.getElementById('poster-cta').value.trim() || 'Scannez pour accéder';
-            const tmpC = document.createElement('canvas');
-            const tmpCtx = tmpC.getContext('2d');
-            tmpCtx.font = 'bold 32px Arial';
-            const pvCtaWidth = tmpCtx.measureText(pvCtaText).width;
-            const contentW = 680; // 800px - 60px*2 padding
-            const groupMarginLeft = Math.max(0, (contentW - pvCtaWidth) / 2);
-            const group = document.createElement('div');
-            group.style.cssText = `display:inline-flex;flex-direction:column;gap:12px;align-items:flex-start;margin-left:${groupMarginLeft}px`;
-            activeSocials.forEach(s => {
-                const item = document.createElement('div');
-                item.className = 'pv-social-item';
-                const dotBg = s.network === 'snapchat' ? '#FFFC00' : s.color;
-                const iconColor = s.network === 'snapchat' ? '#000' : '#fff';
-                item.innerHTML = `<div class="pv-social-dot" style="background:${dotBg};color:${iconColor}"><i class="bi ${networkIcons[s.network] || 'bi-share'}"></i></div><span class="pv-social-name" style="color:${nameTc}">${s.label}</span>`;
-                group.appendChild(item);
-            });
-            pvSocials.appendChild(group);
+            if (socialsLayout === 'vertical') {
+                // Aligner le bloc sous le "S" de "Scannez pour accéder"
+                const pvCtaText = document.getElementById('poster-cta').value.trim() || 'Scannez pour accéder';
+                const tmpC = document.createElement('canvas');
+                const tmpCtx = tmpC.getContext('2d');
+                tmpCtx.font = 'bold 32px Arial';
+                const pvCtaWidth = tmpCtx.measureText(pvCtaText).width;
+                const contentW = 680;
+                const groupMarginLeft = Math.max(0, (contentW - pvCtaWidth) / 2);
+                const group = document.createElement('div');
+                group.style.cssText = `display:inline-flex;flex-direction:column;gap:12px;align-items:flex-start;margin-left:${groupMarginLeft}px`;
+                activeSocials.forEach(s => {
+                    const item = document.createElement('div');
+                    item.className = 'pv-social-item';
+                    const dotBg = s.network === 'snapchat' ? '#FFFC00' : s.color;
+                    const iconColor = s.network === 'snapchat' ? '#000' : '#fff';
+                    item.innerHTML = `<div class="pv-social-dot" style="background:${dotBg};color:${iconColor}"><i class="bi ${networkIcons[s.network] || 'bi-share'}"></i></div><span class="pv-social-name" style="color:${nameTc}">${s.label}</span>`;
+                    group.appendChild(item);
+                });
+                pvSocials.appendChild(group);
+            } else {
+                // 2 par ligne : chaque item prend ~50% de la largeur
+                activeSocials.forEach(s => {
+                    const item = document.createElement('div');
+                    item.className = 'pv-social-item';
+                    const dotBg = s.network === 'snapchat' ? '#FFFC00' : s.color;
+                    const iconColor = s.network === 'snapchat' ? '#000' : '#fff';
+                    item.innerHTML = `<div class="pv-social-dot" style="background:${dotBg};color:${iconColor}"><i class="bi ${networkIcons[s.network] || 'bi-share'}"></i></div><span class="pv-social-name" style="color:${nameTc}">${s.label}</span>`;
+                    pvSocials.appendChild(item);
+                });
+            }
         }
     }
 
@@ -1529,21 +1563,42 @@ document.addEventListener('DOMContentLoaded', function() {
             y = wrapText(ctx, cta, W/2, y+32, contentW, 40) + 18;
             if (canvasSocials.length > 0) {
                 const cr = 28, lineH = cr*2 + 14;
-                // Aligner sous le "S" de "Scannez pour accéder"
                 ctx.font = 'bold 32px Arial';
                 const ctaW = ctx.measureText(cta).width;
                 const ix = W/2 - ctaW/2 + cr;
-                for (const s of canvasSocials) {
-                    ctx.beginPath(); ctx.arc(ix, y+cr, cr, 0, Math.PI*2);
-                    ctx.fillStyle = s.network==='snapchat'?'#FFFC00':s.color; ctx.fill();
-                    ctx.fillStyle = s.network==='snapchat'?'#000':'#fff';
-                    ctx.textAlign='center'; ctx.textBaseline='middle';
-                    ctx.font = `${Math.round(cr*1.1)}px bootstrap-icons`;
-                    ctx.fillText(networkIconChars[s.network]||'', ix, y+cr);
-                    ctx.textBaseline='alphabetic'; ctx.textAlign='left';
-                    ctx.font='bold 24px Arial'; ctx.fillStyle=tc;
-                    ctx.fillText(s.label, ix+cr+14, y+cr+9);
-                    y += lineH;
+                const colW = contentW / 2; // largeur d'une colonne en mode horizontal
+
+                if (socialsLayout === 'horizontal') {
+                    // 2 par ligne
+                    for (let i = 0; i < canvasSocials.length; i++) {
+                        const s = canvasSocials[i];
+                        const col = i % 2; // 0 = gauche, 1 = droite
+                        const sx = ix + col * colW;
+                        if (col === 0 && i > 0) y += lineH;
+                        ctx.beginPath(); ctx.arc(sx, y+cr, cr, 0, Math.PI*2);
+                        ctx.fillStyle = s.network==='snapchat'?'#FFFC00':s.color; ctx.fill();
+                        ctx.fillStyle = s.network==='snapchat'?'#000':'#fff';
+                        ctx.textAlign='center'; ctx.textBaseline='middle';
+                        ctx.font = `${Math.round(cr*1.1)}px bootstrap-icons`;
+                        ctx.fillText(networkIconChars[s.network]||'', sx, y+cr);
+                        ctx.textBaseline='alphabetic'; ctx.textAlign='left';
+                        ctx.font='bold 22px Arial'; ctx.fillStyle=tc;
+                        ctx.fillText(s.label, sx+cr+12, y+cr+8);
+                    }
+                } else {
+                    // Vertical : 1 par ligne
+                    for (const s of canvasSocials) {
+                        ctx.beginPath(); ctx.arc(ix, y+cr, cr, 0, Math.PI*2);
+                        ctx.fillStyle = s.network==='snapchat'?'#FFFC00':s.color; ctx.fill();
+                        ctx.fillStyle = s.network==='snapchat'?'#000':'#fff';
+                        ctx.textAlign='center'; ctx.textBaseline='middle';
+                        ctx.font = `${Math.round(cr*1.1)}px bootstrap-icons`;
+                        ctx.fillText(networkIconChars[s.network]||'', ix, y+cr);
+                        ctx.textBaseline='alphabetic'; ctx.textAlign='left';
+                        ctx.font='bold 24px Arial'; ctx.fillStyle=tc;
+                        ctx.fillText(s.label, ix+cr+14, y+cr+9);
+                        y += lineH;
+                    }
                 }
             }
         }
