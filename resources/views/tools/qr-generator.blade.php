@@ -546,8 +546,9 @@
     /* Cadre affiche centré */
     .poster-preview-frame { margin: 0 auto; }
 
-    /* QR canvas centré */
-    .qr-canvas-wrap { min-height: 260px; }
+    /* QR canvas : taille fixe centrée */
+    .qr-canvas-wrap { width: 280px; max-width: 100%; aspect-ratio: 1; margin: 0 auto; min-height: unset; }
+    .preview-sticky { display: flex; flex-direction: column; align-items: center; gap: 12px; }
 }
 
 /* 480px — smartphone portrait */
