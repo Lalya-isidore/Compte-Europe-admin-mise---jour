@@ -517,7 +517,60 @@
 .social-icon-btn[data-network="snapchat"].active  { border-color:#ccb800; background:rgba(255,252,0,.15); color:#a09500; }
 .social-icon-btn[data-network="pinterest"].active { border-color:#E60023; background:rgba(230,0,35,.08); color:#E60023; }
 .social-icon-btn[data-network="website"].active   { border-color:#2196F3; background:rgba(33,150,243,.1); color:#2196F3; }
-@media (max-width: 500px) { .social-icons-grid { grid-template-columns: repeat(4, 1fr); } }
+/* ======= RESPONSIVE MOBILE ======= */
+
+/* 768px — tablette / mobile paysage */
+@media (max-width: 768px) {
+    /* QR layout : aperçu en haut, settings en bas */
+    .main-layout { grid-template-columns: 1fr; gap: 20px; }
+    .preview-sticky { position: static; order: -1; }
+
+    /* Poster editor : 1 colonne */
+    .poster-editor.open { grid-template-columns: 1fr; }
+    .poster-preview-wrap { position: static; order: 2; width: 100%; align-items: center; }
+
+    /* Card padding réduit */
+    .ce-card { padding: 20px 16px; }
+
+    /* Tabs scrollables */
+    .settings-tabs { overflow-x: auto; gap: 4px; padding-bottom: 0; -webkit-overflow-scrolling: touch; }
+    .tab-btn { padding: 10px 14px; font-size: .8rem; white-space: nowrap; flex-shrink: 0; }
+
+    /* Format tabs — plus petit texte */
+    .format-tab { font-size: .75rem; padding: 7px 6px; gap: 4px; }
+    .format-tab i { font-size: .9rem; }
+
+    /* Fond tabs */
+    .bg-tab { font-size: .75rem; padding: 7px 8px; }
+
+    /* Cadre affiche centré */
+    .poster-preview-frame { margin: 0 auto; }
+
+    /* QR canvas centré */
+    .qr-canvas-wrap { min-height: 260px; }
+}
+
+/* 480px — smartphone portrait */
+@media (max-width: 480px) {
+    /* Color grid */
+    .color-grid { gap: 14px; padding: 14px; }
+
+    /* Style buttons */
+    .style-btn { padding: 8px 6px; font-size: .72rem; }
+
+    /* Social icons : 3 par ligne */
+    .social-icons-grid { grid-template-columns: repeat(3, 1fr); gap: 6px; }
+    .social-icon-btn { padding: 8px 3px 6px; font-size: .6rem; }
+    .social-icon-btn i { font-size: 1.1rem; }
+
+    /* Input */
+    .ce-input { padding: 11px 14px; font-size: .88rem; }
+
+    /* Télécharger l'affiche */
+    .btn-dl-poster { font-size: .85rem; padding: 13px; }
+}
+
+@media (max-width: 500px) { .social-icons-grid { grid-template-columns: repeat(3, 1fr); } }
 
 .btn-dl-poster {
     width: 100%; background: var(--ce-secondary); color: white; border: none;
