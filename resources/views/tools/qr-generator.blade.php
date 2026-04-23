@@ -483,15 +483,17 @@
     align-items: center; justify-content: center; gap: 10px;
 }
 .poster-preview-inner.banner .poster-logo-area { margin-bottom: 0; }
-.poster-preview-inner.banner .poster-logo-area img { width: 80px; height: 80px; }
+.poster-preview-inner.banner .poster-logo-area img { width: 60px; height: 60px; }
 .poster-preview-inner.banner .poster-title-area { text-align: left; margin-bottom: 0; }
-.poster-preview-inner.banner .poster-title-area h2 { font-size: 40px; margin-bottom: 6px; }
-.poster-preview-inner.banner .poster-title-area p { font-size: 22px; }
-.poster-preview-inner.banner .poster-qr-area { margin-bottom: 0; padding: 10px; }
-.poster-preview-inner.banner .poster-cta-area p { font-size: 22px; }
-.poster-preview-inner.banner .poster-socials-area { padding: 6px 0 0; gap: 8px; }
-.poster-preview-inner.banner .pv-social-dot { width: 38px; height: 38px; font-size: 1rem; }
-.poster-preview-inner.banner .pv-social-name { font-size: 18px; }
+.poster-preview-inner.banner .poster-title-area h2 { font-size: 32px; margin-bottom: 4px; line-height: 1.1; }
+.poster-preview-inner.banner .poster-title-area p { font-size: 20px; }
+.poster-preview-inner.banner .poster-qr-area { margin-bottom: 0; padding: 8px; }
+.poster-preview-inner.banner .poster-qr-area canvas,
+.poster-preview-inner.banner #pv-qr-placeholder { width: 240px !important; height: 240px !important; }
+.poster-preview-inner.banner .poster-cta-area p { font-size: 18px; }
+.poster-preview-inner.banner .poster-socials-area { padding: 4px 0 0; gap: 6px; }
+.poster-preview-inner.banner .pv-social-dot { width: 34px; height: 34px; font-size: .9rem; }
+.poster-preview-inner.banner .pv-social-name { font-size: 16px; max-width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 
 /* Paysage : flexbox 2 colonnes */
 .poster-preview-inner.landscape {
@@ -1531,40 +1533,63 @@ document.addEventListener('DOMContentLoaded', function() {
         const canvasSocials = selectedSocials.filter(s => s.label);
 
         if (isBanner) {
-            // === BANNIÈRE : 1200×400px — logo+titre+sous-titre+réseaux à gauche, QR+CTA à droite ===
-            const pad = 40, leftW = 780, rightX = 840;
-            let y = pad;
+            // === BANNIÈRE : 1200×400px ===
+            const pad = 44, leftMaxX = 750, rightX = 810;
+            const leftContentW = leftMaxX - pad; // 706px max pour texte gauche
+            const colW = leftContentW / 2;       // ~353px par colonne en mode 2/ligne
+            // Centrage vertical du contenu gauche
+            let y = 60;
             if (posterLogoData) {
-                await new Promise(res => { const img = new Image(); img.onload = () => { ctx.drawImage(img, pad, y, 70, 70); res(); }; img.src = posterLogoData; });
-                y += 85;
+                await new Promise(res => { const img = new Image(); img.onload = () => { ctx.drawImage(img, pad, y, 60, 60); res(); }; img.src = posterLogoData; });
+                y += 74;
             }
             const title = document.getElementById('poster-title').value.trim() || 'Titre de l\'affiche';
-            ctx.font = 'bold 46px Arial'; ctx.fillStyle = tc; ctx.textAlign = 'left';
-            y = wrapText(ctx, title, pad, y + 46, leftW - pad, 54) + 10;
+            ctx.font = 'bold 38px Arial'; ctx.fillStyle = tc; ctx.textAlign = 'left';
+            y = wrapText(ctx, title, pad, y + 38, leftContentW, 46) + 8;
             const sub = document.getElementById('poster-subtitle').value.trim();
-            if (sub) { ctx.font = '600 26px Arial'; ctx.fillStyle = sc; y = wrapText(ctx, sub, pad, y + 26, leftW - pad, 32) + 10; }
+            if (sub) { ctx.font = '600 22px Arial'; ctx.fillStyle = sc; y = wrapText(ctx, sub, pad, y + 22, leftContentW, 28) + 8; }
             if (canvasSocials.length > 0) {
-                const cr = 22, lineH = cr*2 + 10;
-                for (const s of canvasSocials) {
-                    ctx.beginPath(); ctx.arc(pad + cr, y + cr, cr, 0, Math.PI*2);
-                    ctx.fillStyle = s.network==='snapchat'?'#FFFC00':s.color; ctx.fill();
-                    ctx.fillStyle = s.network==='snapchat'?'#000':'#fff';
-                    ctx.textAlign='center'; ctx.textBaseline='middle';
-                    ctx.font = `${Math.round(cr*1.1)}px bootstrap-icons`;
-                    ctx.fillText(networkIconChars[s.network]||'', pad+cr, y+cr);
-                    ctx.textBaseline='alphabetic'; ctx.textAlign='left';
-                    ctx.font='bold 20px Arial'; ctx.fillStyle=tc;
-                    ctx.fillText(s.label, pad+cr*2+10, y+cr+7);
-                    y += lineH;
+                const cr = 20, lineH = cr*2 + 10;
+                const maxLabelW = colW - cr*2 - 16;
+                if (socialsLayout === 'horizontal') {
+                    // 2 par ligne
+                    for (let i = 0; i < canvasSocials.length; i++) {
+                        const s = canvasSocials[i];
+                        const col = i % 2;
+                        const sx = pad + cr + col * colW;
+                        if (col === 0 && i > 0) y += lineH;
+                        ctx.beginPath(); ctx.arc(sx, y+cr, cr, 0, Math.PI*2);
+                        ctx.fillStyle = s.network==='snapchat'?'#FFFC00':s.color; ctx.fill();
+                        ctx.fillStyle = s.network==='snapchat'?'#000':'#fff';
+                        ctx.textAlign='center'; ctx.textBaseline='middle';
+                        ctx.font = `${Math.round(cr*1.1)}px bootstrap-icons`;
+                        ctx.fillText(networkIconChars[s.network]||'', sx, y+cr);
+                        ctx.textBaseline='alphabetic'; ctx.textAlign='left';
+                        ctx.font='bold 18px Arial'; ctx.fillStyle=tc;
+                        ctx.fillText(s.label, sx+cr+10, y+cr+6, maxLabelW);
+                    }
+                } else {
+                    for (const s of canvasSocials) {
+                        ctx.beginPath(); ctx.arc(pad+cr, y+cr, cr, 0, Math.PI*2);
+                        ctx.fillStyle = s.network==='snapchat'?'#FFFC00':s.color; ctx.fill();
+                        ctx.fillStyle = s.network==='snapchat'?'#000':'#fff';
+                        ctx.textAlign='center'; ctx.textBaseline='middle';
+                        ctx.font = `${Math.round(cr*1.1)}px bootstrap-icons`;
+                        ctx.fillText(networkIconChars[s.network]||'', pad+cr, y+cr);
+                        ctx.textBaseline='alphabetic'; ctx.textAlign='left';
+                        ctx.font='bold 18px Arial'; ctx.fillStyle=tc;
+                        ctx.fillText(s.label, pad+cr*2+10, y+cr+6, leftContentW-cr*2-10);
+                        y += lineH;
+                    }
                 }
             }
-            // QR à droite + CTA sous le QR
-            const qs = 280, qy = (H - qs - 28 - 40) / 2;
-            roundRect(ctx, rightX, qy, qs + 28, qs + 28, 12); ctx.fillStyle = '#ffffff'; ctx.fill();
-            ctx.drawImage(srcCanvas, rightX + 14, qy + 14, qs, qs);
+            // QR à droite centré verticalement + CTA sous le QR
+            const qs = 270, qy = (H - qs - 24 - 36) / 2;
+            roundRect(ctx, rightX, qy, qs+24, qs+24, 12); ctx.fillStyle='#ffffff'; ctx.fill();
+            ctx.drawImage(srcCanvas, rightX+12, qy+12, qs, qs);
             const cta = document.getElementById('poster-cta').value.trim() || 'Scannez pour accéder';
-            ctx.font = 'bold 22px Arial'; ctx.fillStyle = tc; ctx.textAlign = 'center';
-            ctx.fillText(cta, rightX + (qs + 28) / 2, qy + qs + 28 + 28);
+            ctx.font='bold 20px Arial'; ctx.fillStyle=tc; ctx.textAlign='center';
+            ctx.fillText(cta, rightX+(qs+24)/2, qy+qs+24+26);
 
         } else if (isLandscape) {
             // === PAYSAGE : gauche (logo+titre+sous-titre+réseaux), droite (QR+CTA) ===
