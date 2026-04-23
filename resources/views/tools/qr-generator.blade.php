@@ -453,7 +453,7 @@
 .poster-cta-area { text-align: center; width: 100%; }
 .poster-cta-area p { font-size: 1.5rem; font-weight: 600; margin: 0; word-break: break-word; }
 
-.poster-socials-area { display: flex; flex-direction: column; align-items: center; gap: 10px; padding: 18px 0 4px; width: 100%; }
+.poster-socials-area { display: flex; flex-direction: column; align-items: flex-start; gap: 10px; padding: 18px 0 4px; width: 100%; }
 .pv-social-item { display: flex; align-items: center; gap: 7px; }
 .pv-social-dot { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1rem; color: #fff; flex-shrink: 0; }
 .pv-social-name { font-size: .85rem; font-weight: 600; }
@@ -1138,8 +1138,16 @@ document.addEventListener('DOMContentLoaded', function() {
         if (activeSocials.length > 0) {
             const dark = isDark(posterBgColor);
             const nameTc = dark ? '#ffffff' : '#111111';
+            // Align group left edge with "S" of CTA text
+            const pvCtaText = document.getElementById('poster-cta').value.trim() || 'Scannez pour accéder';
+            const tmpC = document.createElement('canvas');
+            const tmpCtx = tmpC.getContext('2d');
+            tmpCtx.font = 'bold 24px Arial'; // matches 1.5rem bold in poster preview
+            const pvCtaWidth = tmpCtx.measureText(pvCtaText).width;
+            const contentW = 680; // poster inner = 800px - 60px*2 padding
+            const groupMarginLeft = Math.max(0, (contentW - pvCtaWidth) / 2);
             const group = document.createElement('div');
-            group.style.cssText = 'display:inline-flex;flex-direction:column;gap:10px;align-items:center';
+            group.style.cssText = `display:inline-flex;flex-direction:column;gap:10px;align-items:flex-start;margin-left:${groupMarginLeft}px`;
             activeSocials.forEach(s => {
                 const item = document.createElement('div');
                 item.className = 'pv-social-item';
@@ -1196,13 +1204,15 @@ document.addEventListener('DOMContentLoaded', function() {
         const canvasSocials = selectedSocials.filter(s => s.label);
         if (canvasSocials.length > 0) {
             const cr = 26, lineH = cr*2 + 16;
+            // Find the X where "S" of CTA starts (same font as CTA drawing)
+            ctx.font = 'bold 30px Arial';
+            const ctaForAlign = document.getElementById('poster-cta').value.trim() || 'Scannez pour accéder';
+            const ctaAlignW = ctx.measureText(ctaForAlign).width;
+            const socialStartX = W/2 - ctaAlignW/2; // left edge of CTA text
+            const ix = socialStartX + cr; // circle center, fixed for all rows
             ctx.font = 'bold 22px Arial';
             const initials = { facebook:'f', whatsapp:'W', instagram:'In', tiktok:'T', youtube:'▶', twitter:'X', linkedin:'in', telegram:'T', snapchat:'S', pinterest:'P', website:'W' };
             for (const s of canvasSocials) {
-                // Center each row independently (like the title above)
-                const rowW = cr*2 + 12 + ctx.measureText(s.label).width;
-                const ix = (W - rowW) / 2 + cr;
-                // circle
                 ctx.beginPath(); ctx.arc(ix, y + cr, cr, 0, Math.PI*2);
                 ctx.fillStyle = s.network === 'snapchat' ? '#FFFC00' : s.color; ctx.fill();
                 // initial inside circle
