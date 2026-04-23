@@ -1116,21 +1116,24 @@ document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('pv-qr-placeholder').style.display = 'flex';
         }
 
-        // Social items in preview (circle + user-typed name)
+        // Social items in preview (circle + user-typed name) — grouped block centered
         const pvSocials = document.getElementById('pv-socials');
         pvSocials.innerHTML = '';
         const activeSocials = selectedSocials.filter(s => s.label);
         if (activeSocials.length > 0) {
             const dark = isDark(posterBgColor);
             const nameTc = dark ? '#ffffff' : '#111111';
+            const group = document.createElement('div');
+            group.style.cssText = 'display:inline-flex;flex-direction:column;gap:10px;align-items:flex-start';
             activeSocials.forEach(s => {
                 const item = document.createElement('div');
                 item.className = 'pv-social-item';
                 const dotBg = s.network === 'snapchat' ? '#FFFC00' : s.color;
                 const iconColor = s.network === 'snapchat' ? '#000' : '#fff';
                 item.innerHTML = `<div class="pv-social-dot" style="background:${dotBg};color:${iconColor}"><i class="bi ${networkIcons[s.network] || 'bi-share'}"></i></div><span class="pv-social-name" style="color:${nameTc}">${s.label}</span>`;
-                pvSocials.appendChild(item);
+                group.appendChild(item);
             });
+            pvSocials.appendChild(group);
         }
     }
 
@@ -1174,27 +1177,27 @@ document.addEventListener('DOMContentLoaded', function() {
         ctx.font = 'bold 30px Arial'; ctx.fillStyle = tc;
         y = wrapText(ctx, cta, W/2, y+30, 680, 38) + 50;
 
-        // Social items on canvas — one per line, centered
+        // Social items on canvas — one per line, block centered, circles aligned
         const canvasSocials = selectedSocials.filter(s => s.label);
         if (canvasSocials.length > 0) {
             const cr = 26, lineH = cr*2 + 16;
             ctx.font = 'bold 22px Arial';
+            // Find widest row to center the whole block
+            const maxRowW = canvasSocials.reduce((max, s) => Math.max(max, cr*2 + 12 + ctx.measureText(s.label).width), 0);
+            const blockX = (W - maxRowW) / 2; // left edge of block
+            const ix = blockX + cr; // circle center X — same for all rows
+            const initials = { facebook:'f', whatsapp:'W', instagram:'In', tiktok:'T', youtube:'▶', twitter:'X', linkedin:'in', telegram:'T', snapchat:'S', pinterest:'P', website:'W' };
             for (const s of canvasSocials) {
-                const lbl = s.label;
-                const tw = ctx.measureText(lbl).width;
-                const rowW = cr*2 + 12 + tw;
-                const ix = (W - rowW) / 2 + cr;
                 // circle
                 ctx.beginPath(); ctx.arc(ix, y + cr, cr, 0, Math.PI*2);
                 ctx.fillStyle = s.network === 'snapchat' ? '#FFFC00' : s.color; ctx.fill();
                 // initial inside circle
-                const initials = { facebook:'f', whatsapp:'W', instagram:'In', tiktok:'T', youtube:'▶', twitter:'X', linkedin:'in', telegram:'T', snapchat:'S', pinterest:'P', website:'W' };
                 ctx.fillStyle = s.network === 'snapchat' ? '#000' : '#fff';
                 ctx.font = 'bold 22px Arial'; ctx.textAlign = 'center';
                 ctx.fillText(initials[s.network] || s.network[0].toUpperCase(), ix, y + cr + 8);
                 // label text
                 ctx.textAlign = 'left'; ctx.fillStyle = tc;
-                ctx.fillText(lbl, ix + cr + 12, y + cr + 8);
+                ctx.fillText(s.label, ix + cr + 12, y + cr + 8);
                 y += lineH;
             }
             y += 10;
