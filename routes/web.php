@@ -72,6 +72,10 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/crypto/vente', function () { return view('crypto.vente'); })->name('crypto.vente');
 
     // URL Tools
+    Route::get('/tools/qr-generator', function () {
+        return view('tools.qr-generator');
+    })->name('tools.qr-generator');
+
     Route::get('/tools/url-check', [UrlCheckController::class, 'index'])->name('tools.url-check');
     Route::post('/tools/url-check', [UrlCheckController::class, 'check'])->name('tools.url-check.run');
     Route::get('/tools/url-shortener', [UrlShortenerController::class, 'index'])->name('tools.url-shortener');
