@@ -425,7 +425,7 @@
 .poster-editor { display: none; margin-top: 28px; }
 .poster-editor.open {
     display: grid;
-    grid-template-columns: 1fr 280px;
+    grid-template-columns: 1fr 340px;
     gap: 28px; align-items: start;
 }
 @media (max-width: 900px) { .poster-editor.open { grid-template-columns: 1fr; } }
@@ -453,7 +453,7 @@
     border: 1px solid var(--ce-border); position: relative; background: #fff;
     transition: width .3s, height .3s;
 }
-.poster-preview-frame.landscape { width: 412px; height: 283px; }
+.poster-preview-frame.landscape { width: 330px; height: 227px; }
 .poster-preview-frame.square { width: 300px; height: 300px; }
 
 .poster-preview-inner {
@@ -466,22 +466,29 @@
 /* Carré */
 .poster-preview-inner.square { width: 1080px; height: 1080px; transform: scale(0.2778); }
 
-/* Paysage : grid 2 colonnes */
+/* Paysage : flexbox 2 colonnes */
 .poster-preview-inner.landscape {
     width: 1100px; height: 756px;
-    transform: scale(0.3745);
+    transform: scale(0.3);
     flex-direction: row; align-items: center;
-    padding: 50px 60px; gap: 50px;
+    padding: 50px 55px; gap: 40px;
     display: flex;
 }
 .poster-preview-inner.landscape .poster-landscape-left {
     flex: 1; display: flex; flex-direction: column;
-    align-items: flex-start; justify-content: center; gap: 18px;
+    align-items: flex-start; justify-content: center; gap: 14px;
+}
+.poster-preview-inner.landscape .poster-landscape-right {
+    flex-shrink: 0; display: flex; flex-direction: column;
+    align-items: center; justify-content: center; gap: 16px;
 }
 .poster-preview-inner.landscape .poster-qr-area {
-    flex-shrink: 0; width: 380px;
+    flex-shrink: 0; width: auto;
     display: flex; align-items: center; justify-content: center;
     margin-bottom: 0;
+}
+.poster-preview-inner.landscape .poster-cta-area {
+    text-align: center; width: auto;
 }
 .poster-logo-area { margin-bottom: 20px; }
 .poster-logo-area img { width: 130px; height: 130px; object-fit: contain; border-radius: 10px; display: none; }
@@ -1149,30 +1156,43 @@ document.addEventListener('DOMContentLoaded', function() {
         const inner = document.getElementById('poster-preview-inner');
         const qrArea = document.getElementById('pv-qr-area');
 
-        // Enlever toutes les classes de format
         frame.classList.remove('landscape', 'square');
         inner.classList.remove('landscape', 'square');
 
         if (posterFormat === 'landscape') {
             frame.classList.add('landscape');
             inner.classList.add('landscape');
-            let leftCol = inner.querySelector('.poster-landscape-left');
-            if (!leftCol) {
-                leftCol = document.createElement('div');
+            if (!inner.querySelector('.poster-landscape-right')) {
+                // Colonne gauche : tout sauf QR et CTA
+                const ctaArea = inner.querySelector('.poster-cta-area');
+                const leftCol = document.createElement('div');
                 leftCol.className = 'poster-landscape-left';
                 [...inner.children].forEach(child => {
-                    if (child !== qrArea) leftCol.appendChild(child);
+                    if (child !== qrArea && child !== ctaArea) leftCol.appendChild(child);
                 });
-                inner.insertBefore(leftCol, qrArea);
+                // Colonne droite : QR + CTA
+                const rightCol = document.createElement('div');
+                rightCol.className = 'poster-landscape-right';
+                rightCol.appendChild(qrArea);
+                rightCol.appendChild(ctaArea);
+                inner.appendChild(leftCol);
+                inner.appendChild(rightCol);
             }
         } else {
-            // Portrait et Carré : même structure DOM verticale
-            const leftCol = inner.querySelector('.poster-landscape-left');
-            if (leftCol) {
-                [...leftCol.children].forEach(child => inner.insertBefore(child, leftCol));
-                leftCol.remove();
-                const cta = inner.querySelector('.poster-cta-area');
-                inner.insertBefore(qrArea, cta);
+            // Restaurer la structure portrait/carré
+            const rightCol = inner.querySelector('.poster-landscape-right');
+            const leftCol  = inner.querySelector('.poster-landscape-left');
+            const logo    = inner.querySelector('.poster-logo-area');
+            const title   = inner.querySelector('.poster-title-area');
+            const cta     = inner.querySelector('.poster-cta-area');
+            const socials = inner.querySelector('.poster-socials-area');
+            if (rightCol || leftCol) {
+                while (inner.firstChild) inner.removeChild(inner.firstChild);
+                if (logo)    inner.appendChild(logo);
+                if (title)   inner.appendChild(title);
+                             inner.appendChild(qrArea);
+                if (cta)     inner.appendChild(cta);
+                if (socials) inner.appendChild(socials);
             }
             if (posterFormat === 'square') {
                 frame.classList.add('square');
@@ -1430,37 +1450,38 @@ document.addEventListener('DOMContentLoaded', function() {
         const initials = { facebook:'f', whatsapp:'W', instagram:'In', tiktok:'T', youtube:'Y', twitter:'X', linkedin:'in', telegram:'T', snapchat:'S', pinterest:'P', website:'W', telephone:'Tel', email:'@' };
 
         if (isLandscape) {
-            // === PAYSAGE : gauche texte, droite QR ===
-            const leftW = 520, rightX = 620, pad = 60;
+            // === PAYSAGE : gauche (logo+titre+sous-titre+réseaux), droite (QR+CTA) ===
+            const pad = 55, leftW = 580, rightX = 640;
             let y = pad;
             if (posterLogoData) {
-                await new Promise(res => { const img = new Image(); img.onload = () => { ctx.drawImage(img, pad, y, 100, 100); res(); }; img.src = posterLogoData; });
-                y += 120;
+                await new Promise(res => { const img = new Image(); img.onload = () => { ctx.drawImage(img, pad, y, 90, 90); res(); }; img.src = posterLogoData; });
+                y += 108;
             }
             const title = document.getElementById('poster-title').value.trim() || 'Titre de l\'affiche';
-            ctx.font = 'bold 54px Arial'; ctx.fillStyle = tc; ctx.textAlign = 'left';
-            y = wrapText(ctx, title, pad, y + 54, leftW - pad, 64) + 20;
+            ctx.font = 'bold 58px Arial'; ctx.fillStyle = tc; ctx.textAlign = 'left';
+            y = wrapText(ctx, title, pad, y + 58, leftW - pad, 68) + 14;
             const sub = document.getElementById('poster-subtitle').value.trim();
-            if (sub) { ctx.font = '28px Arial'; ctx.fillStyle = sc; y = wrapText(ctx, sub, pad, y + 28, leftW - pad, 36) + 16; }
-            const cta = document.getElementById('poster-cta').value.trim() || 'Scannez pour accéder';
-            ctx.font = 'bold 32px Arial'; ctx.fillStyle = tc;
-            y = wrapText(ctx, cta, pad, y + 32, leftW - pad, 40) + 16;
+            if (sub) { ctx.font = '28px Arial'; ctx.fillStyle = sc; y = wrapText(ctx, sub, pad, y + 28, leftW - pad, 36) + 14; }
+            // Réseaux dans colonne gauche (sans CTA)
             if (canvasSocials.length > 0) {
-                const cr = 28, lineH = cr*2 + 14;
-                ctx.font = 'bold 24px Arial';
+                const cr = 26, lineH = cr*2 + 12;
+                ctx.font = 'bold 22px Arial';
                 for (const s of canvasSocials) {
                     ctx.beginPath(); ctx.arc(pad + cr, y + cr, cr, 0, Math.PI*2);
                     ctx.fillStyle = s.network==='snapchat'?'#FFFC00':s.color; ctx.fill();
                     ctx.fillStyle = s.network==='snapchat'?'#000':'#fff';
-                    ctx.textAlign='center'; ctx.fillText(initials[s.network]||s.network[0].toUpperCase(), pad+cr, y+cr+9);
-                    ctx.textAlign='left'; ctx.fillStyle=tc; ctx.fillText(s.label, pad+cr*2+14, y+cr+9);
+                    ctx.textAlign='center'; ctx.fillText(initials[s.network]||s.network[0].toUpperCase(), pad+cr, y+cr+8);
+                    ctx.textAlign='left'; ctx.fillStyle=tc; ctx.fillText(s.label, pad+cr*2+12, y+cr+8);
                     y += lineH;
                 }
             }
-            // QR à droite centré
-            const qs = 360, qy = (H - qs - 32) / 2;
+            // QR à droite + CTA sous le QR
+            const qs = 340, qy = (H - qs - 32 - 48) / 2;
             roundRect(ctx, rightX, qy, qs + 32, qs + 32, 16); ctx.fillStyle = '#ffffff'; ctx.fill();
             ctx.drawImage(srcCanvas, rightX + 16, qy + 16, qs, qs);
+            const cta = document.getElementById('poster-cta').value.trim() || 'Scannez pour accéder';
+            ctx.font = 'bold 26px Arial'; ctx.fillStyle = tc; ctx.textAlign = 'center';
+            ctx.fillText(cta, rightX + (qs + 32) / 2, qy + qs + 32 + 34);
 
         } else {
             // === PORTRAIT / CARRÉ : centré vertical ===
