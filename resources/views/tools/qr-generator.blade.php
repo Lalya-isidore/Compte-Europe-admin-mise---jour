@@ -309,10 +309,12 @@
 
 .qr-canvas-wrap {
     width: 100%;
+    max-width: 380px;
+    margin: 0 auto;
     aspect-ratio: 1;
     background: white;
     border-radius: 20px;
-    padding: 30px;
+    padding: 24px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -320,6 +322,12 @@
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
     position: relative;
     overflow: hidden;
+}
+/* Le canvas QR s'adapte toujours à la taille du conteneur */
+#canvas-container canvas {
+    max-width: 100% !important;
+    height: auto !important;
+    display: block;
 }
 
 .preview-overlay {
@@ -546,9 +554,8 @@
     /* Cadre affiche centré */
     .poster-preview-frame { margin: 0 auto; }
 
-    /* QR canvas : taille fixe centrée */
-    .qr-canvas-wrap { width: 280px; max-width: 100%; aspect-ratio: 1; margin: 0 auto; min-height: unset; }
-    .preview-sticky { display: flex; flex-direction: column; align-items: center; gap: 12px; }
+    /* QR canvas centré, pas de débordement */
+    .preview-sticky { display: flex; flex-direction: column; align-items: stretch; gap: 12px; }
 }
 
 /* 480px — smartphone portrait */
@@ -1041,6 +1048,7 @@ document.addEventListener('DOMContentLoaded', function() {
             width: 400,
             height: 400,
             type: 'canvas',
+            margin: 10,
             data: currentOptions.data,
             dotsOptions: {
                 color: currentOptions.colorDots,
