@@ -447,29 +447,29 @@
 
 .poster-preview-wrap { position: sticky; top: 90px; display: flex; flex-direction: column; align-items: center; gap: 14px; }
 .poster-preview-frame {
-    width: 252px; height: 346px;
+    width: 300px; height: 412px;
     border-radius: 14px; overflow: hidden;
     box-shadow: 0 12px 40px rgba(0,0,0,.15);
     border: 1px solid var(--ce-border); position: relative; background: #fff;
     transition: width .3s, height .3s;
 }
-.poster-preview-frame.landscape { width: 346px; height: 238px; }
-.poster-preview-frame.square { width: 252px; height: 252px; }
+.poster-preview-frame.landscape { width: 412px; height: 283px; }
+.poster-preview-frame.square { width: 300px; height: 300px; }
 
 .poster-preview-inner {
     width: 800px; height: 1100px;
-    transform-origin: top left; transform: scale(0.315);
+    transform-origin: top left; transform: scale(0.375);
     position: absolute; top: 0; left: 0;
     display: flex; flex-direction: column; align-items: center;
     padding: 55px 60px 40px; box-sizing: border-box;
 }
 /* Carré */
-.poster-preview-inner.square { width: 1080px; height: 1080px; transform: scale(0.2333); }
+.poster-preview-inner.square { width: 1080px; height: 1080px; transform: scale(0.2778); }
 
 /* Paysage : grid 2 colonnes */
 .poster-preview-inner.landscape {
     width: 1100px; height: 756px;
-    transform: scale(0.3145);
+    transform: scale(0.3745);
     flex-direction: row; align-items: center;
     padding: 50px 60px; gap: 50px;
     display: flex;
