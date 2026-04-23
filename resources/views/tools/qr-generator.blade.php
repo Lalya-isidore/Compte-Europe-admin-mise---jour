@@ -446,6 +446,7 @@
     transition: width .3s, height .3s;
 }
 .poster-preview-frame.landscape { width: 308px; height: 212px; }
+.poster-preview-frame.square { width: 224px; height: 224px; }
 
 .poster-preview-inner {
     width: 800px; height: 1100px;
@@ -454,6 +455,9 @@
     display: flex; flex-direction: column; align-items: center;
     padding: 60px 60px 50px; box-sizing: border-box;
 }
+/* Carré */
+.poster-preview-inner.square { width: 1080px; height: 1080px; transform: scale(0.2074); }
+
 /* Paysage : grid 2 colonnes */
 .poster-preview-inner.landscape {
     width: 1100px; height: 756px;
@@ -691,6 +695,7 @@
                 <div class="format-tabs" id="format-tabs">
                     <button class="format-tab active" data-format="portrait" type="button"><i class="bi bi-phone"></i> Portrait</button>
                     <button class="format-tab" data-format="landscape" type="button"><i class="bi bi-tablet-landscape"></i> Paysage</button>
+                    <button class="format-tab" data-format="square" type="button"><i class="bi bi-square"></i> Carré</button>
                 </div>
             </div>
             <div class="form-group">
@@ -1059,10 +1064,13 @@ document.addEventListener('DOMContentLoaded', function() {
         const inner = document.getElementById('poster-preview-inner');
         const qrArea = document.getElementById('pv-qr-area');
 
+        // Enlever toutes les classes de format
+        frame.classList.remove('landscape', 'square');
+        inner.classList.remove('landscape', 'square');
+
         if (posterFormat === 'landscape') {
             frame.classList.add('landscape');
             inner.classList.add('landscape');
-            // Wrap all non-QR children in a left column
             let leftCol = inner.querySelector('.poster-landscape-left');
             if (!leftCol) {
                 leftCol = document.createElement('div');
@@ -1073,16 +1081,17 @@ document.addEventListener('DOMContentLoaded', function() {
                 inner.insertBefore(leftCol, qrArea);
             }
         } else {
-            frame.classList.remove('landscape');
-            inner.classList.remove('landscape');
-            // Unwrap left column
+            // Portrait et Carré : même structure DOM verticale
             const leftCol = inner.querySelector('.poster-landscape-left');
             if (leftCol) {
                 [...leftCol.children].forEach(child => inner.insertBefore(child, leftCol));
                 leftCol.remove();
-                // Restore QR between title and CTA
                 const cta = inner.querySelector('.poster-cta-area');
                 inner.insertBefore(qrArea, cta);
+            }
+            if (posterFormat === 'square') {
+                frame.classList.add('square');
+                inner.classList.add('square');
             }
         }
         updatePosterPreview();
@@ -1311,8 +1320,9 @@ document.addEventListener('DOMContentLoaded', function() {
         if (!srcCanvas) { alert('Générez d\'abord le QR Code.'); return; }
 
         const isLandscape = posterFormat === 'landscape';
-        const W = isLandscape ? 1100 : 800;
-        const H = isLandscape ? 756 : 1100;
+        const isSquare = posterFormat === 'square';
+        const W = isLandscape ? 1100 : isSquare ? 1080 : 800;
+        const H = isLandscape ? 756  : isSquare ? 1080 : 1100;
         const cv = document.createElement('canvas');
         cv.width = W; cv.height = H;
         const ctx = cv.getContext('2d');
@@ -1376,24 +1386,28 @@ document.addEventListener('DOMContentLoaded', function() {
             ctx.drawImage(srcCanvas, rightX + 24, qy + 24, qs, qs);
 
         } else {
-            // === PORTRAIT : centré vertical ===
-            let y = 60;
+            // === PORTRAIT / CARRÉ : centré vertical ===
+            const padV = isSquare ? 70 : 60;
+            const contentW = isSquare ? 960 : 680;
+            const titleSize = isSquare ? 54 : 52;
+            const qsSize = isSquare ? 360 : 340;
+            let y = padV;
             if (posterLogoData) {
                 await new Promise(res => { const img = new Image(); img.onload = () => { ctx.drawImage(img, W/2-50, y, 100, 100); res(); }; img.src = posterLogoData; });
                 y += 120;
             }
             const title = document.getElementById('poster-title').value.trim() || 'Titre de l\'affiche';
-            ctx.font = 'bold 52px Arial'; ctx.fillStyle = tc; ctx.textAlign = 'center';
-            y = wrapText(ctx, title, W/2, y+52, 680, 62) + 24;
+            ctx.font = `bold ${titleSize}px Arial`; ctx.fillStyle = tc; ctx.textAlign = 'center';
+            y = wrapText(ctx, title, W/2, y+titleSize, contentW, titleSize+10) + 24;
             const sub = document.getElementById('poster-subtitle').value.trim();
-            if (sub) { ctx.font = '28px Arial'; ctx.fillStyle = sc; y = wrapText(ctx, sub, W/2, y+28, 680, 36) + 20; }
-            const qs = 340, qx = (W-qs)/2-24, qy = y+20;
+            if (sub) { ctx.font = '28px Arial'; ctx.fillStyle = sc; y = wrapText(ctx, sub, W/2, y+28, contentW, 36) + 20; }
+            const qs = qsSize, qx = (W-qs)/2-24, qy = y+20;
             roundRect(ctx, qx, qy, qs+48, qs+48, 24); ctx.fillStyle = '#ffffff'; ctx.fill();
             ctx.drawImage(srcCanvas, qx+24, qy+24, qs, qs);
             y = qy + qs + 48 + 36;
             const cta = document.getElementById('poster-cta').value.trim() || 'Scannez pour accéder';
             ctx.font = 'bold 30px Arial'; ctx.fillStyle = tc;
-            y = wrapText(ctx, cta, W/2, y+30, 680, 38) + 20;
+            y = wrapText(ctx, cta, W/2, y+30, contentW, 38) + 20;
             if (canvasSocials.length > 0) {
                 const cr = 26, lineH = cr*2 + 16;
                 ctx.font = 'bold 30px Arial';
