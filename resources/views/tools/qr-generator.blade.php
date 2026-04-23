@@ -268,6 +268,11 @@
     color: var(--ce-primary);
 }
 
+/* Fond tabs */
+.bg-tabs { display:flex; gap:6px; margin-bottom:12px; }
+.bg-tab { flex:1; padding:7px 10px; border:2px solid var(--ce-border); border-radius:10px; background:var(--ce-bg); color:var(--ce-text-dim); font-size:.8rem; font-weight:600; cursor:pointer; transition:all .18s; }
+.bg-tab.active { border-color:var(--ce-primary); background:rgba(33,150,243,.08); color:var(--ce-primary); }
+
 /* Logo Upload */
 .logo-upload-zone {
     border: 2px dashed var(--ce-border);
@@ -668,20 +673,41 @@
                 <input type="text" id="poster-cta" class="ce-input" placeholder="Scannez pour accéder" maxlength="80" value="Scannez pour accéder">
             </div>
             <div class="form-group">
-                <label class="form-label"><i class="bi bi-palette me-1"></i> Couleur de fond</label>
-                <div class="bg-preset-grid">
-                    <button class="bg-preset-btn active" data-color="#ffffff" style="background:#ffffff;border:2px solid #e8e8e8" title="Blanc"></button>
-                    <button class="bg-preset-btn" data-color="#0a0d2e" style="background:#0a0d2e" title="Marine"></button>
-                    <button class="bg-preset-btn" data-color="#2196F3" style="background:#2196F3" title="Bleu"></button>
-                    <button class="bg-preset-btn" data-color="#10b981" style="background:#10b981" title="Vert"></button>
-                    <button class="bg-preset-btn" data-color="#FF6B35" style="background:#FF6B35" title="Orange"></button>
-                    <button class="bg-preset-btn" data-color="#7c3aed" style="background:#7c3aed" title="Violet"></button>
-                    <button class="bg-preset-btn" data-color="#dc2626" style="background:#dc2626" title="Rouge"></button>
-                    <button class="bg-preset-btn" data-color="#1e293b" style="background:#1e293b" title="Ardoise"></button>
-                    <button class="bg-preset-btn custom-bg-btn" title="Couleur personnalisée">
-                        <i class="bi bi-plus-lg"></i>
-                        <input type="color" id="poster-custom-color" value="#ffffff">
-                    </button>
+                <label class="form-label"><i class="bi bi-palette me-1"></i> Fond de l'affiche</label>
+                {{-- Onglets Couleur / Image --}}
+                <div class="bg-tabs" id="bg-tabs">
+                    <button class="bg-tab active" data-tab="color" type="button"><i class="bi bi-paint-bucket me-1"></i>Couleur</button>
+                    <button class="bg-tab" data-tab="image" type="button"><i class="bi bi-image me-1"></i>Image</button>
+                </div>
+                {{-- Panneau Couleur --}}
+                <div id="bg-panel-color">
+                    <div class="bg-preset-grid">
+                        <button class="bg-preset-btn active" data-color="#ffffff" style="background:#ffffff;border:2px solid #e8e8e8" title="Blanc"></button>
+                        <button class="bg-preset-btn" data-color="#0a0d2e" style="background:#0a0d2e" title="Marine"></button>
+                        <button class="bg-preset-btn" data-color="#2196F3" style="background:#2196F3" title="Bleu"></button>
+                        <button class="bg-preset-btn" data-color="#10b981" style="background:#10b981" title="Vert"></button>
+                        <button class="bg-preset-btn" data-color="#FF6B35" style="background:#FF6B35" title="Orange"></button>
+                        <button class="bg-preset-btn" data-color="#7c3aed" style="background:#7c3aed" title="Violet"></button>
+                        <button class="bg-preset-btn" data-color="#dc2626" style="background:#dc2626" title="Rouge"></button>
+                        <button class="bg-preset-btn" data-color="#1e293b" style="background:#1e293b" title="Ardoise"></button>
+                        <button class="bg-preset-btn custom-bg-btn" title="Couleur personnalisée">
+                            <i class="bi bi-plus-lg"></i>
+                            <input type="color" id="poster-custom-color" value="#ffffff">
+                        </button>
+                    </div>
+                </div>
+                {{-- Panneau Image --}}
+                <div id="bg-panel-image" style="display:none">
+                    <div class="logo-upload-zone" id="bg-image-zone" style="padding:20px">
+                        <input type="file" id="bg-image-input" hidden accept="image/*">
+                        <i class="bi bi-image" style="font-size:1.6rem"></i>
+                        <p style="font-size:.82rem;margin:6px 0 0;color:var(--ce-text-dim)">Cliquez pour ajouter une image de fond</p>
+                    </div>
+                    <div id="bg-image-info" style="display:none;margin-top:10px;background:#f8f9fa;padding:10px 14px;border-radius:10px;align-items:center;gap:10px;border:1px solid var(--ce-border)">
+                        <img id="bg-image-thumb" src="" style="width:50px;height:34px;object-fit:cover;border-radius:6px">
+                        <span id="bg-image-name" style="flex:1;font-size:.82rem;color:var(--ce-text)">image.jpg</span>
+                        <button id="bg-image-remove" style="background:none;border:none;color:#dc2626;font-size:.78rem;cursor:pointer;padding:0">Supprimer</button>
+                    </div>
                 </div>
             </div>
             <div class="form-group">
@@ -981,7 +1007,43 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // ===== SECTION AFFICHE =====
     let posterBgColor = '#ffffff';
+    let posterBgImage = null; // base64 image de fond
     let posterLogoData = null;
+
+    // Onglets Couleur / Image
+    document.querySelectorAll('.bg-tab').forEach(tab => {
+        tab.addEventListener('click', () => {
+            document.querySelectorAll('.bg-tab').forEach(t => t.classList.remove('active'));
+            tab.classList.add('active');
+            const isImage = tab.dataset.tab === 'image';
+            document.getElementById('bg-panel-color').style.display = isImage ? 'none' : 'block';
+            document.getElementById('bg-panel-image').style.display = isImage ? 'block' : 'none';
+            if (!isImage) { posterBgImage = null; updatePosterPreview(); }
+        });
+    });
+
+    // Upload image de fond
+    document.getElementById('bg-image-zone').addEventListener('click', () => document.getElementById('bg-image-input').click());
+    document.getElementById('bg-image-input').addEventListener('change', function() {
+        const file = this.files[0];
+        if (!file) return;
+        if (file.size > 5 * 1024 * 1024) { alert('Image trop volumineuse (max 5 Mo)'); return; }
+        const reader = new FileReader();
+        reader.onload = ev => {
+            posterBgImage = ev.target.result;
+            document.getElementById('bg-image-thumb').src = posterBgImage;
+            document.getElementById('bg-image-name').textContent = file.name;
+            document.getElementById('bg-image-info').style.display = 'flex';
+            updatePosterPreview();
+        };
+        reader.readAsDataURL(file);
+    });
+    document.getElementById('bg-image-remove').addEventListener('click', () => {
+        posterBgImage = null;
+        document.getElementById('bg-image-input').value = '';
+        document.getElementById('bg-image-info').style.display = 'none';
+        updatePosterPreview();
+    });
     let selectedSocials = []; // {network, color}
 
     // Social icon toggle
@@ -1107,9 +1169,14 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function updatePosterPreview() {
         const inner = document.getElementById('poster-preview-inner');
-        inner.style.background = posterBgColor;
-        const tc = isDark(posterBgColor) ? '#ffffff' : '#111111';
-        const sc = isDark(posterBgColor) ? 'rgba(255,255,255,0.75)' : 'rgba(0,0,0,0.6)';
+        if (posterBgImage) {
+            inner.style.background = `url(${posterBgImage}) center/cover no-repeat`;
+        } else {
+            inner.style.background = posterBgColor;
+        }
+        const _darkPreview = posterBgImage ? true : isDark(posterBgColor);
+        const tc = _darkPreview ? '#ffffff' : '#111111';
+        const sc = _darkPreview ? 'rgba(255,255,255,0.75)' : 'rgba(0,0,0,0.6)';
         document.getElementById('pv-title').style.color = tc;
         document.getElementById('pv-title').textContent = document.getElementById('poster-title').value || 'Titre de l\'affiche';
         document.getElementById('pv-subtitle').style.color = sc;
@@ -1136,8 +1203,7 @@ document.addEventListener('DOMContentLoaded', function() {
         pvSocials.innerHTML = '';
         const activeSocials = selectedSocials.filter(s => s.label);
         if (activeSocials.length > 0) {
-            const dark = isDark(posterBgColor);
-            const nameTc = dark ? '#ffffff' : '#111111';
+            const nameTc = _darkPreview ? '#ffffff' : '#111111';
             // Align group left edge with "S" of CTA text
             const pvCtaText = document.getElementById('poster-cta').value.trim() || 'Scannez pour accéder';
             const tmpC = document.createElement('canvas');
@@ -1171,10 +1237,20 @@ document.addEventListener('DOMContentLoaded', function() {
         cv.width = W; cv.height = H;
         const ctx = cv.getContext('2d');
 
-        ctx.fillStyle = posterBgColor;
-        ctx.fillRect(0, 0, W, H);
+        // Fond : image ou couleur
+        if (posterBgImage) {
+            await new Promise(res => {
+                const bgImg = new Image();
+                bgImg.onload = () => { ctx.drawImage(bgImg, 0, 0, W, H); res(); };
+                bgImg.src = posterBgImage;
+            });
+        } else {
+            ctx.fillStyle = posterBgColor;
+            ctx.fillRect(0, 0, W, H);
+        }
 
-        const dark = isDark(posterBgColor);
+        const effectiveBg = posterBgImage ? '#000000' : posterBgColor; // image → texte blanc par défaut
+        const dark = posterBgImage ? true : isDark(posterBgColor);
         const tc = dark ? '#ffffff' : '#111111';
         const sc = dark ? 'rgba(255,255,255,0.75)' : 'rgba(0,0,0,0.6)';
         let y = 60;
