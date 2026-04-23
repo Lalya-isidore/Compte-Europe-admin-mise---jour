@@ -834,7 +834,11 @@ document.addEventListener('DOMContentLoaded', function() {
     let renderTimeout;
     function debouncedRender() {
         clearTimeout(renderTimeout);
-        renderTimeout = setTimeout(renderQR, 200);
+        renderTimeout = setTimeout(() => {
+            renderQR();
+            const togglePoster = document.getElementById('toggle-poster');
+            if (togglePoster && togglePoster.checked) setTimeout(updatePosterPreview, 350);
+        }, 200);
     }
 
     function renderQR() {
@@ -990,9 +994,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // Hook sur renderQR pour mettre à jour l'aperçu affiche
-    const _origRender = renderQR;
-    function renderQR() { _origRender(); if (document.getElementById('toggle-poster').checked) setTimeout(updatePosterPreview, 350); }
 
     // Télécharger l'affiche
     document.getElementById('btn-dl-poster').addEventListener('click', async () => {
