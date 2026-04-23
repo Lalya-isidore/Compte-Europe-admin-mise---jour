@@ -447,29 +447,29 @@
 
 .poster-preview-wrap { position: sticky; top: 90px; display: flex; flex-direction: column; align-items: center; gap: 14px; }
 .poster-preview-frame {
-    width: 224px; height: 308px;
+    width: 252px; height: 346px;
     border-radius: 14px; overflow: hidden;
     box-shadow: 0 12px 40px rgba(0,0,0,.15);
     border: 1px solid var(--ce-border); position: relative; background: #fff;
     transition: width .3s, height .3s;
 }
-.poster-preview-frame.landscape { width: 308px; height: 212px; }
-.poster-preview-frame.square { width: 224px; height: 224px; }
+.poster-preview-frame.landscape { width: 346px; height: 238px; }
+.poster-preview-frame.square { width: 252px; height: 252px; }
 
 .poster-preview-inner {
     width: 800px; height: 1100px;
-    transform-origin: top left; transform: scale(0.28);
+    transform-origin: top left; transform: scale(0.315);
     position: absolute; top: 0; left: 0;
     display: flex; flex-direction: column; align-items: center;
-    padding: 60px 60px 50px; box-sizing: border-box;
+    padding: 55px 60px 40px; box-sizing: border-box;
 }
 /* Carré */
-.poster-preview-inner.square { width: 1080px; height: 1080px; transform: scale(0.2074); }
+.poster-preview-inner.square { width: 1080px; height: 1080px; transform: scale(0.2333); }
 
 /* Paysage : grid 2 colonnes */
 .poster-preview-inner.landscape {
     width: 1100px; height: 756px;
-    transform: scale(0.28);
+    transform: scale(0.3145);
     flex-direction: row; align-items: center;
     padding: 50px 60px; gap: 50px;
     display: flex;
@@ -479,27 +479,27 @@
     align-items: flex-start; justify-content: center; gap: 18px;
 }
 .poster-preview-inner.landscape .poster-qr-area {
-    flex-shrink: 0; width: 360px;
+    flex-shrink: 0; width: 380px;
     display: flex; align-items: center; justify-content: center;
     margin-bottom: 0;
 }
-.poster-logo-area { margin-bottom: 24px; }
-.poster-logo-area img { width: 90px; height: 90px; object-fit: contain; border-radius: 10px; display: none; }
-.poster-title-area { text-align: center; margin-bottom: 28px; width: 100%; }
-.poster-title-area h2 { font-size: 3rem; font-weight: 800; line-height: 1.2; margin: 0 0 14px; word-break: break-word; }
-.poster-title-area p  { font-size: 1.6rem; margin: 0; line-height: 1.4; word-break: break-word; }
+.poster-logo-area { margin-bottom: 20px; }
+.poster-logo-area img { width: 130px; height: 130px; object-fit: contain; border-radius: 10px; display: none; }
+.poster-title-area { text-align: left; margin-bottom: 20px; width: 100%; }
+.poster-title-area h2 { font-size: 68px; font-weight: 800; line-height: 1.15; margin: 0 0 12px; word-break: break-word; }
+.poster-title-area p  { font-size: 30px; margin: 0; line-height: 1.4; word-break: break-word; }
 .poster-qr-area {
-    background: white; padding: 12px; border-radius: 16px;
-    box-shadow: 0 8px 32px rgba(0,0,0,.12); margin-bottom: 28px;
+    background: white; padding: 16px; border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(0,0,0,.12); margin-bottom: 20px;
     display: flex; align-items: center; justify-content: center;
 }
-.poster-cta-area { text-align: center; width: 100%; }
-.poster-cta-area p { font-size: 1.5rem; font-weight: 600; margin: 0; word-break: break-word; }
+.poster-cta-area { text-align: left; width: 100%; }
+.poster-cta-area p { font-size: 32px; font-weight: 700; margin: 0; word-break: break-word; }
 
-.poster-socials-area { display: flex; flex-direction: column; align-items: flex-start; gap: 10px; padding: 18px 0 4px; width: 100%; }
-.pv-social-item { display: flex; align-items: center; gap: 7px; }
-.pv-social-dot { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1rem; color: #fff; flex-shrink: 0; }
-.pv-social-name { font-size: .85rem; font-weight: 600; }
+.poster-socials-area { display: flex; flex-direction: column; align-items: flex-start; gap: 12px; padding: 16px 0 4px; width: 100%; }
+.pv-social-item { display: flex; align-items: center; gap: 10px; }
+.pv-social-dot { width: 52px; height: 52px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; color: #fff; flex-shrink: 0; }
+.pv-social-name { font-size: 24px; font-weight: 600; }
 
 /* Social icon selector */
 .social-icons-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; }
@@ -898,7 +898,7 @@
                         <p id="pv-subtitle" style="color:#555"></p>
                     </div>
                     <div class="poster-qr-area" id="pv-qr-area">
-                        <div id="pv-qr-placeholder" style="width:260px;height:260px;display:flex;align-items:center;justify-content:center;color:#ccc;font-size:.85rem;text-align:center;flex-direction:column;gap:10px">
+                        <div id="pv-qr-placeholder" style="width:380px;height:380px;display:flex;align-items:center;justify-content:center;color:#ccc;font-size:.85rem;text-align:center;flex-direction:column;gap:10px">
                             <i class="bi bi-qr-code" style="font-size:3rem"></i> QR Code ici
                         </div>
                     </div>
@@ -1367,7 +1367,7 @@ document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('pv-qr-placeholder').style.display = 'none';
             const clone = document.createElement('canvas');
             clone.width = srcCanvas.width; clone.height = srcCanvas.height;
-            clone.style.cssText = 'width:260px;height:260px;display:block';
+            clone.style.cssText = 'width:380px;height:380px;display:block';
             clone.getContext('2d').drawImage(srcCanvas, 0, 0);
             pvQr.appendChild(clone);
         } else {
@@ -1380,25 +1380,14 @@ document.addEventListener('DOMContentLoaded', function() {
         const activeSocials = selectedSocials.filter(s => s.label);
         if (activeSocials.length > 0) {
             const nameTc = _darkPreview ? '#ffffff' : '#111111';
-            // Align group left edge with "S" of CTA text
-            const pvCtaText = document.getElementById('poster-cta').value.trim() || 'Scannez pour accéder';
-            const tmpC = document.createElement('canvas');
-            const tmpCtx = tmpC.getContext('2d');
-            tmpCtx.font = 'bold 24px Arial'; // matches 1.5rem bold in poster preview
-            const pvCtaWidth = tmpCtx.measureText(pvCtaText).width;
-            const contentW = 680; // poster inner = 800px - 60px*2 padding
-            const groupMarginLeft = Math.max(0, (contentW - pvCtaWidth) / 2);
-            const group = document.createElement('div');
-            group.style.cssText = `display:inline-flex;flex-direction:column;gap:10px;align-items:flex-start;margin-left:${groupMarginLeft}px`;
             activeSocials.forEach(s => {
                 const item = document.createElement('div');
                 item.className = 'pv-social-item';
                 const dotBg = s.network === 'snapchat' ? '#FFFC00' : s.color;
                 const iconColor = s.network === 'snapchat' ? '#000' : '#fff';
                 item.innerHTML = `<div class="pv-social-dot" style="background:${dotBg};color:${iconColor}"><i class="bi ${networkIcons[s.network] || 'bi-share'}"></i></div><span class="pv-social-name" style="color:${nameTc}">${s.label}</span>`;
-                group.appendChild(item);
+                pvSocials.appendChild(item);
             });
-            pvSocials.appendChild(group);
         }
     }
 
@@ -1429,86 +1418,72 @@ document.addEventListener('DOMContentLoaded', function() {
         const canvasSocials = selectedSocials.filter(s => s.label);
         const initials = { facebook:'f', whatsapp:'W', instagram:'In', tiktok:'T', youtube:'Y', twitter:'X', linkedin:'in', telegram:'T', snapchat:'S', pinterest:'P', website:'W', telephone:'Tel', email:'@' };
 
-        function drawSocials(startX, startY, maxTextW) {
-            const cr = 26, lineH = cr*2 + 14;
-            ctx.font = 'bold 22px Arial';
-            const ctaText = document.getElementById('poster-cta').value.trim() || 'Scannez pour accéder';
-            const ctaAlignFont = isLandscape ? 'bold 28px Arial' : 'bold 30px Arial';
-            ctx.font = ctaAlignFont;
-            const ctaAlignW = ctx.measureText(ctaText).width;
-            const ix = isLandscape ? startX + cr : startX + W/2 - ctaAlignW/2 - startX + cr;
-            const fixedIx = isLandscape ? startX + cr : W/2 - ctaAlignW/2 + cr;
-            ctx.font = 'bold 22px Arial';
-            let sy = startY;
-            for (const s of canvasSocials) {
-                ctx.beginPath(); ctx.arc(fixedIx, sy + cr, cr, 0, Math.PI*2);
-                ctx.fillStyle = s.network === 'snapchat' ? '#FFFC00' : s.color; ctx.fill();
-                ctx.fillStyle = s.network === 'snapchat' ? '#000' : '#fff';
-                ctx.font = 'bold 22px Arial'; ctx.textAlign = 'center';
-                ctx.fillText(initials[s.network] || s.network[0].toUpperCase(), fixedIx, sy + cr + 8);
-                ctx.textAlign = 'left'; ctx.fillStyle = tc;
-                ctx.fillText(s.label, fixedIx + cr + 12, sy + cr + 8);
-                sy += lineH;
-            }
-        }
-
         if (isLandscape) {
             // === PAYSAGE : gauche texte, droite QR ===
             const leftW = 520, rightX = 620, pad = 60;
             let y = pad;
             if (posterLogoData) {
-                await new Promise(res => { const img = new Image(); img.onload = () => { ctx.drawImage(img, pad, y, 80, 80); res(); }; img.src = posterLogoData; });
-                y += 100;
-            }
-            const title = document.getElementById('poster-title').value.trim() || 'Titre de l\'affiche';
-            ctx.font = 'bold 48px Arial'; ctx.fillStyle = tc; ctx.textAlign = 'left';
-            y = wrapText(ctx, title, pad, y + 48, leftW - pad, 58) + 20;
-            const sub = document.getElementById('poster-subtitle').value.trim();
-            if (sub) { ctx.font = '26px Arial'; ctx.fillStyle = sc; y = wrapText(ctx, sub, pad, y + 26, leftW - pad, 34) + 16; }
-            const cta = document.getElementById('poster-cta').value.trim() || 'Scannez pour accéder';
-            ctx.font = 'bold 28px Arial'; ctx.fillStyle = tc;
-            y = wrapText(ctx, cta, pad, y + 28, leftW - pad, 36) + 16;
-            if (canvasSocials.length > 0) drawSocials(pad, y, leftW - pad);
-            // QR à droite centré
-            const qs = 320, qy = (H - qs - 24) / 2;
-            roundRect(ctx, rightX, qy, qs + 24, qs + 24, 14); ctx.fillStyle = '#ffffff'; ctx.fill();
-            ctx.drawImage(srcCanvas, rightX + 12, qy + 12, qs, qs);
-
-        } else {
-            // === PORTRAIT / CARRÉ : centré vertical ===
-            const padV = isSquare ? 70 : 60;
-            const contentW = isSquare ? 960 : 680;
-            const titleSize = isSquare ? 54 : 52;
-            const qsSize = isSquare ? 360 : 340;
-            let y = padV;
-            if (posterLogoData) {
-                await new Promise(res => { const img = new Image(); img.onload = () => { ctx.drawImage(img, W/2-50, y, 100, 100); res(); }; img.src = posterLogoData; });
+                await new Promise(res => { const img = new Image(); img.onload = () => { ctx.drawImage(img, pad, y, 100, 100); res(); }; img.src = posterLogoData; });
                 y += 120;
             }
             const title = document.getElementById('poster-title').value.trim() || 'Titre de l\'affiche';
-            ctx.font = `bold ${titleSize}px Arial`; ctx.fillStyle = tc; ctx.textAlign = 'center';
-            y = wrapText(ctx, title, W/2, y+titleSize, contentW, titleSize+10) + 24;
+            ctx.font = 'bold 54px Arial'; ctx.fillStyle = tc; ctx.textAlign = 'left';
+            y = wrapText(ctx, title, pad, y + 54, leftW - pad, 64) + 20;
             const sub = document.getElementById('poster-subtitle').value.trim();
-            if (sub) { ctx.font = '28px Arial'; ctx.fillStyle = sc; y = wrapText(ctx, sub, W/2, y+28, contentW, 36) + 20; }
-            const qs = qsSize, qx = (W-qs)/2-12, qy = y+20;
-            roundRect(ctx, qx, qy, qs+24, qs+24, 14); ctx.fillStyle = '#ffffff'; ctx.fill();
-            ctx.drawImage(srcCanvas, qx+12, qy+12, qs, qs);
-            y = qy + qs + 24 + 36;
+            if (sub) { ctx.font = '28px Arial'; ctx.fillStyle = sc; y = wrapText(ctx, sub, pad, y + 28, leftW - pad, 36) + 16; }
             const cta = document.getElementById('poster-cta').value.trim() || 'Scannez pour accéder';
-            ctx.font = 'bold 30px Arial'; ctx.fillStyle = tc;
-            y = wrapText(ctx, cta, W/2, y+30, contentW, 38) + 20;
+            ctx.font = 'bold 32px Arial'; ctx.fillStyle = tc;
+            y = wrapText(ctx, cta, pad, y + 32, leftW - pad, 40) + 16;
             if (canvasSocials.length > 0) {
-                const cr = 26, lineH = cr*2 + 16;
-                ctx.font = 'bold 30px Arial';
-                const ctaAlignW = ctx.measureText(cta).width;
-                const ix = W/2 - ctaAlignW/2 + cr;
-                ctx.font = 'bold 22px Arial';
+                const cr = 28, lineH = cr*2 + 14;
+                ctx.font = 'bold 24px Arial';
                 for (const s of canvasSocials) {
-                    ctx.beginPath(); ctx.arc(ix, y+cr, cr, 0, Math.PI*2);
+                    ctx.beginPath(); ctx.arc(pad + cr, y + cr, cr, 0, Math.PI*2);
                     ctx.fillStyle = s.network==='snapchat'?'#FFFC00':s.color; ctx.fill();
                     ctx.fillStyle = s.network==='snapchat'?'#000':'#fff';
-                    ctx.textAlign='center'; ctx.fillText(initials[s.network]||s.network[0].toUpperCase(), ix, y+cr+8);
-                    ctx.textAlign='left'; ctx.fillStyle=tc; ctx.fillText(s.label, ix+cr+12, y+cr+8);
+                    ctx.textAlign='center'; ctx.fillText(initials[s.network]||s.network[0].toUpperCase(), pad+cr, y+cr+9);
+                    ctx.textAlign='left'; ctx.fillStyle=tc; ctx.fillText(s.label, pad+cr*2+14, y+cr+9);
+                    y += lineH;
+                }
+            }
+            // QR à droite centré
+            const qs = 360, qy = (H - qs - 32) / 2;
+            roundRect(ctx, rightX, qy, qs + 32, qs + 32, 16); ctx.fillStyle = '#ffffff'; ctx.fill();
+            ctx.drawImage(srcCanvas, rightX + 16, qy + 16, qs, qs);
+
+        } else {
+            // === PORTRAIT / CARRÉ : centré vertical ===
+            const pad = 60;
+            const contentW = isSquare ? 960 : 680;
+            const titleSize = isSquare ? 60 : 68;
+            const qsSize = isSquare ? 400 : 380;
+            let y = pad;
+            if (posterLogoData) {
+                await new Promise(res => { const img = new Image(); img.onload = () => { ctx.drawImage(img, W/2-65, y, 130, 130); res(); }; img.src = posterLogoData; });
+                y += 150;
+            }
+            const title = document.getElementById('poster-title').value.trim() || 'Titre de l\'affiche';
+            ctx.font = `bold ${titleSize}px Arial`; ctx.fillStyle = tc; ctx.textAlign = 'left';
+            ctx.textAlign = 'left';
+            y = wrapText(ctx, title, pad, y+titleSize, contentW, titleSize+12) + 20;
+            const sub = document.getElementById('poster-subtitle').value.trim();
+            if (sub) { ctx.font = '30px Arial'; ctx.fillStyle = sc; y = wrapText(ctx, sub, pad, y+30, contentW, 38) + 18; }
+            const qs = qsSize, qx = (W-qs)/2-16, qy = y+16;
+            roundRect(ctx, qx, qy, qs+32, qs+32, 16); ctx.fillStyle = '#ffffff'; ctx.fill();
+            ctx.drawImage(srcCanvas, qx+16, qy+16, qs, qs);
+            y = qy + qs + 32 + 28;
+            const cta = document.getElementById('poster-cta').value.trim() || 'Scannez pour accéder';
+            ctx.font = 'bold 32px Arial'; ctx.fillStyle = tc; ctx.textAlign = 'left';
+            y = wrapText(ctx, cta, pad, y+32, contentW, 40) + 18;
+            if (canvasSocials.length > 0) {
+                const cr = 28, lineH = cr*2 + 14;
+                ctx.font = 'bold 24px Arial';
+                for (const s of canvasSocials) {
+                    ctx.beginPath(); ctx.arc(pad+cr, y+cr, cr, 0, Math.PI*2);
+                    ctx.fillStyle = s.network==='snapchat'?'#FFFC00':s.color; ctx.fill();
+                    ctx.fillStyle = s.network==='snapchat'?'#000':'#fff';
+                    ctx.textAlign='center'; ctx.fillText(initials[s.network]||s.network[0].toUpperCase(), pad+cr, y+cr+9);
+                    ctx.textAlign='left'; ctx.fillStyle=tc; ctx.fillText(s.label, pad+cr*2+14, y+cr+9);
                     y += lineH;
                 }
             }
