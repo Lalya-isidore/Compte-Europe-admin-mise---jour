@@ -1252,6 +1252,22 @@ document.addEventListener('DOMContentLoaded', function() {
         telephone:'bi-telephone', email:'bi-envelope'
     };
 
+    // Extraire les vrais caractères Unicode depuis le CSS chargé (pour Canvas)
+    const networkIconChars = {};
+    (function() {
+        Object.entries(networkIcons).forEach(([net, iconClass]) => {
+            const el = document.createElement('i');
+            el.className = 'bi ' + iconClass;
+            el.style.cssText = 'position:fixed;left:-9999px;visibility:hidden;font-size:16px';
+            document.body.appendChild(el);
+            const content = window.getComputedStyle(el, '::before').content;
+            document.body.removeChild(el);
+            if (content && content !== 'none') {
+                networkIconChars[net] = content.replace(/^["']|["']$/g, '');
+            }
+        });
+    })();
+
     const networkPlaceholders = {
         facebook:  'Ex : Page Officielle, @moncompte…',
         whatsapp:  'Ex : +33 6 12 34 56 78',
@@ -1428,6 +1444,9 @@ document.addEventListener('DOMContentLoaded', function() {
         const srcCanvas = document.querySelector('#canvas-container canvas');
         if (!srcCanvas) { alert('Générez d\'abord le QR Code.'); return; }
 
+        // Charger la police Bootstrap Icons pour le canvas
+        try { await document.fonts.load('24px bootstrap-icons'); } catch(e) {}
+
         const isLandscape = posterFormat === 'landscape';
         const isSquare = posterFormat === 'square';
         const W = isLandscape ? 1100 : isSquare ? 1080 : 800;
@@ -1447,7 +1466,6 @@ document.addEventListener('DOMContentLoaded', function() {
         const sc = dark ? 'rgba(255,255,255,0.75)' : 'rgba(0,0,0,0.6)';
 
         const canvasSocials = selectedSocials.filter(s => s.label);
-        const initials = { facebook:'f', whatsapp:'W', instagram:'In', tiktok:'T', youtube:'Y', twitter:'X', linkedin:'in', telegram:'T', snapchat:'S', pinterest:'P', website:'W', telephone:'Tel', email:'@' };
 
         if (isLandscape) {
             // === PAYSAGE : gauche (logo+titre+sous-titre+réseaux), droite (QR+CTA) ===
@@ -1465,13 +1483,16 @@ document.addEventListener('DOMContentLoaded', function() {
             // Réseaux dans colonne gauche (sans CTA)
             if (canvasSocials.length > 0) {
                 const cr = 26, lineH = cr*2 + 12;
-                ctx.font = 'bold 22px Arial';
                 for (const s of canvasSocials) {
                     ctx.beginPath(); ctx.arc(pad + cr, y + cr, cr, 0, Math.PI*2);
                     ctx.fillStyle = s.network==='snapchat'?'#FFFC00':s.color; ctx.fill();
                     ctx.fillStyle = s.network==='snapchat'?'#000':'#fff';
-                    ctx.textAlign='center'; ctx.fillText(initials[s.network]||s.network[0].toUpperCase(), pad+cr, y+cr+8);
-                    ctx.textAlign='left'; ctx.fillStyle=tc; ctx.fillText(s.label, pad+cr*2+12, y+cr+8);
+                    ctx.textAlign='center'; ctx.textBaseline='middle';
+                    ctx.font = `${Math.round(cr*1.1)}px bootstrap-icons`;
+                    ctx.fillText(networkIconChars[s.network]||'', pad+cr, y+cr);
+                    ctx.textBaseline='alphabetic'; ctx.textAlign='left';
+                    ctx.font='bold 22px Arial'; ctx.fillStyle=tc;
+                    ctx.fillText(s.label, pad+cr*2+12, y+cr+8);
                     y += lineH;
                 }
             }
@@ -1512,13 +1533,16 @@ document.addEventListener('DOMContentLoaded', function() {
                 ctx.font = 'bold 32px Arial';
                 const ctaW = ctx.measureText(cta).width;
                 const ix = W/2 - ctaW/2 + cr;
-                ctx.font = 'bold 24px Arial';
                 for (const s of canvasSocials) {
                     ctx.beginPath(); ctx.arc(ix, y+cr, cr, 0, Math.PI*2);
                     ctx.fillStyle = s.network==='snapchat'?'#FFFC00':s.color; ctx.fill();
                     ctx.fillStyle = s.network==='snapchat'?'#000':'#fff';
-                    ctx.textAlign='center'; ctx.fillText(initials[s.network]||s.network[0].toUpperCase(), ix, y+cr+9);
-                    ctx.textAlign='left'; ctx.fillStyle=tc; ctx.fillText(s.label, ix+cr+14, y+cr+9);
+                    ctx.textAlign='center'; ctx.textBaseline='middle';
+                    ctx.font = `${Math.round(cr*1.1)}px bootstrap-icons`;
+                    ctx.fillText(networkIconChars[s.network]||'', ix, y+cr);
+                    ctx.textBaseline='alphabetic'; ctx.textAlign='left';
+                    ctx.font='bold 24px Arial'; ctx.fillStyle=tc;
+                    ctx.fillText(s.label, ix+cr+14, y+cr+9);
                     y += lineH;
                 }
             }
