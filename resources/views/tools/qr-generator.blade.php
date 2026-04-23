@@ -493,7 +493,7 @@
 .poster-logo-area { margin-bottom: 20px; }
 .poster-logo-area img { width: 130px; height: 130px; object-fit: contain; border-radius: 10px; display: none; }
 .poster-title-area { text-align: center; margin-bottom: 20px; width: 100%; }
-.poster-title-area h2 { font-size: 56px; font-weight: 800; line-height: 1.15; margin: 0 0 12px; word-break: break-word; }
+.poster-title-area h2 { font-size: 46px; font-weight: 800; line-height: 1.15; margin: 0 0 12px; word-break: break-word; }
 .poster-title-area p  { font-size: 30px; margin: 0; line-height: 1.4; word-break: break-word; }
 .poster-qr-area {
     background: white; padding: 16px; border-radius: 16px;
@@ -1458,8 +1458,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 y += 108;
             }
             const title = document.getElementById('poster-title').value.trim() || 'Titre de l\'affiche';
-            ctx.font = 'bold 50px Arial'; ctx.fillStyle = tc; ctx.textAlign = 'left';
-            y = wrapText(ctx, title, pad, y + 50, leftW - pad, 60) + 14;
+            ctx.font = 'bold 42px Arial'; ctx.fillStyle = tc; ctx.textAlign = 'left';
+            y = wrapText(ctx, title, pad, y + 42, leftW - pad, 52) + 14;
             const sub = document.getElementById('poster-subtitle').value.trim();
             if (sub) { ctx.font = '28px Arial'; ctx.fillStyle = sc; y = wrapText(ctx, sub, pad, y + 28, leftW - pad, 36) + 14; }
             // Réseaux dans colonne gauche (sans CTA)
@@ -1487,7 +1487,7 @@ document.addEventListener('DOMContentLoaded', function() {
             // === PORTRAIT / CARRÉ : centré vertical ===
             const pad = 60;
             const contentW = isSquare ? 960 : 680;
-            const titleSize = isSquare ? 52 : 56;
+            const titleSize = isSquare ? 44 : 46;
             const qsSize = isSquare ? 400 : 380;
             let y = pad;
             if (posterLogoData) {
