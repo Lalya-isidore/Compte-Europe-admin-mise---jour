@@ -382,6 +382,86 @@
 .switch-input:checked + .switch-rail { background: var(--ce-success); }
 .switch-input:checked + .switch-rail::before { transform: translateX(20px); }
 
+/* ===== POSTER SECTION ===== */
+.poster-divider { border: none; border-top: 2px dashed var(--ce-border); margin: 36px 0 28px; }
+
+.poster-toggle-row {
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 16px;
+}
+.poster-toggle-label {
+    display: flex; align-items: center; gap: 14px; cursor: pointer;
+}
+.poster-toggle-label .ptl-icon {
+    width: 46px; height: 46px;
+    background: rgba(33,150,243,.08);
+    border: 1px solid rgba(33,150,243,.25);
+    border-radius: 14px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.3rem; color: var(--ce-primary);
+}
+.poster-toggle-label .ptl-text strong { font-size: .95rem; color: var(--ce-text); }
+.poster-toggle-label .ptl-text span { font-size: .8rem; color: var(--ce-text-dim); display: block; }
+
+.poster-editor { display: none; margin-top: 28px; }
+.poster-editor.open {
+    display: grid;
+    grid-template-columns: 1fr 280px;
+    gap: 28px; align-items: start;
+}
+@media (max-width: 900px) { .poster-editor.open { grid-template-columns: 1fr; } }
+
+.bg-preset-grid { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 10px; }
+.bg-preset-btn {
+    width: 42px; height: 42px; border-radius: 10px;
+    border: 2px solid transparent; cursor: pointer; transition: all .2s;
+}
+.bg-preset-btn.active { border-color: var(--ce-primary); transform: scale(1.12); }
+.bg-preset-btn.custom-bg-btn {
+    display: flex; align-items: center; justify-content: center;
+    background: #f8f9fa; border: 2px dashed var(--ce-border);
+    color: var(--ce-text-dim); font-size: 1.1rem; position: relative; overflow: hidden;
+}
+.bg-preset-btn.custom-bg-btn input[type="color"] {
+    position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%;
+}
+
+.poster-preview-wrap { position: sticky; top: 90px; display: flex; flex-direction: column; align-items: center; gap: 14px; }
+.poster-preview-frame {
+    width: 224px; height: 308px;
+    border-radius: 14px; overflow: hidden;
+    box-shadow: 0 12px 40px rgba(0,0,0,.15);
+    border: 1px solid var(--ce-border); position: relative; background: #fff;
+}
+.poster-preview-inner {
+    width: 800px; height: 1100px;
+    transform-origin: top left; transform: scale(0.28);
+    position: absolute; top: 0; left: 0;
+    display: flex; flex-direction: column; align-items: center;
+    padding: 60px 60px 50px; box-sizing: border-box;
+}
+.poster-logo-area { margin-bottom: 24px; }
+.poster-logo-area img { width: 90px; height: 90px; object-fit: contain; border-radius: 10px; display: none; }
+.poster-title-area { text-align: center; margin-bottom: 28px; width: 100%; }
+.poster-title-area h2 { font-size: 3rem; font-weight: 800; line-height: 1.2; margin: 0 0 14px; word-break: break-word; }
+.poster-title-area p  { font-size: 1.6rem; margin: 0; line-height: 1.4; word-break: break-word; }
+.poster-qr-area {
+    background: white; padding: 28px; border-radius: 24px;
+    box-shadow: 0 8px 32px rgba(0,0,0,.12); margin-bottom: 28px;
+    display: flex; align-items: center; justify-content: center;
+}
+.poster-cta-area { text-align: center; width: 100%; }
+.poster-cta-area p { font-size: 1.5rem; font-weight: 600; margin: 0; word-break: break-word; }
+
+.btn-dl-poster {
+    width: 100%; background: var(--ce-secondary); color: white; border: none;
+    border-radius: 14px; padding: 16px; font-weight: 700; font-size: .92rem;
+    cursor: pointer; transition: all .3s;
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    box-shadow: 0 4px 15px rgba(255,107,53,.25);
+}
+.btn-dl-poster:hover { transform: translateY(-2px); filter: brightness(1.08); }
+
 </style>
 
 <div class="qr-premium-wrap mt-2">
@@ -523,6 +603,97 @@
             </button>
         </div>
     </div>
+
+    {{-- ===== SECTION AFFICHE ===== --}}
+    <hr class="poster-divider">
+
+    <div class="poster-toggle-row">
+        <label class="poster-toggle-label" for="toggle-poster">
+            <div class="ptl-icon"><i class="bi bi-card-image"></i></div>
+            <div class="ptl-text">
+                <strong>Créer une affiche avec ce QR Code</strong>
+                <span>Optionnel — ajoutez titre, logo et couleurs pour une affiche prête à imprimer ou partager</span>
+            </div>
+        </label>
+        <label class="ce-switch">
+            <input type="checkbox" id="toggle-poster" class="switch-input">
+            <div class="switch-rail"></div>
+        </label>
+    </div>
+
+    <div class="poster-editor" id="poster-editor">
+        {{-- Gauche : paramètres --}}
+        <div class="ce-card">
+            <div class="form-group">
+                <label class="form-label"><i class="bi bi-type-bold me-1"></i> Titre de l'affiche</label>
+                <input type="text" id="poster-title" class="ce-input" placeholder="Ex : Rejoignez-nous !" maxlength="60">
+            </div>
+            <div class="form-group">
+                <label class="form-label"><i class="bi bi-text-left me-1"></i> Sous-titre</label>
+                <input type="text" id="poster-subtitle" class="ce-input" placeholder="Ex : Disponible en ligne 24h/24" maxlength="100">
+            </div>
+            <div class="form-group">
+                <label class="form-label"><i class="bi bi-cursor-text me-1"></i> Texte sous le QR Code</label>
+                <input type="text" id="poster-cta" class="ce-input" placeholder="Scannez pour accéder" maxlength="80" value="Scannez pour accéder">
+            </div>
+            <div class="form-group">
+                <label class="form-label"><i class="bi bi-palette me-1"></i> Couleur de fond</label>
+                <div class="bg-preset-grid">
+                    <button class="bg-preset-btn active" data-color="#ffffff" style="background:#ffffff;border:2px solid #e8e8e8" title="Blanc"></button>
+                    <button class="bg-preset-btn" data-color="#0a0d2e" style="background:#0a0d2e" title="Marine"></button>
+                    <button class="bg-preset-btn" data-color="#2196F3" style="background:#2196F3" title="Bleu"></button>
+                    <button class="bg-preset-btn" data-color="#10b981" style="background:#10b981" title="Vert"></button>
+                    <button class="bg-preset-btn" data-color="#FF6B35" style="background:#FF6B35" title="Orange"></button>
+                    <button class="bg-preset-btn" data-color="#7c3aed" style="background:#7c3aed" title="Violet"></button>
+                    <button class="bg-preset-btn" data-color="#dc2626" style="background:#dc2626" title="Rouge"></button>
+                    <button class="bg-preset-btn" data-color="#1e293b" style="background:#1e293b" title="Ardoise"></button>
+                    <button class="bg-preset-btn custom-bg-btn" title="Couleur personnalisée">
+                        <i class="bi bi-plus-lg"></i>
+                        <input type="color" id="poster-custom-color" value="#ffffff">
+                    </button>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="form-label"><i class="bi bi-image me-1"></i> Logo <span style="font-weight:400;color:var(--ce-text-dim)">(facultatif)</span></label>
+                <div class="logo-upload-zone" id="poster-logo-zone" style="padding:20px">
+                    <input type="file" id="poster-logo-input" hidden accept="image/*">
+                    <i class="bi bi-cloud-arrow-up" style="font-size:1.6rem"></i>
+                    <p style="font-size:.82rem;margin:6px 0 0;color:var(--ce-text-dim)">Cliquez pour ajouter un logo</p>
+                </div>
+                <div id="poster-logo-info" style="display:none;margin-top:10px;background:#f8f9fa;padding:10px 14px;border-radius:10px;align-items:center;gap:10px;border:1px solid var(--ce-border)">
+                    <img id="poster-logo-thumb" src="" style="width:34px;height:34px;object-fit:contain;border-radius:6px">
+                    <span id="poster-logo-name" style="flex:1;font-size:.82rem;color:var(--ce-text)">logo.png</span>
+                    <button id="poster-logo-remove" style="background:none;border:none;color:#dc2626;font-size:.78rem;cursor:pointer;padding:0">Supprimer</button>
+                </div>
+            </div>
+        </div>
+
+        {{-- Droite : aperçu --}}
+        <div class="poster-preview-wrap">
+            <div style="font-size:.78rem;color:var(--ce-text-dim);text-transform:uppercase;letter-spacing:.05em;font-weight:600">Aperçu affiche</div>
+            <div class="poster-preview-frame">
+                <div class="poster-preview-inner" id="poster-preview-inner">
+                    <div class="poster-logo-area"><img id="pv-logo" src="" alt=""></div>
+                    <div class="poster-title-area">
+                        <h2 id="pv-title" style="color:#111">Titre de l'affiche</h2>
+                        <p id="pv-subtitle" style="color:#555"></p>
+                    </div>
+                    <div class="poster-qr-area" id="pv-qr-area">
+                        <div id="pv-qr-placeholder" style="width:260px;height:260px;display:flex;align-items:center;justify-content:center;color:#ccc;font-size:.85rem;text-align:center;flex-direction:column;gap:10px">
+                            <i class="bi bi-qr-code" style="font-size:3rem"></i> QR Code ici
+                        </div>
+                    </div>
+                    <div class="poster-cta-area">
+                        <p id="pv-cta" style="color:#111">Scannez pour accéder</p>
+                    </div>
+                </div>
+            </div>
+            <button class="btn-dl-poster" id="btn-dl-poster">
+                <i class="bi bi-card-image"></i> Télécharger l'affiche
+            </button>
+        </div>
+    </div>
+
 </div>
 
 @push('scripts')
@@ -730,6 +901,151 @@ document.addEventListener('DOMContentLoaded', function() {
         currentOptions.data = dataInput.value.trim();
         document.getElementById('preview-overlay').classList.add('hidden');
         renderQR();
+    }
+
+    // ===== SECTION AFFICHE =====
+    let posterBgColor = '#ffffff';
+    let posterLogoData = null;
+
+    document.getElementById('toggle-poster').addEventListener('change', function() {
+        document.getElementById('poster-editor').classList.toggle('open', this.checked);
+        if (this.checked) updatePosterPreview();
+    });
+
+    document.querySelectorAll('.bg-preset-btn[data-color]').forEach(btn => {
+        btn.addEventListener('click', () => {
+            document.querySelectorAll('.bg-preset-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            posterBgColor = btn.dataset.color;
+            updatePosterPreview();
+        });
+    });
+
+    document.getElementById('poster-custom-color').addEventListener('input', function() {
+        document.querySelectorAll('.bg-preset-btn').forEach(b => b.classList.remove('active'));
+        this.closest('.bg-preset-btn').classList.add('active');
+        posterBgColor = this.value;
+        updatePosterPreview();
+    });
+
+    ['poster-title','poster-subtitle','poster-cta'].forEach(id => {
+        document.getElementById(id).addEventListener('input', updatePosterPreview);
+    });
+
+    const posterLogoZone = document.getElementById('poster-logo-zone');
+    const posterLogoInput = document.getElementById('poster-logo-input');
+    posterLogoZone.addEventListener('click', () => posterLogoInput.click());
+    posterLogoInput.addEventListener('change', function() {
+        const file = this.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = ev => {
+            posterLogoData = ev.target.result;
+            document.getElementById('poster-logo-thumb').src = posterLogoData;
+            document.getElementById('poster-logo-name').textContent = file.name;
+            document.getElementById('poster-logo-info').style.display = 'flex';
+            document.getElementById('pv-logo').src = posterLogoData;
+            document.getElementById('pv-logo').style.display = 'block';
+            updatePosterPreview();
+        };
+        reader.readAsDataURL(file);
+    });
+    document.getElementById('poster-logo-remove').addEventListener('click', () => {
+        posterLogoData = null;
+        posterLogoInput.value = '';
+        document.getElementById('poster-logo-info').style.display = 'none';
+        document.getElementById('pv-logo').style.display = 'none';
+        updatePosterPreview();
+    });
+
+    function isDark(hex) {
+        const r = parseInt(hex.slice(1,3),16), g = parseInt(hex.slice(3,5),16), b = parseInt(hex.slice(5,7),16);
+        return (r*299 + g*587 + b*114) / 1000 < 128;
+    }
+
+    function updatePosterPreview() {
+        const inner = document.getElementById('poster-preview-inner');
+        inner.style.background = posterBgColor;
+        const tc = isDark(posterBgColor) ? '#ffffff' : '#111111';
+        const sc = isDark(posterBgColor) ? 'rgba(255,255,255,0.75)' : 'rgba(0,0,0,0.6)';
+        document.getElementById('pv-title').style.color = tc;
+        document.getElementById('pv-title').textContent = document.getElementById('poster-title').value || 'Titre de l\'affiche';
+        document.getElementById('pv-subtitle').style.color = sc;
+        document.getElementById('pv-subtitle').textContent = document.getElementById('poster-subtitle').value;
+        document.getElementById('pv-cta').style.color = tc;
+        document.getElementById('pv-cta').textContent = document.getElementById('poster-cta').value || 'Scannez pour accéder';
+
+        const srcCanvas = document.querySelector('#canvas-container canvas');
+        const pvQr = document.getElementById('pv-qr-area');
+        pvQr.querySelectorAll('canvas').forEach(c => c.remove());
+        if (srcCanvas) {
+            document.getElementById('pv-qr-placeholder').style.display = 'none';
+            const clone = document.createElement('canvas');
+            clone.width = srcCanvas.width; clone.height = srcCanvas.height;
+            clone.style.cssText = 'width:260px;height:260px;display:block';
+            clone.getContext('2d').drawImage(srcCanvas, 0, 0);
+            pvQr.appendChild(clone);
+        } else {
+            document.getElementById('pv-qr-placeholder').style.display = 'flex';
+        }
+    }
+
+    // Hook sur renderQR pour mettre à jour l'aperçu affiche
+    const _origRender = renderQR;
+    function renderQR() { _origRender(); if (document.getElementById('toggle-poster').checked) setTimeout(updatePosterPreview, 350); }
+
+    // Télécharger l'affiche
+    document.getElementById('btn-dl-poster').addEventListener('click', async () => {
+        const srcCanvas = document.querySelector('#canvas-container canvas');
+        if (!srcCanvas) { alert('Générez d\'abord le QR Code.'); return; }
+
+        const W = 800, H = 1100;
+        const cv = document.createElement('canvas');
+        cv.width = W; cv.height = H;
+        const ctx = cv.getContext('2d');
+
+        ctx.fillStyle = posterBgColor;
+        ctx.fillRect(0, 0, W, H);
+
+        const dark = isDark(posterBgColor);
+        const tc = dark ? '#ffffff' : '#111111';
+        const sc = dark ? 'rgba(255,255,255,0.75)' : 'rgba(0,0,0,0.6)';
+        let y = 60;
+
+        if (posterLogoData) {
+            await new Promise(res => { const img = new Image(); img.onload = () => { ctx.drawImage(img, W/2-50, y, 100, 100); res(); }; img.src = posterLogoData; });
+            y += 120;
+        }
+
+        const title = document.getElementById('poster-title').value.trim() || 'Titre de l\'affiche';
+        ctx.font = 'bold 52px Arial'; ctx.fillStyle = tc; ctx.textAlign = 'center';
+        y = wrapText(ctx, title, W/2, y+52, 680, 62) + 24;
+
+        const sub = document.getElementById('poster-subtitle').value.trim();
+        if (sub) { ctx.font = '28px Arial'; ctx.fillStyle = sc; y = wrapText(ctx, sub, W/2, y+28, 680, 36) + 20; }
+
+        const qs = 340, qx = (W-qs)/2-24, qy = y+20;
+        roundRect(ctx, qx, qy, qs+48, qs+48, 24); ctx.fillStyle = '#ffffff'; ctx.fill();
+        ctx.drawImage(srcCanvas, qx+24, qy+24, qs, qs);
+        y = qy + qs + 48 + 36;
+
+        const cta = document.getElementById('poster-cta').value.trim() || 'Scannez pour accéder';
+        ctx.font = 'bold 30px Arial'; ctx.fillStyle = tc;
+        wrapText(ctx, cta, W/2, y+30, 680, 38);
+
+        cv.toBlob(blob => { const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'affiche-qr.png'; a.click(); }, 'image/png');
+    });
+
+    function wrapText(ctx, text, x, y, maxW, lh) {
+        const words = text.split(' '); let line = '', cy = y;
+        words.forEach(w => { const t = line ? line+' '+w : w; if (ctx.measureText(t).width > maxW && line) { ctx.fillText(line,x,cy); line=w; cy+=lh; } else line=t; });
+        if (line) ctx.fillText(line,x,cy);
+        return cy;
+    }
+    function roundRect(ctx, x, y, w, h, r) {
+        ctx.beginPath(); ctx.moveTo(x+r,y); ctx.lineTo(x+w-r,y); ctx.arcTo(x+w,y,x+w,y+r,r);
+        ctx.lineTo(x+w,y+h-r); ctx.arcTo(x+w,y+h,x+w-r,y+h,r); ctx.lineTo(x+r,y+h);
+        ctx.arcTo(x,y+h,x,y+h-r,r); ctx.lineTo(x,y+r); ctx.arcTo(x,y,x+r,y,r); ctx.closePath();
     }
 });
 </script>
