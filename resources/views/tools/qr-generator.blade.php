@@ -1139,7 +1139,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const dark = isDark(posterBgColor);
             const nameTc = dark ? '#ffffff' : '#111111';
             const group = document.createElement('div');
-            group.style.cssText = 'display:inline-flex;flex-direction:column;gap:10px;align-items:flex-start';
+            group.style.cssText = 'display:inline-flex;flex-direction:column;gap:10px;align-items:center';
             activeSocials.forEach(s => {
                 const item = document.createElement('div');
                 item.className = 'pv-social-item';
@@ -1197,12 +1197,11 @@ document.addEventListener('DOMContentLoaded', function() {
         if (canvasSocials.length > 0) {
             const cr = 26, lineH = cr*2 + 16;
             ctx.font = 'bold 22px Arial';
-            // Find widest row to center the whole block
-            const maxRowW = canvasSocials.reduce((max, s) => Math.max(max, cr*2 + 12 + ctx.measureText(s.label).width), 0);
-            const blockX = (W - maxRowW) / 2; // left edge of block
-            const ix = blockX + cr; // circle center X — same for all rows
             const initials = { facebook:'f', whatsapp:'W', instagram:'In', tiktok:'T', youtube:'▶', twitter:'X', linkedin:'in', telegram:'T', snapchat:'S', pinterest:'P', website:'W' };
             for (const s of canvasSocials) {
+                // Center each row independently (like the title above)
+                const rowW = cr*2 + 12 + ctx.measureText(s.label).width;
+                const ix = (W - rowW) / 2 + cr;
                 // circle
                 ctx.beginPath(); ctx.arc(ix, y + cr, cr, 0, Math.PI*2);
                 ctx.fillStyle = s.network === 'snapchat' ? '#FFFC00' : s.color; ctx.fill();
