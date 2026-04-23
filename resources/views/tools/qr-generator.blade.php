@@ -462,7 +462,7 @@
 .poster-preview-inner.landscape {
     width: 1100px; height: 756px;
     transform: scale(0.28);
-    flex-direction: row; align-items: stretch;
+    flex-direction: row; align-items: center;
     padding: 50px 60px; gap: 50px;
     display: flex;
 }
