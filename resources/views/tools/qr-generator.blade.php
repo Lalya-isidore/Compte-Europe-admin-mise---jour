@@ -998,7 +998,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     const networkPlaceholders = {
         facebook:  'Ex : Page Officielle, @moncompte…',
-        whatsapp:  'Ex : +229 98 20 19 10',
+        whatsapp:  'Ex : +33 6 12 34 56 78',
         instagram: 'Ex : @mon_instagram',
         tiktok:    'Ex : @montiktok',
         youtube:   'Ex : Ma Chaîne YouTube',
