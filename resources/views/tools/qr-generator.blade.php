@@ -453,8 +453,10 @@
 .poster-cta-area { text-align: center; width: 100%; }
 .poster-cta-area p { font-size: 1.5rem; font-weight: 600; margin: 0; word-break: break-word; }
 
-.poster-socials-area { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 10px; padding: 10px 0 4px; width: 100%; }
-.poster-socials-area .pv-social-dot { width: 38px; height: 38px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; color: #fff; flex-shrink: 0; }
+.poster-socials-area { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 12px 20px; padding: 10px 0 4px; width: 100%; }
+.pv-social-item { display: flex; align-items: center; gap: 7px; }
+.pv-social-dot { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1rem; color: #fff; flex-shrink: 0; }
+.pv-social-name { font-size: .85rem; font-weight: 600; }
 
 /* Social icon selector */
 .social-icons-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; }
@@ -479,6 +481,7 @@
 .social-icon-btn[data-network="telegram"].active  { border-color:#2CA5E0; background:rgba(44,165,224,.1); color:#2CA5E0; }
 .social-icon-btn[data-network="snapchat"].active  { border-color:#ccb800; background:rgba(255,252,0,.15); color:#a09500; }
 .social-icon-btn[data-network="pinterest"].active { border-color:#E60023; background:rgba(230,0,35,.08); color:#E60023; }
+.social-icon-btn[data-network="website"].active   { border-color:#2196F3; background:rgba(33,150,243,.1); color:#2196F3; }
 @media (max-width: 500px) { .social-icons-grid { grid-template-columns: repeat(4, 1fr); } }
 
 .btn-dl-poster {
@@ -728,6 +731,12 @@
                     <button class="social-icon-btn" data-network="pinterest" data-color="#E60023" type="button" title="Pinterest">
                         <i class="bi bi-pinterest"></i><span>Pinterest</span>
                     </button>
+                    <button class="social-icon-btn" data-network="website" data-color="#2196F3" type="button" title="Site Web">
+                        <i class="bi bi-globe2"></i><span>Site Web</span>
+                    </button>
+                </div>
+                <div id="website-label-wrap" style="display:none;margin-top:10px">
+                    <input type="text" id="website-label" class="ce-input" placeholder="Ex : www.monsite.com" maxlength="50">
                 </div>
             </div>
         </div>
@@ -985,12 +994,23 @@ document.addEventListener('DOMContentLoaded', function() {
             if (btn.classList.contains('active')) {
                 btn.classList.remove('active');
                 selectedSocials = selectedSocials.filter(s => s.network !== net);
+                if (net === 'website') document.getElementById('website-label-wrap').style.display = 'none';
             } else {
                 btn.classList.add('active');
-                selectedSocials.push({ network: net, color: color });
+                const label = btn.querySelector('span').textContent;
+                selectedSocials.push({ network: net, color: color, label: label });
+                if (net === 'website') document.getElementById('website-label-wrap').style.display = 'block';
             }
             updatePosterPreview();
         });
+    });
+
+    document.getElementById('website-label').addEventListener('input', () => {
+        const idx = selectedSocials.findIndex(s => s.network === 'website');
+        if (idx !== -1) {
+            selectedSocials[idx].label = document.getElementById('website-label').value.trim() || 'Site Web';
+        }
+        updatePosterPreview();
     });
 
     document.getElementById('toggle-poster').addEventListener('change', function() {
@@ -1075,21 +1095,28 @@ document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('pv-qr-placeholder').style.display = 'flex';
         }
 
-        // Social dots in preview
+        // Social items in preview (circle + name)
         const pvSocials = document.getElementById('pv-socials');
         pvSocials.innerHTML = '';
         if (selectedSocials.length > 0) {
             const iconMap = {
-                facebook: 'bi-facebook', whatsapp: 'bi-whatsapp', instagram: 'bi-instagram',
-                tiktok: 'bi-tiktok', youtube: 'bi-youtube', twitter: 'bi-twitter-x',
-                linkedin: 'bi-linkedin', telegram: 'bi-telegram', snapchat: 'bi-snapchat', pinterest: 'bi-pinterest'
+                facebook:'bi-facebook', whatsapp:'bi-whatsapp', instagram:'bi-instagram',
+                tiktok:'bi-tiktok', youtube:'bi-youtube', twitter:'bi-twitter-x',
+                linkedin:'bi-linkedin', telegram:'bi-telegram', snapchat:'bi-snapchat',
+                pinterest:'bi-pinterest', website:'bi-globe2'
             };
+            const dark = isDark(posterBgColor);
+            const nameTc = dark ? '#ffffff' : '#111111';
             selectedSocials.forEach(s => {
-                const dot = document.createElement('div');
-                dot.className = 'pv-social-dot';
-                dot.style.background = s.network === 'tiktok' ? '#010101' : s.color;
-                dot.innerHTML = `<i class="bi ${iconMap[s.network] || 'bi-share'}"></i>`;
-                pvSocials.appendChild(dot);
+                const item = document.createElement('div');
+                item.className = 'pv-social-item';
+                const dotBg = s.network === 'snapchat' ? '#FFFC00' : s.color;
+                const iconColor = s.network === 'snapchat' ? '#000' : '#fff';
+                const displayLabel = s.network === 'website'
+                    ? (document.getElementById('website-label').value.trim() || 'Site Web')
+                    : s.label;
+                item.innerHTML = `<div class="pv-social-dot" style="background:${dotBg};color:${iconColor}"><i class="bi ${iconMap[s.network] || 'bi-share'}"></i></div><span class="pv-social-name" style="color:${nameTc}">${displayLabel}</span>`;
+                pvSocials.appendChild(item);
             });
         }
     }
@@ -1134,20 +1161,35 @@ document.addEventListener('DOMContentLoaded', function() {
         ctx.font = 'bold 30px Arial'; ctx.fillStyle = tc;
         y = wrapText(ctx, cta, W/2, y+30, 680, 38) + 50;
 
-        // Social circles on canvas
+        // Social items on canvas (circle + name)
         if (selectedSocials.length > 0) {
-            const r = 32, gap = 18, total = selectedSocials.length * (r*2 + gap) - gap;
-            let sx = (W - total) / 2 + r;
-            for (const s of selectedSocials) {
-                ctx.beginPath(); ctx.arc(sx, y, r, 0, Math.PI*2);
-                ctx.fillStyle = s.color === '#FFFC00' ? '#FFFC00' : s.color; ctx.fill();
-                // letter
+            const cr = 26; // circle radius
+            ctx.font = 'bold 22px Arial';
+            // measure each item width: circle diameter + gap + text width
+            const itemGap = 28;
+            const items = selectedSocials.map(s => {
+                const lbl = s.network === 'website'
+                    ? (document.getElementById('website-label').value.trim() || 'Site Web')
+                    : s.label;
+                return { s, lbl, tw: ctx.measureText(lbl).width };
+            });
+            const totalW = items.reduce((acc, it) => acc + cr*2 + 10 + it.tw, 0) + (items.length-1)*itemGap;
+            let ix = (W - totalW) / 2 + cr;
+            for (const {s, lbl} of items) {
+                // circle
+                ctx.beginPath(); ctx.arc(ix, y, cr, 0, Math.PI*2);
+                ctx.fillStyle = s.network === 'snapchat' ? '#FFFC00' : s.color; ctx.fill();
+                // initial letter inside circle
                 ctx.fillStyle = s.network === 'snapchat' ? '#000' : '#fff';
-                ctx.font = 'bold 26px Arial'; ctx.textAlign = 'center';
-                const initials = { facebook:'f', whatsapp:'W', instagram:'In', tiktok:'T', youtube:'▶', twitter:'𝕏', linkedin:'in', telegram:'✈', snapchat:'👻', pinterest:'P' };
-                ctx.fillText(initials[s.network] || s.network[0].toUpperCase(), sx, y+9);
-                sx += r*2 + gap;
+                ctx.font = 'bold 22px Arial'; ctx.textAlign = 'center';
+                const initials = { facebook:'f', whatsapp:'W', instagram:'In', tiktok:'T', youtube:'▶', twitter:'X', linkedin:'in', telegram:'T', snapchat:'S', pinterest:'P', website:'W' };
+                ctx.fillText(initials[s.network] || s.network[0].toUpperCase(), ix, y+8);
+                // label text
+                ctx.textAlign = 'left'; ctx.fillStyle = tc; ctx.font = 'bold 22px Arial';
+                ctx.fillText(lbl, ix + cr + 10, y+8);
+                ix += cr*2 + 10 + ctx.measureText(lbl).width + itemGap;
             }
+            y += cr + 20;
         }
 
         cv.toBlob(blob => { const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'affiche-qr.png'; a.click(); }, 'image/png');
