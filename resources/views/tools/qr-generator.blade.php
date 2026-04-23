@@ -735,9 +735,7 @@
                         <i class="bi bi-globe2"></i><span>Site Web</span>
                     </button>
                 </div>
-                <div id="website-label-wrap" style="display:none;margin-top:10px">
-                    <input type="text" id="website-label" class="ce-input" placeholder="Ex : www.monsite.com" maxlength="50">
-                </div>
+                <div id="social-labels-wrap" style="margin-top:10px;display:flex;flex-direction:column;gap:8px"></div>
             </div>
         </div>
 
@@ -987,6 +985,37 @@ document.addEventListener('DOMContentLoaded', function() {
     let selectedSocials = []; // {network, color}
 
     // Social icon toggle
+    const networkNames = {
+        facebook:'Facebook', whatsapp:'WhatsApp', instagram:'Instagram', tiktok:'TikTok',
+        youtube:'YouTube', twitter:'X / Twitter', linkedin:'LinkedIn', telegram:'Telegram',
+        snapchat:'Snapchat', pinterest:'Pinterest', website:'Site Web'
+    };
+    const networkIcons = {
+        facebook:'bi-facebook', whatsapp:'bi-whatsapp', instagram:'bi-instagram', tiktok:'bi-tiktok',
+        youtube:'bi-youtube', twitter:'bi-twitter-x', linkedin:'bi-linkedin', telegram:'bi-telegram',
+        snapchat:'bi-snapchat', pinterest:'bi-pinterest', website:'bi-globe2'
+    };
+
+    function addSocialLabelInput(net, color) {
+        const wrap = document.getElementById('social-labels-wrap');
+        const row = document.createElement('div');
+        row.id = `social-label-row-${net}`;
+        row.style.cssText = 'display:flex;align-items:center;gap:8px';
+        const iconColor = net === 'snapchat' ? '#000' : '#fff';
+        const bgColor = net === 'snapchat' ? '#FFFC00' : color;
+        row.innerHTML = `
+            <div style="width:30px;height:30px;border-radius:50%;background:${bgColor};display:flex;align-items:center;justify-content:center;flex-shrink:0;color:${iconColor};font-size:.9rem">
+                <i class="bi ${networkIcons[net]}"></i>
+            </div>
+            <input type="text" id="social-label-${net}" class="ce-input" placeholder="Saisissez le nom à afficher" maxlength="50" style="flex:1;padding:8px 12px">`;
+        wrap.appendChild(row);
+        document.getElementById(`social-label-${net}`).addEventListener('input', function() {
+            const idx = selectedSocials.findIndex(s => s.network === net);
+            if (idx !== -1) selectedSocials[idx].label = this.value.trim();
+            updatePosterPreview();
+        });
+    }
+
     document.querySelectorAll('.social-icon-btn').forEach(btn => {
         btn.addEventListener('click', () => {
             const net = btn.dataset.network;
@@ -994,23 +1023,15 @@ document.addEventListener('DOMContentLoaded', function() {
             if (btn.classList.contains('active')) {
                 btn.classList.remove('active');
                 selectedSocials = selectedSocials.filter(s => s.network !== net);
-                if (net === 'website') document.getElementById('website-label-wrap').style.display = 'none';
+                const row = document.getElementById(`social-label-row-${net}`);
+                if (row) row.remove();
             } else {
                 btn.classList.add('active');
-                const label = btn.querySelector('span').textContent;
-                selectedSocials.push({ network: net, color: color, label: label });
-                if (net === 'website') document.getElementById('website-label-wrap').style.display = 'block';
+                selectedSocials.push({ network: net, color: color, label: '' });
+                addSocialLabelInput(net, color);
             }
             updatePosterPreview();
         });
-    });
-
-    document.getElementById('website-label').addEventListener('input', () => {
-        const idx = selectedSocials.findIndex(s => s.network === 'website');
-        if (idx !== -1) {
-            selectedSocials[idx].label = document.getElementById('website-label').value.trim() || 'Site Web';
-        }
-        updatePosterPreview();
     });
 
     document.getElementById('toggle-poster').addEventListener('change', function() {
@@ -1095,27 +1116,19 @@ document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('pv-qr-placeholder').style.display = 'flex';
         }
 
-        // Social items in preview (circle + name)
+        // Social items in preview (circle + user-typed name)
         const pvSocials = document.getElementById('pv-socials');
         pvSocials.innerHTML = '';
-        if (selectedSocials.length > 0) {
-            const iconMap = {
-                facebook:'bi-facebook', whatsapp:'bi-whatsapp', instagram:'bi-instagram',
-                tiktok:'bi-tiktok', youtube:'bi-youtube', twitter:'bi-twitter-x',
-                linkedin:'bi-linkedin', telegram:'bi-telegram', snapchat:'bi-snapchat',
-                pinterest:'bi-pinterest', website:'bi-globe2'
-            };
+        const activeSocials = selectedSocials.filter(s => s.label);
+        if (activeSocials.length > 0) {
             const dark = isDark(posterBgColor);
             const nameTc = dark ? '#ffffff' : '#111111';
-            selectedSocials.forEach(s => {
+            activeSocials.forEach(s => {
                 const item = document.createElement('div');
                 item.className = 'pv-social-item';
                 const dotBg = s.network === 'snapchat' ? '#FFFC00' : s.color;
                 const iconColor = s.network === 'snapchat' ? '#000' : '#fff';
-                const displayLabel = s.network === 'website'
-                    ? (document.getElementById('website-label').value.trim() || 'Site Web')
-                    : s.label;
-                item.innerHTML = `<div class="pv-social-dot" style="background:${dotBg};color:${iconColor}"><i class="bi ${iconMap[s.network] || 'bi-share'}"></i></div><span class="pv-social-name" style="color:${nameTc}">${displayLabel}</span>`;
+                item.innerHTML = `<div class="pv-social-dot" style="background:${dotBg};color:${iconColor}"><i class="bi ${networkIcons[s.network] || 'bi-share'}"></i></div><span class="pv-social-name" style="color:${nameTc}">${s.label}</span>`;
                 pvSocials.appendChild(item);
             });
         }
@@ -1161,30 +1174,22 @@ document.addEventListener('DOMContentLoaded', function() {
         ctx.font = 'bold 30px Arial'; ctx.fillStyle = tc;
         y = wrapText(ctx, cta, W/2, y+30, 680, 38) + 50;
 
-        // Social items on canvas (circle + name)
-        if (selectedSocials.length > 0) {
-            const cr = 26; // circle radius
+        // Social items on canvas (circle + user-typed name)
+        const canvasSocials = selectedSocials.filter(s => s.label);
+        if (canvasSocials.length > 0) {
+            const cr = 26;
             ctx.font = 'bold 22px Arial';
-            // measure each item width: circle diameter + gap + text width
             const itemGap = 28;
-            const items = selectedSocials.map(s => {
-                const lbl = s.network === 'website'
-                    ? (document.getElementById('website-label').value.trim() || 'Site Web')
-                    : s.label;
-                return { s, lbl, tw: ctx.measureText(lbl).width };
-            });
+            const items = canvasSocials.map(s => ({ s, lbl: s.label, tw: ctx.measureText(s.label).width }));
             const totalW = items.reduce((acc, it) => acc + cr*2 + 10 + it.tw, 0) + (items.length-1)*itemGap;
             let ix = (W - totalW) / 2 + cr;
             for (const {s, lbl} of items) {
-                // circle
                 ctx.beginPath(); ctx.arc(ix, y, cr, 0, Math.PI*2);
                 ctx.fillStyle = s.network === 'snapchat' ? '#FFFC00' : s.color; ctx.fill();
-                // initial letter inside circle
+                const initials = { facebook:'f', whatsapp:'W', instagram:'In', tiktok:'T', youtube:'▶', twitter:'X', linkedin:'in', telegram:'T', snapchat:'S', pinterest:'P', website:'W' };
                 ctx.fillStyle = s.network === 'snapchat' ? '#000' : '#fff';
                 ctx.font = 'bold 22px Arial'; ctx.textAlign = 'center';
-                const initials = { facebook:'f', whatsapp:'W', instagram:'In', tiktok:'T', youtube:'▶', twitter:'X', linkedin:'in', telegram:'T', snapchat:'S', pinterest:'P', website:'W' };
                 ctx.fillText(initials[s.network] || s.network[0].toUpperCase(), ix, y+8);
-                // label text
                 ctx.textAlign = 'left'; ctx.fillStyle = tc; ctx.font = 'bold 22px Arial';
                 ctx.fillText(lbl, ix + cr + 10, y+8);
                 ix += cr*2 + 10 + ctx.measureText(lbl).width + itemGap;
