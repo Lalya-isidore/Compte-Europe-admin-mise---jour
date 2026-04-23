@@ -27,7 +27,7 @@
 .qr-premium-wrap {
     font-family: 'Poppins', sans-serif;
     color: var(--ce-text);
-    padding: 10px 0;
+    padding: 20px 24px;
 }
 
 .qr-header {
