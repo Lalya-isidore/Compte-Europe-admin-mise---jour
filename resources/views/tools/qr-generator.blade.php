@@ -485,7 +485,7 @@
 }
 .poster-logo-area { margin-bottom: 20px; }
 .poster-logo-area img { width: 130px; height: 130px; object-fit: contain; border-radius: 10px; display: none; }
-.poster-title-area { text-align: left; margin-bottom: 20px; width: 100%; }
+.poster-title-area { text-align: center; margin-bottom: 20px; width: 100%; }
 .poster-title-area h2 { font-size: 68px; font-weight: 800; line-height: 1.15; margin: 0 0 12px; word-break: break-word; }
 .poster-title-area p  { font-size: 30px; margin: 0; line-height: 1.4; word-break: break-word; }
 .poster-qr-area {
@@ -493,7 +493,7 @@
     box-shadow: 0 8px 32px rgba(0,0,0,.12); margin-bottom: 20px;
     display: flex; align-items: center; justify-content: center;
 }
-.poster-cta-area { text-align: left; width: 100%; }
+.poster-cta-area { text-align: center; width: 100%; }
 .poster-cta-area p { font-size: 32px; font-weight: 700; margin: 0; word-break: break-word; }
 
 .poster-socials-area { display: flex; flex-direction: column; align-items: flex-start; gap: 12px; padding: 16px 0 4px; width: 100%; }
@@ -1380,14 +1380,25 @@ document.addEventListener('DOMContentLoaded', function() {
         const activeSocials = selectedSocials.filter(s => s.label);
         if (activeSocials.length > 0) {
             const nameTc = _darkPreview ? '#ffffff' : '#111111';
+            // Aligner le bloc sous le "S" de "Scannez pour accéder"
+            const pvCtaText = document.getElementById('poster-cta').value.trim() || 'Scannez pour accéder';
+            const tmpC = document.createElement('canvas');
+            const tmpCtx = tmpC.getContext('2d');
+            tmpCtx.font = 'bold 32px Arial';
+            const pvCtaWidth = tmpCtx.measureText(pvCtaText).width;
+            const contentW = 680; // 800px - 60px*2 padding
+            const groupMarginLeft = Math.max(0, (contentW - pvCtaWidth) / 2);
+            const group = document.createElement('div');
+            group.style.cssText = `display:inline-flex;flex-direction:column;gap:12px;align-items:flex-start;margin-left:${groupMarginLeft}px`;
             activeSocials.forEach(s => {
                 const item = document.createElement('div');
                 item.className = 'pv-social-item';
                 const dotBg = s.network === 'snapchat' ? '#FFFC00' : s.color;
                 const iconColor = s.network === 'snapchat' ? '#000' : '#fff';
                 item.innerHTML = `<div class="pv-social-dot" style="background:${dotBg};color:${iconColor}"><i class="bi ${networkIcons[s.network] || 'bi-share'}"></i></div><span class="pv-social-name" style="color:${nameTc}">${s.label}</span>`;
-                pvSocials.appendChild(item);
+                group.appendChild(item);
             });
+            pvSocials.appendChild(group);
         }
     }
 
@@ -1463,27 +1474,30 @@ document.addEventListener('DOMContentLoaded', function() {
                 y += 150;
             }
             const title = document.getElementById('poster-title').value.trim() || 'Titre de l\'affiche';
-            ctx.font = `bold ${titleSize}px Arial`; ctx.fillStyle = tc; ctx.textAlign = 'left';
-            ctx.textAlign = 'left';
-            y = wrapText(ctx, title, pad, y+titleSize, contentW, titleSize+12) + 20;
+            ctx.font = `bold ${titleSize}px Arial`; ctx.fillStyle = tc; ctx.textAlign = 'center';
+            y = wrapText(ctx, title, W/2, y+titleSize, contentW, titleSize+12) + 20;
             const sub = document.getElementById('poster-subtitle').value.trim();
-            if (sub) { ctx.font = '30px Arial'; ctx.fillStyle = sc; y = wrapText(ctx, sub, pad, y+30, contentW, 38) + 18; }
+            if (sub) { ctx.font = '30px Arial'; ctx.fillStyle = sc; ctx.textAlign = 'center'; y = wrapText(ctx, sub, W/2, y+30, contentW, 38) + 18; }
             const qs = qsSize, qx = (W-qs)/2-16, qy = y+16;
             roundRect(ctx, qx, qy, qs+32, qs+32, 16); ctx.fillStyle = '#ffffff'; ctx.fill();
             ctx.drawImage(srcCanvas, qx+16, qy+16, qs, qs);
             y = qy + qs + 32 + 28;
             const cta = document.getElementById('poster-cta').value.trim() || 'Scannez pour accéder';
-            ctx.font = 'bold 32px Arial'; ctx.fillStyle = tc; ctx.textAlign = 'left';
-            y = wrapText(ctx, cta, pad, y+32, contentW, 40) + 18;
+            ctx.font = 'bold 32px Arial'; ctx.fillStyle = tc; ctx.textAlign = 'center';
+            y = wrapText(ctx, cta, W/2, y+32, contentW, 40) + 18;
             if (canvasSocials.length > 0) {
                 const cr = 28, lineH = cr*2 + 14;
+                // Aligner sous le "S" de "Scannez pour accéder"
+                ctx.font = 'bold 32px Arial';
+                const ctaW = ctx.measureText(cta).width;
+                const ix = W/2 - ctaW/2 + cr;
                 ctx.font = 'bold 24px Arial';
                 for (const s of canvasSocials) {
-                    ctx.beginPath(); ctx.arc(pad+cr, y+cr, cr, 0, Math.PI*2);
+                    ctx.beginPath(); ctx.arc(ix, y+cr, cr, 0, Math.PI*2);
                     ctx.fillStyle = s.network==='snapchat'?'#FFFC00':s.color; ctx.fill();
                     ctx.fillStyle = s.network==='snapchat'?'#000':'#fff';
-                    ctx.textAlign='center'; ctx.fillText(initials[s.network]||s.network[0].toUpperCase(), pad+cr, y+cr+9);
-                    ctx.textAlign='left'; ctx.fillStyle=tc; ctx.fillText(s.label, pad+cr*2+14, y+cr+9);
+                    ctx.textAlign='center'; ctx.fillText(initials[s.network]||s.network[0].toUpperCase(), ix, y+cr+9);
+                    ctx.textAlign='left'; ctx.fillStyle=tc; ctx.fillText(s.label, ix+cr+14, y+cr+9);
                     y += lineH;
                 }
             }
