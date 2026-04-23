@@ -53,10 +53,16 @@ class AdminAuthController extends Controller
             'support_tickets_open' => \App\Models\SupportTicket::where('status', 'open')->count(),
         ];
 
+        $lastRecharges = \App\Models\RechargeTransaction::with('user')
+            ->orderByDesc('created_at')
+            ->limit(5)
+            ->get();
+
         return view('admin.dashboard', [
             'admin_email' => Session::get('admin_email'),
             'login_time' => Session::get('admin_login_time'),
-            'stats' => $stats
+            'stats' => $stats,
+            'lastRecharges' => $lastRecharges,
         ]);
     }
 

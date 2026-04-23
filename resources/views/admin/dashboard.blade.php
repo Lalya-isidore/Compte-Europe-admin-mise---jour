@@ -170,6 +170,72 @@
     </div>
 </div>
 
+{{-- Dernières recharges --}}
+<div class="card-premium mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h4 class="fw-bold h5 mb-0">
+            <i data-lucide="credit-card" style="width:18px;height:18px;margin-right:6px;vertical-align:-3px"></i>
+            5 dernières recharges de crédits
+        </h4>
+        <a href="{{ route('admin.users.index') }}" class="btn btn-sm btn-outline-secondary">Voir les utilisateurs</a>
+    </div>
+
+    @if($lastRecharges->isEmpty())
+        <p class="text-secondary small text-center py-3">Aucune recharge enregistrée.</p>
+    @else
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0" style="font-size:.875rem">
+                <thead class="table-light">
+                    <tr>
+                        <th>Utilisateur</th>
+                        <th>Montant</th>
+                        <th>Crédits</th>
+                        <th>Méthode</th>
+                        <th>Statut</th>
+                        <th>Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($lastRecharges as $r)
+                    <tr>
+                        <td>
+                            @if($r->user)
+                                <a href="{{ route('admin.users.show', $r->user) }}" class="text-decoration-none fw-semibold">
+                                    {{ $r->user->name ?? $r->user->email }}
+                                </a>
+                            @else
+                                <span class="text-muted">—</span>
+                            @endif
+                        </td>
+                        <td>{{ number_format($r->amount, 0, ',', ' ') }} F</td>
+                        <td>{{ number_format($r->credits_earned, 0, ',', ' ') }}</td>
+                        <td>{{ $r->payment_method ?? '—' }}</td>
+                        <td>
+                            @php
+                                $badge = match($r->status) {
+                                    'completed' => 'success',
+                                    'pending'   => 'warning',
+                                    'failed'    => 'danger',
+                                    default     => 'secondary',
+                                };
+                                $label = match($r->status) {
+                                    'completed' => 'Complété',
+                                    'pending'   => 'En attente',
+                                    'failed'    => 'Échoué',
+                                    default     => ucfirst($r->status),
+                                };
+                            @endphp
+                            <span class="badge bg-{{ $badge }}">{{ $label }}</span>
+                        </td>
+                        <td class="text-muted">{{ $r->created_at->format('d/m/Y H:i') }}</td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+    @endif
+</div>
+
 <style>
     .transition-hover {
         transition: all 0.2s ease;
