@@ -494,7 +494,7 @@
 .poster-logo-area img { width: 130px; height: 130px; object-fit: contain; border-radius: 10px; display: none; }
 .poster-title-area { text-align: center; margin-bottom: 20px; width: 100%; }
 .poster-title-area h2 { font-size: 46px; font-weight: 800; line-height: 1.15; margin: 0 0 12px; word-break: break-word; }
-.poster-title-area p  { font-size: 30px; margin: 0; line-height: 1.4; word-break: break-word; }
+.poster-title-area p  { font-size: 30px; font-weight: 600; margin: 0; line-height: 1.4; word-break: break-word; }
 .poster-qr-area {
     background: white; padding: 16px; border-radius: 16px;
     box-shadow: 0 8px 32px rgba(0,0,0,.12); margin-bottom: 20px;
@@ -1461,7 +1461,7 @@ document.addEventListener('DOMContentLoaded', function() {
             ctx.font = 'bold 42px Arial'; ctx.fillStyle = tc; ctx.textAlign = 'left';
             y = wrapText(ctx, title, pad, y + 42, leftW - pad, 52) + 14;
             const sub = document.getElementById('poster-subtitle').value.trim();
-            if (sub) { ctx.font = '28px Arial'; ctx.fillStyle = sc; y = wrapText(ctx, sub, pad, y + 28, leftW - pad, 36) + 14; }
+            if (sub) { ctx.font = '600 28px Arial'; ctx.fillStyle = sc; y = wrapText(ctx, sub, pad, y + 28, leftW - pad, 36) + 14; }
             // Réseaux dans colonne gauche (sans CTA)
             if (canvasSocials.length > 0) {
                 const cr = 26, lineH = cr*2 + 12;
@@ -1498,7 +1498,7 @@ document.addEventListener('DOMContentLoaded', function() {
             ctx.font = `bold ${titleSize}px Arial`; ctx.fillStyle = tc; ctx.textAlign = 'center';
             y = wrapText(ctx, title, W/2, y+titleSize, contentW, titleSize+12) + 20;
             const sub = document.getElementById('poster-subtitle').value.trim();
-            if (sub) { ctx.font = '30px Arial'; ctx.fillStyle = sc; ctx.textAlign = 'center'; y = wrapText(ctx, sub, W/2, y+30, contentW, 38) + 18; }
+            if (sub) { ctx.font = '600 30px Arial'; ctx.fillStyle = sc; ctx.textAlign = 'center'; y = wrapText(ctx, sub, W/2, y+30, contentW, 38) + 18; }
             const qs = qsSize, qx = (W-qs)/2-16, qy = y+16;
             roundRect(ctx, qx, qy, qs+32, qs+32, 16); ctx.fillStyle = '#ffffff'; ctx.fill();
             ctx.drawImage(srcCanvas, qx+16, qy+16, qs, qs);
