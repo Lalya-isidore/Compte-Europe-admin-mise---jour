@@ -529,9 +529,24 @@
 
 /* 768px — tablette / mobile paysage */
 @media (max-width: 768px) {
+    /* Wrapper padding réduit */
+    .qr-premium-wrap { padding: 14px 16px; }
+
+    /* Header : titre et badge sur 2 lignes si besoin */
+    .qr-header { flex-wrap: wrap; gap: 10px; margin-bottom: 20px; }
+    .qr-header h1 { font-size: 1.25rem; gap: 8px; }
+    .badge-certified { font-size: .7rem; padding: 5px 10px; }
+
     /* QR layout : aperçu en haut, settings en bas */
     .main-layout { grid-template-columns: 1fr; gap: 20px; }
-    .preview-sticky { position: static; order: -1; }
+    .preview-sticky { position: static; order: -1; display: flex; flex-direction: column; align-items: stretch; gap: 12px; }
+
+    /* Poster toggle : texte + switch s'empilent proprement */
+    .poster-toggle-row { flex-direction: row; align-items: flex-start; gap: 12px; }
+    .poster-toggle-label { flex: 1; align-items: flex-start; gap: 10px; }
+    .ptl-icon { width: 38px; height: 38px; font-size: 1.1rem; flex-shrink: 0; }
+    .poster-toggle-label .ptl-text strong { font-size: .88rem; }
+    .poster-toggle-label .ptl-text span { font-size: .75rem; }
 
     /* Poster editor : 1 colonne */
     .poster-editor.open { grid-template-columns: 1fr; }
@@ -553,9 +568,6 @@
 
     /* Cadre affiche centré */
     .poster-preview-frame { margin: 0 auto; }
-
-    /* QR canvas centré, pas de débordement */
-    .preview-sticky { display: flex; flex-direction: column; align-items: stretch; gap: 12px; }
 }
 
 /* 480px — smartphone portrait */
