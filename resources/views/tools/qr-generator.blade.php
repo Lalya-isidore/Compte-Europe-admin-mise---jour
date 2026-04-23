@@ -453,7 +453,7 @@
 .poster-cta-area { text-align: center; width: 100%; }
 .poster-cta-area p { font-size: 1.5rem; font-weight: 600; margin: 0; word-break: break-word; }
 
-.poster-socials-area { display: flex; flex-direction: column; align-items: center; gap: 10px; padding: 10px 0 4px; width: 100%; }
+.poster-socials-area { display: flex; flex-direction: column; align-items: center; gap: 10px; padding: 18px 0 4px; width: 100%; }
 .pv-social-item { display: flex; align-items: center; gap: 7px; }
 .pv-social-dot { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1rem; color: #fff; flex-shrink: 0; }
 .pv-social-name { font-size: .85rem; font-weight: 600; }
@@ -1190,7 +1190,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         const cta = document.getElementById('poster-cta').value.trim() || 'Scannez pour accéder';
         ctx.font = 'bold 30px Arial'; ctx.fillStyle = tc;
-        y = wrapText(ctx, cta, W/2, y+30, 680, 38) + 50;
+        y = wrapText(ctx, cta, W/2, y+30, 680, 38) + 20;
 
         // Social items on canvas — one per line, block centered, circles aligned
         const canvasSocials = selectedSocials.filter(s => s.label);
