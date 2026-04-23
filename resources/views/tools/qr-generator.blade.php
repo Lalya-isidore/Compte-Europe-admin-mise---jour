@@ -996,6 +996,20 @@ document.addEventListener('DOMContentLoaded', function() {
         snapchat:'bi-snapchat', pinterest:'bi-pinterest', website:'bi-globe2'
     };
 
+    const networkPlaceholders = {
+        facebook:  'Ex : Page Officielle, @moncompte…',
+        whatsapp:  'Ex : +229 98 20 19 10',
+        instagram: 'Ex : @mon_instagram',
+        tiktok:    'Ex : @montiktok',
+        youtube:   'Ex : Ma Chaîne YouTube',
+        twitter:   'Ex : @moncompte_x',
+        linkedin:  'Ex : Mon Profil LinkedIn',
+        telegram:  'Ex : @montelegram',
+        snapchat:  'Ex : @monsnapchat',
+        pinterest: 'Ex : @monpinterest',
+        website:   'Ex : www.monsite.com',
+    };
+
     function addSocialLabelInput(net, color) {
         const wrap = document.getElementById('social-labels-wrap');
         const row = document.createElement('div');
@@ -1003,11 +1017,12 @@ document.addEventListener('DOMContentLoaded', function() {
         row.style.cssText = 'display:flex;align-items:center;gap:8px';
         const iconColor = net === 'snapchat' ? '#000' : '#fff';
         const bgColor = net === 'snapchat' ? '#FFFC00' : color;
+        const placeholder = networkPlaceholders[net] || 'Saisissez le nom à afficher';
         row.innerHTML = `
             <div style="width:30px;height:30px;border-radius:50%;background:${bgColor};display:flex;align-items:center;justify-content:center;flex-shrink:0;color:${iconColor};font-size:.9rem">
                 <i class="bi ${networkIcons[net]}"></i>
             </div>
-            <input type="text" id="social-label-${net}" class="ce-input" placeholder="Saisissez le nom à afficher" maxlength="50" style="flex:1;padding:8px 12px">`;
+            <input type="text" id="social-label-${net}" class="ce-input" placeholder="${placeholder}" maxlength="50" style="flex:1;padding:8px 12px">`;
         wrap.appendChild(row);
         document.getElementById(`social-label-${net}`).addEventListener('input', function() {
             const idx = selectedSocials.findIndex(s => s.network === net);
