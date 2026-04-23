@@ -455,6 +455,7 @@
 }
 .poster-preview-frame.landscape { width: 330px; height: 227px; }
 .poster-preview-frame.square { width: 300px; height: 300px; }
+.poster-preview-frame.banner { width: 340px; height: 113px; }
 
 .poster-preview-inner {
     width: 800px; height: 1100px;
@@ -465,6 +466,32 @@
 }
 /* Carré */
 .poster-preview-inner.square { width: 1080px; height: 1080px; transform: scale(0.2778); }
+/* Bannière */
+.poster-preview-inner.banner {
+    width: 1200px; height: 400px;
+    transform: scale(0.2833);
+    flex-direction: row; align-items: center;
+    padding: 30px 40px; gap: 30px;
+    display: flex;
+}
+.poster-preview-inner.banner .poster-landscape-left {
+    flex: 1; display: flex; flex-direction: column;
+    align-items: flex-start; justify-content: center; gap: 10px;
+}
+.poster-preview-inner.banner .poster-landscape-right {
+    flex-shrink: 0; display: flex; flex-direction: column;
+    align-items: center; justify-content: center; gap: 10px;
+}
+.poster-preview-inner.banner .poster-logo-area { margin-bottom: 0; }
+.poster-preview-inner.banner .poster-logo-area img { width: 80px; height: 80px; }
+.poster-preview-inner.banner .poster-title-area { text-align: left; margin-bottom: 0; }
+.poster-preview-inner.banner .poster-title-area h2 { font-size: 40px; margin-bottom: 6px; }
+.poster-preview-inner.banner .poster-title-area p { font-size: 22px; }
+.poster-preview-inner.banner .poster-qr-area { margin-bottom: 0; padding: 10px; }
+.poster-preview-inner.banner .poster-cta-area p { font-size: 22px; }
+.poster-preview-inner.banner .poster-socials-area { padding: 6px 0 0; gap: 8px; }
+.poster-preview-inner.banner .pv-social-dot { width: 38px; height: 38px; font-size: 1rem; }
+.poster-preview-inner.banner .pv-social-name { font-size: 18px; }
 
 /* Paysage : flexbox 2 colonnes */
 .poster-preview-inner.landscape {
@@ -783,6 +810,7 @@
                     <button class="format-tab active" data-format="portrait" type="button"><i class="bi bi-phone"></i> Portrait</button>
                     <button class="format-tab" data-format="landscape" type="button"><i class="bi bi-tablet-landscape"></i> Paysage</button>
                     <button class="format-tab" data-format="square" type="button"><i class="bi bi-square"></i> Carré</button>
+                    <button class="format-tab" data-format="banner" type="button"><i class="bi bi-layout-text-window"></i> Bannière</button>
                 </div>
             </div>
             <div class="form-group">
@@ -1165,21 +1193,21 @@ document.addEventListener('DOMContentLoaded', function() {
         const inner = document.getElementById('poster-preview-inner');
         const qrArea = document.getElementById('pv-qr-area');
 
-        frame.classList.remove('landscape', 'square');
-        inner.classList.remove('landscape', 'square');
+        frame.classList.remove('landscape', 'square', 'banner');
+        inner.classList.remove('landscape', 'square', 'banner');
 
-        if (posterFormat === 'landscape') {
-            frame.classList.add('landscape');
-            inner.classList.add('landscape');
+        const needsTwoCol = posterFormat === 'landscape' || posterFormat === 'banner';
+
+        if (needsTwoCol) {
+            frame.classList.add(posterFormat);
+            inner.classList.add(posterFormat);
             if (!inner.querySelector('.poster-landscape-right')) {
-                // Colonne gauche : tout sauf QR et CTA
                 const ctaArea = inner.querySelector('.poster-cta-area');
                 const leftCol = document.createElement('div');
                 leftCol.className = 'poster-landscape-left';
                 [...inner.children].forEach(child => {
                     if (child !== qrArea && child !== ctaArea) leftCol.appendChild(child);
                 });
-                // Colonne droite : QR + CTA
                 const rightCol = document.createElement('div');
                 rightCol.className = 'poster-landscape-right';
                 rightCol.appendChild(qrArea);
@@ -1188,7 +1216,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 inner.appendChild(rightCol);
             }
         } else {
-            // Restaurer la structure portrait/carré
+            // Restaurer portrait / carré
             const rightCol = inner.querySelector('.poster-landscape-right');
             const leftCol  = inner.querySelector('.poster-landscape-left');
             const logo    = inner.querySelector('.poster-logo-area');
@@ -1482,9 +1510,10 @@ document.addEventListener('DOMContentLoaded', function() {
         try { await document.fonts.load('24px bootstrap-icons'); } catch(e) {}
 
         const isLandscape = posterFormat === 'landscape';
-        const isSquare = posterFormat === 'square';
-        const W = isLandscape ? 1100 : isSquare ? 1080 : 800;
-        const H = isLandscape ? 756  : isSquare ? 1080 : 1100;
+        const isSquare    = posterFormat === 'square';
+        const isBanner    = posterFormat === 'banner';
+        const W = isLandscape ? 1100 : isSquare ? 1080 : isBanner ? 1200 : 800;
+        const H = isLandscape ? 756  : isSquare ? 1080 : isBanner ? 400  : 1100;
         const cv = document.createElement('canvas');
         cv.width = W; cv.height = H;
         const ctx = cv.getContext('2d');
@@ -1501,7 +1530,43 @@ document.addEventListener('DOMContentLoaded', function() {
 
         const canvasSocials = selectedSocials.filter(s => s.label);
 
-        if (isLandscape) {
+        if (isBanner) {
+            // === BANNIÈRE : 1200×400px — logo+titre+sous-titre+réseaux à gauche, QR+CTA à droite ===
+            const pad = 40, leftW = 780, rightX = 840;
+            let y = pad;
+            if (posterLogoData) {
+                await new Promise(res => { const img = new Image(); img.onload = () => { ctx.drawImage(img, pad, y, 70, 70); res(); }; img.src = posterLogoData; });
+                y += 85;
+            }
+            const title = document.getElementById('poster-title').value.trim() || 'Titre de l\'affiche';
+            ctx.font = 'bold 46px Arial'; ctx.fillStyle = tc; ctx.textAlign = 'left';
+            y = wrapText(ctx, title, pad, y + 46, leftW - pad, 54) + 10;
+            const sub = document.getElementById('poster-subtitle').value.trim();
+            if (sub) { ctx.font = '600 26px Arial'; ctx.fillStyle = sc; y = wrapText(ctx, sub, pad, y + 26, leftW - pad, 32) + 10; }
+            if (canvasSocials.length > 0) {
+                const cr = 22, lineH = cr*2 + 10;
+                for (const s of canvasSocials) {
+                    ctx.beginPath(); ctx.arc(pad + cr, y + cr, cr, 0, Math.PI*2);
+                    ctx.fillStyle = s.network==='snapchat'?'#FFFC00':s.color; ctx.fill();
+                    ctx.fillStyle = s.network==='snapchat'?'#000':'#fff';
+                    ctx.textAlign='center'; ctx.textBaseline='middle';
+                    ctx.font = `${Math.round(cr*1.1)}px bootstrap-icons`;
+                    ctx.fillText(networkIconChars[s.network]||'', pad+cr, y+cr);
+                    ctx.textBaseline='alphabetic'; ctx.textAlign='left';
+                    ctx.font='bold 20px Arial'; ctx.fillStyle=tc;
+                    ctx.fillText(s.label, pad+cr*2+10, y+cr+7);
+                    y += lineH;
+                }
+            }
+            // QR à droite + CTA sous le QR
+            const qs = 280, qy = (H - qs - 28 - 40) / 2;
+            roundRect(ctx, rightX, qy, qs + 28, qs + 28, 12); ctx.fillStyle = '#ffffff'; ctx.fill();
+            ctx.drawImage(srcCanvas, rightX + 14, qy + 14, qs, qs);
+            const cta = document.getElementById('poster-cta').value.trim() || 'Scannez pour accéder';
+            ctx.font = 'bold 22px Arial'; ctx.fillStyle = tc; ctx.textAlign = 'center';
+            ctx.fillText(cta, rightX + (qs + 28) / 2, qy + qs + 28 + 28);
+
+        } else if (isLandscape) {
             // === PAYSAGE : gauche (logo+titre+sous-titre+réseaux), droite (QR+CTA) ===
             const pad = 55, leftW = 580, rightX = 640;
             let y = pad;
