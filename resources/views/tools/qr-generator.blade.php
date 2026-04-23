@@ -481,7 +481,7 @@
 .poster-title-area h2 { font-size: 3rem; font-weight: 800; line-height: 1.2; margin: 0 0 14px; word-break: break-word; }
 .poster-title-area p  { font-size: 1.6rem; margin: 0; line-height: 1.4; word-break: break-word; }
 .poster-qr-area {
-    background: white; padding: 28px; border-radius: 24px;
+    background: white; padding: 12px; border-radius: 16px;
     box-shadow: 0 8px 32px rgba(0,0,0,.12); margin-bottom: 28px;
     display: flex; align-items: center; justify-content: center;
 }
@@ -1381,9 +1381,9 @@ document.addEventListener('DOMContentLoaded', function() {
             y = wrapText(ctx, cta, pad, y + 28, leftW - pad, 36) + 16;
             if (canvasSocials.length > 0) drawSocials(pad, y, leftW - pad);
             // QR à droite centré
-            const qs = 320, qy = (H - qs - 48) / 2;
-            roundRect(ctx, rightX, qy, qs + 48, qs + 48, 24); ctx.fillStyle = '#ffffff'; ctx.fill();
-            ctx.drawImage(srcCanvas, rightX + 24, qy + 24, qs, qs);
+            const qs = 320, qy = (H - qs - 24) / 2;
+            roundRect(ctx, rightX, qy, qs + 24, qs + 24, 14); ctx.fillStyle = '#ffffff'; ctx.fill();
+            ctx.drawImage(srcCanvas, rightX + 12, qy + 12, qs, qs);
 
         } else {
             // === PORTRAIT / CARRÉ : centré vertical ===
@@ -1401,10 +1401,10 @@ document.addEventListener('DOMContentLoaded', function() {
             y = wrapText(ctx, title, W/2, y+titleSize, contentW, titleSize+10) + 24;
             const sub = document.getElementById('poster-subtitle').value.trim();
             if (sub) { ctx.font = '28px Arial'; ctx.fillStyle = sc; y = wrapText(ctx, sub, W/2, y+28, contentW, 36) + 20; }
-            const qs = qsSize, qx = (W-qs)/2-24, qy = y+20;
-            roundRect(ctx, qx, qy, qs+48, qs+48, 24); ctx.fillStyle = '#ffffff'; ctx.fill();
-            ctx.drawImage(srcCanvas, qx+24, qy+24, qs, qs);
-            y = qy + qs + 48 + 36;
+            const qs = qsSize, qx = (W-qs)/2-12, qy = y+20;
+            roundRect(ctx, qx, qy, qs+24, qs+24, 14); ctx.fillStyle = '#ffffff'; ctx.fill();
+            ctx.drawImage(srcCanvas, qx+12, qy+12, qs, qs);
+            y = qy + qs + 24 + 36;
             const cta = document.getElementById('poster-cta').value.trim() || 'Scannez pour accéder';
             ctx.font = 'bold 30px Arial'; ctx.fillStyle = tc;
             y = wrapText(ctx, cta, W/2, y+30, contentW, 38) + 20;
