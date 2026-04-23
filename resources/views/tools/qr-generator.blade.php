@@ -268,6 +268,12 @@
     color: var(--ce-primary);
 }
 
+/* Format tabs */
+.format-tabs { display:flex; gap:6px; }
+.format-tab { flex:1; padding:8px 10px; border:2px solid var(--ce-border); border-radius:10px; background:var(--ce-bg); color:var(--ce-text-dim); font-size:.82rem; font-weight:600; cursor:pointer; transition:all .18s; display:flex; align-items:center; justify-content:center; gap:6px; }
+.format-tab i { font-size:1rem; }
+.format-tab.active { border-color:var(--ce-primary); background:rgba(33,150,243,.08); color:var(--ce-primary); }
+
 /* Fond tabs */
 .bg-tabs { display:flex; gap:6px; margin-bottom:12px; }
 .bg-tab { flex:1; padding:7px 10px; border:2px solid var(--ce-border); border-radius:10px; background:var(--ce-bg); color:var(--ce-text-dim); font-size:.8rem; font-weight:600; cursor:pointer; transition:all .18s; }
@@ -437,13 +443,33 @@
     border-radius: 14px; overflow: hidden;
     box-shadow: 0 12px 40px rgba(0,0,0,.15);
     border: 1px solid var(--ce-border); position: relative; background: #fff;
+    transition: width .3s, height .3s;
 }
+.poster-preview-frame.landscape { width: 308px; height: 212px; }
+
 .poster-preview-inner {
     width: 800px; height: 1100px;
     transform-origin: top left; transform: scale(0.28);
     position: absolute; top: 0; left: 0;
     display: flex; flex-direction: column; align-items: center;
     padding: 60px 60px 50px; box-sizing: border-box;
+}
+/* Paysage : grid 2 colonnes */
+.poster-preview-inner.landscape {
+    width: 1100px; height: 756px;
+    transform: scale(0.28);
+    flex-direction: row; align-items: stretch;
+    padding: 50px 60px; gap: 50px;
+    display: flex;
+}
+.poster-preview-inner.landscape .poster-landscape-left {
+    flex: 1; display: flex; flex-direction: column;
+    align-items: flex-start; justify-content: center; gap: 18px;
+}
+.poster-preview-inner.landscape .poster-qr-area {
+    flex-shrink: 0; width: 360px;
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 0;
 }
 .poster-logo-area { margin-bottom: 24px; }
 .poster-logo-area img { width: 90px; height: 90px; object-fit: contain; border-radius: 10px; display: none; }
@@ -660,6 +686,13 @@
     <div class="poster-editor" id="poster-editor">
         {{-- Gauche : paramètres --}}
         <div class="ce-card">
+            <div class="form-group">
+                <label class="form-label"><i class="bi bi-aspect-ratio me-1"></i> Format</label>
+                <div class="format-tabs" id="format-tabs">
+                    <button class="format-tab active" data-format="portrait" type="button"><i class="bi bi-phone"></i> Portrait</button>
+                    <button class="format-tab" data-format="landscape" type="button"><i class="bi bi-tablet-landscape"></i> Paysage</button>
+                </div>
+            </div>
             <div class="form-group">
                 <label class="form-label"><i class="bi bi-type-bold me-1"></i> Titre de l'affiche</label>
                 <input type="text" id="poster-title" class="ce-input" placeholder="Ex : Rejoignez-nous !" maxlength="60">
@@ -1007,8 +1040,53 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // ===== SECTION AFFICHE =====
     let posterBgColor = '#ffffff';
-    let posterBgImage = null; // base64 image de fond
+    let posterBgImage = null;
     let posterLogoData = null;
+    let posterFormat = 'portrait'; // 'portrait' | 'landscape'
+
+    // Format tabs
+    document.querySelectorAll('.format-tab').forEach(tab => {
+        tab.addEventListener('click', () => {
+            document.querySelectorAll('.format-tab').forEach(t => t.classList.remove('active'));
+            tab.classList.add('active');
+            posterFormat = tab.dataset.format;
+            applyPosterFormat();
+        });
+    });
+
+    function applyPosterFormat() {
+        const frame = document.querySelector('.poster-preview-frame');
+        const inner = document.getElementById('poster-preview-inner');
+        const qrArea = document.getElementById('pv-qr-area');
+
+        if (posterFormat === 'landscape') {
+            frame.classList.add('landscape');
+            inner.classList.add('landscape');
+            // Wrap all non-QR children in a left column
+            let leftCol = inner.querySelector('.poster-landscape-left');
+            if (!leftCol) {
+                leftCol = document.createElement('div');
+                leftCol.className = 'poster-landscape-left';
+                [...inner.children].forEach(child => {
+                    if (child !== qrArea) leftCol.appendChild(child);
+                });
+                inner.insertBefore(leftCol, qrArea);
+            }
+        } else {
+            frame.classList.remove('landscape');
+            inner.classList.remove('landscape');
+            // Unwrap left column
+            const leftCol = inner.querySelector('.poster-landscape-left');
+            if (leftCol) {
+                [...leftCol.children].forEach(child => inner.insertBefore(child, leftCol));
+                leftCol.remove();
+                // Restore QR between title and CTA
+                const cta = inner.querySelector('.poster-cta-area');
+                inner.insertBefore(qrArea, cta);
+            }
+        }
+        updatePosterPreview();
+    }
 
     // Onglets Couleur / Image
     document.querySelectorAll('.bg-tab').forEach(tab => {
@@ -1232,78 +1310,108 @@ document.addEventListener('DOMContentLoaded', function() {
         const srcCanvas = document.querySelector('#canvas-container canvas');
         if (!srcCanvas) { alert('Générez d\'abord le QR Code.'); return; }
 
-        const W = 800, H = 1100;
+        const isLandscape = posterFormat === 'landscape';
+        const W = isLandscape ? 1100 : 800;
+        const H = isLandscape ? 756 : 1100;
         const cv = document.createElement('canvas');
         cv.width = W; cv.height = H;
         const ctx = cv.getContext('2d');
 
-        // Fond : image ou couleur
+        // Fond
         if (posterBgImage) {
-            await new Promise(res => {
-                const bgImg = new Image();
-                bgImg.onload = () => { ctx.drawImage(bgImg, 0, 0, W, H); res(); };
-                bgImg.src = posterBgImage;
-            });
+            await new Promise(res => { const bgImg = new Image(); bgImg.onload = () => { ctx.drawImage(bgImg, 0, 0, W, H); res(); }; bgImg.src = posterBgImage; });
         } else {
-            ctx.fillStyle = posterBgColor;
-            ctx.fillRect(0, 0, W, H);
+            ctx.fillStyle = posterBgColor; ctx.fillRect(0, 0, W, H);
         }
-
-        const effectiveBg = posterBgImage ? '#000000' : posterBgColor; // image → texte blanc par défaut
         const dark = posterBgImage ? true : isDark(posterBgColor);
         const tc = dark ? '#ffffff' : '#111111';
         const sc = dark ? 'rgba(255,255,255,0.75)' : 'rgba(0,0,0,0.6)';
-        let y = 60;
 
-        if (posterLogoData) {
-            await new Promise(res => { const img = new Image(); img.onload = () => { ctx.drawImage(img, W/2-50, y, 100, 100); res(); }; img.src = posterLogoData; });
-            y += 120;
-        }
-
-        const title = document.getElementById('poster-title').value.trim() || 'Titre de l\'affiche';
-        ctx.font = 'bold 52px Arial'; ctx.fillStyle = tc; ctx.textAlign = 'center';
-        y = wrapText(ctx, title, W/2, y+52, 680, 62) + 24;
-
-        const sub = document.getElementById('poster-subtitle').value.trim();
-        if (sub) { ctx.font = '28px Arial'; ctx.fillStyle = sc; y = wrapText(ctx, sub, W/2, y+28, 680, 36) + 20; }
-
-        const qs = 340, qx = (W-qs)/2-24, qy = y+20;
-        roundRect(ctx, qx, qy, qs+48, qs+48, 24); ctx.fillStyle = '#ffffff'; ctx.fill();
-        ctx.drawImage(srcCanvas, qx+24, qy+24, qs, qs);
-        y = qy + qs + 48 + 36;
-
-        const cta = document.getElementById('poster-cta').value.trim() || 'Scannez pour accéder';
-        ctx.font = 'bold 30px Arial'; ctx.fillStyle = tc;
-        y = wrapText(ctx, cta, W/2, y+30, 680, 38) + 20;
-
-        // Social items on canvas — one per line, block centered, circles aligned
         const canvasSocials = selectedSocials.filter(s => s.label);
-        if (canvasSocials.length > 0) {
-            const cr = 26, lineH = cr*2 + 16;
-            // Find the X where "S" of CTA starts (same font as CTA drawing)
-            ctx.font = 'bold 30px Arial';
-            const ctaForAlign = document.getElementById('poster-cta').value.trim() || 'Scannez pour accéder';
-            const ctaAlignW = ctx.measureText(ctaForAlign).width;
-            const socialStartX = W/2 - ctaAlignW/2; // left edge of CTA text
-            const ix = socialStartX + cr; // circle center, fixed for all rows
+        const initials = { facebook:'f', whatsapp:'W', instagram:'In', tiktok:'T', youtube:'▶', twitter:'X', linkedin:'in', telegram:'T', snapchat:'S', pinterest:'P', website:'W' };
+
+        function drawSocials(startX, startY, maxTextW) {
+            const cr = 26, lineH = cr*2 + 14;
             ctx.font = 'bold 22px Arial';
-            const initials = { facebook:'f', whatsapp:'W', instagram:'In', tiktok:'T', youtube:'▶', twitter:'X', linkedin:'in', telegram:'T', snapchat:'S', pinterest:'P', website:'W' };
+            const ctaText = document.getElementById('poster-cta').value.trim() || 'Scannez pour accéder';
+            const ctaAlignFont = isLandscape ? 'bold 28px Arial' : 'bold 30px Arial';
+            ctx.font = ctaAlignFont;
+            const ctaAlignW = ctx.measureText(ctaText).width;
+            const ix = isLandscape ? startX + cr : startX + W/2 - ctaAlignW/2 - startX + cr;
+            const fixedIx = isLandscape ? startX + cr : W/2 - ctaAlignW/2 + cr;
+            ctx.font = 'bold 22px Arial';
+            let sy = startY;
             for (const s of canvasSocials) {
-                ctx.beginPath(); ctx.arc(ix, y + cr, cr, 0, Math.PI*2);
+                ctx.beginPath(); ctx.arc(fixedIx, sy + cr, cr, 0, Math.PI*2);
                 ctx.fillStyle = s.network === 'snapchat' ? '#FFFC00' : s.color; ctx.fill();
-                // initial inside circle
                 ctx.fillStyle = s.network === 'snapchat' ? '#000' : '#fff';
                 ctx.font = 'bold 22px Arial'; ctx.textAlign = 'center';
-                ctx.fillText(initials[s.network] || s.network[0].toUpperCase(), ix, y + cr + 8);
-                // label text
+                ctx.fillText(initials[s.network] || s.network[0].toUpperCase(), fixedIx, sy + cr + 8);
                 ctx.textAlign = 'left'; ctx.fillStyle = tc;
-                ctx.fillText(s.label, ix + cr + 12, y + cr + 8);
-                y += lineH;
+                ctx.fillText(s.label, fixedIx + cr + 12, sy + cr + 8);
+                sy += lineH;
             }
-            y += 10;
         }
 
-        cv.toBlob(blob => { const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'affiche-qr.png'; a.click(); }, 'image/png');
+        if (isLandscape) {
+            // === PAYSAGE : gauche texte, droite QR ===
+            const leftW = 520, rightX = 620, pad = 60;
+            let y = pad;
+            if (posterLogoData) {
+                await new Promise(res => { const img = new Image(); img.onload = () => { ctx.drawImage(img, pad, y, 80, 80); res(); }; img.src = posterLogoData; });
+                y += 100;
+            }
+            const title = document.getElementById('poster-title').value.trim() || 'Titre de l\'affiche';
+            ctx.font = 'bold 48px Arial'; ctx.fillStyle = tc; ctx.textAlign = 'left';
+            y = wrapText(ctx, title, pad, y + 48, leftW - pad, 58) + 20;
+            const sub = document.getElementById('poster-subtitle').value.trim();
+            if (sub) { ctx.font = '26px Arial'; ctx.fillStyle = sc; y = wrapText(ctx, sub, pad, y + 26, leftW - pad, 34) + 16; }
+            const cta = document.getElementById('poster-cta').value.trim() || 'Scannez pour accéder';
+            ctx.font = 'bold 28px Arial'; ctx.fillStyle = tc;
+            y = wrapText(ctx, cta, pad, y + 28, leftW - pad, 36) + 16;
+            if (canvasSocials.length > 0) drawSocials(pad, y, leftW - pad);
+            // QR à droite centré
+            const qs = 320, qy = (H - qs - 48) / 2;
+            roundRect(ctx, rightX, qy, qs + 48, qs + 48, 24); ctx.fillStyle = '#ffffff'; ctx.fill();
+            ctx.drawImage(srcCanvas, rightX + 24, qy + 24, qs, qs);
+
+        } else {
+            // === PORTRAIT : centré vertical ===
+            let y = 60;
+            if (posterLogoData) {
+                await new Promise(res => { const img = new Image(); img.onload = () => { ctx.drawImage(img, W/2-50, y, 100, 100); res(); }; img.src = posterLogoData; });
+                y += 120;
+            }
+            const title = document.getElementById('poster-title').value.trim() || 'Titre de l\'affiche';
+            ctx.font = 'bold 52px Arial'; ctx.fillStyle = tc; ctx.textAlign = 'center';
+            y = wrapText(ctx, title, W/2, y+52, 680, 62) + 24;
+            const sub = document.getElementById('poster-subtitle').value.trim();
+            if (sub) { ctx.font = '28px Arial'; ctx.fillStyle = sc; y = wrapText(ctx, sub, W/2, y+28, 680, 36) + 20; }
+            const qs = 340, qx = (W-qs)/2-24, qy = y+20;
+            roundRect(ctx, qx, qy, qs+48, qs+48, 24); ctx.fillStyle = '#ffffff'; ctx.fill();
+            ctx.drawImage(srcCanvas, qx+24, qy+24, qs, qs);
+            y = qy + qs + 48 + 36;
+            const cta = document.getElementById('poster-cta').value.trim() || 'Scannez pour accéder';
+            ctx.font = 'bold 30px Arial'; ctx.fillStyle = tc;
+            y = wrapText(ctx, cta, W/2, y+30, 680, 38) + 20;
+            if (canvasSocials.length > 0) {
+                const cr = 26, lineH = cr*2 + 16;
+                ctx.font = 'bold 30px Arial';
+                const ctaAlignW = ctx.measureText(cta).width;
+                const ix = W/2 - ctaAlignW/2 + cr;
+                ctx.font = 'bold 22px Arial';
+                for (const s of canvasSocials) {
+                    ctx.beginPath(); ctx.arc(ix, y+cr, cr, 0, Math.PI*2);
+                    ctx.fillStyle = s.network==='snapchat'?'#FFFC00':s.color; ctx.fill();
+                    ctx.fillStyle = s.network==='snapchat'?'#000':'#fff';
+                    ctx.textAlign='center'; ctx.fillText(initials[s.network]||s.network[0].toUpperCase(), ix, y+cr+8);
+                    ctx.textAlign='left'; ctx.fillStyle=tc; ctx.fillText(s.label, ix+cr+12, y+cr+8);
+                    y += lineH;
+                }
+            }
+        }
+
+        cv.toBlob(blob => { const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = `affiche-qr-${posterFormat}.png`; a.click(); }, 'image/png');
     });
 
     function wrapText(ctx, text, x, y, maxW, lh) {
