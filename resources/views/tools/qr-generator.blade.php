@@ -453,7 +453,7 @@
 .poster-cta-area { text-align: center; width: 100%; }
 .poster-cta-area p { font-size: 1.5rem; font-weight: 600; margin: 0; word-break: break-word; }
 
-.poster-socials-area { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 12px 20px; padding: 10px 0 4px; width: 100%; }
+.poster-socials-area { display: flex; flex-direction: column; align-items: center; gap: 10px; padding: 10px 0 4px; width: 100%; }
 .pv-social-item { display: flex; align-items: center; gap: 7px; }
 .pv-social-dot { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1rem; color: #fff; flex-shrink: 0; }
 .pv-social-name { font-size: .85rem; font-weight: 600; }
@@ -1174,27 +1174,30 @@ document.addEventListener('DOMContentLoaded', function() {
         ctx.font = 'bold 30px Arial'; ctx.fillStyle = tc;
         y = wrapText(ctx, cta, W/2, y+30, 680, 38) + 50;
 
-        // Social items on canvas (circle + user-typed name)
+        // Social items on canvas — one per line, centered
         const canvasSocials = selectedSocials.filter(s => s.label);
         if (canvasSocials.length > 0) {
-            const cr = 26;
+            const cr = 26, lineH = cr*2 + 16;
             ctx.font = 'bold 22px Arial';
-            const itemGap = 28;
-            const items = canvasSocials.map(s => ({ s, lbl: s.label, tw: ctx.measureText(s.label).width }));
-            const totalW = items.reduce((acc, it) => acc + cr*2 + 10 + it.tw, 0) + (items.length-1)*itemGap;
-            let ix = (W - totalW) / 2 + cr;
-            for (const {s, lbl} of items) {
-                ctx.beginPath(); ctx.arc(ix, y, cr, 0, Math.PI*2);
+            for (const s of canvasSocials) {
+                const lbl = s.label;
+                const tw = ctx.measureText(lbl).width;
+                const rowW = cr*2 + 12 + tw;
+                const ix = (W - rowW) / 2 + cr;
+                // circle
+                ctx.beginPath(); ctx.arc(ix, y + cr, cr, 0, Math.PI*2);
                 ctx.fillStyle = s.network === 'snapchat' ? '#FFFC00' : s.color; ctx.fill();
+                // initial inside circle
                 const initials = { facebook:'f', whatsapp:'W', instagram:'In', tiktok:'T', youtube:'▶', twitter:'X', linkedin:'in', telegram:'T', snapchat:'S', pinterest:'P', website:'W' };
                 ctx.fillStyle = s.network === 'snapchat' ? '#000' : '#fff';
                 ctx.font = 'bold 22px Arial'; ctx.textAlign = 'center';
-                ctx.fillText(initials[s.network] || s.network[0].toUpperCase(), ix, y+8);
-                ctx.textAlign = 'left'; ctx.fillStyle = tc; ctx.font = 'bold 22px Arial';
-                ctx.fillText(lbl, ix + cr + 10, y+8);
-                ix += cr*2 + 10 + ctx.measureText(lbl).width + itemGap;
+                ctx.fillText(initials[s.network] || s.network[0].toUpperCase(), ix, y + cr + 8);
+                // label text
+                ctx.textAlign = 'left'; ctx.fillStyle = tc;
+                ctx.fillText(lbl, ix + cr + 12, y + cr + 8);
+                y += lineH;
             }
-            y += cr + 20;
+            y += 10;
         }
 
         cv.toBlob(blob => { const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'affiche-qr.png'; a.click(); }, 'image/png');
