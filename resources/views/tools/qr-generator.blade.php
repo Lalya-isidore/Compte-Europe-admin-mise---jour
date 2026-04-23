@@ -173,31 +173,70 @@
 }
 
 .color-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-    gap: 16px;
-}
-
-.color-picker-wrap {
-    text-align: center;
-}
-
-.color-preview {
-    width: 100%;
-    height: 50px;
-    border-radius: 12px;
-    cursor: pointer;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 16px;
     border: 1px solid var(--ce-border);
+}
+
+.color-picker-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.color-circle {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: 2px solid white;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    cursor: pointer;
     position: relative;
     overflow: hidden;
-    margin-bottom: 8px;
+    transition: transform 0.2s ease;
 }
 
-.color-preview input {
+.color-circle:hover {
+    transform: scale(1.1);
+}
+
+.color-circle input {
     position: absolute;
-    top: -5px; left: -5px; width: 120%; height: 120%;
+    top: -5px; left: -5px; width: 140%; height: 140%;
     cursor: pointer;
     opacity: 0;
+}
+
+.color-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--ce-text-dim);
+    text-transform: uppercase;
+}
+
+/* Presets */
+.presets-grid {
+    display: flex;
+    gap: 8px;
+    margin-top: 15px;
+}
+
+.preset-dot {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    cursor: pointer;
+    border: 1px solid rgba(0,0,0,0.05);
+    transition: transform 0.2s;
+}
+
+.preset-dot:hover {
+    transform: scale(1.2);
 }
 
 /* Style Buttons */
@@ -394,25 +433,36 @@
             <!-- Tab: Style -->
             <div class="settings-content" id="tab-style">
                 <div class="form-group">
-                    <label class="form-label">Palette de couleurs</label>
+                    <label class="form-label">Personnalisation des couleurs</label>
                     <div class="color-grid">
-                        <div class="color-picker-wrap">
-                            <div class="color-preview" id="preview-dots" style="background:#000000">
+                        <div class="color-picker-item">
+                            <div class="color-circle" id="preview-dots" style="background:#000000">
                                 <input type="color" id="color-dots" value="#000000">
                             </div>
-                            <span style="font-size:0.75rem; color:var(--ce-text-dim)">Points</span>
+                            <span class="color-label">Modules</span>
                         </div>
-                        <div class="color-picker-wrap">
-                            <div class="color-preview" id="preview-bg" style="background:#ffffff">
+                        <div class="color-picker-item">
+                            <div class="color-circle" id="preview-bg" style="background:#ffffff">
                                 <input type="color" id="color-bg" value="#ffffff">
                             </div>
-                            <span style="font-size:0.75rem; color:var(--ce-text-dim)">Fond</span>
+                            <span class="color-label">Arrière-plan</span>
                         </div>
-                        <div class="color-picker-wrap">
-                            <div class="color-preview" id="preview-corners" style="background:#000000">
+                        <div class="color-picker-item" style="border-left: 1px solid #ddd; padding-left: 20px;">
+                            <div class="color-circle" id="preview-corners" style="background:#000000">
                                 <input type="color" id="color-corners" value="#000000">
                             </div>
-                            <span style="font-size:0.75rem; color:var(--ce-text-dim)">Coins</span>
+                            <span class="color-label">Coins</span>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-3">
+                        <span style="font-size: 0.75rem; color: var(--ce-text-dim); font-weight: 600;">PRÉRÉGLAGES PROS</span>
+                        <div class="presets-grid">
+                            <div class="preset-dot" style="background: #000000" data-color="#000000" title="Pure Black"></div>
+                            <div class="preset-dot" style="background: #2196F3" data-color="#2196F3" title="Finance Blue"></div>
+                            <div class="preset-dot" style="background: #333333" data-color="#333333" title="Dark Gray"></div>
+                            <div class="preset-dot" style="background: #1a237e" data-color="#1a237e" title="Deep Indigo"></div>
+                            <div class="preset-dot" style="background: #e53935" data-color="#e53935" title="Security Red"></div>
                         </div>
                     </div>
                 </div>
@@ -536,6 +586,21 @@ document.addEventListener('DOMContentLoaded', function() {
             const val = e.target.value;
             preview.style.background = val;
             currentOptions[`color${type.charAt(0).toUpperCase() + type.slice(1)}`] = val;
+            debouncedRender();
+        });
+    });
+
+    // Presets selection
+    document.querySelectorAll('.preset-dot').forEach(dot => {
+        dot.addEventListener('click', () => {
+            const color = dot.dataset.color;
+            // Apply to Dots and Corners by default
+            const inputs = ['dots', 'corners'];
+            inputs.forEach(type => {
+                document.getElementById(`color-${type}`).value = color;
+                document.getElementById(`preview-${type}`).style.background = color;
+                currentOptions[`color${type.charAt(0).toUpperCase() + type.slice(1)}`] = color;
+            });
             debouncedRender();
         });
     });
