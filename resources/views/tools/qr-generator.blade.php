@@ -453,6 +453,34 @@
 .poster-cta-area { text-align: center; width: 100%; }
 .poster-cta-area p { font-size: 1.5rem; font-weight: 600; margin: 0; word-break: break-word; }
 
+.poster-socials-area { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 10px; padding: 10px 0 4px; width: 100%; }
+.poster-socials-area .pv-social-dot { width: 38px; height: 38px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; color: #fff; flex-shrink: 0; }
+
+/* Social icon selector */
+.social-icons-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; }
+.social-icon-btn {
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 4px; padding: 10px 4px 8px;
+    border: 2px solid var(--ce-border); border-radius: 12px;
+    background: var(--ce-bg); color: var(--ce-text-dim);
+    cursor: pointer; font-size: .65rem; font-weight: 600;
+    text-align: center; transition: all .18s ease;
+}
+.social-icon-btn i { font-size: 1.25rem; transition: color .18s; }
+.social-icon-btn:hover { border-color: #ccc; color: var(--ce-text); }
+.social-icon-btn.active { border-color: var(--ce-primary); background: rgba(33,150,243,.08); color: var(--ce-primary); }
+.social-icon-btn[data-network="facebook"].active  { border-color:#1877F2; background:rgba(24,119,242,.1); color:#1877F2; }
+.social-icon-btn[data-network="whatsapp"].active  { border-color:#25D366; background:rgba(37,211,102,.1); color:#25D366; }
+.social-icon-btn[data-network="instagram"].active { border-color:#E1306C; background:rgba(225,48,108,.1); color:#E1306C; }
+.social-icon-btn[data-network="tiktok"].active    { border-color:#010101; background:rgba(1,1,1,.07);    color:#010101; }
+.social-icon-btn[data-network="youtube"].active   { border-color:#FF0000; background:rgba(255,0,0,.08); color:#FF0000; }
+.social-icon-btn[data-network="twitter"].active   { border-color:#555;    background:rgba(0,0,0,.06);   color:#111; }
+.social-icon-btn[data-network="linkedin"].active  { border-color:#0A66C2; background:rgba(10,102,194,.1); color:#0A66C2; }
+.social-icon-btn[data-network="telegram"].active  { border-color:#2CA5E0; background:rgba(44,165,224,.1); color:#2CA5E0; }
+.social-icon-btn[data-network="snapchat"].active  { border-color:#ccb800; background:rgba(255,252,0,.15); color:#a09500; }
+.social-icon-btn[data-network="pinterest"].active { border-color:#E60023; background:rgba(230,0,35,.08); color:#E60023; }
+@media (max-width: 500px) { .social-icons-grid { grid-template-columns: repeat(4, 1fr); } }
+
 .btn-dl-poster {
     width: 100%; background: var(--ce-secondary); color: white; border: none;
     border-radius: 14px; padding: 16px; font-weight: 700; font-size: .92rem;
@@ -666,6 +694,42 @@
                     <button id="poster-logo-remove" style="background:none;border:none;color:#dc2626;font-size:.78rem;cursor:pointer;padding:0">Supprimer</button>
                 </div>
             </div>
+            <div class="form-group">
+                <label class="form-label"><i class="bi bi-share me-1"></i> Réseaux sociaux <span style="font-weight:400;color:var(--ce-text-dim)">(facultatif)</span></label>
+                <p style="font-size:.78rem;color:var(--ce-text-dim);margin-bottom:10px">Sélectionnez les réseaux pour les afficher sur l'affiche</p>
+                <div class="social-icons-grid" id="social-icons-grid">
+                    <button class="social-icon-btn" data-network="facebook" data-color="#1877F2" type="button" title="Facebook">
+                        <i class="bi bi-facebook"></i><span>Facebook</span>
+                    </button>
+                    <button class="social-icon-btn" data-network="whatsapp" data-color="#25D366" type="button" title="WhatsApp">
+                        <i class="bi bi-whatsapp"></i><span>WhatsApp</span>
+                    </button>
+                    <button class="social-icon-btn" data-network="instagram" data-color="#E1306C" type="button" title="Instagram">
+                        <i class="bi bi-instagram"></i><span>Instagram</span>
+                    </button>
+                    <button class="social-icon-btn" data-network="tiktok" data-color="#010101" type="button" title="TikTok">
+                        <i class="bi bi-tiktok"></i><span>TikTok</span>
+                    </button>
+                    <button class="social-icon-btn" data-network="youtube" data-color="#FF0000" type="button" title="YouTube">
+                        <i class="bi bi-youtube"></i><span>YouTube</span>
+                    </button>
+                    <button class="social-icon-btn" data-network="twitter" data-color="#000000" type="button" title="X / Twitter">
+                        <i class="bi bi-twitter-x"></i><span>X / Twitter</span>
+                    </button>
+                    <button class="social-icon-btn" data-network="linkedin" data-color="#0A66C2" type="button" title="LinkedIn">
+                        <i class="bi bi-linkedin"></i><span>LinkedIn</span>
+                    </button>
+                    <button class="social-icon-btn" data-network="telegram" data-color="#2CA5E0" type="button" title="Telegram">
+                        <i class="bi bi-telegram"></i><span>Telegram</span>
+                    </button>
+                    <button class="social-icon-btn" data-network="snapchat" data-color="#FFFC00" type="button" title="Snapchat">
+                        <i class="bi bi-snapchat"></i><span>Snapchat</span>
+                    </button>
+                    <button class="social-icon-btn" data-network="pinterest" data-color="#E60023" type="button" title="Pinterest">
+                        <i class="bi bi-pinterest"></i><span>Pinterest</span>
+                    </button>
+                </div>
+            </div>
         </div>
 
         {{-- Droite : aperçu --}}
@@ -686,6 +750,7 @@
                     <div class="poster-cta-area">
                         <p id="pv-cta" style="color:#111">Scannez pour accéder</p>
                     </div>
+                    <div class="poster-socials-area" id="pv-socials"></div>
                 </div>
             </div>
             <button class="btn-dl-poster" id="btn-dl-poster">
@@ -910,6 +975,23 @@ document.addEventListener('DOMContentLoaded', function() {
     // ===== SECTION AFFICHE =====
     let posterBgColor = '#ffffff';
     let posterLogoData = null;
+    let selectedSocials = []; // {network, color}
+
+    // Social icon toggle
+    document.querySelectorAll('.social-icon-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const net = btn.dataset.network;
+            const color = btn.dataset.color;
+            if (btn.classList.contains('active')) {
+                btn.classList.remove('active');
+                selectedSocials = selectedSocials.filter(s => s.network !== net);
+            } else {
+                btn.classList.add('active');
+                selectedSocials.push({ network: net, color: color });
+            }
+            updatePosterPreview();
+        });
+    });
 
     document.getElementById('toggle-poster').addEventListener('change', function() {
         document.getElementById('poster-editor').classList.toggle('open', this.checked);
@@ -992,6 +1074,24 @@ document.addEventListener('DOMContentLoaded', function() {
         } else {
             document.getElementById('pv-qr-placeholder').style.display = 'flex';
         }
+
+        // Social dots in preview
+        const pvSocials = document.getElementById('pv-socials');
+        pvSocials.innerHTML = '';
+        if (selectedSocials.length > 0) {
+            const iconMap = {
+                facebook: 'bi-facebook', whatsapp: 'bi-whatsapp', instagram: 'bi-instagram',
+                tiktok: 'bi-tiktok', youtube: 'bi-youtube', twitter: 'bi-twitter-x',
+                linkedin: 'bi-linkedin', telegram: 'bi-telegram', snapchat: 'bi-snapchat', pinterest: 'bi-pinterest'
+            };
+            selectedSocials.forEach(s => {
+                const dot = document.createElement('div');
+                dot.className = 'pv-social-dot';
+                dot.style.background = s.network === 'tiktok' ? '#010101' : s.color;
+                dot.innerHTML = `<i class="bi ${iconMap[s.network] || 'bi-share'}"></i>`;
+                pvSocials.appendChild(dot);
+            });
+        }
     }
 
 
@@ -1032,7 +1132,23 @@ document.addEventListener('DOMContentLoaded', function() {
 
         const cta = document.getElementById('poster-cta').value.trim() || 'Scannez pour accéder';
         ctx.font = 'bold 30px Arial'; ctx.fillStyle = tc;
-        wrapText(ctx, cta, W/2, y+30, 680, 38);
+        y = wrapText(ctx, cta, W/2, y+30, 680, 38) + 50;
+
+        // Social circles on canvas
+        if (selectedSocials.length > 0) {
+            const r = 32, gap = 18, total = selectedSocials.length * (r*2 + gap) - gap;
+            let sx = (W - total) / 2 + r;
+            for (const s of selectedSocials) {
+                ctx.beginPath(); ctx.arc(sx, y, r, 0, Math.PI*2);
+                ctx.fillStyle = s.color === '#FFFC00' ? '#FFFC00' : s.color; ctx.fill();
+                // letter
+                ctx.fillStyle = s.network === 'snapchat' ? '#000' : '#fff';
+                ctx.font = 'bold 26px Arial'; ctx.textAlign = 'center';
+                const initials = { facebook:'f', whatsapp:'W', instagram:'In', tiktok:'T', youtube:'▶', twitter:'𝕏', linkedin:'in', telegram:'✈', snapchat:'👻', pinterest:'P' };
+                ctx.fillText(initials[s.network] || s.network[0].toUpperCase(), sx, y+9);
+                sx += r*2 + gap;
+            }
+        }
 
         cv.toBlob(blob => { const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'affiche-qr.png'; a.click(); }, 'image/png');
     });
