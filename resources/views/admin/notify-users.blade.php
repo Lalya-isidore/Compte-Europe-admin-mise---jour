@@ -73,6 +73,9 @@
                             <i data-lucide="zap" style="width: 16px;"></i> Modèles rapides
                         </label>
                         <div class="d-flex gap-2 flex-wrap">
+                            <button type="button" class="btn btn-outline-primary btn-sm rounded-pill px-3" id="tpl-qr">
+                                ✨ Générateur QR Gratuit
+                            </button>
                             <button type="button" class="btn btn-outline-warning btn-sm rounded-pill px-3" id="tpl-loyalty">
                                 🎁 Bonus Fidélité
                             </button>
@@ -158,6 +161,33 @@ document.addEventListener('DOMContentLoaded', () => {
         if(!confirm('Attention : Vous êtes sur le point d\'envoyer un message à vos utilisateurs. Confirmer l\'envoi ?')) {
             e.preventDefault();
         }
+    });
+
+    // Modèle QR Code Gratuit
+    document.getElementById('tpl-qr')?.addEventListener('click', function() {
+        document.getElementById('email-subject').value = '✨ Nouvelle fonctionnalité gratuite : Générateur de QR Code & Affiches !';
+        document.getElementById('email-message').value = `Bonjour,
+
+Nous avons le plaisir de vous annoncer le lancement d'une nouvelle fonctionnalité 100% gratuite sur FlashBilan ! 🎉
+
+🔷 Générateur de QR Code & Affiches Professionnelles
+
+Créez en quelques secondes des QR codes personnalisés et des affiches prêtes à imprimer pour vos réseaux sociaux, votre business ou vos promotions.
+
+✅ 4 formats disponibles : Portrait, Paysage, Carré et Bannière
+✅ Personnalisation complète : couleurs, logo, titre, sous-titre
+✅ Ajout de vos réseaux sociaux (Facebook, Instagram, WhatsApp, TikTok...)
+✅ Téléchargement immédiat en haute qualité (PNG)
+✅ 100% gratuit, sans abonnement
+
+👉 Accédez à la fonctionnalité dès maintenant : https://flashbilan.fr
+
+Connectez-vous à votre compte et rendez-vous dans la section "Outils" pour découvrir le Générateur QR.
+
+Cordialement,
+L'équipe FlashBilan`;
+        document.getElementById('target-select').value = 'all';
+        singleUserBlock.style.display = 'none';
     });
 
     // Modèle Bonus Fidélité
