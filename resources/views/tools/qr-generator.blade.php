@@ -608,8 +608,8 @@
     .tab-btn { padding: 10px 14px; font-size: .8rem; white-space: nowrap; flex-shrink: 0; }
 
     /* Format tabs — grille 2×2 sur mobile */
-    .format-tabs { flex-wrap: wrap; gap: 8px; }
-    .format-tab { flex: 1 1 calc(50% - 4px); font-size: .8rem; padding: 9px 8px; gap: 5px; justify-content: center; }
+    .format-tabs { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .format-tab { font-size: .8rem; padding: 9px 8px; flex: none; justify-content: center; }
     .format-tab i { font-size: .95rem; }
 
     /* Fond tabs */
