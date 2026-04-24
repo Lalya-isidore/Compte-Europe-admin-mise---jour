@@ -607,9 +607,10 @@
     .settings-tabs { overflow-x: auto; gap: 4px; padding-bottom: 0; -webkit-overflow-scrolling: touch; }
     .tab-btn { padding: 10px 14px; font-size: .8rem; white-space: nowrap; flex-shrink: 0; }
 
-    /* Format tabs — plus petit texte */
-    .format-tab { font-size: .75rem; padding: 7px 6px; gap: 4px; }
-    .format-tab i { font-size: .9rem; }
+    /* Format tabs — grille 2×2 sur mobile */
+    .format-tabs { flex-wrap: wrap; gap: 8px; }
+    .format-tab { flex: 1 1 calc(50% - 4px); font-size: .8rem; padding: 9px 8px; gap: 5px; justify-content: center; }
+    .format-tab i { font-size: .95rem; }
 
     /* Fond tabs */
     .bg-tab { font-size: .75rem; padding: 7px 8px; }
