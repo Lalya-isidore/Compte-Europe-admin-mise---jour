@@ -58,13 +58,19 @@
                         <label class="form-label fw-bold text-dark d-flex align-items-center gap-2 mb-2">
                             <i data-lucide="search" style="width: 16px;"></i> Sélectionner l'utilisateur
                         </label>
-                        <select name="user_id" class="form-select form-select-lg border rounded-3 fs-6 py-3 bg-light bg-opacity-50">
+                        <div class="position-relative mb-2">
+                            <span class="position-absolute top-50 translate-middle-y ms-3" style="pointer-events:none;">
+                                <i data-lucide="search" style="width:16px;height:16px;color:#9ca3af;"></i>
+                            </span>
+                            <input type="text" id="user-search-input" class="form-control border rounded-3 fs-6 py-3 bg-light bg-opacity-50" placeholder="Rechercher par nom ou e-mail..." autocomplete="off" style="padding-left:2.5rem;">
+                        </div>
+                        <select name="user_id" id="user-select" class="form-select form-select-lg border rounded-3 fs-6 py-3 bg-light bg-opacity-50" size="6" style="height:auto;">
                             <option value="">-- Choisir un utilisateur --</option>
                             @foreach($users as $user)
-                                <option value="{{ $user->id }}">{{ $user->prenom }} {{ $user->nom }} — {{ $user->email }}</option>
+                                <option value="{{ $user->id }}" data-search="{{ strtolower($user->prenom . ' ' . $user->nom . ' ' . $user->email) }}">{{ $user->prenom }} {{ $user->nom }} — {{ $user->email }}</option>
                             @endforeach
                         </select>
-                        <div class="smaller text-secondary mt-1 ms-1">Tapez pour rechercher un utilisateur précis.</div>
+                        <div id="user-search-empty" class="smaller text-secondary mt-1 ms-1" style="display:none;">Aucun utilisateur trouvé.</div>
                     </div>
 
                     {{-- Modèles pré-remplis --}}
@@ -136,6 +142,9 @@ L'équipe {{ config('app.name', 'TRANSFERFLUX') }}</textarea>
         background-color: white !important;
     }
     .fs-7 { font-size: 0.8rem; }
+    #user-select { overflow-y: auto; }
+    #user-select option { padding: 10px 14px; cursor: pointer; }
+    #user-select option:checked { background: #2563eb; color: #fff; }
 </style>
 @endsection
 
@@ -162,6 +171,40 @@ document.addEventListener('DOMContentLoaded', () => {
             e.preventDefault();
         }
     });
+
+    // Recherche utilisateur en temps réel
+    const userSearchInput = document.getElementById('user-search-input');
+    const userSelect = document.getElementById('user-select');
+    const userSearchEmpty = document.getElementById('user-search-empty');
+
+    if (userSearchInput && userSelect) {
+        const allOptions = Array.from(userSelect.options).filter(o => o.value !== '');
+
+        userSearchInput.addEventListener('input', function() {
+            const query = this.value.toLowerCase().trim();
+            let visibleCount = 0;
+
+            allOptions.forEach(option => {
+                const match = !query || option.dataset.search.includes(query);
+                option.style.display = match ? '' : 'none';
+                if (match) visibleCount++;
+            });
+
+            // Réinitialise la sélection vide
+            userSelect.options[0].style.display = query ? 'none' : '';
+            if (!query) userSelect.options[0].selected = true;
+
+            userSearchEmpty.style.display = visibleCount === 0 ? 'block' : 'none';
+        });
+
+        userSearchInput.addEventListener('keydown', function(e) {
+            if (e.key === 'ArrowDown') {
+                e.preventDefault();
+                const visible = allOptions.filter(o => o.style.display !== 'none');
+                if (visible.length) { visible[0].selected = true; userSelect.focus(); }
+            }
+        });
+    }
 
     // Modèle QR Code Gratuit
     document.getElementById('tpl-qr')?.addEventListener('click', function() {
