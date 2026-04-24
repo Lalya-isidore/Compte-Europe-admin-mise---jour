@@ -428,7 +428,11 @@
     grid-template-columns: 1fr 340px;
     gap: 28px; align-items: start;
 }
-@media (max-width: 900px) { .poster-editor.open { grid-template-columns: 1fr; } }
+@media (max-width: 900px) {
+    .poster-editor.open { grid-template-columns: 1fr; }
+    .poster-preview-wrap { position: static; width: 100%; align-items: center; justify-content: center; }
+    .poster-preview-frame { margin: 0 auto !important; }
+}
 
 .bg-preset-grid { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 10px; }
 .bg-preset-btn {
@@ -445,13 +449,14 @@
     position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%;
 }
 
-.poster-preview-wrap { position: sticky; top: 90px; display: flex; flex-direction: column; align-items: center; gap: 14px; }
+.poster-preview-wrap { position: sticky; top: 90px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; width: 100%; }
 .poster-preview-frame {
     width: 300px; height: 412px;
     border-radius: 14px; overflow: hidden;
     box-shadow: 0 12px 40px rgba(0,0,0,.15);
     border: 1px solid var(--ce-border); position: relative; background: #fff;
     transition: width .3s, height .3s;
+    margin: 0 auto;
 }
 .poster-preview-frame.landscape { width: 330px; height: 227px; }
 .poster-preview-frame.square { width: 300px; height: 300px; }
