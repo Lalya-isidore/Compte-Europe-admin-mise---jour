@@ -577,8 +577,9 @@
 
 /* 768px — tablette / mobile paysage */
 @media (max-width: 768px) {
-    /* Wrapper padding réduit */
-    .qr-premium-wrap { padding: 14px 16px; }
+    /* Wrapper : 0 marge latérale sur mobile */
+    .qr-premium-wrap { padding: 14px 0; }
+    .ce-card { border-radius: 0; box-shadow: none; border-left: none; border-right: none; }
 
     /* Header : titre et badge sur 2 lignes si besoin */
     .qr-header { flex-wrap: wrap; gap: 10px; margin-bottom: 20px; }
