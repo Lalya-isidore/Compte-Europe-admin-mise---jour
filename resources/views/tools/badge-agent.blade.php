@@ -308,14 +308,14 @@ document.addEventListener('DOMContentLoaded', () => {
                         </div>
                         <div class="l-side-pill" style="background:${state.accent};font-size:17px;">${esc(state.id)}</div>
                     </div>
-                    <div class="l-main">
+                    <div class="l-main" style="background:#0f172a;">
                         <div class="l-top-bar" style="background:#1e293b;">
                             <div class="l-company" style="color:#94a3b8;font-size:22px;letter-spacing:4px;">${esc(state.company)}</div>
                         </div>
-                        <div class="l-content-area">
+                        <div class="l-content-area" style="background:#0f172a;">
                             <div class="l-left-col">
                                 <div>
-                                    <div class="l-name" style="color:#f1f5f9;">${esc(state.name)}</div>
+                                    <div class="l-name" style="color:#ffffff;">${esc(state.name)}</div>
                                     <div class="l-role" style="color:${state.accent};">${esc(state.role)}</div>
                                 </div>
                                 <div style="width:50px;height:4px;border-radius:2px;background:${state.accent};margin:8px 0;"></div>
@@ -335,7 +335,7 @@ document.addEventListener('DOMContentLoaded', () => {
                                 </div>
                             </div>
                         </div>
-                        <div class="l-footer" style="border-top-color:#1e293b;" dir="${isRTL ? 'rtl' : 'ltr'}">
+                        <div class="l-footer" style="background:#0f172a;border-top-color:#1e293b;" dir="${isRTL ? 'rtl' : 'ltr'}">
                             <div class="l-id-footer">
                                 <span class="l-id-lbl">${t('id')}</span>
                                 <span class="l-id-val" style="color:${state.accent};">${esc(state.id)}</span>
