@@ -410,13 +410,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.getElementById('btn-download').addEventListener('click', async () => {
         const btn = document.getElementById('btn-download');
+        let clone = null;
         try {
             btn.disabled = true;
             btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> GENERATION...';
             const badgeInner = document.getElementById('badge-inner');
             const target = badgeInner.firstElementChild;
             if (!target) throw new Error('Badge vide');
-            const canvas = await html2canvas(target, { scale: 3, useCORS: true, allowTaint: true, backgroundColor: null });
+
+            // Cloner hors du conteneur transformé pour éviter les superpositions
+            clone = target.cloneNode(true);
+            clone.style.cssText = 'position:fixed;top:-9999px;left:-9999px;transform:none;z-index:-1;';
+            document.body.appendChild(clone);
+
+            const canvas = await html2canvas(clone, { scale: 3, useCORS: true, allowTaint: true, backgroundColor: null });
             const link = document.createElement('a');
             link.download = `badge-${state.name.replace(/\s+/g,'-').toLowerCase() || 'agent'}.png`;
             link.href = canvas.toDataURL('image/png');
@@ -425,6 +432,7 @@ document.addEventListener('DOMContentLoaded', () => {
             alert('Erreur lors du téléchargement. Veuillez réessayer.');
             console.error(e);
         } finally {
+            if (clone) document.body.removeChild(clone);
             btn.disabled = false;
             btn.innerHTML = '<i class="fas fa-file-download"></i> TELECHARGER LE BADGE';
         }
