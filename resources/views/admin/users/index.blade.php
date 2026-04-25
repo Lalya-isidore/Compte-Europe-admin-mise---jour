@@ -87,8 +87,8 @@
                                 <div class="avatar bg-primary bg-opacity-10 text-primary rounded-4 d-flex align-items-center justify-content-center fw-bold fs-5" style="width: 52px; height: 52px;">
                                     {{ $initials ?: '?' }}
                                 </div>
-                                <div class="overflow-hidden">
-                                    <h3 class="h6 fw-bold mb-0 text-truncate text-dark">{{ $user->nom }} {{ $user->prenom }}</h3>
+                                <div class="overflow-hidden" style="min-width:0;flex:1;">
+                                    <h3 class="h6 fw-bold mb-0 text-truncate text-dark" title="{{ $user->nom }} {{ $user->prenom }}">{{ $user->nom }} {{ $user->prenom }}</h3>
                                     <span class="text-secondary smaller">ID: #{{ $user->id }}</span>
                                 </div>
                             </div>
