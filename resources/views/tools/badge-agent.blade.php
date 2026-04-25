@@ -90,9 +90,9 @@
 /* PORTRAIT */
 .tpl-portrait { width: 540px; height: 856px; background: #fff; display: flex; flex-direction: column; align-items: center; padding: 40px 35px 30px; }
 .v-logo-box { height: 60px; margin-bottom: 28px; }
-.v-photo { width: 220px !important; height: 220px !important; border-radius: 50%; overflow: hidden; border: 10px solid #f1f5f9; box-shadow: 0 12px 35px rgba(0,0,0,0.14); margin-bottom: 28px; background: #eee; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.v-photo { width: 180px !important; height: 180px !important; border-radius: 50%; overflow: hidden; border: 8px solid #f1f5f9; box-shadow: 0 10px 30px rgba(0,0,0,0.14); margin-bottom: 24px; background: #eee; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
 .v-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
-.v-photo i { font-size: 120px; color: #cbd5e1; }
+.v-photo i { font-size: 95px; color: #cbd5e1; }
 .v-name { font-size: 46px; font-weight: 900; text-align: center; line-height: 1.1; margin-bottom: 8px; }
 .v-role { font-size: 22px; font-weight: 700; color: var(--ce-primary); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 22px; }
 .v-details { background: #f8fafc; border-radius: 16px; width: 100%; padding: 18px 22px; display: grid; grid-template-columns: 1fr 1fr; gap: 12px 18px; margin-bottom: 20px; }
