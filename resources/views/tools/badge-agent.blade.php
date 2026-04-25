@@ -66,7 +66,7 @@
 
 .l-content-area { flex: 1; padding: 24px 35px 16px; display: flex; gap: 30px; align-items: stretch; }
 .l-left-col { flex: 1.2; display: flex; flex-direction: column; justify-content: space-between; }
-.l-name { font-size: 40px; font-weight: 900; line-height: 1.05; color: #1e293b; letter-spacing: -1px; margin: 0; }
+.l-name { font-size: 54px; font-weight: 900; line-height: 1.05; color: #1e293b; letter-spacing: -2px; margin: 0; }
 .l-role { font-size: 22px; font-weight: 700; color: var(--ce-primary); text-transform: uppercase; letter-spacing: 2px; margin: 6px 0 0; }
 .l-contact { display: flex; flex-direction: column; gap: 12px; font-size: 22px; font-weight: 600; color: #334155; margin-top: auto; padding-top: 16px; }
 .l-contact-item { display: flex; align-items: center; gap: 14px; }
@@ -94,7 +94,7 @@
 .v-photo { width: 180px !important; height: 180px !important; border-radius: 50%; overflow: hidden; border: 8px solid #f1f5f9; box-shadow: 0 10px 30px rgba(0,0,0,0.14); margin-bottom: 24px; background: #eee; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
 .v-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .v-photo i { font-size: 95px; color: #cbd5e1; }
-.v-name { font-size: 34px; font-weight: 900; text-align: center; line-height: 1.1; margin-bottom: 8px; }
+.v-name { font-size: 46px; font-weight: 900; text-align: center; line-height: 1.1; margin-bottom: 8px; }
 .v-role { font-size: 22px; font-weight: 700; color: var(--ce-primary); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 22px; }
 .v-details { background: #f8fafc; border-radius: 16px; width: 100%; padding: 18px 22px; display: grid; grid-template-columns: 1fr 1fr; gap: 12px 18px; margin-bottom: 20px; }
 .v-id-band { background: var(--ce-primary); color: #fff; width: 100%; padding: 13px; text-align: center; border-radius: 14px; font-family: monospace; font-size: 22px; font-weight: 800; margin-bottom: 20px; }
