@@ -214,21 +214,21 @@
                                 </div>
                             </div>
 
-                            <div class="prev-table">
-                                <div class="prev-table__title">RÉSUMÉ DU PRÊT</div>
-                                <table>
-                                    <tr><td>Montant principal</td><td id="prev-montant">—</td></tr>
-                                    <tr><td>Taux d'intérêt</td><td id="prev-taux">—</td></tr>
-                                    <tr><td>Durée</td><td id="prev-duree">—</td></tr>
-                                    <tr class="highlight"><td>Mensualité</td><td id="prev-mensualite">—</td></tr>
-                                </table>
-                            </div>
-
                             <div class="prev-articles" id="prev-articles">
                                 @foreach(range(1,10) as $n)
                                 <div class="prev-article">
                                     <div class="prev-art-title" id="prev-art{{ $n }}-titre">—</div>
                                     <div class="prev-art-body"  id="prev-art{{ $n }}-body">—</div>
+                                    @if($n === 2)
+                                    <div class="prev-table" style="margin-top: 8px;">
+                                        <table>
+                                            <tr><td id="prev-lbl-montant-p">Montant principal</td><td id="prev-montant">—</td></tr>
+                                            <tr><td id="prev-lbl-taux">Taux d'intérêt</td><td id="prev-taux">—</td></tr>
+                                            <tr><td id="prev-lbl-duree">Durée</td><td id="prev-duree">—</td></tr>
+                                            <tr class="highlight"><td id="prev-lbl-mensualite">Mensualité</td><td id="prev-mensualite">—</td></tr>
+                                        </table>
+                                    </div>
+                                    @endif
                                 </div>
                                 @endforeach
                             </div>
@@ -428,6 +428,12 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('prev-registre').textContent      = t.registre       || 'REGISTRE DU TRIBUNAL';
         document.getElementById('prev-coordination').textContent  = t.coordination   || 'Service de coordination judiciaire';
         document.getElementById('prev-soussignes').textContent    = '— ' + (t.soussignes || 'ENTRE LES SOUSSIGNÉS') + ' —';
+
+        // Labels tableau article 2
+        document.getElementById('prev-lbl-montant-p').textContent  = t.montant_p    || 'Montant principal';
+        document.getElementById('prev-lbl-taux').textContent       = t.taux_label   || 'Taux d\'intérêt';
+        document.getElementById('prev-lbl-duree').textContent      = t.nb_echeances || 'Durée';
+        document.getElementById('prev-lbl-mensualite').textContent = t.mensualite   || 'Mensualité';
 
         // Labels parties
         document.getElementById('prev-label-preteur').textContent = t.le_preteur     || 'LE PRÊTEUR';
