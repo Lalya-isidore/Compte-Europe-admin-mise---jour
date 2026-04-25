@@ -382,7 +382,29 @@ document.addEventListener('DOMContentLoaded', () => {
             `;
         }
         inner.innerHTML = html;
+        resizePreview();
     };
+
+    const resizePreview = () => {
+        const frame = document.getElementById('badge-frame');
+        const inner = document.getElementById('badge-inner');
+        if (!frame || !inner) return;
+        if (window.innerWidth > 992) {
+            frame.style.width = '';
+            frame.style.height = '';
+            inner.style.transform = '';
+            return;
+        }
+        const isPortrait = frame.classList.contains('portrait');
+        const innerW = isPortrait ? 540 : 856;
+        const innerH = isPortrait ? 856 : 540;
+        const availW = frame.parentElement.clientWidth;
+        const scale = availW / innerW;
+        frame.style.width = availW + 'px';
+        frame.style.height = (innerH * scale) + 'px';
+        inner.style.transform = `scale(${scale})`;
+    };
+    window.addEventListener('resize', resizePreview);
 
     // Events
     const inputs = ['name', 'role', 'service', 'company', 'id', 'birth', 'place', 'expiry', 'sex', 'blood', 'phone', 'email'];
