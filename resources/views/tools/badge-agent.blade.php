@@ -424,7 +424,8 @@ document.addEventListener('DOMContentLoaded', () => {
             clone.style.cssText = 'position:fixed;top:-9999px;left:-9999px;transform:none;z-index:-1;';
             document.body.appendChild(clone);
 
-            const canvas = await html2canvas(clone, { scale: 3, useCORS: true, allowTaint: true, backgroundColor: null });
+            const bgColor = state.tpl === 'tpl-dark' ? '#0f172a' : '#ffffff';
+            const canvas = await html2canvas(clone, { scale: 3, useCORS: true, allowTaint: true, backgroundColor: bgColor });
             const link = document.createElement('a');
             link.download = `badge-${state.name.replace(/\s+/g,'-').toLowerCase() || 'agent'}.png`;
             link.href = canvas.toDataURL('image/png');
