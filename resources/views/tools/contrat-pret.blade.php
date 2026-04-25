@@ -157,30 +157,55 @@
                     <div class="cp-card__head"><i class="fas fa-eye"></i> Aperçu du contrat</div>
                     <div class="cp-preview">
                         <div class="cp-preview__doc">
-                            <div class="prev-header">
-                                <div class="prev-logos">
-                                    <div class="prev-logo-box">🇪🇺</div>
-                                    <div class="prev-title-box">
-                                        <div class="prev-title" id="prev-titre">CONTRAT DE PRÊT</div>
-                                    </div>
-                                    <div class="prev-logo-box">⚖️</div>
-                                </div>
-                                <div class="prev-contract-no" id="prev-no">N° <span>—</span>/{{ date('Y') }}</div>
-                            </div>
+                            {{-- En-tête 3 colonnes identique au PDF --}}
+                            <table class="prev-hdr-table">
+                                <tr>
+                                    <td class="prev-hdr-left">
+                                        <img src="/images/contract/logo-ue.png" class="prev-hdr-img">
+                                        <div id="prev-union-eu" class="prev-hdr-txt-blue">UNION EUROPÉENNE</div>
+                                        <span class="prev-hdr-sep">_._._._._._</span>
+                                        <div id="prev-service-justice" class="prev-hdr-txt-blue" style="font-size:7px;">SERVICE DE JUSTICE ET DROITS HUMAINS</div>
+                                        <span class="prev-hdr-sep">_._._</span>
+                                        <div id="prev-tribunal" class="prev-hdr-txt-blue" style="font-size:7px;">TRIBUNAL EUROPÉEN DE PREMIÈRE INSTANCE</div>
+                                    </td>
+                                    <td class="prev-hdr-center">
+                                        <img src="/images/contract/logo-flashbilan.png" class="prev-hdr-img-c">
+                                        <div class="prev-title-wrap">
+                                            <div class="prev-title" id="prev-titre">CONTRAT DE PRÊT</div>
+                                        </div>
+                                    </td>
+                                    <td class="prev-hdr-right">
+                                        <img src="/images/contract/logo-justice.jpg" class="prev-hdr-img">
+                                        <div id="prev-registre" class="prev-hdr-txt-red">REGISTRE DU TRIBUNAL</div>
+                                        <div id="prev-coordination" class="prev-hdr-txt-navy">Service de coordination judiciaire</div>
+                                        <span class="prev-hdr-sep">_o_o_o_o_o_</span>
+                                        <div class="prev-contract-no" id="prev-no">CONTRAT N° —/{{ date('Y') }}</div>
+                                    </td>
+                                </tr>
+                            </table>
 
-                            <div class="prev-subtitle">— ENTRE LES SOUSSIGNÉS —</div>
+                            <div class="prev-subtitle" id="prev-soussignes">— ENTRE LES SOUSSIGNÉS —</div>
 
                             <div class="prev-parties">
                                 <div class="prev-party">
-                                    <div class="prev-party__label">PRÊTEUR</div>
+                                    <div class="prev-party__label" id="prev-label-preteur">LE PRÊTEUR</div>
                                     <div class="prev-party__name" id="prev-preteur-nom">—</div>
-                                    <div class="prev-party__info" id="prev-preteur-pays">Pays: —</div>
-                                    <div class="prev-party__info" id="prev-preteur-capacite">Capacité: —</div>
+                                    <table class="prev-party__tbl">
+                                        <tr><td class="prev-party__key" id="prev-lbl-pays-p">Pays :</td><td id="prev-preteur-pays">—</td></tr>
+                                        <tr><td class="prev-party__key" id="prev-lbl-adresse">Adresse :</td><td id="prev-preteur-adresse">—</td></tr>
+                                        <tr><td class="prev-party__key">ID :</td><td id="prev-preteur-id">—</td></tr>
+                                        <tr><td class="prev-party__key" id="prev-lbl-capacite">Capacité :</td><td id="prev-preteur-capacite">—</td></tr>
+                                    </table>
+                                    <div class="prev-party__denom" id="prev-denom-preteur">Ci-après dénommé "Le Prêteur"</div>
                                 </div>
                                 <div class="prev-party">
-                                    <div class="prev-party__label">BÉNÉFICIAIRE</div>
+                                    <div class="prev-party__label" id="prev-label-benef">LE BÉNÉFICIAIRE</div>
                                     <div class="prev-party__name" id="prev-emprunteur-nom">—</div>
-                                    <div class="prev-party__info" id="prev-emprunteur-pays">Pays: —</div>
+                                    <table class="prev-party__tbl">
+                                        <tr><td class="prev-party__key" id="prev-lbl-pays-e">Pays :</td><td id="prev-emprunteur-pays">—</td></tr>
+                                        <tr id="prev-emp-id-row" style="display:none;"><td class="prev-party__key" id="prev-lbl-cid">Client ID :</td><td id="prev-emprunteur-id">—</td></tr>
+                                    </table>
+                                    <div class="prev-party__denom" id="prev-denom-empr">Ci-après dénommé "L'Emprunteur"</div>
                                 </div>
                             </div>
 
@@ -286,20 +311,31 @@
 .cp-preview { padding: 16px; background: #f5f5f5; }
 .cp-preview__doc { background: #fff; border: 1px solid #ddd; border-radius: 6px; padding: 24px; font-family: 'Times New Roman', serif; font-size: 14px; color: #222; box-shadow: 0 2px 8px rgba(0,0,0,0.08); min-height: 400px; }
 
-.prev-header { border-bottom: 2px double #002B5B; padding-bottom: 12px; margin-bottom: 12px; }
-.prev-logos { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
-.prev-logo-box { font-size: 1.4rem; flex-shrink: 0; }
-.prev-title-box { flex: 1; text-align: center; }
-.prev-title { font-size: 17px; font-weight: bold; color: #4B0082; border: 2px solid #4B0082; display: inline-block; padding: 5px 12px; border-radius: 4px; }
-.prev-contract-no { text-align: right; font-size: 12px; color: #8B0000; font-weight: bold; margin-top: 4px; }
+.prev-hdr-table { width: 100%; border-collapse: collapse; border-bottom: 2px double #002B5B; margin-bottom: 12px; }
+.prev-hdr-table td { vertical-align: top; padding-bottom: 10px; }
+.prev-hdr-left { width: 25%; text-align: center; }
+.prev-hdr-center { width: 50%; text-align: center; vertical-align: middle !important; padding-top: 4px; }
+.prev-hdr-right { width: 25%; text-align: center; }
+.prev-hdr-img { height: 38px; width: auto; display: block; margin: 0 auto 4px; }
+.prev-hdr-img-c { height: 32px; width: auto; display: block; margin: 0 auto 8px; }
+.prev-hdr-txt-blue { font-size: 8px; font-weight: bold; color: #003399; line-height: 1.3; }
+.prev-hdr-txt-red { font-size: 8px; font-weight: bold; color: #8B0000; line-height: 1.3; }
+.prev-hdr-txt-navy { font-size: 7px; font-weight: bold; color: #002B5B; }
+.prev-hdr-sep { font-size: 6px; color: #999; display: block; line-height: 1.2; }
+.prev-title-wrap { border: 2px solid #4B0082; display: inline-block; padding: 5px 12px; border-radius: 6px; background: rgba(75,0,130,0.03); }
+.prev-title { font-size: 15px; font-weight: bold; color: #4B0082; white-space: nowrap; }
+.prev-contract-no { font-size: 9px; color: #d00; font-weight: bold; margin-top: 3px; }
 
-.prev-subtitle { text-align: center; font-size: 13px; font-style: italic; font-weight: bold; text-decoration: underline; margin: 10px 0; }
+.prev-subtitle { text-align: center; font-size: 13px; font-style: italic; font-weight: bold; text-decoration: underline; margin: 10px 0 14px; }
 
 .prev-parties { display: flex; gap: 10px; margin-bottom: 14px; }
-.prev-party { flex: 1; border: 1px solid #e0e0e0; border-radius: 4px; padding: 10px; background: #fafafa; }
-.prev-party__label { font-size: 11px; font-weight: bold; color: #002B5B; text-decoration: underline; margin-bottom: 5px; }
-.prev-party__name { font-size: 13px; font-weight: bold; margin-bottom: 4px; }
-.prev-party__info { font-size: 11px; color: #555; }
+.prev-party { flex: 1; border: 1px solid #e2e8f0; border-radius: 4px; padding: 10px; background: #f8fafc; }
+.prev-party__label { font-size: 11px; font-weight: bold; color: #002B5B; text-decoration: underline; margin-bottom: 6px; }
+.prev-party__name { font-size: 13px; font-weight: bold; margin-bottom: 6px; }
+.prev-party__tbl { width: 100%; border-collapse: collapse; }
+.prev-party__tbl td { border: none; padding: 1px 0; font-size: 10px; vertical-align: top; }
+.prev-party__key { font-weight: bold; color: #4a5568; padding-right: 5px; white-space: nowrap; width: 65px; }
+.prev-party__denom { font-style: italic; font-size: 10px; color: #555; margin-top: 6px; }
 
 .prev-table { margin-bottom: 14px; }
 .prev-table__title { font-size: 12px; font-weight: bold; color: #002B5B; border-bottom: 1px solid #ccc; padding-bottom: 5px; margin-bottom: 7px; }
@@ -364,18 +400,59 @@ document.addEventListener('DOMContentLoaded', () => {
         const duree     = parseInt(document.getElementById('duree').value)     || 0;
         const devise    = document.getElementById('devise').value;
         const sym       = currencySymbols[devise] || '€';
-        const empNom    = document.getElementById('emprunteur_nom').value   || '—';
-        const empPays   = document.getElementById('emprunteur_pays').value  || '—';
-        const preNom    = document.getElementById('preteur_nom').value      || '—';
-        const prePays   = document.getElementById('preteur_pays').value     || '—';
-        const preCap    = document.getElementById('preteur_capacite').value || '—';
+        const empNom    = document.getElementById('emprunteur_nom').value    || '—';
+        const empPays   = document.getElementById('emprunteur_pays').value   || '—';
+        const empId     = document.getElementById('emprunteur_id').value     || '';
+        const preNom    = document.getElementById('preteur_nom').value       || '—';
+        const prePays   = document.getElementById('preteur_pays').value      || '—';
+        const preAdr    = document.getElementById('preteur_adresse').value   || '—';
+        const preId     = document.getElementById('preteur_id').value        || '—';
+        const preCap    = document.getElementById('preteur_capacite').value  || '—';
         const lang      = document.querySelector('input[name="lang"]:checked')?.value || 'fr';
+        const t         = allTranslations[lang] || allTranslations['fr'];
 
-        // Titre selon langue
-        document.getElementById('prev-titre').textContent = langTitles[lang] || langTitles.fr;
+        // En-tête
+        document.getElementById('prev-titre').textContent         = langTitles[lang] || langTitles.fr;
+        document.getElementById('prev-union-eu').textContent      = t.union_eu       || 'UNION EUROPÉENNE';
+        document.getElementById('prev-service-justice').textContent = t.service_justice || 'SERVICE DE JUSTICE ET DROITS HUMAINS';
+        document.getElementById('prev-tribunal').textContent      = t.tribunal       || 'TRIBUNAL EUROPÉEN DE PREMIÈRE INSTANCE';
+        document.getElementById('prev-registre').textContent      = t.registre       || 'REGISTRE DU TRIBUNAL';
+        document.getElementById('prev-coordination').textContent  = t.coordination   || 'Service de coordination judiciaire';
+        document.getElementById('prev-soussignes').textContent    = '— ' + (t.soussignes || 'ENTRE LES SOUSSIGNÉS') + ' —';
+
+        // Labels parties
+        document.getElementById('prev-label-preteur').textContent = t.le_preteur     || 'LE PRÊTEUR';
+        document.getElementById('prev-label-benef').textContent   = t.beneficiaire   || 'LE BÉNÉFICIAIRE';
+        document.getElementById('prev-lbl-pays-p').textContent    = t.pays           || 'Pays :';
+        document.getElementById('prev-lbl-adresse').textContent   = t.adresse        || 'Adresse :';
+        document.getElementById('prev-lbl-capacite').textContent  = t.capacite       || 'Capacité :';
+        document.getElementById('prev-lbl-pays-e').textContent    = t.pays           || 'Pays :';
+        document.getElementById('prev-denom-preteur').textContent = t.denom_preteur  || 'Ci-après dénommé "Le Prêteur"';
+        document.getElementById('prev-denom-empr').textContent    = t.denom_empr     || 'Ci-après dénommé "L\'Emprunteur"';
+
+        // Données prêteur
+        document.getElementById('prev-preteur-nom').textContent      = preNom.toUpperCase();
+        document.getElementById('prev-preteur-pays').textContent     = prePays;
+        document.getElementById('prev-preteur-adresse').textContent  = preAdr;
+        document.getElementById('prev-preteur-id').textContent       = preId;
+        document.getElementById('prev-preteur-capacite').textContent = preCap;
+
+        // Données emprunteur
+        document.getElementById('prev-emprunteur-nom').textContent  = empNom.toUpperCase();
+        document.getElementById('prev-emprunteur-pays').textContent = empPays;
+        const empIdRow = document.getElementById('prev-emp-id-row');
+        if (empId) {
+            document.getElementById('prev-emprunteur-id').textContent = empId;
+            document.getElementById('prev-lbl-cid').textContent = t.client_id || 'Client ID :';
+            empIdRow.style.display = '';
+        } else {
+            empIdRow.style.display = 'none';
+        }
+
+        document.getElementById('prev-sig-emprunteur').textContent  = empNom;
+        document.getElementById('prev-sig-preteur').textContent     = preNom;
 
         // Contenu des articles
-        const t = allTranslations[lang] || allTranslations['fr'];
         const artTitles = ['art1_titre','art2_titre','art3_titre','art4_titre','art5_titre','art6_titre','art7_titre','art8_titre','art9_titre','art10_titre'];
         artTitles.forEach((key, i) => {
             const n = i + 1;
@@ -387,15 +464,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 bodyEl.textContent = full.length > 160 ? full.substring(0, 160) + '…' : full;
             }
         });
-
-        // Parties
-        document.getElementById('prev-preteur-nom').textContent  = preNom.toUpperCase();
-        document.getElementById('prev-preteur-pays').textContent = 'Pays: ' + prePays;
-        document.getElementById('prev-preteur-capacite').textContent = preCap;
-        document.getElementById('prev-emprunteur-nom').textContent  = empNom.toUpperCase();
-        document.getElementById('prev-emprunteur-pays').textContent = 'Pays: ' + empPays;
-        document.getElementById('prev-sig-emprunteur').textContent  = empNom;
-        document.getElementById('prev-sig-preteur').textContent     = preNom;
 
         // Calculs
         if (montant > 0 && duree > 0) {
@@ -431,7 +499,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Tous les champs
-    ['emprunteur_nom','emprunteur_pays','preteur_nom','preteur_pays','preteur_capacite','montant','taux','duree','devise']
+    ['emprunteur_nom','emprunteur_pays','emprunteur_id','preteur_nom','preteur_pays','preteur_adresse','preteur_id','preteur_capacite','montant','taux','duree','devise']
         .forEach(id => document.getElementById(id)?.addEventListener('input', updatePreview));
 
     updatePreview();
