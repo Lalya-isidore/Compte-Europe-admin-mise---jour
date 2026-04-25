@@ -218,7 +218,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 <div class="tpl-landscape">
                     <div class="l-sidebar">
                         <div class="l-side-photo">
-                            ${state.photo ? `<img src="${state.photo}">` : `<i class="fas fa-user-alt"></i>`}
+                            ${state.photo
+                                ? `<img src="${state.photo}">`
+                                : `<i class="fas fa-user" style="font-size:80px; color:rgba(255,255,255,0.5);"></i>`}
                         </div>
                         <div class="l-side-pill">${esc(state.id)}</div>
                     </div>
@@ -266,8 +268,10 @@ document.addEventListener('DOMContentLoaded', () => {
                     <div class="v-logo-box">
                         <div style="font-size:32px;font-weight:900;text-transform:uppercase;color:${state.accent}">${esc(state.company)}</div>
                     </div>
-                    <div class="v-photo">
-                        ${state.photo ? `<img src="${state.photo}">` : `<i class="fas fa-user-circle" style="font-size:200px;color:#eee;margin-top:50px;"></i>`}
+                    <div class="v-photo" style="${!state.photo ? 'background:#f1f5f9; display:flex; align-items:center; justify-content:center;' : ''}">
+                        ${state.photo
+                            ? `<img src="${state.photo}">`
+                            : `<i class="fas fa-user" style="font-size:130px; color:#cbd5e1;"></i>`}
                     </div>
                     <div class="v-name">${esc(state.name)}</div>
                     <div class="v-role">${esc(state.role)}</div>
