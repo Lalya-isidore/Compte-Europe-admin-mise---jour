@@ -168,17 +168,20 @@
 .l-company { font-size: 26px; font-weight: 800; color: #fff; margin-left: 200px; text-transform: uppercase; }
 .l-logo { margin-left: auto; max-height: 70px; }
 
-.l-body { flex: 1; padding: 80px 40px 10px; display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-.l-main-info { display: flex; flex-direction: column; }
-.l-name { font-size: 44px; font-weight: 900; line-height: 1.1; margin-bottom: 2px; }
-.l-role { font-size: 20px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 20px; }
+.l-body { flex: 1; padding: 60px 40px 10px; display: grid; grid-template-columns: 1.2fr 1fr; gap: 30px; }
+.l-main-info { display: flex; flex-direction: column; gap: 5px; }
+.l-name { font-size: 44px; font-weight: 900; line-height: 1.1; margin-bottom: 2px; color: #0f172a; }
+.l-role { font-size: 20px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 15px; }
 
-.l-details-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; font-size: 15px; color: #64748b; }
+.l-details-box { display: flex; flex-direction: column; justify-content: center; }
+.l-details-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; font-size: 15px; background: #f8fafc; padding: 15px; border-radius: 12px; }
+
 .l-det-label { font-weight: 700; color: #94a3b8; text-transform: uppercase; font-size: 12px; }
 .l-det-val { font-weight: 600; color: #1e293b; }
 
-.l-contact { margin-top: auto; font-size: 18px; display: flex; flex-direction: column; gap: 5px; }
-.l-contact i { width: 22px; text-align: center; }
+.l-contact { font-size: 18px; display: flex; flex-direction: column; gap: 8px; font-weight: 600; color: #475569; }
+.l-contact i { width: 22px; text-align: center; color: var(--ce-primary); }
+
 
 .l-sig { position: absolute; bottom: 85px; right: 50px; text-align: center; }
 .l-strip { height: 60px; display: flex; align-items: center; padding: 0 40px; color: #fff; font-weight: 800; font-size: 22px; font-family: 'Roboto Mono', monospace; }
@@ -405,10 +408,11 @@ document.addEventListener('DOMContentLoaded', () => {
                         </div>
                     </div>
                     <div class="l-sig">${sigHtml}</div>
-                    <div class="l-strip" style="background: ${state.accent};">IDENTIFIANT BADGE PRO : ${esc(state.id)}</div>
+                    <div class="l-strip" style="background: ${state.accent};">IDENTIFIANT : ${esc(state.id)}</div>
                 </div>
             `;
         }
+
 
         inner.innerHTML = html;
         frame.className = `badge-preview-frame ${state.layout}`;
