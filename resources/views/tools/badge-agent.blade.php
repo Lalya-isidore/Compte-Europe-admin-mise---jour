@@ -63,6 +63,11 @@
     margin-bottom: 24px;
 }
 
+@media (max-width: 768px) {
+    .ce-card { padding: 16px; border-radius: 12px; }
+}
+
+
 .ce-card h3 {
     font-size: 1rem;
     font-weight: 700;
@@ -130,6 +135,18 @@
 .badge-preview-frame.landscape { width: 340px; height: 214px; }
 .badge-preview-frame.portrait { width: 214px; height: 340px; }
 
+@media (max-width: 480px) {
+    .badge-preview-wrap { display: flex; flex-direction: column; align-items: center; }
+    .badge-preview-frame.landscape { transform: scale(0.9); }
+    .badge-preview-frame.portrait { transform: scale(0.9); }
+}
+
+@media (max-width: 360px) {
+    .badge-preview-frame.landscape { transform: scale(0.8); margin-bottom: -15px; }
+    .badge-preview-frame.portrait { transform: scale(0.8); margin-bottom: -15px; }
+}
+
+
 .badge-preview-inner {
     position: absolute;
     top: 0; left: 0;
@@ -183,10 +200,16 @@
 
 .btn-download { width: 100%; padding: 16px; border-radius: 16px; background: var(--ce-gradient); color: #fff; border: none; font-weight: 800; font-size: 1rem; cursor: pointer; display: flex; justify-content: center; gap: 12px; box-shadow: 0 10px 25px -5px rgba(102, 126, 234, 0.4); }
 
-@media (max-width: 900px) {
+@media (max-width: 992px) {
     .badge-editor { grid-template-columns: 1fr; }
-    .badge-preview-wrap { position: static; margin-top: 32px; }
+    .badge-preview-wrap { position: static; order: -1; margin-bottom: 32px; }
 }
+
+@media (max-width: 576px) {
+    .template-grid { grid-template-columns: 1fr; }
+    .badge-header h1 { font-size: 1.4rem; }
+}
+
 </style>
 
 <div class="badge-wrap">
