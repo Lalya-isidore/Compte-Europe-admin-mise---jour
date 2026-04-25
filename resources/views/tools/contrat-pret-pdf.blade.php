@@ -211,7 +211,7 @@
                 <div style="font-size: 9pt; color: #333; margin-top: 5px;">{{ $t['preteur_rep'] }}</div>
                 <div style="position: relative; margin-top: 10px; text-align: right;">
                     <img src="{{ public_path('images/contract/cachet-signature.jpg') }}" alt="Signature" style="height: 120px; width: auto; display: block; margin: 0 0 0 auto;">
-                    <div class="sig-name" style="margin-top: -30px; position: relative; z-index: 2;">{{ strtoupper($preteurNom) }}</div>
+                    <div class="sig-name" style="margin-top: -55px; position: relative; z-index: 2;">{{ strtoupper($preteurNom) }}</div>
                 </div>
                 <div class="sig-title">{{ $preteurCapacite }}</div>
             </td>
