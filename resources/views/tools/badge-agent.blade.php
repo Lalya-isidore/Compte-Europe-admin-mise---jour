@@ -207,8 +207,10 @@
 
 @media (max-width: 992px) {
     .badge-editor { grid-template-columns: 1fr; }
-    .badge-preview-wrap { position: static; order: -1; margin-bottom: 32px; }
+    .preview-col { order: -1; margin-bottom: 32px; }
+    .badge-preview-wrap { position: static; }
 }
+
 
 @media (max-width: 576px) {
     .template-grid { grid-template-columns: 1fr; }
