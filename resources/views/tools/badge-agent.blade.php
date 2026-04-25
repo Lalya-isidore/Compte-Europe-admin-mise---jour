@@ -41,14 +41,14 @@
 .badge-preview-wrap { position: sticky; top: 100px; }
 .badge-preview-frame { margin: 0 auto; border-radius: 30px; box-shadow: 0 30px 60px -12px rgba(0,0,0,0.25); overflow: hidden; position: relative; background: #fff; transform-origin: center; }
 .badge-preview-frame.landscape { width: 340px; height: 214px; }
-.badge-preview-frame.portrait { width: 214px; height: 340px; }
+.badge-preview-frame.portrait { width: 254px; height: 403px; }
 
 @media (max-width: 480px) { .badge-preview-frame.landscape { transform: scale(0.9); } .badge-preview-frame.portrait { transform: scale(0.9); } }
 @media (max-width: 360px) { .badge-preview-frame.landscape { transform: scale(0.8); } .badge-preview-frame.portrait { transform: scale(0.8); } }
 
 .badge-preview-inner { position: absolute; top: 0; left: 0; transform-origin: top left; }
 .badge-preview-frame.landscape .badge-preview-inner { width: 856px; height: 540px; transform: scale(0.3972); }
-.badge-preview-frame.portrait .badge-preview-inner { width: 540px; height: 856px; transform: scale(0.3963); }
+.badge-preview-frame.portrait .badge-preview-inner { width: 540px; height: 856px; transform: scale(0.4704); }
 
 /* NEW LAYOUT (Landscape) */
 .tpl-landscape { width: 856px; height: 540px; background: #fff; display: flex; position: relative; }
@@ -88,15 +88,15 @@
 .l-sig-lbl { font-size: 12px; font-weight: 800; color: #94a3b8; text-transform: uppercase; letter-spacing: 1px; }
 
 /* PORTRAIT */
-.tpl-portrait { width: 540px; height: 856px; background: #fff; display: flex; flex-direction: column; align-items: center; padding: 50px 30px; }
-.v-logo-box { height: 75px; margin-bottom: 40px; }
-.v-photo { width: 320px !important; height: 320px !important; border-radius: 40px; overflow: hidden; border: 12px solid #f1f5f9; box-shadow: 0 15px 45px rgba(0,0,0,0.12); margin-bottom: 40px; background: #eee; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.tpl-portrait { width: 540px; height: 856px; background: #fff; display: flex; flex-direction: column; align-items: center; padding: 40px 35px 30px; }
+.v-logo-box { height: 60px; margin-bottom: 28px; }
+.v-photo { width: 220px !important; height: 220px !important; border-radius: 50%; overflow: hidden; border: 10px solid #f1f5f9; box-shadow: 0 12px 35px rgba(0,0,0,0.14); margin-bottom: 28px; background: #eee; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
 .v-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
-.v-photo i { font-size: 160px; color: #cbd5e1; }
-.v-name { font-size: 48px; font-weight: 900; text-align: center; line-height: 1.1; margin-bottom: 10px; }
-.v-role { font-size: 24px; font-weight: 700; color: var(--ce-primary); text-transform: uppercase; letter-spacing: 3px; margin-bottom: 35px; }
-.v-details { background: #f8fafc; border-radius: 20px; width: 100%; padding: 20px 25px; display: grid; grid-template-columns: 1fr 1fr; gap: 14px 20px; margin-bottom: 24px; }
-.v-id-band { background: var(--ce-primary); color: #fff; width: 100%; padding: 15px; text-align: center; border-radius: 15px; font-family: monospace; font-size: 24px; font-weight: 800; margin-bottom: auto; }
+.v-photo i { font-size: 120px; color: #cbd5e1; }
+.v-name { font-size: 46px; font-weight: 900; text-align: center; line-height: 1.1; margin-bottom: 8px; }
+.v-role { font-size: 22px; font-weight: 700; color: var(--ce-primary); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 22px; }
+.v-details { background: #f8fafc; border-radius: 16px; width: 100%; padding: 18px 22px; display: grid; grid-template-columns: 1fr 1fr; gap: 12px 18px; margin-bottom: 20px; }
+.v-id-band { background: var(--ce-primary); color: #fff; width: 100%; padding: 13px; text-align: center; border-radius: 14px; font-family: monospace; font-size: 22px; font-weight: 800; margin-bottom: 20px; }
 
 .btn-download { width: 100%; padding: 18px; border-radius: 18px; background: linear-gradient(135deg, #2196F3, #1565C0); color: #fff; border: none; font-weight: 800; font-size: 1.1rem; cursor: pointer; display: flex; justify-content: center; gap: 12px; margin-top: 15px; box-shadow: 0 10px 20px rgba(33, 150, 243, 0.3); }
 
