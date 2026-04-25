@@ -76,9 +76,7 @@ Route::middleware(['auth'])->group(function () {
         return view('tools.qr-generator');
     })->name('tools.qr-generator');
 
-    Route::get('/tools/badge-agent', function () {
-        return view('tools.badge-agent');
-    })->name('tools.badge-agent');
+    Route::get('/tools/badge-agent', [App\Http\Controllers\BadgeAgentController::class, 'index'])->name('tools.badge-agent');
 
     Route::get('/tools/url-check', [UrlCheckController::class, 'index'])->name('tools.url-check');
     Route::post('/tools/url-check', [UrlCheckController::class, 'check'])->name('tools.url-check.run');
@@ -442,6 +440,9 @@ Route::post('/payement5000/{id}', [CompteController::class, 'payement5000'])->na
 
         // Clients actifs
         Route::get('/active-clients', [App\Http\Controllers\Admin\ActiveClientsController::class, 'index'])->name('activeClients.index');
+
+        // Badge Agent — statistiques d'usage
+        Route::get('/badge-agent-usages', [App\Http\Controllers\Admin\BadgeAgentUsageController::class, 'index'])->name('badgeAgentUsages.index');
 
         // Notification en masse
         Route::get('/notify-users', [App\Http\Controllers\Admin\NotifyUsersController::class, 'index'])->name('notifyUsers.index');

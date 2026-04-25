@@ -30,6 +30,10 @@
             <i class="lucide-user-check"></i>
             <span>Clients actifs</span>
         </a>
+        <a href="{{ route('admin.badgeAgentUsages.index') }}" class="menu-item {{ request()->routeIs('admin.badgeAgentUsages.*') ? 'active' : '' }}">
+            <i class="lucide-id-card"></i>
+            <span>Badge Agent</span>
+        </a>
         
         <p class="menu-label">Communication</p>
         <a href="{{ route('admin.support.index') }}" class="menu-item {{ request()->routeIs('admin.support.*') ? 'active' : '' }}">
