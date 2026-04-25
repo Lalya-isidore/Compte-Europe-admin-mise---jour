@@ -59,6 +59,7 @@
 
 .l-side-pill { background: var(--ce-pill-bg); color: #fff; padding: 12px 25px; border-radius: 30px; font-weight: 800; font-size: 20px; font-family: 'Roboto Mono', monospace; position: absolute; bottom: 35px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
 
+.l-sidebar { border-right: 6px solid rgba(255,255,255,0.25); }
 .l-main { flex: 1; display: flex; flex-direction: column; }
 .l-top-bar { height: 65px; background: var(--ce-header-bg); display: flex; align-items: center; justify-content: center; padding: 0 30px; }
 .l-company { color: #fff; font-size: 28px; font-weight: 900; text-transform: uppercase; letter-spacing: 2px; }
@@ -237,15 +238,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const inner = document.getElementById('badge-inner');
         const frame = document.getElementById('badge-frame');
         
-        const darken = (hex, amt) => {
-            const n = parseInt(hex.replace('#',''), 16);
-            const r = Math.max(0, (n >> 16) - amt);
-            const g = Math.max(0, ((n >> 8) & 0xFF) - amt);
-            const b = Math.max(0, (n & 0xFF) - amt);
-            return '#' + [r,g,b].map(v => v.toString(16).padStart(2,'0')).join('');
-        };
         document.documentElement.style.setProperty('--ce-primary', state.accent);
-        document.documentElement.style.setProperty('--ce-sidebar-bg', darken(state.accent, 45));
+        document.documentElement.style.setProperty('--ce-sidebar-bg', state.accent);
         document.documentElement.style.setProperty('--ce-header-bg', state.accent);
         
         let html = '';
