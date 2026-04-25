@@ -57,9 +57,15 @@
                                 <input type="text" name="emprunteur_pays" id="emprunteur_pays" placeholder="Ex: France" required>
                             </div>
                         </div>
-                        <div class="cp-field" style="margin-top: 14px;">
-                            <label>Identifiant / Numéro de client <small>(optionnel)</small></label>
-                            <input type="text" name="emprunteur_id" id="emprunteur_id" placeholder="Ex: CLI-00142">
+                        <div class="cp-row2" style="margin-top: 14px;">
+                            <div class="cp-field">
+                                <label>Identifiant / Numéro de client <small>(optionnel)</small></label>
+                                <input type="text" name="emprunteur_id" id="emprunteur_id" placeholder="Ex: CLI-00142">
+                            </div>
+                            <div class="cp-field">
+                                <label>Numéro du contrat <small>(optionnel — auto si vide)</small></label>
+                                <input type="text" name="contract_no" id="contract_no" placeholder="Ex: LAL-2026-1234">
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -407,8 +413,12 @@ document.addEventListener('DOMContentLoaded', () => {
         const preAdr    = document.getElementById('preteur_adresse').value   || '—';
         const preId     = document.getElementById('preteur_id').value        || '—';
         const preCap    = document.getElementById('preteur_capacite').value  || '—';
-        const lang      = document.querySelector('input[name="lang"]:checked')?.value || 'fr';
-        const t         = allTranslations[lang] || allTranslations['fr'];
+        const lang       = document.querySelector('input[name="lang"]:checked')?.value || 'fr';
+        const contractNo = document.getElementById('contract_no').value.trim();
+        const t          = allTranslations[lang] || allTranslations['fr'];
+
+        // Numéro de contrat
+        document.getElementById('prev-no').textContent = (t.contrat_no || 'CONTRAT N°') + ' ' + (contractNo || '—') + '/{{ date("Y") }}';
 
         // En-tête
         document.getElementById('prev-titre').textContent         = langTitles[lang] || langTitles.fr;
@@ -498,7 +508,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Tous les champs
-    ['emprunteur_nom','emprunteur_pays','emprunteur_id','preteur_nom','preteur_pays','preteur_adresse','preteur_id','preteur_capacite','montant','taux','duree','devise']
+    ['emprunteur_nom','emprunteur_pays','emprunteur_id','contract_no','preteur_nom','preteur_pays','preteur_adresse','preteur_id','preteur_capacite','montant','taux','duree','devise']
         .forEach(id => document.getElementById(id)?.addEventListener('input', updatePreview));
 
     updatePreview();

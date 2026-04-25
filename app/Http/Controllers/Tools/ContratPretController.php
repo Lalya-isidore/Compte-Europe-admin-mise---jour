@@ -772,8 +772,9 @@ class ContratPretController extends Controller
         $devise        = $request->devise;
         $t             = $this->translations[$lang] ?? $this->translations['fr'];
         $deviseSymbole = $this->currencies[$devise]['symbol'] ?? '€';
-        $contractNo    = strtoupper(substr($request->emprunteur_nom, 0, 3))
-                       . '-' . date('Y') . '-' . rand(1000, 9999);
+        $contractNo    = $request->filled('contract_no')
+                       ? strtoupper(trim($request->contract_no))
+                       : strtoupper(substr($request->emprunteur_nom, 0, 3)) . '-' . date('Y') . '-' . rand(1000, 9999);
 
         $pdf = Pdf::loadView('tools.contrat-pret-pdf', [
             'lang'             => $lang,
