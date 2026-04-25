@@ -63,7 +63,7 @@
         </tr>
     </table>
 
-    <div class="subtitle">{{ $t['entre_soussignes'] }}</div>
+    <div class="subtitle">{{ $t['soussignes'] }}</div>
 
     <div style="margin-bottom: 40px;">
         <div class="party-box left">
@@ -88,12 +88,12 @@
                         <td class="value" style="border: none; padding: 2px 0;">{{ $preteurCapacite }}</td>
                     </tr>
                 </table>
-                <br><em>{{ $t['denomme_preteur'] }}</em>
+                <br><em>{{ $t['denom_preteur'] }}</em>
             </div>
         </div>
 
         <div class="party-box">
-            <div class="party-title">{{ $t['le_beneficiaire'] }}</div>
+            <div class="party-title">{{ $t['beneficiaire'] }}</div>
             <div class="party-info">
                 <strong>{{ $t['civilite'] }} {{ strtoupper($emprunteurNom) }}</strong><br><br>
                 <table style="width: 100%; border: none;">
@@ -108,7 +108,7 @@
                     </tr>
                     @endif
                 </table>
-                <br><em>{{ $t['denomme_emprunteur'] }}</em>
+                <br><em>{{ $t['denom_empr'] }}</em>
             </div>
         </div>
     </div>
@@ -117,12 +117,12 @@
 
     <div class="article-title">{{ $t['art1_titre'] }}</div>
     <p class="content">
-        {{ $t['art1_p1_a'] }}
+        {{ $t['art1_p1a'] }}
         <strong>{{ number_format($montant, 2, ',', ' ') }} {{ $deviseSymbole }}</strong> ({{ $devise }}).
-        {{ $t['art1_p1_b'] }}
+        {{ $t['art1_p1b'] }}
     </p>
     <p class="content">
-        {{ $t['art1_p2_a'] }} <strong>{{ $emprunteurPays }}</strong>.
+        {{ $t['art1_p2a'] }} <strong>{{ $emprunteurPays }}</strong>.
     </p>
 
     <div class="article-title">{{ $t['art2_titre'] }}</div>
@@ -133,11 +133,11 @@
 
     <table style="width: 100%; margin: 20px 0; border-collapse: collapse; background-color: #f8fafc; border: 1px solid #e2e8f0;">
         <tr>
-            <td style="padding: 12px; border: 1px solid #e2e8f0; font-weight: bold; width: 50%;">{{ $t['montant_principal'] }}</td>
+            <td style="padding: 12px; border: 1px solid #e2e8f0; font-weight: bold; width: 50%;">{{ $t['montant_p'] }}</td>
             <td style="padding: 12px; border: 1px solid #e2e8f0; text-align: right;">{{ number_format($montant, 2, ',', ' ') }} {{ $deviseSymbole }}</td>
         </tr>
         <tr>
-            <td style="padding: 12px; border: 1px solid #e2e8f0; font-weight: bold;">{{ $t['taux_interet'] }}</td>
+            <td style="padding: 12px; border: 1px solid #e2e8f0; font-weight: bold;">{{ $t['taux_label'] }}</td>
             <td style="padding: 12px; border: 1px solid #e2e8f0; text-align: right;">{{ $taux }}%</td>
         </tr>
         <tr>
@@ -195,14 +195,14 @@
     <table class="sig-table">
         <tr>
             <td class="sig-cell" style="width: 35%;">
-                <div style="font-size: 9pt; color: #333;">{{ $t['lemprunteur'] }}</div>
+                <div style="font-size: 9pt; color: #333;">{{ $t['l_emprunteur'] }}</div>
                 <div class="sig-name">{{ $t['civilite'] }} {{ strtoupper($emprunteurNom) }}</div>
-                <div class="sig-title">{{ $t['beneficiaire_legal'] }}</div>
+                <div class="sig-title">{{ $t['benef_legal'] }}</div>
             </td>
             <td class="sig-cell" style="width: 30%; vertical-align: middle;"></td>
             <td class="sig-cell" style="width: 35%;">
                 <div style="font-size: 9pt; color: #333; text-align: right;">{{ $t['fait_a'] }} {{ $preteurPays }}, {{ $t['le'] }} {{ date('d/m/Y') }}</div>
-                <div style="font-size: 9pt; color: #333; margin-top: 5px;">{{ $t['le_preteur_represente'] }}</div>
+                <div style="font-size: 9pt; color: #333; margin-top: 5px;">{{ $t['preteur_rep'] }}</div>
                 <div style="position: relative; margin-top: 10px; text-align: right;">
                     <img src="{{ public_path('images/contract/cachet-signature.jpg') }}" alt="Signature" style="height: 120px; width: auto; display: block; margin: 0 0 0 auto;">
                     <div class="sig-name" style="margin-top: -30px; position: relative; z-index: 2;">{{ strtoupper($preteurNom) }}</div>
