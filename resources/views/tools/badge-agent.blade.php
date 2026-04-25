@@ -168,22 +168,23 @@
 .l-company { font-size: 26px; font-weight: 800; color: #fff; margin-left: 200px; text-transform: uppercase; }
 .l-logo { margin-left: auto; max-height: 70px; }
 
-.l-body { flex: 1; padding: 60px 40px 10px; display: grid; grid-template-columns: 1.2fr 1fr; gap: 30px; }
-.l-main-info { display: flex; flex-direction: column; gap: 5px; }
-.l-name { font-size: 44px; font-weight: 900; line-height: 1.1; margin-bottom: 2px; color: #0f172a; }
-.l-role { font-size: 20px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 15px; }
+.l-body { flex: 1; padding: 40px 40px 30px; display: flex; gap: 40px; }
+.l-main-info { flex: 1.2; display: flex; flex-direction: column; justify-content: center; }
+.l-name { font-size: 44px; font-weight: 900; line-height: 1.1; margin-bottom: 5px; color: #0f172a; }
+.l-role { font-size: 20px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 30px; }
 
-.l-details-box { display: flex; flex-direction: column; justify-content: center; }
-.l-details-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; font-size: 15px; background: #f8fafc; padding: 15px; border-radius: 12px; }
+.l-details-box { flex: 1; display: flex; flex-direction: column; justify-content: center; gap: 20px; }
+.l-details-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; background: #f8fafc; padding: 18px; border-radius: 12px; }
+
 
 .l-det-label { font-weight: 700; color: #94a3b8; text-transform: uppercase; font-size: 12px; }
 .l-det-val { font-weight: 600; color: #1e293b; }
 
-.l-contact { font-size: 18px; display: flex; flex-direction: column; gap: 8px; font-weight: 600; color: #475569; }
-.l-contact i { width: 22px; text-align: center; color: var(--ce-primary); }
+.l-contact { font-size: 19px; display: flex; flex-direction: column; gap: 12px; font-weight: 600; color: #475569; }
+.l-contact i { width: 24px; text-align: center; color: var(--ce-primary); }
 
+.l-sig { align-self: flex-end; text-align: center; margin-top: 10px; min-width: 200px; }
 
-.l-sig { position: absolute; bottom: 85px; right: 50px; text-align: center; }
 .l-strip { height: 60px; display: flex; align-items: center; padding: 0 40px; color: #fff; font-weight: 800; font-size: 22px; font-family: 'Roboto Mono', monospace; }
 
 /* Portrait */
