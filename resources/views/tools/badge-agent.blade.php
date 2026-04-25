@@ -118,8 +118,9 @@
                     <div class="col-md-6">
                         <label class="form-label">Format</label>
                         <select id="inp-tpl" class="form-select">
-                            <option value="tpl-landscape">Format Paysage (Horizontal)</option>
-                            <option value="tpl-portrait">Format Portrait (Vertical)</option>
+                            <option value="tpl-landscape">🔵 Modern (Paysage)</option>
+                            <option value="tpl-dark">⚫ Dark Pro (Paysage)</option>
+                            <option value="tpl-portrait">⬜ Minimal (Portrait)</option>
                         </select>
                     </div>
                     <div class="col-md-6">
@@ -285,6 +286,61 @@ document.addEventListener('DOMContentLoaded', () => {
                             </div>
                             <div class="l-sig-area">
                                 ${state.sigImg ? `<img src="${state.sigImg}" class="l-sig-img">` : `<div class="l-sig-text">${state.sigText}</div>`}
+                                <div class="l-sig-lbl">${t('sig')}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        } else if (state.tpl === 'tpl-dark') {
+            frame.className = 'badge-preview-frame landscape';
+            html = `
+                <div class="tpl-landscape" style="background:#0f172a;">
+                    <div class="l-sidebar" style="background:linear-gradient(180deg,#1e293b,#0f172a);">
+                        <div class="l-logo-wrap" style="margin-bottom:0;">
+                            ${state.logo ? `<img src="${state.logo}" style="filter:brightness(0) invert(1);opacity:.7;max-height:50px;max-width:150px;">` : ''}
+                        </div>
+                        <div class="l-side-photo" style="border-color:rgba(255,255,255,0.15);">
+                            ${state.photo
+                                ? `<img src="${state.photo}">`
+                                : `<i class="fas fa-user" style="font-size:80px;color:rgba(255,255,255,0.2);"></i>`}
+                        </div>
+                        <div class="l-side-pill" style="background:${state.accent};font-size:17px;">${esc(state.id)}</div>
+                    </div>
+                    <div class="l-main">
+                        <div class="l-top-bar" style="background:#1e293b;">
+                            <div class="l-company" style="color:#94a3b8;font-size:22px;letter-spacing:4px;">${esc(state.company)}</div>
+                        </div>
+                        <div class="l-content-area">
+                            <div class="l-left-col">
+                                <div>
+                                    <div class="l-name" style="color:#f1f5f9;">${esc(state.name)}</div>
+                                    <div class="l-role" style="color:${state.accent};">${esc(state.role)}</div>
+                                </div>
+                                <div style="width:50px;height:4px;border-radius:2px;background:${state.accent};margin:8px 0;"></div>
+                                <div class="l-contact">
+                                    <div class="l-contact-item" style="color:#94a3b8;"><i class="fas fa-phone-alt" style="color:${state.accent};"></i> ${state.phone}</div>
+                                    <div class="l-contact-item" style="color:#94a3b8;"><i class="fas fa-envelope" style="color:${state.accent};"></i> ${state.email}</div>
+                                </div>
+                            </div>
+                            <div class="l-right-col">
+                                <div class="l-details-card" style="background:#1e293b;border-color:#334155;" dir="${isRTL ? 'rtl' : 'ltr'}">
+                                    <div class="l-det-it"><span class="l-det-lbl">${t('sex')}</span><span class="l-det-val" style="color:#e2e8f0;">${state.sex}</span></div>
+                                    <div class="l-det-it"><span class="l-det-lbl">${t('blood')}</span><span class="l-det-val" style="color:#e2e8f0;">${state.blood}</span></div>
+                                    <div class="l-det-it"><span class="l-det-lbl">${t('birth')}</span><span class="l-det-val" style="color:#e2e8f0;">${state.birth}</span></div>
+                                    <div class="l-det-it"><span class="l-det-lbl">${t('place')}</span><span class="l-det-val" style="color:#e2e8f0;">${esc(state.place)}</span></div>
+                                    <div class="l-det-it"><span class="l-det-lbl">${t('service')}</span><span class="l-det-val" style="color:#e2e8f0;">${esc(state.service)}</span></div>
+                                    <div class="l-det-it"><span class="l-det-lbl">${t('expiry')}</span><span class="l-det-val" style="color:${state.accent};">${state.expiry}</span></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="l-footer" style="border-top-color:#1e293b;" dir="${isRTL ? 'rtl' : 'ltr'}">
+                            <div class="l-id-footer">
+                                <span class="l-id-lbl">${t('id')}</span>
+                                <span class="l-id-val" style="color:${state.accent};">${esc(state.id)}</span>
+                            </div>
+                            <div class="l-sig-area">
+                                ${state.sigImg ? `<img src="${state.sigImg}" class="l-sig-img" style="filter:brightness(0) invert(1);">` : `<div class="l-sig-text" style="color:#f1f5f9;">${state.sigText}</div>`}
                                 <div class="l-sig-lbl">${t('sig')}</div>
                             </div>
                         </div>
