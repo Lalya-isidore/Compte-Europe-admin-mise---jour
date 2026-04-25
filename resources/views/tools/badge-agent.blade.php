@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('title', 'Générateur de Badge Agent')
+@section('title', 'Générateur de Badge Agent Pro')
 
 @section('breadcrumb')
     <li class="breadcrumb-item"><i class="fas fa-tools me-1"></i>Outils</li>
@@ -31,12 +31,12 @@
     .badge-wrap { padding: 12px 0; }
 }
 
-
 .badge-header {
     margin-bottom: 32px;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding: 0 15px;
 }
 
 .badge-header h1 {
@@ -69,12 +69,11 @@
 }
 
 @media (max-width: 768px) {
-    .ce-card { padding: 16px; border-radius: 12px; }
+    .ce-card { padding: 16px; border-radius: 12px; margin-bottom: 16px; }
 }
 
-
 .ce-card h3 {
-    font-size: 1rem;
+    font-size: 1.1rem;
     font-weight: 700;
     margin: 0 0 20px;
     display: flex; align-items: center; gap: 10px; color: var(--ce-primary);
@@ -88,7 +87,7 @@
     margin-bottom: 6px;
 }
 
-.form-control {
+.form-control, .form-select {
     border: 1.5px solid var(--ce-border);
     border-radius: 12px;
     padding: 10px 14px;
@@ -98,7 +97,7 @@
     width: 100%;
 }
 
-.form-control:focus { outline: none; border-color: var(--ce-primary); background: #fff; }
+.form-control:focus, .form-select:focus { outline: none; border-color: var(--ce-primary); background: #fff; }
 
 .template-grid {
     display: grid;
@@ -151,7 +150,6 @@
     .badge-preview-frame.portrait { transform: scale(0.8); margin-bottom: -15px; }
 }
 
-
 .badge-preview-inner {
     position: absolute;
     top: 0; left: 0;
@@ -163,47 +161,52 @@
 
 /* CONTENT BLOCKS */
 
-/* Landscape Templates (Modern / Dark) */
 .tpl-landscape { width: 856px; height: 540px; background: #fff; position: relative; overflow: hidden; display: flex; flex-direction: column; }
-
-.l-header { height: 160px; display: flex; align-items: center; padding: 0 40px; position: relative; }
-.l-photo { width: 170px; height: 170px; border-radius: 50%; border: 8px solid #fff; box-shadow: 0 10px 30px rgba(0,0,0,0.1); position: absolute; left: 40px; bottom: -50px; background: #eee; overflow: hidden; z-index: 2; }
+.l-header { height: 140px; display: flex; align-items: center; padding: 0 40px; position: relative; }
+.l-photo { width: 170px; height: 170px; border-radius: 50%; border: 8px solid #fff; box-shadow: 0 10px 30px rgba(0,0,0,0.1); position: absolute; left: 40px; bottom: -60px; background: #eee; overflow: hidden; z-index: 2; }
 .l-photo img { width: 100%; height: 100%; object-fit: cover; }
-.l-company { font-size: 28px; font-weight: 800; color: #fff; margin-left: 200px; text-transform: uppercase; letter-spacing: 1px; }
-.l-logo { margin-left: auto; max-height: 80px; max-width: 150px; object-fit: contain; }
+.l-company { font-size: 26px; font-weight: 800; color: #fff; margin-left: 200px; text-transform: uppercase; }
+.l-logo { margin-left: auto; max-height: 70px; }
 
-.l-body { flex: 1; padding: 70px 40px 40px; }
-.l-name { font-size: 48px; font-weight: 800; line-height: 1.1; margin-bottom: 5px; }
-.l-role { font-size: 24px; font-weight: 600; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 30px; }
-.l-info { display: flex; flex-direction: column; gap: 10px; font-size: 20px; font-weight: 500; }
-.l-info-item { display: flex; align-items: center; gap: 12px; }
+.l-body { flex: 1; padding: 80px 40px 10px; display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.l-main-info { display: flex; flex-direction: column; }
+.l-name { font-size: 44px; font-weight: 900; line-height: 1.1; margin-bottom: 2px; }
+.l-role { font-size: 20px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 20px; }
 
-.l-strip { height: 60px; display: flex; align-items: center; padding: 0 40px; color: #fff; font-weight: 800; font-size: 22px; font-family: 'Roboto Mono', monospace; letter-spacing: 2px; }
+.l-details-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; font-size: 15px; color: #64748b; }
+.l-det-label { font-weight: 700; color: #94a3b8; text-transform: uppercase; font-size: 12px; }
+.l-det-val { font-weight: 600; color: #1e293b; }
 
-.l-sig { position: absolute; bottom: 80px; right: 50px; text-align: center; }
+.l-contact { margin-top: auto; font-size: 18px; display: flex; flex-direction: column; gap: 5px; }
+.l-contact i { width: 22px; text-align: center; }
 
-/* Portrait Template (Vertical) */
-.tpl-portrait { width: 540px; height: 856px; background: #fff; display: flex; flex-direction: column; align-items: center; padding: 50px 40px; position: relative; }
-.v-logo { height: 75px; margin-bottom: 40px; }
-.v-photo { width: 320px; height: 320px; border-radius: 30px; overflow: hidden; border: 10px solid #f8fafc; box-shadow: 0 15px 40px rgba(0,0,0,0.1); margin-bottom: 40px; background: #eee; }
+.l-sig { position: absolute; bottom: 85px; right: 50px; text-align: center; }
+.l-strip { height: 60px; display: flex; align-items: center; padding: 0 40px; color: #fff; font-weight: 800; font-size: 22px; font-family: 'Roboto Mono', monospace; }
+
+/* Portrait */
+.tpl-portrait { width: 540px; height: 856px; background: #fff; display: flex; flex-direction: column; align-items: center; padding: 40px 30px; position: relative; }
+.v-logo { height: 65px; margin-bottom: 30px; }
+.v-photo { width: 280px; height: 280px; border-radius: 20px; overflow: hidden; border: 8px solid #f8fafc; box-shadow: 0 10px 30px rgba(0,0,0,0.1); margin-bottom: 30px; }
 .v-photo img { width: 100%; height: 100%; object-fit: cover; }
-.v-name { font-size: 48px; font-weight: 900; line-height: 1.1; text-align: center; margin-bottom: 8px; color: #0f172a; }
-.v-role { font-size: 24px; font-weight: 700; text-transform: uppercase; letter-spacing: 3px; text-align: center; margin-bottom: 30px; }
-.v-strip { width: 100%; height: 70px; display: flex; align-items: center; justify-content: center; border-radius: 16px; color: #fff; font-family: 'Roboto Mono', monospace; font-size: 24px; font-weight: 800; margin-bottom: 40px; }
-.v-info { display: flex; flex-direction: column; gap: 12px; font-size: 20px; font-weight: 600; color: #64748b; }
-.v-sig { margin-top: auto; text-align: center; padding-bottom: 20px; }
+.v-name { font-size: 42px; font-weight: 900; text-align: center; margin-bottom: 5px; line-height: 1; }
+.v-role { font-size: 20px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 25px; }
+.v-strip { width: 100%; height: 65px; display: flex; align-items: center; justify-content: center; border-radius: 14px; color: #fff; font-family: 'Roboto Mono', monospace; font-size: 22px; margin-bottom: 25px; }
+.v-details { width: 100%; display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 25px; background: #f8fafc; padding: 15px; border-radius: 12px; }
+.v-det-item { display: flex; flex-direction: column; }
+.v-det-label { font-size: 10px; font-weight: 800; color: #94a3b8; text-transform: uppercase; margin-bottom: 2px; }
+.v-det-val { font-size: 14px; font-weight: 700; }
+.v-sig { margin-top: auto; text-align: center; }
 
-/* SIGNATURES */
-.sig-text { font-family: 'Dancing Script', cursive; font-size: 42px; color: #0f172a; margin-bottom: 0; }
-.sig-img { max-height: 80px; filter: contrast(1.5) brightness(0.2); }
-.sig-label { font-size: 15px; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 1px; }
+/* Signatures */
+.sig-text { font-family: 'Dancing Script', cursive; font-size: 38px; color: #0f172a; margin-bottom: 0; }
+.sig-img { max-height: 70px; filter: contrast(1.5) brightness(0.2); }
+.sig-label { font-size: 12px; font-weight: 800; color: #94a3b8; text-transform: uppercase; letter-spacing: 1px; }
 
 .color-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; }
-.color-swatch { aspect-ratio: 1; border-radius: 12px; border: 3px solid transparent; cursor: pointer; transition: transform .15s; }
-.color-swatch:hover { transform: scale(1.1); }
-.color-swatch.active { border-color: #0f172a; }
+.color-swatch { aspect-ratio: 1; border-radius: 12px; cursor: pointer; border: 3px solid transparent; }
+.color-swatch.active { border-color: #000; scale: 1.1; }
 
-.btn-download { width: 100%; padding: 16px; border-radius: 16px; background: var(--ce-gradient); color: #fff; border: none; font-weight: 800; font-size: 1rem; cursor: pointer; display: flex; justify-content: center; gap: 12px; box-shadow: 0 10px 25px -5px rgba(102, 126, 234, 0.4); }
+.btn-download { width: 100%; padding: 16px; border-radius: 16px; background: var(--ce-gradient); color: #fff; border: none; font-weight: 800; font-size: 1rem; cursor: pointer; display: flex; justify-content: center; gap: 12px; box-shadow: 0 10px 25px -5px rgba(102, 126, 234, 0.4); margin-top: 15px; }
 
 @media (max-width: 992px) {
     .badge-editor { grid-template-columns: 1fr; }
@@ -211,75 +214,85 @@
     .badge-preview-wrap { position: static; }
 }
 
-
 @media (max-width: 576px) {
     .template-grid { grid-template-columns: 1fr; }
     .badge-header h1 { font-size: 1.4rem; }
 }
-
 </style>
 
 <div class="badge-wrap">
     <div class="badge-header">
-        <h1><i class="fas fa-id-card"></i> <span>Badge Agent Tool</span></h1>
-        <div class="badge-certified"><i class="fas fa-magic"></i> Version Premium</div>
+        <h1><i class="fas fa-id-badge"></i> <span>Badge Suite Pro</span></h1>
     </div>
 
     <div class="badge-editor">
         <div class="form-col">
-            {{-- Format selection --}}
+            {{-- Template --}}
             <div class="ce-card">
-                <h3><i class="fas fa-layer-group"></i> Format du badge</h3>
+                <h3><i class="fas fa-magic"></i> Style & Format</h3>
                 <div class="template-grid">
                     <button class="template-btn active" data-tpl="tpl-modern" data-layout="landscape">
-                        <i class="fas fa-id-badge"></i>
-                        <div><span class="tpl-name">Modern Horizontal</span><span class="tpl-type">Paysage</span></div>
+                        <i class="fas fa-id-card"></i>
+                        <div><span class="tpl-name">Agent Modern</span><span class="tpl-type">Paysage</span></div>
                     </button>
                     <button class="template-btn" data-tpl="tpl-vertical" data-layout="portrait">
                         <i class="fas fa-portrait"></i>
-                        <div><span class="tpl-name">Professionnel Vertical</span><span class="tpl-type">Portrait</span></div>
+                        <div><span class="tpl-name">Agent Portrait</span><span class="tpl-type">Vertical</span></div>
                     </button>
                     <button class="template-btn" data-tpl="tpl-dark" data-layout="landscape">
                         <i class="fas fa-moon"></i>
-                        <div><span class="tpl-name">Dark Horizontal</span><span class="tpl-type">Paysage</span></div>
+                        <div><span class="tpl-name">Agent Dark</span><span class="tpl-type">Paysage</span></div>
                     </button>
                 </div>
             </div>
 
-            {{-- Fields --}}
+            {{-- Agent Details --}}
             <div class="ce-card">
-                <h3><i class="fas fa-user-edit"></i> Détails de l'agent</h3>
+                <h3><i class="fas fa-user-tie"></i> Informations de l'Agent</h3>
                 <div class="row g-3">
-                    <div class="col-md-6"><label class="form-label">Prénom & Nom</label><input id="inp-name" class="form-control" placeholder="JEAN DUPONT"></div>
-                    <div class="col-md-6"><label class="form-label">Poste / Rôle</label><input id="inp-role" class="form-control" placeholder="AGENT COMMERCIAL"></div>
-                    <div class="col-md-6"><label class="form-label">Société</label><input id="inp-company" class="form-control" placeholder="FLASHBILAN SAS"></div>
-                    <div class="col-md-6"><label class="form-label">Identifiant AGT</label><input id="inp-id" class="form-control" placeholder="AGT-2024-001"></div>
+                    <div class="col-md-6"><label class="form-label">Nom Complet</label><input id="inp-name" class="form-control" placeholder="JEAN DUPONT"></div>
+                    <div class="col-md-6"><label class="form-label">Poste / Fonction</label><input id="inp-role" class="form-control" placeholder="AGENT COMMERCIAL"></div>
+                    <div class="col-md-6"><label class="form-label">Service / Dépt</label><input id="inp-service" class="form-control" placeholder="VENTES"></div>
+                    <div class="col-md-6"><label class="form-label">Structure / Agence</label><input id="inp-company" class="form-control" placeholder="FLASHBILAN SAS"></div>
+                    <div class="col-md-6"><label class="form-label">Identifiant Badge</label><input id="inp-id" class="form-control" placeholder="AGT-2024-001"></div>
+                    <div class="col-md-6"><label class="form-label">Sexe</label><select id="inp-sex" class="form-select"><option value="M">Masculin</option><option value="F">Féminin</option></select></div>
+                </div>
+            </div>
+
+            {{-- Official Data --}}
+            <div class="ce-card">
+                <h3><i class="fas fa-file-contract"></i> Données Officielles</h3>
+                <div class="row g-3">
+                    <div class="col-md-6"><label class="form-label">Date de Naissance</label><input id="inp-birth-date" class="form-control" placeholder="01/01/1990"></div>
+                    <div class="col-md-6"><label class="form-label">Lieu de Naissance</label><input id="inp-birth-place" class="form-control" placeholder="PARIS, FRANCE"></div>
+                    <div class="col-md-6"><label class="form-label">Date d'Expiration</label><input id="inp-expiry" class="form-control" placeholder="31/12/2026"></div>
+                    <div class="col-md-6"><label class="form-label">Groupe Sanguin</label><input id="inp-blood" class="form-control" placeholder="A+"></div>
+                </div>
+            </div>
+
+            {{-- Contact --}}
+            <div class="ce-card">
+                <h3><i class="fas fa-phone-alt"></i> Contact & Médias</h3>
+                <div class="row g-3">
                     <div class="col-md-6"><label class="form-label">Téléphone</label><input id="inp-phone" class="form-control" placeholder="+33 6 00 00 00 00"></div>
                     <div class="col-md-6"><label class="form-label">Email</label><input id="inp-email" class="form-control" placeholder="agent@flashbilan.fr"></div>
-                </div>
-            </div>
-
-            {{-- Signature --}}
-            <div class="ce-card">
-                <h3><i class="fas fa-signature"></i> Signature</h3>
-                <div class="row g-3">
-                    <div class="col-md-6"><label class="form-label">Signature (Texte)</label><input id="inp-sig-text" class="form-control" placeholder="Jean Gem"></div>
-                    <div class="col-md-6"><label class="form-label">Importer Scan</label><input type="file" id="inp-sig-file" class="form-control"></div>
-                </div>
-            </div>
-
-            {{-- Médias --}}
-            <div class="ce-card">
-                <h3><i class="fas fa-camera"></i> Photos & Logos</h3>
-                <div class="row g-3">
                     <div class="col-md-6"><label class="form-label">Photo d'identité</label><input type="file" id="inp-photo" class="form-control"></div>
                     <div class="col-md-6"><label class="form-label">Logo Entreprise</label><input type="file" id="inp-logo" class="form-control"></div>
                 </div>
             </div>
 
-            {{-- Colors --}}
+            {{-- Signature --}}
             <div class="ce-card">
-                <h3><i class="fas fa-palette"></i> Couleur Accent</h3>
+                <h3><i class="fas fa-pen-nib"></i> Signature</h3>
+                <div class="row g-3">
+                    <div class="col-md-6"><label class="form-label">Signature (Texte)</label><input id="inp-sig-text" class="form-control" placeholder="Jean Gem"></div>
+                    <div class="col-md-6"><label class="form-label">Scan Signature</label><input type="file" id="inp-sig-file" class="form-control"></div>
+                </div>
+            </div>
+
+            {{-- Color --}}
+            <div class="ce-card">
+                <h3><i class="fas fa-palette"></i> Couleur Style</h3>
                 <div class="color-grid">
                     <div class="color-swatch active" data-color="#2196F3" style="background:#2196F3;"></div>
                     <div class="color-swatch" data-color="#4CAF50" style="background:#4CAF50;"></div>
@@ -312,8 +325,14 @@ document.addEventListener('DOMContentLoaded', () => {
         accent: '#2196F3',
         name: 'JEAN DUPONT',
         role: 'AGENT COMMERCIAL',
+        service: 'VENTES',
         company: 'FLASHBILAN SAS',
         id: 'AGT-2024-001',
+        birth: '01/01/1990',
+        place: 'PARIS, FRANCE',
+        expiry: '31/12/2026',
+        sex: 'M',
+        blood: 'A+',
         phone: '+33 6 00 00 00 00',
         email: 'agent@flashbilan.fr',
         photo: null,
@@ -328,8 +347,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const updatePreview = () => {
         let html = '';
         const esc = s => s.toUpperCase().replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-        const escRaw = s => s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-
+        
         const sigHtml = `
             <div class="sig-block">
                 ${state.sigImg ? `<img src="${state.sigImg}" class="sig-img">` : `<p class="sig-text">${state.sigText}</p>`}
@@ -341,13 +359,18 @@ document.addEventListener('DOMContentLoaded', () => {
             html = `
                 <div class="tpl-portrait" style="border-top: 15px solid ${state.accent};">
                     <div class="v-logo">${state.logo ? `<img src="${state.logo}" style="max-height:100%;">` : ''}</div>
-                    <div class="v-photo">${state.photo ? `<img src="${state.photo}">` : `<i class="fas fa-user" style="font-size:100px;color:#ccc;margin-top:100px;"></i>`}</div>
+                    <div class="v-photo">${state.photo ? `<img src="${state.photo}">` : `<i class="fas fa-user" style="font-size:100px;color:#ccc;margin-top:80px;"></i>`}</div>
                     <div class="v-name">${esc(state.name)}</div>
                     <div class="v-role" style="color: ${state.accent}">${esc(state.role)}</div>
-                    <div class="v-strip" style="background: ${state.accent}">ID: ${esc(state.id)}</div>
-                    <div class="v-info">
-                        <div><i class="fas fa-phone"></i> ${state.phone}</div>
-                        <div><i class="fas fa-envelope"></i> ${state.email}</div>
+                    <div class="v-strip" style="background: ${state.accent}">ID NO: ${esc(state.id)}</div>
+                    <div class="v-details">
+                        <div class="v-det-item"><span class="v-det-label">Sexe</span><span class="v-det-val">${state.sex}</span></div>
+                        <div class="v-det-item"><span class="v-det-label">Groupe Sang.</span><span class="v-det-val">${state.blood}</span></div>
+                        <div class="v-det-item"><span class="v-det-label">Né le</span><span class="v-det-val">${state.birth}</span></div>
+                        <div class="v-det-item"><span class="v-det-label">Expire le</span><span class="v-det-val">${state.expiry}</span></div>
+                    </div>
+                    <div style="font-size:14px;font-weight:600;color:#64748b;text-align:center;">
+                        <i class="fas fa-phone"></i> ${state.phone} | <i class="fas fa-envelope"></i> ${state.email}
                     </div>
                     <div class="v-sig">${sigHtml}</div>
                 </div>
@@ -362,15 +385,27 @@ document.addEventListener('DOMContentLoaded', () => {
                         <div class="l-logo">${state.logo ? `<img src="${state.logo}" style="filter: ${isDark ? 'brightness(0) invert(1)' : 'grayscale(1) brightness(5)'};">` : ''}</div>
                     </div>
                     <div class="l-body">
-                        <div class="l-name">${esc(state.name)}</div>
-                        <div class="l-role" style="color: ${state.accent}">${esc(state.role)}</div>
-                        <div class="l-info">
-                            <div class="l-info-item"><i class="fas fa-phone" style="width:24px;color:${state.accent};"></i> ${state.phone}</div>
-                            <div class="l-info-item"><i class="fas fa-envelope" style="width:24px;color:${state.accent};"></i> ${state.email}</div>
+                        <div class="l-main-info">
+                            <div class="l-name">${esc(state.name)}</div>
+                            <div class="l-role" style="color: ${state.accent}">${esc(state.role)}</div>
+                            <div class="l-contact">
+                                <div><i class="fas fa-phone" style="color:${state.accent}"></i> ${state.phone}</div>
+                                <div><i class="fas fa-envelope" style="color:${state.accent}"></i> ${state.email}</div>
+                            </div>
+                        </div>
+                        <div class="l-details-box">
+                            <div class="l-details-grid">
+                                <div><div class="l-det-label">Sexe</div><div class="l-det-val">${state.sex}</div></div>
+                                <div><div class="l-det-label">Groupe Sang.</div><div class="l-det-val">${state.blood}</div></div>
+                                <div><div class="l-det-label">Date Nais.</div><div class="l-det-val">${state.birth}</div></div>
+                                <div><div class="l-det-label">Lieu Nais.</div><div class="l-det-val">${state.place}</div></div>
+                                <div><div class="l-det-label">Service</div><div class="l-det-val">${esc(state.service)}</div></div>
+                                <div><div class="l-det-label">Expire le</div><div class="l-det-val" style="color:${state.accent}">${state.expiry}</div></div>
+                            </div>
                         </div>
                     </div>
                     <div class="l-sig">${sigHtml}</div>
-                    <div class="l-strip" style="background: ${state.accent};">ID BADGE : ${esc(state.id)}</div>
+                    <div class="l-strip" style="background: ${state.accent};">IDENTIFIANT BADGE PRO : ${esc(state.id)}</div>
                 </div>
             `;
         }
@@ -379,15 +414,19 @@ document.addEventListener('DOMContentLoaded', () => {
         frame.className = `badge-preview-frame ${state.layout}`;
     };
 
-    // Events
-    ['name', 'role', 'company', 'id', 'phone', 'email'].forEach(f => {
-        document.getElementById('inp-'+f).addEventListener('input', e => { state[f] = e.target.value; updatePreview(); });
+    // Mapping
+    const fields = {
+        name: 'inp-name', role: 'inp-role', service: 'inp-service', company: 'inp-company',
+        id: 'inp-id', birth: 'inp-birth-date', place: 'inp-birth-place', expiry: 'inp-expiry',
+        sex: 'inp-sex', blood: 'inp-blood', phone: 'inp-phone', email: 'inp-email'
+    };
+
+    Object.entries(fields).forEach(([k, id]) => {
+        document.getElementById(id).addEventListener('input', e => { state[k] = e.target.value; updatePreview(); });
     });
 
     document.getElementById('inp-sig-text').addEventListener('input', e => {
-        state.sigText = e.target.value || 'Jean Gem';
-        state.sigImg = null;
-        updatePreview();
+        state.sigText = e.target.value || 'Jean Gem'; state.sigImg = null; updatePreview();
     });
 
     const bindFile = (id, key) => {
@@ -401,19 +440,14 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('.template-btn').forEach(btn => {
         btn.addEventListener('click', () => {
             document.querySelectorAll('.template-btn').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            state.tpl = btn.dataset.tpl;
-            state.layout = btn.dataset.layout;
-            updatePreview();
+            btn.classList.add('active'); state.tpl = btn.dataset.tpl; state.layout = btn.dataset.layout; updatePreview();
         });
     });
 
     document.querySelectorAll('.color-swatch').forEach(s => {
         s.addEventListener('click', () => {
             document.querySelectorAll('.color-swatch').forEach(x => x.classList.remove('active'));
-            s.classList.add('active');
-            state.accent = s.dataset.color;
-            updatePreview();
+            s.classList.add('active'); state.accent = s.dataset.color; updatePreview();
         });
     });
 
@@ -423,8 +457,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const w = state.layout === 'landscape' ? 856 : 540;
         const h = state.layout === 'landscape' ? 540 : 856;
         const canvas = await html2canvas(inner.firstChild, { scale: 3, width: w, height: h });
-        const link = document.createElement('a');
-        link.download = `badge-${state.name.replace(/\s+/g,'-').toLowerCase()}.png`;
+        const link = document.createElement('a'); link.download = `badge-${state.name.replace(/\s+/g,'-').toLowerCase()}.png`;
         link.href = canvas.toDataURL(); link.click();
         btn.innerHTML = '<i class="fas fa-download"></i> Enregistrer HD (PNG)';
     });
