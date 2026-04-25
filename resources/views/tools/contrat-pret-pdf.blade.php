@@ -195,6 +195,13 @@
         <tr>
             <td class="sig-cell" style="width: 35%;">
                 <div style="font-size: 9pt; color: #333;">{{ $t['l_emprunteur'] }}</div>
+                @if($signatureEmprunteur)
+                <div style="margin-top: 10px; margin-bottom: 6px;">
+                    <img src="{{ $signatureEmprunteur }}" alt="Signature emprunteur" style="height: 60px; width: auto; max-width: 160px;">
+                </div>
+                @else
+                <div style="height: 60px;"></div>
+                @endif
                 <div class="sig-name">{{ $t['civilite'] }} {{ strtoupper($emprunteurNom) }}</div>
                 <div class="sig-title">{{ $t['benef_legal'] }}</div>
             </td>

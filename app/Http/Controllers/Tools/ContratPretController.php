@@ -776,23 +776,30 @@ class ContratPretController extends Controller
                        ? strtoupper(trim($request->contract_no))
                        : strtoupper(substr($request->emprunteur_nom, 0, 3)) . '-' . date('Y') . '-' . rand(1000, 9999);
 
+        $signatureEmprunteur = null;
+        if ($request->hasFile('signature_emprunteur') && $request->file('signature_emprunteur')->isValid()) {
+            $signatureEmprunteur = base64_encode(file_get_contents($request->file('signature_emprunteur')->getRealPath()));
+            $signatureEmprunteur = 'data:' . $request->file('signature_emprunteur')->getMimeType() . ';base64,' . $signatureEmprunteur;
+        }
+
         $pdf = Pdf::loadView('tools.contrat-pret-pdf', [
-            'lang'             => $lang,
-            't'                => $t,
-            'contractNo'       => $contractNo,
-            'emprunteurNom'    => $request->emprunteur_nom,
-            'emprunteurPays'   => $request->emprunteur_pays,
-            'emprunteurId'     => $request->emprunteur_id,
-            'preteurNom'       => $request->preteur_nom,
-            'preteurPays'      => $request->preteur_pays,
-            'preteurAdresse'   => $request->preteur_adresse,
-            'preteurId'        => $request->preteur_id,
-            'preteurCapacite'  => $request->preteur_capacite,
-            'montant'          => (float) $request->montant,
-            'devise'           => $devise,
-            'deviseSymbole'    => $deviseSymbole,
-            'taux'             => (float) $request->taux,
-            'duree'            => (int) $request->duree,
+            'lang'                => $lang,
+            't'                   => $t,
+            'contractNo'          => $contractNo,
+            'emprunteurNom'       => $request->emprunteur_nom,
+            'emprunteurPays'      => $request->emprunteur_pays,
+            'emprunteurId'        => $request->emprunteur_id,
+            'preteurNom'          => $request->preteur_nom,
+            'preteurPays'         => $request->preteur_pays,
+            'preteurAdresse'      => $request->preteur_adresse,
+            'preteurId'           => $request->preteur_id,
+            'preteurCapacite'     => $request->preteur_capacite,
+            'montant'             => (float) $request->montant,
+            'devise'              => $devise,
+            'deviseSymbole'       => $deviseSymbole,
+            'taux'                => (float) $request->taux,
+            'duree'               => (int) $request->duree,
+            'signatureEmprunteur' => $signatureEmprunteur,
         ])->setPaper('a4', 'portrait');
 
         $filename = 'contrat-pret-'

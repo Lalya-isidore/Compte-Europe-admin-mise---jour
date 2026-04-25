@@ -21,7 +21,7 @@
         </div>
     </div>
 
-    <form action="{{ route('tools.contrat-pret.generate') }}" method="POST" id="cp-form">
+    <form action="{{ route('tools.contrat-pret.generate') }}" method="POST" id="cp-form" enctype="multipart/form-data">
         @csrf
         <div class="cp-grid">
 
@@ -65,6 +65,13 @@
                             <div class="cp-field">
                                 <label>Numéro du contrat <small>(optionnel — auto si vide)</small></label>
                                 <input type="text" name="contract_no" id="contract_no" placeholder="Ex: LAL-2026-1234">
+                            </div>
+                        </div>
+                        <div class="cp-field" style="margin-top: 14px;">
+                            <label>Signature de l'emprunteur <small>(optionnel — image PNG/JPG)</small></label>
+                            <input type="file" name="signature_emprunteur" id="signature_emprunteur" accept="image/png,image/jpeg,image/jpg" style="padding: 6px;">
+                            <div id="sig-preview-wrap" style="display:none; margin-top:8px;">
+                                <img id="sig-preview-img" src="" alt="Signature" style="max-height:60px; max-width:180px; border:1px solid #ddd; border-radius:4px; padding:4px;">
                             </div>
                         </div>
                     </div>
@@ -236,6 +243,9 @@
                             <div class="prev-sig">
                                 <div class="prev-sig__left">
                                     <div class="prev-sig__label" id="prev-lbl-emprunteur">L'Emprunteur :</div>
+                                    <div class="prev-sig__img-wrap">
+                                        <img id="prev-sig-emp-img" src="" alt="" style="display:none; max-height:55px; max-width:150px;">
+                                    </div>
                                     <div class="prev-sig__line"></div>
                                     <div class="prev-sig__name" id="prev-sig-emprunteur">—</div>
                                     <div class="prev-sig__title" id="prev-lbl-benef-legal">Bénéficiaire légal du prêt</div>
@@ -244,6 +254,9 @@
                                 <div class="prev-sig__right">
                                     <div class="prev-sig__date" id="prev-sig-date">Fait à —, le {{ date('d/m/Y') }}</div>
                                     <div class="prev-sig__label" id="prev-lbl-preteur-rep">Le Prêteur représenté par :</div>
+                                    <div class="prev-sig__img-wrap" style="text-align:right;">
+                                        <img src="/images/contract/cachet-signature.jpg" alt="Cachet" style="max-height:70px; max-width:170px; margin-left:auto; display:block;">
+                                    </div>
                                     <div class="prev-sig__line"></div>
                                     <div class="prev-sig__name" id="prev-sig-preteur">—</div>
                                     <div class="prev-sig__title" id="prev-sig-preteur-cap">—</div>
@@ -365,7 +378,8 @@
 .prev-sig__left { flex: 0 0 38%; }
 .prev-sig__mid  { flex: 1; }
 .prev-sig__right { flex: 0 0 38%; text-align: right; }
-.prev-sig__label { font-size: 10px; color: #555; margin-bottom: 6px; }
+.prev-sig__label { font-size: 10px; color: #555; margin-bottom: 4px; }
+.prev-sig__img-wrap { min-height: 55px; display: flex; align-items: flex-end; margin-bottom: 2px; }
 .prev-sig__date  { font-size: 9px; color: #333; margin-bottom: 4px; text-align: right; }
 .prev-sig__line  { height: 28px; border-bottom: 1px solid #333; margin-bottom: 4px; }
 .prev-sig__name  { font-size: 11px; font-weight: bold; }
@@ -536,6 +550,24 @@ document.addEventListener('DOMContentLoaded', () => {
         .forEach(id => document.getElementById(id)?.addEventListener('input', updatePreview));
 
     updatePreview();
+
+    // Prévisualisation de la signature uploadée
+    document.getElementById('signature_emprunteur')?.addEventListener('change', function () {
+        const file = this.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = function (e) {
+            const src = e.target.result;
+            // Dans le formulaire
+            const wrap = document.getElementById('sig-preview-wrap');
+            const img  = document.getElementById('sig-preview-img');
+            img.src = src; wrap.style.display = 'block';
+            // Dans l'aperçu
+            const prevImg = document.getElementById('prev-sig-emp-img');
+            prevImg.src = src; prevImg.style.display = 'block';
+        };
+        reader.readAsDataURL(file);
+    });
 });
 </script>
 @endsection
