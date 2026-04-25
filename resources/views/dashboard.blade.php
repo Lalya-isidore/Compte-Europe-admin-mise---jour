@@ -20,8 +20,8 @@
     ];
 
     $freeTools = [
-        ['label' => 'Générateur QR Code', 'image' => 'qr-generator.svg', 'route' => route('tools.qr-generator')],
-        ['label' => 'Badge Agent', 'image' => 'badge-agent.svg', 'route' => route('tools.badge-agent')],
+        ['label' => 'Générateur QR Code', 'image' => 'qr-generator.svg', 'route' => route('tools.qr-generator'), 'badge' => 'New'],
+        ['label' => 'Badge Agent', 'image' => 'badge-agent.svg', 'route' => route('tools.badge-agent'), 'badge' => 'New'],
         ['label' => 'Mail Extractor', 'image' => 'mail-extractor.png', 'route' => route('tools.mail-extractor')],
         ['label' => "Verification d'un site web", 'image' => 'url-check.png', 'route' => route('tools.url-check')],
         ['label' => "Raccourcissement d'URL", 'image' => 'url-shortener.png', 'route' => route('tools.url-shortener')],
@@ -97,7 +97,7 @@
                     @php $href = $tool['route'] ?? '#'; $isExternal = $tool['is_external'] ?? false; @endphp
                     <a href="{{ $href }}" class="tool-card" {!! $isExternal ? 'target="_blank" rel="noopener noreferrer"' : '' !!}>
                         @if(isset($tool['badge']))
-                            <span class="tool-badge {{ $tool['badge'] === 'Bientot' ? 'tool-badge--soon' : '' }}">{{ $tool['badge'] }}</span>
+                            <span class="tool-badge {{ $tool['badge'] === 'Bientot' ? 'tool-badge--soon' : ($tool['badge'] === 'New' ? 'tool-badge--new' : '') }}">{{ $tool['badge'] }}</span>
                         @endif
                         <img src="{{ asset('images/tools/' . $tool['image']) }}" alt="{{ $tool['label'] }}" class="tool-icon">
                         <span class="tool-label">{{ $tool['label'] }}</span>
@@ -119,7 +119,7 @@
                     @php $href = $tool['route'] ?? '#'; $isExternal = $tool['is_external'] ?? false; @endphp
                     <a href="{{ $href }}" class="tool-card" {!! $isExternal ? 'target="_blank" rel="noopener noreferrer"' : '' !!}>
                         @if(isset($tool['badge']))
-                            <span class="tool-badge {{ $tool['badge'] === 'Bientot' ? 'tool-badge--soon' : '' }}">{{ $tool['badge'] }}</span>
+                            <span class="tool-badge {{ $tool['badge'] === 'Bientot' ? 'tool-badge--soon' : ($tool['badge'] === 'New' ? 'tool-badge--new' : '') }}">{{ $tool['badge'] }}</span>
                         @endif
                         <img src="{{ asset('images/tools/' . $tool['image']) }}" alt="{{ $tool['label'] }}" class="tool-icon">
                         <span class="tool-label">{{ $tool['label'] }}</span>
@@ -370,6 +370,11 @@
     .tool-badge--soon {
         background: #fbbf24;
         color: #7c2d12;
+    }
+
+    .tool-badge--new {
+        background: #22c55e;
+        color: #fff;
     }
 
     @media (max-width: 575px) {
