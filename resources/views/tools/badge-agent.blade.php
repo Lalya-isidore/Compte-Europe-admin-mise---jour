@@ -265,7 +265,7 @@ document.addEventListener('DOMContentLoaded', () => {
                                 <div class="l-name">${esc(state.name)}</div>
                                 <div class="l-role">${esc(state.role)}</div>
                                 <div class="l-contact">
-                                    <div class="l-contact-item"><i class="fas fa-phone-alt"></i> ${state.phone}</div>
+                                    <div class="l-contact-item"><i class="fas fa-phone"></i> ${state.phone}</div>
                                     <div class="l-contact-item"><i class="fas fa-envelope"></i> ${state.email}</div>
                                 </div>
                             </div>
@@ -320,7 +320,7 @@ document.addEventListener('DOMContentLoaded', () => {
                                 </div>
                                 <div style="width:50px;height:4px;border-radius:2px;background:${state.accent};margin:8px 0;"></div>
                                 <div class="l-contact">
-                                    <div class="l-contact-item" style="color:#94a3b8;"><i class="fas fa-phone-alt" style="color:${state.accent};"></i> ${state.phone}</div>
+                                    <div class="l-contact-item" style="color:#94a3b8;"><i class="fas fa-phone" style="color:${state.accent};"></i> ${state.phone}</div>
                                     <div class="l-contact-item" style="color:#94a3b8;"><i class="fas fa-envelope" style="color:${state.accent};"></i> ${state.email}</div>
                                 </div>
                             </div>
