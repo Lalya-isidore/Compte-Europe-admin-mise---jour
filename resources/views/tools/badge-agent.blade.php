@@ -27,6 +27,11 @@
     padding: 24px;
 }
 
+@media (max-width: 576px) {
+    .badge-wrap { padding: 12px 0; }
+}
+
+
 .badge-header {
     margin-bottom: 32px;
     display: flex;
