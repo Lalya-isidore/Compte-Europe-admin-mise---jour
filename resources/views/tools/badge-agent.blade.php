@@ -159,31 +159,85 @@
 .badge-preview-frame.landscape .badge-preview-inner { width: 856px; height: 540px; transform: scale(0.3972); }
 .badge-preview-frame.portrait .badge-preview-inner { width: 540px; height: 856px; transform: scale(0.3963); }
 
-/* CONTENT BLOCKS */
+/* CONTENT BLOCKS — Landscape */
+.tpl-landscape {
+    width: 856px; height: 540px;
+    background: #fff;
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    overflow: hidden;
+    position: relative;
+}
 
-.tpl-landscape { width: 856px; height: 540px; background: #fff; position: relative; overflow: hidden; display: flex; flex-direction: column; }
-.l-header { height: 140px; display: flex; align-items: center; padding: 0 40px; position: relative; }
-.l-photo { width: 170px; height: 170px; border-radius: 50%; border: 8px solid #fff; box-shadow: 0 10px 30px rgba(0,0,0,0.1); position: absolute; left: 40px; bottom: -60px; background: #eee; overflow: hidden; z-index: 2; }
+/* Colonne gauche */
+.l-left {
+    display: flex; flex-direction: column; align-items: center;
+    justify-content: space-between;
+    padding: 30px 20px;
+    position: relative;
+}
+.l-photo {
+    width: 160px; height: 160px;
+    border-radius: 50%;
+    border: 6px solid rgba(255,255,255,0.5);
+    overflow: hidden;
+    background: rgba(255,255,255,0.2);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+}
 .l-photo img { width: 100%; height: 100%; object-fit: cover; }
-.l-company { font-size: 32px; font-weight: 800; color: #fff; margin-left: 200px; text-transform: uppercase; letter-spacing: 1px; }
-.l-logo { margin-left: auto; max-height: 85px; }
+.l-photo i { font-size: 70px; color: rgba(255,255,255,0.5); }
+.l-logo-wrap { width: 100%; display: flex; justify-content: center; }
+.l-logo-wrap img { max-height: 55px; max-width: 160px; object-fit: contain; filter: brightness(0) invert(1); opacity: .85; }
+.l-id-chip {
+    background: rgba(0,0,0,0.2);
+    color: #fff; border-radius: 30px;
+    padding: 8px 20px;
+    font-family: 'Roboto Mono', monospace;
+    font-size: 17px; font-weight: 700;
+    letter-spacing: 1px; text-align: center;
+    width: 100%;
+}
 
-.l-body { flex: 1; padding: 20px 45px; display: flex; align-items: center; gap: 50px; justify-content: center; }
-.l-main-info { flex: 1.2; display: flex; flex-direction: column; gap: 10px; }
-.l-name { font-size: 56px; font-weight: 900; line-height: 1; margin-bottom: 2px; color: #000; letter-spacing: -1px; }
-.l-role { font-size: 24px; font-weight: 700; text-transform: uppercase; letter-spacing: 3px; margin-bottom: 40px; }
+/* Colonne droite */
+.l-right {
+    display: flex; flex-direction: column;
+    border-left: none;
+}
+.l-top-bar {
+    height: 56px; display: flex; align-items: center;
+    justify-content: space-between;
+    padding: 0 30px;
+}
+.l-company { font-size: 26px; font-weight: 900; color: #fff; text-transform: uppercase; letter-spacing: 1px; }
 
-.l-details-box { flex: 1.2; display: flex; flex-direction: column; gap: 25px; }
-.l-details-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; background: #f8fafc; padding: 25px; border-radius: 20px; }
+.l-body {
+    flex: 1; padding: 16px 30px 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0 30px;
+}
+.l-main-info { display: flex; flex-direction: column; justify-content: flex-start; }
+.l-name { font-size: 46px; font-weight: 900; line-height: 1.05; color: #0f172a; margin-bottom: 4px; }
+.l-role { font-size: 18px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 18px; }
+.l-contact { display: flex; flex-direction: column; gap: 10px; }
+.l-contact-item { display: flex; align-items: center; gap: 10px; font-size: 19px; font-weight: 600; color: #334155; }
+.l-contact-item i { font-size: 17px; width: 24px; text-align: center; }
 
-.l-det-label { font-weight: 800; color: #94a3b8; text-transform: uppercase; font-size: 15px; margin-bottom: 4px; }
-.l-det-val { font-weight: 700; color: #1e293b; font-size: 21px; }
+.l-details-col { display: flex; flex-direction: column; justify-content: flex-start; }
+.l-details-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 16px; background: #f8fafc; padding: 16px; border-radius: 14px; }
+.l-det-label { font-weight: 800; color: #94a3b8; text-transform: uppercase; font-size: 13px; margin-bottom: 2px; }
+.l-det-val { font-weight: 700; color: #1e293b; font-size: 18px; }
 
-.l-contact { font-size: 26px; display: flex; flex-direction: column; gap: 18px; font-weight: 600; color: #334155; }
-.l-contact i { width: 32px; text-align: center; color: var(--ce-primary); font-size: 24px; }
-
-.l-sig { align-self: flex-end; text-align: center; min-width: 240px; margin-top: 10px; }
-.l-strip { height: 85px; display: flex; align-items: center; padding: 0 45px; color: #fff; font-weight: 800; font-size: 28px; font-family: 'Roboto Mono', monospace; }
+.l-bottom {
+    height: 80px; display: flex; align-items: center;
+    justify-content: space-between;
+    padding: 0 30px;
+    border-top: 1px solid #f1f5f9;
+}
+.l-sig { text-align: center; }
+.l-strip-label { font-family: 'Roboto Mono', monospace; font-size: 18px; font-weight: 700; color: #64748b; }
+.l-strip-val { font-family: 'Roboto Mono', monospace; font-size: 22px; font-weight: 900; }
 
 
 
@@ -382,35 +436,70 @@ document.addEventListener('DOMContentLoaded', () => {
             `;
         } else {
             let isDark = state.tpl === 'tpl-dark';
+            const leftBg = isDark
+                ? `linear-gradient(180deg, #1e293b, #0f172a)`
+                : `linear-gradient(180deg, ${state.accent}, ${state.accent}cc)`;
+            const rightBg = isDark ? '#0f172a' : '#fff';
+            const textColor = isDark ? '#f1f5f9' : '#0f172a';
+            const detBg = isDark ? '#1e293b' : '#f8fafc';
+            const detVal = isDark ? '#f1f5f9' : '#1e293b';
+            const contactColor = isDark ? '#94a3b8' : '#334155';
+            const borderColor = isDark ? '#1e293b' : '#f1f5f9';
+
             html = `
-                <div class="tpl-landscape" style="background: ${isDark ? '#0f172a' : '#fff'}; color: ${isDark ? '#fff' : '#1e293b'};">
-                    <div class="l-header" style="background: ${isDark ? '#1e293b' : `linear-gradient(135deg, ${state.accent}, ${state.accent}cc)`};">
-                        <div class="l-photo">${state.photo ? `<img src="${state.photo}">` : `<i class="fas fa-user" style="font-size:80px;color:#ccc;margin:45px 0 0 45px;"></i>`}</div>
-                        <div class="l-company">${esc(state.company)}</div>
-                        <div class="l-logo">${state.logo ? `<img src="${state.logo}" style="filter: ${isDark ? 'brightness(0) invert(1)' : 'grayscale(1) brightness(5)'};">` : ''}</div>
+                <div class="tpl-landscape" style="background:${rightBg}; color:${textColor};">
+                    <!-- Colonne gauche colorée -->
+                    <div class="l-left" style="background:${leftBg};">
+                        <div class="l-logo-wrap">
+                            ${state.logo ? `<img src="${state.logo}">` : ''}
+                        </div>
+                        <div class="l-photo">
+                            ${state.photo
+                                ? `<img src="${state.photo}">`
+                                : `<i class="fas fa-user"></i>`}
+                        </div>
+                        <div class="l-id-chip">${esc(state.id)}</div>
                     </div>
-                    <div class="l-body">
-                        <div class="l-main-info">
-                            <div class="l-name">${esc(state.name)}</div>
-                            <div class="l-role" style="color: ${state.accent}">${esc(state.role)}</div>
-                            <div class="l-contact">
-                                <div><i class="fas fa-phone" style="color:${state.accent}"></i> ${state.phone}</div>
-                                <div><i class="fas fa-envelope" style="color:${state.accent}"></i> ${state.email}</div>
+
+                    <!-- Colonne droite -->
+                    <div class="l-right">
+                        <div class="l-top-bar" style="background:${state.accent};">
+                            <div class="l-company">${esc(state.company)}</div>
+                        </div>
+                        <div class="l-body">
+                            <div class="l-main-info">
+                                <div class="l-name" style="color:${textColor};">${esc(state.name)}</div>
+                                <div class="l-role" style="color:${state.accent};">${esc(state.role)}</div>
+                                <div class="l-contact">
+                                    <div class="l-contact-item">
+                                        <i class="fas fa-phone" style="color:${state.accent};"></i>
+                                        <span style="color:${contactColor};">${state.phone}</span>
+                                    </div>
+                                    <div class="l-contact-item">
+                                        <i class="fas fa-envelope" style="color:${state.accent};"></i>
+                                        <span style="color:${contactColor};">${state.email}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="l-details-col">
+                                <div class="l-details-grid" style="background:${detBg};">
+                                    <div><div class="l-det-label">Sexe</div><div class="l-det-val" style="color:${detVal};">${state.sex}</div></div>
+                                    <div><div class="l-det-label">Groupe Sang.</div><div class="l-det-val" style="color:${detVal};">${state.blood}</div></div>
+                                    <div><div class="l-det-label">Date Nais.</div><div class="l-det-val" style="color:${detVal};">${state.birth}</div></div>
+                                    <div><div class="l-det-label">Lieu Nais.</div><div class="l-det-val" style="color:${detVal};">${state.place}</div></div>
+                                    <div><div class="l-det-label">Service</div><div class="l-det-val" style="color:${detVal};">${esc(state.service)}</div></div>
+                                    <div><div class="l-det-label">Expire le</div><div class="l-det-val" style="color:${state.accent};">${state.expiry}</div></div>
+                                </div>
                             </div>
                         </div>
-                        <div class="l-details-box">
-                            <div class="l-details-grid">
-                                <div><div class="l-det-label">Sexe</div><div class="l-det-val">${state.sex}</div></div>
-                                <div><div class="l-det-label">Groupe Sang.</div><div class="l-det-val">${state.blood}</div></div>
-                                <div><div class="l-det-label">Date Nais.</div><div class="l-det-val">${state.birth}</div></div>
-                                <div><div class="l-det-label">Lieu Nais.</div><div class="l-det-val">${state.place}</div></div>
-                                <div><div class="l-det-label">Service</div><div class="l-det-val">${esc(state.service)}</div></div>
-                                <div><div class="l-det-label">Expire le</div><div class="l-det-val" style="color:${state.accent}">${state.expiry}</div></div>
+                        <div class="l-bottom" style="border-top:1px solid ${borderColor};">
+                            <div>
+                                <div class="l-strip-label" style="color:#94a3b8;">IDENTIFIANT</div>
+                                <div class="l-strip-val" style="color:${state.accent};">${esc(state.id)}</div>
                             </div>
+                            <div class="l-sig">${sigHtml}</div>
                         </div>
                     </div>
-                    <div class="l-sig">${sigHtml}</div>
-                    <div class="l-strip" style="background: ${state.accent};">IDENTIFIANT : ${esc(state.id)}</div>
                 </div>
             `;
         }
