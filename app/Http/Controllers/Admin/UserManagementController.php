@@ -41,7 +41,9 @@ class UserManagementController extends Controller
                     $innerQuery->where('nom', 'like', $term)
                         ->orWhere('prenom', 'like', $term)
                         ->orWhere('email', 'like', $term)
-                        ->orWhere('phone', 'like', $term);
+                        ->orWhere('phone', 'like', $term)
+                        ->orWhereRaw("CONCAT(prenom, ' ', nom) LIKE ?", [$term])
+                        ->orWhereRaw("CONCAT(nom, ' ', prenom) LIKE ?", [$term]);
 
                     if (is_numeric($search)) {
                         $innerQuery->orWhere('id', (int) $search);
