@@ -165,27 +165,26 @@
 .l-header { height: 140px; display: flex; align-items: center; padding: 0 40px; position: relative; }
 .l-photo { width: 170px; height: 170px; border-radius: 50%; border: 8px solid #fff; box-shadow: 0 10px 30px rgba(0,0,0,0.1); position: absolute; left: 40px; bottom: -60px; background: #eee; overflow: hidden; z-index: 2; }
 .l-photo img { width: 100%; height: 100%; object-fit: cover; }
-.l-company { font-size: 26px; font-weight: 800; color: #fff; margin-left: 200px; text-transform: uppercase; }
-.l-logo { margin-left: auto; max-height: 70px; }
+.l-company { font-size: 32px; font-weight: 800; color: #fff; margin-left: 200px; text-transform: uppercase; letter-spacing: 1px; }
+.l-logo { margin-left: auto; max-height: 85px; }
 
 .l-body { flex: 1; padding: 40px 40px 30px; display: flex; gap: 40px; }
-.l-main-info { flex: 1.2; display: flex; flex-direction: column; justify-content: center; }
-.l-name { font-size: 44px; font-weight: 900; line-height: 1.1; margin-bottom: 5px; color: #0f172a; }
-.l-role { font-size: 20px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 30px; }
+.l-main-info { flex: 1.1; display: flex; flex-direction: column; justify-content: center; }
+.l-name { font-size: 48px; font-weight: 900; line-height: 1.1; margin-bottom: 5px; color: #000; }
+.l-role { font-size: 22px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 30px; }
 
-.l-details-box { flex: 1; display: flex; flex-direction: column; justify-content: center; gap: 20px; }
-.l-details-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; background: #f8fafc; padding: 18px; border-radius: 12px; }
+.l-details-box { flex: 1.1; display: flex; flex-direction: column; justify-content: center; gap: 20px; }
+.l-details-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; background: #f8fafc; padding: 25px; border-radius: 16px; }
 
+.l-det-label { font-weight: 800; color: #94a3b8; text-transform: uppercase; font-size: 14px; margin-bottom: 2px; }
+.l-det-val { font-weight: 700; color: #1e293b; font-size: 19px; }
 
-.l-det-label { font-weight: 700; color: #94a3b8; text-transform: uppercase; font-size: 12px; }
-.l-det-val { font-weight: 600; color: #1e293b; }
+.l-contact { font-size: 24px; display: flex; flex-direction: column; gap: 15px; font-weight: 600; color: #475569; }
+.l-contact i { width: 30px; text-align: center; color: var(--ce-primary); font-size: 22px; }
 
-.l-contact { font-size: 19px; display: flex; flex-direction: column; gap: 12px; font-weight: 600; color: #475569; }
-.l-contact i { width: 24px; text-align: center; color: var(--ce-primary); }
+.l-sig { align-self: flex-end; text-align: center; margin-top: 15px; min-width: 220px; }
+.l-strip { height: 75px; display: flex; align-items: center; padding: 0 40px; color: #fff; font-weight: 800; font-size: 26px; font-family: 'Roboto Mono', monospace; }
 
-.l-sig { align-self: flex-end; text-align: center; margin-top: 10px; min-width: 200px; }
-
-.l-strip { height: 60px; display: flex; align-items: center; padding: 0 40px; color: #fff; font-weight: 800; font-size: 22px; font-family: 'Roboto Mono', monospace; }
 
 /* Portrait */
 .tpl-portrait { width: 540px; height: 856px; background: #fff; display: flex; flex-direction: column; align-items: center; padding: 40px 30px; position: relative; }
@@ -202,9 +201,10 @@
 .v-sig { margin-top: auto; text-align: center; }
 
 /* Signatures */
-.sig-text { font-family: 'Dancing Script', cursive; font-size: 38px; color: #0f172a; margin-bottom: 0; }
-.sig-img { max-height: 70px; filter: contrast(1.5) brightness(0.2); }
-.sig-label { font-size: 12px; font-weight: 800; color: #94a3b8; text-transform: uppercase; letter-spacing: 1px; }
+.sig-text { font-family: 'Dancing Script', cursive; font-size: 46px; color: #0f172a; margin-bottom: 0; }
+.sig-img { max-height: 90px; filter: contrast(1.5) brightness(0.2); }
+.sig-label { font-size: 14px; font-weight: 800; color: #94a3b8; text-transform: uppercase; letter-spacing: 1px; }
+
 
 .color-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; }
 .color-swatch { aspect-ratio: 1; border-radius: 12px; cursor: pointer; border: 3px solid transparent; }
