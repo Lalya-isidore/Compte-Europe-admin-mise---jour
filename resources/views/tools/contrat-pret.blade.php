@@ -234,18 +234,24 @@
                             </div>
 
                             <div class="prev-sig">
-                                <div class="prev-sig__block">
+                                <div class="prev-sig__left">
+                                    <div class="prev-sig__label" id="prev-lbl-emprunteur">L'Emprunteur :</div>
                                     <div class="prev-sig__line"></div>
-                                    <div class="prev-sig__name" id="prev-sig-emprunteur">L'Emprunteur</div>
+                                    <div class="prev-sig__name" id="prev-sig-emprunteur">—</div>
+                                    <div class="prev-sig__title" id="prev-lbl-benef-legal">Bénéficiaire légal du prêt</div>
                                 </div>
-                                <div class="prev-sig__block">
+                                <div class="prev-sig__mid"></div>
+                                <div class="prev-sig__right">
+                                    <div class="prev-sig__date" id="prev-sig-date">Fait à —, le {{ date('d/m/Y') }}</div>
+                                    <div class="prev-sig__label" id="prev-lbl-preteur-rep">Le Prêteur représenté par :</div>
                                     <div class="prev-sig__line"></div>
-                                    <div class="prev-sig__name" id="prev-sig-preteur">Le Prêteur</div>
+                                    <div class="prev-sig__name" id="prev-sig-preteur">—</div>
+                                    <div class="prev-sig__title" id="prev-sig-preteur-cap">—</div>
                                 </div>
                             </div>
 
-                            <div class="prev-important">
-                                ⚠️ CE CONTRAT DOIT ÊTRE IMPRIMÉ ET SIGNÉ
+                            <div class="prev-important" id="prev-important-txt">
+                                IMPORTANT : CE CONTRAT DOIT ÊTRE IMPRIMÉ, DATÉ ET SIGNÉ PAR L'EMPRUNTEUR AFIN DE DÉCLENCHER LE VIREMENT DES FONDS SUR LE COMPTE BANCAIRE DÉSIGNÉ.
                             </div>
                         </div>
                     </div>
@@ -355,10 +361,15 @@
 .prev-art-title { font-size: 12px; color: #002B5B; font-weight: bold; margin-bottom: 3px; }
 .prev-art-body { font-size: 11px; color: #444; line-height: 1.5; }
 
-.prev-sig { display: flex; gap: 20px; margin-bottom: 10px; padding-top: 10px; border-top: 1px solid #eee; }
-.prev-sig__block { flex: 1; text-align: center; }
-.prev-sig__line { height: 30px; border-bottom: 1px solid #333; margin-bottom: 4px; }
-.prev-sig__name { font-size: 11px; font-weight: bold; }
+.prev-sig { display: flex; gap: 10px; margin-bottom: 10px; padding-top: 10px; border-top: 1px solid #eee; }
+.prev-sig__left { flex: 0 0 38%; }
+.prev-sig__mid  { flex: 1; }
+.prev-sig__right { flex: 0 0 38%; text-align: right; }
+.prev-sig__label { font-size: 10px; color: #555; margin-bottom: 6px; }
+.prev-sig__date  { font-size: 9px; color: #333; margin-bottom: 4px; text-align: right; }
+.prev-sig__line  { height: 28px; border-bottom: 1px solid #333; margin-bottom: 4px; }
+.prev-sig__name  { font-size: 11px; font-weight: bold; }
+.prev-sig__title { font-style: italic; font-size: 9px; color: #666; margin-top: 2px; }
 
 .prev-important { font-size: 11px; font-weight: bold; color: #003399; border: 1px dashed #003399; background: #f0f7ff; padding: 8px; border-radius: 4px; text-align: center; }
 
@@ -464,8 +475,15 @@ document.addEventListener('DOMContentLoaded', () => {
             empIdRow.style.display = 'none';
         }
 
-        document.getElementById('prev-sig-emprunteur').textContent  = empNom;
-        document.getElementById('prev-sig-preteur').textContent     = preNom;
+        // Signatures
+        document.getElementById('prev-lbl-emprunteur').textContent  = t.l_emprunteur  || 'L\'Emprunteur :';
+        document.getElementById('prev-lbl-benef-legal').textContent = t.benef_legal   || 'Bénéficiaire légal du prêt';
+        document.getElementById('prev-lbl-preteur-rep').textContent = t.preteur_rep   || 'Le Prêteur représenté par :';
+        document.getElementById('prev-sig-date').textContent        = (t.fait_a || 'Fait à') + ' ' + prePays + ', ' + (t.le || 'le') + ' {{ date("d/m/Y") }}';
+        document.getElementById('prev-sig-emprunteur').textContent  = empNom !== '—' ? (t.civilite || 'M./Mme') + ' ' + empNom.toUpperCase() : '—';
+        document.getElementById('prev-sig-preteur').textContent     = preNom.toUpperCase();
+        document.getElementById('prev-sig-preteur-cap').textContent = preCap;
+        document.getElementById('prev-important-txt').textContent   = t.important || 'IMPORTANT : CE CONTRAT DOIT ÊTRE IMPRIMÉ, DATÉ ET SIGNÉ PAR L\'EMPRUNTEUR AFIN DE DÉCLENCHER LE VIREMENT DES FONDS SUR LE COMPTE BANCAIRE DÉSIGNÉ.';
 
         // Contenu des articles
         const artTitles = ['art1_titre','art2_titre','art3_titre','art4_titre','art5_titre','art6_titre','art7_titre','art8_titre','art9_titre','art10_titre'];
