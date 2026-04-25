@@ -94,7 +94,7 @@
 .v-photo img { width: 100%; height: 100%; object-fit: cover; }
 .v-name { font-size: 48px; font-weight: 900; text-align: center; line-height: 1.1; margin-bottom: 10px; }
 .v-role { font-size: 24px; font-weight: 700; color: var(--ce-primary); text-transform: uppercase; letter-spacing: 3px; margin-bottom: 35px; }
-.v-details { background: #f8fafc; border-radius: 20px; width: 100%; padding: 25px; display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 30px; }
+.v-details { background: #f8fafc; border-radius: 20px; width: 100%; padding: 20px 25px; display: grid; grid-template-columns: 1fr 1fr; gap: 14px 20px; margin-bottom: 24px; }
 .v-id-band { background: var(--ce-primary); color: #fff; width: 100%; padding: 15px; text-align: center; border-radius: 15px; font-family: monospace; font-size: 24px; font-weight: 800; margin-bottom: auto; }
 
 .btn-download { width: 100%; padding: 18px; border-radius: 18px; background: linear-gradient(135deg, #2196F3, #1565C0); color: #fff; border: none; font-weight: 800; font-size: 1.1rem; cursor: pointer; display: flex; justify-content: center; gap: 12px; margin-top: 15px; box-shadow: 0 10px 20px rgba(33, 150, 243, 0.3); }
@@ -268,19 +268,21 @@ document.addEventListener('DOMContentLoaded', () => {
                     <div class="v-logo-box">
                         <div style="font-size:32px;font-weight:900;text-transform:uppercase;color:${state.accent}">${esc(state.company)}</div>
                     </div>
-                    <div class="v-photo" style="${!state.photo ? 'background:#f1f5f9; display:flex; align-items:center; justify-content:center;' : ''}">
+                    <div class="v-photo" style="${!state.photo ? 'background:linear-gradient(160deg,#e8edf5,#f1f5f9); display:flex; flex-direction:column; align-items:center; justify-content:flex-end; overflow:hidden;' : ''}">
                         ${state.photo
                             ? `<img src="${state.photo}">`
-                            : `<i class="fas fa-user" style="font-size:130px; color:#cbd5e1;"></i>`}
+                            : `<i class="fas fa-user" style="font-size:220px; color:#c5cfe0; line-height:1; margin-bottom:-30px;"></i>`}
                     </div>
                     <div class="v-name">${esc(state.name)}</div>
                     <div class="v-role">${esc(state.role)}</div>
                     <div class="v-id-band">${esc(state.id)}</div>
                     <div class="v-details">
                         <div class="l-det-it"><span class="l-det-lbl">Sexe</span><span class="l-det-val">${state.sex}</span></div>
-                        <div class="l-det-it"><span class="l-det-lbl">Expire le</span><span class="l-det-val">${state.expiry}</span></div>
-                        <div class="l-det-it"><span class="l-det-lbl">Sang</span><span class="v-det-val">${state.blood}</span></div>
-                        <div class="l-det-it"><span class="l-det-lbl">Service</span><span class="v-det-val">${esc(state.service)}</span></div>
+                        <div class="l-det-it"><span class="l-det-lbl">Groupe Sang.</span><span class="l-det-val">${state.blood}</span></div>
+                        <div class="l-det-it"><span class="l-det-lbl">Date Naiss.</span><span class="l-det-val">${state.birth}</span></div>
+                        <div class="l-det-it"><span class="l-det-lbl">Lieu Naiss.</span><span class="l-det-val">${esc(state.place)}</span></div>
+                        <div class="l-det-it"><span class="l-det-lbl">Service</span><span class="l-det-val">${esc(state.service)}</span></div>
+                        <div class="l-det-it"><span class="l-det-lbl">Expire le</span><span class="l-det-val" style="color:${state.accent};">${state.expiry}</span></div>
                     </div>
                     <div style="font-size:18px;font-weight:600;color:#64748b;margin-bottom:30px;">
                         ${state.phone} | ${state.email}
