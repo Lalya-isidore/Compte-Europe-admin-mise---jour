@@ -90,8 +90,9 @@
 /* PORTRAIT */
 .tpl-portrait { width: 540px; height: 856px; background: #fff; display: flex; flex-direction: column; align-items: center; padding: 50px 30px; }
 .v-logo-box { height: 75px; margin-bottom: 40px; }
-.v-photo { width: 320px; height: 320px; border-radius: 30px; overflow: hidden; border: 12px solid #f1f5f9; box-shadow: 0 15px 40px rgba(0,0,0,0.1); margin-bottom: 40px; }
-.v-photo img { width: 100%; height: 100%; object-fit: cover; }
+.v-photo { width: 320px !important; height: 320px !important; border-radius: 40px; overflow: hidden; border: 12px solid #f1f5f9; box-shadow: 0 15px 45px rgba(0,0,0,0.12); margin-bottom: 40px; background: #eee; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.v-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.v-photo i { font-size: 160px; color: #cbd5e1; }
 .v-name { font-size: 48px; font-weight: 900; text-align: center; line-height: 1.1; margin-bottom: 10px; }
 .v-role { font-size: 24px; font-weight: 700; color: var(--ce-primary); text-transform: uppercase; letter-spacing: 3px; margin-bottom: 35px; }
 .v-details { background: #f8fafc; border-radius: 20px; width: 100%; padding: 20px 25px; display: grid; grid-template-columns: 1fr 1fr; gap: 14px 20px; margin-bottom: 24px; }
