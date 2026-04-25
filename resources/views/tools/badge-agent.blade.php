@@ -249,10 +249,8 @@ document.addEventListener('DOMContentLoaded', () => {
             html = `
                 <div class="tpl-landscape">
                     <div class="l-sidebar">
-                        <div class="l-side-photo">
-                            ${state.photo
-                                ? `<img src="${state.photo}">`
-                                : `<i class="fas fa-user" style="font-size:80px; color:rgba(255,255,255,0.5);"></i>`}
+                        <div class="l-side-photo" style="${state.photo ? `background-image:url('${state.photo}');background-size:cover;background-position:center;` : ''}">
+                            ${state.photo ? '' : `<i class="fas fa-user" style="font-size:80px; color:rgba(255,255,255,0.5);"></i>`}
                         </div>
                         <div class="l-side-pill">${esc(state.id)}</div>
                     </div>
@@ -301,10 +299,8 @@ document.addEventListener('DOMContentLoaded', () => {
                         <div class="l-logo-wrap" style="margin-bottom:0;">
                             ${state.logo ? `<img src="${state.logo}" style="filter:brightness(0) invert(1);opacity:.7;max-height:50px;max-width:150px;">` : ''}
                         </div>
-                        <div class="l-side-photo" style="border-color:rgba(255,255,255,0.15);">
-                            ${state.photo
-                                ? `<img src="${state.photo}">`
-                                : `<i class="fas fa-user" style="font-size:80px;color:rgba(255,255,255,0.2);"></i>`}
+                        <div class="l-side-photo" style="border-color:rgba(255,255,255,0.15);${state.photo ? `background-image:url('${state.photo}');background-size:cover;background-position:center;` : ''}">
+                            ${state.photo ? '' : `<i class="fas fa-user" style="font-size:80px;color:rgba(255,255,255,0.2);"></i>`}
                         </div>
                         <div class="l-side-pill" style="background:${state.accent};font-size:17px;">${esc(state.id)}</div>
                     </div>
@@ -355,10 +351,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     <div class="v-logo-box">
                         <div style="font-size:32px;font-weight:900;text-transform:uppercase;color:${state.accent}">${esc(state.company)}</div>
                     </div>
-                    <div class="v-photo" style="${!state.photo ? 'background:linear-gradient(160deg,#e8edf5,#f1f5f9); display:flex; flex-direction:column; align-items:center; justify-content:flex-end; overflow:hidden;' : ''}">
-                        ${state.photo
-                            ? `<img src="${state.photo}">`
-                            : `<i class="fas fa-user" style="font-size:220px; color:#c5cfe0; line-height:1; margin-bottom:-30px;"></i>`}
+                    <div class="v-photo" style="${state.photo ? `background-image:url('${state.photo}');background-size:cover;background-position:center;` : 'background:linear-gradient(160deg,#e8edf5,#f1f5f9);display:flex;flex-direction:column;align-items:center;justify-content:flex-end;overflow:hidden;'}">
+                        ${state.photo ? '' : `<i class="fas fa-user" style="font-size:220px; color:#c5cfe0; line-height:1; margin-bottom:-30px;"></i>`}
                     </div>
                     <div class="v-name">${esc(state.name)}</div>
                     <div class="v-role">${esc(state.role)}</div>
