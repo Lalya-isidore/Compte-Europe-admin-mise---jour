@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1e3a5f"/>
+      <stop offset="100%" style="stop-color:#2d5986"/>
+    </linearGradient>
+  </defs>
+  <rect width="80" height="80" rx="18" fill="url(#bg)"/>
+  <!-- Document -->
+  <rect x="18" y="12" width="36" height="48" rx="4" fill="white" opacity="0.95"/>
+  <!-- Fold corner -->
+  <path d="M46 12 L54 20 L46 20 Z" fill="#1e3a5f" opacity="0.3"/>
+  <rect x="46" y="12" width="8" height="8" rx="0" fill="white" opacity="0.5"/>
+  <!-- Lines -->
+  <rect x="24" y="24" width="20" height="2" rx="1" fill="#1e3a5f" opacity="0.6"/>
+  <rect x="24" y="29" width="24" height="1.5" rx="1" fill="#9ca3af" opacity="0.6"/>
+  <rect x="24" y="33" width="22" height="1.5" rx="1" fill="#9ca3af" opacity="0.5"/>
+  <rect x="24" y="37" width="24" height="1.5" rx="1" fill="#9ca3af" opacity="0.5"/>
+  <!-- Table lines -->
+  <rect x="24" y="43" width="24" height="6" rx="1" fill="#1e3a5f" opacity="0.08"/>
+  <rect x="24" y="43" width="24" height="2" rx="1" fill="#1e3a5f" opacity="0.15"/>
+  <rect x="24" y="45" width="24" height="1.5" rx="0" fill="#9ca3af" opacity="0.2"/>
+  <!-- Signature line -->
+  <rect x="24" y="52" width="14" height="1" rx="0.5" fill="#1e3a5f" opacity="0.4"/>
+  <!-- Euro sign -->
+  <circle cx="57" cy="57" r="11" fill="#f59e0b"/>
+  <text x="57" y="62" font-size="13" font-weight="bold" fill="white" text-anchor="middle" font-family="Arial">€</text>
+</svg>

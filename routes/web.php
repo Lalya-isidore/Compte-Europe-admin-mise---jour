@@ -78,6 +78,10 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/tools/badge-agent', [App\Http\Controllers\BadgeAgentController::class, 'index'])->name('tools.badge-agent');
 
+    // Générateur de Contrat de Prêt
+    Route::get('/tools/contrat-pret', [App\Http\Controllers\Tools\ContratPretController::class, 'index'])->name('tools.contrat-pret');
+    Route::post('/tools/contrat-pret/generate', [App\Http\Controllers\Tools\ContratPretController::class, 'generate'])->name('tools.contrat-pret.generate');
+
     Route::get('/tools/url-check', [UrlCheckController::class, 'index'])->name('tools.url-check');
     Route::post('/tools/url-check', [UrlCheckController::class, 'check'])->name('tools.url-check.run');
     Route::get('/tools/url-shortener', [UrlShortenerController::class, 'index'])->name('tools.url-shortener');
