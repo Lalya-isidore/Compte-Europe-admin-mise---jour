@@ -168,22 +168,23 @@
 .l-company { font-size: 32px; font-weight: 800; color: #fff; margin-left: 200px; text-transform: uppercase; letter-spacing: 1px; }
 .l-logo { margin-left: auto; max-height: 85px; }
 
-.l-body { flex: 1; padding: 40px 40px 30px; display: flex; gap: 40px; }
-.l-main-info { flex: 1.1; display: flex; flex-direction: column; justify-content: center; }
-.l-name { font-size: 48px; font-weight: 900; line-height: 1.1; margin-bottom: 5px; color: #000; }
-.l-role { font-size: 22px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 30px; }
+.l-body { flex: 1; padding: 20px 45px; display: flex; align-items: center; gap: 50px; justify-content: center; }
+.l-main-info { flex: 1.2; display: flex; flex-direction: column; gap: 10px; }
+.l-name { font-size: 56px; font-weight: 900; line-height: 1; margin-bottom: 2px; color: #000; letter-spacing: -1px; }
+.l-role { font-size: 24px; font-weight: 700; text-transform: uppercase; letter-spacing: 3px; margin-bottom: 40px; }
 
-.l-details-box { flex: 1.1; display: flex; flex-direction: column; justify-content: center; gap: 20px; }
-.l-details-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; background: #f8fafc; padding: 25px; border-radius: 16px; }
+.l-details-box { flex: 1.2; display: flex; flex-direction: column; gap: 25px; }
+.l-details-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; background: #f8fafc; padding: 25px; border-radius: 20px; }
 
-.l-det-label { font-weight: 800; color: #94a3b8; text-transform: uppercase; font-size: 14px; margin-bottom: 2px; }
-.l-det-val { font-weight: 700; color: #1e293b; font-size: 19px; }
+.l-det-label { font-weight: 800; color: #94a3b8; text-transform: uppercase; font-size: 15px; margin-bottom: 4px; }
+.l-det-val { font-weight: 700; color: #1e293b; font-size: 21px; }
 
-.l-contact { font-size: 24px; display: flex; flex-direction: column; gap: 15px; font-weight: 600; color: #475569; }
-.l-contact i { width: 30px; text-align: center; color: var(--ce-primary); font-size: 22px; }
+.l-contact { font-size: 26px; display: flex; flex-direction: column; gap: 18px; font-weight: 600; color: #334155; }
+.l-contact i { width: 32px; text-align: center; color: var(--ce-primary); font-size: 24px; }
 
-.l-sig { align-self: flex-end; text-align: center; margin-top: 15px; min-width: 220px; }
-.l-strip { height: 75px; display: flex; align-items: center; padding: 0 40px; color: #fff; font-weight: 800; font-size: 26px; font-family: 'Roboto Mono', monospace; }
+.l-sig { align-self: flex-end; text-align: center; min-width: 240px; margin-top: 10px; }
+.l-strip { height: 85px; display: flex; align-items: center; padding: 0 45px; color: #fff; font-weight: 800; font-size: 28px; font-family: 'Roboto Mono', monospace; }
+
 
 
 /* Portrait */
