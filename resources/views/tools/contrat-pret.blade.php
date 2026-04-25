@@ -194,17 +194,13 @@
                                 </table>
                             </div>
 
-                            <div class="prev-articles">
-                                <div class="prev-art">Art. 1 — Objet du prêt</div>
-                                <div class="prev-art">Art. 2 — Modalités de remboursement</div>
-                                <div class="prev-art">Art. 3 — Conditions de crédit</div>
-                                <div class="prev-art">Art. 4 — Observation et cartes</div>
-                                <div class="prev-art">Art. 5 — Paiement anticipé</div>
-                                <div class="prev-art">Art. 6 — Juridiction</div>
-                                <div class="prev-art">Art. 7 — Remboursement anticipé</div>
-                                <div class="prev-art">Art. 8 — Retards de paiement</div>
-                                <div class="prev-art">Art. 9 — Garantie d'activation</div>
-                                <div class="prev-art">Art. 10 — Déclaration et signature</div>
+                            <div class="prev-articles" id="prev-articles">
+                                @foreach(range(1,10) as $n)
+                                <div class="prev-article">
+                                    <div class="prev-art-title" id="prev-art{{ $n }}-titre">—</div>
+                                    <div class="prev-art-body"  id="prev-art{{ $n }}-body">—</div>
+                                </div>
+                                @endforeach
                             </div>
 
                             <div class="prev-sig">
@@ -314,7 +310,9 @@
 .prev-table tr.highlight td { background: #edf2f7; color: #002B5B; font-weight: bold; }
 
 .prev-articles { margin-bottom: 12px; }
-.prev-art { font-size: 8.5px; color: #002B5B; font-weight: bold; border-bottom: 1px solid #e8e8e8; padding: 2px 0; }
+.prev-article { border-bottom: 1px solid #e8e8e8; padding: 4px 0; }
+.prev-art-title { font-size: 8.5px; color: #002B5B; font-weight: bold; margin-bottom: 2px; }
+.prev-art-body { font-size: 7.5px; color: #444; line-height: 1.4; }
 
 .prev-sig { display: flex; gap: 20px; margin-bottom: 10px; padding-top: 10px; border-top: 1px solid #eee; }
 .prev-sig__block { flex: 1; text-align: center; }
@@ -335,11 +333,26 @@
 </style>
 
 <script>
+const allTranslations = @json($translations);
+
 document.addEventListener('DOMContentLoaded', () => {
     const langTitles = { fr: 'CONTRAT DE PRÊT', en: 'LOAN CONTRACT', es: 'CONTRATO DE PRÉSTAMO', pt: 'CONTRATO DE EMPRÉSTIMO', de: 'DARLEHENSVERTRAG', it: 'CONTRATTO DI PRESTITO', nl: 'LENINGSOVEREENKOMST', pl: 'UMOWA POŻYCZKI', hr: 'UGOVOR O ZAJMU', ru: 'КРЕДИТНЫЙ ДОГОВОР' };
     const currencySymbols = {
         EUR: '€', USD: '$', GBP: '£', CHF: 'Fr', CAD: 'CA$', XOF: 'F CFA', MAD: 'د.م.', TND: 'DT', DZD: 'DA'
     };
+
+    const articleBodies = [
+        (t, montant, sym, duree) => t.art1_p1a + ' ' + (montant > 0 ? montant.toLocaleString('fr-FR') + ' ' + sym : '—') + '. ' + (t.art1_p1b || ''),
+        (t, montant, sym, duree) => t.art2_intro + ' ' + (duree > 0 ? duree + ' ' + t.mois : '—') + '. ' + (t.art2_suite || ''),
+        (t) => t.art3_p1 || '',
+        (t) => (t.observation || '') + ' ' + (t.art4_p1 || ''),
+        (t) => t.art5_p1 || '',
+        (t) => t.art6_p1 || '',
+        (t) => t.art7_p1 || '',
+        (t) => t.art8_p1 || '',
+        (t) => t.art9_p1 || '',
+        (t) => t.art10_p1 || '',
+    ];
 
     function fmt(n, sym) {
         return new Intl.NumberFormat('fr-FR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(n) + ' ' + sym;
@@ -360,6 +373,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Titre selon langue
         document.getElementById('prev-titre').textContent = langTitles[lang] || langTitles.fr;
+
+        // Contenu des articles
+        const t = allTranslations[lang] || allTranslations['fr'];
+        const artTitles = ['art1_titre','art2_titre','art3_titre','art4_titre','art5_titre','art6_titre','art7_titre','art8_titre','art9_titre','art10_titre'];
+        artTitles.forEach((key, i) => {
+            const n = i + 1;
+            const titleEl = document.getElementById('prev-art' + n + '-titre');
+            const bodyEl  = document.getElementById('prev-art' + n + '-body');
+            if (titleEl) titleEl.textContent = t[key] || '—';
+            if (bodyEl) {
+                const full = articleBodies[i](t, montant, sym, duree);
+                bodyEl.textContent = full.length > 160 ? full.substring(0, 160) + '…' : full;
+            }
+        });
 
         // Parties
         document.getElementById('prev-preteur-nom').textContent  = preNom.toUpperCase();

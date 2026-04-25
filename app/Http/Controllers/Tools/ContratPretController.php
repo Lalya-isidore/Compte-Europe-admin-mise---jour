@@ -745,7 +745,8 @@ class ContratPretController extends Controller
     public function index()
     {
         return view('tools.contrat-pret', [
-            'currencies' => $this->currencies,
+            'currencies'   => $this->currencies,
+            'translations' => $this->translations,
         ]);
     }
 
