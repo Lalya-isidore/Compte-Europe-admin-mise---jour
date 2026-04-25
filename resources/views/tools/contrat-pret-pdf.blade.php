@@ -46,8 +46,7 @@
                 </div>
             </td>
             <td style="width: 50%; text-align: center; vertical-align: middle; padding-top: 20px;">
-                <img src="{{ public_path('images/contract/logo-flashbilan.png') }}" alt="FlashBilan" style="height: 60px; width: auto; display: block; margin: 0 auto 15px auto;">
-                <div style="border: 3px solid #4B0082; padding: 12px 25px; display: inline-block; border-radius: 8px; background: linear-gradient(135deg, rgba(75,0,130,0.05), rgba(75,0,130,0.02));">
+                <div style="border: 3px solid #4B0082; margin-top: 15px; padding: 12px 25px; display: inline-block; border-radius: 8px; background: linear-gradient(135deg, rgba(75,0,130,0.05), rgba(75,0,130,0.02));">
                     <h1>{{ $t['titre'] }}</h1>
                 </div>
             </td>

@@ -169,7 +169,6 @@
                                         <div id="prev-tribunal" class="prev-hdr-txt-blue" style="font-size:7px;">TRIBUNAL EUROPÉEN DE PREMIÈRE INSTANCE</div>
                                     </td>
                                     <td class="prev-hdr-center">
-                                        <img src="/images/contract/logo-flashbilan.png" class="prev-hdr-img-c">
                                         <div class="prev-title-wrap">
                                             <div class="prev-title" id="prev-titre">CONTRAT DE PRÊT</div>
                                         </div>
