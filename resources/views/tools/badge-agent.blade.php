@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('title', 'Générateur de Badge Agent Multi-Format')
+@section('title', 'Générateur de Badge Agent')
 
 @section('breadcrumb')
     <li class="breadcrumb-item"><i class="fas fa-tools me-1"></i>Outils</li>
@@ -9,36 +9,34 @@
 
 @section('content')
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Righteous&family=Dancing+Script:wght@600&family=Roboto+Mono:wght@400;700&family=Inter:wght@400;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Righteous&family=Dancing+Script:wght@600&family=Roboto+Mono:wght@400;700&display=swap');
 
 :root {
     --ce-primary: #2196F3;
     --ce-gradient: linear-gradient(135deg, #667eea, #764ba2);
-    --ce-bg: #f5f3ef;
+    --ce-bg: #f8fafc;
     --ce-card-bg: #ffffff;
-    --ce-text: #333333;
-    --ce-text-dim: #888888;
-    --ce-border: #e8e8e8;
+    --ce-text: #1e293b;
+    --ce-text-dim: #64748b;
+    --ce-border: #e2e8f0;
 }
 
 .badge-wrap {
     font-family: 'Poppins', sans-serif;
     color: var(--ce-text);
-    padding: 20px 24px;
+    padding: 24px;
 }
 
 .badge-header {
-    margin-bottom: 28px;
+    margin-bottom: 32px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    flex-wrap: wrap;
-    gap: 12px;
 }
 
 .badge-header h1 {
-    font-size: 1.6rem;
-    font-weight: 700;
+    font-size: 1.75rem;
+    font-weight: 800;
     margin: 0;
     display: flex; align-items: center; gap: 12px;
 }
@@ -52,40 +50,40 @@
 
 .badge-editor {
     display: grid;
-    grid-template-columns: 1fr 400px;
-    gap: 24px;
+    grid-template-columns: 1fr 380px;
+    gap: 32px;
     align-items: start;
 }
 
 .ce-card {
     background: var(--ce-card-bg);
-    border-radius: 16px;
+    border-radius: 20px;
     border: 1px solid var(--ce-border);
     padding: 24px;
-    margin-bottom: 20px;
+    margin-bottom: 24px;
 }
 
 .ce-card h3 {
-    font-size: 0.95rem;
+    font-size: 1rem;
     font-weight: 700;
-    margin: 0 0 18px;
-    display: flex; align-items: center; gap: 8px; color: var(--ce-primary);
+    margin: 0 0 20px;
+    display: flex; align-items: center; gap: 10px; color: var(--ce-primary);
 }
 
 .form-label {
-    font-size: 0.78rem;
+    font-size: 0.75rem;
     font-weight: 700;
     color: var(--ce-text-dim);
     text-transform: uppercase;
-    margin-bottom: 4px;
+    margin-bottom: 6px;
 }
 
 .form-control {
     border: 1.5px solid var(--ce-border);
-    border-radius: 10px;
+    border-radius: 12px;
     padding: 10px 14px;
-    font-size: 0.88rem;
-    background: #fafafa;
+    font-size: 0.9rem;
+    background: #fbfcfe;
     transition: all .2s;
     width: 100%;
 }
@@ -94,49 +92,41 @@
 
 .template-grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 10px;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
 }
 
 .template-btn {
     border: 2px solid var(--ce-border);
-    border-radius: 12px;
-    padding: 12px 8px;
+    border-radius: 14px;
+    padding: 14px;
     cursor: pointer;
-    background: #fafafa;
+    background: #fff;
     transition: all .2s;
-    text-align: left;
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 12px;
 }
 
-.template-btn:hover { border-color: var(--ce-primary); }
-.template-btn.active { border-color: var(--ce-primary); background: #e3f2fd; }
-.template-btn i { font-size: 1.2rem; }
-.template-btn .tpl-info { display: flex; flex-direction: column; }
-.template-btn .tpl-name { font-weight: 700; font-size: 0.85rem; }
-.template-btn .tpl-type { font-size: 0.65rem; color: #888; text-transform: uppercase; }
+.template-btn.active { border-color: var(--ce-primary); background: #f0f7ff; }
+.template-btn i { font-size: 1.4rem; color: #cbd5e1; }
+.template-btn.active i { color: var(--ce-primary); }
+.template-btn .tpl-name { display: block; font-weight: 700; font-size: 0.9rem; }
+.template-btn .tpl-type { font-size: 0.7rem; color: #94a3b8; text-transform: uppercase; }
 
 /* Preview Frame */
-.badge-preview-wrap { position: sticky; top: 8rem; }
-
-.frame-container {
-    perspective: 1000px;
-    margin-bottom: 20px;
-}
+.badge-preview-wrap { position: sticky; top: 100px; }
 
 .badge-preview-frame {
     margin: 0 auto;
-    border-radius: 12px;
-    box-shadow: 0 20px 60px rgba(0,0,0,.2);
+    border-radius: 24px;
+    box-shadow: 0 30px 60px -12px rgba(0,0,0,0.25);
     overflow: hidden;
     position: relative;
     background: #fff;
-    transition: width 0.3s, height 0.3s;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
-/* Orientation helpers */
 .badge-preview-frame.landscape { width: 340px; height: 214px; }
 .badge-preview-frame.portrait { width: 214px; height: 340px; }
 
@@ -146,150 +136,118 @@
     transform-origin: top left;
 }
 
-/* Aspect transformations */
-.badge-preview-frame.landscape .badge-preview-inner {
-    width: 856px; height: 540px;
-    transform: scale(0.3972); /* 340/856 */
-}
+.badge-preview-frame.landscape .badge-preview-inner { width: 856px; height: 540px; transform: scale(0.3972); }
+.badge-preview-frame.portrait .badge-preview-inner { width: 540px; height: 856px; transform: scale(0.3963); }
 
-.badge-preview-frame.portrait .badge-preview-inner {
-    width: 540px; height: 856px;
-    transform: scale(0.3963); /* 214/540 */
-}
+/* CONTENT BLOCKS */
 
-/* === SIGNATURE SHARED === */
-.sig-box {
-    position: absolute;
-    display: flex; flex-direction: column; align-items: center;
-}
-.sig-text { font-family: 'Dancing Script', cursive; font-size: 34px; color: #111; }
-.sig-img { max-height: 60px; object-fit: contain; filter: brightness(0.2); }
-.sig-label { font-size: 14px; color: #888; margin-top: 4px; font-weight: 600; }
+/* Landscape Templates (Modern / Dark) */
+.tpl-landscape { width: 856px; height: 540px; background: #fff; position: relative; overflow: hidden; display: flex; flex-direction: column; }
 
-/* === TEMPLATE: CNI (Landscape) === */
-.tpl-cni {
-    background-image: url('{{ asset('images/tools/cni-bg.png') }}');
-    background-size: cover;
-    font-family: 'Inter', sans-serif;
-}
-.tpl-cni .cni-header { display: flex; justify-content: space-between; padding: 20px 40px; }
-.tpl-cni .cni-title { text-align: center; }
-.tpl-cni .cni-title h2 { font-size: 32px; font-weight: 900; margin: 0; }
-.tpl-cni .cni-title p { font-size: 18px; font-weight: 700; margin: 0; opacity: 0.8; }
-.tpl-cni .cni-flag { width: 80px; height: 55px; background: linear-gradient(to right, #002395 33%, #fff 33%, #fff 66%, #ed2939 66%); border-radius: 4px; }
-.tpl-cni .cni-seal { width: 90px; height: 90px; background: url('{{ asset('images/tools/cni-rf-seal.png') }}') no-repeat; background-size: contain; }
-.tpl-cni .cni-body { display: grid; grid-template-columns: 240px 1fr; padding: 0 40px; gap: 30px; }
-.tpl-cni .cni-photo { width: 230px; height: 290px; object-fit: cover; background: #eee; }
-.tpl-cni .cni-fields { font-size: 18px; line-height: 1.3; }
-.tpl-cni .cni-label { color: #4b628a; font-weight: 700; margin-right: 8px; font-size: 16px; }
-.tpl-cni .cni-value { font-weight: 900; text-transform: uppercase; }
-.tpl-cni .sig-box { bottom: 40px; right: 60px; }
+.l-header { height: 160px; display: flex; align-items: center; padding: 0 40px; position: relative; }
+.l-photo { width: 170px; height: 170px; border-radius: 50%; border: 8px solid #fff; box-shadow: 0 10px 30px rgba(0,0,0,0.1); position: absolute; left: 40px; bottom: -50px; background: #eee; overflow: hidden; z-index: 2; }
+.l-photo img { width: 100%; height: 100%; object-fit: cover; }
+.l-company { font-size: 28px; font-weight: 800; color: #fff; margin-left: 200px; text-transform: uppercase; letter-spacing: 1px; }
+.l-logo { margin-left: auto; max-height: 80px; max-width: 150px; object-fit: contain; }
 
-/* === TEMPLATE: MODERN (Landscape) === */
-.tpl-modern { background: #fff; }
-.tpl-modern .m-top { height: 160px; display: flex; align-items: flex-end; padding: 0 40px 20px; color: #fff; }
-.tpl-modern .m-photo { width: 140px; height: 140px; border-radius: 50%; border: 6px solid #fff; position: relative; margin-bottom: -40px; background: #eee; overflow: hidden; }
-.tpl-modern .m-photo img { width: 100%; height: 100%; object-fit: cover; }
-.tpl-modern .m-body { padding: 60px 40px; }
-.tpl-modern .m-name { font-size: 40px; font-weight: 800; }
-.tpl-modern .m-role { font-size: 22px; font-weight: 600; margin-bottom: 20px; }
-.tpl-modern .m-info { font-size: 18px; display: flex; flex-direction: column; gap: 8px; color: #667eea; }
-.tpl-modern .m-strip { position: absolute; bottom: 0; left: 0; right: 0; height: 50px; display: flex; align-items: center; padding: 0 40px; color: #fff; font-weight: 700; font-size: 18px; }
-.tpl-modern .sig-box { bottom: 80px; right: 60px; }
+.l-body { flex: 1; padding: 70px 40px 40px; }
+.l-name { font-size: 48px; font-weight: 800; line-height: 1.1; margin-bottom: 5px; }
+.l-role { font-size: 24px; font-weight: 600; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 30px; }
+.l-info { display: flex; flex-direction: column; gap: 10px; font-size: 20px; font-weight: 500; }
+.l-info-item { display: flex; align-items: center; gap: 12px; }
 
-/* === TEMPLATE: VERTICAL (Portrait) === */
-.tpl-vertical { background: #fff; width: 540px; height: 856px; display: flex; flex-direction: column; align-items: center; padding: 40px; }
-.tpl-vertical .v-logo { height: 60px; margin-bottom: 30px; }
-.tpl-vertical .v-photo { width: 300px; height: 300px; border-radius: 20px; overflow: hidden; border: 8px solid #eee; margin-bottom: 30px; }
-.tpl-vertical .v-photo img { width: 100%; height: 100%; object-fit: cover; }
-.tpl-vertical .v-name { font-size: 44px; font-weight: 800; color: #111; text-align: center; }
-.tpl-vertical .v-role { font-size: 24px; font-weight: 600; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 40px; }
-.tpl-vertical .v-id-strip { background: #111; color: #fff; width: 100%; padding: 15px; text-align: center; border-radius: 12px; font-family: monospace; font-size: 22px; margin-bottom: 40px; }
-.tpl-vertical .v-info { display: flex; flex-direction: column; align-items: center; gap: 10px; color: #666; font-size: 18px; }
-.tpl-vertical .sig-box { bottom: 40px; position: absolute; }
+.l-strip { height: 60px; display: flex; align-items: center; padding: 0 40px; color: #fff; font-weight: 800; font-size: 22px; font-family: 'Roboto Mono', monospace; letter-spacing: 2px; }
 
-.btn-download { width: 100%; padding: 14px; border-radius: 12px; background: var(--ce-gradient); color: #fff; border:none; font-weight: 700; cursor: pointer; display:flex; justify-content: center; gap: 10px; margin-top: 10px; }
+.l-sig { position: absolute; bottom: 80px; right: 50px; text-align: center; }
+
+/* Portrait Template (Vertical) */
+.tpl-portrait { width: 540px; height: 856px; background: #fff; display: flex; flex-direction: column; align-items: center; padding: 50px 40px; position: relative; }
+.v-logo { height: 75px; margin-bottom: 40px; }
+.v-photo { width: 320px; height: 320px; border-radius: 30px; overflow: hidden; border: 10px solid #f8fafc; box-shadow: 0 15px 40px rgba(0,0,0,0.1); margin-bottom: 40px; background: #eee; }
+.v-photo img { width: 100%; height: 100%; object-fit: cover; }
+.v-name { font-size: 48px; font-weight: 900; line-height: 1.1; text-align: center; margin-bottom: 8px; color: #0f172a; }
+.v-role { font-size: 24px; font-weight: 700; text-transform: uppercase; letter-spacing: 3px; text-align: center; margin-bottom: 30px; }
+.v-strip { width: 100%; height: 70px; display: flex; align-items: center; justify-content: center; border-radius: 16px; color: #fff; font-family: 'Roboto Mono', monospace; font-size: 24px; font-weight: 800; margin-bottom: 40px; }
+.v-info { display: flex; flex-direction: column; gap: 12px; font-size: 20px; font-weight: 600; color: #64748b; }
+.v-sig { margin-top: auto; text-align: center; padding-bottom: 20px; }
+
+/* SIGNATURES */
+.sig-text { font-family: 'Dancing Script', cursive; font-size: 42px; color: #0f172a; margin-bottom: 0; }
+.sig-img { max-height: 80px; filter: contrast(1.5) brightness(0.2); }
+.sig-label { font-size: 15px; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 1px; }
+
+.color-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; }
+.color-swatch { aspect-ratio: 1; border-radius: 12px; border: 3px solid transparent; cursor: pointer; transition: transform .15s; }
+.color-swatch:hover { transform: scale(1.1); }
+.color-swatch.active { border-color: #0f172a; }
+
+.btn-download { width: 100%; padding: 16px; border-radius: 16px; background: var(--ce-gradient); color: #fff; border: none; font-weight: 800; font-size: 1rem; cursor: pointer; display: flex; justify-content: center; gap: 12px; box-shadow: 0 10px 25px -5px rgba(102, 126, 234, 0.4); }
 
 @media (max-width: 900px) {
     .badge-editor { grid-template-columns: 1fr; }
+    .badge-preview-wrap { position: static; margin-top: 32px; }
 }
 </style>
 
 <div class="badge-wrap">
     <div class="badge-header">
-        <h1><i class="fas fa-id-card"></i> <span>Badge Suite</span></h1>
-        <div class="badge-certified"><i class="fas fa-magic"></i> Multi-Format Ready</div>
+        <h1><i class="fas fa-id-card"></i> <span>Badge Agent Tool</span></h1>
+        <div class="badge-certified"><i class="fas fa-magic"></i> Version Premium</div>
     </div>
 
     <div class="badge-editor">
-        <div class="badge-form-col">
-            {{-- Template Selector --}}
+        <div class="form-col">
+            {{-- Format selection --}}
             <div class="ce-card">
-                <h3><i class="fas fa-th-large"></i> Sélectionner le format & style</h3>
+                <h3><i class="fas fa-layer-group"></i> Format du badge</h3>
                 <div class="template-grid">
                     <button class="template-btn active" data-tpl="tpl-modern" data-layout="landscape">
-                        <i class="fas fa-id-badge text-primary"></i>
-                        <div class="tpl-info">
-                            <span class="tpl-name">Agent Modern</span>
-                            <span class="tpl-type">Paysage • Classic</span>
-                        </div>
+                        <i class="fas fa-id-badge"></i>
+                        <div><span class="tpl-name">Modern Horizontal</span><span class="tpl-type">Paysage</span></div>
                     </button>
                     <button class="template-btn" data-tpl="tpl-vertical" data-layout="portrait">
-                        <i class="fas fa-portrait text-success"></i>
-                        <div class="tpl-info">
-                            <span class="tpl-name">Agent Portrait</span>
-                            <span class="tpl-type">Vertical • Pro</span>
-                        </div>
+                        <i class="fas fa-portrait"></i>
+                        <div><span class="tpl-name">Professionnel Vertical</span><span class="tpl-type">Portrait</span></div>
                     </button>
                     <button class="template-btn" data-tpl="tpl-dark" data-layout="landscape">
-                        <i class="fas fa-moon text-dark"></i>
-                        <div class="tpl-info">
-                            <span class="tpl-name">Agent Dark</span>
-                            <span class="tpl-type">Paysage • Dark</span>
-                        </div>
-                    </button>
-                    <button class="template-btn" data-tpl="tpl-cni" data-layout="landscape">
-                        <i class="fas fa-passport text-danger"></i>
-                        <div class="tpl-info">
-                            <span class="tpl-name">Type CNI FR</span>
-                            <span class="tpl-type">Paysage • Officiel</span>
-                        </div>
+                        <i class="fas fa-moon"></i>
+                        <div><span class="tpl-name">Dark Horizontal</span><span class="tpl-type">Paysage</span></div>
                     </button>
                 </div>
             </div>
 
-            {{-- Form Fields --}}
+            {{-- Fields --}}
             <div class="ce-card">
-                <h3><i class="fas fa-user-edit"></i> Données d'identité</h3>
+                <h3><i class="fas fa-user-edit"></i> Détails de l'agent</h3>
                 <div class="row g-3">
-                    <div class="col-md-6"><label class="form-label">Nom Complet</label><input id="inp-name" class="form-control" placeholder="Jean Dupont"></div>
-                    <div class="col-md-6"><label class="form-label">Poste / Rôle</label><input id="inp-role" class="form-control" placeholder="Agent Commercial"></div>
-                    <div class="col-md-6"><label class="form-label">Structure / Agence</label><input id="inp-company" class="form-control" placeholder="FlashBilan SAS"></div>
-                    <div class="col-md-6"><label class="form-label">Identifiant Badge</label><input id="inp-id" class="form-control" placeholder="AGT-2026-042"></div>
-                    <div class="col-md-6"><label class="form-label">Téléphone</label><input id="inp-phone" class="form-control" placeholder="+33 6 01 02 03 04"></div>
-                    <div class="col-md-6"><label class="form-label">Email</label><input id="inp-email" class="form-control" placeholder="contact@agence.fr"></div>
+                    <div class="col-md-6"><label class="form-label">Prénom & Nom</label><input id="inp-name" class="form-control" placeholder="JEAN DUPONT"></div>
+                    <div class="col-md-6"><label class="form-label">Poste / Rôle</label><input id="inp-role" class="form-control" placeholder="AGENT COMMERCIAL"></div>
+                    <div class="col-md-6"><label class="form-label">Société</label><input id="inp-company" class="form-control" placeholder="FLASHBILAN SAS"></div>
+                    <div class="col-md-6"><label class="form-label">Identifiant AGT</label><input id="inp-id" class="form-control" placeholder="AGT-2024-001"></div>
+                    <div class="col-md-6"><label class="form-label">Téléphone</label><input id="inp-phone" class="form-control" placeholder="+33 6 00 00 00 00"></div>
+                    <div class="col-md-6"><label class="form-label">Email</label><input id="inp-email" class="form-control" placeholder="agent@flashbilan.fr"></div>
                 </div>
             </div>
 
-            {{-- Signature Option --}}
+            {{-- Signature --}}
             <div class="ce-card">
                 <h3><i class="fas fa-signature"></i> Signature</h3>
                 <div class="row g-3">
                     <div class="col-md-6"><label class="form-label">Signature (Texte)</label><input id="inp-sig-text" class="form-control" placeholder="Jean Gem"></div>
-                    <div class="col-md-6"><label class="form-label">Scan Signature</label><input type="file" id="inp-sig-file" class="form-control"></div>
+                    <div class="col-md-6"><label class="form-label">Importer Scan</label><input type="file" id="inp-sig-file" class="form-control"></div>
                 </div>
             </div>
 
-            {{-- Photo & Logo --}}
+            {{-- Médias --}}
             <div class="ce-card">
-                <h3><i class="fas fa-images"></i> Médias</h3>
+                <h3><i class="fas fa-camera"></i> Photos & Logos</h3>
                 <div class="row g-3">
                     <div class="col-md-6"><label class="form-label">Photo d'identité</label><input type="file" id="inp-photo" class="form-control"></div>
                     <div class="col-md-6"><label class="form-label">Logo Entreprise</label><input type="file" id="inp-logo" class="form-control"></div>
                 </div>
             </div>
 
-            {{-- Accent Color --}}
+            {{-- Colors --}}
             <div class="ce-card">
                 <h3><i class="fas fa-palette"></i> Couleur Accent</h3>
                 <div class="color-grid">
@@ -297,19 +255,17 @@
                     <div class="color-swatch" data-color="#4CAF50" style="background:#4CAF50;"></div>
                     <div class="color-swatch" data-color="#F44336" style="background:#F44336;"></div>
                     <div class="color-swatch" data-color="#9C27B0" style="background:#9C27B0;"></div>
-                    <div class="color-swatch" data-color="#333333" style="background:#333333;"></div>
+                    <div class="color-swatch" data-color="#1e293b" style="background:#1e293b;"></div>
                 </div>
             </div>
         </div>
 
-        <div class="cni-preview-col">
+        <div class="preview-col">
             <div class="badge-preview-wrap">
-                <div class="frame-container">
-                    <div class="badge-preview-frame landscape" id="badge-frame">
-                        <div class="badge-preview-inner tpl-modern" id="badge-inner"></div>
-                    </div>
+                <div class="badge-preview-frame landscape" id="badge-frame">
+                    <div class="badge-preview-inner" id="badge-inner"></div>
                 </div>
-                <button class="btn-download" id="btn-download"><i class="fas fa-download"></i> Enregistrer en PNG</button>
+                <button class="btn-download" id="btn-download"><i class="fas fa-download"></i> Enregistrer HD (PNG)</button>
             </div>
         </div>
     </div>
@@ -325,11 +281,11 @@ document.addEventListener('DOMContentLoaded', () => {
         layout: 'landscape',
         accent: '#2196F3',
         name: 'JEAN DUPONT',
-        role: 'Agent Commercial',
-        company: 'FlashBilan SAS',
-        id: 'AGT-2026-042',
-        phone: '+33 6 01 02 03 04',
-        email: 'contact@agence.fr',
+        role: 'AGENT COMMERCIAL',
+        company: 'FLASHBILAN SAS',
+        id: 'AGT-2024-001',
+        phone: '+33 6 00 00 00 00',
+        email: 'agent@flashbilan.fr',
         photo: null,
         logo: null,
         sigImg: null,
@@ -344,73 +300,51 @@ document.addEventListener('DOMContentLoaded', () => {
         const esc = s => s.toUpperCase().replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
         const escRaw = s => s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 
-        const sigHtml = `<div class="sig-box">
-            ${state.sigImg ? `<img src="${state.sigImg}" class="sig-img">` : `<span class="sig-text">${state.sigText}</span>`}
-            <div class="sig-label">Signature du titulaire</div>
-        </div>`;
+        const sigHtml = `
+            <div class="sig-block">
+                ${state.sigImg ? `<img src="${state.sigImg}" class="sig-img">` : `<p class="sig-text">${state.sigText}</p>`}
+                <div class="sig-label">Signature du titulaire</div>
+            </div>
+        `;
 
-        if (state.tpl === 'tpl-cni') {
+        if (state.layout === 'portrait') {
             html = `
-                <div class="cni-header">
-                    <div class="cni-flag"></div>
-                    <div class="cni-title">
-                        <h2>RÉPUBLIQUE FRANÇAISE</h2>
-                        <p>CARTE D'IDENTITÉ - DOCUMENT OFFICIEL</p>
+                <div class="tpl-portrait" style="border-top: 15px solid ${state.accent};">
+                    <div class="v-logo">${state.logo ? `<img src="${state.logo}" style="max-height:100%;">` : ''}</div>
+                    <div class="v-photo">${state.photo ? `<img src="${state.photo}">` : `<i class="fas fa-user" style="font-size:100px;color:#ccc;margin-top:100px;"></i>`}</div>
+                    <div class="v-name">${esc(state.name)}</div>
+                    <div class="v-role" style="color: ${state.accent}">${esc(state.role)}</div>
+                    <div class="v-strip" style="background: ${state.accent}">ID: ${esc(state.id)}</div>
+                    <div class="v-info">
+                        <div><i class="fas fa-phone"></i> ${state.phone}</div>
+                        <div><i class="fas fa-envelope"></i> ${state.email}</div>
                     </div>
-                    <div class="cni-seal"></div>
+                    <div class="v-sig">${sigHtml}</div>
                 </div>
-                <div class="cni-body">
-                    <div class="cni-photo-wrap">${state.photo ? `<img src="${state.photo}" class="cni-photo">` : `<div class="cni-photo" style="background:#ddd;display:flex;align-items:center;justify-content:center;font-size:100px;color:#ccc;"><i class="fas fa-user"></i></div>`}</div>
-                    <div class="cni-fields">
-                        <div><span class="cni-label">NOM :</span><span class="cni-value">${esc(state.name)}</span></div>
-                        <div><span class="cni-label">PRÉNOMS :</span><span class="cni-value">${esc(state.role)}</span></div>
-                        <div><span class="cni-label">SOCIÉTÉ :</span><span class="cni-value">${esc(state.company)}</span></div>
-                        <div><span class="cni-label">ID :</span><span class="cni-value">${esc(state.id)}</span></div>
-                        <div><span class="cni-label">TEL :</span><span class="cni-value">${state.phone}</span></div>
-                    </div>
-                </div>
-                ${sigHtml}
-            `;
-        } else if (state.tpl === 'tpl-vertical') {
-            html = `
-                <div class="v-logo">${state.logo ? `<img src="${state.logo}" style="height:100%;">` : ''}</div>
-                <div class="v-photo">${state.photo ? `<img src="${state.photo}">` : `<div style="width:100%;height:100%;background:#eee;display:flex;align-items:center;justify-content:center;font-size:120px;color:#ccc;"><i class="fas fa-user"></i></div>`}</div>
-                <div class="v-name">${esc(state.name)}</div>
-                <div class="v-role" style="color: ${state.accent}">${esc(state.role)}</div>
-                <div class="v-id-strip" style="background: ${state.accent}">${esc(state.id)}</div>
-                <div class="v-info">
-                    <span><i class="fas fa-phone"></i> ${state.phone}</span>
-                    <span><i class="fas fa-envelope"></i> ${state.email}</span>
-                </div>
-                ${sigHtml}
             `;
         } else {
-            // Modern / Dark Horizontal
             let isDark = state.tpl === 'tpl-dark';
             html = `
-                <div class="m-top" style="background: ${isDark ? '#1e293b' : `linear-gradient(135deg, ${state.accent}, ${state.accent}cc)`};">
-                    <div class="m-photo">${state.photo ? `<img src="${state.photo}">` : `<i class="fas fa-user" style="font-size:3.5rem;color:#ccc;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%)"></i>`}</div>
-                    <div style="margin-left: 170px; margin-bottom: 30px;">
-                        <div style="font-size: 24px; font-weight: 800;">${esc(state.company)}</div>
+                <div class="tpl-landscape" style="background: ${isDark ? '#0f172a' : '#fff'}; color: ${isDark ? '#fff' : '#1e293b'};">
+                    <div class="l-header" style="background: ${isDark ? '#1e293b' : `linear-gradient(135deg, ${state.accent}, ${state.accent}cc)`};">
+                        <div class="l-photo">${state.photo ? `<img src="${state.photo}">` : `<i class="fas fa-user" style="font-size:80px;color:#ccc;margin:45px 0 0 45px;"></i>`}</div>
+                        <div class="l-company">${esc(state.company)}</div>
+                        <div class="l-logo">${state.logo ? `<img src="${state.logo}" style="filter: ${isDark ? 'brightness(0) invert(1)' : 'grayscale(1) brightness(5)'};">` : ''}</div>
                     </div>
-                    <div style="margin-left: auto;">
-                        ${state.logo ? `<img src="${state.logo}" style="max-height: 60px; filter: ${isDark ? 'brightness(0) invert(1)' : 'grayscale(1) brightness(2)'};">` : ''}
+                    <div class="l-body">
+                        <div class="l-name">${esc(state.name)}</div>
+                        <div class="l-role" style="color: ${state.accent}">${esc(state.role)}</div>
+                        <div class="l-info">
+                            <div class="l-info-item"><i class="fas fa-phone" style="width:24px;color:${state.accent};"></i> ${state.phone}</div>
+                            <div class="l-info-item"><i class="fas fa-envelope" style="width:24px;color:${state.accent};"></i> ${state.email}</div>
+                        </div>
                     </div>
+                    <div class="l-sig">${sigHtml}</div>
+                    <div class="l-strip" style="background: ${state.accent};">ID BADGE : ${esc(state.id)}</div>
                 </div>
-                <div class="m-body" style="background: ${isDark ? '#0f172a' : '#fff'}; color: ${isDark ? '#fff' : '#333'};">
-                    <div class="m-name">${esc(state.name)}</div>
-                    <div class="m-role" style="color: ${state.accent}">${esc(state.role)}</div>
-                    <div class="m-info">
-                        <span style="color: ${isDark ? '#94a3b8' : state.accent}">📞 ${state.phone}</span>
-                        <span style="color: ${isDark ? '#94a3b8' : state.accent}">✉️ ${state.email}</span>
-                    </div>
-                    ${sigHtml}
-                </div>
-                <div class="m-strip" style="background: ${state.accent}">ID BADGE : ${state.id}</div>
             `;
         }
 
-        inner.className = `badge-preview-inner ${state.tpl}`;
         inner.innerHTML = html;
         frame.className = `badge-preview-frame ${state.layout}`;
     };
@@ -458,11 +392,11 @@ document.addEventListener('DOMContentLoaded', () => {
         btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Génération...';
         const w = state.layout === 'landscape' ? 856 : 540;
         const h = state.layout === 'landscape' ? 540 : 856;
-        const canvas = await html2canvas(inner, { scale: 2.5, width: w, height: h });
+        const canvas = await html2canvas(inner.firstChild, { scale: 3, width: w, height: h });
         const link = document.createElement('a');
         link.download = `badge-${state.name.replace(/\s+/g,'-').toLowerCase()}.png`;
         link.href = canvas.toDataURL(); link.click();
-        btn.innerHTML = '<i class="fas fa-download"></i> Enregistrer en PNG';
+        btn.innerHTML = '<i class="fas fa-download"></i> Enregistrer HD (PNG)';
     });
 
     updatePreview();
