@@ -114,14 +114,29 @@
         <div class="form-col">
             <div class="ce-card">
                 <h3><i class="fas fa-palette"></i> Style & Couleur</h3>
-                <div class="row align-items-center">
+                <div class="row g-3 align-items-center">
                     <div class="col-md-6">
+                        <label class="form-label">Format</label>
                         <select id="inp-tpl" class="form-select">
                             <option value="tpl-landscape">Format Paysage (Horizontal)</option>
                             <option value="tpl-portrait">Format Portrait (Vertical)</option>
                         </select>
                     </div>
                     <div class="col-md-6">
+                        <label class="form-label">Langue du badge</label>
+                        <select id="inp-lang" class="form-select">
+                            <option value="fr">🇫🇷 Français</option>
+                            <option value="en">🇬🇧 English</option>
+                            <option value="es">🇪🇸 Español</option>
+                            <option value="pt">🇵🇹 Português</option>
+                            <option value="ar">🇸🇦 العربية</option>
+                            <option value="de">🇩🇪 Deutsch</option>
+                            <option value="it">🇮🇹 Italiano</option>
+                            <option value="nl">🇳🇱 Nederlands</option>
+                        </select>
+                    </div>
+                    <div class="col-12">
+                        <label class="form-label">Couleur principale</label>
                         <div class="color-grid">
                             <div class="color-swatch active" data-color="#2196F3" style="background:#2196F3;"></div>
                             <div class="color-swatch" data-color="#E91E63" style="background:#E91E63;"></div>
@@ -182,8 +197,20 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script>
 document.addEventListener('DOMContentLoaded', () => {
+    const translations = {
+        fr: { sex:'SEXE', blood:'GROUPE SANG.', birth:'DATE NAISS.', place:'LIEU NAISS.', service:'SERVICE', expiry:'EXPIRE LE', id:'IDENTIFIANT', sig:'SIGNATURE DU TITULAIRE' },
+        en: { sex:'SEX', blood:'BLOOD GROUP', birth:'DATE OF BIRTH', place:'PLACE OF BIRTH', service:'DEPARTMENT', expiry:'EXPIRES', id:'ID NUMBER', sig:"HOLDER'S SIGNATURE" },
+        es: { sex:'SEXO', blood:'GRUPO SANG.', birth:'FECHA NAC.', place:'LUGAR NAC.', service:'SERVICIO', expiry:'VENCE EL', id:'NÚMERO ID', sig:'FIRMA DEL TITULAR' },
+        pt: { sex:'SEXO', blood:'GRUPO SANG.', birth:'DATA NASC.', place:'LOCAL NASC.', service:'SERVIÇO', expiry:'EXPIRA EM', id:'NÚMERO ID', sig:'ASSINATURA DO TITULAR' },
+        ar: { sex:'الجنس', blood:'فصيلة الدم', birth:'تاريخ الميلاد', place:'مكان الميلاد', service:'القسم', expiry:'تاريخ الانتهاء', id:'رقم التعريف', sig:'توقيع الحامل' },
+        de: { sex:'GESCHLECHT', blood:'BLUTGRUPPE', birth:'GEB. DATUM', place:'GEBURTSORT', service:'ABTEILUNG', expiry:'ABLAUFDATUM', id:'AUSWEIS-NR.', sig:'UNTERSCHRIFT' },
+        it: { sex:'SESSO', blood:'GRUPPO SANG.', birth:'DATA NASC.', place:'LUOGO NASC.', service:'SERVIZIO', expiry:'SCADE IL', id:'NUMERO ID', sig:'FIRMA DEL TITOLARE' },
+        nl: { sex:'GESLACHT', blood:'BLOEDGROEP', birth:'GEBOORTEDATUM', place:'GEBOORTEPLAATS', service:'DIENST', expiry:'VERVALDATUM', id:'ID-NUMMER', sig:'HANDTEKENING' },
+    };
+
     let state = {
         tpl: 'tpl-landscape',
+        lang: 'fr',
         accent: '#2196F3',
         name: 'JEAN DUPONT',
         role: 'AGENT COMMERCIAL',
@@ -204,6 +231,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const updatePreview = () => {
         const esc = s => s.toUpperCase().replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+        const t = key => translations[state.lang]?.[key] || translations.fr[key];
+        const isRTL = state.lang === 'ar';
         const inner = document.getElementById('badge-inner');
         const frame = document.getElementById('badge-frame');
         
@@ -239,24 +268,24 @@ document.addEventListener('DOMContentLoaded', () => {
                                 </div>
                             </div>
                             <div class="l-right-col">
-                                <div class="l-details-card">
-                                    <div class="l-det-it"><span class="l-det-lbl">Sexe</span><span class="l-det-val">${state.sex}</span></div>
-                                    <div class="l-det-it"><span class="l-det-lbl">Groupe Sang.</span><span class="l-det-val">${state.blood}</span></div>
-                                    <div class="l-det-it"><span class="l-det-lbl">Date Naiss.</span><span class="l-det-val">${state.birth}</span></div>
-                                    <div class="l-det-it"><span class="l-det-lbl">Lieu Naiss.</span><span class="l-det-val">${esc(state.place)}</span></div>
-                                    <div class="l-det-it"><span class="l-det-lbl">Service</span><span class="l-det-val">${esc(state.service)}</span></div>
-                                    <div class="l-det-it"><span class="l-det-lbl">Expire le</span><span class="l-det-val" style="color:${state.accent}">${state.expiry}</span></div>
+                                <div class="l-details-card" dir="${isRTL ? 'rtl' : 'ltr'}">
+                                    <div class="l-det-it"><span class="l-det-lbl">${t('sex')}</span><span class="l-det-val">${state.sex}</span></div>
+                                    <div class="l-det-it"><span class="l-det-lbl">${t('blood')}</span><span class="l-det-val">${state.blood}</span></div>
+                                    <div class="l-det-it"><span class="l-det-lbl">${t('birth')}</span><span class="l-det-val">${state.birth}</span></div>
+                                    <div class="l-det-it"><span class="l-det-lbl">${t('place')}</span><span class="l-det-val">${esc(state.place)}</span></div>
+                                    <div class="l-det-it"><span class="l-det-lbl">${t('service')}</span><span class="l-det-val">${esc(state.service)}</span></div>
+                                    <div class="l-det-it"><span class="l-det-lbl">${t('expiry')}</span><span class="l-det-val" style="color:${state.accent}">${state.expiry}</span></div>
                                 </div>
                             </div>
                         </div>
-                        <div class="l-footer">
+                        <div class="l-footer" dir="${isRTL ? 'rtl' : 'ltr'}">
                             <div class="l-id-footer">
-                                <span class="l-id-lbl">IDENTIFIANT</span>
+                                <span class="l-id-lbl">${t('id')}</span>
                                 <span class="l-id-val">${esc(state.id)}</span>
                             </div>
                             <div class="l-sig-area">
                                 ${state.sigImg ? `<img src="${state.sigImg}" class="l-sig-img">` : `<div class="l-sig-text">${state.sigText}</div>`}
-                                <div class="l-sig-lbl">SIGNATURE DU TITULAIRE</div>
+                                <div class="l-sig-lbl">${t('sig')}</div>
                             </div>
                         </div>
                     </div>
@@ -277,20 +306,20 @@ document.addEventListener('DOMContentLoaded', () => {
                     <div class="v-name">${esc(state.name)}</div>
                     <div class="v-role">${esc(state.role)}</div>
                     <div class="v-id-band">${esc(state.id)}</div>
-                    <div class="v-details">
-                        <div class="l-det-it"><span class="l-det-lbl">Sexe</span><span class="l-det-val">${state.sex}</span></div>
-                        <div class="l-det-it"><span class="l-det-lbl">Groupe Sang.</span><span class="l-det-val">${state.blood}</span></div>
-                        <div class="l-det-it"><span class="l-det-lbl">Date Naiss.</span><span class="l-det-val">${state.birth}</span></div>
-                        <div class="l-det-it"><span class="l-det-lbl">Lieu Naiss.</span><span class="l-det-val">${esc(state.place)}</span></div>
-                        <div class="l-det-it"><span class="l-det-lbl">Service</span><span class="l-det-val">${esc(state.service)}</span></div>
-                        <div class="l-det-it"><span class="l-det-lbl">Expire le</span><span class="l-det-val" style="color:${state.accent};">${state.expiry}</span></div>
+                    <div class="v-details" dir="${isRTL ? 'rtl' : 'ltr'}">
+                        <div class="l-det-it"><span class="l-det-lbl">${t('sex')}</span><span class="l-det-val">${state.sex}</span></div>
+                        <div class="l-det-it"><span class="l-det-lbl">${t('blood')}</span><span class="l-det-val">${state.blood}</span></div>
+                        <div class="l-det-it"><span class="l-det-lbl">${t('birth')}</span><span class="l-det-val">${state.birth}</span></div>
+                        <div class="l-det-it"><span class="l-det-lbl">${t('place')}</span><span class="l-det-val">${esc(state.place)}</span></div>
+                        <div class="l-det-it"><span class="l-det-lbl">${t('service')}</span><span class="l-det-val">${esc(state.service)}</span></div>
+                        <div class="l-det-it"><span class="l-det-lbl">${t('expiry')}</span><span class="l-det-val" style="color:${state.accent};">${state.expiry}</span></div>
                     </div>
-                    <div style="font-size:18px;font-weight:600;color:#64748b;margin-bottom:30px;">
+                    <div style="font-size:18px;font-weight:600;color:#64748b;margin-bottom:30px;" dir="${isRTL ? 'rtl' : 'ltr'}">
                         ${state.phone} | ${state.email}
                     </div>
                     <div class="l-sig-area">
                          ${state.sigImg ? `<img src="${state.sigImg}" class="l-sig-img">` : `<div class="l-sig-text">${state.sigText}</div>`}
-                         <div class="l-sig-lbl">SIGNATURE DU TITULAIRE</div>
+                         <div class="l-sig-lbl">${t('sig')}</div>
                     </div>
                 </div>
             `;
@@ -306,6 +335,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     document.getElementById('inp-tpl').addEventListener('change', e => { state.tpl = e.target.value; updatePreview(); });
+    document.getElementById('inp-lang').addEventListener('change', e => { state.lang = e.target.value; updatePreview(); });
 
     const bindFile = (id, key) => {
         document.getElementById(id).addEventListener('change', function() {
