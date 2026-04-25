@@ -1,833 +1,688 @@
 @extends('layouts.admin')
 
-@section('title', 'Générateur de Badge Agent')
+@section('title', 'Générateur de Carte d\'Identité (CNI)')
 
 @section('breadcrumb')
     <li class="breadcrumb-item"><i class="fas fa-tools me-1"></i>Outils</li>
-    <li class="breadcrumb-item active">Badge Agent</li>
+    <li class="breadcrumb-item active">Générateur CNI</li>
 @endsection
 
 @section('content')
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Righteous&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Dancing+Script:wght@600&family=Roboto+Mono:wght@400;700&display=swap');
 
 :root {
-    --ce-primary: #2196F3;
-    --ce-gradient: linear-gradient(135deg, #667eea, #764ba2);
-    --ce-bg: #f5f3ef;
+    --ce-primary: #0055A4; /* French Blue */
+    --ce-bg: #f8fafc;
     --ce-card-bg: #ffffff;
-    --ce-text: #333333;
-    --ce-text-dim: #888888;
-    --ce-border: #e8e8e8;
+    --ce-text: #1e293b;
+    --ce-text-dim: #64748b;
+    --ce-border: #e2e8f0;
 }
 
-.badge-wrap {
-    font-family: 'Poppins', sans-serif;
+.cni-wrap {
+    font-family: 'Inter', sans-serif;
     color: var(--ce-text);
-    padding: 20px 24px;
+    padding: 24px;
 }
 
-.badge-header {
-    margin-bottom: 28px;
+.cni-header {
+    margin-bottom: 32px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    flex-wrap: wrap;
-    gap: 12px;
 }
 
-.badge-header h1 {
-    font-size: 1.6rem;
-    font-weight: 700;
+.cni-header h1 {
+    font-size: 1.75rem;
+    font-weight: 800;
     margin: 0;
+    color: var(--ce-primary);
     display: flex;
     align-items: center;
     gap: 12px;
 }
 
-.badge-header h1 span {
-    font-family: 'Righteous', cursive;
-    background: var(--ce-gradient);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
-
-.badge-certified {
-    background: #fff;
-    color: var(--ce-text-dim);
-    border: 1px solid var(--ce-border);
-    border-radius: 20px;
-    padding: 6px 16px;
-    font-size: 0.78rem;
-    font-weight: 600;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-}
-
-.badge-editor {
+.cni-grid {
     display: grid;
-    grid-template-columns: 1fr 380px;
-    gap: 24px;
+    grid-template-columns: 1fr 400px;
+    gap: 32px;
     align-items: start;
 }
 
 .ce-card {
     background: var(--ce-card-bg);
-    border-radius: 16px;
+    border-radius: 20px;
     border: 1px solid var(--ce-border);
     padding: 24px;
-    margin-bottom: 20px;
+    margin-bottom: 24px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
 }
 
 .ce-card h3 {
-    font-size: 0.95rem;
+    font-size: 1rem;
     font-weight: 700;
-    margin: 0 0 18px;
+    margin: 0 0 20px;
     display: flex;
     align-items: center;
-    gap: 8px;
-    color: var(--ce-text);
+    gap: 10px;
+    color: var(--ce-primary);
+    border-bottom: 1px solid var(--ce-border);
+    padding-bottom: 12px;
 }
 
-.ce-card h3 i { font-size: 1rem; color: var(--ce-primary); }
-
 .form-label {
-    font-size: 0.82rem;
-    font-weight: 600;
+    font-size: 0.75rem;
+    font-weight: 700;
     color: var(--ce-text-dim);
     text-transform: uppercase;
     letter-spacing: 0.5px;
     margin-bottom: 6px;
 }
 
-.form-control, .form-select {
+.form-control {
     border: 1.5px solid var(--ce-border);
-    border-radius: 10px;
+    border-radius: 12px;
     padding: 10px 14px;
     font-size: 0.9rem;
-    font-family: 'Poppins', sans-serif;
-    color: var(--ce-text);
-    background: #fafafa;
-    transition: border-color .2s, box-shadow .2s;
-    width: 100%;
-}
-
-.form-control:focus, .form-select:focus {
-    outline: none;
-    border-color: var(--ce-primary);
-    box-shadow: 0 0 0 3px rgba(33,150,243,.12);
-    background: #fff;
-}
-
-.color-grid {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 8px;
-}
-
-.color-swatch {
-    width: 100%;
-    aspect-ratio: 1;
-    border-radius: 10px;
-    border: 3px solid transparent;
-    cursor: pointer;
-    transition: transform .15s, border-color .15s;
-}
-
-.color-swatch:hover { transform: scale(1.1); }
-.color-swatch.active { border-color: #333; transform: scale(1.05); }
-
-.template-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 10px;
-}
-
-.template-btn {
-    border: 2px solid var(--ce-border);
-    border-radius: 10px;
-    padding: 10px 6px;
-    cursor: pointer;
-    font-size: 0.75rem;
-    font-weight: 600;
-    text-align: center;
-    background: #fafafa;
     transition: all .2s;
-    color: var(--ce-text);
+    background: #fbfcfe;
 }
 
-.template-btn:hover { border-color: var(--ce-primary); background: #f0f7ff; }
-.template-btn.active { border-color: var(--ce-primary); background: #e3f2fd; color: var(--ce-primary); }
+.form-control:focus {
+    border-color: var(--ce-primary);
+    box-shadow: 0 0 0 3px rgba(0, 85, 164, 0.1);
+    background: #fff;
+    outline: none;
+}
 
-.template-btn .tpl-icon { font-size: 1.4rem; display: block; margin-bottom: 4px; }
+/* Photo selection */
+.photo-upload-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
 
-/* Photo upload */
-.photo-upload-area {
+.photo-box {
     border: 2px dashed var(--ce-border);
     border-radius: 12px;
-    padding: 20px;
+    padding: 16px;
     text-align: center;
     cursor: pointer;
     transition: all .2s;
-    position: relative;
-    background: #fafafa;
+    background: #fbfcfe;
 }
 
-.photo-upload-area:hover { border-color: var(--ce-primary); background: #f0f7ff; }
+.photo-box:hover {
+    border-color: var(--ce-primary);
+    background: #f0f7ff;
+}
 
-.photo-preview-thumb {
-    width: 80px;
-    height: 80px;
-    border-radius: 50%;
+.photo-box img {
+    width: 60px;
+    height: 75px;
     object-fit: cover;
+    border-radius: 4px;
+    margin-bottom: 8px;
     display: none;
-    margin: 0 auto 8px;
-    border: 3px solid var(--ce-primary);
+    border: 1px solid var(--ce-border);
 }
 
-/* Preview panel */
-.badge-preview-wrap {
+.photo-box i {
+    font-size: 24px;
+    color: #cbd5e1;
+    display: block;
+    margin-bottom: 8px;
+}
+
+/* Preview area */
+.preview-sticky {
     position: sticky;
-    top: 80px;
+    top: 100px;
 }
 
-.badge-preview-label {
-    font-size: 0.82rem;
-    font-weight: 700;
-    color: var(--ce-text-dim);
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    margin-bottom: 14px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.badge-preview-frame {
-    width: 340px;
-    height: 214px;
-    margin: 0 auto;
-    border-radius: 18px;
+.cni-frame {
+    width: 380px;
+    height: 240px;
+    border-radius: 16px;
     overflow: hidden;
-    box-shadow: 0 20px 60px rgba(0,0,0,.18);
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    margin: 0 auto 24px;
     position: relative;
+    border: 1px solid #ddd;
 }
 
-/* CARD INNER — the actual 85.6×54mm card at 4x = 856x540px, scaled down */
-.badge-preview-inner {
+/* THE CARD DESIGN */
+.cni-inner {
     width: 856px;
     height: 540px;
-    transform: scale(0.3972);
+    background-image: url('{{ asset('images/tools/cni-bg.png') }}');
+    background-size: cover;
+    background-position: center;
+    transform: scale(0.4439); /* 380/856 */
     transform-origin: top left;
     position: absolute;
     top: 0; left: 0;
-    border-radius: 46px;
-    overflow: hidden;
-    font-family: 'Poppins', sans-serif;
+    color: #0b1c3d;
+    font-weight: 500;
 }
 
-/* ====== TEMPLATE 1 : Modern Blue ====== */
-.badge-preview-inner.tpl-modern {
-    background: #ffffff;
-}
-.tpl-modern .badge-stripe {
-    height: 160px;
-    background: linear-gradient(135deg, #1565C0, #42A5F5);
-    position: relative;
+.cni-header-strip {
     display: flex;
-    align-items: flex-end;
-    padding: 0 40px 20px;
+    justify-content: space-between;
+    padding: 20px 40px;
+    align-items: flex-start;
+}
+
+.cni-flag {
+    width: 100px;
+    height: 65px;
+    background: linear-gradient(to right, #002395 33.3%, #ffffff 33.3%, #ffffff 66.6%, #ed2939 66.6%);
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.cni-title {
+    text-align: center;
+    flex: 1;
+}
+
+.cni-title h2 {
+    font-size: 34px;
+    font-weight: 900;
+    margin: 0;
+    letter-spacing: 2px;
+}
+
+.cni-title p {
+    font-size: 20px;
+    font-weight: 700;
+    margin: -4px 0 0;
+    opacity: 0.8;
+}
+
+.cni-rf-seal {
+    width: 110px;
+    height: 110px;
+    background-image: url('{{ asset('images/tools/cni-rf-seal.png') }}');
+    background-size: contain;
+    background-repeat: no-repeat;
+    margin-top: -10px;
+}
+
+.cni-main-content {
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    padding: 0 40px;
     gap: 30px;
 }
-.tpl-modern .badge-photo-wrap {
-    width: 130px; height: 130px;
-    border-radius: 50%;
-    border: 5px solid rgba(255,255,255,.5);
-    overflow: hidden;
-    background: rgba(255,255,255,.2);
-    flex-shrink: 0;
-    display: flex; align-items: center; justify-content: center;
-    margin-bottom: -30px;
-}
-.tpl-modern .badge-photo-wrap img { width: 100%; height: 100%; object-fit: cover; }
-.tpl-modern .badge-photo-wrap .photo-placeholder { font-size: 3rem; color: rgba(255,255,255,.7); }
-.tpl-modern .badge-top-info { padding-bottom: 8px; }
-.tpl-modern .badge-company { font-size: 22px; font-weight: 800; color: #fff; line-height: 1.1; }
-.tpl-modern .badge-logo-area { margin-left: auto; display:flex; align-items:center; }
-.tpl-modern .badge-logo-area img { max-height: 60px; max-width: 120px; object-fit: contain; filter: brightness(0) invert(1); opacity:.9; }
-.tpl-modern .badge-body { padding: 36px 40px 24px; }
-.tpl-modern .badge-name { font-size: 36px; font-weight: 800; color: #1a1a1a; margin-bottom: 4px; line-height: 1.1; }
-.tpl-modern .badge-role { font-size: 22px; font-weight: 600; color: #1565C0; margin-bottom: 24px; }
-.tpl-modern .badge-info-row { display: flex; gap: 40px; margin-top: 4px; }
-.tpl-modern .badge-info-item { display: flex; align-items: center; gap: 10px; font-size: 18px; color: #555; }
-.tpl-modern .badge-info-icon { width: 32px; height: 32px; border-radius: 8px; background: #e3f2fd; display:flex; align-items:center; justify-content:center; font-size: 16px; color: #1565C0; flex-shrink:0; }
-.tpl-modern .badge-id-strip { position: absolute; bottom: 0; left: 0; right: 0; height: 50px; background: linear-gradient(135deg, #1565C0, #42A5F5); display: flex; align-items: center; padding: 0 40px; gap: 14px; }
-.tpl-modern .badge-id-text { color: rgba(255,255,255,.9); font-size: 18px; font-weight: 600; }
-.tpl-modern .badge-id-val { color: #fff; font-size: 20px; font-weight: 800; font-family: monospace; letter-spacing: 2px; }
 
-/* ====== TEMPLATE 2 : Dark Pro ====== */
-.badge-preview-inner.tpl-dark {
-    background: #0f172a;
+.cni-photo-area {
+    position: relative;
 }
-.tpl-dark .badge-left-col {
-    position: absolute; left: 0; top: 0; bottom: 0; width: 240px;
-    background: linear-gradient(180deg, #1e293b, #0f172a);
-    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 20px;
-    padding: 30px 20px;
-}
-.tpl-dark .badge-photo-wrap {
-    width: 140px; height: 140px; border-radius: 50%;
-    border: 4px solid #334155; overflow: hidden;
-    background: #1e293b;
-    display: flex; align-items: center; justify-content: center;
-}
-.tpl-dark .badge-photo-wrap img { width: 100%; height: 100%; object-fit: cover; }
-.tpl-dark .badge-photo-wrap .photo-placeholder { font-size: 3.2rem; color: #475569; }
-.tpl-dark .badge-id-chip { background: #334155; border-radius: 20px; padding: 6px 20px; color: #94a3b8; font-size: 17px; font-weight: 700; letter-spacing: 2px; font-family: monospace; }
-.tpl-dark .badge-right-col {
-    position: absolute; left: 240px; right: 0; top: 0; bottom: 0;
-    padding: 36px 36px 30px;
-    display: flex; flex-direction: column; justify-content: space-between;
-}
-.tpl-dark .badge-logo-area img { max-height: 50px; max-width: 120px; object-fit: contain; filter: brightness(0) invert(1); opacity:.6; }
-.tpl-dark .badge-main { }
-.tpl-dark .badge-role { font-size: 19px; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 8px; }
-.tpl-dark .badge-name { font-size: 38px; font-weight: 800; color: #f1f5f9; line-height: 1.1; margin-bottom: 12px; }
-.tpl-dark .badge-company { font-size: 22px; font-weight: 600; color: #94a3b8; margin-bottom: 20px; }
-.tpl-dark .badge-accent { width: 50px; height: 4px; border-radius: 2px; background: linear-gradient(90deg, #6366f1, #8b5cf6); margin-bottom: 20px; }
-.tpl-dark .badge-info-row { display: flex; flex-direction: column; gap: 10px; }
-.tpl-dark .badge-info-item { display: flex; align-items: center; gap: 10px; font-size: 17px; color: #94a3b8; }
-.tpl-dark .badge-info-icon { font-size: 17px; color: #6366f1; }
 
-/* ====== TEMPLATE 3 : Clean Minimal ====== */
-.badge-preview-inner.tpl-minimal {
-    background: #fafafa;
-    border: 2px solid #e5e7eb;
-}
-.tpl-minimal .badge-top-bar {
-    height: 12px;
-    background: #1f2937;
-}
-.tpl-minimal .badge-content {
-    display: flex; gap: 0; height: calc(100% - 12px);
-}
-.tpl-minimal .badge-left {
-    width: 220px; padding: 30px 24px;
-    display: flex; flex-direction: column; align-items: center; gap: 14px;
-    background: #f3f4f6; border-right: 1px solid #e5e7eb;
-}
-.tpl-minimal .badge-photo-wrap {
-    width: 130px; height: 130px; border-radius: 16px;
-    overflow: hidden; background: #e5e7eb;
-    display: flex; align-items: center; justify-content: center;
-}
-.tpl-minimal .badge-photo-wrap img { width: 100%; height: 100%; object-fit: cover; }
-.tpl-minimal .badge-photo-wrap .photo-placeholder { font-size: 3rem; color: #9ca3af; }
-.tpl-minimal .badge-id-chip { background: #1f2937; color: #fff; border-radius: 8px; padding: 5px 16px; font-size: 16px; font-weight: 700; letter-spacing: 1px; font-family: monospace; }
-.tpl-minimal .badge-logo-min img { max-height: 40px; max-width: 100px; object-fit: contain; }
-.tpl-minimal .badge-right {
-    flex: 1; padding: 34px 36px;
-    display: flex; flex-direction: column; justify-content: space-between;
-}
-.tpl-minimal .badge-company { font-size: 18px; font-weight: 700; color: #6b7280; text-transform: uppercase; letter-spacing: 1px; }
-.tpl-minimal .badge-name { font-size: 40px; font-weight: 800; color: #111827; line-height: 1.05; margin: 8px 0 4px; }
-.tpl-minimal .badge-role { font-size: 21px; font-weight: 600; color: #374151; margin-bottom: 24px; }
-.tpl-minimal .badge-divider { width: 40px; height: 3px; background: #1f2937; border-radius: 2px; margin-bottom: 20px; }
-.tpl-minimal .badge-info-row { display: flex; flex-direction: column; gap: 10px; }
-.tpl-minimal .badge-info-item { display: flex; align-items: center; gap: 10px; font-size: 17px; color: #6b7280; }
-.tpl-minimal .badge-info-icon { font-size: 16px; color: #374151; }
-
-/* Download btn */
-.btn-download {
-    width: 100%;
-    margin-top: 16px;
-    padding: 14px;
-    border-radius: 12px;
-    border: none;
-    font-size: 1rem;
-    font-weight: 700;
-    font-family: 'Poppins', sans-serif;
-    background: linear-gradient(135deg, #667eea, #764ba2);
-    color: #fff;
-    cursor: pointer;
+.cni-photo-placeholder {
+    width: 240px;
+    height: 300px;
+    background: rgba(255,255,255,0.3);
+    border: 1px solid rgba(0,0,0,0.1);
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 10px;
-    transition: opacity .2s, transform .15s;
-    box-shadow: 0 4px 20px rgba(102,126,234,.4);
+    font-size: 100px;
+    color: rgba(0,0,0,0.1);
 }
 
-.btn-download:hover { opacity: .92; transform: translateY(-1px); }
-.btn-download:active { transform: translateY(0); }
+.cni-photo-img {
+    width: 240px;
+    height: 300px;
+    object-fit: cover;
+    display: none;
+    filter: contrast(1.1) saturate(0.9);
+}
 
-.size-info {
+.cni-info-fields {
+    font-size: 19px;
+    line-height: 1.25;
+}
+
+.cni-field {
+    margin-bottom: 12px;
+}
+
+.cni-label {
+    color: #4b628a;
+    font-size: 16px;
+    font-weight: 600;
+    margin-right: 8px;
+}
+
+.cni-value {
+    color: #0b1c3d;
+    font-weight: 800;
+    text-transform: uppercase;
+}
+
+.cni-footer-info {
+    position: absolute;
+    bottom: 60px;
+    left: 40px;
+    right: 40px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    font-size: 18px;
+}
+
+.cni-bottom-id {
+    position: absolute;
+    bottom: 20px;
+    right: 40px;
+    font-family: 'Roboto Mono', monospace;
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.cni-watermark {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(-25deg);
+    font-size: 60px;
+    font-weight: 900;
+    opacity: 0.04;
+    white-space: nowrap;
+    pointer-events: none;
+    letter-spacing: 15px;
+}
+
+.cni-chip {
+    position: absolute;
+    bottom: 40px;
+    left: 40px;
+    width: 70px;
+    height: 55px;
+    background: linear-gradient(135deg, #f3d16b, #d4a72d);
+    border-radius: 8px;
+    border: 1px solid #b38a1a;
+    mask-image: radial-gradient(circle at 50% 50%, black 60%, transparent 100%);
+}
+
+.signature-area {
+    position: absolute;
+    bottom: 30px;
+    right: 60px;
+    width: 200px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.signature-img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    filter: brightness(0.2) contrast(1.5);
+    display: none;
+}
+
+.signature-text {
+    font-family: 'Dancing Script', cursive;
+    font-size: 32px;
+    color: #111;
     text-align: center;
-    font-size: 0.75rem;
-    color: var(--ce-text-dim);
-    margin-top: 8px;
 }
 
-/* Color accent applies to templates */
-.badge-preview-inner[data-accent] .tpl-accent-bg { background: var(--accent-color) !important; }
-
-@media (max-width: 900px) {
-    .badge-editor { grid-template-columns: 1fr; }
-    .badge-preview-wrap { position: static; }
-    .badge-preview-frame { margin: 0 auto; }
+.signature-label {
+    position: absolute;
+    bottom: 10px;
+    right: 60px;
+    font-size: 14px;
+    color: #4b628a;
+    font-weight: 600;
 }
 
-@media (max-width: 768px) {
-    .badge-wrap { padding: 14px 0; }
-    .ce-card { border-radius: 0; box-shadow: none; border-left: none; border-right: none; }
-    .color-grid { grid-template-columns: repeat(5, 1fr); }
+/* Controls */
+.btn-primary {
+    background: var(--ce-primary);
+    border: none;
+    border-radius: 12px;
+    padding: 14px;
+    font-weight: 700;
+    width: 100%;
+    margin-bottom: 12px;
+    box-shadow: 0 4px 12px rgba(0, 85, 164, 0.3);
+}
+
+.btn-secondary {
+    background: #fff;
+    color: var(--ce-text);
+    border: 1px solid var(--ce-border);
+    border-radius: 12px;
+    padding: 12px;
+    font-weight: 600;
+    width: 100%;
+}
+
+@media (max-width: 992px) {
+    .cni-grid { grid-template-columns: 1fr; }
+    .preview-sticky { position: static; }
 }
 </style>
 
-<div class="badge-wrap">
-    <div class="badge-header">
-        <h1>
-            <i class="fas fa-id-badge" style="color:#667eea;"></i>
-            <span>Badge Agent</span>
-        </h1>
-        <div class="badge-certified">
-            <i class="fas fa-star" style="color:#f59e0b;"></i> Outil Gratuit
-        </div>
+<div class="cni-wrap">
+    <div class="cni-header">
+        <h1><i class="fas fa-id-card"></i> Générateur de CNI Française</h1>
+        <div class="badge bg-primary rounded-pill px-3 py-2">Modèle Officiel 2021</div>
     </div>
 
-    <div class="badge-editor">
-        {{-- ===== FORMULAIRE ===== --}}
-        <div class="badge-form-col">
-
-            {{-- Modèle --}}
+    <div class="cni-grid">
+        <div class="cni-form-col">
+            {{-- État Civil --}}
             <div class="ce-card">
-                <h3><i class="fas fa-layer-group"></i> Modèle de carte</h3>
-                <div class="template-grid">
-                    <button class="template-btn active" data-tpl="tpl-modern" type="button">
-                        <span class="tpl-icon">🔵</span>Modern Blue
-                    </button>
-                    <button class="template-btn" data-tpl="tpl-dark" type="button">
-                        <span class="tpl-icon">⚫</span>Dark Pro
-                    </button>
-                    <button class="template-btn" data-tpl="tpl-minimal" type="button">
-                        <span class="tpl-icon">⬜</span>Minimal
-                    </button>
-                </div>
-            </div>
-
-            {{-- Informations agent --}}
-            <div class="ce-card">
-                <h3><i class="fas fa-user-tie"></i> Informations de l'agent</h3>
-                <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
-                    <div>
-                        <label class="form-label">Prénom & Nom</label>
-                        <input type="text" id="inp-name" class="form-control" placeholder="Jean Dupont" maxlength="40">
+                <h3><i class="fas fa-user"></i> État Civil</h3>
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label class="form-label">Nom</label>
+                        <input type="text" id="inp-nom" class="form-control" placeholder="ROBINSON FLUIT">
                     </div>
-                    <div>
-                        <label class="form-label">Poste / Rôle</label>
-                        <input type="text" id="inp-role" class="form-control" placeholder="Agent Commercial" maxlength="40">
+                    <div class="col-md-6">
+                        <label class="form-label">Prénoms</label>
+                        <input type="text" id="inp-prenoms" class="form-control" placeholder="MARCK">
                     </div>
-                    <div>
-                        <label class="form-label">Société / Agence</label>
-                        <input type="text" id="inp-company" class="form-control" placeholder="FlashBilan SAS" maxlength="40">
+                    <div class="col-md-6">
+                        <label class="form-label">Né(e) le</label>
+                        <input type="text" id="inp-birth-date" class="form-control" placeholder="01/01/1990">
                     </div>
-                    <div>
-                        <label class="form-label">Numéro ID / Badge</label>
-                        <input type="text" id="inp-id" class="form-control" placeholder="AGT-2024-001" maxlength="20">
+                    <div class="col-md-6">
+                        <label class="form-label">À (Lieu)</label>
+                        <input type="text" id="inp-birth-place" class="form-control" placeholder="LYON (69)">
                     </div>
-                    <div>
-                        <label class="form-label">Téléphone</label>
-                        <input type="text" id="inp-phone" class="form-control" placeholder="+33 6 00 00 00 00" maxlength="25">
+                    <div class="col-md-6">
+                        <label class="form-label">Nationalité</label>
+                        <input type="text" id="inp-nationality" class="form-control" placeholder="FRANÇAISE">
                     </div>
-                    <div>
-                        <label class="form-label">Email</label>
-                        <input type="text" id="inp-email" class="form-control" placeholder="agent@flashbilan.fr" maxlength="40">
+                    <div class="col-md-6">
+                        <label class="form-label">Taille (m)</label>
+                        <input type="text" id="inp-height" class="form-control" placeholder="1,80 m">
+                    </div>
+                    <div class="col-12">
+                        <label class="form-label">Adresse</label>
+                        <textarea id="inp-address" class="form-control" rows="2" placeholder="10 Rue de la République\n75001 PARIS"></textarea>
                     </div>
                 </div>
             </div>
 
-            {{-- Photos --}}
+            {{-- Document --}}
             <div class="ce-card">
-                <h3><i class="fas fa-images"></i> Photos</h3>
-                <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
-                    <div>
-                        <label class="form-label">Photo de l'agent</label>
-                        <div class="photo-upload-area" id="agent-photo-area" onclick="document.getElementById('inp-photo').click()">
-                            <img id="agent-photo-preview" class="photo-preview-thumb" src="" alt="">
-                            <div id="agent-photo-placeholder">
-                                <i class="fas fa-user-circle" style="font-size:2rem;color:#ccc;display:block;margin-bottom:8px;"></i>
-                                <div style="font-size:.8rem;color:#aaa;">Cliquez pour importer</div>
-                            </div>
-                        </div>
-                        <input type="file" id="inp-photo" accept="image/*" style="display:none;">
+                <h3><i class="fas fa-file-invoice"></i> Détails du Document</h3>
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label class="form-label">N° d'identité</label>
+                        <input type="text" id="inp-id-num" class="form-control" placeholder="12AB34567">
                     </div>
-                    <div>
-                        <label class="form-label">Logo de l'entreprise</label>
-                        <div class="photo-upload-area" id="logo-photo-area" onclick="document.getElementById('inp-logo').click()">
-                            <img id="logo-photo-preview" class="photo-preview-thumb" src="" alt="" style="border-radius:8px;">
-                            <div id="logo-photo-placeholder">
-                                <i class="fas fa-building" style="font-size:2rem;color:#ccc;display:block;margin-bottom:8px;"></i>
-                                <div style="font-size:.8rem;color:#aaa;">Cliquez pour importer</div>
-                            </div>
-                        </div>
-                        <input type="file" id="inp-logo" accept="image/*" style="display:none;">
+                    <div class="col-md-6">
+                        <label class="form-label">Date d'émission</label>
+                        <input type="text" id="inp-issue-date" class="form-control" placeholder="01/01/2024">
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Date d'expiration</label>
+                        <input type="text" id="inp-expiry-date" class="form-control" placeholder="01/01/2034">
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Autorité</label>
+                        <input type="text" id="inp-authority" class="form-control" placeholder="PRÉFECTURE DE PARIS">
                     </div>
                 </div>
             </div>
 
-            {{-- Couleur accent --}}
+            {{-- Médias --}}
             <div class="ce-card">
-                <h3><i class="fas fa-palette"></i> Couleur principale</h3>
-                <div class="color-grid">
-                    <div class="color-swatch active" data-color="#1565C0" style="background:#1565C0;" title="Bleu"></div>
-                    <div class="color-swatch" data-color="#7c3aed" style="background:#7c3aed;" title="Violet"></div>
-                    <div class="color-swatch" data-color="#dc2626" style="background:#dc2626;" title="Rouge"></div>
-                    <div class="color-swatch" data-color="#059669" style="background:#059669;" title="Vert"></div>
-                    <div class="color-swatch" data-color="#d97706" style="background:#d97706;" title="Orange"></div>
-                    <div class="color-swatch" data-color="#0891b2" style="background:#0891b2;" title="Cyan"></div>
-                    <div class="color-swatch" data-color="#db2777" style="background:#db2777;" title="Rose"></div>
-                    <div class="color-swatch" data-color="#0f172a" style="background:#0f172a;" title="Noir"></div>
-                    <div class="color-swatch" data-color="#374151" style="background:#374151;" title="Gris"></div>
-                    <div class="color-swatch" data-color="#b45309" style="background:#b45309;" title="Marron"></div>
+                <h3><i class="fas fa-camera"></i> Photos & Signature</h3>
+                <div class="photo-upload-container">
+                    <div class="photo-box" onclick="document.getElementById('file-photo').click()">
+                        <img id="prev-photo" src="" alt="">
+                        <i class="fas fa-user-plus"></i>
+                        <span class="d-block text-muted small">Photo d'identité</span>
+                        <input type="file" id="file-photo" hidden accept="image/*">
+                    </div>
+                    <div class="photo-box" onclick="document.getElementById('file-sig').click()">
+                        <img id="prev-sig" src="" alt="">
+                        <i class="fas fa-signature"></i>
+                        <span class="d-block text-muted small">Importer Signature</span>
+                        <input type="file" id="file-sig" hidden accept="image/*">
+                    </div>
+                </div>
+                <div class="mt-3">
+                    <label class="form-label">Ou Signature Texte (Style manuscrit)</label>
+                    <input type="text" id="inp-sig-text" class="form-control" placeholder="Jean Gem">
                 </div>
             </div>
-
         </div>
 
-        {{-- ===== APERÇU ===== --}}
-        <div class="badge-preview-wrap">
-            <div class="badge-preview-label">
-                <i class="fas fa-eye"></i> Aperçu en temps réel
-            </div>
-
-            <div class="badge-preview-frame" id="badge-frame">
-                <div class="badge-preview-inner tpl-modern" id="badge-inner">
-
-                    {{-- MODERN --}}
-                    <div class="badge-stripe" id="pv-stripe">
-                        <div class="badge-photo-wrap" id="pv-photo-wrap">
-                            <span class="photo-placeholder" id="pv-photo-ph">👤</span>
-                            <img id="pv-photo-img" src="" alt="" style="display:none;">
-                        </div>
-                        <div class="badge-top-info">
-                            <div class="badge-company" id="pv-company">FlashBilan SAS</div>
-                        </div>
-                        <div class="badge-logo-area" id="pv-logo-area">
-                            <img id="pv-logo-img" src="" alt="" style="display:none;">
-                        </div>
-                    </div>
-                    <div class="badge-body" id="pv-body">
-                        <div class="badge-name" id="pv-name">Jean Dupont</div>
-                        <div class="badge-role" id="pv-role">Agent Commercial</div>
-                        <div class="badge-info-row" id="pv-info-row">
-                            <div class="badge-info-item" id="pv-phone-item">
-                                <div class="badge-info-icon">📞</div>
-                                <span id="pv-phone">+33 6 00 00 00 00</span>
-                            </div>
-                            <div class="badge-info-item" id="pv-email-item">
-                                <div class="badge-info-icon">✉️</div>
-                                <span id="pv-email">agent@flashbilan.fr</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="badge-id-strip" id="pv-id-strip">
-                        <span class="badge-id-text">ID :</span>
-                        <span class="badge-id-val" id="pv-id">AGT-2024-001</span>
-                    </div>
-
+        <div class="preview-col">
+            <div class="preview-sticky">
+                <div class="d-flex align-items-center gap-2 mb-3 text-muted">
+                    <i class="fas fa-eye"></i>
+                    <span class="fw-bold small text-uppercase">Aperçu Haute Définition</span>
                 </div>
-            </div>
 
-            <button class="btn-download" id="btn-download" type="button">
-                <i class="fas fa-download"></i> Télécharger PNG (HD)
-            </button>
-            <div class="size-info">Taille réelle : 856 × 540 px (standard carte bancaire)</div>
+                <div class="cni-frame" id="cni-frame">
+                    <div class="cni-inner" id="cni-render">
+                        <div class="cni-watermark">DOCUMENT OFFICIEL</div>
+                        
+                        <div class="cni-header-strip">
+                            <div class="cni-flag"></div>
+                            <div class="cni-title">
+                                <h2>RÉPUBLIQUE FRANÇAISE</h2>
+                                <p>CARTE D'IDENTITÉ - DOCUMENT OFFICIEL</p>
+                            </div>
+                            <div class="cni-rf-seal"></div>
+                        </div>
+
+                        <div class="cni-main-content">
+                            <div class="cni-photo-area">
+                                <div class="cni-photo-placeholder"><i class="fas fa-user"></i></div>
+                                <img src="" class="cni-photo-img" id="pv-photo">
+                            </div>
+
+                            <div class="cni-info-fields">
+                                <div class="cni-field">
+                                    <span class="cni-label">Nom :</span>
+                                    <span class="cni-value" id="pv-nom">ROBINSON FLUIT</span>
+                                </div>
+                                <div class="cni-field">
+                                    <span class="cni-label">Prénoms :</span>
+                                    <span class="cni-value" id="pv-prenoms">MARCK</span>
+                                </div>
+                                <div class="cni-field">
+                                    <span class="cni-label">Né(e) le :</span>
+                                    <span class="cni-value" id="pv-birth-date">01/01/1990</span>
+                                    <span class="cni-label ms-4">À :</span>
+                                    <span class="cni-value" id="pv-birth-place">LYON (69)</span>
+                                </div>
+                                <div class="cni-field">
+                                    <span class="cni-label">Nationalité :</span>
+                                    <span class="cni-value" id="pv-nationality">FRANÇAISE</span>
+                                </div>
+                                <div class="cni-field">
+                                    <span class="cni-label">Taille :</span>
+                                    <span class="cni-value" id="pv-height">1,80 m</span>
+                                </div>
+                                <div class="cni-field mt-3">
+                                    <span class="cni-label">Adresse :</span>
+                                    <span class="cni-value" id="pv-address" style="display:block; text-transform: none; line-height: 1.4;">10 Rue de la République<br>75001 PARIS</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="cni-footer-info">
+                            <div>
+                                <span class="cni-label">Numéro d'identité :</span>
+                                <span class="cni-value" id="pv-id-num">12AB34567</span>
+                            </div>
+                            <div>
+                                <span class="cni-label">Date :</span>
+                                <span class="cni-value" id="pv-date">01/01/2024</span>
+                            </div>
+                            <div class="mt-2">
+                                <span class="cni-label">Date d'émission :</span>
+                                <span class="cni-value" id="pv-issue-date">01/01/2024</span>
+                            </div>
+                            <div class="mt-2">
+                                <span class="cni-label">Date d'expiration :</span>
+                                <span class="cni-value" id="pv-expiry-date">01/01/2034</span>
+                            </div>
+                            <div class="col-span-2 mt-2">
+                                <span class="cni-label">Autorité de délivrance :</span>
+                                <span class="cni-value" id="pv-authority">PRÉFECTURE DE PARIS</span>
+                            </div>
+                        </div>
+
+                        <div class="cni-chip"></div>
+
+                        <div class="signature-area">
+                            <img src="" class="signature-img" id="pv-sig-img">
+                            <span class="signature-text" id="pv-sig-text">Jean Gem</span>
+                        </div>
+                        <span class="signature-label">Signature du titulaire</span>
+
+                        <div class="cni-bottom-id" id="pv-id-bottom">12AB34567 <<<<<<<<<<< 01/01/2034</div>
+                    </div>
+                </div>
+
+                <button class="btn btn-primary" id="btn-download">
+                    <i class="fas fa-download me-2"></i> Télécharger la Carte (HD)
+                </button>
+                <p class="text-center text-muted small">Dimensions standard : 85.6mm × 54mm (ID-1)</p>
+            </div>
         </div>
     </div>
 </div>
-
 @endsection
 
 @push('scripts')
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script>
 document.addEventListener('DOMContentLoaded', () => {
+    const render = document.getElementById('cni-render');
 
-    // ===== État =====
-    let currentTpl = 'tpl-modern';
-    let accentColor = '#1565C0';
-    let agentPhotoSrc = null;
-    let logoSrc = null;
+    // Helper formatting
+    const formatValue = (val, def) => val.trim().toUpperCase() || def;
 
-    const inner = document.getElementById('badge-inner');
-
-    // ===== Inputs → aperçu =====
+    // Field bindings
     const bindings = [
-        { id: 'inp-name',    fn: v => setText('pv-name',    v || 'Jean Dupont') },
-        { id: 'inp-role',    fn: v => setText('pv-role',    v || 'Agent Commercial') },
-        { id: 'inp-company', fn: v => setText('pv-company', v || 'FlashBilan SAS') },
-        { id: 'inp-id',      fn: v => setText('pv-id',      v || 'AGT-2024-001') },
-        { id: 'inp-phone',   fn: v => setText('pv-phone',   v || '+33 6 00 00 00 00') },
-        { id: 'inp-email',   fn: v => setText('pv-email',   v || 'agent@flashbilan.fr') },
+        { id: 'inp-nom',         pv: 'pv-nom',         def: 'ROBINSON FLUIT' },
+        { id: 'inp-prenoms',     pv: 'pv-prenoms',     def: 'MARCK' },
+        { id: 'inp-birth-date',  pv: 'pv-birth-date',  def: '01/01/1990' },
+        { id: 'inp-birth-place', pv: 'pv-birth-place', def: 'LYON (69)' },
+        { id: 'inp-nationality', pv: 'pv-nationality', def: 'FRANÇAISE' },
+        { id: 'inp-height',      pv: 'pv-height',      def: '1,80 m' },
+        { id: 'inp-id-num',      pv: 'pv-id-num',      def: '12AB34567' },
+        { id: 'inp-issue-date',  pv: 'pv-issue-date',  def: '01/01/2024' },
+        { id: 'inp-expiry-date', pv: 'pv-expiry-date', def: '01/01/2034' },
+        { id: 'inp-authority',   pv: 'pv-authority',   def: 'PRÉFECTURE DE PARIS' },
     ];
 
-    bindings.forEach(({ id, fn }) => {
-        document.getElementById(id)?.addEventListener('input', e => fn(e.target.value.trim()));
-    });
-
-    function setText(elId, text) {
-        const el = document.getElementById(elId);
-        if (el) el.textContent = text;
-    }
-
-    // ===== Changement de modèle =====
-    document.querySelectorAll('.template-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-            document.querySelectorAll('.template-btn').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            currentTpl = btn.dataset.tpl;
-            rebuildPreview();
+    bindings.forEach(bind => {
+        const inp = document.getElementById(bind.id);
+        const pv = document.getElementById(bind.pv);
+        inp.addEventListener('input', () => {
+            const val = formatValue(inp.value, bind.def);
+            pv.textContent = val;
+            if(bind.id === 'inp-id-num') {
+                document.getElementById('pv-id-bottom').textContent = `${val} <<<<<<<<<<< ${document.getElementById('inp-expiry-date').value || '01/01/2034'}`;
+            }
+            if(bind.id === 'inp-issue-date') {
+                document.getElementById('pv-date').textContent = val;
+            }
+            if(bind.id === 'inp-expiry-date') {
+                 const idNum = document.getElementById('inp-id-num').value || '12AB34567';
+                 document.getElementById('pv-id-bottom').textContent = `${idNum} <<<<<<<<<<< ${val || '01/01/2034'}`;
+            }
         });
     });
 
-    // ===== Couleur accent =====
-    document.querySelectorAll('.color-swatch').forEach(sw => {
-        sw.addEventListener('click', () => {
-            document.querySelectorAll('.color-swatch').forEach(s => s.classList.remove('active'));
-            sw.classList.add('active');
-            accentColor = sw.dataset.color;
-            applyAccent();
+    // Special: Address
+    const inpAddress = document.getElementById('inp-address');
+    const pvAddress = document.getElementById('pv-address');
+    inpAddress.addEventListener('input', () => {
+        pvAddress.innerHTML = (inpAddress.value || '10 Rue de la République\n75001 PARIS').replace(/\n/g, '<br>');
+    });
+
+    // Photos
+    const handleImage = (inpId, pvId, thumbId) => {
+        const fileInp = document.getElementById(inpId);
+        fileInp.addEventListener('change', function() {
+            if (!this.files[0]) return;
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                document.getElementById(pvId).src = e.target.result;
+                document.getElementById(pvId).style.display = 'block';
+                if(thumbId) {
+                    const thumb = document.getElementById(thumbId);
+                    thumb.src = e.target.result;
+                    thumb.style.display = 'block';
+                    thumb.nextElementSibling.style.display = 'none'; // hide icon
+                }
+                if(inpId === 'file-sig') {
+                    document.getElementById('pv-sig-text').style.display = 'none';
+                }
+            };
+            reader.readAsDataURL(this.files[0]);
         });
-    });
+    };
 
-    function applyAccent() {
-        if (currentTpl === 'tpl-modern') {
-            const stripe = inner.querySelector('.badge-stripe');
-            const idStrip = inner.querySelector('.badge-id-strip');
-            const role = inner.querySelector('.badge-role');
-            const icons = inner.querySelectorAll('.badge-info-icon');
-            if (stripe) stripe.style.background = `linear-gradient(135deg, ${accentColor}, ${lightenHex(accentColor, 40)})`;
-            if (idStrip) idStrip.style.background = `linear-gradient(135deg, ${accentColor}, ${lightenHex(accentColor, 40)})`;
-            if (role) role.style.color = accentColor;
-            icons.forEach(ic => { ic.style.background = hexToRgba(accentColor, 0.12); ic.style.color = accentColor; });
-        } else if (currentTpl === 'tpl-dark') {
-            const acc = inner.querySelector('.badge-accent');
-            const icons = inner.querySelectorAll('.badge-info-icon');
-            if (acc) acc.style.background = `linear-gradient(90deg, ${accentColor}, ${lightenHex(accentColor, 40)})`;
-            icons.forEach(ic => ic.style.color = accentColor);
-        } else if (currentTpl === 'tpl-minimal') {
-            const bar = inner.querySelector('.badge-top-bar');
-            const chip = inner.querySelector('.badge-id-chip');
-            const divider = inner.querySelector('.badge-divider');
-            if (bar) bar.style.background = accentColor;
-            if (chip) chip.style.background = accentColor;
-            if (divider) divider.style.background = accentColor;
+    handleImage('file-photo', 'pv-photo', 'prev-photo');
+    handleImage('file-sig', 'pv-sig-img', 'prev-sig');
+
+    // Signature Text
+    const inpSigText = document.getElementById('inp-sig-text');
+    const pvSigText = document.getElementById('pv-sig-text');
+    const pvSigImg = document.getElementById('pv-sig-img');
+
+    inpSigText.addEventListener('input', () => {
+        if(inpSigText.value.trim()) {
+            pvSigText.textContent = inpSigText.value;
+            pvSigText.style.display = 'block';
+            pvSigImg.style.display = 'none';
+        } else if(!pvSigImg.src || pvSigImg.style.display === 'none') {
+            pvSigText.textContent = 'Jean Gem';
+            pvSigText.style.display = 'block';
         }
-    }
-
-    // ===== Photos =====
-    document.getElementById('inp-photo').addEventListener('change', function() {
-        if (!this.files[0]) return;
-        const reader = new FileReader();
-        reader.onload = e => {
-            agentPhotoSrc = e.target.result;
-            // Thumbnail
-            const prev = document.getElementById('agent-photo-preview');
-            const ph = document.getElementById('agent-photo-placeholder');
-            prev.src = agentPhotoSrc; prev.style.display = 'block'; ph.style.display = 'none';
-            updatePhoto();
-        };
-        reader.readAsDataURL(this.files[0]);
     });
 
-    document.getElementById('inp-logo').addEventListener('change', function() {
-        if (!this.files[0]) return;
-        const reader = new FileReader();
-        reader.onload = e => {
-            logoSrc = e.target.result;
-            const prev = document.getElementById('logo-photo-preview');
-            const ph = document.getElementById('logo-photo-placeholder');
-            prev.src = logoSrc; prev.style.display = 'block'; ph.style.display = 'none';
-            updateLogo();
-        };
-        reader.readAsDataURL(this.files[0]);
-    });
-
-    function updatePhoto() {
-        const ph = inner.querySelector('.photo-placeholder');
-        const img = inner.querySelector('.badge-photo-wrap img');
-        if (!img) return;
-        if (agentPhotoSrc) { img.src = agentPhotoSrc; img.style.display = 'block'; if(ph) ph.style.display='none'; }
-        else { img.style.display = 'none'; if(ph) ph.style.display='block'; }
-    }
-
-    function updateLogo() {
-        const logoImg = inner.querySelector('.badge-logo-area img, .badge-logo-min img');
-        if (!logoImg) return;
-        if (logoSrc) { logoImg.src = logoSrc; logoImg.style.display = 'block'; }
-        else { logoImg.style.display = 'none'; }
-    }
-
-    // ===== Rebuild preview on template change =====
-    function rebuildPreview() {
-        const name    = document.getElementById('inp-name').value.trim()    || 'Jean Dupont';
-        const role    = document.getElementById('inp-role').value.trim()    || 'Agent Commercial';
-        const company = document.getElementById('inp-company').value.trim() || 'FlashBilan SAS';
-        const idVal   = document.getElementById('inp-id').value.trim()      || 'AGT-2024-001';
-        const phone   = document.getElementById('inp-phone').value.trim()   || '+33 6 00 00 00 00';
-        const email   = document.getElementById('inp-email').value.trim()   || 'agent@flashbilan.fr';
-
-        let html = '';
-
-        if (currentTpl === 'tpl-modern') {
-            html = `
-            <div class="badge-stripe">
-                <div class="badge-photo-wrap">
-                    ${agentPhotoSrc ? `<img src="${agentPhotoSrc}" alt="">` : `<span class="photo-placeholder">👤</span>`}
-                </div>
-                <div class="badge-top-info">
-                    <div class="badge-company" id="pv-company">${esc(company)}</div>
-                </div>
-                <div class="badge-logo-area">
-                    ${logoSrc ? `<img src="${logoSrc}" alt="">` : ''}
-                </div>
-            </div>
-            <div class="badge-body">
-                <div class="badge-name" id="pv-name">${esc(name)}</div>
-                <div class="badge-role" id="pv-role">${esc(role)}</div>
-                <div class="badge-info-row">
-                    <div class="badge-info-item"><div class="badge-info-icon">📞</div><span id="pv-phone">${esc(phone)}</span></div>
-                    <div class="badge-info-item"><div class="badge-info-icon">✉️</div><span id="pv-email">${esc(email)}</span></div>
-                </div>
-            </div>
-            <div class="badge-id-strip">
-                <span class="badge-id-text">ID :</span>
-                <span class="badge-id-val" id="pv-id">${esc(idVal)}</span>
-            </div>`;
-        } else if (currentTpl === 'tpl-dark') {
-            html = `
-            <div class="badge-left-col">
-                <div class="badge-photo-wrap">
-                    ${agentPhotoSrc ? `<img src="${agentPhotoSrc}" alt="">` : `<span class="photo-placeholder">👤</span>`}
-                </div>
-                <div class="badge-id-chip">${esc(idVal)}</div>
-            </div>
-            <div class="badge-right-col">
-                <div class="badge-logo-area">
-                    ${logoSrc ? `<img src="${logoSrc}" alt="">` : ''}
-                </div>
-                <div class="badge-main">
-                    <div class="badge-role">${esc(role)}</div>
-                    <div class="badge-name">${esc(name)}</div>
-                    <div class="badge-company">${esc(company)}</div>
-                    <div class="badge-accent"></div>
-                    <div class="badge-info-row">
-                        <div class="badge-info-item"><span class="badge-info-icon">📞</span><span>${esc(phone)}</span></div>
-                        <div class="badge-info-item"><span class="badge-info-icon">✉️</span><span>${esc(email)}</span></div>
-                    </div>
-                </div>
-            </div>`;
-        } else if (currentTpl === 'tpl-minimal') {
-            html = `
-            <div class="badge-top-bar"></div>
-            <div class="badge-content">
-                <div class="badge-left">
-                    <div class="badge-photo-wrap">
-                        ${agentPhotoSrc ? `<img src="${agentPhotoSrc}" alt="">` : `<span class="photo-placeholder">👤</span>`}
-                    </div>
-                    <div class="badge-id-chip">${esc(idVal)}</div>
-                    <div class="badge-logo-min">${logoSrc ? `<img src="${logoSrc}" alt="">` : ''}</div>
-                </div>
-                <div class="badge-right">
-                    <div class="badge-company">${esc(company)}</div>
-                    <div>
-                        <div class="badge-name">${esc(name)}</div>
-                        <div class="badge-role">${esc(role)}</div>
-                    </div>
-                    <div>
-                        <div class="badge-divider"></div>
-                        <div class="badge-info-row">
-                            <div class="badge-info-item"><span class="badge-info-icon">📞</span><span>${esc(phone)}</span></div>
-                            <div class="badge-info-item"><span class="badge-info-icon">✉️</span><span>${esc(email)}</span></div>
-                        </div>
-                    </div>
-                </div>
-            </div>`;
-        }
-
-        inner.className = `badge-preview-inner ${currentTpl}`;
-        inner.innerHTML = html;
-        applyAccent();
-    }
-
-    function esc(str) {
-        return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-    }
-
-    // ===== Téléchargement PNG via html2canvas =====
+    // Download
     document.getElementById('btn-download').addEventListener('click', async () => {
         const btn = document.getElementById('btn-download');
-        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Génération...';
+        const originalContent = btn.innerHTML;
+        btn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Génération...';
         btn.disabled = true;
 
         try {
-            // Charger html2canvas si pas encore chargé
-            if (typeof html2canvas === 'undefined') {
-                await loadScript('https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js');
-            }
-
-            const canvas = await html2canvas(inner, {
-                scale: 2.52,
+            const canvas = await html2canvas(render, {
+                scale: 3,
                 useCORS: true,
                 allowTaint: true,
                 backgroundColor: null,
-                logging: false,
                 width: 856,
-                height: 540,
+                height: 540
             });
 
             const link = document.createElement('a');
-            const name = document.getElementById('inp-name').value.trim() || 'badge-agent';
-            link.download = `badge-${name.replace(/\s+/g,'-').toLowerCase()}.png`;
+            const nom = document.getElementById('inp-nom').value || 'CNI-FR';
+            link.download = `${nom.toLowerCase().replace(/\s+/g, '-')}-identite.png`;
             link.href = canvas.toDataURL('image/png', 1.0);
             link.click();
-        } catch(e) {
+        } catch (e) {
             alert('Erreur lors de la génération. Veuillez réessayer.');
             console.error(e);
+        } finally {
+            btn.innerHTML = originalContent;
+            btn.disabled = false;
         }
-
-        btn.innerHTML = '<i class="fas fa-download"></i> Télécharger PNG (HD)';
-        btn.disabled = false;
     });
-
-    function loadScript(src) {
-        return new Promise((resolve, reject) => {
-            const s = document.createElement('script');
-            s.src = src; s.onload = resolve; s.onerror = reject;
-            document.head.appendChild(s);
-        });
-    }
-
-    // ===== Helpers couleur =====
-    function lightenHex(hex, amount) {
-        let r = parseInt(hex.slice(1,3),16);
-        let g = parseInt(hex.slice(3,5),16);
-        let b = parseInt(hex.slice(5,7),16);
-        r = Math.min(255, r + amount);
-        g = Math.min(255, g + amount);
-        b = Math.min(255, b + amount);
-        return `rgb(${r},${g},${b})`;
-    }
-
-    function hexToRgba(hex, alpha) {
-        const r = parseInt(hex.slice(1,3),16);
-        const g = parseInt(hex.slice(3,5),16);
-        const b = parseInt(hex.slice(5,7),16);
-        return `rgba(${r},${g},${b},${alpha})`;
-    }
-
-    // Init
-    applyAccent();
 });
 </script>
 @endpush
