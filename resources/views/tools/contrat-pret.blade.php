@@ -33,7 +33,7 @@
                     <div class="cp-card__head"><i class="fas fa-language"></i> Langue du contrat</div>
                     <div class="cp-card__body">
                         <div class="lang-pills">
-                            @foreach(['fr' => '🇫🇷 Français', 'en' => '🇬🇧 English', 'es' => '🇪🇸 Español', 'pt' => '🇵🇹 Português', 'de' => '🇩🇪 Deutsch', 'it' => '🇮🇹 Italiano', 'nl' => '🇳🇱 Nederlands'] as $code => $label)
+                            @foreach(['fr' => '🇫🇷 Français', 'en' => '🇬🇧 English', 'es' => '🇪🇸 Español', 'pt' => '🇵🇹 Português', 'de' => '🇩🇪 Deutsch', 'it' => '🇮🇹 Italiano', 'nl' => '🇳🇱 Nederlands', 'pl' => '🇵🇱 Polski', 'hr' => '🇭🇷 Hrvatski', 'ru' => '🇷🇺 Русский'] as $code => $label)
                                 <label class="lang-pill {{ $code === 'fr' ? 'active' : '' }}">
                                     <input type="radio" name="lang" value="{{ $code }}" {{ $code === 'fr' ? 'checked' : '' }}>
                                     {{ $label }}
@@ -229,7 +229,7 @@
                 <div class="cp-info-box">
                     <i class="fas fa-info-circle"></i>
                     <div>
-                        <strong>7 langues disponibles :</strong> Français, Anglais, Espagnol, Portugais, Allemand, Italien, Néerlandais.
+                        <strong>10 langues disponibles :</strong> Français, Anglais, Espagnol, Portugais, Allemand, Italien, Néerlandais, Polonais, Croate, Russe.
                         Le contrat PDF sera généré intégralement dans la langue choisie.
                     </div>
                 </div>
@@ -336,7 +336,7 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', () => {
-    const langTitles = { fr: 'CONTRAT DE PRÊT', en: 'LOAN CONTRACT', es: 'CONTRATO DE PRÉSTAMO', pt: 'CONTRATO DE EMPRÉSTIMO', de: 'DARLEHENSVERTRAG', it: 'CONTRATTO DI PRESTITO', nl: 'LENINGSOVEREENKOMST' };
+    const langTitles = { fr: 'CONTRAT DE PRÊT', en: 'LOAN CONTRACT', es: 'CONTRATO DE PRÉSTAMO', pt: 'CONTRATO DE EMPRÉSTIMO', de: 'DARLEHENSVERTRAG', it: 'CONTRATTO DI PRESTITO', nl: 'LENINGSOVEREENKOMST', pl: 'UMOWA POŻYCZKI', hr: 'UGOVOR O ZAJMU', ru: 'КРЕДИТНЫЙ ДОГОВОР' };
     const currencySymbols = {
         EUR: '€', USD: '$', GBP: '£', CHF: 'Fr', CAD: 'CA$', XOF: 'F CFA', MAD: 'د.م.', TND: 'DT', DZD: 'DA'
     };
