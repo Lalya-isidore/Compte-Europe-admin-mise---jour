@@ -40,9 +40,10 @@
 /* Preview Frame */
 .badge-preview-wrap { position: sticky; top: 100px; }
 @media (max-width: 992px) { .badge-preview-wrap { position: static; top: auto; } }
-.badge-preview-frame { margin: 0 auto; border-radius: 30px; box-shadow: 0 30px 60px -12px rgba(0,0,0,0.25); overflow: hidden; position: relative; background: #fff; transform-origin: center; }
+.badge-preview-frame { margin: 0 auto; border-radius: 30px; box-shadow: 0 30px 60px -12px rgba(0,0,0,0.25); overflow: hidden; position: relative; background: #fff; transform-origin: center; transform: translateZ(0); }
 .badge-preview-frame.landscape { width: 340px; height: 214px; }
 .badge-preview-frame.portrait { width: 254px; height: 403px; }
+@media (max-width: 992px) { .preview-col { overflow: hidden; } }
 
 .badge-preview-inner { position: absolute; top: 0; left: 0; transform-origin: top left; }
 .badge-preview-frame.landscape .badge-preview-inner { width: 856px; height: 540px; transform: scale(0.3972); }
