@@ -4,27 +4,27 @@
     <meta charset="utf-8">
     <title>Contrat de Prêt</title>
     <style>
-        @page { margin: 2.5cm 2cm; }
-        body { font-family: 'Times New Roman', serif; font-size: 12pt; line-height: 1.6; color: #2c3e50; }
+        @page { margin: 2.2cm 2cm; }
+        body { font-family: 'Times New Roman', serif; font-size: 13.5pt; line-height: 1.9; color: #2c3e50; }
         .container { width: 100%; position: relative; }
-        .frame { position: fixed; top: 0; left: 0; right: 0; bottom: 0; border: 2px solid #002B5B; margin: -1.5cm; z-index: -2; }
-        .frame-inner { position: fixed; top: 0; left: 0; right: 0; bottom: 0; border: 1px solid #002B5B; margin: -1.4cm; z-index: -2; }
+        .frame { position: fixed; top: 0; left: 0; right: 0; bottom: 0; border: 2px solid #002B5B; margin: -1.2cm; z-index: -2; }
+        .frame-inner { position: fixed; top: 0; left: 0; right: 0; bottom: 0; border: 1px solid #002B5B; margin: -1.1cm; z-index: -2; }
         .watermark { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 500px; height: 500px; opacity: 0.05; z-index: -1; background-image: url("{{ public_path('images/contract/logo-justice.jpg') }}"); background-repeat: no-repeat; background-position: center; background-size: contain; }
-        .header-table { width: 100%; border-bottom: 3px double #002B5B; margin-bottom: 20px; padding-bottom: 20px; }
-        h1 { color: #4B0082; font-size: 22pt; font-weight: bold; margin: 0; letter-spacing: 1px; white-space: nowrap; }
-        .subtitle { text-align: center; font-size: 14pt; font-weight: bold; margin-bottom: 30px; font-style: italic; text-decoration: underline; }
+        .header-table { width: 100%; border-bottom: 3px double #002B5B; margin-bottom: 24px; padding-bottom: 24px; }
+        h1 { color: #4B0082; font-size: 23pt; font-weight: bold; margin: 0; letter-spacing: 1px; white-space: nowrap; }
+        .subtitle { text-align: center; font-size: 15pt; font-weight: bold; margin-bottom: 40px; font-style: italic; text-decoration: underline; }
         .party-box { width: 42%; display: inline-block; vertical-align: top; }
         .party-box.left { margin-right: 12%; }
-        .party-title { font-weight: bold; text-decoration: underline; margin-bottom: 10px; color: #002B5B; }
-        .party-info { background-color: #f8fafc; border: 1px solid #e2e8f0; padding: 15px; font-size: 11pt; border-radius: 4px; min-height: 120px; }
+        .party-title { font-weight: bold; text-decoration: underline; margin-bottom: 12px; color: #002B5B; font-size: 13pt; }
+        .party-info { background-color: #f8fafc; border: 1px solid #e2e8f0; padding: 18px; font-size: 12pt; border-radius: 4px; min-height: 150px; }
         .label { font-weight: bold; color: #4a5568; padding-right: 10px; white-space: nowrap; vertical-align: top; }
         .value { color: #1a202c; vertical-align: top; }
-        .content { text-align: justify; margin-bottom: 20px; }
-        .article-title { color: #002B5B; font-weight: bold; font-size: 13pt; border-bottom: 1px solid #cbd5e0; margin-top: 25px; margin-bottom: 15px; padding-bottom: 5px; }
-        .sig-table { width: 100%; border-collapse: collapse; margin-top: 40px; border-top: 1px solid #eee; }
-        .sig-cell { vertical-align: top; padding: 20px 5px; text-align: center; }
-        .sig-name { font-weight: bold; margin-top: 50px; }
-        .sig-title { font-style: italic; font-size: 8pt; color: #666; margin-top: 5px; }
+        .content { text-align: justify; margin-bottom: 26px; }
+        .article-title { color: #002B5B; font-weight: bold; font-size: 14pt; border-bottom: 1px solid #cbd5e0; margin-top: 34px; margin-bottom: 18px; padding-bottom: 6px; }
+        .sig-table { width: 100%; border-collapse: collapse; margin-top: 50px; border-top: 1px solid #eee; }
+        .sig-cell { vertical-align: top; padding: 25px 5px; text-align: center; }
+        .sig-name { font-weight: bold; margin-top: 60px; }
+        .sig-title { font-style: italic; font-size: 9pt; color: #666; margin-top: 6px; }
     </style>
 </head>
 <body>
