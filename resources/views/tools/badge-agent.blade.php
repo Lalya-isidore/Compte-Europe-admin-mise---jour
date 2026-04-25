@@ -88,8 +88,8 @@
 .l-sig-lbl { font-size: 12px; font-weight: 800; color: #94a3b8; text-transform: uppercase; letter-spacing: 1px; }
 
 /* PORTRAIT */
-.tpl-portrait { width: 540px; height: 856px; background: #fff; display: flex; flex-direction: column; align-items: center; padding: 40px 35px 30px; }
-.v-logo-box { height: 60px; margin-bottom: 28px; }
+.tpl-portrait { width: 540px; height: 856px; background: #fff; display: flex; flex-direction: column; align-items: center; padding: 20px 35px 30px; }
+.v-logo-box { height: 60px; margin-bottom: 16px; }
 .v-photo { width: 180px !important; height: 180px !important; border-radius: 50%; overflow: hidden; border: 8px solid #f1f5f9; box-shadow: 0 10px 30px rgba(0,0,0,0.14); margin-bottom: 24px; background: #eee; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
 .v-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .v-photo i { font-size: 95px; color: #cbd5e1; }
