@@ -82,13 +82,13 @@
                 @endphp
                 <div class="col-xl-4 col-lg-4 col-md-6">
                     <div class="card-premium h-100 transition-hover border border-light-subtle d-flex flex-column p-4">
-                        <div class="d-flex align-items-start justify-content-between mb-4">
-                            <div class="d-flex align-items-center gap-3">
-                                <div class="avatar bg-primary bg-opacity-10 text-primary rounded-4 d-flex align-items-center justify-content-center fw-bold fs-5" style="width: 52px; height: 52px;">
+                        <div class="mb-4" style="overflow:hidden;">
+                            <div class="d-flex align-items-center gap-3" style="min-width:0;">
+                                <div class="avatar bg-primary bg-opacity-10 text-primary rounded-4 d-flex align-items-center justify-content-center fw-bold fs-5 flex-shrink-0" style="width:52px;height:52px;">
                                     {{ $initials ?: '?' }}
                                 </div>
-                                <div class="overflow-hidden" style="min-width:0;flex:1;">
-                                    <h3 class="h6 fw-bold mb-0 text-truncate text-dark" title="{{ $user->nom }} {{ $user->prenom }}">{{ $user->nom }} {{ $user->prenom }}</h3>
+                                <div style="min-width:0;overflow:hidden;">
+                                    <h3 class="h6 fw-bold mb-0 text-dark text-truncate" title="{{ $user->nom }} {{ $user->prenom }}">{{ $user->nom }} {{ $user->prenom }}</h3>
                                     <span class="text-secondary smaller">ID: #{{ $user->id }}</span>
                                 </div>
                             </div>
