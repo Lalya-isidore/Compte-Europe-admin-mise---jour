@@ -76,6 +76,10 @@ Route::middleware(['auth'])->group(function () {
         return view('tools.qr-generator');
     })->name('tools.qr-generator');
 
+    Route::get('/tools/badge-agent', function () {
+        return view('tools.badge-agent');
+    })->name('tools.badge-agent');
+
     Route::get('/tools/url-check', [UrlCheckController::class, 'index'])->name('tools.url-check');
     Route::post('/tools/url-check', [UrlCheckController::class, 'check'])->name('tools.url-check.run');
     Route::get('/tools/url-shortener', [UrlShortenerController::class, 'index'])->name('tools.url-shortener');

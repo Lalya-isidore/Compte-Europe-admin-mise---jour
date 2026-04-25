@@ -21,6 +21,7 @@
 
     $freeTools = [
         ['label' => 'Générateur QR Code', 'image' => 'qr-generator.svg', 'route' => route('tools.qr-generator')],
+        ['label' => 'Badge Agent', 'image' => 'badge-agent.svg', 'route' => route('tools.badge-agent')],
         ['label' => 'Mail Extractor', 'image' => 'mail-extractor.png', 'route' => route('tools.mail-extractor')],
         ['label' => "Verification d'un site web", 'image' => 'url-check.png', 'route' => route('tools.url-check')],
         ['label' => "Raccourcissement d'URL", 'image' => 'url-shortener.png', 'route' => route('tools.url-shortener')],
