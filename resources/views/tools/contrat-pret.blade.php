@@ -628,7 +628,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     updatePreview();
 
-    // Suppression fond via flood-fill depuis les bords (ne touche que le fond connecté aux bords)
+    // Suppression fond intelligente : détecte automatiquement la couleur du fond
+    // en échantillonnant les coins de l'image, puis flood-fill depuis les bords.
+    // Fonctionne sur fond blanc, crème, beige, gris clair (comme une photo de papier).
     function removeWhiteBackground(dataUrl, callback) {
         const tmpImg = new Image();
         tmpImg.onload = function () {
@@ -640,31 +642,68 @@ document.addEventListener('DOMContentLoaded', () => {
             const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
             const d = imageData.data;
             const w = canvas.width, h = canvas.height;
-            const TOLERANCE = 90; // distance max au blanc pour être considéré "fond"
+
+            // --- Étape 1 : détecter la couleur du fond via les coins ---
+            const samplePositions = [
+                0,                          // coin haut-gauche
+                (w - 1),                    // coin haut-droit
+                (h - 1) * w,                // coin bas-gauche
+                (h - 1) * w + (w - 1),      // coin bas-droit
+                Math.floor(w / 2),          // milieu haut
+                (h - 1) * w + Math.floor(w / 2), // milieu bas
+            ];
+            let bgR = 0, bgG = 0, bgB = 0, cnt = 0;
+            samplePositions.forEach(pos => {
+                const i = pos * 4;
+                bgR += d[i]; bgG += d[i+1]; bgB += d[i+2]; cnt++;
+            });
+            bgR = Math.round(bgR / cnt);
+            bgG = Math.round(bgG / cnt);
+            bgB = Math.round(bgB / cnt);
+
+            // TOLÉRANCE adaptative : plus large si fond très clair (papier)
+            // => 60 pour fond pur, jusqu'à 100 pour fond très uniforme mais légèrement coloré
+            const brightness = (bgR + bgG + bgB) / 3;
+            const TOLERANCE = brightness > 200 ? 85 : (brightness > 160 ? 70 : 55);
+
+            const colorDist = (r, g, b) =>
+                Math.sqrt((bgR - r) ** 2 + (bgG - g) ** 2 + (bgB - b) ** 2);
 
             const isBg = (pos) => {
                 const i = pos * 4;
-                const r = d[i], g = d[i+1], b = d[i+2];
-                return Math.sqrt((255-r)**2 + (255-g)**2 + (255-b)**2) < TOLERANCE;
+                return colorDist(d[i], d[i+1], d[i+2]) < TOLERANCE;
             };
 
-            // BFS depuis tous les pixels de bordure
+            // --- Étape 2 : BFS depuis tous les pixels de bordure ---
             const visited = new Uint8Array(w * h);
             const stack = [];
-            for (let x = 0; x < w; x++) { stack.push(x); stack.push(x + (h-1)*w); }
-            for (let y = 1; y < h-1; y++) { stack.push(y*w); stack.push((w-1)+y*w); }
+            for (let x = 0; x < w; x++) { stack.push(x); stack.push(x + (h - 1) * w); }
+            for (let y = 1; y < h - 1; y++) { stack.push(y * w); stack.push((w - 1) + y * w); }
 
             while (stack.length) {
                 const pos = stack.pop();
                 if (visited[pos]) continue;
                 visited[pos] = 1;
                 if (!isBg(pos)) continue;
-                d[pos*4 + 3] = 0; // transparent
+                // Rendre transparent
+                d[pos * 4 + 3] = 0;
                 const x = pos % w, y = (pos / w) | 0;
                 if (x > 0)   stack.push(pos - 1);
                 if (x < w-1) stack.push(pos + 1);
                 if (y > 0)   stack.push(pos - w);
                 if (y < h-1) stack.push(pos + w);
+            }
+
+            // --- Étape 3 : passe de lissage des bords (anti-aliasing) ---
+            // Rend semi-transparent les pixels proches du fond pour éviter les bords durs
+            for (let pos = 0; pos < w * h; pos++) {
+                if (visited[pos] || d[pos * 4 + 3] === 0) continue;
+                const dist = colorDist(d[pos * 4], d[pos * 4 + 1], d[pos * 4 + 2]);
+                if (dist < TOLERANCE * 1.5) {
+                    // Pixel dans la "zone floue" : atténuer l'opacité
+                    const factor = (dist - TOLERANCE) / (TOLERANCE * 0.5);
+                    d[pos * 4 + 3] = Math.round(255 * Math.min(1, Math.max(0, factor)));
+                }
             }
 
             ctx.putImageData(imageData, 0, 0);
@@ -693,6 +732,33 @@ document.addEventListener('DOMContentLoaded', () => {
         };
         reader.readAsDataURL(file);
     });
+
+    // Traiter aussi l'image de cachet/signature par défaut au chargement
+    const defaultSigImg = document.getElementById('prev-sig-pre-img');
+    if (defaultSigImg && defaultSigImg.src && !defaultSigImg.src.startsWith('data:')) {
+        const tmpFetch = new Image();
+        tmpFetch.crossOrigin = 'anonymous';
+        tmpFetch.onload = function () {
+            const cvs = document.createElement('canvas');
+            cvs.width = tmpFetch.width;
+            cvs.height = tmpFetch.height;
+            const cx = cvs.getContext('2d');
+            cx.drawImage(tmpFetch, 0, 0);
+            try {
+                removeWhiteBackground(cvs.toDataURL('image/png'), function (processed) {
+                    defaultSigImg.src = processed;
+                });
+            } catch (e) {
+                // CORS ou autre erreur : fallback mix-blend-mode
+                defaultSigImg.style.mixBlendMode = 'multiply';
+            }
+        };
+        tmpFetch.onerror = function () {
+            // Fallback CSS si l'image ne peut pas être lue en cross-origin
+            defaultSigImg.style.mixBlendMode = 'multiply';
+        };
+        tmpFetch.src = defaultSigImg.src;
+    }
 });
 
 // ---- Fonctions globales éditeur d'articles ----
