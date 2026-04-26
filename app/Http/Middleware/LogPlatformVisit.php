@@ -18,13 +18,15 @@ class LogPlatformVisit
             !$request->is('admin/*') &&
             !$request->is('api/*') &&
             !$request->ajax() &&
-            Auth::check()
+            Auth::check() &&
+            !session()->has('visit_logged')
         ) {
             PlatformVisit::create([
                 'user_id'    => Auth::id(),
                 'ip_address' => $request->ip(),
                 'url'        => $request->path(),
             ]);
+            session(['visit_logged' => true]);
         }
 
         return $response;
