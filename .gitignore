@@ -22,3 +22,9 @@
 Homestead.json
 Homestead.yaml
 Thumbs.db
+*.sql
+*_translations.json
+check_extra_langs.php
+extract_*.php
+generate_*.php
+pl_hr_ru_translations.json
