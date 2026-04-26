@@ -85,6 +85,9 @@
                             <button type="button" class="btn btn-outline-warning btn-sm rounded-pill px-3" id="tpl-loyalty">
                                 🎁 Bonus Fidélité
                             </button>
+                            <button type="button" class="btn btn-outline-success btn-sm rounded-pill px-3" id="tpl-contrat">
+                                📄 Contrat de Prêt
+                            </button>
                         </div>
                     </div>
 
@@ -226,6 +229,34 @@ Créez en quelques secondes des QR codes personnalisés et des affiches prêtes 
 👉 Accédez à la fonctionnalité dès maintenant : https://flashbilan.fr
 
 Connectez-vous à votre compte et rendez-vous dans la section "Outils" pour découvrir le Générateur QR.
+
+Cordialement,
+L'équipe FlashBilan`;
+        document.getElementById('target-select').value = 'all';
+        singleUserBlock.style.display = 'none';
+    });
+
+    // Modèle Contrat de Prêt
+    document.getElementById('tpl-contrat')?.addEventListener('click', function() {
+        document.getElementById('email-subject').value = '📄 Nouveau sur FlashBilan : Générez vos Contrats de Prêt en PDF !';
+        document.getElementById('email-message').value = `Bonjour,
+
+Nous avons le plaisir de vous annoncer le lancement d'une nouvelle fonctionnalité sur FlashBilan ! 🎉
+
+📄 Générateur de Contrat de Prêt Professionnel
+
+Créez en quelques minutes un contrat de prêt complet, signé et prêt à télécharger en PDF.
+
+✅ Contrat personnalisable (prêteur, emprunteur, montant, durée, taux)
+✅ 10 langues disponibles : Français, Anglais, Espagnol, Portugais, Allemand, Italien, Néerlandais, Polonais, Croate, Russe
+✅ Signature électronique intégrée (emprunteur + cachet prêteur)
+✅ 10 articles réglementaires inclus
+✅ Aperçu en temps réel avant téléchargement
+✅ Première génération GRATUITE
+
+👉 Connectez-vous à votre compte et rendez-vous dans la section "Outils" pour découvrir le Générateur de Contrat de Prêt.
+
+🌐 https://flashbilan.fr
 
 Cordialement,
 L'équipe FlashBilan`;
