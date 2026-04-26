@@ -800,6 +800,7 @@ class ContratPretController extends Controller
             'taux'                => (float) $request->taux,
             'duree'               => (int) $request->duree,
             'signatureEmprunteur' => $signatureEmprunteur,
+            'customArticles'      => $request->input('articles', []),
         ])->setPaper('a4', 'portrait');
 
         $filename = 'contrat-pret-'

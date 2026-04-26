@@ -157,6 +157,44 @@
                     </div>
                 </div>
 
+                {{-- Articles personnalisables --}}
+                <div class="cp-card">
+                    <div class="cp-card__head cp-card__head--toggle" onclick="toggleArtsSection()">
+                        <i class="fas fa-edit"></i> Articles du contrat
+                        <small style="font-weight:normal; margin-left:8px; opacity:0.7;">Modifiez ou supprimez des articles</small>
+                        <i class="fas fa-chevron-down" id="arts-chev" style="margin-left:auto; transition:transform 0.2s;"></i>
+                    </div>
+                    <div id="arts-section" style="display:none;">
+                        <div class="cp-card__body" style="padding-top:10px;">
+                            <button type="button" onclick="resetArticles()" class="cp-btn-reset">
+                                <i class="fas fa-sync-alt"></i> Réinitialiser depuis la langue sélectionnée
+                            </button>
+                            <div id="arts-container" style="margin-top:12px;">
+                                @foreach(range(1,10) as $n)
+                                <div class="art-item" id="art-item-{{ $n }}">
+                                    <div class="art-item__hd" onclick="toggleArt({{ $n }})">
+                                        <span class="art-item__badge">{{ $n }}</span>
+                                        <input type="text" name="articles[{{ $n }}][titre]" id="art-{{ $n }}-titre"
+                                               class="art-titre-inp" placeholder="Titre article {{ $n }}"
+                                               onclick="event.stopPropagation()">
+                                        <button type="button" class="art-del-btn" title="Supprimer cet article"
+                                                onclick="deleteArticle({{ $n }}); event.stopPropagation();">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </button>
+                                        <i class="fas fa-chevron-down art-chev" id="art-chev-{{ $n }}"></i>
+                                    </div>
+                                    <div class="art-item__bd" id="art-bd-{{ $n }}" style="display:none;">
+                                        <textarea name="articles[{{ $n }}][corps]" id="art-{{ $n }}-corps"
+                                                  class="art-corps-inp" rows="5"
+                                                  placeholder="Contenu de l'article..."></textarea>
+                                    </div>
+                                </div>
+                                @endforeach
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <button type="submit" class="cp-btn-generate">
                     <i class="fas fa-file-pdf"></i>
                     Générer et Télécharger le Contrat PDF
@@ -326,6 +364,23 @@
 .cp-calc__item span { font-size: 0.72rem; color: #666; display: block; margin-bottom: 4px; }
 .cp-calc__item strong { font-size: 0.95rem; color: #1e3a5f; font-weight: 700; }
 
+.cp-card__head--toggle { cursor: pointer; user-select: none; }
+.cp-btn-reset { padding: 7px 14px; background: #f3f4f6; color: #374151; border: 1px solid #d1d5db; border-radius: 7px; font-size: 0.82rem; cursor: pointer; display: flex; align-items: center; gap: 6px; }
+.cp-btn-reset:hover { background: #e5e7eb; }
+.art-item { border: 1px solid #e5e7eb; border-radius: 8px; margin-bottom: 7px; overflow: hidden; transition: opacity 0.2s; }
+.art-item.deleted { display: none; }
+.art-item__hd { display: flex; align-items: center; gap: 8px; padding: 9px 12px; background: #f9fafb; cursor: pointer; }
+.art-item__badge { background: #1e3a5f; color: #fff; border-radius: 50%; width: 22px; height: 22px; display: flex; align-items: center; justify-content: center; font-size: 0.73rem; font-weight: bold; flex-shrink: 0; }
+.art-titre-inp { flex: 1; border: 1px solid #ddd; border-radius: 6px; padding: 5px 9px; font-size: 0.83rem; font-weight: 600; color: #1e3a5f; min-width: 0; }
+.art-titre-inp:focus { outline: none; border-color: #4B0082; }
+.art-del-btn { background: #fee2e2; color: #dc2626; border: none; border-radius: 6px; width: 28px; height: 28px; cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 0.75rem; }
+.art-del-btn:hover { background: #fca5a5; }
+.art-chev { color: #aaa; font-size: 0.72rem; flex-shrink: 0; transition: transform 0.2s; }
+.art-item.open .art-chev { transform: rotate(180deg); }
+.art-item__bd { padding: 0 12px 12px; background: #fff; }
+.art-corps-inp { width: 100%; border: 1px solid #ddd; border-radius: 6px; padding: 9px; font-size: 0.82rem; line-height: 1.6; color: #333; resize: vertical; font-family: 'Times New Roman', serif; box-sizing: border-box; margin-top: 8px; }
+.art-corps-inp:focus { outline: none; border-color: #4B0082; }
+
 .cp-btn-generate { width: 100%; padding: 14px; background: linear-gradient(135deg, #1e3a5f, #2d5986); color: #fff; border: none; border-radius: 10px; font-size: 0.95rem; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; transition: all 0.2s; }
 .cp-btn-generate:hover { background: linear-gradient(135deg, #162e4d, #244a72); transform: translateY(-1px); box-shadow: 0 6px 20px rgba(30,58,95,0.3); }
 .cp-btn-generate i { font-size: 1.1rem; }
@@ -424,6 +479,68 @@ document.addEventListener('DOMContentLoaded', () => {
         return new Intl.NumberFormat('fr-FR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(n) + ' ' + sym;
     }
 
+    // ---- Éditeur d'articles ----
+    function buildArticleFullText(n, t, montant, sym, duree, empPays) {
+        const fmtN = (v) => v > 0 ? new Intl.NumberFormat('fr-FR',{minimumFractionDigits:2}).format(v)+' '+sym : '—';
+        const j = (arr) => arr.filter(s => s && s.trim()).join('\n\n');
+        switch(n) {
+            case 1:  return j([(t.art1_p1a||'')+' '+fmtN(montant)+'. '+(t.art1_p1b||''), (t.art1_p2a||'')+' '+empPays+'.']);
+            case 2:  return (t.art2_intro||'')+' '+(duree>0?duree+' '+(t.mois||'mois'):'—')+'. '+(t.art2_suite||'');
+            case 3:  return t.art3_p1 || '';
+            case 4:  return j([(t.observation||'')+' '+(t.art4_p1||''), t.art4_p2||'', t.art4_p3||'']);
+            case 5:  return j([t.art5_p1||'', t.art5_p2||'', '- '+(t.art5_li1||'')+'\n- '+(t.art5_li2||'')+'\n- '+(t.art5_li3||'')]);
+            case 6:  return j([t.art6_p1||'', t.art6_p2||'', t.art6_p3||'']);
+            case 7:  return j([t.art7_p1||'', t.art7_p2||'', (t.art7_partiel||'')+' '+(t.art7_p3||'')]);
+            case 8:  return j([t.art8_p1||'', t.art8_p2||'', t.art8_p3||'', t.art8_p4||'']);
+            case 9:  return t.art9_p1 || '';
+            case 10: return j([t.art10_p1||'', t.art10_p2||'']);
+        }
+        return '';
+    }
+
+    function toggleArtsSection() {
+        const sec = document.getElementById('arts-section');
+        const chev = document.getElementById('arts-chev');
+        const open = sec.style.display !== 'none';
+        sec.style.display = open ? 'none' : 'block';
+        chev.style.transform = open ? '' : 'rotate(180deg)';
+    }
+
+    function toggleArt(n) {
+        const item = document.getElementById('art-item-' + n);
+        const bd   = document.getElementById('art-bd-' + n);
+        const open = item.classList.toggle('open');
+        bd.style.display = open ? 'block' : 'none';
+    }
+
+    function deleteArticle(n) {
+        const item = document.getElementById('art-item-' + n);
+        item.classList.add('deleted');
+        item.querySelectorAll('input, textarea').forEach(el => el.disabled = true);
+        updatePreview();
+    }
+
+    function resetArticles() {
+        const lang    = document.querySelector('input[name="lang"]:checked')?.value || 'fr';
+        const t       = allTranslations[lang] || allTranslations['fr'];
+        const montant = parseFloat(document.getElementById('montant').value) || 0;
+        const duree   = parseInt(document.getElementById('duree').value) || 0;
+        const sym     = currencySymbols[document.getElementById('devise').value] || '€';
+        const empPays = document.getElementById('emprunteur_pays').value || '—';
+        const titleKeys = ['art1_titre','art2_titre','art3_titre','art4_titre','art5_titre','art6_titre','art7_titre','art8_titre','art9_titre','art10_titre'];
+        for (let n = 1; n <= 10; n++) {
+            const item = document.getElementById('art-item-' + n);
+            if (!item) continue;
+            item.classList.remove('deleted');
+            item.querySelectorAll('input, textarea').forEach(el => el.disabled = false);
+            const titreEl = document.getElementById('art-' + n + '-titre');
+            const corpsEl = document.getElementById('art-' + n + '-corps');
+            if (titreEl) titreEl.value = t[titleKeys[n-1]] || '';
+            if (corpsEl) corpsEl.value = buildArticleFullText(n, t, montant, sym, duree, empPays);
+        }
+        updatePreview();
+    }
+
     function updatePreview() {
         const montant   = parseFloat(document.getElementById('montant').value) || 0;
         const taux      = parseFloat(document.getElementById('taux').value)    || 0;
@@ -499,18 +616,27 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('prev-sig-preteur-cap').textContent = preCap;
         document.getElementById('prev-important-txt').textContent   = t.important || 'IMPORTANT : CE CONTRAT DOIT ÊTRE IMPRIMÉ, DATÉ ET SIGNÉ PAR L\'EMPRUNTEUR AFIN DE DÉCLENCHER LE VIREMENT DES FONDS SUR LE COMPTE BANCAIRE DÉSIGNÉ.';
 
-        // Contenu des articles
-        const artTitles = ['art1_titre','art2_titre','art3_titre','art4_titre','art5_titre','art6_titre','art7_titre','art8_titre','art9_titre','art10_titre'];
-        artTitles.forEach((key, i) => {
-            const n = i + 1;
+        // Contenu des articles (custom ou défaut)
+        const artTitleKeys = ['art1_titre','art2_titre','art3_titre','art4_titre','art5_titre','art6_titre','art7_titre','art8_titre','art9_titre','art10_titre'];
+        for (let i = 0; i < 10; i++) {
+            const n       = i + 1;
+            const artItem = document.getElementById('art-item-' + n);
+            const prevArt = document.getElementById('prev-art' + n + '-titre')?.closest('.prev-article');
             const titleEl = document.getElementById('prev-art' + n + '-titre');
             const bodyEl  = document.getElementById('prev-art' + n + '-body');
-            if (titleEl) titleEl.textContent = t[key] || '—';
+            if (artItem && artItem.classList.contains('deleted')) {
+                if (prevArt) prevArt.style.display = 'none';
+                continue;
+            }
+            if (prevArt) prevArt.style.display = '';
+            const custTitre = document.getElementById('art-' + n + '-titre')?.value.trim() || '';
+            const custCorps = document.getElementById('art-' + n + '-corps')?.value.trim() || '';
+            if (titleEl) titleEl.textContent = custTitre || t[artTitleKeys[i]] || '—';
             if (bodyEl) {
-                const full = articleBodies[i](t, montant, sym, duree);
+                const full = custCorps || articleBodies[i](t, montant, sym, duree);
                 bodyEl.textContent = full.length > 160 ? full.substring(0, 160) + '…' : full;
             }
-        });
+        }
 
         // Calculs
         if (montant > 0 && duree > 0) {
@@ -548,6 +674,11 @@ document.addEventListener('DOMContentLoaded', () => {
     // Tous les champs
     ['emprunteur_nom','emprunteur_pays','emprunteur_id','contract_no','preteur_nom','preteur_pays','preteur_adresse','preteur_id','preteur_capacite','montant','taux','duree','devise']
         .forEach(id => document.getElementById(id)?.addEventListener('input', updatePreview));
+
+    for (let n = 1; n <= 10; n++) {
+        document.getElementById('art-' + n + '-titre')?.addEventListener('input', updatePreview);
+        document.getElementById('art-' + n + '-corps')?.addEventListener('input', updatePreview);
+    }
 
     updatePreview();
 

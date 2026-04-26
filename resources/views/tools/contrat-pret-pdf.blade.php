@@ -114,82 +114,43 @@
 
     <p class="content">{{ $t['convenu'] }}</p>
 
-    <div class="article-title">{{ $t['art1_titre'] }}</div>
-    <p class="content">
-        {{ $t['art1_p1a'] }}
-        <strong>{{ number_format($montant, 2, ',', ' ') }} {{ $deviseSymbole }}</strong> ({{ $devise }}).
-        {{ $t['art1_p1b'] }}
-    </p>
-    <p class="content">
-        {{ $t['art1_p2a'] }} <strong>{{ $emprunteurPays }}</strong>.
-    </p>
+    @php
+        $artDefaults = [
+            1 => ['titre' => $t['art1_titre'], 'corps' => implode("\n\n", array_filter([
+                    $t['art1_p1a'].' '.number_format($montant,2,',',' ').' '.$deviseSymbole.' ('.$devise.'). '.$t['art1_p1b'],
+                    $t['art1_p2a'].' '.$emprunteurPays.'.'
+                  ]))],
+            2 => ['titre' => $t['art2_titre'], 'corps' => $t['art2_intro'].' '.$duree.' '.$t['mois'].' ('.round($duree/12,1).' '.$t['ans'].'). '.$t['art2_suite']],
+            3 => ['titre' => $t['art3_titre'], 'corps' => $t['art3_p1']],
+            4 => ['titre' => $t['art4_titre'], 'corps' => implode("\n\n", [$t['observation'].' '.$t['art4_p1'], $t['art4_p2'], $t['art4_p3']])],
+            5 => ['titre' => $t['art5_titre'], 'corps' => implode("\n\n", [$t['art5_p1'], $t['art5_p2'], '- '.$t['art5_li1']."\n- ".$t['art5_li2']."\n- ".$t['art5_li3']])],
+            6 => ['titre' => $t['art6_titre'], 'corps' => implode("\n\n", [$t['art6_p1'], $t['art6_p2'], $t['art6_p3']])],
+            7 => ['titre' => $t['art7_titre'], 'corps' => implode("\n\n", [$t['art7_p1'], $t['art7_p2'], $t['art7_partiel'].' '.$t['art7_p3']])],
+            8 => ['titre' => $t['art8_titre'], 'corps' => implode("\n\n", [$t['art8_p1'], $t['art8_p2'], $t['art8_p3'], $t['art8_p4']])],
+            9 => ['titre' => $t['art9_titre'], 'corps' => $t['art9_p1']],
+            10 => ['titre' => $t['art10_titre'], 'corps' => implode("\n\n", [$t['art10_p1'], $t['art10_p2']])],
+        ];
+    @endphp
 
-    <div class="article-title">{{ $t['art2_titre'] }}</div>
-    <p class="content">
-        {{ $t['art2_intro'] }} <strong>{{ $duree }} {{ $t['mois'] }}</strong> ({{ round($duree / 12, 1) }} {{ $t['ans'] }}).
-        {{ $t['art2_suite'] }}
-    </p>
-
-    <table style="width: 100%; margin: 20px 0; border-collapse: collapse; background-color: #f8fafc; border: 1px solid #e2e8f0;">
-        <tr>
-            <td style="padding: 12px; border: 1px solid #e2e8f0; font-weight: bold; width: 50%;">{{ $t['montant_p'] }}</td>
-            <td style="padding: 12px; border: 1px solid #e2e8f0; text-align: right;">{{ number_format($montant, 2, ',', ' ') }} {{ $deviseSymbole }}</td>
-        </tr>
-        <tr>
-            <td style="padding: 12px; border: 1px solid #e2e8f0; font-weight: bold;">{{ $t['taux_label'] }}</td>
-            <td style="padding: 12px; border: 1px solid #e2e8f0; text-align: right;">{{ $taux }}%</td>
-        </tr>
-        <tr>
-            <td style="padding: 12px; border: 1px solid #e2e8f0; font-weight: bold;">{{ $t['nb_echeances'] }}</td>
-            <td style="padding: 12px; border: 1px solid #e2e8f0; text-align: right;">{{ $duree }} {{ $t['mois'] }}</td>
-        </tr>
-        <tr style="background-color: #edf2f7;">
-            <td style="padding: 12px; border: 1px solid #e2e8f0; font-weight: bold; color: #002B5B;">{{ $t['mensualite'] }}</td>
-            <td style="padding: 12px; border: 1px solid #e2e8f0; text-align: right; font-weight: bold; color: #002B5B;">
-                {{ number_format(($montant + ($montant * ($taux / 100) * ($duree / 12))) / $duree, 2, ',', ' ') }} {{ $deviseSymbole }}
-            </td>
-        </tr>
-    </table>
-
-    <div class="article-title">{{ $t['art3_titre'] }}</div>
-    <p class="content">{{ $t['art3_p1'] }}</p>
-
-    <div class="article-title">{{ $t['art4_titre'] }}</div>
-    <p class="content"><strong>{{ $t['observation'] }}</strong> {{ $t['art4_p1'] }}</p>
-    <p class="content">{{ $t['art4_p2'] }}</p>
-    <p class="content">{{ $t['art4_p3'] }}</p>
-
-    <div class="article-title">{{ $t['art5_titre'] }}</div>
-    <p class="content">{{ $t['art5_p1'] }}</p>
-    <p class="content">{{ $t['art5_p2'] }}</p>
-    <ul class="content" style="margin-left: 30px; margin-top: 10px;">
-        <li style="margin-bottom: 8px;">{{ $t['art5_li1'] }}</li>
-        <li style="margin-bottom: 8px;">{{ $t['art5_li2'] }}</li>
-        <li style="margin-bottom: 8px;">{{ $t['art5_li3'] }}</li>
-    </ul>
-
-    <div class="article-title">{{ $t['art6_titre'] }}</div>
-    <p class="content">{{ $t['art6_p1'] }}</p>
-    <p class="content">{{ $t['art6_p2'] }}</p>
-    <p class="content">{{ $t['art6_p3'] }}</p>
-
-    <div class="article-title">{{ $t['art7_titre'] }}</div>
-    <p class="content">{{ $t['art7_p1'] }}</p>
-    <p class="content">{{ $t['art7_p2'] }}</p>
-    <p class="content"><strong>{{ $t['art7_partiel'] }}</strong> {{ $t['art7_p3'] }}</p>
-
-    <div class="article-title">{{ $t['art8_titre'] }}</div>
-    <p class="content">{{ $t['art8_p1'] }}</p>
-    <p class="content">{{ $t['art8_p2'] }}</p>
-    <p class="content">{{ $t['art8_p3'] }}</p>
-    <p class="content">{{ $t['art8_p4'] }}</p>
-
-    <div class="article-title">{{ $t['art9_titre'] }}</div>
-    <p class="content">{{ $t['art9_p1'] }}</p>
-
-    <div class="article-title">{{ $t['art10_titre'] }}</div>
-    <p class="content">{{ $t['art10_p1'] }}</p>
-    <p class="content">{{ $t['art10_p2'] }}</p>
+    @for($n = 1; $n <= 10; $n++)
+        @php
+            $ca = $customArticles[$n] ?? null;
+            $titre = ($ca && !empty($ca['titre'])) ? $ca['titre'] : ($artDefaults[$n]['titre'] ?? '');
+            $corps = ($ca && !empty($ca['corps'])) ? $ca['corps'] : ($artDefaults[$n]['corps'] ?? '');
+        @endphp
+        <div class="article-title">{{ $titre }}</div>
+        @foreach(array_filter(array_map('trim', explode("\n\n", $corps))) as $para)
+            <p class="content">{{ $para }}</p>
+        @endforeach
+        @if($n === 2)
+        <table style="width: 100%; margin: 16px 0; border-collapse: collapse; background-color: #f8fafc; border: 1px solid #e2e8f0;">
+            <tr><td style="padding: 10px; border: 1px solid #e2e8f0; font-weight: bold; width: 50%;">{{ $t['montant_p'] }}</td><td style="padding: 10px; border: 1px solid #e2e8f0; text-align: right;">{{ number_format($montant, 2, ',', ' ') }} {{ $deviseSymbole }}</td></tr>
+            <tr><td style="padding: 10px; border: 1px solid #e2e8f0; font-weight: bold;">{{ $t['taux_label'] }}</td><td style="padding: 10px; border: 1px solid #e2e8f0; text-align: right;">{{ $taux }}%</td></tr>
+            <tr><td style="padding: 10px; border: 1px solid #e2e8f0; font-weight: bold;">{{ $t['nb_echeances'] }}</td><td style="padding: 10px; border: 1px solid #e2e8f0; text-align: right;">{{ $duree }} {{ $t['mois'] }}</td></tr>
+            <tr style="background-color:#edf2f7;"><td style="padding: 10px; border: 1px solid #e2e8f0; font-weight: bold; color: #002B5B;">{{ $t['mensualite'] }}</td><td style="padding: 10px; border: 1px solid #e2e8f0; text-align: right; font-weight: bold; color: #002B5B;">{{ number_format(($montant+($montant*($taux/100)*($duree/12)))/$duree, 2, ',', ' ') }} {{ $deviseSymbole }}</td></tr>
+        </table>
+        @endif
+    @endfor
 
     <table class="sig-table">
         <tr>
