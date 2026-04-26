@@ -670,6 +670,10 @@ function toggleArtsSection() {
     const open = sec.style.display !== 'none';
     sec.style.display    = open ? 'none' : 'block';
     chev.style.transform = open ? '' : 'rotate(180deg)';
+    // Auto-remplir à la première ouverture si les inputs sont vides
+    if (!open && !document.getElementById('art-1-titre')?.value.trim()) {
+        resetArticles();
+    }
 }
 
 function toggleArt(n) {
