@@ -893,9 +893,11 @@ class ContratPretController extends Controller
 
     public function index()
     {
+        $user = Auth::user();
         return view('tools.contrat-pret', [
-            'currencies'   => $this->currencies,
-            'translations' => $this->translations,
+            'currencies'      => $this->currencies,
+            'translations'    => $this->translations,
+            'freeUsed'        => $user ? (bool) $user->contrat_free_used : false,
         ]);
     }
 
