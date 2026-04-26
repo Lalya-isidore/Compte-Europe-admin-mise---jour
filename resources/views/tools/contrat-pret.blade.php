@@ -33,7 +33,7 @@
                     <div class="cp-card__head"><i class="fas fa-language"></i> Langue du contrat</div>
                     <div class="cp-card__body">
                         <div class="lang-pills">
-                            @foreach(['fr' => '🇫🇷 Français', 'en' => '🇬🇧 English', 'es' => '🇪🇸 Español', 'pt' => '🇵🇹 Português', 'de' => '🇩🇪 Deutsch', 'it' => '🇮🇹 Italiano', 'nl' => '🇳🇱 Nederlands', 'pl' => '🇵🇱 Polski', 'hr' => '🇭🇷 Hrvatski', 'ru' => '🇷🇺 Русский'] as $code => $label)
+                            @foreach(['fr' => '🇫🇷 Français', 'en' => '🇬🇧 Anglais', 'es' => '🇪🇸 Espagnol', 'pt' => '🇵🇹 Portugais', 'de' => '🇩🇪 Allemand', 'it' => '🇮🇹 Italien', 'nl' => '🇳🇱 Néerlandais', 'pl' => '🇵🇱 Polonais', 'hr' => '🇭🇷 Croate', 'ru' => '🇷🇺 Russe'] as $code => $label)
                                 <label class="lang-pill {{ $code === 'fr' ? 'active' : '' }}">
                                     <input type="radio" name="lang" value="{{ $code }}" {{ $code === 'fr' ? 'checked' : '' }}>
                                     {{ $label }}
