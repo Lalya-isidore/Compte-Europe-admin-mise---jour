@@ -308,7 +308,7 @@
                     <div class="cp-preview">
                         <div class="cp-preview__doc">
                             {{-- En-tête 3 colonnes identique au PDF --}}
-                            <table class="prev-hdr-table">
+                            <div class="prev-hdr-wrap"><table class="prev-hdr-table">
                                 <tr>
                                     <td class="prev-hdr-left">
                                         <img src="/images/contract/logo-ue.png" class="prev-hdr-img">
@@ -331,7 +331,7 @@
                                         <div class="prev-contract-no" id="prev-no">CONTRAT N° —/{{ date('Y') }}</div>
                                     </td>
                                 </tr>
-                            </table>
+                            </table></div>{{-- /prev-hdr-wrap --}}
 
                             <div class="prev-subtitle" id="prev-soussignes">— ENTRE LES SOUSSIGNÉS —</div>
 
@@ -576,12 +576,7 @@
     .cp-col--preview .cp-card { border-radius: 0; border-left: none; border-right: none; }
     .cp-preview { padding: 0; }
     .cp-preview__doc { padding: 12px 10px; border-radius: 0; border-left: none; border-right: none; box-shadow: none; }
-    /* En-tête : réduction ciblée */
-    .prev-hdr-table td { font-size: 5.5pt !important; padding: 2px !important; }
-    .prev-hdr-table td div { font-size: 5.5pt !important; line-height: 1.3 !important; }
-    .prev-hdr-table h1, #prev-titre { font-size: 11pt !important; letter-spacing: 0 !important; white-space: normal !important; }
-    .prev-hdr-table img { height: 28px !important; }
-    #prev-no { font-size: 6pt !important; }
+    .prev-hdr-wrap { overflow: hidden; }
 }
 
 /* Cachet / Tampon */
@@ -762,9 +757,33 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Exposer updatePreview globalement pour les fonctions externes (deleteArticle, resetArticles)
+    const _rawUpdatePreview = updatePreview;
+    updatePreview = function() { _rawUpdatePreview(); setTimeout(scalePreviewHeader, 60); };
     window.updatePreview = updatePreview;
 
+    // Zoom de l'en-tête uniquement sur mobile
+    function scalePreviewHeader() {
+        const wrap = document.querySelector('.prev-hdr-wrap');
+        const tbl  = document.querySelector('.prev-hdr-table');
+        if (!wrap || !tbl) return;
+        // Reset
+        tbl.style.transform = tbl.style.width = tbl.style.marginBottom = '';
+        wrap.style.height   = '';
+        if (window.innerWidth > 600) return;
+        const available = wrap.offsetWidth;
+        const natural   = 620; // largeur naturelle de l'en-tête desktop
+        if (available >= natural) return;
+        const scale = available / natural;
+        tbl.style.width           = natural + 'px';
+        tbl.style.transformOrigin = 'top left';
+        tbl.style.transform       = `scale(${scale})`;
+        // Corriger la hauteur occupée dans le layout
+        wrap.style.height = (tbl.offsetHeight * scale) + 'px';
+    }
+    window.addEventListener('resize', scalePreviewHeader);
+
     updatePreview();
+    setTimeout(scalePreviewHeader, 80);
 
     // Suppression fond intelligente : détecte automatiquement la couleur du fond
     // en échantillonnant les coins de l'image, puis flood-fill depuis les bords.
