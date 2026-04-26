@@ -18,17 +18,6 @@
     </div>
     @enderror
 
-    {{-- En-tête --}}
-    <div class="cp-header">
-        <div class="cp-header__icon">
-            <i class="fas fa-file-contract"></i>
-        </div>
-        <div>
-            <h1 class="cp-header__title">Générateur de Contrat de Prêt</h1>
-            <p class="cp-header__sub">Remplissez les informations ci-dessous pour générer un contrat PDF professionnel</p>
-        </div>
-    </div>
-
     {{-- Info section style Flash Compte Pro --}}
     <div class="cp-info-card">
         <div class="cp-info-title"><i class="fas fa-file-contract"></i> Contrat de Prêt</div>
