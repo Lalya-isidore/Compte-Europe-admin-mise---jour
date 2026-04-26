@@ -32,13 +32,12 @@
                 <div class="cp-card">
                     <div class="cp-card__head"><i class="fas fa-language"></i> Langue du contrat</div>
                     <div class="cp-card__body">
-                        <div class="lang-pills">
-                            @foreach(['fr' => '🇫🇷 Français', 'en' => '🇬🇧 Anglais', 'es' => '🇪🇸 Espagnol', 'pt' => '🇵🇹 Portugais', 'de' => '🇩🇪 Allemand', 'it' => '🇮🇹 Italien', 'nl' => '🇳🇱 Néerlandais', 'pl' => '🇵🇱 Polonais', 'hr' => '🇭🇷 Croate', 'ru' => '🇷🇺 Russe'] as $code => $label)
-                                <label class="lang-pill {{ $code === 'fr' ? 'active' : '' }}">
-                                    <input type="radio" name="lang" value="{{ $code }}" {{ $code === 'fr' ? 'checked' : '' }}>
-                                    {{ $label }}
-                                </label>
-                            @endforeach
+                        <div class="cp-field">
+                            <select name="lang" id="lang-select">
+                                @foreach(['fr' => '🇫🇷 Français', 'en' => '🇬🇧 Anglais', 'es' => '🇪🇸 Espagnol', 'pt' => '🇵🇹 Portugais', 'de' => '🇩🇪 Allemand', 'it' => '🇮🇹 Italien', 'nl' => '🇳🇱 Néerlandais', 'pl' => '🇵🇱 Polonais', 'hr' => '🇭🇷 Croate', 'ru' => '🇷🇺 Russe'] as $code => $label)
+                                    <option value="{{ $code }}" {{ $code === 'fr' ? 'selected' : '' }}>{{ $label }}</option>
+                                @endforeach
+                            </select>
                         </div>
                     </div>
                 </div>
@@ -454,11 +453,6 @@
 .cp-card__head i { color: #1e3a5f; }
 .cp-card__body { padding: 18px; }
 
-.lang-pills { display: flex; flex-wrap: wrap; gap: 8px; }
-.lang-pill { display: flex; align-items: center; gap: 6px; padding: 7px 14px; border: 2px solid #e0e0e0; border-radius: 8px; cursor: pointer; font-size: 0.83rem; font-weight: 500; color: #555; transition: all 0.2s; }
-.lang-pill:hover { border-color: #1e3a5f; color: #1e3a5f; }
-.lang-pill.active { border-color: #1e3a5f; background: #1e3a5f; color: #fff; }
-.lang-pill input { display: none; }
 
 .cp-row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
 .cp-field { display: flex; flex-direction: column; gap: 5px; }
@@ -612,7 +606,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const preAdr    = document.getElementById('preteur_adresse').value   || '—';
         const preId     = document.getElementById('preteur_id').value        || '—';
         const preCap    = document.getElementById('preteur_capacite').value  || '—';
-        const lang       = document.querySelector('input[name="lang"]:checked')?.value || 'fr';
+        const lang       = document.getElementById('lang-select')?.value || 'fr';
         const contractNo = document.getElementById('contract_no').value.trim();
         const t          = allTranslations[lang] || allTranslations['fr'];
 
@@ -719,16 +713,14 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Langue pills
-    document.querySelectorAll('.lang-pill').forEach(pill => {
-        pill.addEventListener('click', () => {
-            document.querySelectorAll('.lang-pill').forEach(p => p.classList.remove('active'));
-            pill.classList.add('active');
+    // Langue select
+    document.getElementById('lang-select')?.addEventListener('change', () => {
+        {
             // Si des articles ont déjà été remplis, les recalculer dans la nouvelle langue
             const artsFilled = document.getElementById('art-1-titre')?.value.trim();
             if (artsFilled) resetArticles();
             else updatePreview();
-        });
+        }
     });
 
     // Tous les champs
@@ -1239,7 +1231,7 @@ function deleteArticle(n) {
 }
 
 function resetArticles() {
-    const lang    = document.querySelector('input[name="lang"]:checked')?.value || 'fr';
+    const lang    = document.getElementById('lang-select')?.value || 'fr';
     const t       = allTranslations[lang] || allTranslations['fr'];
     const montant = parseFloat(document.getElementById('montant').value) || 0;
     const taux    = parseFloat(document.getElementById('taux').value) || 0;
