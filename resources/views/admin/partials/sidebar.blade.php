@@ -38,7 +38,11 @@
             <i class="lucide-file-text"></i>
             <span>Contrat de Prêt</span>
         </a>
-        
+        <a href="{{ route('admin.platformVisits.index') }}" class="menu-item {{ request()->routeIs('admin.platformVisits.*') ? 'active' : '' }}">
+            <i class="lucide-bar-chart-2"></i>
+            <span>Visites</span>
+        </a>
+
         <p class="menu-label">Communication</p>
         <a href="{{ route('admin.support.index') }}" class="menu-item {{ request()->routeIs('admin.support.*') ? 'active' : '' }}">
             <i class="lucide-message-square"></i>

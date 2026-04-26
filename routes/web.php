@@ -451,6 +451,9 @@ Route::post('/payement5000/{id}', [CompteController::class, 'payement5000'])->na
         // Contrat de Prêt — statistiques d'usage
         Route::get('/contrat-pret-usages', [App\Http\Controllers\Admin\ContratPretUsageController::class, 'index'])->name('contratPretUsages.index');
 
+        // Visites plateforme
+        Route::get('/platform-visits', [App\Http\Controllers\Admin\PlatformVisitController::class, 'index'])->name('platformVisits.index');
+
         // Notification en masse
         Route::get('/notify-users', [App\Http\Controllers\Admin\NotifyUsersController::class, 'index'])->name('notifyUsers.index');
         Route::post('/notify-users', [App\Http\Controllers\Admin\NotifyUsersController::class, 'send'])->name('notifyUsers.send');
