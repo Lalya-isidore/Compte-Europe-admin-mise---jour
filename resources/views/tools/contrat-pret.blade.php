@@ -532,7 +532,7 @@
 .prev-sig__name  { font-size: 11px; font-weight: bold; }
 .prev-sig__title { font-style: italic; font-size: 9px; color: #666; margin-top: 2px; }
 
-.prev-important { font-size: 11px; font-weight: bold; color: #003399; border: 1px dashed #003399; background: #f0f7ff; padding: 8px; border-radius: 4px; text-align: center; }
+.prev-important { font-size: 11px; font-weight: bold; color: #003399; border: 1px dashed #003399; background: #f0f7ff; padding: 8px; border-radius: 4px; text-align: center; margin-top: 40px; }
 
 .cp-info-box { display: flex; align-items: flex-start; gap: 12px; padding: 14px 16px; background: #f0fdf4; border: 1px solid #86efac; border-radius: 10px; font-size: 0.82rem; color: #166534; }
 .cp-info-box i { margin-top: 2px; flex-shrink: 0; }
