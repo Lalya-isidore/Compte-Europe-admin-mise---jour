@@ -358,6 +358,7 @@
         position: absolute;
         top: 8px;
         left: 8px;
+        z-index: 2;
         background: #2196F3;
         color: #fff;
         font-size: 0.75rem;
