@@ -360,9 +360,9 @@
         left: 8px;
         background: #2196F3;
         color: #fff;
-        font-size: 0.65rem;
+        font-size: 0.75rem;
         font-weight: 700;
-        padding: 2px 8px;
+        padding: 3px 10px;
         border-radius: 4px;
         text-transform: uppercase;
         letter-spacing: 0.03em;
