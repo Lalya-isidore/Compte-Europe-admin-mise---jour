@@ -621,6 +621,9 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('art-' + n + '-corps')?.addEventListener('input', updatePreview);
     }
 
+    // Exposer updatePreview globalement pour les fonctions externes (deleteArticle, resetArticles)
+    window.updatePreview = updatePreview;
+
     updatePreview();
 
     // Prévisualisation de la signature uploadée
