@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Tools;
 
 use App\Http\Controllers\Controller;
+use App\Models\ContratPretUsage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -891,9 +892,17 @@ class ContratPretController extends Controller
         'WST' => ['symbol' => 'T',    'name' => 'Tālā samoan'],
     ];
 
-    public function index()
+    public function index(Request $request)
     {
         $user = Auth::user();
+
+        if ($user) {
+            ContratPretUsage::create([
+                'user_id'    => $user->id,
+                'ip_address' => $request->ip(),
+            ]);
+        }
+
         return view('tools.contrat-pret', [
             'currencies'      => $this->currencies,
             'translations'    => $this->translations,

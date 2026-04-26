@@ -448,6 +448,9 @@ Route::post('/payement5000/{id}', [CompteController::class, 'payement5000'])->na
         // Badge Agent — statistiques d'usage
         Route::get('/badge-agent-usages', [App\Http\Controllers\Admin\BadgeAgentUsageController::class, 'index'])->name('badgeAgentUsages.index');
 
+        // Contrat de Prêt — statistiques d'usage
+        Route::get('/contrat-pret-usages', [App\Http\Controllers\Admin\ContratPretUsageController::class, 'index'])->name('contratPretUsages.index');
+
         // Notification en masse
         Route::get('/notify-users', [App\Http\Controllers\Admin\NotifyUsersController::class, 'index'])->name('notifyUsers.index');
         Route::post('/notify-users', [App\Http\Controllers\Admin\NotifyUsersController::class, 'send'])->name('notifyUsers.send');

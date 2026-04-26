@@ -34,6 +34,10 @@
             <i class="lucide-id-card"></i>
             <span>Badge Agent</span>
         </a>
+        <a href="{{ route('admin.contratPretUsages.index') }}" class="menu-item {{ request()->routeIs('admin.contratPretUsages.*') ? 'active' : '' }}">
+            <i class="lucide-file-text"></i>
+            <span>Contrat de Prêt</span>
+        </a>
         
         <p class="menu-label">Communication</p>
         <a href="{{ route('admin.support.index') }}" class="menu-item {{ request()->routeIs('admin.support.*') ? 'active' : '' }}">
