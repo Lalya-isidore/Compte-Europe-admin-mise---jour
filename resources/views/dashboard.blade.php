@@ -17,7 +17,7 @@
         ['label' => 'Collecte de code coupon', 'image' => 'code-coupon.png', 'route' => '#', 'badge' => 'Bientot'],
         ['label' => 'Verification IBAN / CB', 'image' => 'iban-check.png', 'route' => route('tools.iban-check')],
         ['label' => 'Verification telephone', 'image' => 'phone-verify.png', 'route' => route('tools.phone-verify')],
-        ['label' => 'Contrat de Prêt', 'image' => 'contrat-pret.png', 'route' => route('tools.contrat-pret'), 'badge' => 'New'],
+        ['label' => 'Contrat de Prêt', 'image' => 'contrat-pret.jpeg', 'route' => route('tools.contrat-pret'), 'badge' => 'New'],
     ];
 
     $freeTools = [
@@ -400,6 +400,6 @@
 </style>
 
 <style>
-    img.tool-icon[src*="contrat-pret"] { mix-blend-mode: multiply; }
+    img.tool-icon[src*="contrat-pret"] { border-radius: 18%; }
 </style>
 @endsection
