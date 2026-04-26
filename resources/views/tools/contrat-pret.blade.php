@@ -375,54 +375,31 @@
                                 @endforeach
                             </div>
 
-                            <table style="width:100%; border-top:1px solid #eee; margin-top:20px; border-collapse:collapse;">
-                                {{-- Ligne pour la date (uniquement à droite) --}}
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td style="text-align:right; padding-top:10px;">
-                                        <div class="prev-sig__date" id="prev-sig-date" style="margin-bottom:5px;">Fait à —, le {{ date('d/m/Y') }}</div>
-                                    </td>
-                                </tr>
-                                {{-- Ligne pour les étiquettes (Emprunteur / Prêteur) --}}
-                                <tr>
-                                    <td style="width:45%; vertical-align:top;">
+                            <div class="prev-sig-flex">
+                                <div class="prev-sig-date-row">
+                                    <div class="prev-sig__date" id="prev-sig-date">Fait à —, le {{ date('d/m/Y') }}</div>
+                                </div>
+                                <div class="prev-sig-cols">
+                                    <div class="prev-sig-col">
                                         <div class="prev-sig__label" id="prev-lbl-emprunteur">L'Emprunteur :</div>
-                                    </td>
-                                    <td style="width:10%;"></td>
-                                    <td style="width:45%; vertical-align:top; text-align:right;">
+                                        <div class="prev-sig__img-wrap">
+                                            <img id="prev-sig-emp-img" src="" alt="" style="display:none; max-height:clamp(40px,12vw,60px); max-width:clamp(80px,28vw,160px);">
+                                        </div>
+                                        <div class="prev-sig__line"></div>
+                                        <div class="prev-sig__name" id="prev-sig-emprunteur">—</div>
+                                        <div class="prev-sig__title" id="prev-lbl-benef-legal">Bénéficiaire légal du prêt</div>
+                                    </div>
+                                    <div class="prev-sig-col prev-sig-col--right">
                                         <div class="prev-sig__label" id="prev-lbl-preteur-rep">Le Prêteur représenté par :</div>
-                                    </td>
-                                </tr>
-                                {{-- Ligne pour les images (Signature / Cachet) --}}
-                                <tr>
-                                    <td style="vertical-align:bottom;">
-                                        <div class="prev-sig__img-wrap" style="min-height:60px; display:flex; align-items:flex-end;">
-                                            <img id="prev-sig-emp-img" src="" alt="" style="display:none; max-height:60px; max-width:160px;">
+                                        <div class="prev-sig__img-wrap" style="text-align:right;">
+                                            <img id="prev-sig-pre-img" src="/images/contract/cachet-signature.jpg" alt="Cachet" style="max-height:clamp(60px,18vw,100px); max-width:clamp(100px,32vw,180px); margin-left:auto; display:block;">
                                         </div>
-                                    </td>
-                                    <td></td>
-                                    <td style="vertical-align:bottom; text-align:right;">
-                                        <div class="prev-sig__img-wrap" style="text-align:right; min-height:unset; margin-bottom:0;">
-                                            <img id="prev-sig-pre-img" src="/images/contract/cachet-signature.jpg" alt="Cachet" style="max-height:100px; max-width:180px; margin-left:auto; display:block;">
-                                        </div>
-                                    </td>
-                                </tr>
-                                {{-- Ligne pour les noms --}}
-                                <tr>
-                                    <td style="vertical-align:top;">
-                                        <div class="prev-sig__line" style="border-bottom:1px solid #333; height:1px; margin:5px 0;"></div>
-                                        <div class="prev-sig__name" id="prev-sig-emprunteur" style="font-size:11px; font-weight:bold;">—</div>
-                                        <div class="prev-sig__title" id="prev-lbl-benef-legal" style="font-style:italic; font-size:9px; color:#666;">Bénéficiaire légal du prêt</div>
-                                    </td>
-                                    <td></td>
-                                    <td style="vertical-align:top; text-align:right;">
-                                        <div class="prev-sig__line" style="border-bottom:1px solid #333; height:1px; margin:5px 0;"></div>
-                                        <div class="prev-sig__name" id="prev-sig-preteur" style="font-size:11px; font-weight:bold;">—</div>
-                                        <div class="prev-sig__title" id="prev-sig-preteur-cap" style="font-style:italic; font-size:9px; color:#666;">—</div>
-                                    </td>
-                                </tr>
-                            </table>
+                                        <div class="prev-sig__line"></div>
+                                        <div class="prev-sig__name" id="prev-sig-preteur">—</div>
+                                        <div class="prev-sig__title" id="prev-sig-preteur-cap">—</div>
+                                    </div>
+                                </div>
+                            </div>
 
                             <div class="prev-important" id="prev-important-txt">
                                 IMPORTANT : CE CONTRAT DOIT ÊTRE IMPRIMÉ, DATÉ ET SIGNÉ PAR L'EMPRUNTEUR AFIN DE DÉCLENCHER LE VIREMENT DES FONDS SUR LE COMPTE BANCAIRE DÉSIGNÉ.
@@ -545,16 +522,17 @@
 .prev-art-title { font-size: 12px; color: #002B5B; font-weight: bold; margin-bottom: 3px; }
 .prev-art-body { font-size: 11px; color: #444; line-height: 1.5; }
 
-.prev-sig { display: flex; gap: 10px; margin-bottom: 10px; padding-top: 10px; border-top: 1px solid #eee; }
-.prev-sig__left { flex: 0 0 38%; }
-.prev-sig__mid  { flex: 1; }
-.prev-sig__right { flex: 0 0 38%; text-align: right; }
-.prev-sig__label { font-size: 10px; color: #555; margin-bottom: 4px; }
-.prev-sig__img-wrap { min-height: 55px; display: flex; align-items: flex-end; margin-bottom: 2px; }
-.prev-sig__date  { font-size: 9px; color: #333; margin-bottom: 4px; text-align: right; }
-.prev-sig__line  { height: 28px; border-bottom: 1px solid #333; margin-bottom: 4px; }
-.prev-sig__name  { font-size: 11px; font-weight: bold; }
-.prev-sig__title { font-style: italic; font-size: 9px; color: #666; margin-top: 2px; }
+.prev-sig-flex { border-top: 1px solid #eee; margin-top: 20px; padding-top: 8px; }
+.prev-sig-date-row { text-align: right; margin-bottom: 6px; }
+.prev-sig-cols { display: flex; gap: 8%; }
+.prev-sig-col { flex: 1; min-width: 0; }
+.prev-sig-col--right { text-align: right; }
+.prev-sig__label { font-size: clamp(8px, 1.8vw, 10px); color: #555; margin-bottom: 4px; }
+.prev-sig__img-wrap { min-height: clamp(40px, 12vw, 55px); display: flex; align-items: flex-end; margin-bottom: 2px; }
+.prev-sig__date  { font-size: clamp(7px, 1.6vw, 9px); color: #333; }
+.prev-sig__line  { height: 1px; border-bottom: 1px solid #333; margin: 5px 0; }
+.prev-sig__name  { font-size: clamp(8px, 2vw, 11px); font-weight: bold; }
+.prev-sig__title { font-style: italic; font-size: clamp(7px, 1.6vw, 9px); color: #666; margin-top: 2px; }
 
 .prev-important { font-size: 11px; font-weight: bold; color: #003399; border: 1px dashed #003399; background: #f0f7ff; padding: 8px; border-radius: 4px; text-align: center; margin-top: 40px; }
 
