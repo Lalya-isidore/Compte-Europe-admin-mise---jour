@@ -401,5 +401,6 @@
 
 <style>
     img.tool-icon[src*="contrat-pret"] { border-radius: 18%; }
+    img.tool-icon[src*="badge-agent"] { width: 80px; height: 80px; }
 </style>
 @endsection
