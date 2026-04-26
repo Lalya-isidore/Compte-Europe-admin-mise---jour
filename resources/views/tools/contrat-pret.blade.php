@@ -1059,29 +1059,38 @@ function updateComposite() {
     function tryDraw() {
         if (!sigLoaded || !stampLoaded) return;
 
-        const sW = sigImg.width,   sH = sigImg.height;
-        const tW = stampImg.width, tH = stampImg.height;
+        // --- Normaliser la signature à une largeur cible ---
+        const SIG_TARGET_W = 400; // largeur cible de la signature en pixels
+        const sigRatio = sigImg.height / sigImg.width;
+        const sigW = SIG_TARGET_W;
+        const sigH = Math.round(SIG_TARGET_W * sigRatio);
 
-        // Canvas assez grand pour les deux avec chevauchement
-        const pad  = 16;
-        const cW   = Math.max(sW, tW) + pad;
-        const cH   = sH + Math.round(tH * 0.45) + pad;
+        // --- Normaliser le cachet à ~50% de la hauteur de la signature ---
+        const STAMP_TARGET_H = Math.round(sigH * 0.55);
+        const stampRatio = stampImg.width / stampImg.height;
+        const stH = STAMP_TARGET_H;
+        const stW = Math.round(STAMP_TARGET_H * stampRatio);
+
+        // --- Canvas résultant ---
+        const pad = 10;
+        const cW  = sigW + Math.round(stW * 0.3) + pad; // débordement droit du cachet
+        const cH  = sigH + Math.round(stH * 0.3) + pad; // débordement bas du cachet
 
         const cvs = document.createElement('canvas');
         cvs.width = cW; cvs.height = cH;
         const ctx = cvs.getContext('2d');
 
-        // Dessiner la signature
-        ctx.drawImage(sigImg, (cW - sW) / 2, pad / 2);
+        // Dessiner la signature (normalisée)
+        ctx.drawImage(sigImg, 0, 0, sigW, sigH);
 
-        // Dessiner le cachet en chevauchement bas-droite, légèrement incliné
-        const stX = cW - tW - 4;
-        const stY = pad / 2 + sH - Math.round(tH * 0.55);
+        // Cachet : coin bas-droit de la signature, légèrement incliné
+        const stX = sigW - Math.round(stW * 0.7);
+        const stY = sigH - Math.round(stH * 0.7);
         ctx.save();
-        ctx.translate(stX + tW / 2, stY + tH / 2);
+        ctx.translate(stX + stW / 2, stY + stH / 2);
         ctx.rotate(-0.12); // légère inclinaison réaliste
         ctx.globalAlpha = 0.88;
-        ctx.drawImage(stampImg, -tW / 2, -tH / 2);
+        ctx.drawImage(stampImg, -stW / 2, -stH / 2, stW, stH);
         ctx.restore();
 
         const result = cvs.toDataURL('image/png');
