@@ -147,11 +147,39 @@
                                         </div>
                                     </div>
 
+                                    {{-- Texte du pourtour --}}
+                                    <div style="margin-bottom:10px;">
+                                        <div class="cachet-label"><i class="fas fa-sync-alt" style="font-size:9px;"></i> Texte du pourtour (arc)</div>
+                                        <input type="text" id="cachet_tour"
+                                               value="TRIBUNAL EUROPÉEN DE PREMIÈRE INSTANCE ✦ SERVICE DE COORDINATION JUDICIAIRE"
+                                               oninput="updateCachetPreview()"
+                                               style="width:100%; border:1px solid #ddd; border-radius:6px; padding:7px 10px; font-size:0.78rem; box-sizing:border-box;">
+                                    </div>
+
+                                    {{-- Contenu centre du cachet --}}
+                                    <div style="margin-bottom:12px; background:#f8fafc; border:1px solid #e8edf3; border-radius:7px; padding:10px;">
+                                        <div class="cachet-label" style="margin-bottom:8px;"><i class="fas fa-align-center" style="font-size:9px;"></i> Contenu du centre</div>
+                                        <div style="display:flex; flex-direction:column; gap:7px;">
+                                            <input type="text" id="cachet_societe" placeholder="Nom de la société / Organisation"
+                                                   oninput="updateCachetPreview()"
+                                                   style="border:1px solid #ddd; border-radius:5px; padding:6px 9px; font-size:0.8rem; font-weight:600;">
+                                            <input type="text" id="cachet_bp" placeholder="BP / Adresse (ex: BP 31327 Madrid)"
+                                                   oninput="updateCachetPreview()"
+                                                   style="border:1px solid #ddd; border-radius:5px; padding:6px 9px; font-size:0.78rem;">
+                                            <input type="text" id="cachet_tel" placeholder="Tél : +34 91 000 00 00"
+                                                   oninput="updateCachetPreview()"
+                                                   style="border:1px solid #ddd; border-radius:5px; padding:6px 9px; font-size:0.78rem;">
+                                            <input type="text" id="cachet_email" placeholder="E-mail : contact@exemple.com"
+                                                   oninput="updateCachetPreview()"
+                                                   style="border:1px solid #ddd; border-radius:5px; padding:6px 9px; font-size:0.78rem;">
+                                        </div>
+                                    </div>
+
                                     {{-- Aperçu cachet --}}
                                     <div>
                                         <div class="cachet-label">Aperçu</div>
                                         <div style="background:repeating-conic-gradient(#ccc 0% 25%,#fff 0% 50%) 0 0/12px 12px; border-radius:6px; padding:8px; display:inline-block;">
-                                            <canvas id="cachet-canvas" width="220" height="220" style="display:block;"></canvas>
+                                            <canvas id="cachet-canvas" width="260" height="260" style="display:block;"></canvas>
                                         </div>
                                         <div style="font-size:10px; color:#666; margin-top:5px;">
                                             <i class="fas fa-info-circle"></i> Le cachet se superpose à la signature sur le contrat
@@ -848,10 +876,6 @@ function setCachetColor(color, btn) {
     cachetColor = color;
     document.querySelectorAll('.cachet-color').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
-    // Sync style pills active state
-    document.querySelectorAll('.cachet-pill').forEach(p => {
-        p.classList.toggle('active', p.querySelector('input')?.checked);
-    });
     updateCachetPreview();
 }
 
@@ -860,6 +884,7 @@ document.querySelectorAll('.cachet-pill input').forEach(inp => {
     inp.addEventListener('change', () => {
         document.querySelectorAll('.cachet-pill').forEach(p => p.classList.remove('active'));
         inp.closest('.cachet-pill').classList.add('active');
+        updateCachetPreview();
     });
 });
 
@@ -869,6 +894,11 @@ function getStampInfo() {
         pays: (document.getElementById('preteur_pays')?.value || '').toUpperCase().trim(),
         id  : (document.getElementById('preteur_id')?.value   || '').trim(),
         cap : (document.getElementById('preteur_capacite')?.value || '').toUpperCase().trim(),
+        tour: (document.getElementById('cachet_tour')?.value || '').toUpperCase().trim(),
+        societe: (document.getElementById('cachet_societe')?.value || '').toUpperCase().trim(),
+        bp: (document.getElementById('cachet_bp')?.value || '').trim(),
+        tel: (document.getElementById('cachet_tel')?.value || '').trim(),
+        email: (document.getElementById('cachet_email')?.value || '').trim(),
     };
 }
 
@@ -895,10 +925,10 @@ function drawArcText(ctx, text, cx, cy, radius, midAngle, clockwise) {
     ctx.restore();
 }
 
-// Génère un cachet ROND sur un canvas de 220×220
-function generateRoundStamp(nom, pays, id, cap, color) {
-    const S = 220, cx = 110, cy = 110;
-    const Ro = 100, Rt = 90, Ri = 82;
+// Génère un cachet ROND sur un canvas de 260×260
+function generateRoundStamp(info, color) {
+    const S = 260, cx = 130, cy = 130;
+    const Ro = 120, Rt = 108, Ri = 96;
     const cvs = document.createElement('canvas');
     cvs.width = cvs.height = S;
     const ctx = cvs.getContext('2d');
@@ -906,50 +936,47 @@ function generateRoundStamp(nom, pays, id, cap, color) {
     ctx.strokeStyle = color; ctx.fillStyle = color;
 
     // Cercle extérieur (épais)
-    ctx.lineWidth = 3.5;
+    ctx.lineWidth = 4;
     ctx.beginPath(); ctx.arc(cx, cy, Ro, 0, Math.PI * 2); ctx.stroke();
-
-    // Cercle intérieur (fin)
     ctx.lineWidth = 1.5;
+    ctx.beginPath(); ctx.arc(cx, cy, Ro - 6, 0, Math.PI * 2); ctx.stroke();
+
+    // Cercle intérieur
+    ctx.lineWidth = 2;
     ctx.beginPath(); ctx.arc(cx, cy, Ri, 0, Math.PI * 2); ctx.stroke();
 
-    // Étoiles décoratrices (3h et 9h)
-    ['✦','✦'].forEach((star, i) => {
-        const a = i === 0 ? 0 : Math.PI;
-        ctx.save();
-        ctx.font = '11px Arial';
-        ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
-        ctx.fillText(star, cx + Math.cos(a) * Rt, cy + Math.sin(a) * Rt);
-        ctx.restore();
-    });
-
-    // Texte supérieur (nom) — arc du haut, sens horaire
-    const topText = nom.length > 22 ? nom.substring(0, 22) : nom;
-    ctx.font = 'bold 11px Arial';
-    drawArcText(ctx, topText, cx, cy, Rt, -Math.PI / 2, true);
-
-    // Texte inférieur (capacité · pays) — arc du bas, sens anti-horaire
-    const botText = (cap && pays) ? cap + ' · ' + pays : (cap || pays || '');
-    if (botText) {
-        ctx.font = '9px Arial';
-        drawArcText(ctx, botText, cx, cy, Rt, Math.PI / 2, false);
+    // Texte du pourtour (arc complet)
+    if (info.tour) {
+        ctx.font = 'bold 12px Arial';
+        drawArcText(ctx, info.tour, cx, cy, Rt, -Math.PI / 2, true);
     }
 
-    // Texte central (ID)
+    // Texte central
     ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
-    ctx.font = 'bold 10px Arial';
-    const idLines = id.split(/[,;·]/);
-    idLines.forEach((line, i) => {
-        const y = cy + (i - (idLines.length - 1) / 2) * 14;
-        ctx.fillText(line.trim(), cx, y);
+    let lines = [];
+    if (info.societe) lines.push({text: info.societe, font: 'bold 13px Arial'});
+    if (info.bp)      lines.push({text: info.bp,      font: '10px Arial'});
+    if (info.tel)     lines.push({text: info.tel,     font: '10px Arial'});
+    if (info.email)   lines.push({text: info.email,   font: '10px Arial'});
+
+    if (lines.length === 0) {
+        lines.push({text: info.nom, font: 'bold 12px Arial'});
+        lines.push({text: info.cap, font: '10px Arial'});
+    }
+
+    const lineH = 15;
+    const startY = cy - ((lines.length - 1) * lineH) / 2;
+    lines.forEach((line, i) => {
+        ctx.font = line.font;
+        ctx.fillText(line.text, cx, startY + i * lineH);
     });
 
     return cvs.toDataURL('image/png');
 }
 
-// Génère un cachet RECTANGULAIRE sur un canvas de 240×100
-function generateRectStamp(nom, pays, id, cap, color) {
-    const W = 240, H = 100;
+// Génère un cachet RECTANGULAIRE
+function generateRectStamp(info, color) {
+    const W = 260, H = 120;
     const cvs = document.createElement('canvas');
     cvs.width = W; cvs.height = H;
     const ctx = cvs.getContext('2d');
@@ -957,30 +984,29 @@ function generateRectStamp(nom, pays, id, cap, color) {
     ctx.strokeStyle = color; ctx.fillStyle = color;
 
     // Double bordure
-    ctx.lineWidth = 2.5; ctx.strokeRect(3, 3, W - 6, H - 6);
-    ctx.lineWidth = 1;   ctx.strokeRect(7, 7, W - 14, H - 14);
+    ctx.lineWidth = 3; ctx.strokeRect(4, 4, W - 8, H - 8);
+    ctx.lineWidth = 1; ctx.strokeRect(10, 10, W - 20, H - 20);
 
     ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    
+    let lines = [];
+    if (info.societe) lines.push({text: info.societe, font: 'bold 15px Arial'});
+    if (info.bp)      lines.push({text: info.bp,      font: '11px Arial'});
+    if (info.tel)     lines.push({text: info.tel,     font: '11px Arial'});
+    if (info.email)   lines.push({text: info.email,   font: '11px Arial'});
 
-    // Ligne 1 : nom
-    ctx.font = 'bold 14px Arial';
-    ctx.fillText(nom.length > 28 ? nom.substring(0, 28) : nom, W / 2, 28);
+    if (lines.length === 0) {
+        lines.push({text: info.nom, font: 'bold 14px Arial'});
+        lines.push({text: info.cap, font: '11px Arial'});
+        lines.push({text: info.id,  font: 'bold 10px Arial'});
+    }
 
-    // Ligne séparatrice
-    ctx.lineWidth = 0.8;
-    ctx.beginPath(); ctx.moveTo(20, 40); ctx.lineTo(W - 20, 40); ctx.stroke();
-
-    // Ligne 2 : capacité
-    ctx.font = '11px Arial';
-    ctx.fillText(cap || '', W / 2, 54);
-
-    // Ligne 3 : pays
-    ctx.font = '10px Arial';
-    ctx.fillText(pays || '', W / 2, 68);
-
-    // Ligne 4 : ID
-    ctx.font = 'bold 9px Arial';
-    ctx.fillText(id || '', W / 2, 83);
+    const lineH = 18;
+    const startY = (H / 2) - ((lines.length - 1) * lineH) / 2;
+    lines.forEach((line, i) => {
+        ctx.font = line.font;
+        ctx.fillText(line.text, W / 2, startY + i * lineH);
+    });
 
     return cvs.toDataURL('image/png');
 }
@@ -997,11 +1023,11 @@ function updateCachetPreview() {
         updateComposite(); return;
     }
 
-    const { nom, pays, id, cap } = getStampInfo();
+    const info = getStampInfo();
 
     if (style === 'rond') {
-        cvs.width = cvs.height = 220;
-        const stampUrl = generateRoundStamp(nom, pays, id, cap, cachetColor);
+        cvs.width = cvs.height = 260;
+        const stampUrl = generateRoundStamp(info, cachetColor);
         const img = new Image();
         img.onload = () => {
             const ctx = cvs.getContext('2d');
@@ -1011,8 +1037,8 @@ function updateCachetPreview() {
         };
         img.src = stampUrl;
     } else {
-        cvs.width = 240; cvs.height = 100;
-        const stampUrl = generateRectStamp(nom, pays, id, cap, cachetColor);
+        cvs.width = 260; cvs.height = 120;
+        const stampUrl = generateRectStamp(info, cachetColor);
         const img = new Image();
         img.onload = () => {
             const ctx = cvs.getContext('2d');
@@ -1027,15 +1053,15 @@ function updateCachetPreview() {
 // Composite signature + cachet → stocke dans signature_preteur_data + met à jour l'aperçu
 function updateComposite() {
     const style = document.querySelector('input[name="cachet_style"]:checked')?.value || 'rond';
-    const { nom, pays, id, cap } = getStampInfo();
+    const info = getStampInfo();
     const prevImg = document.getElementById('prev-sig-pre-img');
 
     // Pas de signature importée → juste le cachet
     if (!currentSigDataUrl) {
         if (style === 'none') { if (prevImg) prevImg.src = '/images/contract/cachet-signature.jpg'; return; }
         const stampUrl = style === 'rond'
-            ? generateRoundStamp(nom, pays, id, cap, cachetColor)
-            : generateRectStamp(nom, pays, id, cap, cachetColor);
+            ? generateRoundStamp(info, cachetColor)
+            : generateRectStamp(info, cachetColor);
         document.getElementById('signature_preteur_data').value = stampUrl;
         if (prevImg) { prevImg.src = stampUrl; prevImg.style.display = 'block'; }
         return;
@@ -1049,8 +1075,8 @@ function updateComposite() {
     }
 
     const stampUrl = style === 'rond'
-        ? generateRoundStamp(nom, pays, id, cap, cachetColor)
-        : generateRectStamp(nom, pays, id, cap, cachetColor);
+        ? generateRoundStamp(info, cachetColor)
+        : generateRectStamp(info, cachetColor);
 
     const sigImg   = new Image();
     const stampImg = new Image();
@@ -1065,7 +1091,7 @@ function updateComposite() {
         const sigW = SIG_TARGET_W;
         const sigH = Math.round(SIG_TARGET_W * sigRatio);
 
-        // --- Normaliser le cachet à ~50% de la hauteur de la signature ---
+        // --- Normaliser le cachet à ~55% de la hauteur de la signature ---
         const STAMP_TARGET_H = Math.round(sigH * 0.55);
         const stampRatio = stampImg.width / stampImg.height;
         const stH = STAMP_TARGET_H;
@@ -1104,8 +1130,8 @@ function updateComposite() {
     stampImg.src = stampUrl;
 }
 
-// Écouter les champs prêteur pour mettre à jour le cachet en temps réel
-['preteur_nom','preteur_pays','preteur_id','preteur_capacite'].forEach(id => {
+// Écouter les champs prêteur et cachet pour mettre à jour le cachet en temps réel
+['preteur_nom','preteur_pays','preteur_id','preteur_capacite','cachet_tour','cachet_societe','cachet_bp','cachet_tel','cachet_email'].forEach(id => {
     document.getElementById(id)?.addEventListener('input', updateCachetPreview);
 });
 
