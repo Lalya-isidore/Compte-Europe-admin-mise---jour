@@ -605,7 +605,10 @@ document.addEventListener('DOMContentLoaded', () => {
         pill.addEventListener('click', () => {
             document.querySelectorAll('.lang-pill').forEach(p => p.classList.remove('active'));
             pill.classList.add('active');
-            updatePreview();
+            // Si des articles ont déjà été remplis, les recalculer dans la nouvelle langue
+            const artsFilled = document.getElementById('art-1-titre')?.value.trim();
+            if (artsFilled) resetArticles();
+            else updatePreview();
         });
     });
 
