@@ -38,15 +38,13 @@
                 <span class="cp-r-about" data-bs-toggle="tooltip" data-bs-placement="bottom" title="1 Crédit = 1 F CFA" tabindex="0">à savoir</span>
             </p>
             <p class="cp-tool-info">
-                <span data-bs-toggle="collapse" data-bs-target="#cpInfoCollapse" aria-expanded="false" aria-controls="cpInfoCollapse">
+                <span data-bs-toggle="modal" data-bs-target="#cpHelpModal">
                     <i class="fas fa-info-circle"></i> Utilité et Fonctionnement <i class="fas fa-arrow-right" style="font-size:0.75em;"></i>
                 </span>
             </p>
-            <div class="collapse show" id="cpInfoCollapse">
-                <div class="alert alert-primary" role="alert">
-                    <p><i class="fas fa-info-circle"></i> Cet outil vous permet de générer un <b>contrat de prêt professionnel</b> en PDF, signé et horodaté, dans la langue de votre choix (10 langues disponibles). Personnalisez les parties, le montant, la durée, le taux, et les articles du contrat.</p>
-                    <b>NB :</b> Chaque téléchargement coûte <b>1 250 crédits</b>. La première génération est <b>gratuite</b> (contrat avec filigrane Flash Bilan).
-                </div>
+            <div class="alert alert-primary" role="alert" style="font-size:.9em;">
+                <p><i class="fas fa-info-circle"></i> Cet outil vous permet de générer un <b>contrat de prêt professionnel</b> en PDF, signé et horodaté, dans la langue de votre choix (10 langues disponibles). Personnalisez les parties, le montant, la durée, le taux, et les articles du contrat.</p>
+                <b>NB :</b> Chaque téléchargement coûte <b>1 250 crédits</b>. La première génération est <b>gratuite</b> (contrat avec filigrane Flash Bilan).
             </div>
         </div>
     </div>
@@ -450,6 +448,29 @@
 
         </div>
     </form>
+</div>
+
+{{-- Modal Utilité et Fonctionnement --}}
+<div class="modal fade" id="cpHelpModal" tabindex="-1" aria-labelledby="cpHelpModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="cpHelpModalLabel"><i class="fas fa-info-circle"></i> Utilité et Fonctionnement</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <h6 class="text-primary">Utilité</h6>
+                <p>Cet outil vous permet de générer un <b>contrat de prêt professionnel</b> en PDF, signé et horodaté. Personnalisez librement les informations du prêteur et de l'emprunteur, le montant, la durée, le taux d'intérêt, la devise, et le contenu des 10 articles du contrat.</p>
+                <h6 class="text-primary">Fonctionnement</h6>
+                <p>Remplissez le formulaire avec les informations des parties, les conditions financières et éventuellement vos signatures. L'aperçu se met à jour en temps réel. Cliquez sur <b>Télécharger</b> pour générer et télécharger le PDF.</p>
+                <p>Cet outil est payant (<b>1 250 crédits</b> par téléchargement). La <b>première génération est gratuite</b> mais le contrat portera un filigrane <em>Flash Bilan</em> sur chaque page. Les générations suivantes produisent un contrat officiel sans filigrane.</p>
+                <p><b>Langues disponibles :</b> Français, Anglais, Espagnol, Portugais, Allemand, Italien, Néerlandais, Polonais, Croate, Russe.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+            </div>
+        </div>
+    </div>
 </div>
 
 <style>
