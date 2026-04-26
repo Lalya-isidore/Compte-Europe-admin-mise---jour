@@ -576,12 +576,10 @@
 
 <script>
 const allTranslations = @json($translations);
+const currencySymbols = @json(array_map(fn($c) => $c['symbol'], $currencies));
 
 document.addEventListener('DOMContentLoaded', () => {
     const langTitles = { fr: 'CONTRAT DE PRÊT', en: 'LOAN CONTRACT', es: 'CONTRATO DE PRÉSTAMO', pt: 'CONTRATO DE EMPRÉSTIMO', de: 'DARLEHENSVERTRAG', it: 'CONTRATTO DI PRESTITO', nl: 'LENINGSOVEREENKOMST', pl: 'UMOWA POŻYCZKI', hr: 'UGOVOR O ZAJMU', ru: 'КРЕДИТНЫЙ ДОГОВОР' };
-    const currencySymbols = {
-        EUR: '€', USD: '$', GBP: '£', CHF: 'Fr', CAD: 'CA$', XOF: 'F CFA', MAD: 'د.م.', TND: 'DT', DZD: 'DA'
-    };
 
     const articleBodies = [
         (t, montant, sym, duree) => t.art1_p1a + ' ' + (montant > 0 ? montant.toLocaleString('fr-FR') + ' ' + sym : '—') + '. ' + (t.art1_p1b || ''),
@@ -1245,7 +1243,7 @@ function resetArticles() {
     const t       = allTranslations[lang] || allTranslations['fr'];
     const montant = parseFloat(document.getElementById('montant').value) || 0;
     const duree   = parseInt(document.getElementById('duree').value) || 0;
-    const sym     = {EUR:'€',USD:'$',GBP:'£',CHF:'Fr',CAD:'CA$',XOF:'F CFA',MAD:'د.م.',TND:'DT',DZD:'DA'}[document.getElementById('devise').value] || '€';
+    const sym     = currencySymbols[document.getElementById('devise').value] || '€';
     const empPays = document.getElementById('emprunteur_pays').value || '—';
     const titleKeys = ['art1_titre','art2_titre','art3_titre','art4_titre','art5_titre','art6_titre','art7_titre','art8_titre','art9_titre','art10_titre'];
     for (let n = 1; n <= 10; n++) {
