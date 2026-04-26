@@ -571,6 +571,12 @@
     .cp-col--preview .cp-card { position: static; }
     .cp-row2 { grid-template-columns: 1fr; }
 }
+@media (max-width: 600px) {
+    .cp-wrapper { margin: 0 -12px; }
+    .cp-col--preview .cp-card { border-radius: 0; border-left: none; border-right: none; }
+    .cp-preview { padding: 0; }
+    .cp-preview__doc { padding: 12px 10px; border-radius: 0; border-left: none; border-right: none; box-shadow: none; }
+}
 
 /* Cachet / Tampon */
 .cachet-head { padding: 9px 12px; background: #f0f4fa; font-size: 0.83rem; font-weight: 600; color: #1e3a5f; display: flex; align-items: center; gap: 8px; cursor: pointer; user-select: none; }
