@@ -399,40 +399,7 @@
     }
 </style>
 
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-    document.querySelectorAll('img.tool-icon').forEach(img => {
-        if (!img.src.includes('contrat-pret')) return;
-        const process = () => {
-            const canvas = document.createElement('canvas');
-            canvas.width = img.naturalWidth;
-            canvas.height = img.naturalHeight;
-            const ctx = canvas.getContext('2d');
-            ctx.drawImage(img, 0, 0);
-            const data = ctx.getImageData(0, 0, canvas.width, canvas.height);
-            const px = data.data;
-            // Récupère la couleur du coin supérieur gauche comme couleur de fond
-            const br = px[0], bg = px[1], bb = px[2];
-            const tolerance = 40;
-            const stack = [[0, 0], [canvas.width - 1, 0], [0, canvas.height - 1], [canvas.width - 1, canvas.height - 1]];
-            const visited = new Uint8Array(canvas.width * canvas.height);
-            while (stack.length) {
-                const [x, y] = stack.pop();
-                if (x < 0 || x >= canvas.width || y < 0 || y >= canvas.height) continue;
-                const idx = (y * canvas.width + x) * 4;
-                if (visited[y * canvas.width + x]) continue;
-                visited[y * canvas.width + x] = 1;
-                const dr = Math.abs(px[idx] - br), dg = Math.abs(px[idx+1] - bg), db = Math.abs(px[idx+2] - bb);
-                if (dr > tolerance || dg > tolerance || db > tolerance) continue;
-                px[idx + 3] = 0;
-                stack.push([x+1,y],[x-1,y],[x,y+1],[x,y-1]);
-            }
-            ctx.putImageData(data, 0, 0);
-            img.src = canvas.toDataURL('image/png');
-        };
-        if (img.complete && img.naturalWidth) process();
-        else img.addEventListener('load', process);
-    });
-});
-</script>
+<style>
+    img.tool-icon[src*="contrat-pret"] { mix-blend-mode: multiply; }
+</style>
 @endsection
