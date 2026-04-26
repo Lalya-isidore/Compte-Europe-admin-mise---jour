@@ -928,46 +928,56 @@ function drawArcText(ctx, text, cx, cy, radius, midAngle, clockwise) {
 // Génère un cachet ROND sur un canvas de 260×260
 function generateRoundStamp(info, color) {
     const S = 260, cx = 130, cy = 130;
-    const Ro = 120, Rt = 108, Ri = 96;
+    const Ro = 122, Rt = 106, Ri = 90;
     const cvs = document.createElement('canvas');
     cvs.width = cvs.height = S;
     const ctx = cvs.getContext('2d');
 
     ctx.strokeStyle = color; ctx.fillStyle = color;
 
-    // Cercle extérieur (épais)
-    ctx.lineWidth = 4;
+    // --- BORDURES ---
+    // Bordure extérieure très épaisse
+    ctx.lineWidth = 5;
     ctx.beginPath(); ctx.arc(cx, cy, Ro, 0, Math.PI * 2); ctx.stroke();
+    // Filet intérieur
     ctx.lineWidth = 1.5;
-    ctx.beginPath(); ctx.arc(cx, cy, Ro - 6, 0, Math.PI * 2); ctx.stroke();
-
-    // Cercle intérieur
-    ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.arc(cx, cy, Ro - 7, 0, Math.PI * 2); ctx.stroke();
+    // Bordure de séparation intérieure
+    ctx.lineWidth = 2.5;
     ctx.beginPath(); ctx.arc(cx, cy, Ri, 0, Math.PI * 2); ctx.stroke();
 
-    // Texte du pourtour (arc complet)
+    // --- TEXTE POURTOUR (Arc) ---
     if (info.tour) {
-        ctx.font = 'bold 12px Arial';
+        ctx.font = 'bold 15px "Arial Black", Arial, sans-serif';
+        // On centre l'arc sur le haut
         drawArcText(ctx, info.tour, cx, cy, Rt, -Math.PI / 2, true);
     }
 
-    // Texte central
+    // Étoile au bas pour fermer le cercle
+    ctx.font = '24px Arial';
     ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    ctx.fillText('★', cx, cy + Rt + 2);
+
+    // --- TEXTE CENTRAL ---
     let lines = [];
-    if (info.societe) lines.push({text: info.societe, font: 'bold 13px Arial'});
-    if (info.bp)      lines.push({text: info.bp,      font: '10px Arial'});
-    if (info.tel)     lines.push({text: info.tel,     font: '10px Arial'});
-    if (info.email)   lines.push({text: info.email,   font: '10px Arial'});
+    if (info.societe) lines.push({text: info.societe, font: 'bold 18px Impact, "Arial Black", sans-serif'});
+    if (info.bp)      lines.push({text: info.bp,      font: 'bold 11px Arial'});
+    if (info.tel)     lines.push({text: info.tel,     font: 'bold 11px Arial'});
+    if (info.email)   lines.push({text: info.email,   font: 'bold 11px Arial'});
 
     if (lines.length === 0) {
-        lines.push({text: info.nom, font: 'bold 12px Arial'});
-        lines.push({text: info.cap, font: '10px Arial'});
+        lines.push({text: info.nom, font: 'bold 16px Impact, sans-serif'});
+        lines.push({text: info.cap, font: 'bold 11px Arial'});
     }
 
-    const lineH = 15;
-    const startY = cy - ((lines.length - 1) * lineH) / 2;
+    const lineH = 18;
+    const totalH = (lines.length - 1) * lineH;
+    const startY = cy - totalH / 2;
+
     lines.forEach((line, i) => {
         ctx.font = line.font;
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
         ctx.fillText(line.text, cx, startY + i * lineH);
     });
 
