@@ -964,7 +964,6 @@ function generateRoundStamp(info, color) {
     ctx.fillText('★', cx, cy + Rt + 5);
 
     // --- TEXTE CENTRAL ---
-    const Ri = 180;
     let lines = [];
     if (info.societe) lines.push({text: info.societe, baseSize: 32, font: 'bold 32px "Arial Black", sans-serif'});
     if (info.bp)      lines.push({text: info.bp,      baseSize: 20, font: 'bold 20px Arial'});
