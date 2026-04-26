@@ -286,8 +286,8 @@
                 </div>
 
                 <button type="submit" class="cp-btn-generate">
-                    <i class="fas fa-file-pdf"></i>
-                    <span>Générer et Télécharger le Contrat PDF</span>
+                    <i class="fas fa-download"></i>
+                    Télécharger
                     <span style="margin-left:10px; background:rgba(255,255,255,0.18); border-radius:20px; padding:2px 10px; font-size:0.78rem; font-weight:600; letter-spacing:0.5px;">
                         <i class="fas fa-coins" style="font-size:0.72rem;"></i> 1 250 crédits
                     </span>
