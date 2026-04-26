@@ -67,13 +67,6 @@
                                 <input type="text" name="contract_no" id="contract_no" placeholder="Ex: LAL-2026-1234">
                             </div>
                         </div>
-                        <div class="cp-field" style="margin-top: 14px;">
-                            <label>Signature de l'emprunteur <small>(optionnel — image PNG/JPG)</small></label>
-                            <input type="file" name="signature_emprunteur" id="signature_emprunteur" accept="image/png,image/jpeg,image/jpg" style="padding: 6px;">
-                            <div id="sig-preview-wrap" style="display:none; margin-top:8px;">
-                                <img id="sig-preview-img" src="" alt="Signature" style="max-height:60px; max-width:180px; border:1px solid #ddd; border-radius:4px; padding:4px;">
-                            </div>
-                        </div>
                     </div>
                 </div>
 
@@ -103,6 +96,13 @@
                             <div class="cp-field">
                                 <label>Capacité / Titre <span class="req">*</span></label>
                                 <input type="text" name="preteur_capacite" id="preteur_capacite" placeholder="Ex: Investisseur Privé" value="Investisseur Privé" required>
+                            </div>
+                        </div>
+                        <div class="cp-field" style="margin-top: 14px;">
+                            <label>Signature / Cachet du prêteur <small>(optionnel — image PNG/JPG)</small></label>
+                            <input type="file" name="signature_preteur" id="signature_preteur" accept="image/png,image/jpeg,image/jpg" style="padding: 6px;">
+                            <div id="sig-pre-wrap" style="display:none; margin-top:8px;">
+                                <img id="sig-pre-img" src="" alt="Signature prêteur" style="max-height:70px; max-width:200px; border:1px solid #ddd; border-radius:4px; padding:4px;">
                             </div>
                         </div>
                     </div>
@@ -293,7 +293,7 @@
                                     <div class="prev-sig__date" id="prev-sig-date">Fait à —, le {{ date('d/m/Y') }}</div>
                                     <div class="prev-sig__label" id="prev-lbl-preteur-rep">Le Prêteur représenté par :</div>
                                     <div class="prev-sig__img-wrap" style="text-align:right;">
-                                        <img src="/images/contract/cachet-signature.jpg" alt="Cachet" style="max-height:70px; max-width:170px; margin-left:auto; display:block;">
+                                        <img id="prev-sig-pre-img" src="/images/contract/cachet-signature.jpg" alt="Cachet" style="max-height:70px; max-width:170px; margin-left:auto; display:block;">
                                     </div>
                                     <div class="prev-sig__line"></div>
                                     <div class="prev-sig__name" id="prev-sig-preteur">—</div>
@@ -626,20 +626,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
     updatePreview();
 
-    // Prévisualisation de la signature uploadée
-    document.getElementById('signature_emprunteur')?.addEventListener('change', function () {
+    // Prévisualisation de la signature du prêteur
+    document.getElementById('signature_preteur')?.addEventListener('change', function () {
         const file = this.files[0];
         if (!file) return;
         const reader = new FileReader();
         reader.onload = function (e) {
             const src = e.target.result;
-            // Dans le formulaire
-            const wrap = document.getElementById('sig-preview-wrap');
-            const img  = document.getElementById('sig-preview-img');
+            const wrap = document.getElementById('sig-pre-wrap');
+            const img  = document.getElementById('sig-pre-img');
             img.src = src; wrap.style.display = 'block';
-            // Dans l'aperçu
-            const prevImg = document.getElementById('prev-sig-emp-img');
-            prevImg.src = src; prevImg.style.display = 'block';
+            // Remplacer le cachet dans l'aperçu
+            const prevImg = document.getElementById('prev-sig-pre-img');
+            if (prevImg) prevImg.src = src;
         };
         reader.readAsDataURL(file);
     });

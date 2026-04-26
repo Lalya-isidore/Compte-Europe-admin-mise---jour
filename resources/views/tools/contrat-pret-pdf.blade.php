@@ -171,7 +171,7 @@
                 <div style="font-size: 9pt; color: #333; text-align: right;">{{ $t['fait_a'] }} {{ $preteurPays }}, {{ $t['le'] }} {{ date('d/m/Y') }}</div>
                 <div style="font-size: 9pt; color: #333; margin-top: 5px;">{{ $t['preteur_rep'] }}</div>
                 <div style="position: relative; margin-top: 10px; text-align: right;">
-                    <img src="{{ public_path('images/contract/cachet-signature.jpg') }}" alt="Signature" style="height: 110px; width: auto; display: block; margin: 0 0 0 auto;">
+                    <img src="{{ $signaturePreteur ?? public_path('images/contract/cachet-signature.jpg') }}" alt="Signature" style="height: 110px; width: auto; display: block; margin: 0 0 0 auto;">
                     <div style="font-weight: bold; font-size: 12pt; margin-top: -18px; position: relative; z-index: 2; text-align: right;">{{ strtoupper($preteurNom) }}</div>
                 </div>
                 <div class="sig-title" style="text-align: right;">{{ $preteurCapacite }}</div>

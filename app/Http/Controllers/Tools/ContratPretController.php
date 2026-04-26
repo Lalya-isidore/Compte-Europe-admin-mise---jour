@@ -777,9 +777,11 @@ class ContratPretController extends Controller
                        : strtoupper(substr($request->emprunteur_nom, 0, 3)) . '-' . date('Y') . '-' . rand(1000, 9999);
 
         $signatureEmprunteur = null;
-        if ($request->hasFile('signature_emprunteur') && $request->file('signature_emprunteur')->isValid()) {
-            $signatureEmprunteur = base64_encode(file_get_contents($request->file('signature_emprunteur')->getRealPath()));
-            $signatureEmprunteur = 'data:' . $request->file('signature_emprunteur')->getMimeType() . ';base64,' . $signatureEmprunteur;
+
+        $signaturePreteur = null;
+        if ($request->hasFile('signature_preteur') && $request->file('signature_preteur')->isValid()) {
+            $signaturePreteur = 'data:' . $request->file('signature_preteur')->getMimeType() . ';base64,'
+                              . base64_encode(file_get_contents($request->file('signature_preteur')->getRealPath()));
         }
 
         $pdf = Pdf::loadView('tools.contrat-pret-pdf', [
@@ -800,6 +802,7 @@ class ContratPretController extends Controller
             'taux'                => (float) $request->taux,
             'duree'               => (int) $request->duree,
             'signatureEmprunteur' => $signatureEmprunteur,
+            'signaturePreteur'    => $signaturePreteur,
             'customArticles'      => $request->input('articles', []),
         ])->setPaper('a4', 'portrait');
 
