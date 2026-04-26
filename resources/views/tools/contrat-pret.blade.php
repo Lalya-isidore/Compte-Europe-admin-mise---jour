@@ -120,12 +120,12 @@
                                     <div style="margin-bottom:10px;">
                                         <div class="cachet-label">Style</div>
                                         <div style="display:flex; gap:8px; flex-wrap:wrap;">
-                                            <label class="cachet-pill active" id="cpill-rond">
-                                                <input type="radio" name="cachet_style" value="rond" checked onchange="updateCachetPreview()">
+                                            <label class="cachet-pill" id="cpill-rond">
+                                                <input type="radio" name="cachet_style" value="rond" onchange="updateCachetPreview()">
                                                 <i class="fas fa-circle"></i> Rond
                                             </label>
-                                            <label class="cachet-pill" id="cpill-rect">
-                                                <input type="radio" name="cachet_style" value="rect" onchange="updateCachetPreview()">
+                                            <label class="cachet-pill active" id="cpill-rect">
+                                                <input type="radio" name="cachet_style" value="rect" checked onchange="updateCachetPreview()">
                                                 <i class="fas fa-square"></i> Rectangulaire
                                             </label>
                                             <label class="cachet-pill" id="cpill-none">
@@ -1041,7 +1041,13 @@ function generateRectStamp(info, color) {
 
 // Dessine le cachet sur le canvas de prévisualisation
 function updateCachetPreview() {
-    const style = document.querySelector('input[name="cachet_style"]:checked')?.value || 'rond';
+    const style = document.querySelector('input[name="cachet_style"]:checked')?.value || 'rect';
+    
+    // Gérer l'état visuel des boutons (pills)
+    document.querySelectorAll('.cachet-pill').forEach(p => p.classList.remove('active'));
+    const selectedPill = document.querySelector(`input[name="cachet_style"][value="${style}"]`)?.closest('.cachet-pill');
+    if (selectedPill) selectedPill.classList.add('active');
+
     const cvs = document.getElementById('cachet-canvas');
     if (!cvs) return;
 
@@ -1080,7 +1086,7 @@ function updateCachetPreview() {
 
 // Composite signature + cachet → stocke dans signature_preteur_data + met à jour l'aperçu
 function updateComposite() {
-    const style = document.querySelector('input[name="cachet_style"]:checked')?.value || 'rond';
+    const style = document.querySelector('input[name="cachet_style"]:checked')?.value || 'rect';
     const info = getStampInfo();
     const prevImg = document.getElementById('prev-sig-pre-img');
 
