@@ -917,12 +917,17 @@ class ContratPretController extends Controller
             'lang'             => 'required|string|in:fr,en,es,pt,de,it,nl,pl,hr,ru',
         ]);
 
-        // Vérification des crédits (1250 crédits requis par téléchargement)
+        // Génération gratuite (1ère fois) ou payante (crédits requis)
         $user = Auth::user();
         $cost = 1250;
-        if (!$user || $user->credit_user < $cost) {
+        $isTestGeneration = false;
+
+        if (!$user->contrat_free_used) {
+            // Première génération : gratuite avec filigrane
+            $isTestGeneration = true;
+        } elseif ($user->credit_user < $cost) {
             return back()->withErrors([
-                'credits' => 'Crédits insuffisants. Il vous faut au moins ' . number_format($cost, 0, ',', ' ') . ' crédits pour générer un contrat de prêt. Votre solde actuel : ' . number_format($user->credit_user ?? 0, 0, ',', ' ') . ' crédits.',
+                'credits' => 'Crédits insuffisants. Il vous faut au moins ' . number_format($cost, 0, ',', ' ') . ' crédits pour générer un contrat de prêt. Votre solde actuel : ' . number_format($user->credit_user, 0, ',', ' ') . ' crédits.',
             ])->withInput();
         }
 
@@ -966,14 +971,19 @@ class ContratPretController extends Controller
             'signatureEmprunteur' => $signatureEmprunteur,
             'signaturePreteur'    => $signaturePreteur,
             'customArticles'      => $request->input('articles', []),
+            'isTestGeneration'    => $isTestGeneration,
         ])->setPaper('a4', 'portrait');
 
         $filename = 'contrat-pret-'
             . strtolower(str_replace(' ', '-', $request->emprunteur_nom))
             . '-' . date('Ymd') . '.pdf';
 
-        // Déduction des crédits après génération réussie
-        DB::table('users')->where('id', $user->id)->decrement('credit_user', $cost);
+        // Après génération réussie : marquer la gratuite ou déduire les crédits
+        if ($isTestGeneration) {
+            DB::table('users')->where('id', $user->id)->update(['contrat_free_used' => true]);
+        } else {
+            DB::table('users')->where('id', $user->id)->decrement('credit_user', $cost);
+        }
 
         return $pdf->download($filename);
     }

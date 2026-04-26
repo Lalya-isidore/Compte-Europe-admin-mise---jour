@@ -25,12 +25,21 @@
         .sig-cell { vertical-align: top; padding: 20px 5px; text-align: center; }
         .sig-name { font-weight: bold; margin-top: 50px; }
         .sig-title { font-style: italic; font-size: 9pt; color: #666; margin-top: 6px; }
+        @if($isTestGeneration)
+        .test-watermark { position: fixed; top: 0; left: 0; right: 0; bottom: 0; z-index: 999; pointer-events: none; display: flex; align-items: center; justify-content: center; }
+        .test-watermark-text { font-size: 72pt; font-weight: 900; color: rgba(200,0,0,0.08); white-space: nowrap; transform: rotate(-35deg); letter-spacing: 6px; font-family: Arial, sans-serif; }
+        .test-banner { position: fixed; bottom: 0; left: 0; right: 0; background: #c0392b; color: #fff; font-size: 8.5pt; font-weight: bold; text-align: center; padding: 6px 10px; z-index: 1000; letter-spacing: 0.3px; }
+        @endif
     </style>
 </head>
 <body>
 <div class="frame"></div>
 <div class="frame-inner"></div>
 <div class="watermark"></div>
+@if($isTestGeneration)
+<div class="test-watermark"><div class="test-watermark-text">FLASH BILAN</div></div>
+<div class="test-banner">⚠ Ceci est une génération de test. La prochaine fois, générez avec des crédits pour obtenir un contrat officiel sans filigrane Flash Bilan.</div>
+@endif
 
 <div class="container">
     <table class="header-table" style="border: none; margin-bottom: 20px;">
