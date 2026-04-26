@@ -982,25 +982,27 @@ function generateRoundStamp(info, color) {
 
 // Génère un cachet RECTANGULAIRE (haute résolution)
 function generateRectStamp(info, color) {
-    const W = 500, H = 220;
+    const W = 600, H = 280; // Plus d'espace pour éviter les coupures
     const cvs = document.createElement('canvas');
     cvs.width = W; cvs.height = H;
     const ctx = cvs.getContext('2d');
 
     ctx.strokeStyle = color; ctx.fillStyle = color;
 
-    ctx.lineWidth = 7; ctx.strokeRect(8, 8, W - 16, H - 16);
-    ctx.lineWidth = 2; ctx.strokeRect(20, 20, W - 40, H - 40);
+    // Marges pour les bordures
+    const m = 30; 
+    ctx.lineWidth = 10; ctx.strokeRect(m, m, W - m*2, H - m*2);
+    ctx.lineWidth = 3;  ctx.strokeRect(m + 15, m + 15, W - (m + 15)*2, H - (m + 15)*2);
 
     ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
     
     let lines = [];
-    if (info.societe) lines.push({text: info.societe, font: 'bold 30px "Arial Black", sans-serif'});
-    if (info.bp)      lines.push({text: info.bp,      font: 'bold 20px Arial'});
-    if (info.tel)     lines.push({text: info.tel,     font: 'bold 20px Arial'});
-    if (info.email)   lines.push({text: info.email,   font: 'bold 20px Arial'});
+    if (info.societe) lines.push({text: info.societe, font: 'bold 36px "Arial Black", sans-serif'});
+    if (info.bp)      lines.push({text: info.bp,      font: 'bold 24px Arial'});
+    if (info.tel)     lines.push({text: info.tel,     font: 'bold 24px Arial'});
+    if (info.email)   lines.push({text: info.email,   font: 'bold 24px Arial'});
 
-    const lineH = 34;
+    const lineH = 40;
     const totalH = (lines.length - 1) * lineH;
     const startY = (H / 2) - totalH / 2;
     lines.forEach((line, i) => {
