@@ -576,6 +576,12 @@
     .cp-col--preview .cp-card { border-radius: 0; border-left: none; border-right: none; }
     .cp-preview { padding: 0; }
     .cp-preview__doc { padding: 12px 10px; border-radius: 0; border-left: none; border-right: none; box-shadow: none; }
+    /* En-tête : réduction ciblée */
+    .prev-hdr-table td { font-size: 5.5pt !important; padding: 2px !important; }
+    .prev-hdr-table td div { font-size: 5.5pt !important; line-height: 1.3 !important; }
+    .prev-hdr-table h1, #prev-titre { font-size: 11pt !important; letter-spacing: 0 !important; white-space: normal !important; }
+    .prev-hdr-table img { height: 28px !important; }
+    #prev-no { font-size: 6pt !important; }
 }
 
 /* Cachet / Tampon */
@@ -758,31 +764,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Exposer updatePreview globalement pour les fonctions externes (deleteArticle, resetArticles)
     window.updatePreview = updatePreview;
 
-    // Mise à l'échelle de l'aperçu sur mobile
-    function scalePreview() {
-        const wrap = document.querySelector('.cp-preview');
-        const doc  = document.querySelector('.cp-preview__doc');
-        if (!wrap || !doc) return;
-        if (window.innerWidth > 600) {
-            doc.style.width = doc.style.transform = doc.style.marginBottom = '';
-            return;
-        }
-        const naturalW = 660;
-        const scale    = wrap.clientWidth / naturalW;
-        doc.style.width           = naturalW + 'px';
-        doc.style.transformOrigin = 'top left';
-        doc.style.transform       = `scale(${scale})`;
-        doc.style.marginBottom    = `-${doc.offsetHeight * (1 - scale)}px`;
-    }
-    window.scalePreview = scalePreview;
-    window.addEventListener('resize', scalePreview);
-
-    const _origUpdate = updatePreview;
-    updatePreview = function() { _origUpdate(); setTimeout(scalePreview, 50); };
-    window.updatePreview = updatePreview;
-
     updatePreview();
-    setTimeout(scalePreview, 100);
 
     // Suppression fond intelligente : détecte automatiquement la couleur du fond
     // en échantillonnant les coins de l'image, puis flood-fill depuis les bords.
