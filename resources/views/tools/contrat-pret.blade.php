@@ -308,30 +308,28 @@
                     <div class="cp-preview">
                         <div class="cp-preview__doc">
                             {{-- En-tête 3 colonnes identique au PDF --}}
-                            <div class="prev-hdr-wrap"><table class="prev-hdr-table">
-                                <tr>
-                                    <td class="prev-hdr-left">
-                                        <img src="/images/contract/logo-ue.png" class="prev-hdr-img">
-                                        <div id="prev-union-eu" class="prev-hdr-txt-blue">UNION EUROPÉENNE</div>
-                                        <span class="prev-hdr-sep">_._._._._._</span>
-                                        <div id="prev-service-justice" class="prev-hdr-txt-blue" style="font-size:7px;">SERVICE DE JUSTICE ET DROITS HUMAINS</div>
-                                        <span class="prev-hdr-sep">_._._</span>
-                                        <div id="prev-tribunal" class="prev-hdr-txt-blue" style="font-size:7px;">TRIBUNAL EUROPÉEN DE PREMIÈRE INSTANCE</div>
-                                    </td>
-                                    <td class="prev-hdr-center">
-                                        <div class="prev-title-wrap">
-                                            <div class="prev-title" id="prev-titre">CONTRAT DE PRÊT</div>
-                                        </div>
-                                    </td>
-                                    <td class="prev-hdr-right">
-                                        <img src="/images/contract/logo-justice.jpg" class="prev-hdr-img">
-                                        <div id="prev-registre" class="prev-hdr-txt-red">REGISTRE DU TRIBUNAL</div>
-                                        <div id="prev-coordination" class="prev-hdr-txt-navy">Service de coordination judiciaire</div>
-                                        <span class="prev-hdr-sep">_o_o_o_o_o_</span>
-                                        <div class="prev-contract-no" id="prev-no">CONTRAT N° —/{{ date('Y') }}</div>
-                                    </td>
-                                </tr>
-                            </table></div>{{-- /prev-hdr-wrap --}}
+                            <div class="prev-hdr-flex">
+                                <div class="prev-hdr-left">
+                                    <img src="/images/contract/logo-ue.png" class="prev-hdr-img">
+                                    <div id="prev-union-eu" class="prev-hdr-txt-blue">UNION EUROPÉENNE</div>
+                                    <span class="prev-hdr-sep">_._._._._._</span>
+                                    <div id="prev-service-justice" class="prev-hdr-txt-blue">SERVICE DE JUSTICE ET DROITS HUMAINS</div>
+                                    <span class="prev-hdr-sep">_._._</span>
+                                    <div id="prev-tribunal" class="prev-hdr-txt-blue">TRIBUNAL EUROPÉEN DE PREMIÈRE INSTANCE</div>
+                                </div>
+                                <div class="prev-hdr-center">
+                                    <div class="prev-title-wrap">
+                                        <div class="prev-title" id="prev-titre">CONTRAT DE PRÊT</div>
+                                    </div>
+                                </div>
+                                <div class="prev-hdr-right">
+                                    <img src="/images/contract/logo-justice.jpg" class="prev-hdr-img">
+                                    <div id="prev-registre" class="prev-hdr-txt-red">REGISTRE DU TRIBUNAL</div>
+                                    <div id="prev-coordination" class="prev-hdr-txt-navy">Service de coordination judiciaire</div>
+                                    <span class="prev-hdr-sep">_o_o_o_o_o_</span>
+                                    <div class="prev-contract-no" id="prev-no">CONTRAT N° —/{{ date('Y') }}</div>
+                                </div>
+                            </div>
 
                             <div class="prev-subtitle" id="prev-soussignes">— ENTRE LES SOUSSIGNÉS —</div>
 
@@ -510,20 +508,18 @@
 .cp-preview { padding: 16px; background: #f5f5f5; }
 .cp-preview__doc { background: #fff; border: 1px solid #ddd; border-radius: 6px; padding: 24px; font-family: 'Times New Roman', serif; font-size: 14px; color: #222; box-shadow: 0 2px 8px rgba(0,0,0,0.08); min-height: 400px; }
 
-.prev-hdr-table { width: 100%; border-collapse: collapse; border-bottom: 2px double #002B5B; margin-bottom: 12px; }
-.prev-hdr-table td { vertical-align: top; padding-bottom: 10px; }
-.prev-hdr-left { width: 25%; text-align: center; }
-.prev-hdr-center { width: 50%; text-align: center; vertical-align: middle !important; padding-top: 4px; }
-.prev-hdr-right { width: 25%; text-align: center; }
-.prev-hdr-img { height: 38px; width: auto; display: block; margin: 0 auto 4px; }
-.prev-hdr-img-c { height: 32px; width: auto; display: block; margin: 0 auto 8px; }
-.prev-hdr-txt-blue { font-size: 8px; font-weight: bold; color: #003399; line-height: 1.3; }
-.prev-hdr-txt-red { font-size: 8px; font-weight: bold; color: #8B0000; line-height: 1.3; }
-.prev-hdr-txt-navy { font-size: 7px; font-weight: bold; color: #002B5B; }
-.prev-hdr-sep { font-size: 6px; color: #999; display: block; line-height: 1.2; }
-.prev-title-wrap { border: 2px solid #4B0082; display: inline-block; padding: 5px 12px; border-radius: 6px; background: rgba(75,0,130,0.03); }
-.prev-title { font-size: 15px; font-weight: bold; color: #4B0082; white-space: nowrap; }
-.prev-contract-no { font-size: 9px; color: #d00; font-weight: bold; margin-top: 3px; }
+.prev-hdr-flex { display: flex; align-items: center; width: 100%; border-bottom: 2px double #002B5B; margin-bottom: 12px; padding-bottom: 10px; gap: 4px; }
+.prev-hdr-left  { flex: 0 0 25%; min-width: 0; text-align: center; }
+.prev-hdr-center{ flex: 1; text-align: center; }
+.prev-hdr-right { flex: 0 0 25%; min-width: 0; text-align: center; }
+.prev-hdr-img { height: clamp(22px, 5vw, 38px); width: auto; display: block; margin: 0 auto 4px; }
+.prev-hdr-txt-blue { font-size: clamp(6px, 1.5vw, 8px); font-weight: bold; color: #003399; line-height: 1.3; word-break: break-word; }
+.prev-hdr-txt-red  { font-size: clamp(6px, 1.5vw, 8px); font-weight: bold; color: #8B0000; line-height: 1.3; word-break: break-word; }
+.prev-hdr-txt-navy { font-size: clamp(5px, 1.3vw, 7px); font-weight: bold; color: #002B5B; word-break: break-word; }
+.prev-hdr-sep { font-size: clamp(5px, 1.2vw, 6px); color: #999; display: block; line-height: 1.2; }
+.prev-title-wrap { border: 2px solid #4B0082; display: inline-block; padding: clamp(3px,0.8vw,5px) clamp(6px,1.5vw,12px); border-radius: 6px; background: rgba(75,0,130,0.03); }
+.prev-title { font-size: clamp(9px, 2.8vw, 15px); font-weight: bold; color: #4B0082; }
+.prev-contract-no { font-size: clamp(6px, 1.6vw, 9px); color: #d00; font-weight: bold; margin-top: 3px; }
 
 .prev-subtitle { text-align: center; font-size: 13px; font-style: italic; font-weight: bold; text-decoration: underline; margin: 10px 0 14px; }
 
@@ -757,33 +753,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Exposer updatePreview globalement pour les fonctions externes (deleteArticle, resetArticles)
-    const _rawUpdatePreview = updatePreview;
-    updatePreview = function() { _rawUpdatePreview(); setTimeout(scalePreviewHeader, 60); };
     window.updatePreview = updatePreview;
 
-    // Zoom de l'en-tête uniquement sur mobile
-    function scalePreviewHeader() {
-        const wrap = document.querySelector('.prev-hdr-wrap');
-        const tbl  = document.querySelector('.prev-hdr-table');
-        if (!wrap || !tbl) return;
-        // Reset
-        tbl.style.transform = tbl.style.width = tbl.style.marginBottom = '';
-        wrap.style.height   = '';
-        if (window.innerWidth > 600) return;
-        const available = wrap.offsetWidth;
-        const natural   = 620; // largeur naturelle de l'en-tête desktop
-        if (available >= natural) return;
-        const scale = available / natural;
-        tbl.style.width           = natural + 'px';
-        tbl.style.transformOrigin = 'top left';
-        tbl.style.transform       = `scale(${scale})`;
-        // Corriger la hauteur occupée dans le layout
-        wrap.style.height = (tbl.offsetHeight * scale) + 'px';
-    }
-    window.addEventListener('resize', scalePreviewHeader);
-
     updatePreview();
-    setTimeout(scalePreviewHeader, 80);
 
     // Suppression fond intelligente : détecte automatiquement la couleur du fond
     // en échantillonnant les coins de l'image, puis flood-fill depuis les bords.
