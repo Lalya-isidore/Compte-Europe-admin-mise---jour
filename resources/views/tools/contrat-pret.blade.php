@@ -1087,37 +1087,45 @@ function updateComposite() {
     function tryDraw() {
         if (!sigLoaded || !stampLoaded) return;
 
-        // --- Normaliser la signature à une largeur cible (PLUS GRANDE pour la lisibilité) ---
-        const SIG_TARGET_W = 800; // largeur cible doublée
+        // --- Normaliser la signature ---
+        const SIG_TARGET_W = 800; 
         const sigRatio = sigImg.height / sigImg.width;
         const sigW = SIG_TARGET_W;
         const sigH = Math.round(SIG_TARGET_W * sigRatio);
 
-        // --- Normaliser le cachet à ~90% de la hauteur de la signature (PLUS GRAND) ---
-        const STAMP_TARGET_H = Math.round(sigH * 0.9);
+        // --- Normaliser le cachet ---
+        const STAMP_TARGET_H = Math.round(sigH * 0.95);
         const stampRatio = stampImg.width / stampImg.height;
         const stH = STAMP_TARGET_H;
         const stW = Math.round(STAMP_TARGET_H * stampRatio);
 
-        // --- Canvas résultant ---
-        const pad = 20;
-        const cW  = sigW + Math.round(stW * 0.25) + pad; 
-        const cH  = sigH + Math.round(stH * 0.25) + pad; 
+        // --- Calcul de position et taille canvas ---
+        // On veut que le cachet chevauche le bas-droit de la signature.
+        // stX est le bord gauche du cachet.
+        let stX = sigW - Math.round(stW * 0.65);
+        let shiftX = 0;
+        if (stX < 0) {
+            shiftX = Math.abs(stX) + 20; // Décaler tout vers la droite si le cachet dépasse à gauche
+            stX = 20;
+        }
+
+        const pad = 30;
+        const cW = Math.max(sigW + shiftX, stX + stW) + pad;
+        const cH = sigH + Math.round(stH * 0.3) + pad;
 
         const cvs = document.createElement('canvas');
         cvs.width = cW; cvs.height = cH;
         const ctx = cvs.getContext('2d');
 
-        // Dessiner la signature (normalisée)
-        ctx.drawImage(sigImg, 0, 0, sigW, sigH);
+        // Dessiner la signature (éventuellement décalée)
+        ctx.drawImage(sigImg, shiftX, 0, sigW, sigH);
 
-        // Cachet : coin bas-droit de la signature, légèrement incliné
-        const stX = sigW - Math.round(stW * 0.7);
+        // Cachet : légèrement incliné
         const stY = sigH - Math.round(stH * 0.7);
         ctx.save();
         ctx.translate(stX + stW / 2, stY + stH / 2);
-        ctx.rotate(-0.12); // légère inclinaison réaliste
-        ctx.globalAlpha = 0.88;
+        ctx.rotate(-0.10); // légère inclinaison
+        ctx.globalAlpha = 0.92;
         ctx.drawImage(stampImg, -stW / 2, -stH / 2, stW, stH);
         ctx.restore();
 
