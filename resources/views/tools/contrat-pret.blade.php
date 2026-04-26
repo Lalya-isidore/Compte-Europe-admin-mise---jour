@@ -628,7 +628,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     updatePreview();
 
-    // Suppression fond blanc via Canvas
+    // Suppression fond blanc via Canvas (distance euclidienne au blanc)
     function removeWhiteBackground(dataUrl, callback) {
         const tmpImg = new Image();
         tmpImg.onload = function () {
@@ -641,8 +641,10 @@ document.addEventListener('DOMContentLoaded', () => {
             const d = imageData.data;
             for (let i = 0; i < d.length; i += 4) {
                 const r = d[i], g = d[i + 1], b = d[i + 2];
-                // Pixels blancs ou quasi-blancs → transparents
-                if (r > 210 && g > 210 && b > 210) {
+                // Distance euclidienne au blanc pur (255,255,255)
+                // Seuil 80 : capture papier blanc, jaunâtre, grisâtre, légèrement coloré
+                const dist = Math.sqrt((255 - r) ** 2 + (255 - g) ** 2 + (255 - b) ** 2);
+                if (dist < 80) {
                     d[i + 3] = 0;
                 }
             }
