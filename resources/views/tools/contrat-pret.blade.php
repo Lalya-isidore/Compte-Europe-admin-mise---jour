@@ -362,22 +362,39 @@
                             </div>
 
                             <table style="width:100%; border-top:1px solid #eee; margin-top:20px; border-collapse:collapse;">
+                                {{-- Ligne pour la date (uniquement à droite) --}}
                                 <tr>
-                                    <td style="width:45%; vertical-align:bottom; padding-top:10px;">
-                                        <div class="prev-sig__label" id="prev-lbl-emprunteur" style="margin-bottom:10px;">L'Emprunteur :</div>
+                                    <td></td>
+                                    <td></td>
+                                    <td style="text-align:right; padding-top:10px;">
+                                        <div class="prev-sig__date" id="prev-sig-date" style="margin-bottom:5px;">Fait à —, le {{ date('d/m/Y') }}</div>
+                                    </td>
+                                </tr>
+                                {{-- Ligne pour les étiquettes (Emprunteur / Prêteur) --}}
+                                <tr>
+                                    <td style="width:45%; vertical-align:top;">
+                                        <div class="prev-sig__label" id="prev-lbl-emprunteur">L'Emprunteur :</div>
+                                    </td>
+                                    <td style="width:10%;"></td>
+                                    <td style="width:45%; vertical-align:top; text-align:right;">
+                                        <div class="prev-sig__label" id="prev-lbl-preteur-rep">Le Prêteur représenté par :</div>
+                                    </td>
+                                </tr>
+                                {{-- Ligne pour les images (Signature / Cachet) --}}
+                                <tr>
+                                    <td style="vertical-align:bottom;">
                                         <div class="prev-sig__img-wrap" style="min-height:60px; display:flex; align-items:flex-end;">
                                             <img id="prev-sig-emp-img" src="" alt="" style="display:none; max-height:60px; max-width:160px;">
                                         </div>
                                     </td>
-                                    <td style="width:10%;"></td>
-                                    <td style="width:45%; vertical-align:bottom; text-align:right; padding-top:10px;">
-                                        <div class="prev-sig__date" id="prev-sig-date" style="margin-bottom:10px;">Fait à —, le {{ date('d/m/Y') }}</div>
-                                        <div class="prev-sig__label" id="prev-lbl-preteur-rep" style="margin-bottom:10px;">Le Prêteur représenté par :</div>
+                                    <td></td>
+                                    <td style="vertical-align:bottom; text-align:right;">
                                         <div class="prev-sig__img-wrap" style="text-align:right; min-height:unset; margin-bottom:0;">
                                             <img id="prev-sig-pre-img" src="/images/contract/cachet-signature.jpg" alt="Cachet" style="max-height:100px; max-width:180px; margin-left:auto; display:block;">
                                         </div>
                                     </td>
                                 </tr>
+                                {{-- Ligne pour les noms --}}
                                 <tr>
                                     <td style="vertical-align:top;">
                                         <div class="prev-sig__line" style="border-bottom:1px solid #333; height:1px; margin:5px 0;"></div>
