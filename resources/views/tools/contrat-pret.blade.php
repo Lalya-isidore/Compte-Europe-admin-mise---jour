@@ -628,7 +628,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     updatePreview();
 
-    // Suppression fond blanc via Canvas (distance euclidienne au blanc)
+    // Suppression fond via flood-fill depuis les bords (ne touche que le fond connecté aux bords)
     function removeWhiteBackground(dataUrl, callback) {
         const tmpImg = new Image();
         tmpImg.onload = function () {
@@ -639,15 +639,34 @@ document.addEventListener('DOMContentLoaded', () => {
             ctx.drawImage(tmpImg, 0, 0);
             const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
             const d = imageData.data;
-            for (let i = 0; i < d.length; i += 4) {
-                const r = d[i], g = d[i + 1], b = d[i + 2];
-                // Distance euclidienne au blanc pur (255,255,255)
-                // Seuil 80 : capture papier blanc, jaunâtre, grisâtre, légèrement coloré
-                const dist = Math.sqrt((255 - r) ** 2 + (255 - g) ** 2 + (255 - b) ** 2);
-                if (dist < 80) {
-                    d[i + 3] = 0;
-                }
+            const w = canvas.width, h = canvas.height;
+            const TOLERANCE = 90; // distance max au blanc pour être considéré "fond"
+
+            const isBg = (pos) => {
+                const i = pos * 4;
+                const r = d[i], g = d[i+1], b = d[i+2];
+                return Math.sqrt((255-r)**2 + (255-g)**2 + (255-b)**2) < TOLERANCE;
+            };
+
+            // BFS depuis tous les pixels de bordure
+            const visited = new Uint8Array(w * h);
+            const stack = [];
+            for (let x = 0; x < w; x++) { stack.push(x); stack.push(x + (h-1)*w); }
+            for (let y = 1; y < h-1; y++) { stack.push(y*w); stack.push((w-1)+y*w); }
+
+            while (stack.length) {
+                const pos = stack.pop();
+                if (visited[pos]) continue;
+                visited[pos] = 1;
+                if (!isBg(pos)) continue;
+                d[pos*4 + 3] = 0; // transparent
+                const x = pos % w, y = (pos / w) | 0;
+                if (x > 0)   stack.push(pos - 1);
+                if (x < w-1) stack.push(pos + 1);
+                if (y > 0)   stack.push(pos - w);
+                if (y < h-1) stack.push(pos + w);
             }
+
             ctx.putImageData(imageData, 0, 0);
             callback(canvas.toDataURL('image/png'));
         };
