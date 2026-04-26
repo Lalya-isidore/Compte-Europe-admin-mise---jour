@@ -479,68 +479,6 @@ document.addEventListener('DOMContentLoaded', () => {
         return new Intl.NumberFormat('fr-FR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(n) + ' ' + sym;
     }
 
-    // ---- Éditeur d'articles ----
-    function buildArticleFullText(n, t, montant, sym, duree, empPays) {
-        const fmtN = (v) => v > 0 ? new Intl.NumberFormat('fr-FR',{minimumFractionDigits:2}).format(v)+' '+sym : '—';
-        const j = (arr) => arr.filter(s => s && s.trim()).join('\n\n');
-        switch(n) {
-            case 1:  return j([(t.art1_p1a||'')+' '+fmtN(montant)+'. '+(t.art1_p1b||''), (t.art1_p2a||'')+' '+empPays+'.']);
-            case 2:  return (t.art2_intro||'')+' '+(duree>0?duree+' '+(t.mois||'mois'):'—')+'. '+(t.art2_suite||'');
-            case 3:  return t.art3_p1 || '';
-            case 4:  return j([(t.observation||'')+' '+(t.art4_p1||''), t.art4_p2||'', t.art4_p3||'']);
-            case 5:  return j([t.art5_p1||'', t.art5_p2||'', '- '+(t.art5_li1||'')+'\n- '+(t.art5_li2||'')+'\n- '+(t.art5_li3||'')]);
-            case 6:  return j([t.art6_p1||'', t.art6_p2||'', t.art6_p3||'']);
-            case 7:  return j([t.art7_p1||'', t.art7_p2||'', (t.art7_partiel||'')+' '+(t.art7_p3||'')]);
-            case 8:  return j([t.art8_p1||'', t.art8_p2||'', t.art8_p3||'', t.art8_p4||'']);
-            case 9:  return t.art9_p1 || '';
-            case 10: return j([t.art10_p1||'', t.art10_p2||'']);
-        }
-        return '';
-    }
-
-    function toggleArtsSection() {
-        const sec = document.getElementById('arts-section');
-        const chev = document.getElementById('arts-chev');
-        const open = sec.style.display !== 'none';
-        sec.style.display = open ? 'none' : 'block';
-        chev.style.transform = open ? '' : 'rotate(180deg)';
-    }
-
-    function toggleArt(n) {
-        const item = document.getElementById('art-item-' + n);
-        const bd   = document.getElementById('art-bd-' + n);
-        const open = item.classList.toggle('open');
-        bd.style.display = open ? 'block' : 'none';
-    }
-
-    function deleteArticle(n) {
-        const item = document.getElementById('art-item-' + n);
-        item.classList.add('deleted');
-        item.querySelectorAll('input, textarea').forEach(el => el.disabled = true);
-        updatePreview();
-    }
-
-    function resetArticles() {
-        const lang    = document.querySelector('input[name="lang"]:checked')?.value || 'fr';
-        const t       = allTranslations[lang] || allTranslations['fr'];
-        const montant = parseFloat(document.getElementById('montant').value) || 0;
-        const duree   = parseInt(document.getElementById('duree').value) || 0;
-        const sym     = currencySymbols[document.getElementById('devise').value] || '€';
-        const empPays = document.getElementById('emprunteur_pays').value || '—';
-        const titleKeys = ['art1_titre','art2_titre','art3_titre','art4_titre','art5_titre','art6_titre','art7_titre','art8_titre','art9_titre','art10_titre'];
-        for (let n = 1; n <= 10; n++) {
-            const item = document.getElementById('art-item-' + n);
-            if (!item) continue;
-            item.classList.remove('deleted');
-            item.querySelectorAll('input, textarea').forEach(el => el.disabled = false);
-            const titreEl = document.getElementById('art-' + n + '-titre');
-            const corpsEl = document.getElementById('art-' + n + '-corps');
-            if (titreEl) titreEl.value = t[titleKeys[n-1]] || '';
-            if (corpsEl) corpsEl.value = buildArticleFullText(n, t, montant, sym, duree, empPays);
-        }
-        updatePreview();
-    }
-
     function updatePreview() {
         const montant   = parseFloat(document.getElementById('montant').value) || 0;
         const taux      = parseFloat(document.getElementById('taux').value)    || 0;
@@ -700,5 +638,67 @@ document.addEventListener('DOMContentLoaded', () => {
         reader.readAsDataURL(file);
     });
 });
+
+// ---- Fonctions globales éditeur d'articles ----
+function buildArticleFullText(n, t, montant, sym, duree, empPays) {
+    const fmtN = (v) => v > 0 ? new Intl.NumberFormat('fr-FR',{minimumFractionDigits:2}).format(v)+' '+sym : '—';
+    const j = (arr) => arr.filter(s => s && s.trim()).join('\n\n');
+    switch(n) {
+        case 1:  return j([(t.art1_p1a||'')+' '+fmtN(montant)+'. '+(t.art1_p1b||''), (t.art1_p2a||'')+' '+empPays+'.']);
+        case 2:  return (t.art2_intro||'')+' '+(duree>0?duree+' '+(t.mois||'mois'):'—')+'. '+(t.art2_suite||'');
+        case 3:  return t.art3_p1 || '';
+        case 4:  return j([(t.observation||'')+' '+(t.art4_p1||''), t.art4_p2||'', t.art4_p3||'']);
+        case 5:  return j([t.art5_p1||'', t.art5_p2||'', '- '+(t.art5_li1||'')+'\n- '+(t.art5_li2||'')+'\n- '+(t.art5_li3||'')]);
+        case 6:  return j([t.art6_p1||'', t.art6_p2||'', t.art6_p3||'']);
+        case 7:  return j([t.art7_p1||'', t.art7_p2||'', (t.art7_partiel||'')+' '+(t.art7_p3||'')]);
+        case 8:  return j([t.art8_p1||'', t.art8_p2||'', t.art8_p3||'', t.art8_p4||'']);
+        case 9:  return t.art9_p1 || '';
+        case 10: return j([t.art10_p1||'', t.art10_p2||'']);
+    }
+    return '';
+}
+
+function toggleArtsSection() {
+    const sec  = document.getElementById('arts-section');
+    const chev = document.getElementById('arts-chev');
+    const open = sec.style.display !== 'none';
+    sec.style.display    = open ? 'none' : 'block';
+    chev.style.transform = open ? '' : 'rotate(180deg)';
+}
+
+function toggleArt(n) {
+    const item = document.getElementById('art-item-' + n);
+    const bd   = document.getElementById('art-bd-' + n);
+    const open = item.classList.toggle('open');
+    bd.style.display = open ? 'block' : 'none';
+}
+
+function deleteArticle(n) {
+    const item = document.getElementById('art-item-' + n);
+    item.classList.add('deleted');
+    item.querySelectorAll('input, textarea').forEach(el => el.disabled = true);
+    if (typeof updatePreview === 'function') updatePreview();
+}
+
+function resetArticles() {
+    const lang    = document.querySelector('input[name="lang"]:checked')?.value || 'fr';
+    const t       = allTranslations[lang] || allTranslations['fr'];
+    const montant = parseFloat(document.getElementById('montant').value) || 0;
+    const duree   = parseInt(document.getElementById('duree').value) || 0;
+    const sym     = {EUR:'€',USD:'$',GBP:'£',CHF:'Fr',CAD:'CA$',XOF:'F CFA',MAD:'د.م.',TND:'DT',DZD:'DA'}[document.getElementById('devise').value] || '€';
+    const empPays = document.getElementById('emprunteur_pays').value || '—';
+    const titleKeys = ['art1_titre','art2_titre','art3_titre','art4_titre','art5_titre','art6_titre','art7_titre','art8_titre','art9_titre','art10_titre'];
+    for (let n = 1; n <= 10; n++) {
+        const item = document.getElementById('art-item-' + n);
+        if (!item) continue;
+        item.classList.remove('deleted');
+        item.querySelectorAll('input, textarea').forEach(el => el.disabled = false);
+        const titreEl = document.getElementById('art-' + n + '-titre');
+        const corpsEl = document.getElementById('art-' + n + '-corps');
+        if (titreEl) titreEl.value = t[titleKeys[n-1]] || '';
+        if (corpsEl) corpsEl.value = buildArticleFullText(n, t, montant, sym, duree, empPays);
+    }
+    if (typeof updatePreview === 'function') updatePreview();
+}
 </script>
 @endsection
