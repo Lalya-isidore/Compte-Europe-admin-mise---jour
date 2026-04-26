@@ -758,7 +758,31 @@ document.addEventListener('DOMContentLoaded', () => {
     // Exposer updatePreview globalement pour les fonctions externes (deleteArticle, resetArticles)
     window.updatePreview = updatePreview;
 
+    // Mise à l'échelle de l'aperçu sur mobile
+    function scalePreview() {
+        const wrap = document.querySelector('.cp-preview');
+        const doc  = document.querySelector('.cp-preview__doc');
+        if (!wrap || !doc) return;
+        if (window.innerWidth > 600) {
+            doc.style.width = doc.style.transform = doc.style.marginBottom = '';
+            return;
+        }
+        const naturalW = 660;
+        const scale    = wrap.clientWidth / naturalW;
+        doc.style.width           = naturalW + 'px';
+        doc.style.transformOrigin = 'top left';
+        doc.style.transform       = `scale(${scale})`;
+        doc.style.marginBottom    = `-${doc.offsetHeight * (1 - scale)}px`;
+    }
+    window.scalePreview = scalePreview;
+    window.addEventListener('resize', scalePreview);
+
+    const _origUpdate = updatePreview;
+    updatePreview = function() { _origUpdate(); setTimeout(scalePreview, 50); };
+    window.updatePreview = updatePreview;
+
     updatePreview();
+    setTimeout(scalePreview, 100);
 
     // Suppression fond intelligente : détecte automatiquement la couleur du fond
     // en échantillonnant les coins de l'image, puis flood-fill depuis les bords.
