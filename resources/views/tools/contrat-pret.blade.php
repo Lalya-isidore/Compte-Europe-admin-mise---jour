@@ -417,22 +417,6 @@
                     </div>
                 </div>
 
-                {{-- Info langues disponibles --}}
-                <div class="cp-info-box">
-                    <i class="fas fa-info-circle"></i>
-                    <div>
-                        <strong>10 langues disponibles :</strong> Français, Anglais, Espagnol, Portugais, Allemand, Italien, Néerlandais, Polonais, Croate, Russe.
-                        Le contrat PDF sera généré intégralement dans la langue choisie.
-                    </div>
-                </div>
-
-                {{-- Contenu du contrat --}}
-                <div class="cp-info-box cp-info-box--blue">
-                    <i class="fas fa-file-alt"></i>
-                    <div>
-                        <strong>10 articles inclus :</strong> Objet, Remboursement, Conditions crédit, Cartes, Paiement anticipé, Juridiction, Remboursement anticipé, Retards, Garantie, Signature.
-                    </div>
-                </div>
             </div>
 
         </div>
