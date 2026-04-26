@@ -572,7 +572,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (titleEl) titleEl.textContent = custTitre || t[artTitleKeys[i]] || '—';
             if (bodyEl) {
                 const full = custCorps || articleBodies[i](t, montant, sym, duree);
-                bodyEl.textContent = full.length > 160 ? full.substring(0, 160) + '…' : full;
+                bodyEl.textContent = full;
             }
         }
 
