@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Tools;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Barryvdh\DomPDF\Facade\Pdf;
 
 class ContratPretController extends Controller
@@ -909,11 +911,20 @@ class ContratPretController extends Controller
             'preteur_id'       => 'required|string|max:50',
             'preteur_capacite' => 'required|string|max:80',
             'montant'          => 'required|numeric|min:1',
-            'devise'           => 'required|string|in:EUR,USD,GBP,CHF,CAD,XOF,MAD,TND,DZD',
+            'devise'           => 'required|string|in:' . implode(',', array_keys($this->currencies)),
             'taux'             => 'required|numeric|min:0|max:100',
             'duree'            => 'required|integer|min:1|max:360',
             'lang'             => 'required|string|in:fr,en,es,pt,de,it,nl,pl,hr,ru',
         ]);
+
+        // Vérification des crédits (1250 crédits requis par téléchargement)
+        $user = Auth::user();
+        $cost = 1250;
+        if (!$user || $user->credit_user < $cost) {
+            return back()->withErrors([
+                'credits' => 'Crédits insuffisants. Il vous faut au moins ' . number_format($cost, 0, ',', ' ') . ' crédits pour générer un contrat de prêt. Votre solde actuel : ' . number_format($user->credit_user ?? 0, 0, ',', ' ') . ' crédits.',
+            ])->withInput();
+        }
 
         $lang          = $request->lang;
         $devise        = $request->devise;
@@ -960,6 +971,9 @@ class ContratPretController extends Controller
         $filename = 'contrat-pret-'
             . strtolower(str_replace(' ', '-', $request->emprunteur_nom))
             . '-' . date('Ymd') . '.pdf';
+
+        // Déduction des crédits après génération réussie
+        DB::table('users')->where('id', $user->id)->decrement('credit_user', $cost);
 
         return $pdf->download($filename);
     }

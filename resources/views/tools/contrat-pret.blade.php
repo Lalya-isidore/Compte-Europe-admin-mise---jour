@@ -10,6 +10,14 @@
 @section('content')
 <div class="cp-wrapper">
 
+    {{-- Alerte crédits insuffisants --}}
+    @error('credits')
+    <div style="background:#fff3cd; border:1px solid #ffc107; border-radius:10px; padding:14px 18px; margin-bottom:18px; display:flex; align-items:center; gap:12px; color:#856404;">
+        <i class="fas fa-exclamation-triangle" style="font-size:1.2rem;"></i>
+        <span>{{ $message }}</span>
+    </div>
+    @enderror
+
     {{-- En-tête --}}
     <div class="cp-header">
         <div class="cp-header__icon">
