@@ -29,6 +29,28 @@
         </div>
     </div>
 
+    {{-- Info section style Flash Compte Pro --}}
+    <div class="cp-info-card">
+        <div class="cp-info-title"><i class="fas fa-file-contract"></i> Contrat de Prêt</div>
+        <div class="cp-info-body">
+            <p class="cp-r-balance">
+                <span>Crédit(s) disponible : <b>{{ number_format($userCredits, 0, ',', ' ') }}</b></span>
+                <span class="cp-r-about" data-bs-toggle="tooltip" data-bs-placement="bottom" title="1 Crédit = 1 F CFA" tabindex="0">à savoir</span>
+            </p>
+            <p class="cp-tool-info">
+                <span data-bs-toggle="collapse" data-bs-target="#cpInfoCollapse" aria-expanded="false" aria-controls="cpInfoCollapse">
+                    <i class="fas fa-info-circle"></i> Utilité et Fonctionnement <i class="fas fa-arrow-right" style="font-size:0.75em;"></i>
+                </span>
+            </p>
+            <div class="collapse show" id="cpInfoCollapse">
+                <div class="alert alert-primary" role="alert">
+                    <p><i class="fas fa-info-circle"></i> Cet outil vous permet de générer un <b>contrat de prêt professionnel</b> en PDF, signé et horodaté, dans la langue de votre choix (10 langues disponibles). Personnalisez les parties, le montant, la durée, le taux, et les articles du contrat.</p>
+                    <b>NB :</b> Chaque téléchargement coûte <b>1 250 crédits</b>. La première génération est <b>gratuite</b> (contrat avec filigrane Flash Bilan).
+                </div>
+            </div>
+        </div>
+    </div>
+
     <form action="{{ route('tools.contrat-pret.generate') }}" method="POST" id="cp-form" enctype="multipart/form-data">
         @csrf
         <div class="cp-grid">
@@ -436,6 +458,19 @@
 .cp-header__icon { width: 52px; height: 52px; background: rgba(255,255,255,0.15); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; flex-shrink: 0; }
 .cp-header__title { font-size: 1.25rem; font-weight: 700; margin: 0; }
 .cp-header__sub { font-size: 0.82rem; opacity: 0.75; margin: 4px 0 0; }
+
+/* Info card style Flash Compte Pro */
+.cp-info-card { background: #fff; border-radius: 8px; box-shadow: 0 0 12px 0 rgba(0,0,0,.08); margin-bottom: 24px; overflow: hidden; }
+.cp-info-title { font-family: 'Righteous', cursive, sans-serif; padding: 18px 20px; border-bottom: 1px solid #e2e2e2; color: #0d6efd; font-size: 1rem; }
+.cp-info-body { padding: 18px 20px 10px; }
+.cp-r-balance { margin-bottom: 14px; font-size: 0.92em; }
+.cp-r-about { color: #4285f4; margin-left: 10px; text-decoration: underline; cursor: pointer; font-size: 0.88em; }
+.cp-r-about:hover { color: #4285f480; }
+.cp-tool-info span { position: relative; display: inline-block; border: none; background-color: #4f429b; box-shadow: 0 0 12px rgba(0,0,0,.12); font-size: .88em; text-align: center; border-radius: 4px; padding: 8px 18px; transition: all 200ms ease; user-select: none; color: white; cursor: pointer; }
+.cp-tool-info span:hover { transform: scale(1.02); }
+.cp-tool-info span:active { transform: scale(.98); }
+.cp-tool-info { margin-bottom: 14px; }
+.cp-info-card .alert { font-size: .9em; }
 
 .cp-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; align-items: start; }
 .cp-col { display: flex; flex-direction: column; gap: 18px; }

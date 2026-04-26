@@ -898,6 +898,7 @@ class ContratPretController extends Controller
             'currencies'      => $this->currencies,
             'translations'    => $this->translations,
             'freeUsed'        => $user ? (bool) $user->contrat_free_used : false,
+            'userCredits'     => $user ? (int) $user->credit_user : 0,
         ]);
     }
 
