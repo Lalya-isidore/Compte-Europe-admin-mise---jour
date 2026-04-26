@@ -400,7 +400,15 @@
 </style>
 
 <style>
-    img.tool-icon[src*="contrat-pret"] { border-radius: 18%; }
+    img.tool-icon[src*="contrat-pret"], img.tool-icon[src*="badge-agent"] { 
+        filter: drop-shadow(0 4px 8px rgba(0,0,0,0.15));
+        transition: filter 0.3s ease;
+    }
+    .tool-card:hover img.tool-icon[src*="contrat-pret"], 
+    .tool-card:hover img.tool-icon[src*="badge-agent"] {
+        filter: drop-shadow(0 6px 12px rgba(0,0,0,0.2));
+    }
+    img.tool-icon[src*="contrat-pret"] { border-radius: 12px; }
     img.tool-icon[src*="badge-agent"] { width: 80px; height: 80px; }
 </style>
 @endsection
