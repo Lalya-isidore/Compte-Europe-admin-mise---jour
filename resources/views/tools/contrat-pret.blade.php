@@ -160,7 +160,7 @@
                                     <div style="margin-bottom:12px; background:#f8fafc; border:1px solid #e8edf3; border-radius:7px; padding:10px;">
                                         <div class="cachet-label" style="margin-bottom:8px;"><i class="fas fa-align-center" style="font-size:9px;"></i> Contenu du centre</div>
                                         <div style="display:flex; flex-direction:column; gap:7px;">
-                                            <input type="text" id="cachet_societe" value="COMPTE EUROPE BANQUE" placeholder="Nom de la société / Organisation"
+                                            <input type="text" id="cachet_societe" value="UNION BANQUE EUROPE" placeholder="Nom de la société / Organisation"
                                                    oninput="updateCachetPreview()"
                                                    style="border:1px solid #ddd; border-radius:5px; padding:6px 9px; font-size:0.8rem; font-weight:600;">
                                             <input type="text" id="cachet_bp" value="BP 45892 Madrid, Espagne" placeholder="BP / Adresse (ex: BP 31327 Madrid)"
