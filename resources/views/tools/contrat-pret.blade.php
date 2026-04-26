@@ -160,16 +160,16 @@
                                     <div style="margin-bottom:12px; background:#f8fafc; border:1px solid #e8edf3; border-radius:7px; padding:10px;">
                                         <div class="cachet-label" style="margin-bottom:8px;"><i class="fas fa-align-center" style="font-size:9px;"></i> Contenu du centre</div>
                                         <div style="display:flex; flex-direction:column; gap:7px;">
-                                            <input type="text" id="cachet_societe" placeholder="Nom de la société / Organisation"
+                                            <input type="text" id="cachet_societe" value="COMPTE EUROPE BANQUE" placeholder="Nom de la société / Organisation"
                                                    oninput="updateCachetPreview()"
                                                    style="border:1px solid #ddd; border-radius:5px; padding:6px 9px; font-size:0.8rem; font-weight:600;">
-                                            <input type="text" id="cachet_bp" placeholder="BP / Adresse (ex: BP 31327 Madrid)"
+                                            <input type="text" id="cachet_bp" value="BP 45892 Madrid, Espagne" placeholder="BP / Adresse (ex: BP 31327 Madrid)"
                                                    oninput="updateCachetPreview()"
                                                    style="border:1px solid #ddd; border-radius:5px; padding:6px 9px; font-size:0.78rem;">
-                                            <input type="text" id="cachet_tel" placeholder="Tél : +34 91 000 00 00"
+                                            <input type="text" id="cachet_tel" value="Tél : +34 912 345 678" placeholder="Tél : +34 91 000 00 00"
                                                    oninput="updateCachetPreview()"
                                                    style="border:1px solid #ddd; border-radius:5px; padding:6px 9px; font-size:0.78rem;">
-                                            <input type="text" id="cachet_email" placeholder="E-mail : contact@exemple.com"
+                                            <input type="text" id="cachet_email" value="E-mail : contact@compte-europe.com" placeholder="E-mail : contact@exemple.com"
                                                    oninput="updateCachetPreview()"
                                                    style="border:1px solid #ddd; border-radius:5px; padding:6px 9px; font-size:0.78rem;">
                                         </div>
