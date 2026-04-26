@@ -778,8 +778,12 @@ class ContratPretController extends Controller
 
         $signatureEmprunteur = null;
 
+        // Priorité : données traitées (fond blanc supprimé côté client) — sinon fichier brut
         $signaturePreteur = null;
-        if ($request->hasFile('signature_preteur') && $request->file('signature_preteur')->isValid()) {
+        $preteurData = $request->input('signature_preteur_data', '');
+        if (!empty($preteurData) && str_starts_with($preteurData, 'data:image/')) {
+            $signaturePreteur = $preteurData;
+        } elseif ($request->hasFile('signature_preteur') && $request->file('signature_preteur')->isValid()) {
             $signaturePreteur = 'data:' . $request->file('signature_preteur')->getMimeType() . ';base64,'
                               . base64_encode(file_get_contents($request->file('signature_preteur')->getRealPath()));
         }

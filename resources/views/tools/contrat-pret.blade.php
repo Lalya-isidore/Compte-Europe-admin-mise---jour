@@ -101,8 +101,10 @@
                         <div class="cp-field" style="margin-top: 14px;">
                             <label>Signature / Cachet du prêteur <small>(optionnel — image PNG/JPG)</small></label>
                             <input type="file" name="signature_preteur" id="signature_preteur" accept="image/png,image/jpeg,image/jpg" style="padding: 6px;">
+                            <input type="hidden" name="signature_preteur_data" id="signature_preteur_data">
                             <div id="sig-pre-wrap" style="display:none; margin-top:8px;">
-                                <img id="sig-pre-img" src="" alt="Signature prêteur" style="max-height:70px; max-width:200px; border:1px solid #ddd; border-radius:4px; padding:4px;">
+                                <img id="sig-pre-img" src="" alt="Signature prêteur" style="max-height:70px; max-width:200px; border-radius:4px; padding:4px; background: repeating-conic-gradient(#ccc 0% 25%, #fff 0% 50%) 0 0 / 12px 12px;">
+                                <div style="font-size:10px; color:#666; margin-top:4px;"><i class="fas fa-magic"></i> Fond blanc supprimé automatiquement</div>
                             </div>
                         </div>
                     </div>
@@ -626,19 +628,47 @@ document.addEventListener('DOMContentLoaded', () => {
 
     updatePreview();
 
+    // Suppression fond blanc via Canvas
+    function removeWhiteBackground(dataUrl, callback) {
+        const tmpImg = new Image();
+        tmpImg.onload = function () {
+            const canvas = document.createElement('canvas');
+            canvas.width  = tmpImg.width;
+            canvas.height = tmpImg.height;
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(tmpImg, 0, 0);
+            const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+            const d = imageData.data;
+            for (let i = 0; i < d.length; i += 4) {
+                const r = d[i], g = d[i + 1], b = d[i + 2];
+                // Pixels blancs ou quasi-blancs → transparents
+                if (r > 210 && g > 210 && b > 210) {
+                    d[i + 3] = 0;
+                }
+            }
+            ctx.putImageData(imageData, 0, 0);
+            callback(canvas.toDataURL('image/png'));
+        };
+        tmpImg.src = dataUrl;
+    }
+
     // Prévisualisation de la signature du prêteur
     document.getElementById('signature_preteur')?.addEventListener('change', function () {
         const file = this.files[0];
         if (!file) return;
         const reader = new FileReader();
         reader.onload = function (e) {
-            const src = e.target.result;
-            const wrap = document.getElementById('sig-pre-wrap');
-            const img  = document.getElementById('sig-pre-img');
-            img.src = src; wrap.style.display = 'block';
-            // Remplacer le cachet dans l'aperçu
-            const prevImg = document.getElementById('prev-sig-pre-img');
-            if (prevImg) prevImg.src = src;
+            removeWhiteBackground(e.target.result, function (processed) {
+                const wrap = document.getElementById('sig-pre-wrap');
+                const img  = document.getElementById('sig-pre-img');
+                img.src = processed;
+                wrap.style.display = 'block';
+                // Stocker le résultat traité pour l'envoi au serveur
+                document.getElementById('signature_preteur_data').value = processed;
+                // Remplacer le cachet dans l'aperçu
+                const prevImg = document.getElementById('prev-sig-pre-img');
+                if (prevImg) prevImg.src = processed;
+            });
         };
         reader.readAsDataURL(file);
     });
