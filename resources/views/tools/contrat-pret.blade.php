@@ -375,8 +375,8 @@
                                 <div class="prev-sig__right">
                                     <div class="prev-sig__date" id="prev-sig-date">Fait à —, le {{ date('d/m/Y') }}</div>
                                     <div class="prev-sig__label" id="prev-lbl-preteur-rep">Le Prêteur représenté par :</div>
-                                    <div class="prev-sig__img-wrap" style="text-align:right;">
-                                        <img id="prev-sig-pre-img" src="/images/contract/cachet-signature.jpg" alt="Cachet" style="max-height:70px; max-width:170px; margin-left:auto; display:block;">
+                                    <div class="prev-sig__img-wrap" style="text-align:right; min-height:unset; margin-bottom:0;">
+                                        <img id="prev-sig-pre-img" src="/images/contract/cachet-signature.jpg" alt="Cachet" style="max-height:90px; max-width:170px; margin-left:auto; display:block;">
                                     </div>
                                     <div class="prev-sig__line"></div>
                                     <div class="prev-sig__name" id="prev-sig-preteur">—</div>
@@ -1109,9 +1109,9 @@ function updateComposite() {
             stX = 20;
         }
 
-        const pad = 30;
+        const pad = 10;
         const cW = Math.max(sigW + shiftX, stX + stW) + pad;
-        const cH = sigH + Math.round(stH * 0.3) + pad;
+        const cH = sigH + Math.round(stH * 0.15) + pad; // Réduit l'espace en bas
 
         const cvs = document.createElement('canvas');
         cvs.width = cW; cvs.height = cH;
@@ -1120,8 +1120,8 @@ function updateComposite() {
         // Dessiner la signature (éventuellement décalée)
         ctx.drawImage(sigImg, shiftX, 0, sigW, sigH);
 
-        // Cachet : légèrement incliné
-        const stY = sigH - Math.round(stH * 0.7);
+        // Cachet : remonté un peu plus pour chevaucher davantage
+        const stY = sigH - Math.round(stH * 0.85); 
         ctx.save();
         ctx.translate(stX + stW / 2, stY + stH / 2);
         ctx.rotate(-0.10); // légère inclinaison
