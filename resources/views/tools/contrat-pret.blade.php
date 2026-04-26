@@ -104,7 +104,60 @@
                             <input type="hidden" name="signature_preteur_data" id="signature_preteur_data">
                             <div id="sig-pre-wrap" style="display:none; margin-top:8px;">
                                 <img id="sig-pre-img" src="" alt="Signature prêteur" style="max-height:70px; max-width:200px; border-radius:4px; padding:4px; background: repeating-conic-gradient(#ccc 0% 25%, #fff 0% 50%) 0 0 / 12px 12px;">
-                                <div style="font-size:10px; color:#666; margin-top:4px;"><i class="fas fa-magic"></i> Fond blanc supprimé automatiquement</div>
+                                <div style="font-size:10px; color:#666; margin-top:4px;"><i class="fas fa-magic"></i> Fond supprimé automatiquement</div>
+                            </div>
+
+                            {{-- === SECTION CACHET === --}}
+                            <div style="margin-top:12px; border:1px solid #dde3ed; border-radius:8px; overflow:hidden;">
+                                <div class="cachet-head" onclick="toggleCachetSection()">
+                                    <i class="fas fa-stamp"></i> Cachet / Tampon
+                                    <small style="font-weight:normal; opacity:0.65;">(optionnel)</small>
+                                    <i class="fas fa-chevron-down" id="cachet-chev" style="margin-left:auto; transition:transform 0.25s;"></i>
+                                </div>
+                                <div id="cachet-body" style="display:none; padding:12px; background:#fff;">
+
+                                    {{-- Style --}}
+                                    <div style="margin-bottom:10px;">
+                                        <div class="cachet-label">Style</div>
+                                        <div style="display:flex; gap:8px; flex-wrap:wrap;">
+                                            <label class="cachet-pill active" id="cpill-rond">
+                                                <input type="radio" name="cachet_style" value="rond" checked onchange="updateCachetPreview()">
+                                                <i class="fas fa-circle"></i> Rond
+                                            </label>
+                                            <label class="cachet-pill" id="cpill-rect">
+                                                <input type="radio" name="cachet_style" value="rect" onchange="updateCachetPreview()">
+                                                <i class="fas fa-square"></i> Rectangulaire
+                                            </label>
+                                            <label class="cachet-pill" id="cpill-none">
+                                                <input type="radio" name="cachet_style" value="none" onchange="updateCachetPreview()">
+                                                <i class="fas fa-times"></i> Aucun
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                    {{-- Couleur --}}
+                                    <div style="margin-bottom:12px;">
+                                        <div class="cachet-label">Couleur</div>
+                                        <div style="display:flex; gap:8px;">
+                                            <button type="button" class="cachet-color active" style="background:#1a5ea8;" onclick="setCachetColor('#1a5ea8',this)" title="Bleu"></button>
+                                            <button type="button" class="cachet-color" style="background:#c0392b;" onclick="setCachetColor('#c0392b',this)" title="Rouge"></button>
+                                            <button type="button" class="cachet-color" style="background:#1a1a1a;" onclick="setCachetColor('#1a1a1a',this)" title="Noir"></button>
+                                            <button type="button" class="cachet-color" style="background:#155724;" onclick="setCachetColor('#155724',this)" title="Vert"></button>
+                                            <button type="button" class="cachet-color" style="background:#6b21a8;" onclick="setCachetColor('#6b21a8',this)" title="Violet"></button>
+                                        </div>
+                                    </div>
+
+                                    {{-- Aperçu cachet --}}
+                                    <div>
+                                        <div class="cachet-label">Aperçu</div>
+                                        <div style="background:repeating-conic-gradient(#ccc 0% 25%,#fff 0% 50%) 0 0/12px 12px; border-radius:6px; padding:8px; display:inline-block;">
+                                            <canvas id="cachet-canvas" width="220" height="220" style="display:block;"></canvas>
+                                        </div>
+                                        <div style="font-size:10px; color:#666; margin-top:5px;">
+                                            <i class="fas fa-info-circle"></i> Le cachet se superpose à la signature sur le contrat
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -453,6 +506,18 @@
     .cp-col--preview .cp-card { position: static; }
     .cp-row2 { grid-template-columns: 1fr; }
 }
+
+/* Cachet / Tampon */
+.cachet-head { padding: 9px 12px; background: #f0f4fa; font-size: 0.83rem; font-weight: 600; color: #1e3a5f; display: flex; align-items: center; gap: 8px; cursor: pointer; user-select: none; }
+.cachet-head:hover { background: #e4ecf7; }
+.cachet-label { font-size: 0.76rem; font-weight: 600; color: #555; margin-bottom: 6px; }
+.cachet-pill { display: flex; align-items: center; gap: 5px; padding: 6px 12px; border: 2px solid #e0e0e0; border-radius: 7px; cursor: pointer; font-size: 0.8rem; font-weight: 500; color: #555; transition: all 0.18s; }
+.cachet-pill:hover { border-color: #1e3a5f; color: #1e3a5f; }
+.cachet-pill.active { border-color: #1e3a5f; background: #1e3a5f; color: #fff; }
+.cachet-pill input { display: none; }
+.cachet-color { width: 26px; height: 26px; border-radius: 50%; border: 3px solid transparent; cursor: pointer; transition: transform 0.15s, border-color 0.15s; }
+.cachet-color:hover { transform: scale(1.15); }
+.cachet-color.active { border-color: #333; transform: scale(1.1); }
 </style>
 
 <script>
@@ -719,15 +784,18 @@ document.addEventListener('DOMContentLoaded', () => {
         const reader = new FileReader();
         reader.onload = function (e) {
             removeWhiteBackground(e.target.result, function (processed) {
+                // Mémoriser la signature sans fond
+                currentSigDataUrl = processed;
+                // Afficher la prévisualisation de la signature seule
                 const wrap = document.getElementById('sig-pre-wrap');
                 const img  = document.getElementById('sig-pre-img');
                 img.src = processed;
                 wrap.style.display = 'block';
-                // Stocker le résultat traité pour l'envoi au serveur
-                document.getElementById('signature_preteur_data').value = processed;
-                // Remplacer le cachet dans l'aperçu
-                const prevImg = document.getElementById('prev-sig-pre-img');
-                if (prevImg) prevImg.src = processed;
+                // Générer le composite signature + cachet
+                updateComposite();
+                // Mettre à jour aussi l'aperçu du cachet si la section est ouverte
+                const cachetBody = document.getElementById('cachet-body');
+                if (cachetBody && cachetBody.style.display !== 'none') updateCachetPreview();
             });
         };
         reader.readAsDataURL(file);
@@ -761,7 +829,279 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
+// =========================================================
+// ---- GÉNÉRATEUR DE CACHET / TAMPON ----
+// =========================================================
+let currentSigDataUrl = null; // signature sans fond
+let cachetColor = '#1a5ea8';  // couleur active
+
+function toggleCachetSection() {
+    const body = document.getElementById('cachet-body');
+    const chev = document.getElementById('cachet-chev');
+    const open = body.style.display !== 'none';
+    body.style.display    = open ? 'none' : 'block';
+    chev.style.transform  = open ? '' : 'rotate(180deg)';
+    if (!open) updateCachetPreview();
+}
+
+function setCachetColor(color, btn) {
+    cachetColor = color;
+    document.querySelectorAll('.cachet-color').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    // Sync style pills active state
+    document.querySelectorAll('.cachet-pill').forEach(p => {
+        p.classList.toggle('active', p.querySelector('input')?.checked);
+    });
+    updateCachetPreview();
+}
+
+// Sync pill active on radio change
+document.querySelectorAll('.cachet-pill input').forEach(inp => {
+    inp.addEventListener('change', () => {
+        document.querySelectorAll('.cachet-pill').forEach(p => p.classList.remove('active'));
+        inp.closest('.cachet-pill').classList.add('active');
+    });
+});
+
+function getStampInfo() {
+    return {
+        nom : (document.getElementById('preteur_nom')?.value  || 'PRÊTEUR').toUpperCase().trim(),
+        pays: (document.getElementById('preteur_pays')?.value || '').toUpperCase().trim(),
+        id  : (document.getElementById('preteur_id')?.value   || '').trim(),
+        cap : (document.getElementById('preteur_capacite')?.value || '').toUpperCase().trim(),
+    };
+}
+
+// Écriture de texte en arc de cercle
+function drawArcText(ctx, text, cx, cy, radius, midAngle, clockwise) {
+    const chars = [...text];
+    const widths = chars.map(c => ctx.measureText(c).width);
+    const totalW = widths.reduce((a, b) => a + b, 0);
+    const totalAngle = totalW / radius;
+    let angle = midAngle + (clockwise ? -totalAngle / 2 : totalAngle / 2);
+    ctx.save();
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    chars.forEach((ch, i) => {
+        const ca = widths[i] / radius;
+        const ma = angle + (clockwise ? ca / 2 : -ca / 2);
+        ctx.save();
+        ctx.translate(cx + Math.cos(ma) * radius, cy + Math.sin(ma) * radius);
+        ctx.rotate(ma + (clockwise ? Math.PI / 2 : -Math.PI / 2));
+        ctx.fillText(ch, 0, 0);
+        ctx.restore();
+        angle += clockwise ? ca : -ca;
+    });
+    ctx.restore();
+}
+
+// Génère un cachet ROND sur un canvas de 220×220
+function generateRoundStamp(nom, pays, id, cap, color) {
+    const S = 220, cx = 110, cy = 110;
+    const Ro = 100, Rt = 90, Ri = 82;
+    const cvs = document.createElement('canvas');
+    cvs.width = cvs.height = S;
+    const ctx = cvs.getContext('2d');
+
+    ctx.strokeStyle = color; ctx.fillStyle = color;
+
+    // Cercle extérieur (épais)
+    ctx.lineWidth = 3.5;
+    ctx.beginPath(); ctx.arc(cx, cy, Ro, 0, Math.PI * 2); ctx.stroke();
+
+    // Cercle intérieur (fin)
+    ctx.lineWidth = 1.5;
+    ctx.beginPath(); ctx.arc(cx, cy, Ri, 0, Math.PI * 2); ctx.stroke();
+
+    // Étoiles décoratrices (3h et 9h)
+    ['✦','✦'].forEach((star, i) => {
+        const a = i === 0 ? 0 : Math.PI;
+        ctx.save();
+        ctx.font = '11px Arial';
+        ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+        ctx.fillText(star, cx + Math.cos(a) * Rt, cy + Math.sin(a) * Rt);
+        ctx.restore();
+    });
+
+    // Texte supérieur (nom) — arc du haut, sens horaire
+    const topText = nom.length > 22 ? nom.substring(0, 22) : nom;
+    ctx.font = 'bold 11px Arial';
+    drawArcText(ctx, topText, cx, cy, Rt, -Math.PI / 2, true);
+
+    // Texte inférieur (capacité · pays) — arc du bas, sens anti-horaire
+    const botText = (cap && pays) ? cap + ' · ' + pays : (cap || pays || '');
+    if (botText) {
+        ctx.font = '9px Arial';
+        drawArcText(ctx, botText, cx, cy, Rt, Math.PI / 2, false);
+    }
+
+    // Texte central (ID)
+    ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    ctx.font = 'bold 10px Arial';
+    const idLines = id.split(/[,;·]/);
+    idLines.forEach((line, i) => {
+        const y = cy + (i - (idLines.length - 1) / 2) * 14;
+        ctx.fillText(line.trim(), cx, y);
+    });
+
+    return cvs.toDataURL('image/png');
+}
+
+// Génère un cachet RECTANGULAIRE sur un canvas de 240×100
+function generateRectStamp(nom, pays, id, cap, color) {
+    const W = 240, H = 100;
+    const cvs = document.createElement('canvas');
+    cvs.width = W; cvs.height = H;
+    const ctx = cvs.getContext('2d');
+
+    ctx.strokeStyle = color; ctx.fillStyle = color;
+
+    // Double bordure
+    ctx.lineWidth = 2.5; ctx.strokeRect(3, 3, W - 6, H - 6);
+    ctx.lineWidth = 1;   ctx.strokeRect(7, 7, W - 14, H - 14);
+
+    ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+
+    // Ligne 1 : nom
+    ctx.font = 'bold 14px Arial';
+    ctx.fillText(nom.length > 28 ? nom.substring(0, 28) : nom, W / 2, 28);
+
+    // Ligne séparatrice
+    ctx.lineWidth = 0.8;
+    ctx.beginPath(); ctx.moveTo(20, 40); ctx.lineTo(W - 20, 40); ctx.stroke();
+
+    // Ligne 2 : capacité
+    ctx.font = '11px Arial';
+    ctx.fillText(cap || '', W / 2, 54);
+
+    // Ligne 3 : pays
+    ctx.font = '10px Arial';
+    ctx.fillText(pays || '', W / 2, 68);
+
+    // Ligne 4 : ID
+    ctx.font = 'bold 9px Arial';
+    ctx.fillText(id || '', W / 2, 83);
+
+    return cvs.toDataURL('image/png');
+}
+
+// Dessine le cachet sur le canvas de prévisualisation
+function updateCachetPreview() {
+    const style = document.querySelector('input[name="cachet_style"]:checked')?.value || 'rond';
+    const cvs = document.getElementById('cachet-canvas');
+    if (!cvs) return;
+
+    if (style === 'none') {
+        const ctx = cvs.getContext('2d');
+        ctx.clearRect(0, 0, cvs.width, cvs.height);
+        updateComposite(); return;
+    }
+
+    const { nom, pays, id, cap } = getStampInfo();
+
+    if (style === 'rond') {
+        cvs.width = cvs.height = 220;
+        const stampUrl = generateRoundStamp(nom, pays, id, cap, cachetColor);
+        const img = new Image();
+        img.onload = () => {
+            const ctx = cvs.getContext('2d');
+            ctx.clearRect(0, 0, cvs.width, cvs.height);
+            ctx.drawImage(img, 0, 0);
+            updateComposite();
+        };
+        img.src = stampUrl;
+    } else {
+        cvs.width = 240; cvs.height = 100;
+        const stampUrl = generateRectStamp(nom, pays, id, cap, cachetColor);
+        const img = new Image();
+        img.onload = () => {
+            const ctx = cvs.getContext('2d');
+            ctx.clearRect(0, 0, cvs.width, cvs.height);
+            ctx.drawImage(img, 0, 0);
+            updateComposite();
+        };
+        img.src = stampUrl;
+    }
+}
+
+// Composite signature + cachet → stocke dans signature_preteur_data + met à jour l'aperçu
+function updateComposite() {
+    const style = document.querySelector('input[name="cachet_style"]:checked')?.value || 'rond';
+    const { nom, pays, id, cap } = getStampInfo();
+    const prevImg = document.getElementById('prev-sig-pre-img');
+
+    // Pas de signature importée → juste le cachet
+    if (!currentSigDataUrl) {
+        if (style === 'none') { if (prevImg) prevImg.src = '/images/contract/cachet-signature.jpg'; return; }
+        const stampUrl = style === 'rond'
+            ? generateRoundStamp(nom, pays, id, cap, cachetColor)
+            : generateRectStamp(nom, pays, id, cap, cachetColor);
+        document.getElementById('signature_preteur_data').value = stampUrl;
+        if (prevImg) { prevImg.src = stampUrl; prevImg.style.display = 'block'; }
+        return;
+    }
+
+    // Aucun cachet → juste la signature
+    if (style === 'none') {
+        document.getElementById('signature_preteur_data').value = currentSigDataUrl;
+        if (prevImg) prevImg.src = currentSigDataUrl;
+        return;
+    }
+
+    const stampUrl = style === 'rond'
+        ? generateRoundStamp(nom, pays, id, cap, cachetColor)
+        : generateRectStamp(nom, pays, id, cap, cachetColor);
+
+    const sigImg   = new Image();
+    const stampImg = new Image();
+    let sigLoaded = false, stampLoaded = false;
+
+    function tryDraw() {
+        if (!sigLoaded || !stampLoaded) return;
+
+        const sW = sigImg.width,   sH = sigImg.height;
+        const tW = stampImg.width, tH = stampImg.height;
+
+        // Canvas assez grand pour les deux avec chevauchement
+        const pad  = 16;
+        const cW   = Math.max(sW, tW) + pad;
+        const cH   = sH + Math.round(tH * 0.45) + pad;
+
+        const cvs = document.createElement('canvas');
+        cvs.width = cW; cvs.height = cH;
+        const ctx = cvs.getContext('2d');
+
+        // Dessiner la signature
+        ctx.drawImage(sigImg, (cW - sW) / 2, pad / 2);
+
+        // Dessiner le cachet en chevauchement bas-droite, légèrement incliné
+        const stX = cW - tW - 4;
+        const stY = pad / 2 + sH - Math.round(tH * 0.55);
+        ctx.save();
+        ctx.translate(stX + tW / 2, stY + tH / 2);
+        ctx.rotate(-0.12); // légère inclinaison réaliste
+        ctx.globalAlpha = 0.88;
+        ctx.drawImage(stampImg, -tW / 2, -tH / 2);
+        ctx.restore();
+
+        const result = cvs.toDataURL('image/png');
+        document.getElementById('signature_preteur_data').value = result;
+        if (prevImg) prevImg.src = result;
+    }
+
+    sigImg.onload   = () => { sigLoaded   = true; tryDraw(); };
+    stampImg.onload = () => { stampLoaded = true; tryDraw(); };
+    sigImg.src   = currentSigDataUrl;
+    stampImg.src = stampUrl;
+}
+
+// Écouter les champs prêteur pour mettre à jour le cachet en temps réel
+['preteur_nom','preteur_pays','preteur_id','preteur_capacite'].forEach(id => {
+    document.getElementById(id)?.addEventListener('input', updateCachetPreview);
+});
+
 // ---- Fonctions globales éditeur d'articles ----
+
 function buildArticleFullText(n, t, montant, sym, duree, empPays) {
     const fmtN = (v) => v > 0 ? new Intl.NumberFormat('fr-FR',{minimumFractionDigits:2}).format(v)+' '+sym : '—';
     const j = (arr) => arr.filter(s => s && s.trim()).join('\n\n');
