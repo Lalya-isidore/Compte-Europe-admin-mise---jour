@@ -61,7 +61,7 @@
 
                 {{-- Emprunteur --}}
                 <div class="cp-card">
-                    <div class="cp-card__head"><i class="fas fa-user"></i> L'Emprunteur (Bénéficiaire)</div>
+                    <div class="cp-card__head"><i class="fas fa-user"></i> L'Emprunteur (Bénéficiaire du prêt)</div>
                     <div class="cp-card__body">
                         <div class="cp-row2">
                             <div class="cp-field">
