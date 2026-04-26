@@ -495,8 +495,8 @@
 .art-corps-inp { width: 100%; border: 1px solid #ddd; border-radius: 6px; padding: 9px; font-size: 0.82rem; line-height: 1.6; color: #333; resize: vertical; font-family: 'Times New Roman', serif; box-sizing: border-box; margin-top: 8px; }
 .art-corps-inp:focus { outline: none; border-color: #4B0082; }
 
-.cp-btn-generate { width: 100%; padding: 14px; background: linear-gradient(135deg, #1e3a5f, #2d5986); color: #fff; border: none; border-radius: 10px; font-size: 0.95rem; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; transition: all 0.2s; }
-.cp-btn-generate:hover { background: linear-gradient(135deg, #162e4d, #244a72); transform: translateY(-1px); box-shadow: 0 6px 20px rgba(30,58,95,0.3); }
+.cp-btn-generate { width: 100%; padding: 14px; background: linear-gradient(135deg, #1a7a3f, #25a858); color: #fff; border: none; border-radius: 10px; font-size: 0.95rem; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; transition: all 0.2s; }
+.cp-btn-generate:hover { background: linear-gradient(135deg, #156233, #1e8f49); transform: translateY(-1px); box-shadow: 0 6px 20px rgba(26,122,63,0.35); }
 .cp-btn-generate i { font-size: 1.1rem; }
 
 /* Aperçu */
