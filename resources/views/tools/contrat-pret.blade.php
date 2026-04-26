@@ -1194,7 +1194,7 @@ function updateComposite() {
 
 // ---- Fonctions globales éditeur d'articles ----
 
-function buildArticleFullText(n, t, montant, sym, duree, empPays) {
+function buildArticleFullText(n, t, montant, sym, duree, empPays, taux) {
     const fmtN = (v) => v > 0 ? new Intl.NumberFormat('fr-FR',{minimumFractionDigits:2}).format(v)+' '+sym : '—';
     const j = (arr) => arr.filter(s => s && s.trim()).join('\n\n');
     switch(n) {
@@ -1204,7 +1204,7 @@ function buildArticleFullText(n, t, montant, sym, duree, empPays) {
         case 4:  return j([(t.observation||'')+' '+(t.art4_p1||''), t.art4_p2||'', t.art4_p3||'']);
         case 5:  return j([t.art5_p1||'', t.art5_p2||'', '- '+(t.art5_li1||'')+'\n- '+(t.art5_li2||'')+'\n- '+(t.art5_li3||'')]);
         case 6:  return j([t.art6_p1||'', t.art6_p2||'', t.art6_p3||'']);
-        case 7:  return j([t.art7_p1||'', t.art7_p2||'', (t.art7_partiel||'')+' '+(t.art7_p3||'')]);
+        case 7: { const p3 = (t.art7_p3||'').replace(/5\s*%/g, (taux||0)+'%'); return j([t.art7_p1||'', t.art7_p2||'', (t.art7_partiel||'')+' '+p3]); }
         case 8:  return j([t.art8_p1||'', t.art8_p2||'', t.art8_p3||'', t.art8_p4||'']);
         case 9:  return t.art9_p1 || '';
         case 10: return j([t.art10_p1||'', t.art10_p2||'']);
@@ -1242,6 +1242,7 @@ function resetArticles() {
     const lang    = document.querySelector('input[name="lang"]:checked')?.value || 'fr';
     const t       = allTranslations[lang] || allTranslations['fr'];
     const montant = parseFloat(document.getElementById('montant').value) || 0;
+    const taux    = parseFloat(document.getElementById('taux').value) || 0;
     const duree   = parseInt(document.getElementById('duree').value) || 0;
     const sym     = currencySymbols[document.getElementById('devise').value] || '€';
     const empPays = document.getElementById('emprunteur_pays').value || '—';
@@ -1254,7 +1255,7 @@ function resetArticles() {
         const titreEl = document.getElementById('art-' + n + '-titre');
         const corpsEl = document.getElementById('art-' + n + '-corps');
         if (titreEl) titreEl.value = t[titleKeys[n-1]] || '';
-        if (corpsEl) corpsEl.value = buildArticleFullText(n, t, montant, sym, duree, empPays);
+        if (corpsEl) corpsEl.value = buildArticleFullText(n, t, montant, sym, duree, empPays, taux);
     }
     if (typeof updatePreview === 'function') updatePreview();
 }

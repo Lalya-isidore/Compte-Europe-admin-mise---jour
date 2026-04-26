@@ -125,7 +125,7 @@
             4 => ['titre' => $t['art4_titre'], 'corps' => implode("\n\n", [$t['observation'].' '.$t['art4_p1'], $t['art4_p2'], $t['art4_p3']])],
             5 => ['titre' => $t['art5_titre'], 'corps' => implode("\n\n", [$t['art5_p1'], $t['art5_p2'], '- '.$t['art5_li1']."\n- ".$t['art5_li2']."\n- ".$t['art5_li3']])],
             6 => ['titre' => $t['art6_titre'], 'corps' => implode("\n\n", [$t['art6_p1'], $t['art6_p2'], $t['art6_p3']])],
-            7 => ['titre' => $t['art7_titre'], 'corps' => implode("\n\n", [$t['art7_p1'], $t['art7_p2'], $t['art7_partiel'].' '.$t['art7_p3']])],
+            7 => ['titre' => $t['art7_titre'], 'corps' => implode("\n\n", [$t['art7_p1'], $t['art7_p2'], $t['art7_partiel'].' '.preg_replace('/5\s*%/', $taux.'%', $t['art7_p3'])])],
             8 => ['titre' => $t['art8_titre'], 'corps' => implode("\n\n", [$t['art8_p1'], $t['art8_p2'], $t['art8_p3'], $t['art8_p4']])],
             9 => ['titre' => $t['art9_titre'], 'corps' => $t['art9_p1']],
             10 => ['titre' => $t['art10_titre'], 'corps' => implode("\n\n", [$t['art10_p1'], $t['art10_p2']])],
