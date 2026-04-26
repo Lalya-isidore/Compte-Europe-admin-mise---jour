@@ -361,28 +361,37 @@
                                 @endforeach
                             </div>
 
-                            <div class="prev-sig">
-                                <div class="prev-sig__left">
-                                    <div class="prev-sig__label" id="prev-lbl-emprunteur">L'Emprunteur :</div>
-                                    <div class="prev-sig__img-wrap">
-                                        <img id="prev-sig-emp-img" src="" alt="" style="display:none; max-height:55px; max-width:150px;">
-                                    </div>
-                                    <div class="prev-sig__line"></div>
-                                    <div class="prev-sig__name" id="prev-sig-emprunteur">—</div>
-                                    <div class="prev-sig__title" id="prev-lbl-benef-legal">Bénéficiaire légal du prêt</div>
-                                </div>
-                                <div class="prev-sig__mid"></div>
-                                <div class="prev-sig__right">
-                                    <div class="prev-sig__date" id="prev-sig-date">Fait à —, le {{ date('d/m/Y') }}</div>
-                                    <div class="prev-sig__label" id="prev-lbl-preteur-rep">Le Prêteur représenté par :</div>
-                                    <div class="prev-sig__img-wrap" style="text-align:right; min-height:unset; margin-bottom:0;">
-                                        <img id="prev-sig-pre-img" src="/images/contract/cachet-signature.jpg" alt="Cachet" style="max-height:90px; max-width:170px; margin-left:auto; display:block;">
-                                    </div>
-                                    <div class="prev-sig__line"></div>
-                                    <div class="prev-sig__name" id="prev-sig-preteur">—</div>
-                                    <div class="prev-sig__title" id="prev-sig-preteur-cap">—</div>
-                                </div>
-                            </div>
+                            <table style="width:100%; border-top:1px solid #eee; margin-top:20px; border-collapse:collapse;">
+                                <tr>
+                                    <td style="width:45%; vertical-align:bottom; padding-top:10px;">
+                                        <div class="prev-sig__label" id="prev-lbl-emprunteur" style="margin-bottom:10px;">L'Emprunteur :</div>
+                                        <div class="prev-sig__img-wrap" style="min-height:60px; display:flex; align-items:flex-end;">
+                                            <img id="prev-sig-emp-img" src="" alt="" style="display:none; max-height:60px; max-width:160px;">
+                                        </div>
+                                    </td>
+                                    <td style="width:10%;"></td>
+                                    <td style="width:45%; vertical-align:bottom; text-align:right; padding-top:10px;">
+                                        <div class="prev-sig__date" id="prev-sig-date" style="margin-bottom:10px;">Fait à —, le {{ date('d/m/Y') }}</div>
+                                        <div class="prev-sig__label" id="prev-lbl-preteur-rep" style="margin-bottom:10px;">Le Prêteur représenté par :</div>
+                                        <div class="prev-sig__img-wrap" style="text-align:right; min-height:unset; margin-bottom:0;">
+                                            <img id="prev-sig-pre-img" src="/images/contract/cachet-signature.jpg" alt="Cachet" style="max-height:100px; max-width:180px; margin-left:auto; display:block;">
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="vertical-align:top;">
+                                        <div class="prev-sig__line" style="border-bottom:1px solid #333; height:1px; margin:5px 0;"></div>
+                                        <div class="prev-sig__name" id="prev-sig-emprunteur" style="font-size:11px; font-weight:bold;">—</div>
+                                        <div class="prev-sig__title" id="prev-lbl-benef-legal" style="font-style:italic; font-size:9px; color:#666;">Bénéficiaire légal du prêt</div>
+                                    </td>
+                                    <td></td>
+                                    <td style="vertical-align:top; text-align:right;">
+                                        <div class="prev-sig__line" style="border-bottom:1px solid #333; height:1px; margin:5px 0;"></div>
+                                        <div class="prev-sig__name" id="prev-sig-preteur" style="font-size:11px; font-weight:bold;">—</div>
+                                        <div class="prev-sig__title" id="prev-sig-preteur-cap" style="font-style:italic; font-size:9px; color:#666;">—</div>
+                                    </td>
+                                </tr>
+                            </table>
 
                             <div class="prev-important" id="prev-important-txt">
                                 IMPORTANT : CE CONTRAT DOIT ÊTRE IMPRIMÉ, DATÉ ET SIGNÉ PAR L'EMPRUNTEUR AFIN DE DÉCLENCHER LE VIREMENT DES FONDS SUR LE COMPTE BANCAIRE DÉSIGNÉ.
