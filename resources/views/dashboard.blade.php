@@ -374,7 +374,7 @@
     }
 
     .tool-badge--new {
-        background: #22c55e;
+        background: #2196F3;
         color: #fff;
     }
 
