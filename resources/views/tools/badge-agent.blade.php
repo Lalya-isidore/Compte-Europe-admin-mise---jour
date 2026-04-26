@@ -108,6 +108,11 @@
 <div class="badge-wrap">
     <div class="badge-header">
         <h1><i class="fas fa-id-badge"></i> <span>Badge Suite Pro</span></h1>
+        <p class="cp-tool-info">
+            <span data-bs-toggle="modal" data-bs-target="#baHelpModal">
+                <i class="fas fa-info-circle"></i> Utilité et Fonctionnement <i class="fas fa-arrow-right" style="font-size:0.75em;"></i>
+            </span>
+        </p>
     </div>
 
     <div class="badge-editor">
@@ -192,6 +197,37 @@
         </div>
     </div>
 </div>
+
+{{-- Modal Utilité et Fonctionnement --}}
+<div class="modal fade" id="baHelpModal" tabindex="-1" aria-labelledby="baHelpModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="baHelpModalLabel"><i class="fas fa-info-circle"></i> Utilité et Fonctionnement</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <h6 class="text-primary">Utilité</h6>
+                <p>Cet outil vous permet de créer un <b>badge d'agent professionnel</b> personnalisé avec photo, nom, fonction, société, groupe sanguin et date d'expiration. Idéal pour vos agents de terrain, commerciaux, ou tout personnel nécessitant une identification officielle.</p>
+                <h6 class="text-primary">Fonctionnement</h6>
+                <p>Choisissez un modèle (Modern Paysage, Dark Pro ou Minimal Portrait), renseignez les informations de l'agent et téléchargez une photo. L'aperçu se met à jour en temps réel. Cliquez sur <b>Télécharger le Badge</b> pour obtenir une image haute résolution prête à imprimer.</p>
+                <p>Cet outil est <b>gratuit</b> et ne nécessite aucun crédit.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.cp-tool-info span { position: relative; display: inline-block; border: none; background-color: #4f429b; box-shadow: 0 0 12px rgba(0,0,0,.12); font-size: .88em; text-align: center; border-radius: 4px; padding: 8px 18px; transition: all 200ms ease; user-select: none; color: white; cursor: pointer; }
+.cp-tool-info span:hover { transform: scale(1.02); }
+.cp-tool-info span:active { transform: scale(.98); }
+.cp-tool-info { margin-bottom: 14px; }
+.badge-header .cp-tool-info { margin-top: 10px; margin-bottom: 0; }
+</style>
+
 @endsection
 
 @push('scripts')

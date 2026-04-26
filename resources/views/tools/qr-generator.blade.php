@@ -12,6 +12,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Righteous&display=swap');
 @import url('https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css');
 
+.cp-tool-info span { position: relative; display: inline-block; border: none; background-color: #4f429b; box-shadow: 0 0 12px rgba(0,0,0,.12); font-size: .88em; text-align: center; border-radius: 4px; padding: 8px 18px; transition: all 200ms ease; user-select: none; color: white; cursor: pointer; }
+.cp-tool-info span:hover { transform: scale(1.02); }
+.cp-tool-info span:active { transform: scale(.98); }
+.cp-tool-info { margin-bottom: 14px; }
+
 :root {
     --ce-primary: #2196F3;
     --ce-secondary: #FF6B35;
@@ -657,6 +662,11 @@
     <div class="qr-header">
         <h1><i class="bi bi-qr-code-scan" style="color: var(--ce-primary)"></i> <span>Flash</span>QR Generator</h1>
         <div class="badge-certified"><i class="bi bi-shield-check" style="color: var(--ce-success)"></i> ISO 27001 Certified</div>
+        <p class="cp-tool-info" style="margin-top:12px;">
+            <span data-bs-toggle="modal" data-bs-target="#qrHelpModal">
+                <i class="bi bi-info-circle"></i> Utilité et Fonctionnement <i class="bi bi-arrow-right" style="font-size:0.75em;"></i>
+            </span>
+        </p>
     </div>
 
     <div class="main-layout">
@@ -1717,4 +1727,28 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 </script>
 @endpush
+
+{{-- Modal Utilité et Fonctionnement --}}
+<div class="modal fade" id="qrHelpModal" tabindex="-1" aria-labelledby="qrHelpModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="qrHelpModalLabel"><i class="bi bi-info-circle"></i> Utilité et Fonctionnement</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <h6 class="text-primary">Utilité</h6>
+                <p>Cet outil vous permet de générer des <b>QR Codes professionnels</b> pour n'importe quel contenu : URL, texte, email, téléphone, WiFi, vCard, etc. Personnalisez les couleurs, ajoutez un logo et créez même une affiche prête à imprimer.</p>
+                <h6 class="text-primary">Fonctionnement</h6>
+                <p>Sélectionnez le type de contenu, saisissez vos informations et personnalisez le style (couleurs, forme des modules, logo central). L'aperçu se met à jour en temps réel.</p>
+                <p>Utilisez l'onglet <b>Affiche</b> pour créer un visuel complet avec titre, sous-titre et réseaux sociaux. Téléchargez ensuite le QR Code ou l'affiche en PNG haute résolution.</p>
+                <p>Cet outil est <b>gratuit</b> et ne nécessite aucun crédit.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 @endsection
