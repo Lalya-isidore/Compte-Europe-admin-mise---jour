@@ -479,6 +479,11 @@
 .cp-btn-generate { width: 100%; padding: 14px; background: linear-gradient(135deg, #1a7a3f, #25a858); color: #fff; border: none; border-radius: 10px; font-size: 0.95rem; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; transition: all 0.2s; }
 .cp-btn-generate:hover { background: linear-gradient(135deg, #156233, #1e8f49); transform: translateY(-1px); box-shadow: 0 6px 20px rgba(26,122,63,0.35); }
 .cp-btn-generate i { font-size: 1.1rem; }
+@media (max-width: 600px) {
+    .cp-btn-generate { padding: 10px 14px; font-size: 0.82rem; border-radius: 8px; gap: 7px; }
+    .cp-btn-generate i { font-size: 0.9rem; }
+    .cp-btn-generate span { font-size: 0.72rem; padding: 2px 8px; }
+}
 
 /* Aperçu */
 .cp-col--preview .cp-card { position: sticky; top: 80px; }
