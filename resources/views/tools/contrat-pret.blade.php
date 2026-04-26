@@ -925,10 +925,10 @@ function drawArcText(ctx, text, cx, cy, radius, midAngle, clockwise) {
     ctx.restore();
 }
 
-// Génère un cachet ROND sur un canvas de 260×260
+// Génère un cachet ROND sur un canvas de 500×500 (haute résolution)
 function generateRoundStamp(info, color) {
-    const S = 260, cx = 130, cy = 130;
-    const Ro = 122, Rt = 106, Ri = 90;
+    const S = 500, cx = 250, cy = 250;
+    const Ro = 240, Rt = 212, Ri = 180;
     const cvs = document.createElement('canvas');
     cvs.width = cvs.height = S;
     const ctx = cvs.getContext('2d');
@@ -936,41 +936,37 @@ function generateRoundStamp(info, color) {
     ctx.strokeStyle = color; ctx.fillStyle = color;
 
     // --- BORDURES ---
-    // Bordure extérieure très épaisse
-    ctx.lineWidth = 5;
+    ctx.lineWidth = 10;
     ctx.beginPath(); ctx.arc(cx, cy, Ro, 0, Math.PI * 2); ctx.stroke();
-    // Filet intérieur
-    ctx.lineWidth = 1.5;
-    ctx.beginPath(); ctx.arc(cx, cy, Ro - 7, 0, Math.PI * 2); ctx.stroke();
-    // Bordure de séparation intérieure
-    ctx.lineWidth = 2.5;
+    ctx.lineWidth = 3;
+    ctx.beginPath(); ctx.arc(cx, cy, Ro - 14, 0, Math.PI * 2); ctx.stroke();
+    ctx.lineWidth = 5;
     ctx.beginPath(); ctx.arc(cx, cy, Ri, 0, Math.PI * 2); ctx.stroke();
 
     // --- TEXTE POURTOUR (Arc) ---
     if (info.tour) {
-        ctx.font = 'bold 15px "Arial Black", Arial, sans-serif';
-        // On centre l'arc sur le haut
+        ctx.font = 'bold 30px "Arial Black", Arial, sans-serif';
         drawArcText(ctx, info.tour, cx, cy, Rt, -Math.PI / 2, true);
     }
 
-    // Étoile au bas pour fermer le cercle
-    ctx.font = '24px Arial';
+    // Étoile au bas
+    ctx.font = '48px Arial';
     ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
-    ctx.fillText('★', cx, cy + Rt + 2);
+    ctx.fillText('★', cx, cy + Rt + 5);
 
     // --- TEXTE CENTRAL ---
     let lines = [];
-    if (info.societe) lines.push({text: info.societe, font: 'bold 18px Impact, "Arial Black", sans-serif'});
-    if (info.bp)      lines.push({text: info.bp,      font: 'bold 11px Arial'});
-    if (info.tel)     lines.push({text: info.tel,     font: 'bold 11px Arial'});
-    if (info.email)   lines.push({text: info.email,   font: 'bold 11px Arial'});
+    if (info.societe) lines.push({text: info.societe, font: 'bold 36px "Arial Black", sans-serif'});
+    if (info.bp)      lines.push({text: info.bp,      font: 'bold 22px Arial'});
+    if (info.tel)     lines.push({text: info.tel,     font: 'bold 22px Arial'});
+    if (info.email)   lines.push({text: info.email,   font: 'bold 22px Arial'});
 
     if (lines.length === 0) {
-        lines.push({text: info.nom, font: 'bold 16px Impact, sans-serif'});
-        lines.push({text: info.cap, font: 'bold 11px Arial'});
+        lines.push({text: info.nom, font: 'bold 32px Arial'});
+        lines.push({text: info.cap, font: 'bold 22px Arial'});
     }
 
-    const lineH = 18;
+    const lineH = 36;
     const totalH = (lines.length - 1) * lineH;
     const startY = cy - totalH / 2;
 
@@ -984,35 +980,29 @@ function generateRoundStamp(info, color) {
     return cvs.toDataURL('image/png');
 }
 
-// Génère un cachet RECTANGULAIRE
+// Génère un cachet RECTANGULAIRE (haute résolution)
 function generateRectStamp(info, color) {
-    const W = 260, H = 120;
+    const W = 500, H = 220;
     const cvs = document.createElement('canvas');
     cvs.width = W; cvs.height = H;
     const ctx = cvs.getContext('2d');
 
     ctx.strokeStyle = color; ctx.fillStyle = color;
 
-    // Double bordure
-    ctx.lineWidth = 3; ctx.strokeRect(4, 4, W - 8, H - 8);
-    ctx.lineWidth = 1; ctx.strokeRect(10, 10, W - 20, H - 20);
+    ctx.lineWidth = 7; ctx.strokeRect(8, 8, W - 16, H - 16);
+    ctx.lineWidth = 2; ctx.strokeRect(20, 20, W - 40, H - 40);
 
     ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
     
     let lines = [];
-    if (info.societe) lines.push({text: info.societe, font: 'bold 15px Arial'});
-    if (info.bp)      lines.push({text: info.bp,      font: '11px Arial'});
-    if (info.tel)     lines.push({text: info.tel,     font: '11px Arial'});
-    if (info.email)   lines.push({text: info.email,   font: '11px Arial'});
+    if (info.societe) lines.push({text: info.societe, font: 'bold 30px "Arial Black", sans-serif'});
+    if (info.bp)      lines.push({text: info.bp,      font: 'bold 20px Arial'});
+    if (info.tel)     lines.push({text: info.tel,     font: 'bold 20px Arial'});
+    if (info.email)   lines.push({text: info.email,   font: 'bold 20px Arial'});
 
-    if (lines.length === 0) {
-        lines.push({text: info.nom, font: 'bold 14px Arial'});
-        lines.push({text: info.cap, font: '11px Arial'});
-        lines.push({text: info.id,  font: 'bold 10px Arial'});
-    }
-
-    const lineH = 18;
-    const startY = (H / 2) - ((lines.length - 1) * lineH) / 2;
+    const lineH = 34;
+    const totalH = (lines.length - 1) * lineH;
+    const startY = (H / 2) - totalH / 2;
     lines.forEach((line, i) => {
         ctx.font = line.font;
         ctx.fillText(line.text, W / 2, startY + i * lineH);
@@ -1036,13 +1026,13 @@ function updateCachetPreview() {
     const info = getStampInfo();
 
     if (style === 'rond') {
-        cvs.width = cvs.height = 260;
+        cvs.width = cvs.height = 260; // Garder l'aperçu UI à 260
         const stampUrl = generateRoundStamp(info, cachetColor);
         const img = new Image();
         img.onload = () => {
             const ctx = cvs.getContext('2d');
             ctx.clearRect(0, 0, cvs.width, cvs.height);
-            ctx.drawImage(img, 0, 0);
+            ctx.drawImage(img, 0, 0, 260, 260); // Downscale juste pour l'aperçu
             updateComposite();
         };
         img.src = stampUrl;
@@ -1053,7 +1043,7 @@ function updateCachetPreview() {
         img.onload = () => {
             const ctx = cvs.getContext('2d');
             ctx.clearRect(0, 0, cvs.width, cvs.height);
-            ctx.drawImage(img, 0, 0);
+            ctx.drawImage(img, 0, 0, 260, 120);
             updateComposite();
         };
         img.src = stampUrl;
@@ -1095,22 +1085,22 @@ function updateComposite() {
     function tryDraw() {
         if (!sigLoaded || !stampLoaded) return;
 
-        // --- Normaliser la signature à une largeur cible ---
-        const SIG_TARGET_W = 400; // largeur cible de la signature en pixels
+        // --- Normaliser la signature à une largeur cible (PLUS GRANDE pour la lisibilité) ---
+        const SIG_TARGET_W = 800; // largeur cible doublée
         const sigRatio = sigImg.height / sigImg.width;
         const sigW = SIG_TARGET_W;
         const sigH = Math.round(SIG_TARGET_W * sigRatio);
 
-        // --- Normaliser le cachet à ~55% de la hauteur de la signature ---
-        const STAMP_TARGET_H = Math.round(sigH * 0.55);
+        // --- Normaliser le cachet à ~90% de la hauteur de la signature (PLUS GRAND) ---
+        const STAMP_TARGET_H = Math.round(sigH * 0.9);
         const stampRatio = stampImg.width / stampImg.height;
         const stH = STAMP_TARGET_H;
         const stW = Math.round(STAMP_TARGET_H * stampRatio);
 
         // --- Canvas résultant ---
-        const pad = 10;
-        const cW  = sigW + Math.round(stW * 0.3) + pad; // débordement droit du cachet
-        const cH  = sigH + Math.round(stH * 0.3) + pad; // débordement bas du cachet
+        const pad = 20;
+        const cW  = sigW + Math.round(stW * 0.25) + pad; 
+        const cH  = sigH + Math.round(stH * 0.25) + pad; 
 
         const cvs = document.createElement('canvas');
         cvs.width = cW; cvs.height = cH;
