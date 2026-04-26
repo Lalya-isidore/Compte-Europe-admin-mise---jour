@@ -964,15 +964,16 @@ function generateRoundStamp(info, color) {
     ctx.fillText('★', cx, cy + Rt + 5);
 
     // --- TEXTE CENTRAL ---
+    const Ri = 180;
     let lines = [];
-    if (info.societe) lines.push({text: info.societe, font: 'bold 36px "Arial Black", sans-serif'});
-    if (info.bp)      lines.push({text: info.bp,      font: 'bold 22px Arial'});
-    if (info.tel)     lines.push({text: info.tel,     font: 'bold 22px Arial'});
-    if (info.email)   lines.push({text: info.email,   font: 'bold 22px Arial'});
+    if (info.societe) lines.push({text: info.societe, baseSize: 32, font: 'bold 32px "Arial Black", sans-serif'});
+    if (info.bp)      lines.push({text: info.bp,      baseSize: 20, font: 'bold 20px Arial'});
+    if (info.tel)     lines.push({text: info.tel,     baseSize: 20, font: 'bold 20px Arial'});
+    if (info.email)   lines.push({text: info.email,   baseSize: 20, font: 'bold 20px Arial'});
 
     if (lines.length === 0) {
-        lines.push({text: info.nom, font: 'bold 32px Arial'});
-        lines.push({text: info.cap, font: 'bold 22px Arial'});
+        lines.push({text: info.nom, baseSize: 28, font: 'bold 28px Arial'});
+        lines.push({text: info.cap, baseSize: 20, font: 'bold 20px Arial'});
     }
 
     const lineH = 36;
@@ -980,10 +981,21 @@ function generateRoundStamp(info, color) {
     const startY = cy - totalH / 2;
 
     lines.forEach((line, i) => {
+        const yPos = startY + i * lineH;
+        const dFromCenter = Math.abs(cy - yPos);
+        // Largeur max dispo à cette hauteur dans le cercle Ri
+        let maxW = 2 * Math.sqrt(Math.max(0, Ri * Ri - dFromCenter * dFromCenter)) * 0.88;
+        
+        let currentSize = line.baseSize;
         ctx.font = line.font;
+        while (ctx.measureText(line.text).width > maxW && currentSize > 10) {
+            currentSize -= 1;
+            ctx.font = line.font.replace(line.baseSize + 'px', currentSize + 'px');
+        }
+        
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
-        ctx.fillText(line.text, cx, startY + i * lineH);
+        ctx.fillText(line.text, cx, yPos);
     });
 
     return cvs.toDataURL('image/png');
@@ -1006,16 +1018,22 @@ function generateRectStamp(info, color) {
     ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
     
     let lines = [];
-    if (info.societe) lines.push({text: info.societe, font: 'bold 36px "Arial Black", sans-serif'});
-    if (info.bp)      lines.push({text: info.bp,      font: 'bold 24px Arial'});
-    if (info.tel)     lines.push({text: info.tel,     font: 'bold 24px Arial'});
-    if (info.email)   lines.push({text: info.email,   font: 'bold 24px Arial'});
+    if (info.societe) lines.push({text: info.societe, baseSize: 36, font: 'bold 36px "Arial Black", sans-serif'});
+    if (info.bp)      lines.push({text: info.bp,      baseSize: 22, font: 'bold 22px Arial'});
+    if (info.tel)     lines.push({text: info.tel,     baseSize: 22, font: 'bold 22px Arial'});
+    if (info.email)   lines.push({text: info.email,   baseSize: 22, font: 'bold 22px Arial'});
 
+    const maxW = W - (m + 25) * 2;
     const lineH = 40;
     const totalH = (lines.length - 1) * lineH;
     const startY = (H / 2) - totalH / 2;
     lines.forEach((line, i) => {
+        let currentSize = line.baseSize;
         ctx.font = line.font;
+        while (ctx.measureText(line.text).width > maxW && currentSize > 10) {
+            currentSize -= 1;
+            ctx.font = line.font.replace(line.baseSize + 'px', currentSize + 'px');
+        }
         ctx.fillText(line.text, W / 2, startY + i * lineH);
     });
 
