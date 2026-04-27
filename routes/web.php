@@ -82,6 +82,10 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/tools/contrat-pret', [App\Http\Controllers\Tools\ContratPretController::class, 'index'])->name('tools.contrat-pret');
     Route::post('/tools/contrat-pret/generate', [App\Http\Controllers\Tools\ContratPretController::class, 'generate'])->name('tools.contrat-pret.generate');
 
+    // Simulateur de Crédit / Prêt Bancaire
+    Route::get('/tools/simulateur-credit', [App\Http\Controllers\Tools\SimulateurCreditController::class, 'index'])->name('tools.simulateur-credit');
+    Route::post('/tools/simulateur-credit/generate', [App\Http\Controllers\Tools\SimulateurCreditController::class, 'generate'])->name('tools.simulateur-credit.generate');
+
     Route::get('/tools/url-check', [UrlCheckController::class, 'index'])->name('tools.url-check');
     Route::post('/tools/url-check', [UrlCheckController::class, 'check'])->name('tools.url-check.run');
     Route::get('/tools/url-shortener', [UrlShortenerController::class, 'index'])->name('tools.url-shortener');

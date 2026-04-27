@@ -14,6 +14,7 @@
         ['label' => 'Flash Compte Pro', 'image' => 'flash-compte-v1.png', 'route' => route('compte.create')],
         ['label' => 'Mail Flash Pro', 'image' => 'mail-flash-pro.png', 'route' => route('mail.flash.pro')],
         ['label' => 'Contrat de Prêt', 'image' => 'contrat-pret.jpeg', 'route' => route('tools.contrat-pret'), 'badge' => 'New'],
+        ['label' => 'Simulateur de Crédit', 'image' => 'simulateur-credit.png', 'route' => route('tools.simulateur-credit'), 'badge' => 'New'],
         ['label' => 'Collecte de code coupon', 'image' => 'code-coupon.png', 'route' => '#', 'badge' => 'Bientot'],
         ['label' => 'Verification IBAN / CB', 'image' => 'iban-check.png', 'route' => route('tools.iban-check')],
         ['label' => 'Verification telephone', 'image' => 'phone-verify.png', 'route' => route('tools.phone-verify')],
