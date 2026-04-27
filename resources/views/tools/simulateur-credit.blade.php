@@ -1,10 +1,10 @@
 @extends('layouts.admin')
 
-@section('title', 'Simulateur de Crédit')
+@section('title', 'Calculateur de Prêt Pro')
 
 @section('breadcrumb')
     <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Outils</a></li>
-    <li class="breadcrumb-item active">Simulateur de Crédit</li>
+    <li class="breadcrumb-item active">Calculateur de Prêt Pro</li>
 @endsection
 
 @section('content')
@@ -20,7 +20,7 @@
 
     {{-- Info card --}}
     <div class="sc-info-card">
-        <div class="sc-info-title"><i class="fas fa-calculator"></i> Simulateur de Crédit / Prêt Bancaire</div>
+        <div class="sc-info-title"><i class="fas fa-calculator"></i> Calculateur de Prêt Pro</div>
         <div class="sc-info-body">
             <p class="sc-r-balance">
                 <span>Crédit(s) disponible : <b>{{ number_format($userCredits, 0, ',', ' ') }}</b></span>
