@@ -14,7 +14,7 @@
         ['label' => 'Flash Compte Pro', 'image' => 'flash-compte-v1.png', 'route' => route('compte.create')],
         ['label' => 'Mail Flash Pro', 'image' => 'mail-flash-pro.png', 'route' => route('mail.flash.pro')],
         ['label' => 'Contrat de Prêt', 'image' => 'contrat-pret.jpeg', 'route' => route('tools.contrat-pret'), 'badge' => 'New'],
-        ['label' => 'Calculateur de Prêt Pro', 'image' => 'simulateur-credit.png', 'route' => route('tools.simulateur-credit'), 'badge' => 'New'],
+        ['label' => 'Calculateur de Prêt Pro', 'icon' => 'fas fa-calculator', 'icon_color' => '#1e3a5f', 'route' => route('tools.simulateur-credit'), 'badge' => 'New'],
         ['label' => 'Collecte de code coupon', 'image' => 'code-coupon.png', 'route' => '#', 'badge' => 'Bientot'],
         ['label' => 'Verification IBAN / CB', 'image' => 'iban-check.png', 'route' => route('tools.iban-check')],
         ['label' => 'Verification telephone', 'image' => 'phone-verify.png', 'route' => route('tools.phone-verify')],
@@ -101,7 +101,11 @@
                         @if(isset($tool['badge']))
                             <span class="tool-badge {{ $tool['badge'] === 'Bientot' ? 'tool-badge--soon' : ($tool['badge'] === 'New' ? 'tool-badge--new' : '') }}">{{ $tool['badge'] }}</span>
                         @endif
-                        <img src="{{ asset('images/tools/' . $tool['image']) }}" alt="{{ $tool['label'] }}" class="tool-icon">
+                        @if(isset($tool['icon']))
+                            <i class="{{ $tool['icon'] }} tool-icon-fa" style="color:{{ $tool['icon_color'] ?? '#1e3a5f' }};"></i>
+                        @else
+                            <img src="{{ asset('images/tools/' . $tool['image']) }}" alt="{{ $tool['label'] }}" class="tool-icon">
+                        @endif
                         <span class="tool-label">{{ $tool['label'] }}</span>
                     </a>
                 @endforeach
@@ -123,7 +127,11 @@
                         @if(isset($tool['badge']))
                             <span class="tool-badge {{ $tool['badge'] === 'Bientot' ? 'tool-badge--soon' : ($tool['badge'] === 'New' ? 'tool-badge--new' : '') }}">{{ $tool['badge'] }}</span>
                         @endif
-                        <img src="{{ asset('images/tools/' . $tool['image']) }}" alt="{{ $tool['label'] }}" class="tool-icon">
+                        @if(isset($tool['icon']))
+                            <i class="{{ $tool['icon'] }} tool-icon-fa" style="color:{{ $tool['icon_color'] ?? '#1e3a5f' }};"></i>
+                        @else
+                            <img src="{{ asset('images/tools/' . $tool['image']) }}" alt="{{ $tool['label'] }}" class="tool-icon">
+                        @endif
                         <span class="tool-label">{{ $tool['label'] }}</span>
                     </a>
                 @endforeach
@@ -346,6 +354,15 @@
         width: 56px;
         height: 56px;
         object-fit: contain;
+    }
+
+    .tool-icon-fa {
+        font-size: 2.4rem;
+        width: 56px;
+        height: 56px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
 
     .tool-label {
