@@ -38,17 +38,24 @@
 <div class="frame"></div>
 <div class="frame-inner"></div>
 
+@php $nomClientStr = trim((string)($nomClient ?? '')); @endphp
+
 <div class="header">
     <h1>SIMULATION DE CRÉDIT / PRÊT BANCAIRE</h1>
-    @php $nomClientStr = isset($nomClient) ? trim((string)$nomClient) : ''; @endphp
-    @if($nomClientStr !== '')
-    <p class="sub">Établie pour : <strong>{{ strtoupper($nomClientStr) }}</strong></p>
-    @endif
+    <?php if ($nomClientStr !== ''): ?>
+    <p class="sub">Établie pour : <strong><?php echo strtoupper($nomClientStr); ?></strong></p>
+    <?php endif; ?>
     <p class="date">Générée le {{ $dateGeneration }} — via FlashBilan</p>
 </div>
 
 <div class="summary">
     <table>
+        <?php if ($nomClientStr !== ''): ?>
+        <tr>
+            <td>Client</td>
+            <td><?php echo strtoupper($nomClientStr); ?></td>
+        </tr>
+        <?php endif; ?>
         <tr>
             <td>Montant emprunté</td>
             <td>{{ number_format($montant, 2, ',', ' ') }} {{ $devise }}</td>
