@@ -34,7 +34,7 @@
             <div class="collapse show" id="scInfoCollapse">
                 <div class="alert alert-primary" role="alert" style="font-size:.9em;">
                     <p><i class="fas fa-info-circle"></i> Simulez n'importe quel crédit ou prêt bancaire : mensualité, total des intérêts, tableau d'amortissement complet. L'aperçu se met à jour en temps réel.</p>
-                    <b>NB :</b> Le téléchargement du rapport PDF avec le tableau d'amortissement coûte <b>500 crédits</b>.
+                    <b>NB :</b> Le téléchargement du rapport PDF avec le tableau d'amortissement coûte <b>300 crédits</b>.
                 </div>
             </div>
         </div>
@@ -117,7 +117,7 @@
                 <button type="submit" class="sc-btn-generate">
                     <i class="fas fa-file-pdf"></i>
                     Télécharger le rapport PDF
-                    <span class="sc-btn-cost"><i class="fas fa-coins"></i> 500 crédits</span>
+                    <span class="sc-btn-cost"><i class="fas fa-coins"></i> 300 crédits</span>
                 </button>
 
             </div>

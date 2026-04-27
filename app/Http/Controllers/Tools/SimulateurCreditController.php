@@ -10,7 +10,7 @@ use Barryvdh\DomPDF\Facade\Pdf;
 
 class SimulateurCreditController extends Controller
 {
-    private const COST = 500;
+    private const COST = 300;
 
     private array $translations = [
         'fr' => [
