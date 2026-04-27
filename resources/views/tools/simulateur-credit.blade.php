@@ -128,6 +128,11 @@
                     <div class="sc-card__head"><i class="fas fa-chart-bar"></i> Résultats de la simulation</div>
                     <div class="sc-card__body">
 
+                        {{-- Nom client --}}
+                        <div id="sc-client-name" style="display:none; background:#f0f7ff; border:1px solid #c0d8f5; border-radius:8px; padding:8px 14px; margin-bottom:14px; font-size:.85rem; color:#1e3a5f;">
+                            <i class="fas fa-user"></i> <span id="sc-client-name-text"></span>
+                        </div>
+
                         {{-- Résumé --}}
                         <div class="sc-results" id="sc-results">
                             <div class="sc-result-grid">
@@ -311,7 +316,19 @@ const currencySymbols = @json(array_map(fn($v) => explode(' — ', $v)[0], $curr
         return rows;
     }
 
+    function updateClientName() {
+        const nom = (document.getElementById('nom-client')?.value || '').trim().toUpperCase();
+        const wrap = document.getElementById('sc-client-name');
+        if (nom) {
+            document.getElementById('sc-client-name-text').textContent = nom;
+            wrap.style.display = 'block';
+        } else {
+            wrap.style.display = 'none';
+        }
+    }
+
     function updateSim() {
+        updateClientName();
         const montant = parseFloat(document.getElementById('montant').value) || 0;
         const taux    = parseFloat(document.getElementById('taux').value) || 0;
         const duree   = parseInt(document.getElementById('duree').value) || 0;
@@ -363,6 +380,8 @@ const currencySymbols = @json(array_map(fn($v) => explode(' — ', $v)[0], $curr
             document.getElementById(id)?.addEventListener('input', updateSim);
             document.getElementById(id)?.addEventListener('change', updateSim);
         });
+
+        document.getElementById('nom-client')?.addEventListener('input', updateClientName);
 
         // Boutons durée rapide
         document.querySelectorAll('.sc-dur-btn').forEach(btn => {
