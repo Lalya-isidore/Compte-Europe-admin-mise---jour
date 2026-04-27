@@ -279,6 +279,7 @@
 </style>
 <body data-support-enabled="{{ auth()->check() ? '1' : '0' }}">
     <!-- PWA Install Banner -->
+    @auth
     <div id="pwa-install-banner">
         <img src="{{ asset('icon-192.png') }}" class="pwa-icon" alt="App Icon">
         <div class="pwa-text">
@@ -288,6 +289,7 @@
         <button id="pwa-install-btn" class="pwa-btn">Installer</button>
         <button id="pwa-close-btn" class="pwa-close">&times;</button>
     </div>
+    @endauth
     
     @if(request()->routeIs('connexion', 'inscription', 'password.request', 'password.reset'))
     <div class="auth-bg">
