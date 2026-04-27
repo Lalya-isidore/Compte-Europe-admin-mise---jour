@@ -65,16 +65,9 @@
                             <div class="sc-field">
                                 <label>Devise <span class="req">*</span></label>
                                 <select name="devise" id="devise">
-                                    <option value="€" selected>€ — Euro</option>
-                                    <option value="XOF">XOF — Franc CFA</option>
-                                    <option value="$">$ — Dollar USD</option>
-                                    <option value="£">£ — Livre Sterling</option>
-                                    <option value="CHF">CHF — Franc Suisse</option>
-                                    <option value="MAD">MAD — Dirham Marocain</option>
-                                    <option value="XAF">XAF — Franc CFA BEAC</option>
-                                    <option value="GNF">GNF — Franc Guinéen</option>
-                                    <option value="DZD">DZD — Dinar Algérien</option>
-                                    <option value="TND">TND — Dinar Tunisien</option>
+                                    @foreach($currencies as $code => $label)
+                                    <option value="{{ $code }}" {{ $code === 'EUR' ? 'selected' : '' }}>{{ $code }} — {{ explode(' — ', $label)[1] ?? $label }}</option>
+                                    @endforeach
                                 </select>
                             </div>
                         </div>
@@ -267,8 +260,9 @@
 
 @push('scripts')
 <script>
+const currencySymbols = @json(array_map(fn($v) => explode(' — ', $v)[0], $currencies));
 (function () {
-    const fmtNum = (n, devise) => new Intl.NumberFormat('fr-FR', {minimumFractionDigits:2, maximumFractionDigits:2}).format(n) + ' ' + devise;
+    const fmtNum = (n, devise) => new Intl.NumberFormat('fr-FR', {minimumFractionDigits:2, maximumFractionDigits:2}).format(n) + ' ' + (currencySymbols[devise] || devise);
 
     function calcMensualite(montant, tauxAnn, duree) {
         if (tauxAnn === 0) return montant / duree;
