@@ -104,8 +104,5 @@
     </tbody>
 </table>
 
-<div class="footer">
-    Ce document est une simulation à titre indicatif. Il ne constitue pas un engagement contractuel. — FlashBilan &copy; {{ date('Y') }}
-</div>
 </body>
 </html>
