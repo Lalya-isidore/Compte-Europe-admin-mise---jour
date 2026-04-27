@@ -14,6 +14,14 @@
     <link rel="stylesheet" href="{{ asset('css/responsive.css') }}?v={{ time() }}">
     <link rel="stylesheet" href="{{ asset('css/support-widget.css') }}">
     <script src="{{ asset('js/support-widget.js') }}" defer></script>
+    
+    <!-- PWA Meta Tags -->
+    <link rel="manifest" href="{{ asset('manifest.json') }}">
+    <meta name="theme-color" content="#0d6efd">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Compte Europe Pro">
+    <link rel="apple-touch-icon" href="{{ asset('icon-192.png') }}">
     <style>
         :root {
             --sidebar-width: 220px;
@@ -442,9 +450,108 @@
                 padding: 0.6rem 0.75rem;
             }
         }
+
+        #pwa-install-banner {
+            display: none;
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 95%;
+            max-width: 450px;
+            background: linear-gradient(135deg, #0d6efd 0%, #0a58ca 100%);
+            color: white;
+            padding: 14px 18px;
+            border-radius: 20px;
+            box-shadow: 0 15px 45px rgba(13, 110, 253, 0.4);
+            z-index: 99999;
+            align-items: center;
+            gap: 15px;
+            animation: slideDown 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        @keyframes slideDown {
+            from { transform: translate(-50%, -120px); opacity: 0; }
+            to { transform: translate(-50%, 0); opacity: 1; }
+        }
+
+        .pwa-icon {
+            width: 54px;
+            height: 54px;
+            border-radius: 14px;
+            background: white;
+            padding: 2px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .pwa-text {
+            flex: 1;
+        }
+
+        .pwa-text h4 {
+            margin: 0;
+            font-size: 1.05rem;
+            font-weight: 800;
+            color: white !important;
+        }
+
+        .pwa-text p {
+            margin: 4px 0 0;
+            font-size: 0.82rem;
+            opacity: 0.95;
+            line-height: 1.2;
+            color: white !important;
+        }
+
+        .pwa-btn {
+            background: white;
+            color: #0d6efd;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 12px;
+            font-weight: 800;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: 0 4px 12px rgba(255,255,255,0.2);
+            white-space: nowrap;
+        }
+
+        .pwa-btn:active {
+            transform: scale(0.95);
+        }
+
+        .pwa-close {
+            background: transparent;
+            color: rgba(255,255,255,0.7);
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 5px;
+            line-height: 1;
+        }
     </style>
 </head>
 <body data-support-enabled="{{ auth()->check() ? '1' : '0' }}">
+    <!-- PWA Install Banner -->
+    <div id="pwa-install-banner">
+        <svg class="pwa-icon" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="40" height="40" rx="10" fill="url(#fb_grad_pwa_admin)" />
+            <path d="M20 10C14.4772 10 10 14.4772 10 20C10 25.5228 14.4772 30 20 30C25.5228 30 30 25.5228 30 20C30 14.4772 25.5228 10 20 10ZM20 27.5C15.8579 27.5 12.5 24.1421 12.5 20C12.5 15.8579 15.8579 12.5 20 12.5V20H27.5C27.5 24.1421 24.1421 27.5 20 27.5Z" fill="white"/>
+            <defs>
+                <linearGradient id="fb_grad_pwa_admin" x1="0" y1="0" x2="40" y2="40" gradientUnits="userSpaceOnUse">
+                    <stop stop-color="#F59E0B"/>
+                    <stop offset="1" stop-color="#10B981"/>
+                </linearGradient>
+            </defs>
+        </svg>
+        <div class="pwa-text">
+            <h4>Application Mobile</h4>
+            <p id="pwa-desc">Téléchargez l'application pour un accès rapide.</p>
+        </div>
+        <button id="pwa-install-btn" class="pwa-btn">Installer</button>
+        <button id="pwa-close-btn" class="pwa-close">&times;</button>
+    </div>
     @php
         $currentUser = Auth::user();
         $userFirstName = $currentUser->prenom ?? 'Utilisateur';
@@ -704,6 +811,62 @@
                 }, 5000);
             });
         });
+
+        // PWA Install Logic
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js')
+                    .then(reg => console.log('Service Worker registered', reg))
+                    .catch(err => console.log('Service Worker not registered', err));
+            });
+        }
+
+        let deferredPrompt;
+        const pwaBanner = document.getElementById('pwa-install-banner');
+        const installBtn = document.getElementById('pwa-install-btn');
+        const closeBtn = document.getElementById('pwa-close-btn');
+
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            const isStandalone = window.matchMedia('(display-mode: standalone)').matches;
+            const isDismissed = sessionStorage.getItem('pwa-banner-dismissed');
+            
+            if (!isStandalone && !isDismissed) {
+                pwaBanner.style.display = 'flex';
+            }
+        });
+
+        // Detection for iOS
+        const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+        const isStandalone = window.navigator.standalone === true || window.matchMedia('(display-mode: standalone)').matches;
+        const isDismissed = sessionStorage.getItem('pwa-banner-dismissed');
+
+        if (isIOS && !isStandalone && !isDismissed) {
+            pwaBanner.style.display = 'flex';
+            document.getElementById('pwa-desc').innerText = "Appuyez sur Partager puis 'Sur l'écran d'accueil'";
+            installBtn.style.display = 'none';
+        }
+
+        if (installBtn) {
+            installBtn.addEventListener('click', async () => {
+                if (deferredPrompt) {
+                    deferredPrompt.prompt();
+                    const { outcome } = await deferredPrompt.userChoice;
+                    if (outcome === 'accepted') {
+                        pwaBanner.style.display = 'none';
+                    }
+                    deferredPrompt = null;
+                }
+            });
+        }
+
+        if (closeBtn) {
+            closeBtn.addEventListener('click', () => {
+                pwaBanner.style.display = 'none';
+                sessionStorage.setItem('pwa-banner-dismissed', 'true');
+            });
+        }
     </script>
     @stack('scripts')
     @yield('scripts')
