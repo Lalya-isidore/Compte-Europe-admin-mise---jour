@@ -94,8 +94,11 @@
                         <div class="sc-field" style="margin-top:14px;">
                             <label>Durée rapide</label>
                             <div class="sc-slider-row">
-                                @foreach([6,12,24,36,48,60,84,120,180,240] as $m)
-                                <button type="button" class="sc-dur-btn" data-mois="{{ $m }}">{{ $m }}m</button>
+                                @php
+                                $dureeLabels = [6=>'6 mois',12=>'1 an',24=>'2 ans',36=>'3 ans',48=>'4 ans',60=>'5 ans',84=>'7 ans',120=>'10 ans',180=>'15 ans',240=>'20 ans'];
+                                @endphp
+                                @foreach($dureeLabels as $m => $label)
+                                <button type="button" class="sc-dur-btn" data-mois="{{ $m }}">{{ $label }}</button>
                                 @endforeach
                             </div>
                         </div>
