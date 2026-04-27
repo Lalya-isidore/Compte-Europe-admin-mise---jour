@@ -88,6 +88,9 @@
                             <button type="button" class="btn btn-outline-success btn-sm rounded-pill px-3" id="tpl-contrat">
                                 📄 Contrat de Prêt
                             </button>
+                            <button type="button" class="btn btn-outline-info btn-sm rounded-pill px-3" id="tpl-calc">
+                                🧮 Calculateur de Prêt Pro
+                            </button>
                         </div>
                     </div>
 
@@ -257,6 +260,35 @@ Créez en quelques minutes un contrat de prêt complet, signé et prêt à tél�
 👉 Connectez-vous à votre compte et rendez-vous dans la section "Outils" pour découvrir le Générateur de Contrat de Prêt.
 
 🌐 https://flashbilan.fr
+
+Cordialement,
+L'équipe FlashBilan`;
+        document.getElementById('target-select').value = 'all';
+        singleUserBlock.style.display = 'none';
+    });
+
+    // Modèle Calculateur de Prêt Pro
+    document.getElementById('tpl-calc')?.addEventListener('click', function() {
+        document.getElementById('email-subject').value = '🧮 Nouveau sur FlashBilan : Calculez vos prêts et téléchargez votre rapport PDF !';
+        document.getElementById('email-message').value = `Bonjour,
+
+Nous avons le plaisir de vous annoncer le lancement d'une nouvelle fonctionnalité sur FlashBilan ! 🎉
+
+🧮 Calculateur de Prêt Pro est maintenant disponible sur votre tableau de bord.
+
+✅ Ce que vous pouvez faire :
+- Simuler n'importe quel crédit ou prêt bancaire en quelques secondes
+- Obtenir instantanément : la mensualité, le total des intérêts, et le coût total du prêt
+- Visualiser la répartition capital / intérêts en temps réel
+- Télécharger un rapport PDF complet avec tableau d'amortissement
+- Choisir parmi 10 langues : Français, Anglais, Espagnol, Portugais, Allemand, Italien, Néerlandais, Polonais, Croate, Russe
+- Compatible avec plus de 50 devises internationales
+
+💡 Que vous soyez en train d'accompagner un client, préparer un dossier de financement ou simplement comparer des offres, cet outil vous fait gagner un temps précieux.
+
+💰 Le téléchargement du rapport PDF coûte seulement 300 crédits.
+
+👉 Accédez dès maintenant au Calculateur de Prêt Pro sur : https://flashbilan.fr
 
 Cordialement,
 L'équipe FlashBilan`;
