@@ -43,7 +43,7 @@
 <div class="header">
     <h1>SIMULATION DE CRÉDIT / PRÊT BANCAIRE</h1>
     <p class="sub">Établie pour : <strong><?php echo $nomClientStr !== '' ? strtoupper($nomClientStr) : '—'; ?></strong></p>
-    <p class="date">Générée le {{ $dateGeneration }} — via FlashBilan</p>
+    <p class="date">Fait le {{ $dateGeneration }}</p>
 </div>
 
 <div class="summary">
