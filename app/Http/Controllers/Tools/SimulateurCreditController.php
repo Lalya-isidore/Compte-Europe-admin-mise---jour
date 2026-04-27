@@ -42,7 +42,7 @@ class SimulateurCreditController extends Controller
         $tauxAnn   = (float) $data['taux'];
         $duree     = (int)   $data['duree'];
         $devise    = $data['devise'];
-        $nomClient = trim($request->input('nom_client', ''));
+        $nomClient = trim((string) $request->post('nom_client', ''));
 
         $tableau = $this->buildAmortissement($montant, $tauxAnn, $duree);
 

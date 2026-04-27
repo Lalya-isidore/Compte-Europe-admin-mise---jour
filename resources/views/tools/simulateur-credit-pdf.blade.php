@@ -40,8 +40,9 @@
 
 <div class="header">
     <h1>SIMULATION DE CRÉDIT / PRÊT BANCAIRE</h1>
-    @if($nomClient)
-    <p class="sub">Établie pour : <strong>{{ strtoupper($nomClient) }}</strong></p>
+    @php $nomClientStr = isset($nomClient) ? trim((string)$nomClient) : ''; @endphp
+    @if($nomClientStr !== '')
+    <p class="sub">Établie pour : <strong>{{ strtoupper($nomClientStr) }}</strong></p>
     @endif
     <p class="date">Générée le {{ $dateGeneration }} — via FlashBilan</p>
 </div>
