@@ -165,7 +165,7 @@
                         {{-- Tableau d'amortissement (aperçu 12 premières lignes) --}}
                         <div style="margin-top:18px;">
                             <div style="font-size:0.83rem;font-weight:600;color:#1e3a5f;margin-bottom:8px;"><i class="fas fa-table"></i> Aperçu du tableau d'amortissement <small style="color:#999;font-weight:400;">(12 premières lignes)</small></div>
-                            <div style="overflow-x:auto;">
+                            <div style="overflow-x:auto;" class="sc-table-wrap">
                                 <table class="sc-table" id="sc-amort-table">
                                     <thead>
                                         <tr>
@@ -251,10 +251,23 @@
 
 /* Table */
 .sc-table { width:100%; border-collapse:collapse; font-size:.78rem; }
-.sc-table th { background:#1e3a5f; color:#fff; padding:7px 8px; text-align:center; font-weight:600; }
-.sc-table td { padding:5px 8px; text-align:right; border-bottom:1px solid #f0f0f0; }
+.sc-table th { background:#1e3a5f; color:#fff; padding:7px 8px; text-align:center; font-weight:600; white-space:nowrap; }
+.sc-table td { padding:5px 8px; text-align:right; border-bottom:1px solid #f0f0f0; white-space:nowrap; }
 .sc-table td:first-child { text-align:center; font-weight:600; color:#1e3a5f; }
 .sc-table tr:nth-child(even) td { background:#f8fafc; }
+
+@media (max-width:575px) {
+    .sc-table-wrap { overflow-x:unset !important; }
+    .sc-table thead { display:none; }
+    .sc-table, .sc-table tbody { display:block; width:100%; }
+    .sc-table tr { display:grid; grid-template-columns:40px 1fr; border:1px solid #e8edf3; border-radius:8px; margin-bottom:8px; overflow:hidden; background:#fff; }
+    .sc-table tr:nth-child(even) td { background:transparent; }
+    .sc-table td { display:flex; justify-content:space-between; align-items:center; padding:6px 10px; text-align:right; border-bottom:1px solid #f4f4f4; font-size:.75rem; grid-column:2; white-space:normal; }
+    .sc-table td:last-child { border-bottom:none; }
+    .sc-table td::before { content:attr(data-label); font-weight:600; color:#666; text-align:left; flex:1; font-size:.72rem; }
+    .sc-table td:first-child { grid-column:1; grid-row:1 / span 5; display:flex; align-items:center; justify-content:center; background:#1e3a5f; color:#fff; font-size:.8rem; font-weight:700; border-radius:0; writing-mode:vertical-rl; text-orientation:mixed; border:none; padding:6px 4px; }
+    .sc-table td:first-child::before { display:none; }
+}
 
 /* Bouton */
 .sc-btn-generate { width:100%; padding:14px; background:linear-gradient(135deg,#1a7a3f,#25a858); color:#fff; border:none; border-radius:10px; font-size:.95rem; font-weight:600; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:10px; transition:all .2s; }
@@ -337,7 +350,7 @@ const currencySymbols = @json(array_map(fn($v) => explode(' — ', $v)[0], $curr
         const preview = rows.slice(0, 12);
         const fmt = n => new Intl.NumberFormat('fr-FR', {minimumFractionDigits:2, maximumFractionDigits:2}).format(n);
         let html = preview.map(r =>
-            `<tr><td>${r.mois}</td><td>${fmt(r.echeance)}</td><td>${fmt(r.capital)}</td><td>${fmt(r.interet)}</td><td>${fmt(r.restant)}</td></tr>`
+            `<tr><td>${r.mois}</td><td data-label="Échéance">${fmt(r.echeance)}</td><td data-label="Capital">${fmt(r.capital)}</td><td data-label="Intérêts">${fmt(r.interet)}</td><td data-label="Restant dû">${fmt(r.restant)}</td></tr>`
         ).join('');
         if (rows.length > 12) {
             html += `<tr><td colspan="5" style="text-align:center;color:#888;font-style:italic;padding:8px;">… et ${rows.length - 12} ligne(s) supplémentaire(s) dans le PDF complet</td></tr>`;
