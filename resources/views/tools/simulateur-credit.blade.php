@@ -47,6 +47,20 @@
             {{-- ======== COLONNE GAUCHE : Formulaire ======== --}}
             <div class="sc-col">
 
+                {{-- Langue du document PDF --}}
+                <div class="sc-card">
+                    <div class="sc-card__head"><i class="fas fa-language"></i> Langue du document PDF</div>
+                    <div class="sc-card__body">
+                        <div class="sc-field">
+                            <select name="lang" id="sc-lang-select">
+                                @foreach(['fr' => '🇫🇷 Français', 'en' => '🇬🇧 Anglais', 'es' => '🇪🇸 Espagnol', 'pt' => '🇵🇹 Portugais', 'de' => '🇩🇪 Allemand', 'it' => '🇮🇹 Italien', 'nl' => '🇳🇱 Néerlandais', 'pl' => '🇵🇱 Polonais', 'hr' => '🇭🇷 Croate', 'ru' => '🇷🇺 Russe'] as $code => $label)
+                                    <option value="{{ $code }}" {{ $code === 'fr' ? 'selected' : '' }}>{{ $label }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
                 {{-- Paramètres du prêt --}}
                 <div class="sc-card">
                     <div class="sc-card__head"><i class="fas fa-sliders-h"></i> Paramètres du prêt</div>
