@@ -42,20 +42,16 @@
 
 <div class="header">
     <h1>SIMULATION DE CRÉDIT / PRÊT BANCAIRE</h1>
-    <?php if ($nomClientStr !== ''): ?>
-    <p class="sub">Établie pour : <strong><?php echo strtoupper($nomClientStr); ?></strong></p>
-    <?php endif; ?>
+    <p class="sub">Établie pour : <strong><?php echo $nomClientStr !== '' ? strtoupper($nomClientStr) : '—'; ?></strong></p>
     <p class="date">Générée le {{ $dateGeneration }} — via FlashBilan</p>
 </div>
 
 <div class="summary">
     <table>
-        <?php if ($nomClientStr !== ''): ?>
         <tr>
             <td>Client</td>
-            <td><?php echo strtoupper($nomClientStr); ?></td>
+            <td><?php echo $nomClientStr !== '' ? strtoupper($nomClientStr) : '—'; ?></td>
         </tr>
-        <?php endif; ?>
         <tr>
             <td>Montant emprunté</td>
             <td>{{ number_format($montant, 2, ',', ' ') }} {{ $devise }}</td>
