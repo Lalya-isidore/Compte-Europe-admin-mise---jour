@@ -91,6 +91,9 @@
                             <button type="button" class="btn btn-outline-info btn-sm rounded-pill px-3" id="tpl-calc">
                                 🧮 Calculateur de Prêt Pro
                             </button>
+                            <button type="button" class="btn btn-outline-dark btn-sm rounded-pill px-3" id="tpl-app">
+                                📱 Application Mobile
+                            </button>
                         </div>
                     </div>
 
@@ -289,6 +292,35 @@ Nous avons le plaisir de vous annoncer le lancement d'une nouvelle fonctionnalit
 💰 Le téléchargement du rapport PDF coûte seulement 300 crédits.
 
 👉 Accédez dès maintenant au Calculateur de Prêt Pro sur : https://flashbilan.fr
+
+Cordialement,
+L'équipe FlashBilan`;
+        document.getElementById('target-select').value = 'all';
+        singleUserBlock.style.display = 'none';
+    });
+
+    // Modèle Application Mobile
+    document.getElementById('tpl-app')?.addEventListener('click', function() {
+        document.getElementById('email-subject').value = '📱 FlashBilan est maintenant disponible comme application mobile !';
+        document.getElementById('email-message').value = `Bonjour,
+
+Nous avons une excellente nouvelle pour vous ! 🎉
+
+📱 L'application FlashBilan est désormais disponible et peut être installée directement sur votre téléphone depuis notre site web — sans passer par l'App Store ou le Play Store.
+
+✅ Installation rapide en 2 étapes :
+1. Ouvrez https://flashbilan.fr dans votre navigateur (Chrome ou Safari)
+2. Appuyez sur la bannière "Installer l'application" qui apparaît en bas de l'écran
+
+Une fois installée, l'application apparaît sur votre écran d'accueil comme n'importe quelle autre application. Vous pouvez l'ouvrir directement sans passer par le navigateur.
+
+✨ Avantages :
+- Accès rapide en un clic depuis votre téléphone
+- Interface optimisée pour mobile
+- Fonctionne même avec une connexion lente
+- Aucune mise à jour manuelle requise
+
+👉 Rendez-vous sur https://flashbilan.fr pour installer l'application dès maintenant.
 
 Cordialement,
 L'équipe FlashBilan`;
