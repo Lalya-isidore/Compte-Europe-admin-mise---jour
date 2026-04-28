@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Mail\MassNotification;
-use App\Models\Compte;
 use App\Models\User;
 use App\Services\SafeMailService;
 use Illuminate\Http\RedirectResponse;
@@ -36,32 +35,27 @@ class NotifyUsersController extends Controller
         $recipients = $this->resolveRecipients($data['target'], $data['user_id'] ?? null);
 
         if ($recipients->isEmpty()) {
-            return back()->with('error', 'Aucun destinataire trouve.');
+            return back()->with('error', 'Aucun destinataire trouvé.');
         }
 
-        $sent = 0;
-        $failed = 0;
+        $count      = $recipients->count();
+        $subject    = $data['subject'];
+        $message    = $data['message'];
+        $list       = $recipients->all();
 
-        foreach ($recipients as $user) {
-            $success = SafeMailService::send(
-                $user->email,
-                new MassNotification($data['subject'], $data['message'], $user),
-                'Notification en masse'
-            );
-
-            if ($success) {
-                $sent++;
-            } else {
-                $failed++;
+        // Envoi après que la réponse HTTP soit déjà envoyée au navigateur
+        app()->terminating(function () use ($list, $subject, $message) {
+            set_time_limit(0);
+            foreach ($list as $user) {
+                SafeMailService::send(
+                    $user->email,
+                    new MassNotification($subject, $message, $user),
+                    'Notification en masse'
+                );
             }
-        }
+        });
 
-        $msg = $sent . ' e-mail(s) envoye(s) avec succes.';
-        if ($failed > 0) {
-            $msg .= ' ' . $failed . ' echec(s).';
-        }
-
-        return back()->with('success', $msg);
+        return back()->with('success', "✅ Envoi lancé : {$count} e-mail(s) en cours de traitement.");
     }
 
     private function resolveRecipients(string $target, ?int $userId)
