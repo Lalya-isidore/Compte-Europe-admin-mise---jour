@@ -10,7 +10,7 @@
     <link href="https://cdn.jsdelivr.net/npm/remixicon@4.1.0/fonts/remixicon.css" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&family=Righteous&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&family=Righteous&family=Cabin:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('css/responsive.css') }}?v={{ time() }}">
     <link rel="stylesheet" href="{{ asset('css/support-widget.css') }}">
     <script src="{{ asset('js/support-widget.js') }}" defer></script>
@@ -447,6 +447,9 @@
             }
             .page-content.page-flush {
                 padding: 0;
+            }
+            .page-content.page-flush, .page-content.page-flush * {
+                font-family: 'Cabin', sans-serif !important;
             }
 
             .breadcrumb-bar {
