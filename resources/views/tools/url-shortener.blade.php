@@ -1,5 +1,6 @@
 @extends('layouts.admin')
 
+@section('page-class', 'page-flush')
 @section('title', "Raccourcissement d'URL")
 
 @section('breadcrumb')

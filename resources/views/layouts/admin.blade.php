@@ -445,6 +445,9 @@
             .page-content {
                 padding: var(--mobile-padding);
             }
+            .page-content.page-flush {
+                padding: 0;
+            }
 
             .breadcrumb-bar {
                 padding: 0.6rem 0.75rem;
@@ -724,7 +727,7 @@
         </div>
         @endif
 
-        <div class="page-content">
+        <div class="page-content @yield('page-class')">
             @yield('content')
         </div>
     </div>
