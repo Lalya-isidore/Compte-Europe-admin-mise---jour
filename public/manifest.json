@@ -1,8 +1,8 @@
 {
-  "name": "Compte Europe",
-  "short_name": "CompteEurope",
-  "description": "Accédez à votre compte Compte Europe en toute sécurité.",
-  "start_url": "index.php",
+  "name": "FlashBilan",
+  "short_name": "FlashBilan",
+  "description": "Accédez à votre espace FlashBilan en toute sécurité.",
+  "start_url": "/dashboard",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#4b59d9",
