@@ -1,4 +1,4 @@
-const CACHE_NAME = 'compteeurope-v2';
+const CACHE_NAME = 'flashbilan-v3';
 const OFFLINE_URL = 'offline.html';
 const ASSETS_TO_CACHE = [
   'index.php',
