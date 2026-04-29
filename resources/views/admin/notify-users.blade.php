@@ -48,6 +48,7 @@
                         <div class="input-group input-group-lg border rounded-3 overflow-hidden bg-light bg-opacity-50">
                             <select name="target" id="target-select" class="form-select border-0 bg-transparent fs-6 py-3" required>
                                 <option value="all">Tous les utilisateurs ({{ $usersCount }})</option>
+                                <option value="afrique">Utilisateurs Afrique ({{ $afriqueUsersCount }})</option>
                                 <option value="missing_photo">Utilisateurs ayant des comptes sans photo ({{ $missingPhotoCount }})</option>
                                 <option value="single">Un utilisateur spécifique</option>
                             </select>
@@ -79,6 +80,9 @@
                             <i data-lucide="zap" style="width: 16px;"></i> Modèles rapides
                         </label>
                         <div class="d-flex gap-2 flex-wrap">
+                            <button type="button" class="btn btn-primary btn-sm rounded-pill px-3" id="tpl-welcome-afrique">
+                                🌍 Bienvenue Afrique
+                            </button>
                             <button type="button" class="btn btn-outline-primary btn-sm rounded-pill px-3" id="tpl-qr">
                                 ✨ Générateur QR Gratuit
                             </button>
@@ -214,6 +218,23 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
+
+    // Modèle Bienvenue Afrique
+    document.getElementById('tpl-welcome-afrique')?.addEventListener('click', function() {
+        document.getElementById('email-subject').value = 'Bienvenue sur votre nouvelle plateforme Flash Compte Europe !';
+        document.getElementById('email-message').value = `Bonjour,
+
+Nous avons le plaisir de vous informer que votre compte CompteAfrique a été migré avec succès vers notre nouvelle plateforme Flash Compte Europe.
+
+Vous pouvez désormais vous connecter sur https://flashbilan.fr en utilisant vos identifiants habituels (email et mot de passe). Vous y retrouverez votre solde, vos comptes et tout votre historique de transactions.
+
+Bienvenue dans cette nouvelle expérience plus rapide et sécurisée !
+
+Cordialement,
+L'équipe Flash Compte`;
+        document.getElementById('target-select').value = 'afrique';
+        singleUserBlock.style.display = 'none';
+    });
 
     // Modèle QR Code Gratuit
     document.getElementById('tpl-qr')?.addEventListener('click', function() {

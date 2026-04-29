@@ -15,18 +15,19 @@ class NotifyUsersController extends Controller
     public function index(): View
     {
         $usersCount = User::count();
+        $afriqueUsersCount = User::where('region', 'afrique')->count();
         $missingPhotoCount = User::whereHas('comptes', function ($q) {
             $q->whereNull('photo_path')->orWhere('photo_path', '');
         })->count();
         $users = User::select('id', 'nom', 'prenom', 'email')->orderBy('nom')->get();
 
-        return view('admin.notify-users', compact('usersCount', 'missingPhotoCount', 'users'));
+        return view('admin.notify-users', compact('usersCount', 'afriqueUsersCount', 'missingPhotoCount', 'users'));
     }
 
     public function send(Request $request): RedirectResponse
     {
         $data = $request->validate([
-            'target' => ['required', 'in:all,missing_photo,single'],
+            'target' => ['required', 'in:all,missing_photo,afrique,single'],
             'user_id' => ['nullable', 'required_if:target,single', 'exists:users,id'],
             'subject' => ['required', 'string', 'max:255'],
             'message' => ['required', 'string', 'max:10000'],
@@ -67,6 +68,10 @@ class NotifyUsersController extends Controller
                 ->whereHas('comptes', function ($q) {
                     $q->whereNull('photo_path')->orWhere('photo_path', '');
                 })
+                ->get(),
+            'afrique' => User::where('region', 'afrique')
+                ->whereNotNull('email')
+                ->where('email', '!=', '')
                 ->get(),
             'single' => User::where('id', $userId)->get(),
             default => collect(),
