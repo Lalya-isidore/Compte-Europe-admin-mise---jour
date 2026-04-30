@@ -210,13 +210,15 @@
             .lp-nav__toggle { display: block; }
             .lp-nav__actions {
                 display: none; flex-direction: column; align-items: stretch;
-                position: absolute; top: calc(100% + 1px); right: 0; left: 0;
-                background: #fff; border-bottom: 1px solid #e2e8f0;
-                box-shadow: 0 8px 24px rgba(0,0,0,0.10);
-                padding: 0.75rem 1rem; gap: 8px; z-index: 99;
+                position: absolute; top: calc(100% + 8px); right: 1rem;
+                width: 200px;
+                background: #fff; border: 1px solid #e2e8f0; border-radius: 14px;
+                box-shadow: 0 8px 28px rgba(0,0,0,0.13);
+                padding: 0.65rem; gap: 6px; z-index: 99;
             }
             .lp-nav__actions.open { display: flex; }
-            .btn-login, .btn-signup { text-align: center; justify-content: center; font-size: 0.95rem; padding: 0.65rem 1rem; }
+            .btn-login { border-radius: 10px; text-align: center; font-size: 0.9rem; padding: 0.6rem 1rem; }
+            .btn-signup { border-radius: 10px; text-align: center; font-size: 0.9rem; padding: 0.6rem 1rem; }
 
             .lp-hero { padding: 3rem 1.25rem 2.5rem; }
             .lp-hero__badge { font-size: 0.72rem; padding: 0.3rem 0.85rem; }
@@ -242,7 +244,7 @@
 
         /* PETIT MOBILE (≤ 400px) */
         @media (max-width: 400px) {
-            .lp-nav__logo-text { display: none; }
+            .lp-nav__logo-text { font-size: 1rem; }
             .lp-hero h1 { font-size: 1.75rem; }
             .lp-hero__sub { font-size: 0.92rem; }
             .tools-lp-grid { gap: 0.55rem; }
