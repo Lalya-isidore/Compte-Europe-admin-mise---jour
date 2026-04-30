@@ -78,7 +78,7 @@
             color: #fff; padding: 5rem 1.5rem 4rem; text-align: center; position: relative; overflow: hidden;
         }
         .lp-hero::before {
-            content: ''; position: absolute; inset: 0;
+            content: ''; position: absolute; inset: 0; pointer-events: none;
             background: radial-gradient(ellipse at 50% 0%, rgba(245,158,11,0.18) 0%, transparent 70%);
         }
         .lp-hero__badge {
