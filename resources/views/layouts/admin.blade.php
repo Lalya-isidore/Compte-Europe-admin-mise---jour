@@ -567,9 +567,7 @@
         {{-- Logo --}}
         <div class="sidebar-logo">
             <a href="{{ $dashboardUrl }}">
-                <div class="sidebar-logo-icon">
-                    <i class="fas fa-chart-pie"></i>
-                </div>
+                <img src="{{ asset('icon-192.png') }}" alt="FlashBilan" style="height: 34px; width: 34px; object-fit: contain; border-radius: 8px;">
                 <div class="sidebar-logo-text">Flash<span>Bilan</span></div>
             </a>
         </div>
@@ -662,7 +660,7 @@
         <div class="top-header">
             <div class="top-header__left">
                 <a href="{{ $dashboardUrl }}" class="top-header__logo">
-                    <div class="sidebar-logo-icon"><i class="fas fa-chart-pie"></i></div>
+                    <img src="{{ asset('icon-192.png') }}" alt="FlashBilan" style="height: 34px; width: 34px; object-fit: contain; border-radius: 8px;">
                     <div class="sidebar-logo-text">Flash<span>Bilan</span></div>
                 </a>
             </div>
