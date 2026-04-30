@@ -13,13 +13,17 @@ class PlatformVisitController extends Controller
         $today       = now()->startOfDay();
         $startWeek   = now()->startOfWeek();
         $startMonth  = now()->startOfMonth();
+        $adminEmails = ['isiserviceplus@gmail.com'];
 
-        $visitToday  = PlatformVisit::where('created_at', '>=', $today)->count();
-        $visitWeek   = PlatformVisit::where('created_at', '>=', $startWeek)->count();
-        $visitMonth  = PlatformVisit::where('created_at', '>=', $startMonth)->count();
+        $baseQuery = fn() => PlatformVisit::whereHas('user', fn($q) => $q->whereNotIn('email', $adminEmails));
+
+        $visitToday  = $baseQuery()->where('created_at', '>=', $today)->count();
+        $visitWeek   = $baseQuery()->where('created_at', '>=', $startWeek)->count();
+        $visitMonth  = $baseQuery()->where('created_at', '>=', $startMonth)->count();
 
         // Visites par jour sur les 30 derniers jours
-        $dailyStats = PlatformVisit::select(
+        $dailyStats = $baseQuery()
+            ->select(
                 DB::raw('DATE(created_at) as date'),
                 DB::raw('COUNT(*) as total'),
                 DB::raw('COUNT(DISTINCT user_id) as unique_users')
@@ -29,8 +33,9 @@ class PlatformVisitController extends Controller
             ->orderByDesc('date')
             ->get();
 
-        // Dernières visites
-        $recentVisits = PlatformVisit::with('user')
+        // Dernières visites (exclure l'admin)
+        $recentVisits = $baseQuery()
+            ->with('user')
             ->latest()
             ->take(20)
             ->get();
