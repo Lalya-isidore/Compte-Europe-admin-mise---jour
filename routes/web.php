@@ -5,8 +5,8 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return \Illuminate\Support\Facades\Auth::check()
         ? redirect()->route('dashboard')
-        : view('users.connexion');
-});
+        : view('landing');
+})->name('landing');
 use App\Http\Controllers\CompteController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\SousCompteController;
