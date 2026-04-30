@@ -59,6 +59,11 @@
         }
         .lp-nav__logo-icon svg { width: 22px; height: 22px; }
         .lp-nav__actions { display: flex; align-items: center; gap: 10px; }
+        .lp-nav__toggle {
+            display: none; background: none; border: none; cursor: pointer;
+            padding: 6px; border-radius: 8px; color: #334155;
+        }
+        .lp-nav__toggle svg { width: 26px; height: 26px; display: block; }
         .btn-login {
             padding: 0.5rem 1.25rem; border-radius: 8px; font-weight: 600; font-size: 0.9rem;
             border: 1.5px solid #e2e8f0; background: #fff; color: #334155; text-decoration: none;
@@ -200,9 +205,18 @@
 
         /* MOBILE (≤ 768px) */
         @media (max-width: 768px) {
-            .lp-nav { padding: 0.75rem 1rem; }
+            .lp-nav { padding: 0.75rem 1rem; position: relative; }
             .lp-nav__logo-text { font-size: 1.2rem; }
-            .btn-login { display: none; }
+            .lp-nav__toggle { display: block; }
+            .lp-nav__actions {
+                display: none; flex-direction: column; align-items: stretch;
+                position: absolute; top: calc(100% + 1px); right: 0; left: 0;
+                background: #fff; border-bottom: 1px solid #e2e8f0;
+                box-shadow: 0 8px 24px rgba(0,0,0,0.10);
+                padding: 0.75rem 1rem; gap: 8px; z-index: 99;
+            }
+            .lp-nav__actions.open { display: flex; }
+            .btn-login, .btn-signup { text-align: center; justify-content: center; font-size: 0.95rem; padding: 0.65rem 1rem; }
 
             .lp-hero { padding: 3rem 1.25rem 2.5rem; }
             .lp-hero__badge { font-size: 0.72rem; padding: 0.3rem 0.85rem; }
@@ -229,7 +243,6 @@
         /* PETIT MOBILE (≤ 400px) */
         @media (max-width: 400px) {
             .lp-nav__logo-text { display: none; }
-            .btn-signup { font-size: 0.82rem; padding: 0.45rem 0.9rem; }
             .lp-hero h1 { font-size: 1.75rem; }
             .lp-hero__sub { font-size: 0.92rem; }
             .tools-lp-grid { gap: 0.55rem; }
@@ -249,11 +262,28 @@
         <img src="{{ asset('images/logo-premium.png') }}" alt="FlashBilan Logo" style="width: 45px; height: 45px; object-fit: contain; margin-right: 5px;">
         <span class="lp-nav__logo-text">Flash<span>Bilan</span></span>
     </a>
-    <div class="lp-nav__actions">
-        <a href="{{ route('connexion') }}" class="btn-login">Se connecter</a>
-        <a href="{{ route('inscription') }}" class="btn-signup">Créer un compte</a>
+    <button class="lp-nav__toggle" id="navToggle" aria-label="Menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+            <line x1="3" y1="6" x2="21" y2="6"/>
+            <line x1="3" y1="12" x2="21" y2="12"/>
+            <line x1="3" y1="18" x2="21" y2="18"/>
+        </svg>
+    </button>
+    <div class="lp-nav__actions" id="navActions">
+        <a href="{{ route('connexion') }}" class="btn-login">↪ Se connecter</a>
+        <a href="{{ route('inscription') }}" class="btn-signup">S'inscrire</a>
     </div>
 </nav>
+<script>
+    document.getElementById('navToggle').addEventListener('click', function () {
+        document.getElementById('navActions').classList.toggle('open');
+    });
+    document.addEventListener('click', function (e) {
+        if (!e.target.closest('#navToggle') && !e.target.closest('#navActions')) {
+            document.getElementById('navActions').classList.remove('open');
+        }
+    });
+</script>
 
 {{-- HERO --}}
 <section class="lp-hero">
