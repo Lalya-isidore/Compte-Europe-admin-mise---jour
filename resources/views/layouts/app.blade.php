@@ -317,9 +317,8 @@
     <header class="app-header-shell">
         <nav class="app-navbar navbar navbar-expand-lg">
             <div class="container-fluid p-0" style="display: flex; justify-content: space-between; align-items: center;">
-                <a class="navbar-brand" href="#">
-                    <span class="brand-dot"></span>
-                    {{ app('region')->appName() }}
+                <a class="navbar-brand" href="{{ route('dashboard') }}">
+                    <img src="{{ asset('images/logo-premium.png') }}" alt="FlashBilan" style="height: 38px; width: auto; object-fit: contain;">
                 </a>
 
                 <div class="d-flex align-items-center">
