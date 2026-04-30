@@ -8,7 +8,6 @@
             <div class="fb-logo-icon">
                 <img src="{{ asset('images/logo-final-premium.png') }}" alt="FlashBilan" style="height: 70px; width: auto; object-fit: contain;">
             </div>
-            <h1 class="fb-brand-text">Flash<span>Bilan</span></h1>
             <p class="fb-subtitle">Définissez votre nouveau mot de passe</p>
         </div>
 
