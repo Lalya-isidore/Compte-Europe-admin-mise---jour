@@ -62,7 +62,7 @@ return [
 
     'crisp' => [
         'website_id' => env('CRISP_WEBSITE_ID'),
-        'auto_message' => env('CRISP_AUTO_MESSAGE', 'Bonjour, posez-moi toutes vos questions à propos de KITSCMS.'),
+        'auto_message' => env('CRISP_AUTO_MESSAGE', 'Bonjour, posez-moi toutes vos questions à propos de FlashBilan.'),
         'locale' => env('CRISP_LOCALE', 'fr'),
     ],
 
