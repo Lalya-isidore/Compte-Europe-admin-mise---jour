@@ -309,7 +309,7 @@
         <nav class="app-navbar navbar navbar-expand-lg">
             <div class="container-fluid p-0" style="display: flex; justify-content: space-between; align-items: center;">
                 <a class="navbar-brand" href="{{ route('dashboard') }}">
-                    <img src="{{ asset('images/logo-final-premium.png') }}" alt="FlashBilan" style="height: 38px; width: auto; object-fit: contain;">
+                    <img src="{{ asset('images/logo-final-premium.png') }}" alt="FlashBilan" style="height: 38px; width: auto; object-fit: contain; mix-blend-mode: multiply;">
                 </a>
 
                 <div class="d-flex align-items-center">
