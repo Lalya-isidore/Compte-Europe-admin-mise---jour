@@ -139,7 +139,7 @@
 
             <!-- 🔗 Footer Links (KitsCMS Style) -->
             <div class="fb-auth-footer">
-                <a href="{{ route('home') }}" class="fb-footer-link">
+                <a href="{{ url('/') }}" class="fb-footer-link">
                     <i class="fas fa-home"></i> Accueil
                 </a>
                 <span class="fb-footer-sep">|</span>
