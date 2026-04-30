@@ -24,7 +24,7 @@
     <meta name="twitter:description" content="Flash Compte Pro, SMS Pro, Contrat de Prêt PDF et plus. Outils professionnels sur FlashBilan.">
     <meta name="twitter:image" content="{{ asset('images/og-preview1.png') }}">
 
-    <link rel="icon" type="image/svg+xml" href="{{ asset('images/favicon.svg') }}">
+    <link rel="icon" type="image/png" href="{{ asset('images/logo-final-premium.png') }}">
     <link rel="manifest" href="{{ asset('manifest.json') }}">
     <link rel="apple-touch-icon" href="{{ asset('icon-192.png') }}">
 

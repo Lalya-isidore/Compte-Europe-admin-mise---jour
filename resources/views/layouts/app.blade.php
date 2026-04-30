@@ -37,7 +37,7 @@
     <link rel="stylesheet" href="{{ asset('css/responsive.css') }}?v={{ time() }}">
     <link rel="stylesheet" href="{{ asset('css/support-widget.css') }}">
     <script src="{{ asset('js/support-widget.js') }}" defer></script>
-    <link rel="icon" type="image/svg+xml" href="{{ asset('images/favicon.svg') }}">
+    <link rel="icon" type="image/png" href="{{ asset('images/logo-final-premium.png') }}">
     
     <!-- PWA Meta Tags -->
     <link rel="manifest" href="{{ asset('manifest.json') }}">
