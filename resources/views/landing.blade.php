@@ -192,17 +192,52 @@
         .lp-footer a { color: rgba(255,255,255,0.6); text-decoration: none; }
         .lp-footer a:hover { color: #fbbf24; }
 
-        @media (max-width: 768px) {
-            .lp-stats__grid { grid-template-columns: repeat(2, 1fr); }
-            .tools-lp-grid { grid-template-columns: repeat(2, 1fr); gap: 0.85rem; }
-            .why-grid { grid-template-columns: 1fr; gap: 1rem; }
-            .lp-nav__logo-text { display: none; }
+        /* TABLET (≤ 1024px) */
+        @media (max-width: 1024px) {
+            .tools-lp-grid { grid-template-columns: repeat(3, 1fr); }
+            .why-grid { gap: 1.25rem; }
         }
-        @media (max-width: 480px) {
-            .lp-hero { padding: 3.5rem 1rem 3rem; }
-            .tool-lp-card { padding: 1.1rem 0.6rem; }
-            .tool-lp-card img { width: 44px; height: 44px; }
+
+        /* MOBILE (≤ 768px) */
+        @media (max-width: 768px) {
+            .lp-nav { padding: 0.75rem 1rem; }
+            .lp-nav__logo-text { font-size: 1.2rem; }
+            .btn-login { display: none; }
+
+            .lp-hero { padding: 3rem 1.25rem 2.5rem; }
+            .lp-hero__badge { font-size: 0.72rem; padding: 0.3rem 0.85rem; }
+            .lp-hero__cta { flex-direction: column; align-items: stretch; gap: 10px; padding: 0 1rem; }
+            .btn-hero-primary, .btn-hero-secondary { text-align: center; justify-content: center; }
+
+            .lp-stats { padding: 1.5rem 1rem; }
+            .lp-stats__grid { grid-template-columns: repeat(2, 1fr); gap: 1.25rem; }
+            .lp-stat__num { font-size: 1.6rem; }
+
+            .lp-section { padding: 2.5rem 1rem; }
+            .tools-lp-grid { grid-template-columns: repeat(2, 1fr); gap: 0.75rem; }
+            .tool-lp-card { padding: 1.1rem 0.6rem; gap: 0.5rem; border-radius: 12px; }
+            .tool-lp-card img { width: 46px; height: 46px; }
             .tool-lp-card__name { font-size: 0.78rem; }
+
+            .why-grid { grid-template-columns: 1fr; gap: 0.85rem; }
+            .why-card { padding: 1.25rem; }
+
+            .lp-cta { padding: 3rem 1.25rem; }
+            .lp-cta p { font-size: 0.95rem; }
+        }
+
+        /* PETIT MOBILE (≤ 400px) */
+        @media (max-width: 400px) {
+            .lp-nav__logo-text { display: none; }
+            .btn-signup { font-size: 0.82rem; padding: 0.45rem 0.9rem; }
+            .lp-hero h1 { font-size: 1.75rem; }
+            .lp-hero__sub { font-size: 0.92rem; }
+            .tools-lp-grid { gap: 0.55rem; }
+            .tool-lp-card { padding: 0.9rem 0.4rem; border-radius: 10px; }
+            .tool-lp-card img { width: 38px; height: 38px; }
+            .tool-lp-card__name { font-size: 0.72rem; }
+            .tool-lp-card__badge { font-size: 0.58rem; padding: 1px 5px; }
+            .lp-stat__num { font-size: 1.4rem; }
         }
     </style>
 </head>
@@ -230,8 +265,8 @@
         <i class="fas fa-bolt"></i> La plateforme des outils bancaires pro
     </div>
     <h1>
-        <span class="accent">Flash Compte Pro</span><br>
-        et tous vos outils bancaires<br>en un seul endroit
+        <span class="accent">Flash Compte Pro</span>
+        et tous vos outils bancaires en un seul endroit
     </h1>
     <p class="lp-hero__sub">
         Créez des relevés de compte européens professionnels, envoyez des SMS en masse, générez des contrats de prêt PDF et vérifiez des IBAN en quelques secondes.
