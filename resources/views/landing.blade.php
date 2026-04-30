@@ -44,7 +44,8 @@
             background: rgba(255,255,255,0.95);
             backdrop-filter: blur(12px);
             border-bottom: 1px solid #e2e8f0;
-            padding: 0.9rem 1.5rem;
+            padding: 0 1.5rem;
+            height: 68px;
             display: flex; align-items: center; justify-content: space-between;
         }
         .lp-nav__logo {
@@ -261,7 +262,7 @@
 {{-- NAV --}}
 <nav class="lp-nav">
     <a href="{{ url('/') }}" class="lp-nav__logo">
-        <img src="{{ asset('images/logo-final-premium.png') }}" alt="FlashBilan Logo" style="height: 55px; width: auto; object-fit: contain;">
+        <img src="{{ asset('images/logo-final-premium.png') }}" alt="FlashBilan Logo" style="max-height: 52px; width: auto; object-fit: contain;">
     </a>
     <button class="lp-nav__toggle" id="navToggle" aria-label="Menu">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
