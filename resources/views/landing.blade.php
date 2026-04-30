@@ -261,8 +261,7 @@
 {{-- NAV --}}
 <nav class="lp-nav">
     <a href="{{ url('/') }}" class="lp-nav__logo">
-        <img src="{{ asset('images/logo-premium.png') }}" alt="FlashBilan Logo" style="width: 45px; height: 45px; object-fit: contain; margin-right: 5px;">
-        <span class="lp-nav__logo-text">Flash<span>Bilan</span></span>
+        <img src="{{ asset('images/logo-premium.png') }}" alt="FlashBilan Logo" style="height: 45px; width: auto; object-fit: contain;">
     </a>
     <button class="lp-nav__toggle" id="navToggle" aria-label="Menu">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
