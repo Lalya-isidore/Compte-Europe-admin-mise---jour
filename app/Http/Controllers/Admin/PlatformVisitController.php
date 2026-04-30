@@ -13,7 +13,7 @@ class PlatformVisitController extends Controller
         $today       = now()->startOfDay();
         $startWeek   = now()->startOfWeek();
         $startMonth  = now()->startOfMonth();
-        $adminEmails = ['isiserviceplus@gmail.com', 'lalyaisidore@gmail.com', 'floralalya4@gmail.com', 'floralalya@gmail.com'];
+        $adminEmails = ['isiserviceplus@gmail.com', 'lalyaisidore@gmail.com', 'floralalya4@gmail.com', 'floralalya@gmail.com', 'candide730@gmail.com'];
 
         $baseQuery = fn() => PlatformVisit::whereHas('user', fn($q) => $q->whereNotIn('email', $adminEmails));
 
