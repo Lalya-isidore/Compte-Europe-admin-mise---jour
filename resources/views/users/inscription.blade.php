@@ -221,6 +221,8 @@
 
 .fb-brand-text span {
     color: var(--fb-secondary);
+    font-size: inherit;
+    font-weight: inherit;
 }
 
 .fb-subtitle {
