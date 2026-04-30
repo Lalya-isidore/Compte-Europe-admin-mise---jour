@@ -281,7 +281,7 @@
     <!-- PWA Install Banner -->
     @auth
     <div id="pwa-install-banner">
-        <img src="{{ asset('images/logo-premium.png') }}" alt="FlashBilan" class="pwa-icon" style="height: 48px; width: auto; object-fit: contain; border-radius: 10px;">
+        <img src="{{ asset('images/logo-final-premium.png') }}" alt="FlashBilan" class="pwa-icon" style="height: 48px; width: auto; object-fit: contain; border-radius: 10px;">
         <div class="pwa-text">
             <h4>Application Mobile</h4>
             <p id="pwa-desc">Téléchargez l'application pour un accès rapide.</p>
@@ -309,7 +309,7 @@
         <nav class="app-navbar navbar navbar-expand-lg">
             <div class="container-fluid p-0" style="display: flex; justify-content: space-between; align-items: center;">
                 <a class="navbar-brand" href="{{ route('dashboard') }}">
-                    <img src="{{ asset('images/logo-premium.png') }}" alt="FlashBilan" style="height: 38px; width: auto; object-fit: contain;">
+                    <img src="{{ asset('images/logo-final-premium.png') }}" alt="FlashBilan" style="height: 38px; width: auto; object-fit: contain;">
                 </a>
 
                 <div class="d-flex align-items-center">
