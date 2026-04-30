@@ -225,7 +225,7 @@
             .lp-hero { padding: 3rem 1.25rem 2.5rem; }
             .lp-hero__badge { font-size: 0.72rem; padding: 0.3rem 0.85rem; }
             .lp-hero__cta { flex-direction: column; align-items: stretch; gap: 10px; padding: 0 1rem; }
-            .btn-hero-primary, .btn-hero-secondary { text-align: center; justify-content: center; }
+            .btn-hero-primary, .btn-hero-secondary { text-align: center; justify-content: center; font-size: 0.88rem; padding: 0.65rem 1.25rem; }
 
             .lp-stats { padding: 1.5rem 1rem; }
             .lp-stats__grid { grid-template-columns: repeat(2, 1fr); gap: 1.25rem; }
