@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html class="dark" lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>Flash Compte Pro — Outils bancaires professionnels | FlashBilan</title>
@@ -19,394 +19,270 @@
     <meta property="og:site_name" content="FlashBilan">
     <meta property="og:locale" content="fr_FR">
 
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Flash Compte Pro — Outils bancaires | FlashBilan">
-    <meta name="twitter:description" content="Flash Compte Pro, SMS Pro, Contrat de Prêt PDF et plus. Outils professionnels sur FlashBilan.">
-    <meta name="twitter:image" content="{{ asset('images/og-preview1.png') }}">
-
     <link rel="icon" type="image/svg+xml" href="{{ asset('images/favicon.svg') }}">
     <link rel="manifest" href="{{ asset('manifest.json') }}">
     <link rel="apple-touch-icon" href="{{ asset('icon-192.png') }}">
 
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Cabin:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    
+    <link rel="stylesheet" href="{{ asset('css/landing-premium.css') }}">
 
-    <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: 'Inter', sans-serif; background: #f8fafc; color: #1e293b; }
-
-        /* NAV */
-        .lp-nav {
-            position: sticky; top: 0; z-index: 100;
-            background: rgba(255,255,255,0.95);
-            backdrop-filter: blur(12px);
-            border-bottom: 1px solid #e2e8f0;
-            padding: 0.9rem 1.5rem;
-            display: flex; align-items: center; justify-content: space-between;
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary-container": "#0a0d2e",
+                        "secondary": "#4edea3",
+                        "on-secondary": "#003824",
+                        "tertiary": "#c3c0ff",
+                        "background": "#0d1031",
+                        "surface-container-low": "#151839",
+                        "surface-container-highest": "#2f3254",
+                        "on-background": "#e0e0ff",
+                        "on-surface": "#e0e0ff",
+                        "on-surface-variant": "#c7c5cf",
+                    }
+                }
+            }
         }
-        .lp-nav__logo {
-            font-size: 1.4rem; font-weight: 800; text-decoration: none; color: #1e293b;
-            display: flex; align-items: center; gap: 10px;
-        }
-        .lp-nav__logo span { color: #f59e0b; }
-        .lp-nav__logo-icon {
-            width: 38px; height: 38px; border-radius: 10px;
-            background: linear-gradient(135deg, #f59e0b, #10b981);
-            display: flex; align-items: center; justify-content: center;
-        }
-        .lp-nav__logo-icon svg { width: 22px; height: 22px; }
-        .lp-nav__actions { display: flex; align-items: center; gap: 10px; }
-        .btn-login {
-            padding: 0.5rem 1.25rem; border-radius: 8px; font-weight: 600; font-size: 0.9rem;
-            border: 1.5px solid #e2e8f0; background: #fff; color: #334155; text-decoration: none;
-            transition: all 0.2s;
-        }
-        .btn-login:hover { border-color: #94a3b8; color: #1e293b; }
-        .btn-signup {
-            padding: 0.5rem 1.25rem; border-radius: 8px; font-weight: 600; font-size: 0.9rem;
-            background: linear-gradient(135deg, #f59e0b, #10b981); color: #fff; text-decoration: none;
-            border: none; transition: all 0.2s;
-        }
-        .btn-signup:hover { opacity: 0.9; color: #fff; transform: translateY(-1px); }
-
-        /* HERO */
-        .lp-hero {
-            background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 60%, #0f4c75 100%);
-            color: #fff; padding: 5rem 1.5rem 4rem; text-align: center; position: relative; overflow: hidden;
-        }
-        .lp-hero::before {
-            content: ''; position: absolute; inset: 0;
-            background: radial-gradient(ellipse at 50% 0%, rgba(245,158,11,0.18) 0%, transparent 70%);
-        }
-        .lp-hero__badge {
-            display: inline-flex; align-items: center; gap: 8px;
-            background: rgba(245,158,11,0.15); border: 1px solid rgba(245,158,11,0.35);
-            color: #fbbf24; border-radius: 999px; padding: 0.35rem 1rem;
-            font-size: 0.8rem; font-weight: 600; letter-spacing: 0.04em;
-            text-transform: uppercase; margin-bottom: 1.5rem;
-        }
-        .lp-hero h1 {
-            font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 800; line-height: 1.15;
-            margin-bottom: 1.25rem; position: relative;
-        }
-        .lp-hero h1 .accent { color: #fbbf24; }
-        .lp-hero__sub {
-            font-size: clamp(1rem, 2vw, 1.2rem); color: rgba(255,255,255,0.72);
-            max-width: 620px; margin: 0 auto 2.5rem; line-height: 1.7;
-        }
-        .lp-hero__cta { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
-        .btn-hero-primary {
-            padding: 0.9rem 2rem; border-radius: 12px; font-weight: 700; font-size: 1rem;
-            background: linear-gradient(135deg, #f59e0b, #10b981); color: #fff;
-            text-decoration: none; transition: all 0.25s; border: none;
-            box-shadow: 0 8px 24px rgba(245,158,11,0.35);
-        }
-        .btn-hero-primary:hover { transform: translateY(-2px); color: #fff; box-shadow: 0 12px 30px rgba(245,158,11,0.45); }
-        .btn-hero-secondary {
-            padding: 0.9rem 2rem; border-radius: 12px; font-weight: 600; font-size: 1rem;
-            background: rgba(255,255,255,0.08); border: 1.5px solid rgba(255,255,255,0.2);
-            color: #fff; text-decoration: none; transition: all 0.25s;
-        }
-        .btn-hero-secondary:hover { background: rgba(255,255,255,0.15); color: #fff; }
-
-        /* STATS */
-        .lp-stats {
-            background: #fff; border-bottom: 1px solid #e2e8f0;
-            padding: 2rem 1.5rem;
-        }
-        .lp-stats__grid {
-            max-width: 900px; margin: 0 auto;
-            display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; text-align: center;
-        }
-        .lp-stat__num { font-size: 1.9rem; font-weight: 800; color: #0f172a; }
-        .lp-stat__label { font-size: 0.8rem; color: #64748b; margin-top: 2px; }
-
-        /* SECTIONS */
-        .lp-section { padding: 4rem 1.5rem; }
-        .lp-section__inner { max-width: 1100px; margin: 0 auto; }
-        .lp-section__tag {
-            display: inline-block; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em;
-            text-transform: uppercase; color: #f59e0b; background: rgba(245,158,11,0.1);
-            border-radius: 999px; padding: 0.3rem 0.9rem; margin-bottom: 0.75rem;
-        }
-        .lp-section__tag.green { color: #10b981; background: rgba(16,185,129,0.1); }
-        .lp-section h2 {
-            font-size: clamp(1.6rem, 3vw, 2.2rem); font-weight: 800; margin-bottom: 0.5rem; color: #0f172a;
-        }
-        .lp-section__desc { color: #64748b; font-size: 1rem; margin-bottom: 2.5rem; max-width: 580px; }
-
-        /* TOOLS GRID */
-        .tools-lp-grid {
-            display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.25rem;
-        }
-        .tool-lp-card {
-            background: #fff; border: 1px solid #e2e8f0; border-radius: 16px;
-            padding: 1.5rem 1rem; text-align: center; text-decoration: none; color: #1e293b;
-            transition: all 0.22s; position: relative; display: flex; flex-direction: column;
-            align-items: center; gap: 0.75rem;
-        }
-        .tool-lp-card:hover {
-            border-color: #f59e0b; box-shadow: 0 8px 24px rgba(245,158,11,0.12);
-            transform: translateY(-4px); color: #1e293b;
-        }
-        .tool-lp-card img { width: 56px; height: 56px; object-fit: contain; }
-        .tool-lp-card__name { font-size: 0.85rem; font-weight: 600; line-height: 1.3; }
-        .tool-lp-card__badge {
-            position: absolute; top: 10px; left: 10px; z-index: 2;
-            font-size: 0.65rem; font-weight: 700; padding: 2px 8px; border-radius: 4px;
-            text-transform: uppercase; letter-spacing: 0.03em;
-        }
-        .badge-new { background: #2196F3; color: #fff; }
-        .badge-soon { background: #fbbf24; color: #7c2d12; }
-        .badge-free { background: #10b981; color: #fff; }
-
-        /* WHY */
-        .lp-why { background: #fff; }
-        .why-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; }
-        .why-card {
-            background: #f8fafc; border-radius: 16px; padding: 2rem; border: 1px solid #e2e8f0;
-        }
-        .why-card__icon {
-            width: 52px; height: 52px; border-radius: 14px; font-size: 1.4rem;
-            display: flex; align-items: center; justify-content: center; margin-bottom: 1rem;
-        }
-        .why-card h3 { font-size: 1rem; font-weight: 700; margin-bottom: 0.5rem; }
-        .why-card p { font-size: 0.88rem; color: #64748b; line-height: 1.6; }
-
-        /* CTA BOTTOM */
-        .lp-cta {
-            background: linear-gradient(135deg, #0f172a, #1e3a5f);
-            color: #fff; text-align: center; padding: 5rem 1.5rem;
-        }
-        .lp-cta h2 { font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 800; margin-bottom: 1rem; }
-        .lp-cta p { color: rgba(255,255,255,0.7); font-size: 1.05rem; margin-bottom: 2rem; }
-
-        /* FOOTER */
-        .lp-footer {
-            background: #0f172a; color: rgba(255,255,255,0.45);
-            text-align: center; padding: 1.5rem; font-size: 0.82rem;
-        }
-        .lp-footer a { color: rgba(255,255,255,0.6); text-decoration: none; }
-        .lp-footer a:hover { color: #fbbf24; }
-
-        @media (max-width: 768px) {
-            .lp-stats__grid { grid-template-columns: repeat(2, 1fr); }
-            .tools-lp-grid { grid-template-columns: repeat(2, 1fr); gap: 0.85rem; }
-            .why-grid { grid-template-columns: 1fr; gap: 1rem; }
-            .lp-nav__logo-text { display: none; }
-        }
-        @media (max-width: 480px) {
-            .lp-hero { padding: 3.5rem 1rem 3rem; }
-            .tool-lp-card { padding: 1.1rem 0.6rem; }
-            .tool-lp-card img { width: 44px; height: 44px; }
-            .tool-lp-card__name { font-size: 0.78rem; }
-        }
-    </style>
+    </script>
 </head>
-<body>
-
-{{-- NAV --}}
-<nav class="lp-nav">
-    <a href="{{ url('/') }}" class="lp-nav__logo">
-        <div class="lp-nav__logo-icon">
-            <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M20 10C14.48 10 10 14.48 10 20C10 25.52 14.48 30 20 30C25.52 30 30 25.52 30 20C30 14.48 25.52 10 20 10ZM20 27.5C15.86 27.5 12.5 24.14 12.5 20C12.5 15.86 15.86 12.5 20 12.5V20H27.5C27.5 24.14 24.14 27.5 20 27.5Z" fill="white"/>
-            </svg>
-        </div>
-        <span class="lp-nav__logo-text">Flash<span>Bilan</span></span>
-    </a>
-    <div class="lp-nav__actions">
-        <a href="{{ route('connexion') }}" class="btn-login">Se connecter</a>
-        <a href="{{ route('inscription') }}" class="btn-signup">Créer un compte</a>
-    </div>
-</nav>
-
-{{-- HERO --}}
-<section class="lp-hero">
-    <div class="lp-hero__badge">
-        <i class="fas fa-bolt"></i> La plateforme des outils bancaires pro
-    </div>
-    <h1>
-        <span class="accent">Flash Compte Pro</span><br>
-        et tous vos outils bancaires<br>en un seul endroit
-    </h1>
-    <p class="lp-hero__sub">
-        Créez des relevés de compte européens professionnels, envoyez des SMS en masse, générez des contrats de prêt PDF et vérifiez des IBAN en quelques secondes.
-    </p>
-    <div class="lp-hero__cta">
-        <a href="{{ route('inscription') }}" class="btn-hero-primary">
-            <i class="fas fa-rocket me-2"></i>Commencer gratuitement
-        </a>
-        <a href="{{ route('connexion') }}" class="btn-hero-secondary">
-            <i class="fas fa-sign-in-alt me-2"></i>Se connecter
-        </a>
-    </div>
-</section>
-
-{{-- STATS --}}
-<div class="lp-stats">
-    <div class="lp-stats__grid">
-        <div>
-            <div class="lp-stat__num">200+</div>
-            <div class="lp-stat__label">Utilisateurs actifs</div>
-        </div>
-        <div>
-            <div class="lp-stat__num">16</div>
-            <div class="lp-stat__label">Outils disponibles</div>
-        </div>
-        <div>
-            <div class="lp-stat__num">10</div>
-            <div class="lp-stat__label">Langues supportées</div>
-        </div>
-        <div>
-            <div class="lp-stat__num">100%</div>
-            <div class="lp-stat__label">Sécurisé</div>
-        </div>
-    </div>
-</div>
-
-{{-- OUTILS PAYANTS --}}
-<section class="lp-section">
-    <div class="lp-section__inner">
-        <span class="lp-section__tag">Outils Premium</span>
-        <h2>Outils à accès payant</h2>
-        <p class="lp-section__desc">Des outils professionnels puissants pour votre activité bancaire et commerciale.</p>
-
-        <div class="tools-lp-grid">
-            <a href="{{ route('inscription') }}" class="tool-lp-card">
-                <img src="{{ asset('images/tools/sms-pro.png') }}" alt="SMS Pro">
-                <span class="tool-lp-card__name">SMS Pro</span>
-            </a>
-            <a href="{{ route('inscription') }}" class="tool-lp-card">
-                <img src="{{ asset('images/tools/flash-compte-v1.png') }}" alt="Flash Compte Pro">
-                <span class="tool-lp-card__name">Flash Compte Pro</span>
-            </a>
-            <a href="{{ route('inscription') }}" class="tool-lp-card">
-                <img src="{{ asset('images/tools/mail-flash-pro.png') }}" alt="Mail Flash Pro">
-                <span class="tool-lp-card__name">Mail Flash Pro</span>
-            </a>
-            <a href="{{ route('inscription') }}" class="tool-lp-card">
-                <span class="tool-lp-card__badge badge-new">New</span>
-                <img src="{{ asset('images/tools/contrat-pret.jpeg') }}" alt="Contrat de Prêt" style="border-radius:12%;">
-                <span class="tool-lp-card__name">Contrat de Prêt</span>
-            </a>
-            <a href="{{ route('inscription') }}" class="tool-lp-card">
-                <img src="{{ asset('images/tools/iban-check.png') }}" alt="Vérification IBAN">
-                <span class="tool-lp-card__name">Vérification IBAN / CB</span>
-            </a>
-            <a href="{{ route('inscription') }}" class="tool-lp-card">
-                <img src="{{ asset('images/tools/phone-verify.png') }}" alt="Vérification Téléphone">
-                <span class="tool-lp-card__name">Vérification Téléphone</span>
-            </a>
-            <a href="{{ route('inscription') }}" class="tool-lp-card">
-                <span class="tool-lp-card__badge badge-soon">Bientôt</span>
-                <img src="{{ asset('images/tools/code-coupon.png') }}" alt="Collecte Code Coupon">
-                <span class="tool-lp-card__name">Collecte de Code Coupon</span>
-            </a>
-            <a href="{{ route('inscription') }}" class="tool-lp-card">
-                <span class="tool-lp-card__badge badge-soon">Bientôt</span>
-                <img src="{{ asset('images/tools/mail-pro-prive.png') }}" alt="Mail Pro Privé">
-                <span class="tool-lp-card__name">Mail Pro Privé</span>
-            </a>
-        </div>
-    </div>
-</section>
-
-{{-- OUTILS GRATUITS --}}
-<section class="lp-section" style="background:#fff; border-top:1px solid #e2e8f0;">
-    <div class="lp-section__inner">
-        <span class="lp-section__tag green">Accès Libre</span>
-        <h2>Outils gratuits</h2>
-        <p class="lp-section__desc">Des outils puissants accessibles sans crédit pour booster votre productivité.</p>
-
-        <div class="tools-lp-grid">
-            <a href="{{ route('inscription') }}" class="tool-lp-card">
-                <span class="tool-lp-card__badge badge-new">New</span>
-                <img src="{{ asset('images/tools/qr-generator.svg') }}" alt="Générateur QR Code">
-                <span class="tool-lp-card__name">Générateur QR Code</span>
-            </a>
-            <a href="{{ route('inscription') }}" class="tool-lp-card">
-                <span class="tool-lp-card__badge badge-new">New</span>
-                <img src="{{ asset('images/tools/badge-agent.png') }}" alt="Badge Agent">
-                <span class="tool-lp-card__name">Badge Agent</span>
-            </a>
-            <a href="{{ route('inscription') }}" class="tool-lp-card">
-                <img src="{{ asset('images/tools/mail-extractor.png') }}" alt="Mail Extractor">
-                <span class="tool-lp-card__name">Mail Extractor</span>
-            </a>
-            <a href="{{ route('inscription') }}" class="tool-lp-card">
-                <img src="{{ asset('images/tools/url-check.png') }}" alt="Vérification site web">
-                <span class="tool-lp-card__name">Vérification site web</span>
-            </a>
-            <a href="{{ route('inscription') }}" class="tool-lp-card">
-                <img src="{{ asset('images/tools/url-shortener.png') }}" alt="Raccourcissement URL">
-                <span class="tool-lp-card__name">Raccourcissement d'URL</span>
-            </a>
-            <a href="{{ route('inscription') }}" class="tool-lp-card">
-                <span class="tool-lp-card__badge badge-soon">Bientôt</span>
-                <img src="{{ asset('images/tools/crypto-usdt.png') }}" alt="Vente Crypto USDT">
-                <span class="tool-lp-card__name">Vente de Crypto USDT</span>
-            </a>
-            <a href="https://console.whatsago.com/partners/45575" target="_blank" rel="noopener" class="tool-lp-card">
-                <img src="{{ asset('images/tools/telephone.png') }}" alt="Numéros Virtuels">
-                <span class="tool-lp-card__name">Numéros Virtuels</span>
-            </a>
-            <a href="https://neutrocard.com/new-login/" target="_blank" rel="noopener" class="tool-lp-card">
-                <img src="{{ asset('images/tools/virtual-cards.png') }}" alt="Cartes Virtuelles">
-                <span class="tool-lp-card__name">Cartes Virtuelles</span>
-            </a>
-        </div>
-    </div>
-</section>
-
-{{-- POURQUOI --}}
-<section class="lp-section lp-why">
-    <div class="lp-section__inner">
-        <span class="lp-section__tag">Pourquoi FlashBilan</span>
-        <h2>Rapide, fiable et professionnel</h2>
-        <p class="lp-section__desc">Tout ce dont vous avez besoin pour gérer vos outils bancaires au quotidien.</p>
-
-        <div class="why-grid">
-            <div class="why-card">
-                <div class="why-card__icon" style="background:rgba(245,158,11,0.1);">⚡</div>
-                <h3>Résultats immédiats</h3>
-                <p>Générez vos documents et relevés en quelques secondes. Aucune attente, aucune complexité.</p>
+<body class="font-inter overflow-x-hidden">
+    <!-- Section 1: Sticky Header -->
+    <nav class="sticky top-0 w-full z-50 bg-[#0d1031]/80 backdrop-blur-xl border-b border-white/5 shadow-2xl">
+        <div class="flex justify-between items-center px-8 py-4 max-w-7xl mx-auto">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-500 to-emerald-500 flex items-center justify-center">
+                    <svg class="w-6 h-6 text-white" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M20 10C14.48 10 10 14.48 10 20C10 25.52 14.48 30 20 30C25.52 30 30 25.52 30 20C30 14.48 25.52 10 20 10ZM20 27.5C15.86 27.5 12.5 24.14 12.5 20C12.5 15.86 15.86 12.5 20 12.5V20H27.5C27.5 24.14 24.14 27.5 20 27.5Z" fill="currentColor"/>
+                    </svg>
+                </div>
+                <span class="text-xl font-black tracking-tighter text-white uppercase">Flash<span class="text-amber-500">Bilan</span></span>
             </div>
-            <div class="why-card">
-                <div class="why-card__icon" style="background:rgba(16,185,129,0.1);">🔒</div>
-                <h3>Sécurisé et privé</h3>
-                <p>Vos données sont protégées. Chaque compte est isolé et sécurisé avec un accès par code.</p>
+            <div class="hidden md:flex items-center space-x-8">
+                <a class="text-on-surface hover:text-secondary transition-colors font-medium text-sm uppercase tracking-widest" href="#outils">Outils</a>
+                <a class="text-on-surface hover:text-secondary transition-colors font-medium text-sm uppercase tracking-widest" href="#pourquoi">Pourquoi nous</a>
+                <a class="text-on-surface hover:text-secondary transition-colors font-medium text-sm uppercase tracking-widest" href="#">Tarifs</a>
             </div>
-            <div class="why-card">
-                <div class="why-card__icon" style="background:rgba(99,102,241,0.1);">🌍</div>
-                <h3>Multi-langues</h3>
-                <p>Nos outils supportent jusqu'à 10 langues : Français, Anglais, Espagnol, Portugais et plus.</p>
+            <div class="flex items-center gap-4">
+                <a href="{{ route('connexion') }}" class="text-on-surface-variant hover:text-white transition-colors font-semibold text-sm">Se connecter</a>
+                <a href="{{ route('inscription') }}" class="bg-secondary text-on-secondary px-6 py-2.5 rounded-full font-bold emerald-glow hover:scale-105 transition-transform text-sm">Ouvrir un compte</a>
             </div>
         </div>
-    </div>
-</section>
+    </nav>
 
-{{-- CTA --}}
-<section class="lp-cta">
-    <h2>Prêt à utiliser <span style="color:#fbbf24;">Flash Compte Pro</span> ?</h2>
-    <p>Créez votre compte gratuitement et accédez à tous nos outils dès maintenant.</p>
-    <a href="{{ route('inscription') }}" class="btn-hero-primary" style="font-size:1.05rem; padding: 1rem 2.5rem;">
-        <i class="fas fa-user-plus me-2"></i>Créer un compte gratuit
-    </a>
-</section>
+    <!-- Section 2: Hero Section -->
+    <section class="relative pt-24 pb-48 px-8 overflow-hidden">
+        <div class="max-w-7xl mx-auto text-center relative z-10">
+            <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-500 text-xs font-bold uppercase tracking-widest mb-8">
+                <span class="material-symbols-outlined text-sm">bolt</span>
+                La plateforme des outils bancaires pro
+            </div>
+            <h1 class="text-display-xl text-white mb-6 max-w-4xl mx-auto">
+                Flash Compte Pro et tous vos outils bancaires <span class="text-amber-500">en un seul endroit</span>
+            </h1>
+            <p class="text-lg text-on-surface-variant max-w-2xl mx-auto mb-12">
+                Accédez instantanément à vos relevés de compte européens, gérez vos SMS Pro et générez vos contrats de prêt PDF en toute sécurité.
+            </p>
+            <div class="flex flex-col sm:flex-row justify-center items-center gap-6">
+                <a href="{{ route('inscription') }}" class="bg-secondary text-on-secondary px-10 py-4 rounded-full text-lg font-bold emerald-glow hover:scale-105 transition-transform flex items-center gap-2">
+                    Commencer gratuitement
+                    <span class="material-symbols-outlined">arrow_forward</span>
+                </a>
+                <a href="#outils" class="glass-panel text-white px-10 py-4 rounded-full text-lg font-bold vault-glow hover:bg-white/10 transition-colors">
+                    Consulter les solutions
+                </a>
+            </div>
+        </div>
+        
+        <!-- Ambient Background Lights -->
+        <div class="absolute top-0 left-1/4 w-[500px] h-[500px] bg-indigo-600/10 blur-[120px] rounded-full pointer-events-none -z-0"></div>
+        <div class="absolute bottom-0 right-1/4 w-[400px] h-[400px] bg-emerald-600/10 blur-[100px] rounded-full pointer-events-none -z-0"></div>
 
-{{-- FOOTER --}}
-<footer class="lp-footer">
-    <p>
-        &copy; {{ date('Y') }} FlashBilan — Tous droits réservés &nbsp;·&nbsp;
-        <a href="{{ route('connexion') }}">Connexion</a> &nbsp;·&nbsp;
-        <a href="{{ route('inscription') }}">Inscription</a>
-    </p>
-</footer>
+        <div class="mt-24 max-w-5xl mx-auto glass-panel rounded-card vault-glow p-2 relative z-10 overflow-hidden border border-white/5">
+            <img alt="Dashboard Interface" class="rounded-[24px] w-full opacity-90" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAXDDkaWkOYx3joKeTYmTm4Rs-DBJVknrtqTXpaedD188yqwFq-FvaBwEOUcmpq5iFi63KKaiHsBinPYekz_2ayc8I8IucpOMxNHOy57i4yd4HVBDpLJsPpudc5MXn9RdPTYaJXEGRpVS7N0A1VWBprVhnN2EeMXhvwyil-XWDhM3FE75pBsTDKz0JdGDVv5si3HjnZ-s9tzQzHDnId2i8CH3LxaEkGW2mJS4HN0LMiIg4V0m3jZYYQtQ0dCyJLdYHrP6Ps3Z1HF3GB"/>
+        </div>
+    </section>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" defer></script>
+    <!-- Section 3: Stats Section -->
+    <section class="py-16 bg-[#070a2b] border-y border-white/5">
+        <div class="max-w-7xl mx-auto px-8 grid grid-cols-2 md:grid-cols-4 gap-12 text-center">
+            <div class="space-y-1">
+                <div class="text-4xl font-bold text-secondary">200+</div>
+                <div class="text-label-caps text-on-surface-variant">Utilisateurs</div>
+            </div>
+            <div class="space-y-1">
+                <div class="text-4xl font-bold text-amber-500">16</div>
+                <div class="text-label-caps text-on-surface-variant">Outils</div>
+            </div>
+            <div class="space-y-1">
+                <div class="text-4xl font-bold text-tertiary">10</div>
+                <div class="text-label-caps text-on-surface-variant">Langues</div>
+            </div>
+            <div class="space-y-1">
+                <div class="text-4xl font-bold text-white">100%</div>
+                <div class="text-label-caps text-on-surface-variant">Sécurisé</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 4: Tools Grid -->
+    <section id="outils" class="py-24 px-8 max-w-7xl mx-auto">
+        <div class="mb-16 text-center md:text-left">
+            <h2 class="text-headline-lg text-white mb-4">Nos Outils Professionnels</h2>
+            <p class="text-on-surface-variant">Une suite complète pour la gestion financière et opérationnelle.</p>
+        </div>
+
+        <!-- Premium Tools -->
+        <div class="mb-20">
+            <div class="flex items-center gap-4 mb-10">
+                <span class="text-label-caps text-secondary bg-secondary/10 px-4 py-1 rounded-full border border-secondary/20">PREMIUM</span>
+                <div class="h-px flex-grow bg-white/5"></div>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- SMS Pro -->
+                <a href="{{ route('inscription') }}" class="glass-panel p-8 rounded-card vault-glow hover-lift group border border-white/5 block">
+                    <div class="w-14 h-14 bg-secondary/10 rounded-2xl flex items-center justify-center text-secondary mb-6 group-hover:bg-secondary group-hover:text-on-secondary transition-all">
+                        <span class="material-symbols-outlined text-3xl">sms</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">SMS Pro</h3>
+                    <p class="text-on-surface-variant leading-relaxed">Envoi massif de notifications sécurisées pour vos clients institutionnels.</p>
+                </a>
+                <!-- Flash Compte Pro -->
+                <a href="{{ route('inscription') }}" class="glass-panel p-8 rounded-card vault-glow hover-lift group border border-white/5 block">
+                    <div class="w-14 h-14 bg-secondary/10 rounded-2xl flex items-center justify-center text-secondary mb-6 group-hover:bg-secondary group-hover:text-on-secondary transition-all">
+                        <span class="material-symbols-outlined text-3xl">account_balance</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">Flash Compte Pro</h3>
+                    <p class="text-on-surface-variant leading-relaxed">Relevés bancaires instantanés au format européen standardisé.</p>
+                </a>
+                <!-- Mail Flash Pro -->
+                <a href="{{ route('inscription') }}" class="glass-panel p-8 rounded-card vault-glow hover-lift group border border-white/5 block">
+                    <div class="w-14 h-14 bg-secondary/10 rounded-2xl flex items-center justify-center text-secondary mb-6 group-hover:bg-secondary group-hover:text-on-secondary transition-all">
+                        <span class="material-symbols-outlined text-3xl">mail</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">Mail Flash Pro</h3>
+                    <p class="text-on-surface-variant leading-relaxed">Serveur SMTP haute délivrabilité pour vos communications critiques.</p>
+                </a>
+                <!-- Contrat de Prêt -->
+                <a href="{{ route('inscription') }}" class="glass-panel p-8 rounded-card vault-glow hover-lift group border border-white/5 block">
+                    <div class="w-14 h-14 bg-secondary/10 rounded-2xl flex items-center justify-center text-secondary mb-6 group-hover:bg-secondary group-hover:text-on-secondary transition-all">
+                        <span class="material-symbols-outlined text-3xl">description</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">Contrat de Prêt</h3>
+                    <p class="text-on-surface-variant leading-relaxed">Génération dynamique de contrats PDF juridiquement conformes.</p>
+                </a>
+                <!-- Iban Check -->
+                <a href="{{ route('inscription') }}" class="glass-panel p-8 rounded-card vault-glow hover-lift group border border-white/5 block">
+                    <div class="w-14 h-14 bg-secondary/10 rounded-2xl flex items-center justify-center text-secondary mb-6 group-hover:bg-secondary group-hover:text-on-secondary transition-all">
+                        <span class="material-symbols-outlined text-3xl">verified_user</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">Iban Check</h3>
+                    <p class="text-on-surface-variant leading-relaxed">Vérification algorithmique et KYC des coordonnées bancaires mondiales.</p>
+                </a>
+                <!-- Phone Verify -->
+                <a href="{{ route('inscription') }}" class="glass-panel p-8 rounded-card vault-glow hover-lift group border border-white/5 block">
+                    <div class="w-14 h-14 bg-secondary/10 rounded-2xl flex items-center justify-center text-secondary mb-6 group-hover:bg-secondary group-hover:text-on-secondary transition-all">
+                        <span class="material-symbols-outlined text-3xl">phone_iphone</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">Phone Verify</h3>
+                    <p class="text-on-surface-variant leading-relaxed">Authentification multifacteur et validation de lignes internationales.</p>
+                </a>
+            </div>
+        </div>
+
+        <!-- Free Tools -->
+        <div>
+            <div class="flex items-center gap-4 mb-10">
+                <span class="text-label-caps text-amber-500 bg-amber-500/10 px-4 py-1 rounded-full border border-amber-500/20">OUTILS GRATUITS</span>
+                <div class="h-px flex-grow bg-white/5"></div>
+            </div>
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
+                <a href="{{ route('inscription') }}" class="glass-panel p-6 rounded-2xl vault-glow flex flex-col items-center text-center hover:bg-white/5 transition-all border border-white/5">
+                    <span class="material-symbols-outlined text-amber-500 mb-4 text-3xl">qr_code</span>
+                    <span class="font-medium text-sm">QR Generator</span>
+                </a>
+                <a href="{{ route('inscription') }}" class="glass-panel p-6 rounded-2xl vault-glow flex flex-col items-center text-center hover:bg-white/5 transition-all border border-white/5">
+                    <span class="material-symbols-outlined text-amber-500 mb-4 text-3xl">badge</span>
+                    <span class="font-medium text-sm">Badge Agent</span>
+                </a>
+                <a href="{{ route('inscription') }}" class="glass-panel p-6 rounded-2xl vault-glow flex flex-col items-center text-center hover:bg-white/5 transition-all border border-white/5">
+                    <span class="material-symbols-outlined text-amber-500 mb-4 text-3xl">content_paste_search</span>
+                    <span class="font-medium text-sm">Mail Extractor</span>
+                </a>
+                <a href="{{ route('inscription') }}" class="glass-panel p-6 rounded-2xl vault-glow flex flex-col items-center text-center hover:bg-white/5 transition-all border border-white/5">
+                    <span class="material-symbols-outlined text-amber-500 mb-4 text-3xl">language</span>
+                    <span class="font-medium text-sm">Website Check</span>
+                </a>
+                <a href="{{ route('inscription') }}" class="glass-panel p-6 rounded-2xl vault-glow flex flex-col items-center text-center hover:bg-white/5 transition-all border border-white/5">
+                    <span class="material-symbols-outlined text-amber-500 mb-4 text-3xl">link</span>
+                    <span class="font-medium text-sm">URL Shortener</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 5: Why Us -->
+    <section id="pourquoi" class="py-24 px-8 bg-primary-container/30">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-headline-lg text-white mb-4">L'Excellence Institutionnelle</h2>
+                <p class="text-on-surface-variant max-w-2xl mx-auto">La confiance de nos partenaires repose sur trois piliers fondamentaux de notre architecture.</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="p-10 rounded-card glass-panel flex flex-col items-center text-center border border-white/5">
+                    <div class="text-5xl mb-6">⚡</div>
+                    <h3 class="text-xl font-bold text-white mb-4">Résultats immédiats</h3>
+                    <p class="text-on-surface-variant leading-relaxed">Tous nos processus sont automatisés pour une exécution en millisecondes, garantissant une fluidité opérationnelle totale.</p>
+                </div>
+                <div class="p-10 rounded-card glass-panel flex flex-col items-center text-center border border-white/5">
+                    <div class="text-5xl mb-6">🛡️</div>
+                    <h3 class="text-xl font-bold text-white mb-4">Sécurisé et privé</h3>
+                    <p class="text-on-surface-variant leading-relaxed">Cryptage AES-256 de bout en bout. Vos données ne quittent jamais notre infrastructure sécurisée de grade souverain.</p>
+                </div>
+                <div class="p-10 rounded-card glass-panel flex flex-col items-center text-center border border-white/5">
+                    <div class="text-5xl mb-6">🌍</div>
+                    <h3 class="text-xl font-bold text-white mb-4">Multi-langues</h3>
+                    <p class="text-on-surface-variant leading-relaxed">Une interface disponible dans plus de 10 langues pour accompagner votre expansion internationale sans friction.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 6: CTA Bottom -->
+    <section class="py-32 text-center bg-gradient-to-b from-transparent to-[#0a0d2e]">
+        <div class="max-w-4xl mx-auto px-8">
+            <h2 class="text-4xl md:text-5xl font-black text-white mb-8">Prêt à utiliser <span class="text-amber-500">Flash Compte Pro</span> ?</h2>
+            <p class="text-xl text-on-surface-variant mb-12">Créez votre compte gratuitement et accédez à tous nos outils dès maintenant.</p>
+            <a href="{{ route('inscription') }}" class="bg-secondary text-on-secondary px-12 py-5 rounded-full text-xl font-bold emerald-glow hover:scale-105 transition-transform inline-flex items-center gap-3">
+                <span class="material-symbols-outlined">person_add</span>
+                Créer un compte gratuit
+            </a>
+        </div>
+    </section>
+
+    <!-- Section 7: Footer -->
+    <footer class="bg-[#0a0d2e] w-full py-16 border-t border-white/5">
+        <div class="flex flex-col md:flex-row justify-between items-center px-12 max-w-7xl mx-auto gap-12">
+            <div class="flex flex-col gap-4 text-center md:text-left">
+                <span class="text-xl font-black text-white uppercase tracking-tighter">Flash<span class="text-amber-500">Bilan</span></span>
+                <p class="text-xs tracking-widest uppercase text-slate-500">© {{ date('Y') }} FlashBilan. Tous droits réservés.</p>
+            </div>
+            <div class="flex flex-wrap justify-center gap-8">
+                <a class="text-xs tracking-widest uppercase text-slate-500 hover:text-white transition-colors" href="#">Protocoles</a>
+                <a class="text-xs tracking-widest uppercase text-slate-500 hover:text-white transition-colors" href="#">Audit Sécurité</a>
+                <a class="text-xs tracking-widest uppercase text-slate-500 hover:text-white transition-colors" href="#">Conditions</a>
+            </div>
+            <div class="flex gap-6">
+                <a class="text-slate-500 hover:text-secondary transition-colors" href="#"><span class="material-symbols-outlined">account_balance</span></a>
+                <a class="text-slate-500 hover:text-secondary transition-colors" href="#"><span class="material-symbols-outlined">shield</span></a>
+                <a class="text-slate-500 hover:text-secondary transition-colors" href="#"><span class="material-symbols-outlined">public</span></a>
+            </div>
+        </div>
+    </footer>
 </body>
 </html>
