@@ -541,7 +541,7 @@
 <body data-support-enabled="{{ auth()->check() ? '1' : '0' }}">
     <!-- PWA Install Banner -->
     <div id="pwa-install-banner">
-        <img src="{{ asset('images/logo-final-premium.png') }}" alt="FlashBilan" class="pwa-icon" style="height: 48px; width: auto; object-fit: contain; border-radius: 10px;">
+        <img src="{{ asset('icon-192.png') }}" alt="FlashBilan" class="pwa-icon" style="height: 48px; width: 48px; object-fit: contain; border-radius: 10px;">
         <div class="pwa-text">
             <h4>Application Mobile</h4>
             <p id="pwa-desc">Téléchargez l'application pour un accès rapide.</p>

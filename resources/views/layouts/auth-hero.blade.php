@@ -15,7 +15,7 @@
     <meta property="og:site_name" content="FlashBilan">
     <meta property="og:locale" content="fr_FR">
     <title>{{ trim($__env->yieldContent('title', 'Kits FlashBilan - ' . app('region')->appName())) }}</title>
-    <link rel="icon" type="image/png" href="{{ asset('images/logo-final-premium.png') }}">
+    <link rel="icon" type="image/png" href="{{ asset('images/favicon-new.png') }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
