@@ -59,7 +59,7 @@
             display: flex; align-items: center; justify-content: center;
         }
         .lp-nav__logo-icon svg { width: 22px; height: 22px; }
-        .lp-nav__logo img { height: 46px !important; width: auto !important; max-width: none !important; }
+        .lp-nav__logo img { height: 36px !important; width: auto !important; max-width: none !important; }
         .lp-nav__actions { display: flex; align-items: center; gap: 10px; }
         .lp-nav__toggle {
             display: none; background: none; border: none; cursor: pointer;
