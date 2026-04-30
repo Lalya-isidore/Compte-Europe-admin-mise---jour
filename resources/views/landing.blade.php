@@ -246,11 +246,7 @@
 {{-- NAV --}}
 <nav class="lp-nav">
     <a href="{{ url('/') }}" class="lp-nav__logo">
-        <div class="lp-nav__logo-icon">
-            <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M20 10C14.48 10 10 14.48 10 20C10 25.52 14.48 30 20 30C25.52 30 30 25.52 30 20C30 14.48 25.52 10 20 10ZM20 27.5C15.86 27.5 12.5 24.14 12.5 20C12.5 15.86 15.86 12.5 20 12.5V20H27.5C27.5 24.14 24.14 27.5 20 27.5Z" fill="white"/>
-            </svg>
-        </div>
+        <img src="{{ asset('images/logo-premium.png') }}" alt="FlashBilan Logo" style="width: 45px; height: 45px; object-fit: contain; margin-right: 5px;">
         <span class="lp-nav__logo-text">Flash<span>Bilan</span></span>
     </a>
     <div class="lp-nav__actions">
@@ -262,11 +258,11 @@
 {{-- HERO --}}
 <section class="lp-hero">
     <div class="lp-hero__badge">
-        <i class="fas fa-bolt"></i> La plateforme des outils bancaires pro
+        <i class="fas fa-bolt"></i> La plateforme professionnelle tout-en-un
     </div>
     <h1>
         <span class="accent">Flash Compte Pro</span>
-        et tous vos outils bancaires en un seul endroit
+        et tous vos outils professionnels en un seul endroit
     </h1>
     <p class="lp-hero__sub">
         Créez des relevés de compte européens professionnels, envoyez des SMS en masse, générez des contrats de prêt PDF et vérifiez des IBAN en quelques secondes.
@@ -308,7 +304,7 @@
     <div class="lp-section__inner">
         <span class="lp-section__tag">Outils Premium</span>
         <h2>Outils à accès payant</h2>
-        <p class="lp-section__desc">Des outils professionnels puissants pour votre activité bancaire et commerciale.</p>
+        <p class="lp-section__desc">Des outils professionnels puissants pour développer votre activité.</p>
 
         <div class="tools-lp-grid">
             <a href="{{ route('inscription') }}" class="tool-lp-card">
@@ -402,7 +398,7 @@
     <div class="lp-section__inner">
         <span class="lp-section__tag">Pourquoi FlashBilan</span>
         <h2>Rapide, fiable et professionnel</h2>
-        <p class="lp-section__desc">Tout ce dont vous avez besoin pour gérer vos outils bancaires au quotidien.</p>
+        <p class="lp-section__desc">Tout ce dont vous avez besoin pour gérer votre activité au quotidien.</p>
 
         <div class="why-grid">
             <div class="why-card">
