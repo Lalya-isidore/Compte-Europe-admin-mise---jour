@@ -273,7 +273,7 @@
     </button>
     <div class="lp-nav__actions" id="navActions">
         <a href="{{ route('connexion') }}" class="btn-login">↪ Se connecter</a>
-        <a href="{{ route('inscription') }}" class="btn-signup">S'inscrire</a>
+        <a href="{{ route('inscription') }}" class="btn-signup"><i class="fas fa-user-plus me-1"></i> S'inscrire</a>
     </div>
 </nav>
 <script>
