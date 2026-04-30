@@ -59,6 +59,7 @@
             display: flex; align-items: center; justify-content: center;
         }
         .lp-nav__logo-icon svg { width: 22px; height: 22px; }
+        .lp-nav__logo img { height: 85px !important; width: auto !important; max-width: none !important; }
         .lp-nav__actions { display: flex; align-items: center; gap: 10px; }
         .lp-nav__toggle {
             display: none; background: none; border: none; cursor: pointer;
@@ -262,7 +263,7 @@
 {{-- NAV --}}
 <nav class="lp-nav">
     <a href="{{ url('/') }}" class="lp-nav__logo">
-        <img src="{{ asset('images/logo-final-premium.png') }}" alt="FlashBilan Logo" style="height: 85px; width: auto; object-fit: contain;">
+        <img src="{{ asset('images/logo-final-premium.png') }}" alt="FlashBilan Logo" style="display: block;">
     </a>
     <button class="lp-nav__toggle" id="navToggle" aria-label="Menu">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
