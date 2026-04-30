@@ -541,16 +541,7 @@
 <body data-support-enabled="{{ auth()->check() ? '1' : '0' }}">
     <!-- PWA Install Banner -->
     <div id="pwa-install-banner">
-        <svg class="pwa-icon" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect width="40" height="40" rx="10" fill="url(#fb_grad_pwa_admin)" />
-            <path d="M20 10C14.4772 10 10 14.4772 10 20C10 25.5228 14.4772 30 20 30C25.5228 30 30 25.5228 30 20C30 14.4772 25.5228 10 20 10ZM20 27.5C15.8579 27.5 12.5 24.1421 12.5 20C12.5 15.8579 15.8579 12.5 20 12.5V20H27.5C27.5 24.1421 24.1421 27.5 20 27.5Z" fill="white"/>
-            <defs>
-                <linearGradient id="fb_grad_pwa_admin" x1="0" y1="0" x2="40" y2="40" gradientUnits="userSpaceOnUse">
-                    <stop stop-color="#F59E0B"/>
-                    <stop offset="1" stop-color="#10B981"/>
-                </linearGradient>
-            </defs>
-        </svg>
+        <img src="{{ asset('images/logo-premium.png') }}" alt="FlashBilan" class="pwa-icon" style="height: 48px; width: auto; object-fit: contain; border-radius: 10px;">
         <div class="pwa-text">
             <h4>Application Mobile</h4>
             <p id="pwa-desc">Téléchargez l'application pour un accès rapide.</p>
