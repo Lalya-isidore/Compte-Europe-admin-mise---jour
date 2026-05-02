@@ -28,6 +28,7 @@ class User extends Authenticatable
         'code_parrainage',
         'parrain_id',
         'region',
+        'pwa_installed_at',
     ];
 
     /**

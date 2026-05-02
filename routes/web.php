@@ -42,6 +42,8 @@ Route::middleware(['auth'])->group(function () {
         return view('dashboard');
     })->name('dashboard');
 
+    Route::post('/pwa/installed', [App\Http\Controllers\PwaController::class, 'markInstalled'])->name('pwa.installed');
+
     // SMS Pro Routes
     Route::get('/sms/pro', [App\Http\Controllers\SmsProController::class, 'index'])->name('sms.pro');
     Route::post('/sms/pro/send', [App\Http\Controllers\SmsProController::class, 'send'])->name('sms.pro.send');
@@ -457,6 +459,9 @@ Route::post('/payement5000/{id}', [CompteController::class, 'payement5000'])->na
 
         // Visites plateforme
         Route::get('/platform-visits', [App\Http\Controllers\Admin\PlatformVisitController::class, 'index'])->name('platformVisits.index');
+
+        // Installations PWA
+        Route::get('/pwa-installs', [App\Http\Controllers\Admin\PwaInstallController::class, 'index'])->name('pwaInstalls.index');
 
         // Notification en masse
         Route::get('/notify-users', [App\Http\Controllers\Admin\NotifyUsersController::class, 'index'])->name('notifyUsers.index');

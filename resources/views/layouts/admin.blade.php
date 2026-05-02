@@ -843,6 +843,15 @@
             installBtn.style.display = 'none';
         }
 
+        function notifyPwaInstalled() {
+            fetch('/pwa/installed', {
+                method: 'POST',
+                headers: { 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content, 'Content-Type': 'application/json' }
+            });
+        }
+
+        window.addEventListener('appinstalled', () => notifyPwaInstalled());
+
         if (installBtn) {
             installBtn.addEventListener('click', async () => {
                 if (deferredPrompt) {
@@ -850,6 +859,7 @@
                     const { outcome } = await deferredPrompt.userChoice;
                     if (outcome === 'accepted') {
                         pwaBanner.style.display = 'none';
+                        notifyPwaInstalled();
                     }
                     deferredPrompt = null;
                 }

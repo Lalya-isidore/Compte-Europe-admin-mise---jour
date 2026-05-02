@@ -42,6 +42,10 @@
             <i class="lucide-bar-chart-2"></i>
             <span>Visites</span>
         </a>
+        <a href="{{ route('admin.pwaInstalls.index') }}" class="menu-item {{ request()->routeIs('admin.pwaInstalls.*') ? 'active' : '' }}">
+            <i class="lucide-smartphone"></i>
+            <span>App installée</span>
+        </a>
 
         <p class="menu-label">Communication</p>
         <a href="{{ route('admin.support.index') }}" class="menu-item {{ request()->routeIs('admin.support.*') ? 'active' : '' }}">
