@@ -98,7 +98,7 @@
                 <tr>
                     <th>Utilisateur</th>
                     <th>Page</th>
-                    <th>IP</th>
+                    <th>Lieu</th>
                     <th>Date & Heure</th>
                     <th>Profil</th>
                 </tr>
@@ -120,7 +120,13 @@
                         @endif
                     </td>
                     <td><code class="text-primary">/{{ $visit->url }}</code></td>
-                    <td><code>{{ $visit->ip_address ?? '—' }}</code></td>
+                    <td>
+                        @if($visit->location)
+                            <span><i data-lucide="map-pin" style="width:13px;height:13px" class="me-1 text-danger"></i>{{ $visit->location }}</span>
+                        @else
+                            <code class="text-secondary">{{ $visit->ip_address ?? '—' }}</code>
+                        @endif
+                    </td>
                     <td>{{ $visit->created_at->format('d/m/Y à H:i') }}</td>
                     <td>
                         @if($visit->user)
