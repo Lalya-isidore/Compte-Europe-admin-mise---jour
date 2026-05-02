@@ -4,9 +4,7 @@
 
 <aside class="sidebar" id="adminSidebar">
     <div class="sidebar-header">
-        <div class="stat-icon bg-primary text-white">
-            <i class="lucide-shield"></i>
-        </div>
+        <img src="{{ asset('icon-192.png') }}" alt="FlashBilan" style="width:40px;height:40px;border-radius:10px;object-fit:contain;">
         <h2>ADMIN PANEL</h2>
     </div>
     
