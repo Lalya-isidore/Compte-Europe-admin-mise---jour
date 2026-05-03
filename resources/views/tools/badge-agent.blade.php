@@ -402,11 +402,11 @@ document.addEventListener('DOMContentLoaded', () => {
                         <div class="l-det-it"><span class="l-det-lbl">${t('service')}</span><span class="l-det-val">${esc(state.service)}</span></div>
                         <div class="l-det-it"><span class="l-det-lbl">${t('expiry')}</span><span class="l-det-val" style="color:${state.accent};">${state.expiry}</span></div>
                     </div>
-                    <div style="font-size:18px;font-weight:600;color:#64748b;margin-bottom:30px;" dir="${isRTL ? 'rtl' : 'ltr'}">
+                    <div style="font-size:18px;font-weight:600;color:#64748b;margin-bottom:12px;" dir="${isRTL ? 'rtl' : 'ltr'}">
                         ${state.phone} | ${state.email}
                     </div>
                     <div class="l-sig-area">
-                         ${state.sigImg ? `<img src="${state.sigImg}" class="l-sig-img">` : `<div class="l-sig-text">${state.sigText}</div>`}
+                         ${state.sigImg ? `<img src="${state.sigImg}" class="l-sig-img" style="max-height:80px;">` : `<div class="l-sig-text" style="font-size:42px;">${state.sigText}</div>`}
                          <div class="l-sig-lbl">${t('sig')}</div>
                     </div>
                 </div>
