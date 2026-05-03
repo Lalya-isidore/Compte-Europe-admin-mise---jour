@@ -83,7 +83,7 @@
 .l-id-val { font-size: 22px; font-weight: 800; color: var(--ce-primary); font-family: 'Roboto Mono', monospace; }
 
 .l-sig-area { text-align: center; }
-.l-sig-text { font-family: 'Dancing Script', cursive; font-size: 44px; color: #1e293b; line-height: 1; }
+.l-sig-text { font-family: 'Dancing Script', cursive; font-size: 72px; font-weight: 600; color: #1e293b; line-height: 1; display: inline-block; transform: rotate(-4deg); transform-origin: center; }
 .l-sig-img { max-height: 75px; filter: contrast(1.2) brightness(0.2); }
 .l-sig-lbl { font-size: 12px; font-weight: 800; color: #94a3b8; text-transform: uppercase; letter-spacing: 1px; }
 
