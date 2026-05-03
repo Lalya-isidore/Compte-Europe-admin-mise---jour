@@ -84,7 +84,7 @@
 
 .l-sig-area { text-align: center; }
 .l-sig-text { font-family: 'Great Vibes', cursive; font-size: 52px; color: #1e293b; line-height: 1; display: inline-block; transform: rotate(-3deg); transform-origin: center; }
-.l-sig-img { max-height: 75px; filter: contrast(1.1) brightness(0.9); }
+.l-sig-img { max-height: 110px; max-width: 220px; filter: contrast(1.1) brightness(0.9); }
 .l-sig-lbl { font-size: 12px; font-weight: 800; color: #94a3b8; text-transform: uppercase; letter-spacing: 1px; }
 
 /* PORTRAIT */
