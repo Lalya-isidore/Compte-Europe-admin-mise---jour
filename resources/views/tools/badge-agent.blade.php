@@ -437,6 +437,45 @@ document.addEventListener('DOMContentLoaded', () => {
     };
     window.addEventListener('resize', resizePreview);
 
+    function removeWhiteBackground(dataUrl, callback) {
+        const tmpImg = new Image();
+        tmpImg.onload = function () {
+            const canvas = document.createElement('canvas');
+            canvas.width = tmpImg.width; canvas.height = tmpImg.height;
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(tmpImg, 0, 0);
+            const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+            const d = imageData.data, w = canvas.width, h = canvas.height;
+            const samples = [0, w-1, (h-1)*w, (h-1)*w+(w-1), Math.floor(w/2), (h-1)*w+Math.floor(w/2)];
+            let bgR=0,bgG=0,bgB=0,cnt=0;
+            samples.forEach(p => { const i=p*4; bgR+=d[i]; bgG+=d[i+1]; bgB+=d[i+2]; cnt++; });
+            bgR=Math.round(bgR/cnt); bgG=Math.round(bgG/cnt); bgB=Math.round(bgB/cnt);
+            const brightness=(bgR+bgG+bgB)/3;
+            const TOL = brightness>200?85:(brightness>160?70:55);
+            const dist = (r,g,b) => Math.sqrt((bgR-r)**2+(bgG-g)**2+(bgB-b)**2);
+            const visited = new Uint8Array(w*h);
+            const stack = [];
+            for(let x=0;x<w;x++){stack.push(x);stack.push(x+(h-1)*w);}
+            for(let y=1;y<h-1;y++){stack.push(y*w);stack.push((w-1)+y*w);}
+            while(stack.length){
+                const pos=stack.pop(); if(visited[pos])continue; visited[pos]=1;
+                if(dist(d[pos*4],d[pos*4+1],d[pos*4+2])>=TOL)continue;
+                d[pos*4+3]=0;
+                const x=pos%w,y=(pos/w)|0;
+                if(x>0)stack.push(pos-1); if(x<w-1)stack.push(pos+1);
+                if(y>0)stack.push(pos-w); if(y<h-1)stack.push(pos+w);
+            }
+            for(let pos=0;pos<w*h;pos++){
+                if(visited[pos]||d[pos*4+3]===0)continue;
+                const d2=dist(d[pos*4],d[pos*4+1],d[pos*4+2]);
+                if(d2<TOL*1.5) d[pos*4+3]=Math.round(255*Math.min(1,Math.max(0,(d2-TOL)/(TOL*0.5))));
+            }
+            ctx.putImageData(imageData,0,0);
+            callback(canvas.toDataURL('image/png'));
+        };
+        tmpImg.src = dataUrl;
+    }
+
     // Events
     const inputs = ['name', 'role', 'service', 'company', 'id', 'birth', 'place', 'expiry', 'sex', 'blood', 'phone', 'email'];
     inputs.forEach(key => {
@@ -460,7 +499,9 @@ document.addEventListener('DOMContentLoaded', () => {
     bindFile('inp-photo', 'photo');
     document.getElementById('inp-sig-file').addEventListener('change', function() {
         if (!this.files[0]) { state.sigImg = null; state.sigText = nameToSig(state.name); updatePreview(); return; }
-        const r = new FileReader(); r.onload = e => { state.sigImg = e.target.result; updatePreview(); }; r.readAsDataURL(this.files[0]);
+        const r = new FileReader();
+        r.onload = e => removeWhiteBackground(e.target.result, processed => { state.sigImg = processed; updatePreview(); });
+        r.readAsDataURL(this.files[0]);
     });
 
     document.querySelectorAll('.color-swatch').forEach(s => {
