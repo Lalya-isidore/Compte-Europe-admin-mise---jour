@@ -9,7 +9,7 @@
 
 @section('content')
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&family=Righteous&family=Dancing+Script:wght@600&family=Roboto+Mono:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&family=Righteous&family=Dancing+Script:wght@600&family=Great+Vibes&family=Roboto+Mono:wght@400;700&display=swap');
 
 :root {
     --ce-primary: #2196F3;
@@ -83,7 +83,7 @@
 .l-id-val { font-size: 22px; font-weight: 800; color: var(--ce-primary); font-family: 'Roboto Mono', monospace; }
 
 .l-sig-area { text-align: center; }
-.l-sig-text { font-family: 'Dancing Script', cursive; font-size: 72px; font-weight: 600; color: #1e293b; line-height: 1; display: inline-block; transform: rotate(-4deg); transform-origin: center; }
+.l-sig-text { font-family: 'Great Vibes', cursive; font-size: 52px; color: #1e293b; line-height: 1; display: inline-block; transform: rotate(-3deg); transform-origin: center; }
 .l-sig-img { max-height: 75px; filter: contrast(1.2) brightness(0.2); }
 .l-sig-lbl { font-size: 12px; font-weight: 800; color: #94a3b8; text-transform: uppercase; letter-spacing: 1px; }
 
