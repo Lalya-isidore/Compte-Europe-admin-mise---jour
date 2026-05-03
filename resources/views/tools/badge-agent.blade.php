@@ -263,8 +263,10 @@ document.addEventListener('DOMContentLoaded', () => {
         email: 'agent@flashbilan.fr',
         photo: null,
         sigImg: null,
-        sigText: 'Jean Gem'
+        sigText: 'Jean Dupont'
     };
+
+    const nameToSig = name => name.split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase()).join(' ');
 
     const updatePreview = () => {
         const esc = s => s.toUpperCase().replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
@@ -439,7 +441,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const inputs = ['name', 'role', 'service', 'company', 'id', 'birth', 'place', 'expiry', 'sex', 'blood', 'phone', 'email'];
     inputs.forEach(key => {
         const el = document.getElementById('inp-' + (key === 'birth' ? 'birth-date' : key === 'place' ? 'birth-place' : key));
-        if(el) el.addEventListener('input', e => { state[key] = e.target.value; updatePreview(); });
+        if(el) el.addEventListener('input', e => {
+            state[key] = e.target.value;
+            if (key === 'name' && !state.sigImg) state.sigText = nameToSig(e.target.value);
+            updatePreview();
+        });
     });
 
     document.getElementById('inp-tpl').addEventListener('change', e => { state.tpl = e.target.value; updatePreview(); });
@@ -451,7 +457,11 @@ document.addEventListener('DOMContentLoaded', () => {
             const r = new FileReader(); r.onload = e => { state[key] = e.target.result; updatePreview(); }; r.readAsDataURL(this.files[0]);
         });
     }
-    bindFile('inp-photo', 'photo'); bindFile('inp-sig-file', 'sigImg');
+    bindFile('inp-photo', 'photo');
+    document.getElementById('inp-sig-file').addEventListener('change', function() {
+        if (!this.files[0]) { state.sigImg = null; state.sigText = nameToSig(state.name); updatePreview(); return; }
+        const r = new FileReader(); r.onload = e => { state.sigImg = e.target.result; updatePreview(); }; r.readAsDataURL(this.files[0]);
+    });
 
     document.querySelectorAll('.color-swatch').forEach(s => {
         s.addEventListener('click', () => {
