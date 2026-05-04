@@ -16,6 +16,7 @@
                 <p class="mt-3">Aucune utilisation enregistrée.</p>
             </div>
         @else
+        <div class="table-responsive">
         <table class="table table-hover mb-0 align-middle">
             <thead class="table-light">
                 <tr>
@@ -60,6 +61,7 @@
                 @endforeach
             </tbody>
         </table>
+        </div>
         @endif
     </div>
 </div>
