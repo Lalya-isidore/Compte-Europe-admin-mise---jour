@@ -107,7 +107,7 @@
                             @endif
                             <div class="d-flex align-items-center gap-2">
                                 <i data-lucide="calendar" class="text-secondary" style="width: 14px;"></i>
-                                <span class="smaller text-secondary">Inscrit le {{ $user->created_at?->format('d/m/Y') }}</span>
+                                <span class="smaller text-secondary">Inscrit le {{ $user->created_at?->setTimezone('Europe/Paris')->format('d/m/Y à H:i') }}</span>
                             </div>
                         </div>
 
