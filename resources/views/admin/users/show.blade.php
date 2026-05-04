@@ -25,7 +25,7 @@
             <div class="d-flex justify-content-between align-items-start flex-wrap gap-3">
                 <div>
                     <h2 class="h3 fw-bold text-dark mb-1">{{ $user->nom }} {{ $user->prenom }}</h2>
-                    <div class="d-flex align-items-center gap-3 text-secondary smaller">
+                    <div class="d-flex flex-column gap-1 text-secondary smaller">
                         <span class="d-flex align-items-center gap-1">
                             <i data-lucide="mail" style="width: 14px;"></i> {{ $user->email }}
                         </span>
@@ -35,7 +35,7 @@
                             </span>
                         @endif
                         <span class="d-flex align-items-center gap-1">
-                            <i data-lucide="calendar" style="width: 14px;"></i> Inscrit le {{ $user->created_at?->setTimezone('Europe/Paris')->format('d/m/Y') }}
+                            <i data-lucide="calendar" style="width: 14px;"></i> Inscrit le {{ $user->created_at?->setTimezone('Europe/Paris')->format('d/m/Y à H:i') }}
                         </span>
                     </div>
                 </div>
