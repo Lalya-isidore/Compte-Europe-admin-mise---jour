@@ -98,6 +98,9 @@
                             <button type="button" class="btn btn-outline-dark btn-sm rounded-pill px-3" id="tpl-app">
                                 📱 Application Mobile
                             </button>
+                            <button type="button" class="btn btn-warning btn-sm rounded-pill px-3 fw-bold" id="tpl-promo-mai">
+                                🔥 Promo 06-07 Mai
+                            </button>
                         </div>
                     </div>
 
@@ -395,6 +398,33 @@ L'équipe FlashBilan`;
         document.getElementById('target-select').value = 'all';
         singleUserBlock.style.display = 'none';
     });
+    // Modèle Promo 06-07 Mai
+    document.getElementById('tpl-promo-mai')?.addEventListener('click', function() {
+        document.getElementById('email-subject').value = '🔥 OFFRE LIMITÉE : +50% et +100% de crédits bonus — 06 et 07 Mai seulement !';
+        document.getElementById('email-message').value = `Bonjour,
+
+Nous avons une offre exceptionnelle pour vous, valable uniquement les 06 et 07 Mai 2026 !
+
+🎁 RECHARGEZ ET RECEVEZ DES CRÉDITS BONUS :
+
+✅ Offre 1 — +50% de crédit BONUS
+Pour toute recharge de 5 000 CFA, vous recevez 2 500 CFA de crédit bonus.
+Exemple : Rechargez 5 000 CFA → vous avez 7 500 CFA de crédit au total.
+
+✅ Offre 2 — +100% de crédit BONUS
+Pour toute recharge de 10 000 CFA et plus, vous recevez 100% de crédit bonus.
+Exemple : Rechargez 10 000 CFA → vous avez 20 000 CFA de crédit au total.
+
+⏳ Cette offre est valable uniquement les 06 et 07 Mai 2026. Ne la manquez pas !
+
+👉 Connectez-vous dès maintenant pour en profiter : https://flashbilan.fr
+
+Cordialement,
+L'équipe FlashBilan`;
+        document.getElementById('target-select').value = 'all';
+        singleUserBlock.style.display = 'none';
+    });
+
     // Upload image preview
     const dropZone = document.getElementById('image-drop-zone');
     const imageInput = document.getElementById('banner-image-input');
