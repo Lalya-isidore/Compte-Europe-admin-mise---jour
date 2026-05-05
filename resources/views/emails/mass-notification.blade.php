@@ -108,6 +108,12 @@
             <h1>{{ config('app.name', 'TRANSFERFLUX') }}</h1>
         </div>
 
+        @if(!empty($bannerUrl))
+        <div style="padding:0;line-height:0;">
+            <img src="{{ $bannerUrl }}" alt="FlashBilan" style="width:100%;max-width:600px;display:block;border:none;">
+        </div>
+        @endif
+
         <div class="content">
             <p class="greeting">Bonjour {{ $user->prenom ?? $user->nom ?? '' }},</p>
 

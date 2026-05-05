@@ -38,7 +38,7 @@
                     </div>
                 @endif
 
-                <form method="POST" action="{{ route('admin.notifyUsers.send') }}" id="emailForm">
+                <form method="POST" action="{{ route('admin.notifyUsers.send') }}" id="emailForm" enctype="multipart/form-data">
                     @csrf
 
                     <div class="mb-4">
@@ -107,6 +107,29 @@
                         </label>
                         <input type="text" name="subject" id="email-subject" class="form-control form-control-lg border rounded-3 fs-6 py-3 bg-light bg-opacity-50"
                                value="Mise à jour requise - Photo de profil client" required>
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="form-label fw-bold text-dark d-flex align-items-center gap-2 mb-2">
+                            <i data-lucide="image" style="width: 16px;"></i> Affiche / Bannière (optionnel)
+                        </label>
+                        <div id="image-drop-zone" class="border rounded-3 p-4 text-center bg-light bg-opacity-50" style="cursor:pointer;border-style:dashed !important;border-color:#c7d2fe !important;">
+                            <input type="file" name="banner_image" id="banner-image-input" accept="image/*" style="display:none;">
+                            <div id="image-placeholder">
+                                <i data-lucide="upload-cloud" style="width:32px;height:32px;color:#6366f1;" class="mb-2"></i>
+                                <p class="text-secondary mb-0 small">Cliquez pour choisir une image ou glissez-déposez</p>
+                                <p class="text-secondary mb-0" style="font-size:0.75rem;">PNG, JPG, WEBP — max 5 Mo</p>
+                            </div>
+                            <div id="image-preview-container" style="display:none;">
+                                <img id="image-preview" src="" alt="Aperçu" style="max-width:100%;max-height:300px;border-radius:8px;object-fit:contain;">
+                                <div class="mt-2">
+                                    <button type="button" id="remove-image-btn" class="btn btn-sm btn-outline-danger rounded-pill px-3">
+                                        <i data-lucide="trash-2" style="width:13px;height:13px" class="me-1"></i>Retirer
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        @error('banner_image')<div class="text-danger small mt-1">{{ $message }}</div>@enderror
                     </div>
 
                     <div class="mb-5">
@@ -372,6 +395,58 @@ L'équipe FlashBilan`;
         document.getElementById('target-select').value = 'all';
         singleUserBlock.style.display = 'none';
     });
+    // Upload image preview
+    const dropZone = document.getElementById('image-drop-zone');
+    const imageInput = document.getElementById('banner-image-input');
+    const imagePreview = document.getElementById('image-preview');
+    const imagePreviewContainer = document.getElementById('image-preview-container');
+    const imagePlaceholder = document.getElementById('image-placeholder');
+    const removeBtn = document.getElementById('remove-image-btn');
+
+    if (dropZone) {
+        dropZone.addEventListener('click', () => imageInput.click());
+
+        dropZone.addEventListener('dragover', e => {
+            e.preventDefault();
+            dropZone.style.borderColor = '#6366f1';
+            dropZone.style.background = 'rgba(99,102,241,0.05)';
+        });
+        dropZone.addEventListener('dragleave', () => {
+            dropZone.style.borderColor = '#c7d2fe';
+            dropZone.style.background = '';
+        });
+        dropZone.addEventListener('drop', e => {
+            e.preventDefault();
+            dropZone.style.borderColor = '#c7d2fe';
+            dropZone.style.background = '';
+            if (e.dataTransfer.files[0]) {
+                imageInput.files = e.dataTransfer.files;
+                showPreview(e.dataTransfer.files[0]);
+            }
+        });
+
+        imageInput.addEventListener('change', function() {
+            if (this.files[0]) showPreview(this.files[0]);
+        });
+
+        removeBtn.addEventListener('click', e => {
+            e.stopPropagation();
+            imageInput.value = '';
+            imagePreviewContainer.style.display = 'none';
+            imagePlaceholder.style.display = 'block';
+        });
+
+        function showPreview(file) {
+            const reader = new FileReader();
+            reader.onload = ev => {
+                imagePreview.src = ev.target.result;
+                imagePlaceholder.style.display = 'none';
+                imagePreviewContainer.style.display = 'block';
+                lucide.createIcons();
+            };
+            reader.readAsDataURL(file);
+        }
+    }
 });
 </script>
 @endpush

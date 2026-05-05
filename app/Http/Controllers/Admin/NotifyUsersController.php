@@ -31,7 +31,14 @@ class NotifyUsersController extends Controller
             'user_id' => ['nullable', 'required_if:target,single', 'exists:users,id'],
             'subject' => ['required', 'string', 'max:255'],
             'message' => ['required', 'string', 'max:10000'],
+            'banner_image' => ['nullable', 'image', 'max:5120'],
         ]);
+
+        $bannerUrl = null;
+        if ($request->hasFile('banner_image')) {
+            $path = $request->file('banner_image')->store('email-banners', 'public');
+            $bannerUrl = asset('storage/' . $path);
+        }
 
         $recipients = $this->resolveRecipients($data['target'], $data['user_id'] ?? null);
 
@@ -45,12 +52,12 @@ class NotifyUsersController extends Controller
         $list       = $recipients->all();
 
         // Envoi après que la réponse HTTP soit déjà envoyée au navigateur
-        app()->terminating(function () use ($list, $subject, $message) {
+        app()->terminating(function () use ($list, $subject, $message, $bannerUrl) {
             set_time_limit(0);
             foreach ($list as $user) {
                 SafeMailService::send(
                     $user->email,
-                    new MassNotification($subject, $message, $user),
+                    new MassNotification($subject, $message, $user, $bannerUrl),
                     'Notification en masse'
                 );
             }

@@ -17,12 +17,14 @@ class MassNotification extends Mailable
     public string $emailSubject;
     public string $emailMessage;
     public User $user;
+    public ?string $bannerUrl;
 
-    public function __construct(string $subject, string $message, User $user)
+    public function __construct(string $subject, string $message, User $user, ?string $bannerUrl = null)
     {
         $this->emailSubject = $subject;
         $this->emailMessage = $message;
         $this->user = $user;
+        $this->bannerUrl = $bannerUrl;
     }
 
     public function envelope(): Envelope
@@ -40,6 +42,7 @@ class MassNotification extends Mailable
             with: [
                 'emailMessage' => $this->emailMessage,
                 'user' => $this->user,
+                'bannerUrl' => $this->bannerUrl,
             ],
         );
     }
