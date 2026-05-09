@@ -63,12 +63,10 @@
                                         <i class="fas fa-coins text-secondary fs-1"></i>
                                     </div>
                                     <h5 class="card-title text-secondary fw-bold">Pack Mini</h5>
-                                    <p class="card-text mb-3">
+                                    <p class="card-text mb-1">
                                         <span class="fs-4 fw-bold">1 500</span> F CFA
                                     </p>
-                                    <div class="bonus-info mb-3">
-                                        <p class="small text-muted mt-1">Recevez <strong>1 000</strong> crédits</p>
-                                    </div>
+                                    <p class="fw-bold fs-5 text-primary mb-3">+ 1 000 Crédits</p>
                                     <button class="btn btn-secondary btn-select-package w-100">
                                         <i class="fas fa-plus-circle me-2"></i>Choisir
                                     </button>
@@ -83,12 +81,10 @@
                                         <i class="fas fa-bolt fs-1" style="color:#f59e0b;"></i>
                                     </div>
                                     <h5 class="card-title fw-bold" style="color:#f59e0b;">Pack Essentiel</h5>
-                                    <p class="card-text mb-3">
+                                    <p class="card-text mb-1">
                                         <span class="fs-4 fw-bold">3 000</span> F CFA
                                     </p>
-                                    <div class="bonus-info mb-3">
-                                        <p class="small text-muted mt-1">Recevez <strong>2 000</strong> crédits</p>
-                                    </div>
+                                    <p class="fw-bold fs-5 text-primary mb-3">+ 2 000 Crédits</p>
                                     <button class="btn btn-warning btn-select-package w-100">
                                         <i class="fas fa-plus-circle me-2"></i>Choisir
                                     </button>
@@ -103,12 +99,10 @@
                                         <i class="fas fa-star text-primary fs-1"></i>
                                     </div>
                                     <h5 class="card-title text-primary fw-bold">Pack Starter</h5>
-                                    <p class="card-text mb-3">
+                                    <p class="card-text mb-1">
                                         <span class="fs-4 fw-bold">5 000</span> F CFA
                                     </p>
-                                    <div class="bonus-info mb-3">
-                                        <p class="small text-muted mt-1">Recevez <strong>5 000</strong> crédits</p>
-                                    </div>
+                                    <p class="fw-bold fs-5 text-primary mb-3">+ 5 000 Crédits</p>
                                     <button class="btn btn-primary btn-select-package w-100">
                                         <i class="fas fa-plus-circle me-2"></i>Choisir
                                     </button>
@@ -123,13 +117,11 @@
                                         <i class="fas fa-gem text-success fs-1"></i>
                                     </div>
                                     <h5 class="card-title text-success fw-bold">Pack Premium</h5>
-                                    <p class="card-text mb-3">
+                                    <p class="card-text mb-1">
                                         <span class="fs-4 fw-bold">10 000</span> F CFA
                                     </p>
-                                    <div class="bonus-info mb-3">
-                                        <span class="badge bg-success fs-6">+50% Bonus</span>
-                                        <p class="small text-muted mt-1">Recevez <strong>15 000</strong> crédits</p>
-                                    </div>
+                                    <p class="fw-bold fs-5 text-primary mb-1">+ 15 000 Crédits</p>
+                                    <div class="mb-3"><span class="badge bg-success">+50% Bonus</span></div>
                                     <button class="btn btn-success btn-select-package w-100">
                                         <i class="fas fa-plus-circle me-2"></i>Choisir
                                     </button>
@@ -144,13 +136,11 @@
                                         <i class="fas fa-bolt text-info fs-1"></i>
                                     </div>
                                     <h5 class="card-title text-info fw-bold">Pack Pro</h5>
-                                    <p class="card-text mb-3">
+                                    <p class="card-text mb-1">
                                         <span class="fs-4 fw-bold">15 000</span> F CFA
                                     </p>
-                                    <div class="bonus-info mb-3">
-                                        <span class="badge bg-info fs-6">+67% Bonus</span>
-                                        <p class="small text-muted mt-1">Recevez <strong>25 000</strong> crédits</p>
-                                    </div>
+                                    <p class="fw-bold fs-5 text-primary mb-1">+ 25 000 Crédits</p>
+                                    <div class="mb-3"><span class="badge bg-info">+67% Bonus</span></div>
                                     <button class="btn btn-info btn-select-package w-100">
                                         <i class="fas fa-plus-circle me-2"></i>Choisir
                                     </button>
@@ -165,13 +155,11 @@
                                         <i class="fas fa-crown text-warning fs-1"></i>
                                     </div>
                                     <h5 class="card-title text-warning fw-bold">Pack Gold</h5>
-                                    <p class="card-text mb-3">
+                                    <p class="card-text mb-1">
                                         <span class="fs-4 fw-bold">25 000</span> F CFA
                                     </p>
-                                    <div class="bonus-info mb-3">
-                                        <span class="badge bg-warning fs-6">+60% Bonus</span>
-                                        <p class="small text-muted mt-1">Recevez <strong>40 000</strong> crédits</p>
-                                    </div>
+                                    <p class="fw-bold fs-5 text-primary mb-1">+ 40 000 Crédits</p>
+                                    <div class="mb-3"><span class="badge bg-warning">+60% Bonus</span></div>
                                     <button class="btn btn-warning btn-select-package w-100">
                                         <i class="fas fa-plus-circle me-2"></i>Choisir
                                     </button>
@@ -186,13 +174,11 @@
                                         <i class="fas fa-trophy text-danger fs-1"></i>
                                     </div>
                                     <h5 class="card-title text-danger fw-bold">Pack VIP</h5>
-                                    <p class="card-text mb-3">
+                                    <p class="card-text mb-1">
                                         <span class="fs-4 fw-bold">50 000</span> F CFA
                                     </p>
-                                    <div class="bonus-info mb-3">
-                                        <span class="badge bg-danger fs-6">+100% Bonus</span>
-                                        <p class="small text-muted mt-1">Recevez <strong>100 000</strong> crédits</p>
-                                    </div>
+                                    <p class="fw-bold fs-5 text-primary mb-1">+ 100 000 Crédits</p>
+                                    <div class="mb-3"><span class="badge bg-danger">+100% Bonus</span></div>
                                     <button class="btn btn-danger btn-select-package w-100">
                                         <i class="fas fa-plus-circle me-2"></i>Choisir
                                     </button>
