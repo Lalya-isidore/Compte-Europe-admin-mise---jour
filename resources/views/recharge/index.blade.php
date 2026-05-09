@@ -59,32 +59,32 @@
                     </div>
                     <div class="row g-3 mb-4 justify-content-center">
                         <div class="col-md-6 col-lg-4">
-                            <div class="card h-100 package-card position-relative" style="border:none;border-radius:16px;background:#10b981;" data-amount="1500" data-credits="1000">
-                                <span class="position-absolute top-0 start-0 badge fw-bold px-2 py-1 m-2" style="background:#059669;border-radius:8px;font-size:.7rem;">NOUVEAU</span>
+                            <div class="card h-100 package-card position-relative" style="border:2px solid #10b981;border-radius:16px;background:#fff;" data-amount="1500" data-credits="1000">
+                                <span class="position-absolute top-0 start-0 badge fw-bold px-2 py-1 m-2" style="background:#10b981;border-radius:8px;font-size:.7rem;">NOUVEAU</span>
                                 <div class="card-body text-center p-4 pt-5">
                                     <div class="package-icon mb-2">
-                                        <i class="fas fa-coins fs-1 text-white"></i>
+                                        <i class="fas fa-coins fs-1" style="color:#10b981;"></i>
                                     </div>
-                                    <h5 class="card-title fw-bold mb-3 text-white">Pack Mini</h5>
-                                    <div class="d-inline-block px-3 py-1 rounded-pill fw-bold mb-2" style="background:#059669;color:#fff;font-size:1.1rem;">1 500 F CFA</div>
-                                    <p class="fw-bold text-white mb-3" style="font-size:1.1rem;">+ 1 000 Crédits</p>
-                                    <button class="btn btn-select-package w-100 fw-bold text-white" style="background:#059669;border-radius:10px;border:none;">
+                                    <h5 class="card-title fw-bold mb-3" style="color:#10b981;">Pack Mini</h5>
+                                    <div class="d-inline-block px-3 py-1 rounded-pill fw-bold mb-2" style="background:#d1fae5;color:#065f46;font-size:1.05rem;">1 500 F CFA</div>
+                                    <p class="fw-bold text-primary mb-3" style="font-size:1.05rem;">+ 1 000 Crédits</p>
+                                    <button class="btn btn-select-package w-100 fw-bold text-white" style="background:#10b981;border-radius:10px;border:none;">
                                         <i class="fas fa-check-circle me-2"></i>Choisir
                                     </button>
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-6 col-lg-4">
-                            <div class="card h-100 package-card position-relative" style="border:none;border-radius:16px;background:#f97316;" data-amount="3000" data-credits="2000">
-                                <span class="position-absolute top-0 start-0 badge fw-bold px-2 py-1 m-2" style="background:#ea580c;border-radius:8px;font-size:.7rem;">NOUVEAU</span>
+                            <div class="card h-100 package-card position-relative" style="border:2px solid #f97316;border-radius:16px;background:#fff;" data-amount="3000" data-credits="2000">
+                                <span class="position-absolute top-0 start-0 badge fw-bold px-2 py-1 m-2" style="background:#f97316;border-radius:8px;font-size:.7rem;">NOUVEAU</span>
                                 <div class="card-body text-center p-4 pt-5">
                                     <div class="package-icon mb-2">
-                                        <i class="fas fa-bolt fs-1 text-white"></i>
+                                        <i class="fas fa-bolt fs-1" style="color:#f97316;"></i>
                                     </div>
-                                    <h5 class="card-title fw-bold mb-3 text-white">Pack Essentiel</h5>
-                                    <div class="d-inline-block px-3 py-1 rounded-pill fw-bold mb-2" style="background:#ea580c;color:#fff;font-size:1.1rem;">3 000 F CFA</div>
-                                    <p class="fw-bold text-white mb-3" style="font-size:1.1rem;">+ 2 000 Crédits</p>
-                                    <button class="btn btn-select-package w-100 fw-bold text-white" style="background:#ea580c;border-radius:10px;border:none;">
+                                    <h5 class="card-title fw-bold mb-3" style="color:#f97316;">Pack Essentiel</h5>
+                                    <div class="d-inline-block px-3 py-1 rounded-pill fw-bold mb-2" style="background:#ffedd5;color:#9a3412;font-size:1.05rem;">3 000 F CFA</div>
+                                    <p class="fw-bold text-primary mb-3" style="font-size:1.05rem;">+ 2 000 Crédits</p>
+                                    <button class="btn btn-select-package w-100 fw-bold text-white" style="background:#f97316;border-radius:10px;border:none;">
                                         <i class="fas fa-check-circle me-2"></i>Choisir
                                     </button>
                                 </div>
