@@ -47,13 +47,13 @@
                             <div class="flex-grow-1 overflow-hidden">
                                 <div class="fw-bold mb-0" style="color:#b45309;font-size:.95rem;">Comment ça fonctionne ?</div>
                                 <div class="d-none d-sm-block" style="font-size:.83rem;color:#78350f;line-height:1.4;">
-                                    Les recharges vous donnent des <strong>crédits</strong> pour créer des comptes FlashBilan, pas de l'argent sur votre solde bancaire.
+                                    Les recharges vous donnent des <strong>crédits</strong> pour créer des Flash Comptes aux clients, envoyé des SMS Pro partout dans le monde, de généré des contrats de prêt et bien d'autres.
                                 </div>
                             </div>
                             <i class="fas fa-cog position-absolute end-0 top-50 translate-middle-y me-2 d-none d-sm-block" style="font-size:3.5rem;color:#fde68a;pointer-events:none;"></i>
                         </div>
                         <div class="px-3 pb-2 d-block d-sm-none" style="font-size:.8rem;color:#78350f;">
-                            Les recharges vous donnent des <strong>crédits</strong> pour créer des comptes FlashBilan, pas de l'argent sur votre solde bancaire.
+                            Les recharges vous donnent des <strong>crédits</strong> pour créer des Flash Comptes aux clients, envoyé des SMS Pro partout dans le monde, de généré des contrats de prêt et bien d'autres.
                         </div>
                     </div>
 
