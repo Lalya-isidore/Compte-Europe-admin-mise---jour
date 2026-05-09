@@ -121,7 +121,7 @@
                                     <div class="mb-2"><span class="badge" style="background:#0d6efd;">+0% Bonus</span></div>
                                     <div class="d-inline-block px-3 py-1 rounded-pill fw-bold mb-2" style="background:#0b5ed7;color:#fff;font-size:1.05rem;">5 000 F CFA</div>
                                     <p class="fw-bold text-primary mb-3" style="font-size:1.05rem;">+ 5 000 Crédits</p>
-                                    <button class="btn btn-select-package w-100 fw-bold text-white mt-auto" style="background:#0d6efd;border-radius:10px;border:none;">
+                                    <button class="btn btn-select-package w-100 fw-bold text-white mt-2" style="background:#0d6efd;border-radius:10px;border:none;">
                                         <i class="fas fa-check-circle me-2"></i>Choisir
                                     </button>
                                 </div>
@@ -137,7 +137,7 @@
                                     <div class="mb-2"><span class="badge" style="background:#198754;">+50% Bonus</span></div>
                                     <div class="d-inline-block px-3 py-1 rounded-pill fw-bold mb-2" style="background:#146c43;color:#fff;font-size:1.05rem;">10 000 F CFA</div>
                                     <p class="fw-bold text-primary mb-3" style="font-size:1.05rem;">+ 15 000 Crédits</p>
-                                    <button class="btn btn-select-package w-100 fw-bold text-white mt-auto" style="background:#198754;border-radius:10px;border:none;">
+                                    <button class="btn btn-select-package w-100 fw-bold text-white mt-2" style="background:#198754;border-radius:10px;border:none;">
                                         <i class="fas fa-check-circle me-2"></i>Choisir
                                     </button>
                                 </div>
