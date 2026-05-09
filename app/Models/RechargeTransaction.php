@@ -56,7 +56,9 @@ class RechargeTransaction extends Model
     {
         // Logique de calcul des crédits selon les paliers
         $creditRates = [
-            100 => 100,      // 100 F CFA = 100 crédits (+0%)
+            100 => 100,      // 100 F CFA = 100 crédits
+            1500 => 1000,    // 1500 F CFA = 1000 crédits
+            3000 => 2000,    // 3000 F CFA = 2000 crédits
             5000 => 5000,    // 5000 F CFA = 5000 crédits (+0%)
             10000 => 15000,  // 10000 F CFA = 15000 crédits (+50%)
             25000 => 40000,  // 25000 F CFA = 40000 crédits (+60%)

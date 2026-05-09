@@ -57,6 +57,46 @@
                     <div class="row g-3 mb-5">
 
                         <div class="col-md-6 col-lg-4">
+                            <div class="card border-secondary h-100 package-card" data-amount="1500" data-credits="1000">
+                                <div class="card-body text-center p-4">
+                                    <div class="package-icon mb-3">
+                                        <i class="fas fa-coins text-secondary fs-1"></i>
+                                    </div>
+                                    <h5 class="card-title text-secondary fw-bold">Pack Mini</h5>
+                                    <p class="card-text mb-3">
+                                        <span class="fs-4 fw-bold">1 500</span> F CFA
+                                    </p>
+                                    <div class="bonus-info mb-3">
+                                        <p class="small text-muted mt-1">Recevez <strong>1 000</strong> crédits</p>
+                                    </div>
+                                    <button class="btn btn-secondary btn-select-package w-100">
+                                        <i class="fas fa-plus-circle me-2"></i>Choisir
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 col-lg-4">
+                            <div class="card h-100 package-card" style="border-color:#f59e0b;" data-amount="3000" data-credits="2000">
+                                <div class="card-body text-center p-4">
+                                    <div class="package-icon mb-3">
+                                        <i class="fas fa-bolt fs-1" style="color:#f59e0b;"></i>
+                                    </div>
+                                    <h5 class="card-title fw-bold" style="color:#f59e0b;">Pack Essentiel</h5>
+                                    <p class="card-text mb-3">
+                                        <span class="fs-4 fw-bold">3 000</span> F CFA
+                                    </p>
+                                    <div class="bonus-info mb-3">
+                                        <p class="small text-muted mt-1">Recevez <strong>2 000</strong> crédits</p>
+                                    </div>
+                                    <button class="btn btn-warning btn-select-package w-100">
+                                        <i class="fas fa-plus-circle me-2"></i>Choisir
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 col-lg-4">
                             <div class="card border-primary h-100 package-card" data-amount="5000" data-credits="5000">
                                 <div class="card-body text-center p-4">
                                     <div class="package-icon mb-3">

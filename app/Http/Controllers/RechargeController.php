@@ -41,7 +41,7 @@ class RechargeController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'amount' => 'required|numeric|in:5000,10000,25000,50000',
+            'amount' => 'required|numeric|in:1500,3000,5000,10000,25000,50000',
             // Include all supported payment methods (matches switch cases)
             'payment_method' => 'required|in:fedapay,oosic,card,mobile_money,bank_transfer'
         ]);
