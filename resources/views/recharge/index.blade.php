@@ -73,7 +73,6 @@
                                     <h5 class="card-title fw-bold mb-3" style="color:#10b981;">Pack Mini</h5>
                                     <div class="d-inline-block px-3 py-1 rounded-pill fw-bold mb-2" style="background:#d1fae5;color:#065f46;font-size:1.1rem;">1 500 F CFA</div>
                                     <p class="fw-bold text-primary mb-2" style="font-size:1.1rem;">+ 1 000 Crédits</p>
-                                    <p class="text-muted small mb-3">Idéal pour tester nos outils sans engagement.</p>
                                     <button class="btn btn-select-package w-100 fw-bold text-white" style="background:#10b981;border-radius:10px;">
                                         <i class="fas fa-check-circle me-2"></i>Choisir
                                     </button>
@@ -91,7 +90,6 @@
                                     <h5 class="card-title fw-bold mb-3" style="color:#f59e0b;">Pack Essentiel</h5>
                                     <div class="d-inline-block px-3 py-1 rounded-pill fw-bold mb-2" style="background:#fef3c7;color:#92400e;font-size:1.1rem;">3 000 F CFA</div>
                                     <p class="fw-bold text-primary mb-2" style="font-size:1.1rem;">+ 2 000 Crédits</p>
-                                    <p class="text-muted small mb-3">Parfait pour une utilisation régulière.</p>
                                     <button class="btn btn-select-package w-100 fw-bold text-white" style="background:#f59e0b;border-radius:10px;">
                                         <i class="fas fa-check-circle me-2"></i>Choisir
                                     </button>
