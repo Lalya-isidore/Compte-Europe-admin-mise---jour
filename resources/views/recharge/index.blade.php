@@ -57,7 +57,7 @@
                     <div class="text-center mb-3">
                         <span class="badge fw-bold px-4 py-2" style="background:#10b981;font-size:.85rem;border-radius:999px;letter-spacing:.05em;">✨ NOUVEAUX PACKS</span>
                     </div>
-                    <div class="row g-3 mb-4 justify-content-center">
+                    <div class="row g-3 mb-4">
                         <div class="col-md-6 col-lg-4">
                             <div class="card h-100 package-card position-relative" style="border:2px solid #10b981;border-radius:16px;background:#fff;" data-amount="1500" data-credits="1000">
                                 <span class="position-absolute top-0 start-0 badge fw-bold px-2 py-1 m-2" style="background:#10b981;border-radius:8px;font-size:.7rem;">NOUVEAU</span>
@@ -90,10 +90,6 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-
-                    <!-- Packages existants -->
-                    <div class="row g-3 mb-5">
                         <div class="col-md-6 col-lg-4">
                             <div class="card border-primary h-100 package-card" data-amount="5000" data-credits="5000">
                                 <div class="card-body text-center p-4">
@@ -111,7 +107,10 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
 
+                    <!-- Packages existants -->
+                    <div class="row g-3 mb-5">
                         <div class="col-md-6 col-lg-4">
                             <div class="card border-success h-100 package-card" data-amount="10000" data-credits="15000">
                                 <div class="card-body text-center p-4">
