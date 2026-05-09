@@ -91,18 +91,16 @@
                             </div>
                         </div>
                         <div class="col-md-6 col-lg-4">
-                            <div class="card border-primary h-100 package-card" data-amount="5000" data-credits="5000">
+                            <div class="card h-100 package-card" style="border:2px solid #0d6efd;border-radius:16px;background:#fff;" data-amount="5000" data-credits="5000">
                                 <div class="card-body text-center p-4">
-                                    <div class="package-icon mb-3">
-                                        <i class="fas fa-star text-primary fs-1"></i>
+                                    <div class="package-icon mb-2">
+                                        <i class="fas fa-star fs-1" style="color:#0d6efd;"></i>
                                     </div>
-                                    <h5 class="card-title text-primary fw-bold">Pack Starter</h5>
-                                    <p class="card-text mb-1">
-                                        <span class="fs-4 fw-bold">5 000</span> F CFA
-                                    </p>
-                                    <p class="fw-bold fs-5 text-primary mb-3">+ 5 000 Crédits</p>
-                                    <button class="btn btn-primary btn-select-package w-100">
-                                        <i class="fas fa-plus-circle me-2"></i>Choisir
+                                    <h5 class="card-title fw-bold mb-3" style="color:#0d6efd;">Pack Starter</h5>
+                                    <div class="d-inline-block px-3 py-1 rounded-pill fw-bold mb-2" style="background:#0b5ed7;color:#fff;font-size:1.05rem;">5 000 F CFA</div>
+                                    <p class="fw-bold text-primary mb-3" style="font-size:1.05rem;">+ 5 000 Crédits</p>
+                                    <button class="btn btn-select-package w-100 fw-bold text-white" style="background:#0d6efd;border-radius:10px;border:none;">
+                                        <i class="fas fa-check-circle me-2"></i>Choisir
                                     </button>
                                 </div>
                             </div>
@@ -112,76 +110,68 @@
                     <!-- Packages existants -->
                     <div class="row g-3 mb-5">
                         <div class="col-md-6 col-lg-4">
-                            <div class="card border-success h-100 package-card" data-amount="10000" data-credits="15000">
+                            <div class="card h-100 package-card" style="border:2px solid #198754;border-radius:16px;background:#fff;" data-amount="10000" data-credits="15000">
                                 <div class="card-body text-center p-4">
-                                    <div class="package-icon mb-3">
-                                        <i class="fas fa-gem text-success fs-1"></i>
+                                    <div class="package-icon mb-2">
+                                        <i class="fas fa-gem fs-1" style="color:#198754;"></i>
                                     </div>
-                                    <h5 class="card-title text-success fw-bold">Pack Premium</h5>
-                                    <p class="card-text mb-1">
-                                        <span class="fs-4 fw-bold">10 000</span> F CFA
-                                    </p>
-                                    <p class="fw-bold fs-5 text-primary mb-1">+ 15 000 Crédits</p>
-                                    <div class="mb-3"><span class="badge bg-success">+50% Bonus</span></div>
-                                    <button class="btn btn-success btn-select-package w-100">
-                                        <i class="fas fa-plus-circle me-2"></i>Choisir
+                                    <h5 class="card-title fw-bold mb-1" style="color:#198754;">Pack Premium</h5>
+                                    <div class="mb-2"><span class="badge" style="background:#198754;">+50% Bonus</span></div>
+                                    <div class="d-inline-block px-3 py-1 rounded-pill fw-bold mb-2" style="background:#146c43;color:#fff;font-size:1.05rem;">10 000 F CFA</div>
+                                    <p class="fw-bold text-primary mb-3" style="font-size:1.05rem;">+ 15 000 Crédits</p>
+                                    <button class="btn btn-select-package w-100 fw-bold text-white" style="background:#198754;border-radius:10px;border:none;">
+                                        <i class="fas fa-check-circle me-2"></i>Choisir
                                     </button>
                                 </div>
                             </div>
                         </div>
 
                         <div class="col-md-6 col-lg-4">
-                            <div class="card border-info h-100 package-card" data-amount="15000" data-credits="25000">
+                            <div class="card h-100 package-card" style="border:2px solid #0891b2;border-radius:16px;background:#fff;" data-amount="15000" data-credits="25000">
                                 <div class="card-body text-center p-4">
-                                    <div class="package-icon mb-3">
-                                        <i class="fas fa-bolt text-info fs-1"></i>
+                                    <div class="package-icon mb-2">
+                                        <i class="fas fa-bolt fs-1" style="color:#0891b2;"></i>
                                     </div>
-                                    <h5 class="card-title text-info fw-bold">Pack Pro</h5>
-                                    <p class="card-text mb-1">
-                                        <span class="fs-4 fw-bold">15 000</span> F CFA
-                                    </p>
-                                    <p class="fw-bold fs-5 text-primary mb-1">+ 25 000 Crédits</p>
-                                    <div class="mb-3"><span class="badge bg-info">+67% Bonus</span></div>
-                                    <button class="btn btn-info btn-select-package w-100">
-                                        <i class="fas fa-plus-circle me-2"></i>Choisir
+                                    <h5 class="card-title fw-bold mb-1" style="color:#0891b2;">Pack Pro</h5>
+                                    <div class="mb-2"><span class="badge" style="background:#0891b2;">+67% Bonus</span></div>
+                                    <div class="d-inline-block px-3 py-1 rounded-pill fw-bold mb-2" style="background:#0e7490;color:#fff;font-size:1.05rem;">15 000 F CFA</div>
+                                    <p class="fw-bold text-primary mb-3" style="font-size:1.05rem;">+ 25 000 Crédits</p>
+                                    <button class="btn btn-select-package w-100 fw-bold text-white" style="background:#0891b2;border-radius:10px;border:none;">
+                                        <i class="fas fa-check-circle me-2"></i>Choisir
                                     </button>
                                 </div>
                             </div>
                         </div>
 
                         <div class="col-md-6 col-lg-4">
-                            <div class="card border-warning h-100 package-card" data-amount="25000" data-credits="40000">
+                            <div class="card h-100 package-card" style="border:2px solid #d97706;border-radius:16px;background:#fff;" data-amount="25000" data-credits="40000">
                                 <div class="card-body text-center p-4">
-                                    <div class="package-icon mb-3">
-                                        <i class="fas fa-crown text-warning fs-1"></i>
+                                    <div class="package-icon mb-2">
+                                        <i class="fas fa-crown fs-1" style="color:#d97706;"></i>
                                     </div>
-                                    <h5 class="card-title text-warning fw-bold">Pack Gold</h5>
-                                    <p class="card-text mb-1">
-                                        <span class="fs-4 fw-bold">25 000</span> F CFA
-                                    </p>
-                                    <p class="fw-bold fs-5 text-primary mb-1">+ 40 000 Crédits</p>
-                                    <div class="mb-3"><span class="badge bg-warning">+60% Bonus</span></div>
-                                    <button class="btn btn-warning btn-select-package w-100">
-                                        <i class="fas fa-plus-circle me-2"></i>Choisir
+                                    <h5 class="card-title fw-bold mb-1" style="color:#d97706;">Pack Gold</h5>
+                                    <div class="mb-2"><span class="badge" style="background:#d97706;">+60% Bonus</span></div>
+                                    <div class="d-inline-block px-3 py-1 rounded-pill fw-bold mb-2" style="background:#b45309;color:#fff;font-size:1.05rem;">25 000 F CFA</div>
+                                    <p class="fw-bold text-primary mb-3" style="font-size:1.05rem;">+ 40 000 Crédits</p>
+                                    <button class="btn btn-select-package w-100 fw-bold text-white" style="background:#d97706;border-radius:10px;border:none;">
+                                        <i class="fas fa-check-circle me-2"></i>Choisir
                                     </button>
                                 </div>
                             </div>
                         </div>
 
                         <div class="col-md-6 col-lg-4">
-                            <div class="card border-danger h-100 package-card" data-amount="50000" data-credits="100000">
+                            <div class="card h-100 package-card" style="border:2px solid #dc3545;border-radius:16px;background:#fff;" data-amount="50000" data-credits="100000">
                                 <div class="card-body text-center p-4">
-                                    <div class="package-icon mb-3">
-                                        <i class="fas fa-trophy text-danger fs-1"></i>
+                                    <div class="package-icon mb-2">
+                                        <i class="fas fa-trophy fs-1" style="color:#dc3545;"></i>
                                     </div>
-                                    <h5 class="card-title text-danger fw-bold">Pack VIP</h5>
-                                    <p class="card-text mb-1">
-                                        <span class="fs-4 fw-bold">50 000</span> F CFA
-                                    </p>
-                                    <p class="fw-bold fs-5 text-primary mb-1">+ 100 000 Crédits</p>
-                                    <div class="mb-3"><span class="badge bg-danger">+100% Bonus</span></div>
-                                    <button class="btn btn-danger btn-select-package w-100">
-                                        <i class="fas fa-plus-circle me-2"></i>Choisir
+                                    <h5 class="card-title fw-bold mb-1" style="color:#dc3545;">Pack VIP</h5>
+                                    <div class="mb-2"><span class="badge" style="background:#dc3545;">+100% Bonus</span></div>
+                                    <div class="d-inline-block px-3 py-1 rounded-pill fw-bold mb-2" style="background:#b02a37;color:#fff;font-size:1.05rem;">50 000 F CFA</div>
+                                    <p class="fw-bold text-primary mb-3" style="font-size:1.05rem;">+ 100 000 Crédits</p>
+                                    <button class="btn btn-select-package w-100 fw-bold text-white" style="background:#dc3545;border-radius:10px;border:none;">
+                                        <i class="fas fa-check-circle me-2"></i>Choisir
                                     </button>
                                 </div>
                             </div>
