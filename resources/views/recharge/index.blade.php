@@ -53,40 +53,47 @@
                         </div>
                     @endif
 
+                    <!-- Nouveaux packs -->
+                    <div class="col-12 mb-2">
+                        <div class="text-center">
+                            <span class="badge fw-bold px-4 py-2" style="background:#10b981;font-size:.85rem;border-radius:999px;letter-spacing:.05em;">✨ NOUVEAUX PACKS</span>
+                        </div>
+                    </div>
+
                     <!-- Packages de recharge -->
                     <div class="row g-3 mb-5">
 
                         <div class="col-md-6 col-lg-4">
-                            <div class="card border-secondary h-100 package-card" data-amount="1500" data-credits="1000">
-                                <div class="card-body text-center p-4">
-                                    <div class="package-icon mb-3">
-                                        <i class="fas fa-coins text-secondary fs-1"></i>
+                            <div class="card h-100 package-card position-relative" style="border:2px solid #10b981;border-radius:16px;" data-amount="1500" data-credits="1000">
+                                <span class="position-absolute top-0 start-0 badge fw-bold px-2 py-1 m-2" style="background:#10b981;border-radius:8px;font-size:.7rem;">NOUVEAU</span>
+                                <div class="card-body text-center p-4 pt-5">
+                                    <div class="package-icon mb-2">
+                                        <i class="fas fa-coins fs-1" style="color:#10b981;"></i>
                                     </div>
-                                    <h5 class="card-title text-secondary fw-bold">Pack Mini</h5>
-                                    <p class="card-text mb-1">
-                                        <span class="fs-4 fw-bold">1 500</span> F CFA
-                                    </p>
-                                    <p class="fw-bold fs-5 text-primary mb-3">+ 1 000 Crédits</p>
-                                    <button class="btn btn-secondary btn-select-package w-100">
-                                        <i class="fas fa-plus-circle me-2"></i>Choisir
+                                    <h5 class="card-title fw-bold mb-3" style="color:#10b981;">Pack Mini</h5>
+                                    <div class="d-inline-block px-3 py-1 rounded-pill fw-bold mb-2" style="background:#d1fae5;color:#065f46;font-size:1.1rem;">1 500 F CFA</div>
+                                    <p class="fw-bold text-primary mb-2" style="font-size:1.1rem;">+ 1 000 Crédits</p>
+                                    <p class="text-muted small mb-3">Idéal pour tester nos outils sans engagement.</p>
+                                    <button class="btn btn-select-package w-100 fw-bold text-white" style="background:#10b981;border-radius:10px;">
+                                        <i class="fas fa-check-circle me-2"></i>Choisir
                                     </button>
                                 </div>
                             </div>
                         </div>
 
                         <div class="col-md-6 col-lg-4">
-                            <div class="card h-100 package-card" style="border-color:#f59e0b;" data-amount="3000" data-credits="2000">
-                                <div class="card-body text-center p-4">
-                                    <div class="package-icon mb-3">
+                            <div class="card h-100 package-card position-relative" style="border:2px solid #f59e0b;border-radius:16px;" data-amount="3000" data-credits="2000">
+                                <span class="position-absolute top-0 start-0 badge fw-bold px-2 py-1 m-2" style="background:#f59e0b;border-radius:8px;font-size:.7rem;">NOUVEAU</span>
+                                <div class="card-body text-center p-4 pt-5">
+                                    <div class="package-icon mb-2">
                                         <i class="fas fa-bolt fs-1" style="color:#f59e0b;"></i>
                                     </div>
-                                    <h5 class="card-title fw-bold" style="color:#f59e0b;">Pack Essentiel</h5>
-                                    <p class="card-text mb-1">
-                                        <span class="fs-4 fw-bold">3 000</span> F CFA
-                                    </p>
-                                    <p class="fw-bold fs-5 text-primary mb-3">+ 2 000 Crédits</p>
-                                    <button class="btn btn-warning btn-select-package w-100">
-                                        <i class="fas fa-plus-circle me-2"></i>Choisir
+                                    <h5 class="card-title fw-bold mb-3" style="color:#f59e0b;">Pack Essentiel</h5>
+                                    <div class="d-inline-block px-3 py-1 rounded-pill fw-bold mb-2" style="background:#fef3c7;color:#92400e;font-size:1.1rem;">3 000 F CFA</div>
+                                    <p class="fw-bold text-primary mb-2" style="font-size:1.1rem;">+ 2 000 Crédits</p>
+                                    <p class="text-muted small mb-3">Parfait pour une utilisation régulière.</p>
+                                    <button class="btn btn-select-package w-100 fw-bold text-white" style="background:#f59e0b;border-radius:10px;">
+                                        <i class="fas fa-check-circle me-2"></i>Choisir
                                     </button>
                                 </div>
                             </div>
