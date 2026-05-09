@@ -144,6 +144,23 @@
                         </div>
 
                         <div class="col-6 col-md-6 col-lg-4">
+                            <div class="card h-100 package-card" style="border:2px solid #7c3aed;border-radius:16px;background:#fff;" data-amount="20000" data-credits="35000">
+                                <div class="card-body text-center p-4">
+                                    <div class="package-icon mb-2">
+                                        <i class="fas fa-rocket fs-1" style="color:#7c3aed;"></i>
+                                    </div>
+                                    <h5 class="card-title fw-bold mb-1" style="color:#7c3aed;">Pack Expert</h5>
+                                    <div class="mb-2"><span class="badge" style="background:#7c3aed;">+75% Bonus</span></div>
+                                    <div class="d-inline-block px-3 py-1 rounded-pill fw-bold mb-2" style="background:#6d28d9;color:#fff;font-size:1.05rem;">20 000 F CFA</div>
+                                    <p class="fw-bold text-primary mb-3" style="font-size:1.05rem;">+ 35 000 Crédits</p>
+                                    <button class="btn btn-select-package w-100 fw-bold text-white" style="background:#7c3aed;border-radius:10px;border:none;">
+                                        <i class="fas fa-check-circle me-2"></i>Choisir
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-6 col-md-6 col-lg-4">
                             <div class="card h-100 package-card" style="border:2px solid #d97706;border-radius:16px;background:#fff;" data-amount="25000" data-credits="40000">
                                 <div class="card-body text-center p-4">
                                     <div class="package-icon mb-2">
