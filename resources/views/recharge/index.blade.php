@@ -66,7 +66,7 @@
                                         <i class="fas fa-coins fs-1" style="color:#10b981;"></i>
                                     </div>
                                     <h5 class="card-title fw-bold mb-3" style="color:#10b981;">Pack Mini</h5>
-                                    <div class="d-inline-block px-3 py-1 rounded-pill fw-bold mb-2" style="background:#d1fae5;color:#065f46;font-size:1.05rem;">1 500 F CFA</div>
+                                    <div class="d-inline-block px-3 py-1 rounded-pill fw-bold mb-2" style="background:#059669;color:#fff;font-size:1.05rem;">1 500 F CFA</div>
                                     <p class="fw-bold text-primary mb-3" style="font-size:1.05rem;">+ 1 000 Crédits</p>
                                     <button class="btn btn-select-package w-100 fw-bold text-white" style="background:#10b981;border-radius:10px;border:none;">
                                         <i class="fas fa-check-circle me-2"></i>Choisir
@@ -82,7 +82,7 @@
                                         <i class="fas fa-bolt fs-1" style="color:#f97316;"></i>
                                     </div>
                                     <h5 class="card-title fw-bold mb-3" style="color:#f97316;">Pack Essentiel</h5>
-                                    <div class="d-inline-block px-3 py-1 rounded-pill fw-bold mb-2" style="background:#ffedd5;color:#9a3412;font-size:1.05rem;">3 000 F CFA</div>
+                                    <div class="d-inline-block px-3 py-1 rounded-pill fw-bold mb-2" style="background:#ea580c;color:#fff;font-size:1.05rem;">3 000 F CFA</div>
                                     <p class="fw-bold text-primary mb-3" style="font-size:1.05rem;">+ 2 000 Crédits</p>
                                     <button class="btn btn-select-package w-100 fw-bold text-white" style="background:#f97316;border-radius:10px;border:none;">
                                         <i class="fas fa-check-circle me-2"></i>Choisir
