@@ -19,24 +19,41 @@
                 <div class="card-body p-2 p-sm-4">
                     
                     <!-- Crédits FlashBilan disponibles -->
-                    <div class="alert alert-success d-flex align-items-center mb-4">
-                        <i class="fas fa-coins me-3 fs-5"></i>
-                        <div>
-                            <strong>Crédits disponibles :</strong>
-                            <span class="fs-5 fw-bold">{{ number_format(auth()->user()->credit_user ?? 0, 0, ',', ' ') }} crédits</span>
-                            <br>
-                            <small class="text-muted">Chaque crédit vous permet de créer un compte FlashBilan</small>
+                    <div class="rounded-3 mb-3 overflow-hidden" style="background:#f0fdf4;border:1.5px solid #bbf7d0;">
+                        <div class="d-flex align-items-center px-3 py-3 gap-3 position-relative">
+                            <div class="flex-shrink-0 d-flex align-items-center justify-content-center rounded-circle" style="width:52px;height:52px;background:#dcfce7;">
+                                <i class="fas fa-coins" style="color:#16a34a;font-size:1.4rem;"></i>
+                            </div>
+                            <div class="flex-grow-1 overflow-hidden">
+                                <div class="fw-semibold mb-0" style="color:#15803d;font-size:.85rem;">Crédits disponibles</div>
+                                <div class="fw-bold" style="color:#15803d;font-size:1.35rem;line-height:1.2;">{{ number_format(auth()->user()->credit_user ?? 0, 0, ',', ' ') }} crédits</div>
+                            </div>
+                            <div class="d-none d-sm-block flex-shrink-0 text-muted" style="max-width:200px;font-size:.83rem;line-height:1.4;">
+                                Chaque crédit vous permet de créer un compte FlashBilan rapidement et facilement.
+                            </div>
+                            <i class="fas fa-coins position-absolute end-0 top-50 translate-middle-y me-2 d-none d-sm-block" style="font-size:3.5rem;color:#bbf7d0;pointer-events:none;"></i>
+                        </div>
+                        <div class="px-3 pb-2 d-block d-sm-none" style="font-size:.8rem;color:#166534;">
+                            Chaque crédit vous permet de créer un compte FlashBilan rapidement et facilement.
                         </div>
                     </div>
 
                     <!-- Information sur les crédits -->
-                    <div class="alert alert-warning d-flex align-items-center mb-4">
-                        <i class="fas fa-info-circle me-3 fs-5"></i>
-                        <div>
-                            <strong><i class="fas fa-lightbulb me-1"></i> Comment ça fonctionne :</strong><br>
-                            <small class="text-muted">
-                                Les recharges vous donnent des <strong>crédits</strong> pour créer des comptes FlashBilan, pas de l'argent sur votre solde bancaire.
-                            </small>
+                    <div class="rounded-3 mb-4 overflow-hidden" style="background:#fffbeb;border:1.5px solid #fde68a;">
+                        <div class="d-flex align-items-center px-3 py-3 gap-3 position-relative">
+                            <div class="flex-shrink-0 d-flex align-items-center justify-content-center rounded-circle" style="width:52px;height:52px;background:#fef3c7;">
+                                <i class="fas fa-lightbulb" style="color:#d97706;font-size:1.4rem;"></i>
+                            </div>
+                            <div class="flex-grow-1 overflow-hidden">
+                                <div class="fw-bold mb-0" style="color:#b45309;font-size:.95rem;">Comment ça fonctionne ?</div>
+                                <div class="d-none d-sm-block" style="font-size:.83rem;color:#78350f;line-height:1.4;">
+                                    Les recharges vous donnent des <strong>crédits</strong> pour créer des comptes FlashBilan, pas de l'argent sur votre solde bancaire.
+                                </div>
+                            </div>
+                            <i class="fas fa-cog position-absolute end-0 top-50 translate-middle-y me-2 d-none d-sm-block" style="font-size:3.5rem;color:#fde68a;pointer-events:none;"></i>
+                        </div>
+                        <div class="px-3 pb-2 d-block d-sm-none" style="font-size:.8rem;color:#78350f;">
+                            Les recharges vous donnent des <strong>crédits</strong> pour créer des comptes FlashBilan, pas de l'argent sur votre solde bancaire.
                         </div>
                     </div>
 
