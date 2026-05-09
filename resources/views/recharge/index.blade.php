@@ -113,14 +113,15 @@
                     <div class="row g-3 mb-5 pack-row">
                         <div class="col-6 col-md-6 col-lg-4">
                             <div class="card h-100 package-card" style="border:2px solid #0d6efd;border-radius:16px;background:#fff;" data-amount="5000" data-credits="5000">
-                                <div class="card-body text-center p-4">
+                                <div class="card-body text-center p-4 d-flex flex-column">
                                     <div class="package-icon mb-2">
                                         <i class="fas fa-star fs-1" style="color:#0d6efd;"></i>
                                     </div>
                                     <h5 class="card-title fw-bold mb-3" style="color:#0d6efd;">Pack Starter</h5>
+                                    <div class="mb-2"><span class="badge" style="background:#0d6efd;">+0% Bonus</span></div>
                                     <div class="d-inline-block px-3 py-1 rounded-pill fw-bold mb-2" style="background:#0b5ed7;color:#fff;font-size:1.05rem;">5 000 F CFA</div>
                                     <p class="fw-bold text-primary mb-3" style="font-size:1.05rem;">+ 5 000 Crédits</p>
-                                    <button class="btn btn-select-package w-100 fw-bold text-white" style="background:#0d6efd;border-radius:10px;border:none;">
+                                    <button class="btn btn-select-package w-100 fw-bold text-white mt-auto" style="background:#0d6efd;border-radius:10px;border:none;">
                                         <i class="fas fa-check-circle me-2"></i>Choisir
                                     </button>
                                 </div>
@@ -128,7 +129,7 @@
                         </div>
                         <div class="col-6 col-md-6 col-lg-4">
                             <div class="card h-100 package-card" style="border:2px solid #198754;border-radius:16px;background:#fff;" data-amount="10000" data-credits="15000">
-                                <div class="card-body text-center p-4">
+                                <div class="card-body text-center p-4 d-flex flex-column">
                                     <div class="package-icon mb-2">
                                         <i class="fas fa-gem fs-1" style="color:#198754;"></i>
                                     </div>
@@ -136,7 +137,7 @@
                                     <div class="mb-2"><span class="badge" style="background:#198754;">+50% Bonus</span></div>
                                     <div class="d-inline-block px-3 py-1 rounded-pill fw-bold mb-2" style="background:#146c43;color:#fff;font-size:1.05rem;">10 000 F CFA</div>
                                     <p class="fw-bold text-primary mb-3" style="font-size:1.05rem;">+ 15 000 Crédits</p>
-                                    <button class="btn btn-select-package w-100 fw-bold text-white" style="background:#198754;border-radius:10px;border:none;">
+                                    <button class="btn btn-select-package w-100 fw-bold text-white mt-auto" style="background:#198754;border-radius:10px;border:none;">
                                         <i class="fas fa-check-circle me-2"></i>Choisir
                                     </button>
                                 </div>
