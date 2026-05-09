@@ -101,6 +101,9 @@
                             <button type="button" class="btn btn-warning btn-sm rounded-pill px-3 fw-bold" id="tpl-promo-mai">
                                 🔥 Promo 06-07 Mai
                             </button>
+                            <button type="button" class="btn btn-outline-success btn-sm rounded-pill px-3" id="tpl-nouveaux-tarifs">
+                                💳 Nouveaux tarifs
+                            </button>
                         </div>
                     </div>
 
@@ -398,6 +401,33 @@ L'équipe FlashBilan`;
         document.getElementById('target-select').value = 'all';
         singleUserBlock.style.display = 'none';
     });
+    // Modèle Nouveaux tarifs
+    document.getElementById('tpl-nouveaux-tarifs')?.addEventListener('click', function() {
+        document.getElementById('email-subject').value = '💳 Nouveau : Rechargez dès 1 500 F CFA sur FlashBilan !';
+        document.getElementById('email-message').value = `Bonjour,
+
+Nous avons le plaisir de vous annoncer l'ajout de deux nouveaux tarifs de recharge sur FlashBilan !
+
+💳 NOUVEAUX PACKS DISPONIBLES :
+
+✅ Pack Mini — 1 500 F CFA
+Recevez 1 000 crédits immédiatement.
+Idéal pour tester nos outils sans engagement.
+
+✅ Pack Essentiel — 3 000 F CFA
+Recevez 2 000 crédits immédiatement.
+Parfait pour une utilisation régulière.
+
+Ces nouveaux packs s'ajoutent à nos offres existantes (5 000, 10 000, 25 000 et 50 000 F CFA) pour vous offrir encore plus de flexibilité.
+
+👉 Rechargez dès maintenant sur : https://flashbilan.fr
+
+Cordialement,
+L'équipe FlashBilan`;
+        document.getElementById('target-select').value = 'all';
+        singleUserBlock.style.display = 'none';
+    });
+
     // Modèle Promo 06-07 Mai
     document.getElementById('tpl-promo-mai')?.addEventListener('click', function() {
         document.getElementById('email-subject').value = '🔥 OFFRE LIMITÉE : +50% et +100% de crédits bonus — 06 et 07 Mai seulement !';
