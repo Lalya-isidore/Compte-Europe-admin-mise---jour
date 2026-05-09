@@ -77,8 +77,9 @@
                     <div class="row g-3 mb-4 pack-row">
                         <div class="col-6 col-md-6 col-lg-4">
                             <div class="card h-100 package-card position-relative" style="border:2px solid #10b981;border-radius:16px;background:#fff;" data-amount="1500" data-credits="1000">
-                                <span class="position-absolute top-0 start-0 badge fw-bold px-2 py-1 m-2" style="background:#10b981;border-radius:8px;font-size:.7rem;">NOUVEAU</span>
-                                <div class="card-body text-center p-4 pt-5">
+                                <div class="text-center fw-bold text-white py-1" style="background:#10b981;border-radius:14px 14px 0 0;font-size:.75rem;letter-spacing:.06em;">Découverte</div>
+                                <span class="position-absolute badge fw-bold px-2 py-1" style="background:#10b981;border-radius:8px;font-size:.7rem;top:28px;left:8px;">NOUVEAU</span>
+                                <div class="card-body text-center p-4 pt-4">
                                     <div class="package-icon mb-2">
                                         <i class="fas fa-coins fs-1" style="color:#10b981;"></i>
                                     </div>
@@ -93,8 +94,9 @@
                         </div>
                         <div class="col-6 col-md-6 col-lg-4">
                             <div class="card h-100 package-card position-relative" style="border:2px solid #f97316;border-radius:16px;background:#fff;" data-amount="3000" data-credits="2000">
-                                <span class="position-absolute top-0 start-0 badge fw-bold px-2 py-1 m-2" style="background:#f97316;border-radius:8px;font-size:.7rem;">NOUVEAU</span>
-                                <div class="card-body text-center p-4 pt-5">
+                                <div class="text-center fw-bold text-white py-1" style="background:#f97316;border-radius:14px 14px 0 0;font-size:.75rem;letter-spacing:.06em;">Basique</div>
+                                <span class="position-absolute badge fw-bold px-2 py-1" style="background:#f97316;border-radius:8px;font-size:.7rem;top:28px;left:8px;">NOUVEAU</span>
+                                <div class="card-body text-center p-4 pt-4">
                                     <div class="package-icon mb-2">
                                         <i class="fas fa-bolt fs-1" style="color:#f97316;"></i>
                                     </div>
@@ -113,6 +115,7 @@
                     <div class="row g-3 mb-5 pack-row">
                         <div class="col-6 col-md-6 col-lg-4">
                             <div class="card h-100 package-card" style="border:2px solid #0d6efd;border-radius:16px;background:#fff;" data-amount="5000" data-credits="5000">
+                                <div class="text-center fw-bold text-white py-1" style="background:#0d6efd;border-radius:14px 14px 0 0;font-size:.75rem;letter-spacing:.06em;">Simple</div>
                                 <div class="card-body text-center p-4 pb-2 d-flex flex-column">
                                     <div class="package-icon mb-2">
                                         <i class="fas fa-star fs-1" style="color:#0d6efd;"></i>
@@ -129,6 +132,7 @@
                         </div>
                         <div class="col-6 col-md-6 col-lg-4">
                             <div class="card h-100 package-card" style="border:2px solid #198754;border-radius:16px;background:#fff;" data-amount="10000" data-credits="15000">
+                                <div class="text-center fw-bold text-white py-1" style="background:#198754;border-radius:14px 14px 0 0;font-size:.75rem;letter-spacing:.06em;">⭐ Conseillé</div>
                                 <div class="card-body text-center p-4 pb-2 d-flex flex-column">
                                     <div class="package-icon mb-2">
                                         <i class="fas fa-gem fs-1" style="color:#198754;"></i>
@@ -146,6 +150,7 @@
 
                         <div class="col-6 col-md-6 col-lg-4">
                             <div class="card h-100 package-card" style="border:2px solid #0891b2;border-radius:16px;background:#fff;" data-amount="15000" data-credits="25000">
+                                <div class="text-center fw-bold text-white py-1" style="background:#0891b2;border-radius:14px 14px 0 0;font-size:.75rem;letter-spacing:.06em;">Populaire</div>
                                 <div class="card-body text-center p-4">
                                     <div class="package-icon mb-2">
                                         <i class="fas fa-bolt fs-1" style="color:#0891b2;"></i>
@@ -163,6 +168,7 @@
 
                         <div class="col-6 col-md-6 col-lg-4">
                             <div class="card h-100 package-card" style="border:2px solid #7c3aed;border-radius:16px;background:#fff;" data-amount="20000" data-credits="35000">
+                                <div class="text-center fw-bold text-white py-1" style="background:#7c3aed;border-radius:14px 14px 0 0;font-size:.75rem;letter-spacing:.06em;">Expert</div>
                                 <div class="card-body text-center p-4">
                                     <div class="package-icon mb-2">
                                         <i class="fas fa-rocket fs-1" style="color:#7c3aed;"></i>
@@ -180,6 +186,7 @@
 
                         <div class="col-6 col-md-6 col-lg-4">
                             <div class="card h-100 package-card" style="border:2px solid #d97706;border-radius:16px;background:#fff;" data-amount="25000" data-credits="40000">
+                                <div class="text-center fw-bold text-white py-1" style="background:#d97706;border-radius:14px 14px 0 0;font-size:.75rem;letter-spacing:.06em;">Avancé</div>
                                 <div class="card-body text-center p-4">
                                     <div class="package-icon mb-2">
                                         <i class="fas fa-crown fs-1" style="color:#d97706;"></i>
@@ -197,6 +204,7 @@
 
                         <div class="col-6 col-md-6 col-lg-4">
                             <div class="card h-100 package-card" style="border:2px solid #dc3545;border-radius:16px;background:#fff;" data-amount="50000" data-credits="100000">
+                                <div class="text-center fw-bold text-white py-1" style="background:#dc3545;border-radius:14px 14px 0 0;font-size:.75rem;letter-spacing:.06em;">Ultime</div>
                                 <div class="card-body text-center p-4">
                                     <div class="package-icon mb-2">
                                         <i class="fas fa-trophy fs-1" style="color:#dc3545;"></i>
