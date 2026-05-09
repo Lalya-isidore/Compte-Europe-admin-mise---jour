@@ -113,7 +113,7 @@
                     <div class="row g-3 mb-5 pack-row">
                         <div class="col-6 col-md-6 col-lg-4">
                             <div class="card h-100 package-card" style="border:2px solid #0d6efd;border-radius:16px;background:#fff;" data-amount="5000" data-credits="5000">
-                                <div class="card-body text-center p-4 d-flex flex-column">
+                                <div class="card-body text-center p-4 pb-2 d-flex flex-column">
                                     <div class="package-icon mb-2">
                                         <i class="fas fa-star fs-1" style="color:#0d6efd;"></i>
                                     </div>
@@ -129,7 +129,7 @@
                         </div>
                         <div class="col-6 col-md-6 col-lg-4">
                             <div class="card h-100 package-card" style="border:2px solid #198754;border-radius:16px;background:#fff;" data-amount="10000" data-credits="15000">
-                                <div class="card-body text-center p-4 d-flex flex-column">
+                                <div class="card-body text-center p-4 pb-2 d-flex flex-column">
                                     <div class="package-icon mb-2">
                                         <i class="fas fa-gem fs-1" style="color:#198754;"></i>
                                     </div>
