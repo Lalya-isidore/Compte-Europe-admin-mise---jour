@@ -539,6 +539,21 @@
         color: #111827;
         text-align: right;
     }
+
+    @media (max-width: 576px) {
+        .package-card .card-body {
+            padding: 0.6rem !important;
+            padding-top: 1.8rem !important;
+        }
+        .package-card .package-icon { margin-bottom: 0.25rem !important; }
+        .package-card .package-icon i { font-size: 1.4rem !important; }
+        .package-card .card-title { font-size: 0.78rem !important; margin-bottom: 0.4rem !important; }
+        .package-card .rounded-pill { font-size: 0.72rem !important; padding: 0.2rem 0.5rem !important; margin-bottom: 0.3rem !important; }
+        .package-card p { font-size: 0.75rem !important; margin-bottom: 0.4rem !important; }
+        .package-card .btn { font-size: 0.72rem !important; padding: 0.35rem 0.25rem !important; }
+        .package-card .badge { font-size: 0.6rem !important; }
+        .package-card .position-absolute { font-size: 0.6rem !important; padding: 0.15rem 0.35rem !important; }
+    }
 </style>
 
 <script>
