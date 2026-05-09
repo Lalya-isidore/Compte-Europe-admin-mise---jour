@@ -58,7 +58,7 @@
                         <span class="badge fw-bold px-4 py-2" style="background:#10b981;font-size:.85rem;border-radius:999px;letter-spacing:.05em;">✨ NOUVEAUX PACKS</span>
                     </div>
                     <div class="row g-3 mb-4">
-                        <div class="col-md-6 col-lg-4">
+                        <div class="col-6 col-md-6 col-lg-4">
                             <div class="card h-100 package-card position-relative" style="border:2px solid #10b981;border-radius:16px;background:#fff;" data-amount="1500" data-credits="1000">
                                 <span class="position-absolute top-0 start-0 badge fw-bold px-2 py-1 m-2" style="background:#10b981;border-radius:8px;font-size:.7rem;">NOUVEAU</span>
                                 <div class="card-body text-center p-4 pt-5">
@@ -74,7 +74,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-6 col-lg-4">
+                        <div class="col-6 col-md-6 col-lg-4">
                             <div class="card h-100 package-card position-relative" style="border:2px solid #f97316;border-radius:16px;background:#fff;" data-amount="3000" data-credits="2000">
                                 <span class="position-absolute top-0 start-0 badge fw-bold px-2 py-1 m-2" style="background:#f97316;border-radius:8px;font-size:.7rem;">NOUVEAU</span>
                                 <div class="card-body text-center p-4 pt-5">
@@ -90,7 +90,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-6 col-lg-4">
+                        <div class="col-6 col-md-6 col-lg-4">
                             <div class="card h-100 package-card" style="border:2px solid #0d6efd;border-radius:16px;background:#fff;" data-amount="5000" data-credits="5000">
                                 <div class="card-body text-center p-4">
                                     <div class="package-icon mb-2">
@@ -109,7 +109,7 @@
 
                     <!-- Packages existants -->
                     <div class="row g-3 mb-5">
-                        <div class="col-md-6 col-lg-4">
+                        <div class="col-6 col-md-6 col-lg-4">
                             <div class="card h-100 package-card" style="border:2px solid #198754;border-radius:16px;background:#fff;" data-amount="10000" data-credits="15000">
                                 <div class="card-body text-center p-4">
                                     <div class="package-icon mb-2">
@@ -126,7 +126,7 @@
                             </div>
                         </div>
 
-                        <div class="col-md-6 col-lg-4">
+                        <div class="col-6 col-md-6 col-lg-4">
                             <div class="card h-100 package-card" style="border:2px solid #0891b2;border-radius:16px;background:#fff;" data-amount="15000" data-credits="25000">
                                 <div class="card-body text-center p-4">
                                     <div class="package-icon mb-2">
@@ -143,7 +143,7 @@
                             </div>
                         </div>
 
-                        <div class="col-md-6 col-lg-4">
+                        <div class="col-6 col-md-6 col-lg-4">
                             <div class="card h-100 package-card" style="border:2px solid #d97706;border-radius:16px;background:#fff;" data-amount="25000" data-credits="40000">
                                 <div class="card-body text-center p-4">
                                     <div class="package-icon mb-2">
@@ -160,7 +160,7 @@
                             </div>
                         </div>
 
-                        <div class="col-md-6 col-lg-4">
+                        <div class="col-6 col-md-6 col-lg-4">
                             <div class="card h-100 package-card" style="border:2px solid #dc3545;border-radius:16px;background:#fff;" data-amount="50000" data-credits="100000">
                                 <div class="card-body text-center p-4">
                                     <div class="package-icon mb-2">
