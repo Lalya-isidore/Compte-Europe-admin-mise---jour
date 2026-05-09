@@ -66,7 +66,7 @@
                                     <p class="card-text mb-1">
                                         <span class="fs-4 fw-bold">1 500</span> F CFA
                                     </p>
-                                    <p class="fw-bold fs-4 text-primary mb-3">+ 1 000 Crédits</p>
+                                    <p class="fw-bold fs-5 text-primary mb-3">+ 1 000 Crédits</p>
                                     <button class="btn btn-secondary btn-select-package w-100">
                                         <i class="fas fa-plus-circle me-2"></i>Choisir
                                     </button>
@@ -84,7 +84,7 @@
                                     <p class="card-text mb-1">
                                         <span class="fs-4 fw-bold">3 000</span> F CFA
                                     </p>
-                                    <p class="fw-bold fs-4 text-primary mb-3">+ 2 000 Crédits</p>
+                                    <p class="fw-bold fs-5 text-primary mb-3">+ 2 000 Crédits</p>
                                     <button class="btn btn-warning btn-select-package w-100">
                                         <i class="fas fa-plus-circle me-2"></i>Choisir
                                     </button>
@@ -102,7 +102,7 @@
                                     <p class="card-text mb-1">
                                         <span class="fs-4 fw-bold">5 000</span> F CFA
                                     </p>
-                                    <p class="fw-bold fs-4 text-primary mb-3">+ 5 000 Crédits</p>
+                                    <p class="fw-bold fs-5 text-primary mb-3">+ 5 000 Crédits</p>
                                     <button class="btn btn-primary btn-select-package w-100">
                                         <i class="fas fa-plus-circle me-2"></i>Choisir
                                     </button>
@@ -120,7 +120,7 @@
                                     <p class="card-text mb-1">
                                         <span class="fs-4 fw-bold">10 000</span> F CFA
                                     </p>
-                                    <p class="fw-bold fs-4 text-primary mb-1">+ 15 000 Crédits</p>
+                                    <p class="fw-bold fs-5 text-primary mb-1">+ 15 000 Crédits</p>
                                     <div class="mb-3"><span class="badge bg-success">+50% Bonus</span></div>
                                     <button class="btn btn-success btn-select-package w-100">
                                         <i class="fas fa-plus-circle me-2"></i>Choisir
@@ -139,7 +139,7 @@
                                     <p class="card-text mb-1">
                                         <span class="fs-4 fw-bold">15 000</span> F CFA
                                     </p>
-                                    <p class="fw-bold fs-4 text-primary mb-1">+ 25 000 Crédits</p>
+                                    <p class="fw-bold fs-5 text-primary mb-1">+ 25 000 Crédits</p>
                                     <div class="mb-3"><span class="badge bg-info">+67% Bonus</span></div>
                                     <button class="btn btn-info btn-select-package w-100">
                                         <i class="fas fa-plus-circle me-2"></i>Choisir
@@ -158,7 +158,7 @@
                                     <p class="card-text mb-1">
                                         <span class="fs-4 fw-bold">25 000</span> F CFA
                                     </p>
-                                    <p class="fw-bold fs-4 text-primary mb-1">+ 40 000 Crédits</p>
+                                    <p class="fw-bold fs-5 text-primary mb-1">+ 40 000 Crédits</p>
                                     <div class="mb-3"><span class="badge bg-warning">+60% Bonus</span></div>
                                     <button class="btn btn-warning btn-select-package w-100">
                                         <i class="fas fa-plus-circle me-2"></i>Choisir
@@ -177,7 +177,7 @@
                                     <p class="card-text mb-1">
                                         <span class="fs-4 fw-bold">50 000</span> F CFA
                                     </p>
-                                    <p class="fw-bold fs-4 text-primary mb-1">+ 100 000 Crédits</p>
+                                    <p class="fw-bold fs-5 text-primary mb-1">+ 100 000 Crédits</p>
                                     <div class="mb-3"><span class="badge bg-danger">+100% Bonus</span></div>
                                     <button class="btn btn-danger btn-select-package w-100">
                                         <i class="fas fa-plus-circle me-2"></i>Choisir
