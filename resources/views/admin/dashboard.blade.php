@@ -227,7 +227,7 @@
                             @endphp
                             <span class="badge bg-{{ $badge }}">{{ $label }}</span>
                         </td>
-                        <td class="text-muted">{{ $r->created_at->format('d/m/Y H:i') }}</td>
+                        <td class="text-muted">{{ $r->created_at->setTimezone('Europe/Paris')->format('d/m/Y H:i') }}</td>
                     </tr>
                     @endforeach
                 </tbody>

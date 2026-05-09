@@ -5,23 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>Flash Compte Pro — Outils bancaires professionnels | FlashBilan</title>
-    <meta name="description" content="Flash Compte Pro : créez des relevés de compte européens professionnels en quelques secondes. SMS Pro, Contrat de Prêt PDF, Vérification IBAN, QR Code et bien plus. Essayez gratuitement sur FlashBilan.">
+    <title>Flash Compte Pro &amp; SMS Pro — Outils bancaires professionnels | FlashBilan</title>
+    <meta name="description" content="Flash Compte Pro &amp; SMS Pro : créez des relevés de compte européens professionnels et envoyez des SMS en masse en quelques secondes. Contrat de Prêt PDF, Vérification IBAN, QR Code et bien plus. Essayez gratuitement sur FlashBilan.">
     <meta name="keywords" content="flash compte, flash compte pro, compte européen, relevé bancaire, SMS Pro, contrat de prêt, vérification IBAN, FlashBilan, outils bancaires, générateur compte">
     <meta name="author" content="FlashBilan">
     <meta name="robots" content="index, follow">
 
     <meta property="og:type" content="website">
     <meta property="og:url" content="{{ url('/') }}">
-    <meta property="og:title" content="Flash Compte Pro — Outils bancaires professionnels | FlashBilan">
+    <meta property="og:title" content="Flash Compte Pro &amp; SMS Pro — Outils bancaires professionnels | FlashBilan">
     <meta property="og:description" content="Créez des relevés de compte européens, envoyez des SMS Pro, générez des contrats de prêt PDF. Outils professionnels pour particuliers et entreprises.">
     <meta property="og:image" content="{{ asset('images/og-preview1.png') }}">
     <meta property="og:site_name" content="FlashBilan">
     <meta property="og:locale" content="fr_FR">
 
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Flash Compte Pro — Outils bancaires | FlashBilan">
-    <meta name="twitter:description" content="Flash Compte Pro, SMS Pro, Contrat de Prêt PDF et plus. Outils professionnels sur FlashBilan.">
+    <meta name="twitter:title" content="Flash Compte Pro &amp; SMS Pro — Outils bancaires | FlashBilan">
+    <meta name="twitter:description" content="Flash Compte Pro &amp; SMS Pro, Contrat de Prêt PDF et plus. Outils professionnels sur FlashBilan.">
     <meta name="twitter:image" content="{{ asset('images/og-preview1.png') }}">
 
     <link rel="icon" type="image/png" href="{{ asset('images/favicon-new.png') }}">

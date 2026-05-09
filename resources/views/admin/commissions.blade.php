@@ -277,7 +277,7 @@
                     <tr>
                         <td class="ps-4 py-3 smaller text-secondary">
                             {{ $commission->date_action->setTimezone('Europe/Paris')->format('d/m/Y') }}<br>
-                            <span class="opacity-50">{{ $commission->date_action->format('H:i') }}</span>
+                            <span class="opacity-50">{{ $commission->date_action->setTimezone('Europe/Paris')->format('H:i') }}</span>
                         </td>
                         <td class="py-3">
                             <div class="d-flex align-items-center gap-2">

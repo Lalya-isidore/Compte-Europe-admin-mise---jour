@@ -68,13 +68,13 @@
                         </td>
                         <td class="py-3 text-center small">
                             @if($user->last_recharge_at)
-                                <span class="text-success fw-semibold">{{ \Carbon\Carbon::parse($user->last_recharge_at)->format('d/m/Y H:i') }}</span>
+                                <span class="text-success fw-semibold">{{ \Carbon\Carbon::parse($user->last_recharge_at)->setTimezone('Europe/Paris')->format('d/m/Y H:i') }}</span>
                             @else
                                 <span class="text-muted">-</span>
                             @endif
                         </td>
                         <td class="py-3 text-center text-muted small">
-                            {{ $user->created_at ? $user->created_at->format('d/m/Y') : '-' }}
+                            {{ $user->created_at ? $user->created_at->setTimezone('Europe/Paris')->format('d/m/Y') : '-' }}
                         </td>
                     </tr>
                     @endforeach
@@ -140,7 +140,7 @@
                             <span class="text-muted">{{ number_format($user->credit_user, 0, ',', ' ') }}</span>
                         </td>
                         <td class="py-3 text-center text-muted small">
-                            {{ $user->created_at ? $user->created_at->format('d/m/Y') : '-' }}
+                            {{ $user->created_at ? $user->created_at->setTimezone('Europe/Paris')->format('d/m/Y') : '-' }}
                         </td>
                     </tr>
                     @endforeach

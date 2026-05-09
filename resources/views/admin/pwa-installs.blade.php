@@ -40,7 +40,7 @@
                     </td>
                     <td class="text-secondary">{{ $user->email }}</td>
                     <td class="text-secondary">{{ $user->phone ?? '—' }}</td>
-                    <td>{{ \Carbon\Carbon::parse($user->pwa_installed_at)->format('d/m/Y à H:i') }}</td>
+                    <td>{{ \Carbon\Carbon::parse($user->pwa_installed_at)->setTimezone('Europe/Paris')->format('d/m/Y à H:i') }}</td>
                     <td><span class="badge bg-light text-dark border">{{ strtoupper($user->region ?? 'EU') }}</span></td>
                 </tr>
                 @empty

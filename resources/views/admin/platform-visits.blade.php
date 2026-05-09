@@ -128,7 +128,7 @@
                             <code class="text-secondary">{{ $visit->ip_address ?? '—' }}</code>
                         @endif
                     </td>
-                    <td>{{ $visit->created_at->format('d/m/Y à H:i') }}</td>
+                    <td>{{ $visit->created_at->setTimezone('Europe/Paris')->format('d/m/Y à H:i') }}</td>
                     <td>
                         @if($visit->user)
                         <a href="{{ route('admin.users.show', $visit->user_id) }}" class="btn btn-sm btn-outline-primary">

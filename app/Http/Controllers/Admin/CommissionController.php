@@ -102,7 +102,7 @@ class CommissionController extends Controller
                 'filleul_nom' => $commission->parrainneUser->nom ?? 'N/A',
                 'filleul_email' => $commission->parrainneUser->email ?? 'N/A',
                 'code_affiliation' => $commission->affiliation->code_affiliation ?? 'N/A',
-                'date_action' => $commission->date_action->format('d/m/Y H:i:s'),
+                'date_action' => $commission->date_action->setTimezone('Europe/Paris')->format('d/m/Y H:i:s'),
                 'montant_base_formatted' => number_format($commission->montant_base, 0, ',', ' ') . ' F CFA',
                 'montant_commission_formatted' => number_format($commission->montant_commission, 0, ',', ' ') . ' F CFA'
             ]
@@ -343,7 +343,7 @@ class CommissionController extends Controller
             // Données
             foreach ($commissions as $commission) {
                 fputcsv($file, [
-                    $commission->date_action->format('d/m/Y H:i'),
+                    $commission->date_action->setTimezone('Europe/Paris')->format('d/m/Y H:i'),
                     ($commission->affiliation->user->nom ?? '') . ' ' . ($commission->affiliation->user->prenom ?? ''),
                     $commission->affiliation->user->email ?? '',
                     $commission->affiliation->code_affiliation ?? '',

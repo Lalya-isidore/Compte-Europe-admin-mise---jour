@@ -48,8 +48,8 @@
                     <td>{{ $usage->user->phone ?? '—' }}</td>
                     <td><code>{{ $usage->ip_address ?? '—' }}</code></td>
                     <td>
-                        <span title="{{ $usage->created_at }}">
-                            {{ $usage->created_at->format('d/m/Y à H:i') }}
+                        <span title="{{ $usage->created_at->setTimezone('Europe/Paris') }}">
+                            {{ $usage->created_at->setTimezone('Europe/Paris')->format('d/m/Y à H:i') }}
                         </span>
                     </td>
                     <td>
