@@ -57,7 +57,7 @@
                     <div class="text-center mb-3">
                         <span class="badge fw-bold px-4 py-2" style="background:#10b981;font-size:.85rem;border-radius:999px;letter-spacing:.05em;">✨ NOUVEAUX PACKS</span>
                     </div>
-                    <div class="row g-3 mb-4">
+                    <div class="row g-3 mb-4 pack-row">
                         <div class="col-6 col-md-6 col-lg-4">
                             <div class="card h-100 package-card position-relative" style="border:2px solid #10b981;border-radius:16px;background:#fff;" data-amount="1500" data-credits="1000">
                                 <span class="position-absolute top-0 start-0 badge fw-bold px-2 py-1 m-2" style="background:#10b981;border-radius:8px;font-size:.7rem;">NOUVEAU</span>
@@ -108,7 +108,7 @@
                     </div>
 
                     <!-- Packages existants -->
-                    <div class="row g-3 mb-5">
+                    <div class="row g-3 mb-5 pack-row">
                         <div class="col-6 col-md-6 col-lg-4">
                             <div class="card h-100 package-card" style="border:2px solid #198754;border-radius:16px;background:#fff;" data-amount="10000" data-credits="15000">
                                 <div class="card-body text-center p-4">
@@ -541,6 +541,11 @@
     }
 
     @media (max-width: 576px) {
+        .pack-row > div {
+            flex: 0 0 50% !important;
+            max-width: 50% !important;
+            width: 50% !important;
+        }
         .package-card .card-body {
             padding: 0.6rem !important;
             padding-top: 1.8rem !important;
