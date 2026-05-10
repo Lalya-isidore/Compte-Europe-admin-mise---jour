@@ -445,11 +445,24 @@
                     @if($history->isEmpty())
                         <!-- État vide -->
                         <div class="text-center py-4">
-                            <div class="mb-3" style="position:relative;width:90px;height:80px;margin:0 auto;">
-                                <div class="d-flex align-items-end justify-content-center" style="position:absolute;bottom:0;left:0;right:0;height:65px;background:#eff6ff;border-radius:14px;">
-                                    <i class="fas fa-box-open mb-2" style="color:#93c5fd;font-size:2.2rem;"></i>
-                                </div>
-                                <i class="fas fa-paper-plane" style="position:absolute;top:2px;right:8px;color:#3b82f6;font-size:1.2rem;transform:rotate(-20deg);"></i>
+                            <div class="mb-3" style="margin:0 auto;width:110px;">
+                                <svg viewBox="0 0 110 90" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:110px;height:90px;">
+                                    <!-- Boîte ouverte -->
+                                    <rect x="15" y="42" width="70" height="42" rx="5" fill="#bfdbfe"/>
+                                    <path d="M15 42 L50 54 L85 42" stroke="#93c5fd" stroke-width="2" fill="none"/>
+                                    <!-- Rabat gauche -->
+                                    <path d="M15 42 L22 28 L50 28 L50 54 Z" fill="#dbeafe" stroke="#93c5fd" stroke-width="1.5"/>
+                                    <!-- Rabat droit -->
+                                    <path d="M85 42 L78 28 L50 28 L50 54 Z" fill="#eff6ff" stroke="#93c5fd" stroke-width="1.5"/>
+                                    <!-- Avion en papier -->
+                                    <g transform="translate(68, 8) rotate(-20)">
+                                        <path d="M0 8 L22 0 L14 14 Z" fill="#3b82f6"/>
+                                        <path d="M0 8 L14 14 L10 20 Z" fill="#60a5fa"/>
+                                        <path d="M14 14 L10 20 L22 0 Z" fill="#2563eb"/>
+                                    </g>
+                                    <!-- Pointillés trajectoire -->
+                                    <path d="M58 22 Q65 15 72 12" stroke="#93c5fd" stroke-width="1.5" stroke-dasharray="3 3" fill="none"/>
+                                </svg>
                             </div>
                             <p class="fw-semibold mb-1" style="color:#1e293b;">Aucun envoi pour le moment</p>
                             <p class="text-secondary mb-0" style="font-size:.83rem;">Vos envois de SMS apparaîtront ici.</p>
