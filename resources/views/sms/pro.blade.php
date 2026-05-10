@@ -163,8 +163,8 @@ $svg = [
 <div class="container-fluid px-0 sms-pro-wrapper" style="max-width: 100%;">
 
     <!-- Hero card SMS Pro -->
-    <div class="mx-3 mx-sm-4 mt-3 mb-3 rounded-4 overflow-hidden position-relative" style="background:linear-gradient(135deg,#e8f0fe 0%,#f0f4ff 100%);border:1px solid #dbe4ff;">
-        <div class="d-flex align-items-center gap-3 p-3 p-sm-4">
+    <div class="mx-3 mx-sm-4 mt-2 mb-2 rounded-4 overflow-hidden position-relative" style="background:linear-gradient(135deg,#e8f0fe 0%,#f0f4ff 100%);border:1px solid #dbe4ff;">
+        <div class="d-flex align-items-center gap-3 p-3">
             <div class="flex-shrink-0 rounded-3 d-flex align-items-center justify-content-center" style="width:60px;height:60px;background:#1d4ed8;">
                 {!! $svg['sms'] !!}
             </div>
@@ -181,7 +181,7 @@ $svg = [
     </div>
 
     <!-- Bouton info -->
-    <div class="mx-3 mx-sm-4 mb-3">
+    <div class="mx-3 mx-sm-4 mb-2">
         <button class="btn w-100 d-flex align-items-center gap-3 px-3 py-3 rounded-3" type="button"
             data-bs-toggle="modal" data-bs-target="#utiliteModal"
             style="background:#fff;color:#1e293b;border:1.5px solid #e2e8f0;text-align:left;">
