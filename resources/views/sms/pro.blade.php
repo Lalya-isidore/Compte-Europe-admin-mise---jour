@@ -149,9 +149,7 @@ $svg = [
             height: 38px !important;
         }
         .sms-field-icon {
-            width: 34px !important;
-            height: 34px !important;
-            font-size: .85rem !important;
+            display: none !important;
         }
     }
 </style>
