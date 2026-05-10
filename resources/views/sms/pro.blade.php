@@ -435,38 +435,72 @@
 
         <!-- Colonne droite: Historique -->
         <div class="col-12 col-xl-4 p-0 sms-history-column">
-            <div class="sms-history-column__header">
-                <h5 class="mb-0"><i class="fas fa-history me-2"></i>Historique des envois (<span id="history-count">{{ count($history) }}</span>)</h5>
+            <!-- Header historique -->
+            <div class="p-3 d-flex align-items-center gap-2" style="background:#fff;border-bottom:1px solid #e2e8f0;">
+                <i class="fas fa-history" style="color:#3b82f6;font-size:1.1rem;"></i>
+                <h6 class="mb-0 fw-bold" style="color:#1e293b;">Historique des envois (<span id="history-count">{{ count($history) }}</span>)</h6>
             </div>
             <div class="p-3 history-scroll">
                 <div id="history-container">
-                        @if($history->isEmpty())
-                            <p class="text-center text-muted">Aucun envoi pour le moment</p>
-                        @else
-                            @foreach($history as $item)
-                                <div class="border-bottom pb-2 mb-2" style="cursor: pointer;" onclick="showSmsDetails({{ $item->id }})">
-                                    <div class="d-flex justify-content-between align-items-start mb-1">
-                                        @if($item->status === 'Livré')
-                                            <span class="badge bg-success">Livré ✓</span>
-                                        @elseif($item->status === 'Envoyé')
-                                            <span class="badge bg-info">Envoyé ✉</span>
-                                        @else
-                                            <span class="badge bg-danger">Rejeté ⚠</span>
-                                        @endif
-                                        <small class="text-muted">{{ $item->created_at->format('d/m/y') }} à {{ $item->created_at->format('H:i') }} UTC+0</small>
-                                    </div>
-                                    <div class="small">
-                                        <strong>De {{ $item->expediteur }} au {{ $item->destinataire }}</strong> le {{ $item->created_at->format('d/m/Y') }} à {{ $item->created_at->format('H:i') }} UTC+0
-                                    </div>
+                    @if($history->isEmpty())
+                        <!-- État vide -->
+                        <div class="text-center py-4">
+                            <div class="mb-3" style="position:relative;width:90px;height:80px;margin:0 auto;">
+                                <div class="d-flex align-items-end justify-content-center" style="position:absolute;bottom:0;left:0;right:0;height:65px;background:#eff6ff;border-radius:14px;">
+                                    <i class="fas fa-box-open mb-2" style="color:#93c5fd;font-size:2.2rem;"></i>
                                 </div>
-                            @endforeach
-                        @endif
+                                <i class="fas fa-paper-plane" style="position:absolute;top:2px;right:8px;color:#3b82f6;font-size:1.2rem;transform:rotate(-20deg);"></i>
+                            </div>
+                            <p class="fw-semibold mb-1" style="color:#1e293b;">Aucun envoi pour le moment</p>
+                            <p class="text-secondary mb-0" style="font-size:.83rem;">Vos envois de SMS apparaîtront ici.</p>
+                        </div>
+                    @else
+                        @foreach($history as $item)
+                            <div class="border-bottom pb-2 mb-2" style="cursor:pointer;" onclick="showSmsDetails({{ $item->id }})">
+                                <div class="d-flex justify-content-between align-items-start mb-1">
+                                    @if($item->status === 'Livré')
+                                        <span class="badge bg-success">Livré ✓</span>
+                                    @elseif($item->status === 'Envoyé')
+                                        <span class="badge bg-info">Envoyé ✉</span>
+                                    @else
+                                        <span class="badge bg-danger">Rejeté ⚠</span>
+                                    @endif
+                                    <small class="text-muted">{{ $item->created_at->setTimezone('Europe/Paris')->format('d/m/y') }} à {{ $item->created_at->setTimezone('Europe/Paris')->format('H:i') }}</small>
+                                </div>
+                                <div class="small">
+                                    <strong>De {{ $item->expediteur }} au {{ $item->destinataire }}</strong> le {{ $item->created_at->setTimezone('Europe/Paris')->format('d/m/Y') }} à {{ $item->created_at->setTimezone('Europe/Paris')->format('H:i') }}
+                                </div>
+                            </div>
+                        @endforeach
+                    @endif
                 </div>
-                    
-                <div class="mt-3 px-3 pb-3">
-                    <button class="btn btn-danger w-100" id="btnSupprimerHistorique" style="background-color: #dc3545; border-color: #dc3545;">
+
+                <div class="mt-3 pb-3">
+                    <button class="btn btn-outline-danger w-100" id="btnSupprimerHistorique">
                         <i class="fas fa-trash me-2"></i>Supprimer l'historique des envois
                     </button>
+                </div>
+
+                <!-- Bonnes pratiques -->
+                <div class="mt-3 rounded-3 p-3" style="background:#fff;border:1px solid #e2e8f0;">
+                    <div class="d-flex align-items-center gap-2 mb-3">
+                        <i class="fas fa-shield-alt" style="color:#16a34a;font-size:1.05rem;"></i>
+                        <span class="fw-bold" style="color:#1e293b;font-size:.92rem;">Bonnes pratiques</span>
+                    </div>
+                    <ul class="list-unstyled mb-0">
+                        <li class="d-flex gap-2 mb-2">
+                            <i class="fas fa-check-circle text-success flex-shrink-0 mt-1" style="font-size:.85rem;"></i>
+                            <span class="text-secondary" style="font-size:.85rem;">Utilisez des noms d'expéditeur clairs et professionnels.</span>
+                        </li>
+                        <li class="d-flex gap-2 mb-2">
+                            <i class="fas fa-check-circle text-success flex-shrink-0 mt-1" style="font-size:.85rem;"></i>
+                            <span class="text-secondary" style="font-size:.85rem;">Évitez les mots interdits pour garantir la livraison.</span>
+                        </li>
+                        <li class="d-flex gap-2">
+                            <i class="fas fa-check-circle text-success flex-shrink-0 mt-1" style="font-size:.85rem;"></i>
+                            <span class="text-secondary" style="font-size:.85rem;">Vérifiez vos crédits avant chaque envoi.</span>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </div>
