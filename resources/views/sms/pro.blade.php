@@ -198,10 +198,10 @@ $svg = [
 
     <div class="row g-0 m-0 sms-layout-row">
         <!-- Colonne gauche: Formulaire d'envoi -->
-        <div class="col-12 col-xl-8 p-3 sms-form-column">
+        <div class="col-12 col-xl-8 p-2 sms-form-column">
 
             <!-- En-tête formulaire avec crédits -->
-            <div class="rounded-3 p-3 mb-3 d-flex align-items-center gap-3" style="background:#fff;border:1px solid #e2e8f0;box-shadow:0 1px 3px rgba(0,0,0,.05);">
+            <div class="rounded-3 p-3 mb-2 d-flex align-items-center gap-3" style="background:#fff;border:1px solid #e2e8f0;box-shadow:0 1px 3px rgba(0,0,0,.05);">
                 <div class="flex-shrink-0 rounded-3 d-flex align-items-center justify-content-center sms-form-header-icon" style="width:48px;height:48px;background:#1d4ed8;">
                     {!! $svg['plane'] !!}
                 </div>
@@ -222,7 +222,7 @@ $svg = [
                 @csrf
 
                 <!-- Expéditeur -->
-                <div class="rounded-3 p-3 mb-3 d-flex align-items-start gap-3" style="background:#fff;border:1px solid #e2e8f0;">
+                <div class="rounded-3 p-3 mb-2 d-flex align-items-start gap-3" style="background:#fff;border:1px solid #e2e8f0;">
                     <div class="flex-shrink-0 rounded-circle d-flex align-items-center justify-content-center sms-field-icon" style="width:40px;height:40px;background:#eff6ff;">
                         {!! $svg['user'] !!}
                     </div>
@@ -240,7 +240,7 @@ $svg = [
                 </div>
 
                 <!-- Destinataire -->
-                <div class="rounded-3 p-3 mb-3 d-flex align-items-start gap-3" style="background:#fff;border:1px solid #e2e8f0;">
+                <div class="rounded-3 p-3 mb-2 d-flex align-items-start gap-3" style="background:#fff;border:1px solid #e2e8f0;">
                     <div class="flex-shrink-0 rounded-circle d-flex align-items-center justify-content-center sms-field-icon" style="width:40px;height:40px;background:#f0fdf4;">
                         {!! $svg['users'] !!}
                     </div>
@@ -429,7 +429,7 @@ $svg = [
                 </div>
 
                 <!-- Message -->
-                <div class="rounded-3 p-3 mb-3 d-flex align-items-start gap-3" style="background:#fff;border:1px solid #e2e8f0;">
+                <div class="rounded-3 p-3 mb-2 d-flex align-items-start gap-3" style="background:#fff;border:1px solid #e2e8f0;">
                     <div class="flex-shrink-0 rounded-circle d-flex align-items-center justify-content-center sms-field-icon" style="width:40px;height:40px;background:#faf5ff;">
                         {!! $svg['chat'] !!}
                     </div>
