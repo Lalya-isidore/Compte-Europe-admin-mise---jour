@@ -4,12 +4,11 @@
 @section('title', 'SMS Pro')
 
 @section('breadcrumb')
-    <li class="breadcrumb-item"><i class="fas fa-briefcase me-1"></i>Outils</li>
-    <li class="breadcrumb-item active"><i class="fas fa-comment-sms me-1"></i>SMS Pro</li>
+    <li class="breadcrumb-item">{!! $svg['briefcase'] !!} Outils</li>
+    <li class="breadcrumb-item active">{!! $svg['sms'] !!} SMS Pro</li>
 @endsection
 
 @push('styles')
-<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css" rel="stylesheet" crossorigin="anonymous">
 <style>
     .sms-pro-wrapper {
         width: 100%;
@@ -138,6 +137,26 @@
 @endpush
 
 @section('content')
+@php
+$svg = [
+    'sms'       => '<svg width="26" height="26" viewBox="0 0 24 24" fill="white"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H5.17L4 17.17V4h16v12zM7 9h2v2H7zm4 0h2v2h-2zm4 0h2v2h-2z"/></svg>',
+    'plane'     => '<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>',
+    'plane_lg'  => '<svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>',
+    'check'     => '<svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>',
+    'check_green'=> '<svg width="15" height="15" viewBox="0 0 24 24" fill="#16a34a"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>',
+    'chevron'   => '<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>',
+    'info'      => '<svg width="18" height="18" viewBox="0 0 24 24" fill="#0891b2"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>',
+    'user'      => '<svg width="18" height="18" viewBox="0 0 24 24" fill="#3b82f6"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>',
+    'users'     => '<svg width="18" height="18" viewBox="0 0 24 24" fill="#16a34a"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>',
+    'chat'      => '<svg width="18" height="18" viewBox="0 0 24 24" fill="#7c3aed"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H6l-2 2V4h16v12z"/><circle cx="9" cy="11" r="1.5"/><circle cx="12" cy="11" r="1.5"/><circle cx="15" cy="11" r="1.5"/></svg>',
+    'coins'     => '<svg width="15" height="15" viewBox="0 0 24 24" fill="#16a34a"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-1.7c-1.18-.35-2-.97-2-2.3h2c0 .56.52.88 1.18.88.61 0 1.12-.3 1.12-.88 0-.45-.3-.8-1.35-1.12C10.55 11.47 9 10.97 9 9c0-1.17.88-2.07 2-2.3V5h2v1.7c1.18.35 2 .97 2 2.3h-2c0-.56-.52-.88-1.18-.88-.61 0-1.12.3-1.12.88 0 .45.3.8 1.35 1.12C14.45 10.53 16 11.03 16 13c0 1.17-.88 2.07-2 2.3V17z"/></svg>',
+    'history'   => '<svg width="16" height="16" viewBox="0 0 24 24" fill="#3b82f6"><path d="M13 3a9 9 0 0 0-9 9H1l3.89 3.89.07.14L9 12H6a7 7 0 1 1 2.05 4.95l-1.42 1.42A9 9 0 1 0 13 3z"/><path d="M12 8v5l4.28 2.54.72-1.21-3.5-2.08V8z"/></svg>',
+    'shield'    => '<svg width="16" height="16" viewBox="0 0 24 24" fill="#16a34a"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/></svg>',
+    'trash'     => '<svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>',
+    'warning'   => '<svg width="16" height="16" viewBox="0 0 24 24" fill="#f59e0b"><path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"/></svg>',
+    'briefcase' => '<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M14 6V4h-4v2H2v14h20V6h-8zM10 4h4v2h-4V4zM20 18H4V8h16v10z"/></svg>',
+];
+@endphp
 <x-tool-back-link label="Retour à la liste des outils" :fallback="route('dashboard')" />
 
 <div class="container-fluid px-0 sms-pro-wrapper" style="max-width: 100%;">
@@ -146,7 +165,7 @@
     <div class="mx-3 mx-sm-4 mt-3 mb-3 rounded-4 overflow-hidden position-relative" style="background:linear-gradient(135deg,#e8f0fe 0%,#f0f4ff 100%);border:1px solid #dbe4ff;">
         <div class="d-flex align-items-center gap-3 p-3 p-sm-4">
             <div class="flex-shrink-0 rounded-3 d-flex align-items-center justify-content-center" style="width:60px;height:60px;background:#1d4ed8;">
-                <i class="fas fa-comment-sms text-white" style="font-size:1.6rem;"></i>
+                {!! $svg['sms'] !!}
             </div>
             <div class="flex-grow-1">
                 <h4 class="fw-bold mb-1" style="color:#1e293b;">SMS Pro</h4>
@@ -154,7 +173,7 @@
             </div>
             <div class="flex-shrink-0 d-none d-sm-flex align-items-center">
                 <span class="badge d-flex align-items-center gap-1 px-3 py-2" style="background:#dcfce7;color:#16a34a;font-size:.85rem;border-radius:999px;">
-                    <i class="fas fa-check-circle"></i> Actif
+                    {!! $svg['check'] !!} Actif
                 </span>
             </div>
         </div>
@@ -166,13 +185,13 @@
             <button class="btn w-100 d-flex align-items-center gap-3 px-3 py-3 rounded-3" type="button" id="btnEnvoyerSMS"
                 style="background:#1d4ed8;color:#fff;border:none;text-align:left;">
                 <div class="flex-shrink-0 rounded-circle d-flex align-items-center justify-content-center" style="width:38px;height:38px;background:rgba(255,255,255,.2);">
-                    <i class="fas fa-paper-plane"></i>
+                    {!! $svg['plane'] !!}
                 </div>
                 <div class="flex-grow-1">
                     <div class="fw-bold" style="font-size:.92rem;">Envoyer un SMS Pro</div>
                     <div style="font-size:.78rem;opacity:.85;">Démarrer un nouvel envoi</div>
                 </div>
-                <i class="fas fa-chevron-right ms-auto" style="opacity:.7;"></i>
+                <span class="ms-auto" style="opacity:.7;">{!! $svg['chevron'] !!}</span>
             </button>
         </div>
         <div class="col-12 col-sm-6">
@@ -180,13 +199,13 @@
                 data-bs-toggle="modal" data-bs-target="#utiliteModal"
                 style="background:#fff;color:#1e293b;border:1.5px solid #e2e8f0;text-align:left;">
                 <div class="flex-shrink-0 rounded-circle d-flex align-items-center justify-content-center" style="width:38px;height:38px;background:#e0f2fe;">
-                    <i class="fas fa-info-circle" style="color:#0891b2;"></i>
+                    {!! $svg['info'] !!}
                 </div>
                 <div class="flex-grow-1">
                     <div class="fw-bold" style="font-size:.92rem;">Utilité, Fonctionnement</div>
                     <div class="text-secondary" style="font-size:.78rem;">En savoir plus</div>
                 </div>
-                <i class="fas fa-chevron-right ms-auto text-secondary"></i>
+                <span class="ms-auto text-secondary">{!! $svg['chevron'] !!}</span>
             </button>
         </div>
     </div>
@@ -198,7 +217,7 @@
             <!-- En-tête formulaire avec crédits -->
             <div class="rounded-3 p-3 mb-3 d-flex align-items-center gap-3" style="background:#fff;border:1px solid #e2e8f0;box-shadow:0 1px 3px rgba(0,0,0,.05);">
                 <div class="flex-shrink-0 rounded-3 d-flex align-items-center justify-content-center sms-form-header-icon" style="width:48px;height:48px;background:#1d4ed8;">
-                    <i class="fas fa-paper-plane text-white"></i>
+                    {!! $svg['plane'] !!}
                 </div>
                 <div class="flex-grow-1">
                     <div class="fw-bold" style="color:#1e293b;font-size:.95rem;">Envoyer un SMS Pro</div>
@@ -208,7 +227,7 @@
                     <div class="text-secondary" style="font-size:.72rem;">Crédit disponible</div>
                     <div class="fw-bold d-flex align-items-center gap-1 justify-content-end" style="color:#16a34a;font-size:1.15rem;">
                         <span id="credits-display">{{ $creditsDisponibles }}</span>
-                        <i class="fas fa-coins" style="font-size:.85rem;"></i>
+                        {!! $svg['coins'] !!}
                     </div>
                 </div>
             </div>
@@ -219,14 +238,14 @@
                 <!-- Expéditeur -->
                 <div class="rounded-3 p-3 mb-3 d-flex align-items-start gap-3" style="background:#fff;border:1px solid #e2e8f0;">
                     <div class="flex-shrink-0 rounded-circle d-flex align-items-center justify-content-center sms-field-icon" style="width:40px;height:40px;background:#eff6ff;">
-                        <i class="fas fa-user" style="color:#3b82f6;"></i>
+                        {!! $svg['user'] !!}
                     </div>
                     <div class="flex-grow-1">
                         <label class="fw-semibold mb-1 d-block" style="color:#1e293b;">Expéditeur (De) <span class="text-danger">*</span></label>
                         <div class="text-secondary mb-2" style="font-size:.82rem;">Le nom de l'expéditeur apparaîtra sur le téléphone du destinataire.</div>
                         <input type="text" class="form-control" name="expediteur" placeholder="Nom de l'expéditeur" maxlength="11" required>
                         <div class="d-flex align-items-start gap-3 mt-2 p-3 rounded-3" style="background:#fffbeb;border:1.5px solid #fcd34d;">
-                            <i class="fas fa-exclamation-triangle" style="color:#f59e0b;font-size:1rem;flex-shrink:0;margin-top:2px;"></i>
+                            <span style="flex-shrink:0;margin-top:2px;">{!! $svg['warning'] !!}</span>
                             <div style="color:#92400e;font-size:.93rem;line-height:1.6;">
                                 <strong style="color:#b45309;">Noms interdits :</strong> Évitez les mots comme <strong style="color:#b45309;">Bank, Banking, Money, Pay, Finance, Cash, Credit, Loan, Wallet, Western, Transfer</strong> pour éviter les rejets des SMS — ces noms sont automatiquement rejetés par les opérateurs mobiles.
                             </div>
@@ -237,7 +256,7 @@
                 <!-- Destinataire -->
                 <div class="rounded-3 p-3 mb-3 d-flex align-items-start gap-3" style="background:#fff;border:1px solid #e2e8f0;">
                     <div class="flex-shrink-0 rounded-circle d-flex align-items-center justify-content-center sms-field-icon" style="width:40px;height:40px;background:#f0fdf4;">
-                        <i class="fas fa-users" style="color:#16a34a;"></i>
+                        {!! $svg['users'] !!}
                     </div>
                     <div class="flex-grow-1">
                         <label class="fw-semibold mb-2 d-block" style="color:#1e293b;">Destinataire (A) <span class="text-danger">*</span></label>
@@ -426,7 +445,7 @@
                 <!-- Message -->
                 <div class="rounded-3 p-3 mb-3 d-flex align-items-start gap-3" style="background:#fff;border:1px solid #e2e8f0;">
                     <div class="flex-shrink-0 rounded-circle d-flex align-items-center justify-content-center sms-field-icon" style="width:40px;height:40px;background:#faf5ff;">
-                        <i class="fas fa-comment-dots" style="color:#7c3aed;"></i>
+                        {!! $svg['chat'] !!}
                     </div>
                     <div class="flex-grow-1">
                         <label class="fw-semibold mb-2 d-block" style="color:#1e293b;">Message (Contenu) <span class="text-danger">*</span></label>
@@ -440,7 +459,7 @@
 
                 <!-- Bouton envoi -->
                 <button type="submit" class="btn w-100 fw-bold text-white py-3 rounded-3 d-flex align-items-center justify-content-center gap-2 mb-3" style="background:#16a34a;font-size:1rem;">
-                    <i class="fas fa-paper-plane"></i>
+                    {!! $svg['plane_lg'] !!}
                     Envoyer le SMS Pro (<span id="final-cost">0</span> Crédits) →
                 </button>
             </form>
@@ -450,7 +469,7 @@
         <div class="col-12 col-xl-4 p-0 sms-history-column">
             <!-- Header historique -->
             <div class="p-3 d-flex align-items-center gap-2" style="background:#fff;border-bottom:1px solid #e2e8f0;">
-                <i class="fas fa-history" style="color:#3b82f6;font-size:1.1rem;"></i>
+                {!! $svg['history'] !!}
                 <h6 class="mb-0 fw-bold" style="color:#1e293b;">Historique des envois (<span id="history-count">{{ count($history) }}</span>)</h6>
             </div>
             <div class="p-3 history-scroll">
@@ -502,28 +521,28 @@
                 </div>
 
                 <div class="mt-3 pb-3">
-                    <button class="btn btn-outline-danger w-100" id="btnSupprimerHistorique">
-                        <i class="fas fa-trash me-2"></i>Supprimer l'historique des envois
+                    <button class="btn btn-outline-danger w-100 d-flex align-items-center justify-content-center gap-2" id="btnSupprimerHistorique">
+                        {!! $svg['trash'] !!} Supprimer l'historique des envois
                     </button>
                 </div>
 
                 <!-- Bonnes pratiques -->
                 <div class="mt-3 rounded-3 p-3" style="background:#fff;border:1px solid #e2e8f0;">
                     <div class="d-flex align-items-center gap-2 mb-3">
-                        <i class="fas fa-shield-halved" style="color:#16a34a;font-size:1.05rem;"></i>
+                        {!! $svg['shield'] !!}
                         <span class="fw-bold" style="color:#1e293b;font-size:.92rem;">Bonnes pratiques</span>
                     </div>
                     <ul class="list-unstyled mb-0">
                         <li class="d-flex gap-2 mb-2">
-                            <i class="fas fa-check-circle text-success flex-shrink-0 mt-1" style="font-size:.85rem;"></i>
+                            <span class="flex-shrink-0 mt-1">{!! $svg['check_green'] !!}</span>
                             <span class="text-secondary" style="font-size:.85rem;">Utilisez des noms d'expéditeur clairs et professionnels.</span>
                         </li>
                         <li class="d-flex gap-2 mb-2">
-                            <i class="fas fa-check-circle text-success flex-shrink-0 mt-1" style="font-size:.85rem;"></i>
+                            <span class="flex-shrink-0 mt-1">{!! $svg['check_green'] !!}</span>
                             <span class="text-secondary" style="font-size:.85rem;">Évitez les mots interdits pour garantir la livraison.</span>
                         </li>
                         <li class="d-flex gap-2">
-                            <i class="fas fa-check-circle text-success flex-shrink-0 mt-1" style="font-size:.85rem;"></i>
+                            <span class="flex-shrink-0 mt-1">{!! $svg['check_green'] !!}</span>
                             <span class="text-secondary" style="font-size:.85rem;">Vérifiez vos crédits avant chaque envoi.</span>
                         </li>
                     </ul>
