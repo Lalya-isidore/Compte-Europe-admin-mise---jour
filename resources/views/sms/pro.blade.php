@@ -5,10 +5,11 @@
 
 @section('breadcrumb')
     <li class="breadcrumb-item"><i class="fas fa-briefcase me-1"></i>Outils</li>
-    <li class="breadcrumb-item active"><i class="fas fa-sms me-1"></i>SMS Pro</li>
+    <li class="breadcrumb-item active"><i class="fas fa-comment-sms me-1"></i>SMS Pro</li>
 @endsection
 
 @push('styles')
+<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css" rel="stylesheet" crossorigin="anonymous">
 <style>
     .sms-pro-wrapper {
         width: 100%;
@@ -145,7 +146,7 @@
     <div class="mx-3 mx-sm-4 mt-3 mb-3 rounded-4 overflow-hidden position-relative" style="background:linear-gradient(135deg,#e8f0fe 0%,#f0f4ff 100%);border:1px solid #dbe4ff;">
         <div class="d-flex align-items-center gap-3 p-3 p-sm-4">
             <div class="flex-shrink-0 rounded-3 d-flex align-items-center justify-content-center" style="width:60px;height:60px;background:#1d4ed8;">
-                <i class="fas fa-sms text-white" style="font-size:1.6rem;"></i>
+                <i class="fas fa-comment-sms text-white" style="font-size:1.6rem;"></i>
             </div>
             <div class="flex-grow-1">
                 <h4 class="fw-bold mb-1" style="color:#1e293b;">SMS Pro</h4>
@@ -509,7 +510,7 @@
                 <!-- Bonnes pratiques -->
                 <div class="mt-3 rounded-3 p-3" style="background:#fff;border:1px solid #e2e8f0;">
                     <div class="d-flex align-items-center gap-2 mb-3">
-                        <i class="fas fa-shield-alt" style="color:#16a34a;font-size:1.05rem;"></i>
+                        <i class="fas fa-shield-halved" style="color:#16a34a;font-size:1.05rem;"></i>
                         <span class="fw-bold" style="color:#1e293b;font-size:.92rem;">Bonnes pratiques</span>
                     </div>
                     <ul class="list-unstyled mb-0">
