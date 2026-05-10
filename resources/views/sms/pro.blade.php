@@ -180,35 +180,20 @@ $svg = [
         </div>
     </div>
 
-    <!-- Boutons d'action -->
-    <div class="mx-3 mx-sm-4 mb-3 row g-2">
-        <div class="col-12 col-sm-6">
-            <button class="btn w-100 d-flex align-items-center gap-3 px-3 py-3 rounded-3" type="button" id="btnEnvoyerSMS"
-                style="background:#1d4ed8;color:#fff;border:none;text-align:left;">
-                <div class="flex-shrink-0 rounded-circle d-flex align-items-center justify-content-center" style="width:38px;height:38px;background:rgba(255,255,255,.2);">
-                    {!! $svg['plane'] !!}
-                </div>
-                <div class="flex-grow-1">
-                    <div class="fw-bold" style="font-size:.92rem;">Envoyer un SMS Pro</div>
-                    <div style="font-size:.78rem;opacity:.85;">Démarrer un nouvel envoi</div>
-                </div>
-                <span class="ms-auto" style="opacity:.7;">{!! $svg['chevron'] !!}</span>
-            </button>
-        </div>
-        <div class="col-12 col-sm-6">
-            <button class="btn w-100 d-flex align-items-center gap-3 px-3 py-3 rounded-3" type="button"
-                data-bs-toggle="modal" data-bs-target="#utiliteModal"
-                style="background:#fff;color:#1e293b;border:1.5px solid #e2e8f0;text-align:left;">
-                <div class="flex-shrink-0 rounded-circle d-flex align-items-center justify-content-center" style="width:38px;height:38px;background:#e0f2fe;">
-                    {!! $svg['info'] !!}
-                </div>
-                <div class="flex-grow-1">
-                    <div class="fw-bold" style="font-size:.92rem;">Utilité, Fonctionnement</div>
-                    <div class="text-secondary" style="font-size:.78rem;">En savoir plus</div>
-                </div>
-                <span class="ms-auto text-secondary">{!! $svg['chevron'] !!}</span>
-            </button>
-        </div>
+    <!-- Bouton info -->
+    <div class="mx-3 mx-sm-4 mb-3">
+        <button class="btn w-100 d-flex align-items-center gap-3 px-3 py-3 rounded-3" type="button"
+            data-bs-toggle="modal" data-bs-target="#utiliteModal"
+            style="background:#fff;color:#1e293b;border:1.5px solid #e2e8f0;text-align:left;">
+            <div class="flex-shrink-0 rounded-circle d-flex align-items-center justify-content-center" style="width:38px;height:38px;background:#e0f2fe;">
+                {!! $svg['info'] !!}
+            </div>
+            <div class="flex-grow-1">
+                <div class="fw-bold" style="font-size:.92rem;">Utilité, Fonctionnement</div>
+                <div class="text-secondary" style="font-size:.78rem;">En savoir plus</div>
+            </div>
+            <span class="ms-auto text-secondary">{!! $svg['chevron'] !!}</span>
+        </button>
     </div>
 
     <div class="row g-0 m-0 sms-layout-row">
