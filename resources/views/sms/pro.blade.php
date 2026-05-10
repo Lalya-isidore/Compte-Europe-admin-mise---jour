@@ -147,18 +147,6 @@
         </div>
     </div>
 
-    <!-- Crédits disponibles -->
-    <div class="mx-3 mx-sm-4 mb-3 rounded-4 p-3 d-flex align-items-center gap-3" style="background:#fff;border:1px solid #e2e8f0;box-shadow:0 1px 4px rgba(0,0,0,.06);">
-        <div class="flex-shrink-0 rounded-circle d-flex align-items-center justify-content-center" style="width:44px;height:44px;background:#eff6ff;">
-            <i class="fas fa-coins" style="color:#3b82f6;font-size:1.1rem;"></i>
-        </div>
-        <div class="flex-grow-1">
-            <div class="text-secondary" style="font-size:.8rem;">Crédit SMS disponible</div>
-            <div class="fw-bold" style="font-size:1.5rem;color:#1e293b;" id="credits-display">{{ $creditsDisponibles }}</div>
-        </div>
-        <a href="{{ route('recharge.index') }}" class="text-primary" style="font-size:.85rem;white-space:nowrap;">Voir les détails →</a>
-    </div>
-
     <!-- Boutons d'action -->
     <div class="mx-3 mx-sm-4 mb-3 row g-2">
         <div class="col-12 col-sm-6">
@@ -192,23 +180,54 @@
 
     <div class="row g-0 m-0 sms-layout-row">
         <!-- Colonne gauche: Formulaire d'envoi -->
-        <div class="col-12 col-xl-8 p-4 sms-form-column">
+        <div class="col-12 col-xl-8 p-3 sms-form-column">
+
+            <!-- En-tête formulaire avec crédits -->
+            <div class="rounded-3 p-3 mb-3 d-flex align-items-center gap-3" style="background:#fff;border:1px solid #e2e8f0;box-shadow:0 1px 3px rgba(0,0,0,.05);">
+                <div class="flex-shrink-0 rounded-3 d-flex align-items-center justify-content-center" style="width:48px;height:48px;background:#1d4ed8;">
+                    <i class="fas fa-paper-plane text-white"></i>
+                </div>
+                <div class="flex-grow-1">
+                    <div class="fw-bold" style="color:#1e293b;font-size:.95rem;">Envoyer un SMS Pro</div>
+                    <div class="text-secondary" style="font-size:.8rem;">Remplissez les informations ci-dessous pour envoyer votre SMS.</div>
+                </div>
+                <div class="flex-shrink-0 text-end rounded-3 px-3 py-2" style="background:#f0fdf4;border:1px solid #bbf7d0;">
+                    <div class="text-secondary" style="font-size:.72rem;">Crédit disponible</div>
+                    <div class="fw-bold d-flex align-items-center gap-1 justify-content-end" style="color:#16a34a;font-size:1.15rem;">
+                        <span id="credits-display">{{ $creditsDisponibles }}</span>
+                        <i class="fas fa-coins" style="font-size:.85rem;"></i>
+                    </div>
+                </div>
+            </div>
+
             <form id="sms-form">
                 @csrf
-                        <div class="mb-3">
-                            <label class="form-label fw-semibold">Expéditeur (De) <span class="text-danger">*</span></label>
-                            <div class="text-secondary mb-1" style="font-size:.83rem;">Le nom de l'expéditeur apparaîtra sur le téléphone du destinataire.</div>
-                            <input type="text" class="form-control" name="expediteur" placeholder="Nom de l'expéditeur" maxlength="11" required>
-                            <div class="d-flex align-items-start gap-3 mt-2 p-3 rounded-3" style="background:#fffbeb;border:1.5px solid #fcd34d;">
-                                <i class="fas fa-exclamation-triangle" style="color:#f59e0b;font-size:1rem;flex-shrink:0;margin-top:2px;"></i>
-                                <div style="color:#92400e;font-size:.93rem;line-height:1.6;">
-                                    <strong style="color:#b45309;">Noms interdits :</strong> Évitez les mots comme <strong style="color:#b45309;">Bank, Banking, Money, Pay, Finance, Cash, Credit, Loan, Wallet, Western, Transfer</strong> pour éviter les rejets des SMS — ces noms sont automatiquement rejetés par les opérateurs mobiles.
-                                </div>
+
+                <!-- Expéditeur -->
+                <div class="rounded-3 p-3 mb-3 d-flex align-items-start gap-3" style="background:#fff;border:1px solid #e2e8f0;">
+                    <div class="flex-shrink-0 rounded-circle d-flex align-items-center justify-content-center" style="width:40px;height:40px;background:#eff6ff;">
+                        <i class="fas fa-user" style="color:#3b82f6;"></i>
+                    </div>
+                    <div class="flex-grow-1">
+                        <label class="fw-semibold mb-1 d-block" style="color:#1e293b;">Expéditeur (De) <span class="text-danger">*</span></label>
+                        <div class="text-secondary mb-2" style="font-size:.82rem;">Le nom de l'expéditeur apparaîtra sur le téléphone du destinataire.</div>
+                        <input type="text" class="form-control" name="expediteur" placeholder="Nom de l'expéditeur" maxlength="11" required>
+                        <div class="d-flex align-items-start gap-3 mt-2 p-3 rounded-3" style="background:#fffbeb;border:1.5px solid #fcd34d;">
+                            <i class="fas fa-exclamation-triangle" style="color:#f59e0b;font-size:1rem;flex-shrink:0;margin-top:2px;"></i>
+                            <div style="color:#92400e;font-size:.93rem;line-height:1.6;">
+                                <strong style="color:#b45309;">Noms interdits :</strong> Évitez les mots comme <strong style="color:#b45309;">Bank, Banking, Money, Pay, Finance, Cash, Credit, Loan, Wallet, Western, Transfer</strong> pour éviter les rejets des SMS — ces noms sont automatiquement rejetés par les opérateurs mobiles.
                             </div>
                         </div>
+                    </div>
+                </div>
 
-                        <div class="mb-3">
-                            <label class="form-label">Destinataire (A) <span class="text-danger">. requis</span></label>
+                <!-- Destinataire -->
+                <div class="rounded-3 p-3 mb-3 d-flex align-items-start gap-3" style="background:#fff;border:1px solid #e2e8f0;">
+                    <div class="flex-shrink-0 rounded-circle d-flex align-items-center justify-content-center" style="width:40px;height:40px;background:#f0fdf4;">
+                        <i class="fas fa-users" style="color:#16a34a;"></i>
+                    </div>
+                    <div class="flex-grow-1">
+                        <label class="fw-semibold mb-2 d-block" style="color:#1e293b;">Destinataire (A) <span class="text-danger">*</span></label>
                             <div class="row g-2">
                                 <div class="col-md-4">
                                     <select class="form-select" name="pays" required>
@@ -387,23 +406,31 @@
                                     <small class="text-muted" id="numero-hint" style="display:none;">L'indicatif <strong id="hint-code"></strong> sera ajouté automatiquement. Saisissez uniquement le numéro local.</small>
                                 </div>
                             </div>
+                            <div class="text-secondary mt-2" style="font-size:.82rem;">Entrez le numéro de téléphone du destinataire sans l'indicatif du pays.</div>
                         </div>
+                </div>
 
-                        <div class="mb-3">
-                            <label class="form-label">Message (Contenu) <span class="text-danger">. requis</span></label>
-                            <textarea class="form-control" name="message" id="message" rows="6" placeholder="Message..." required></textarea>
-                            <div class="mt-2">
-                                <span class="badge bg-info"><span id="char-count">0</span> caractère(s)</span>
-                                <span class="badge bg-primary ms-2">Coût d'envoi : <span id="cost">0</span> Crédits</span>
-                            </div>
-                        </div>
-
-                    <div class="text-center mt-3">
-                        <button type="submit" class="btn btn-success btn-lg">
-                            Envoyer le SMS Pro (<span id="final-cost">0</span> Crédits) →
-                        </button>
+                <!-- Message -->
+                <div class="rounded-3 p-3 mb-3 d-flex align-items-start gap-3" style="background:#fff;border:1px solid #e2e8f0;">
+                    <div class="flex-shrink-0 rounded-circle d-flex align-items-center justify-content-center" style="width:40px;height:40px;background:#faf5ff;">
+                        <i class="fas fa-comment-dots" style="color:#7c3aed;"></i>
                     </div>
-                </form>
+                    <div class="flex-grow-1">
+                        <label class="fw-semibold mb-2 d-block" style="color:#1e293b;">Message (Contenu) <span class="text-danger">*</span></label>
+                        <textarea class="form-control" name="message" id="message" rows="6" placeholder="Votre message ici..." required></textarea>
+                        <div class="mt-2 d-flex gap-2 flex-wrap">
+                            <span class="badge bg-light text-dark border"><span id="char-count">0</span> caractère(s)</span>
+                            <span class="badge bg-light text-dark border">Coût d'envoi : <span id="cost">0</span> Crédits</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bouton envoi -->
+                <button type="submit" class="btn w-100 fw-bold text-white py-3 rounded-3 d-flex align-items-center justify-content-center gap-2 mb-3" style="background:#16a34a;font-size:1rem;">
+                    <i class="fas fa-paper-plane"></i>
+                    Envoyer le SMS Pro (<span id="final-cost">0</span> Crédits) →
+                </button>
+            </form>
         </div>
 
         <!-- Colonne droite: Historique -->
