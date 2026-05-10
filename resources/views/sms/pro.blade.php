@@ -165,11 +165,11 @@
                         <div class="mb-3">
                             <label class="form-label">Expéditeur (De) <span class="text-danger">. requis</span></label>
                             <input type="text" class="form-control" name="expediteur" placeholder="Nom de l'expéditeur" maxlength="11" required>
-                            <div class="d-flex align-items-start gap-2 mt-2 p-2 rounded-3" style="background:#fff3cd;border:1px solid #ffc107;">
-                                <i class="fas fa-exclamation-triangle mt-1" style="color:#d97706;font-size:.8rem;flex-shrink:0;"></i>
-                                <small style="color:#92400e;font-size:.88rem;line-height:1.4;">
-                                    <strong>Noms interdits :</strong> Évitez les mots comme <strong>Bank, Banking, Money, Pay, Finance, Cash, Credit, Loan, Wallet, Western, Transfer</strong> pour éviter les rejets des SMS — ces noms sont automatiquement rejetés par les opérateurs mobiles.
-                                </small>
+                            <div class="d-flex align-items-start gap-3 mt-2 p-3 rounded-3" style="background:#fffbeb;border:1.5px solid #fcd34d;">
+                                <i class="fas fa-exclamation-triangle" style="color:#f59e0b;font-size:1rem;flex-shrink:0;margin-top:2px;"></i>
+                                <div style="color:#92400e;font-size:.93rem;line-height:1.6;">
+                                    <strong style="color:#b45309;">Noms interdits :</strong> Évitez les mots comme <strong style="color:#b45309;">Bank, Banking, Money, Pay, Finance, Cash, Credit, Loan, Wallet, Western, Transfer</strong> pour éviter les rejets des SMS — ces noms sont automatiquement rejetés par les opérateurs mobiles.
+                                </div>
                             </div>
                         </div>
 
