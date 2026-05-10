@@ -128,42 +128,76 @@
 <x-tool-back-link label="Retour à la liste des outils" :fallback="route('dashboard')" />
 
 <div class="container-fluid px-0 sms-pro-wrapper" style="max-width: 100%;">
-    <!-- Header SMS Pro -->
-    <div class="bg-primary text-white py-3 px-4 mb-0">
-        <h4 class="mb-0"><i class="fas fa-sms me-2"></i>SMS Pro</h4>
+
+    <!-- Hero card SMS Pro -->
+    <div class="mx-3 mx-sm-4 mt-3 mb-3 rounded-4 overflow-hidden position-relative" style="background:linear-gradient(135deg,#e8f0fe 0%,#f0f4ff 100%);border:1px solid #dbe4ff;">
+        <div class="d-flex align-items-center gap-3 p-3 p-sm-4">
+            <div class="flex-shrink-0 rounded-3 d-flex align-items-center justify-content-center" style="width:60px;height:60px;background:#1d4ed8;">
+                <i class="fas fa-sms text-white" style="font-size:1.6rem;"></i>
+            </div>
+            <div class="flex-grow-1">
+                <h4 class="fw-bold mb-1" style="color:#1e293b;">SMS Pro</h4>
+                <p class="mb-0 text-secondary" style="font-size:.88rem;">Envoyez des SMS professionnels rapidement et en toute simplicité.</p>
+            </div>
+            <div class="flex-shrink-0 d-none d-sm-flex align-items-center">
+                <span class="badge d-flex align-items-center gap-1 px-3 py-2" style="background:#dcfce7;color:#16a34a;font-size:.85rem;border-radius:999px;">
+                    <i class="fas fa-check-circle"></i> Actif
+                </span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Crédits disponibles -->
+    <div class="mx-3 mx-sm-4 mb-3 rounded-4 p-3 d-flex align-items-center gap-3" style="background:#fff;border:1px solid #e2e8f0;box-shadow:0 1px 4px rgba(0,0,0,.06);">
+        <div class="flex-shrink-0 rounded-circle d-flex align-items-center justify-content-center" style="width:44px;height:44px;background:#eff6ff;">
+            <i class="fas fa-coins" style="color:#3b82f6;font-size:1.1rem;"></i>
+        </div>
+        <div class="flex-grow-1">
+            <div class="text-secondary" style="font-size:.8rem;">Crédit SMS disponible</div>
+            <div class="fw-bold" style="font-size:1.5rem;color:#1e293b;" id="credits-display">{{ $creditsDisponibles }}</div>
+        </div>
+        <a href="{{ route('recharge.index') }}" class="text-primary" style="font-size:.85rem;white-space:nowrap;">Voir les détails →</a>
+    </div>
+
+    <!-- Boutons d'action -->
+    <div class="mx-3 mx-sm-4 mb-3 row g-2">
+        <div class="col-12 col-sm-6">
+            <button class="btn w-100 d-flex align-items-center gap-3 px-3 py-3 rounded-3" type="button" id="btnEnvoyerSMS"
+                style="background:#1d4ed8;color:#fff;border:none;text-align:left;">
+                <div class="flex-shrink-0 rounded-circle d-flex align-items-center justify-content-center" style="width:38px;height:38px;background:rgba(255,255,255,.2);">
+                    <i class="fas fa-paper-plane"></i>
+                </div>
+                <div class="flex-grow-1">
+                    <div class="fw-bold" style="font-size:.92rem;">Envoyer un SMS Pro</div>
+                    <div style="font-size:.78rem;opacity:.85;">Démarrer un nouvel envoi</div>
+                </div>
+                <i class="fas fa-chevron-right ms-auto" style="opacity:.7;"></i>
+            </button>
+        </div>
+        <div class="col-12 col-sm-6">
+            <button class="btn w-100 d-flex align-items-center gap-3 px-3 py-3 rounded-3" type="button"
+                data-bs-toggle="modal" data-bs-target="#utiliteModal"
+                style="background:#fff;color:#1e293b;border:1.5px solid #e2e8f0;text-align:left;">
+                <div class="flex-shrink-0 rounded-circle d-flex align-items-center justify-content-center" style="width:38px;height:38px;background:#e0f2fe;">
+                    <i class="fas fa-info-circle" style="color:#0891b2;"></i>
+                </div>
+                <div class="flex-grow-1">
+                    <div class="fw-bold" style="font-size:.92rem;">Utilité, Fonctionnement</div>
+                    <div class="text-secondary" style="font-size:.78rem;">En savoir plus</div>
+                </div>
+                <i class="fas fa-chevron-right ms-auto text-secondary"></i>
+            </button>
+        </div>
     </div>
 
     <div class="row g-0 m-0 sms-layout-row">
         <!-- Colonne gauche: Formulaire d'envoi -->
         <div class="col-12 col-xl-8 p-4 sms-form-column">
-            <div class="mb-3">
-                <p class="mb-1">
-                    <span style="color: #6c757d;">Crédit(s) disponible :</span> <strong style="color: #28a745; font-size: 1.3rem;" id="credits-display">{{ $creditsDisponibles }}</strong>
-                    <a href="#" class="text-primary ms-2">à savoir</a>
-                </p>
-            </div>
-
-            <div class="sms-action-buttons">
-                <div class="sms-action-buttons__item" style="margin-bottom: 1.1rem;">
-                        <button class="btn sms-info-btn" data-bs-toggle="modal" data-bs-target="#utiliteModal"
-                        style="background: linear-gradient(135deg, #14b8c2, #0d8ea0); border-color: #0d8ea0; color: #fff;">
-                            <i class="fas fa-info-circle"></i>
-                        <span>Utilité, Fonctionnement et Liste des Couvertures →</span>
-                    </button>
-                </div>
-                <div class="sms-action-buttons__item" style="margin-bottom: 1.3rem;">
-                    <button class="btn sms-send-btn" type="button" id="btnEnvoyerSMS"
-                        style="background: linear-gradient(135deg, #2ac36c, #1d914d); border-color: #1d914d; color: #fff;">
-                        <i class="fas fa-paper-plane"></i>
-                        <span>Envoyer un SMS Pro</span>
-                    </button>
-                </div>
-            </div>
-
             <form id="sms-form">
                 @csrf
                         <div class="mb-3">
-                            <label class="form-label">Expéditeur (De) <span class="text-danger">. requis</span></label>
+                            <label class="form-label fw-semibold">Expéditeur (De) <span class="text-danger">*</span></label>
+                            <div class="text-secondary mb-1" style="font-size:.83rem;">Le nom de l'expéditeur apparaîtra sur le téléphone du destinataire.</div>
                             <input type="text" class="form-control" name="expediteur" placeholder="Nom de l'expéditeur" maxlength="11" required>
                             <div class="d-flex align-items-start gap-3 mt-2 p-3 rounded-3" style="background:#fffbeb;border:1.5px solid #fcd34d;">
                                 <i class="fas fa-exclamation-triangle" style="color:#f59e0b;font-size:1rem;flex-shrink:0;margin-top:2px;"></i>
