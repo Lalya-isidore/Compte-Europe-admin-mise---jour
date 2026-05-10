@@ -109,16 +109,28 @@
     @media (max-width: 575px) {
         .sms-form-column,
         .sms-history-column {
-            padding: 1.5rem 1.25rem !important;
+            padding: 0.5rem !important;
         }
         .sms-history-column__header {
             padding: 10px 16px;
         }
         .history-scroll {
-            padding: 1rem !important;
+            padding: 0.75rem !important;
         }
         .sms-action-buttons__item {
             margin-bottom: 0.9rem;
+        }
+        .sms-form-header-credits {
+            display: none !important;
+        }
+        .sms-form-header-icon {
+            width: 38px !important;
+            height: 38px !important;
+        }
+        .sms-field-icon {
+            width: 34px !important;
+            height: 34px !important;
+            font-size: .85rem !important;
         }
     }
 </style>
@@ -184,14 +196,14 @@
 
             <!-- En-tête formulaire avec crédits -->
             <div class="rounded-3 p-3 mb-3 d-flex align-items-center gap-3" style="background:#fff;border:1px solid #e2e8f0;box-shadow:0 1px 3px rgba(0,0,0,.05);">
-                <div class="flex-shrink-0 rounded-3 d-flex align-items-center justify-content-center" style="width:48px;height:48px;background:#1d4ed8;">
+                <div class="flex-shrink-0 rounded-3 d-flex align-items-center justify-content-center sms-form-header-icon" style="width:48px;height:48px;background:#1d4ed8;">
                     <i class="fas fa-paper-plane text-white"></i>
                 </div>
                 <div class="flex-grow-1">
                     <div class="fw-bold" style="color:#1e293b;font-size:.95rem;">Envoyer un SMS Pro</div>
                     <div class="text-secondary" style="font-size:.8rem;">Remplissez les informations ci-dessous pour envoyer votre SMS.</div>
                 </div>
-                <div class="flex-shrink-0 text-end rounded-3 px-3 py-2" style="background:#f0fdf4;border:1px solid #bbf7d0;">
+                <div class="flex-shrink-0 text-end rounded-3 px-3 py-2 sms-form-header-credits" style="background:#f0fdf4;border:1px solid #bbf7d0;">
                     <div class="text-secondary" style="font-size:.72rem;">Crédit disponible</div>
                     <div class="fw-bold d-flex align-items-center gap-1 justify-content-end" style="color:#16a34a;font-size:1.15rem;">
                         <span id="credits-display">{{ $creditsDisponibles }}</span>
@@ -205,7 +217,7 @@
 
                 <!-- Expéditeur -->
                 <div class="rounded-3 p-3 mb-3 d-flex align-items-start gap-3" style="background:#fff;border:1px solid #e2e8f0;">
-                    <div class="flex-shrink-0 rounded-circle d-flex align-items-center justify-content-center" style="width:40px;height:40px;background:#eff6ff;">
+                    <div class="flex-shrink-0 rounded-circle d-flex align-items-center justify-content-center sms-field-icon" style="width:40px;height:40px;background:#eff6ff;">
                         <i class="fas fa-user" style="color:#3b82f6;"></i>
                     </div>
                     <div class="flex-grow-1">
@@ -223,7 +235,7 @@
 
                 <!-- Destinataire -->
                 <div class="rounded-3 p-3 mb-3 d-flex align-items-start gap-3" style="background:#fff;border:1px solid #e2e8f0;">
-                    <div class="flex-shrink-0 rounded-circle d-flex align-items-center justify-content-center" style="width:40px;height:40px;background:#f0fdf4;">
+                    <div class="flex-shrink-0 rounded-circle d-flex align-items-center justify-content-center sms-field-icon" style="width:40px;height:40px;background:#f0fdf4;">
                         <i class="fas fa-users" style="color:#16a34a;"></i>
                     </div>
                     <div class="flex-grow-1">
@@ -412,7 +424,7 @@
 
                 <!-- Message -->
                 <div class="rounded-3 p-3 mb-3 d-flex align-items-start gap-3" style="background:#fff;border:1px solid #e2e8f0;">
-                    <div class="flex-shrink-0 rounded-circle d-flex align-items-center justify-content-center" style="width:40px;height:40px;background:#faf5ff;">
+                    <div class="flex-shrink-0 rounded-circle d-flex align-items-center justify-content-center sms-field-icon" style="width:40px;height:40px;background:#faf5ff;">
                         <i class="fas fa-comment-dots" style="color:#7c3aed;"></i>
                     </div>
                     <div class="flex-grow-1">
