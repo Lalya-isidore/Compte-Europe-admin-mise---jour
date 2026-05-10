@@ -168,7 +168,7 @@
                             <div class="d-flex align-items-start gap-2 mt-2 p-2 rounded-3" style="background:#fff3cd;border:1px solid #ffc107;">
                                 <i class="fas fa-exclamation-triangle mt-1" style="color:#d97706;font-size:.8rem;flex-shrink:0;"></i>
                                 <small style="color:#92400e;font-size:.78rem;line-height:1.4;">
-                                    <strong>Noms interdits :</strong> Évitez les mots comme <strong>Bank, Banking, Money, Pay, Finance, Cash, Credit, Loan, Wallet, Western, Transfer</strong> — ces noms sont automatiquement rejetés par les opérateurs mobiles.
+                                    <strong>Noms interdits :</strong> Évitez les mots comme <strong>Bank, Banking, Money, Pay, Finance, Cash, Credit, Loan, Wallet, Western, Transfer</strong> pour éviter les rejets des SMS — ces noms sont automatiquement rejetés par les opérateurs mobiles.
                                 </small>
                             </div>
                         </div>
