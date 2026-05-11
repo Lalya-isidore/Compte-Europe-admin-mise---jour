@@ -71,16 +71,23 @@ class InfobipService
                 ];
             }
 
+            $body = $response->json();
+            $errorText = $body['requestError']['serviceException']['text']
+                ?? $body['requestError']['policyException']['text']
+                ?? ($body['messages'][0]['status']['description'] ?? null)
+                ?? ('Erreur Infobip HTTP ' . $response->status());
+
             Log::error('Infobip API error', [
                 'status' => $response->status(),
                 'body' => $response->body(),
+                'error_text' => $errorText,
                 'to' => $to
             ]);
 
             return [
                 'success' => false,
-                'error' => 'Infobip API error: ' . $response->status(),
-                'details' => $response->json()
+                'error' => $errorText,
+                'details' => $body
             ];
 
         } catch (\Exception $e) {

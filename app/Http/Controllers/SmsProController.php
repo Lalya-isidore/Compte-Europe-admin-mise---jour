@@ -106,7 +106,6 @@ class SmsProController extends Controller
                     DB::table('users')
                         ->where('id', $user->id)
                         ->update(['credit_user' => DB::raw('credit_user + ' . $creditsNeeded)]);
-                    $errorMessage = 'Échec de l\'envoi du SMS';
                 }
 
                 // Sauvegarder dans l'historique
