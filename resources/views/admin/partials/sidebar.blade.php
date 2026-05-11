@@ -44,6 +44,10 @@
             <i class="lucide-smartphone"></i>
             <span>App installée</span>
         </a>
+        <a href="{{ route('admin.rechargeStats.index') }}" class="menu-item {{ request()->routeIs('admin.rechargeStats.*') ? 'active' : '' }}">
+            <i class="lucide-credit-card"></i>
+            <span>Dépôts crédits</span>
+        </a>
 
         <p class="menu-label">Communication</p>
         <a href="{{ route('admin.support.index') }}" class="menu-item {{ request()->routeIs('admin.support.*') ? 'active' : '' }}">

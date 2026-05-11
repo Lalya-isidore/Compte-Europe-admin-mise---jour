@@ -460,6 +460,9 @@ Route::post('/payement5000/{id}', [CompteController::class, 'payement5000'])->na
         // Visites plateforme
         Route::get('/platform-visits', [App\Http\Controllers\Admin\PlatformVisitController::class, 'index'])->name('platformVisits.index');
 
+        // Statistiques dépôts de crédits
+        Route::get('/recharge-stats', [App\Http\Controllers\Admin\RechargeStatsController::class, 'index'])->name('rechargeStats.index');
+
         // Installations PWA
         Route::get('/pwa-installs', [App\Http\Controllers\Admin\PwaInstallController::class, 'index'])->name('pwaInstalls.index');
 
