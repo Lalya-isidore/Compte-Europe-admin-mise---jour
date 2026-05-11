@@ -14,7 +14,7 @@
         ['label' => 'Flash Compte Pro', 'image' => 'flash-compte-v1.png', 'route' => route('compte.create')],
         ['label' => 'Mail Flash Pro', 'image' => 'mail-flash-pro.png', 'route' => route('mail.flash.pro')],
         ['label' => 'Contrat de Prêt', 'image' => 'contrat-pret.jpeg', 'route' => route('tools.contrat-pret'), 'badge' => 'New'],
-        ['label' => 'Calculateur de Prêt Pro', 'icon' => 'fas fa-calculator', 'icon_color' => '#1e3a5f', 'route' => route('tools.simulateur-credit'), 'badge' => 'New'],
+        ['label' => 'Calculateur de Prêt Pro', 'svg' => '<svg xmlns="http://www.w3.org/2000/svg" width="54" height="54" viewBox="0 0 24 24" fill="none" stroke="#1e3a5f" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="8" y1="10" x2="10" y2="10"/><line x1="12" y1="10" x2="14" y2="10"/><line x1="16" y1="10" x2="16" y2="10"/><line x1="8" y1="14" x2="10" y2="14"/><line x1="12" y1="14" x2="14" y2="14"/><line x1="16" y1="14" x2="16" y2="14"/><line x1="8" y1="18" x2="10" y2="18"/><line x1="12" y1="18" x2="16" y2="18"/></svg>', 'route' => route('tools.simulateur-credit'), 'badge' => 'New'],
         ['label' => 'Collecte de code coupon', 'image' => 'code-coupon.png', 'route' => '#', 'badge' => 'Bientot'],
         ['label' => 'Verification IBAN / CB', 'image' => 'iban-check.png', 'route' => route('tools.iban-check')],
         ['label' => 'Verification telephone', 'image' => 'phone-verify.png', 'route' => route('tools.phone-verify')],
@@ -101,7 +101,9 @@
                         @if(isset($tool['badge']))
                             <span class="tool-badge {{ $tool['badge'] === 'Bientot' ? 'tool-badge--soon' : ($tool['badge'] === 'New' ? 'tool-badge--new' : '') }}">{{ $tool['badge'] }}</span>
                         @endif
-                        @if(isset($tool['icon']))
+                        @if(isset($tool['svg']))
+                            {!! $tool['svg'] !!}
+                        @elseif(isset($tool['icon']))
                             <i class="{{ $tool['icon'] }} tool-icon-fa" style="color:{{ $tool['icon_color'] ?? '#1e3a5f' }};"></i>
                         @else
                             <img src="{{ asset('images/tools/' . $tool['image']) }}" alt="{{ $tool['label'] }}" class="tool-icon">
@@ -117,7 +119,7 @@
     <div class="col-12 col-lg-6">
         <div class="tools-section">
             <div class="tools-section__header">
-                <i class="fas fa-feather"></i>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.24 12.24a6 6 0 0 0-8.49-8.49L5 10.5V19h8.5z"/><line x1="16" y1="8" x2="2" y2="22"/><line x1="17.5" y1="15" x2="9" y2="15"/></svg>
                 <strong>Outils a acces libre</strong>
             </div>
             <div class="tools-grid">
@@ -127,7 +129,9 @@
                         @if(isset($tool['badge']))
                             <span class="tool-badge {{ $tool['badge'] === 'Bientot' ? 'tool-badge--soon' : ($tool['badge'] === 'New' ? 'tool-badge--new' : '') }}">{{ $tool['badge'] }}</span>
                         @endif
-                        @if(isset($tool['icon']))
+                        @if(isset($tool['svg']))
+                            {!! $tool['svg'] !!}
+                        @elseif(isset($tool['icon']))
                             <i class="{{ $tool['icon'] }} tool-icon-fa" style="color:{{ $tool['icon_color'] ?? '#1e3a5f' }};"></i>
                         @else
                             <img src="{{ asset('images/tools/' . $tool['image']) }}" alt="{{ $tool['label'] }}" class="tool-icon">
