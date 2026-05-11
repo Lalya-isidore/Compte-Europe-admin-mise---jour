@@ -97,7 +97,7 @@
                             </div>
                             <div class="cp-field">
                                 <label>Pays <span class="req">*</span></label>
-                                <input type="text" name="preteur_pays" id="preteur_pays" placeholder="Ex: Espagne" value="Espagne" required>
+                                <input type="text" name="preteur_pays" id="preteur_pays" placeholder="Ex: Madrid" value="Madrid" required>
                             </div>
                         </div>
                         <div class="cp-field" style="margin-top: 14px;">
