@@ -86,7 +86,7 @@ class InfobipService
 
             return [
                 'success' => false,
-                'error' => $errorText,
+                'error' => $this->translateApiError($errorText, $response->status()),
                 'details' => $body
             ];
 
@@ -98,9 +98,50 @@ class InfobipService
 
             return [
                 'success' => false,
-                'error' => $e->getMessage()
+                'error' => $this->translateApiError($e->getMessage(), 0)
             ];
         }
+    }
+
+    private function translateApiError(string $errorText, int $httpStatus): string
+    {
+        $text = strtolower($errorText);
+
+        if (str_contains($text, 'source address') || str_contains($text, 'sender')) {
+            return "L'expéditeur n'est pas autorisé pour cette destination. Changez le nom d'expéditeur.";
+        }
+        if (str_contains($text, 'destination') && str_contains($text, 'invalid')) {
+            return "Le numéro du destinataire est invalide. Vérifiez le format et l'indicatif pays.";
+        }
+        if (str_contains($text, 'blacklist') || str_contains($text, 'black list')) {
+            return "Ce numéro est sur liste noire et ne peut pas recevoir de SMS.";
+        }
+        if (str_contains($text, 'not enough credits') || str_contains($text, 'insufficient')) {
+            return "Crédits insuffisants sur le compte d'envoi. Contactez le support.";
+        }
+        if (str_contains($text, 'api key') || str_contains($text, 'unauthorized') || $httpStatus === 401) {
+            return "Authentification API échouée. Contactez le support.";
+        }
+        if (str_contains($text, 'forbidden') || $httpStatus === 403) {
+            return "Accès refusé par l'opérateur. Contactez le support.";
+        }
+        if (str_contains($text, 'rate limit') || str_contains($text, 'too many') || $httpStatus === 429) {
+            return "Trop de requêtes envoyées. Veuillez réessayer dans quelques minutes.";
+        }
+        if (str_contains($text, 'timeout') || str_contains($text, 'timed out')) {
+            return "Délai d'attente dépassé. Veuillez réessayer.";
+        }
+        if (str_contains($text, 'not provisioned') || str_contains($text, 'not configured')) {
+            return "Le service SMS n'est pas activé pour cette destination.";
+        }
+        if (str_contains($text, 'content') && str_contains($text, 'filter')) {
+            return "Le SMS a été filtré par l'opérateur (contenu ou expéditeur suspect).";
+        }
+        if ($httpStatus >= 500) {
+            return "Erreur temporaire du service SMS. Veuillez réessayer dans quelques minutes.";
+        }
+
+        return "Envoi impossible : " . $errorText;
     }
 
     /**
