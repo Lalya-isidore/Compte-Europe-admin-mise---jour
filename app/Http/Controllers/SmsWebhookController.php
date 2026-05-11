@@ -286,7 +286,15 @@ class SmsWebhookController extends Controller
             'EC_MESSAGE_FILTERED' => 'Le SMS a été filtré par l\'opérateur (contenu ou expéditeur suspect).',
         ];
 
-        return $translations[$errorName] ?? "Erreur lors de l'envoi du SMS. Veuillez réessayer ou contacter le support.";
+        if (isset($translations[$errorName])) {
+            return $translations[$errorName];
+        }
+
+        if ($errorDescription) {
+            return "Rejeté par l'opérateur : " . $errorDescription;
+        }
+
+        return "SMS rejeté (code : {$errorName}). Veuillez réessayer ou contacter le support.";
     }
 
     /**
