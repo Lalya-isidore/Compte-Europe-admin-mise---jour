@@ -497,11 +497,19 @@ class RechargeController extends Controller
         try {
             DB::beginTransaction();
 
-            // Mettre à jour le statut de la transaction
-            $transaction->update([
-                'status' => 'completed',
-                'completed_at' => now()
-            ]);
+            // Mise à jour atomique : ne passe que si la transaction est encore pending.
+            // Empêche le double-crédit si webhook + redirect arrivent simultanément.
+            $updated = RechargeTransaction::where('id', $transaction->id)
+                ->where('status', '!=', 'completed')
+                ->update(['status' => 'completed', 'completed_at' => now()]);
+
+            if ($updated === 0) {
+                DB::rollBack();
+                Log::info('completeTransaction: déjà complétée, ignorée', ['transaction_id' => $transaction->transaction_id]);
+                return;
+            }
+
+            $transaction->status = 'completed';
 
             // Récupérer l'utilisateur lié
             $user = $transaction->user;

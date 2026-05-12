@@ -17,7 +17,7 @@ class CheckPendingRecharges extends Command
         $pending = RechargeTransaction::where('status', 'pending')
             ->where('payment_method', 'fedapay')
             ->whereNotNull('external_transaction_id')
-            ->where('created_at', '>=', now()->subHours(24))
+            ->where('created_at', '>=', now()->subDays(7))
             ->orderBy('created_at', 'desc')
             ->get();
 
