@@ -100,8 +100,8 @@ class RechargeController extends Controller
                     'iso' => 'XOF'
                 ],
                 'callback_url' => route('recharge.webhook.fedapay'),
-                'cancel_url' => route('recharge.return.fedapay', ['status' => 'canceled', 'close' => 'true']),
-                'return_url' => route('recharge.return.fedapay', ['status' => 'approved']),
+                'cancel_url' => route('recharge.return.fedapay', ['status' => 'canceled', 'close' => 'true', 'local_tx' => $transaction->transaction_id]),
+                'return_url' => route('recharge.return.fedapay', ['status' => 'approved', 'local_tx' => $transaction->transaction_id]),
                 'custom_metadata' => [
                     'transaction_id' => $transaction->transaction_id,
                     'user_id' => $transaction->user_id
@@ -259,22 +259,27 @@ class RechargeController extends Controller
     {
         $status = $request->get('status');
         $transactionId = $request->get('id');
+        $localTx = $request->get('local_tx');
         $close = $request->get('close');
-        
+
         Log::info('FedaPay Redirect', [
             'status' => $status,
             'transaction_id' => $transactionId,
+            'local_tx' => $localTx,
             'close' => $close
         ]);
-        
-        // Rediriger selon le statut
-        // Tenter de retrouver la transaction locale en utilisant l'ID externe FedaPay
+
+        // Tenter de retrouver la transaction locale
+        // Priorité 1 : paramètre local_tx (notre propre ID, fiable)
+        // Priorité 2 : paramètre id (ID FedaPay, peut être absent)
         try {
             $tx = null;
-            if ($transactionId) {
+            if ($localTx) {
+                $tx = RechargeTransaction::where('transaction_id', $localTx)->first();
+            }
+            if (! $tx && $transactionId) {
                 $tx = RechargeTransaction::where('external_transaction_id', $transactionId)->first();
                 if (! $tx) {
-                    // Certains retours peuvent fournir l'ID interne directement
                     $tx = RechargeTransaction::where('transaction_id', $transactionId)->first();
                 }
             }
