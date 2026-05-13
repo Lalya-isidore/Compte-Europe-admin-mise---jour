@@ -321,6 +321,9 @@
                                 };
                             @endphp
                             <span class="badge bg-{{ $smsBadge }} bg-opacity-10 text-{{ $smsBadge }} rounded-pill px-3">{{ $sms->status }}</span>
+                            @if($sms->error_message)
+                                <div class="smaller text-danger mt-1" style="max-width:180px;line-height:1.3;">{{ $sms->error_message }}</div>
+                            @endif
                         </td>
                         <td class="pe-4 py-3 text-end smaller text-secondary">
                             {{ $sms->created_at?->setTimezone('Europe/Paris')->format('d/m/Y H:i') }}
