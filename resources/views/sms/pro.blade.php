@@ -168,10 +168,10 @@ $svg = [
             </div>
             <div class="flex-grow-1">
                 <h4 class="fw-bold mb-1" style="color:#1e293b;">SMS Pro</h4>
-                <p class="mb-0 text-secondary" style="font-size:.88rem;">Envoyez des SMS professionnels rapidement et en toute simplicité.</p>
+                <p class="mb-0 text-secondary" style="font-size:.98rem;">Envoyez des SMS professionnels rapidement et en toute simplicité.</p>
             </div>
             <div class="flex-shrink-0 d-none d-sm-flex align-items-center">
-                <span class="badge d-flex align-items-center gap-1 px-3 py-2" style="background:#dcfce7;color:#16a34a;font-size:.85rem;border-radius:999px;">
+                <span class="badge d-flex align-items-center gap-1 px-3 py-2" style="background:#dcfce7;color:#16a34a;font-size:.96rem;border-radius:999px;">
                     {!! $svg['check'] !!} Actif
                 </span>
             </div>
@@ -187,8 +187,8 @@ $svg = [
                 {!! $svg['info'] !!}
             </div>
             <div class="flex-grow-1">
-                <div class="fw-bold" style="font-size:.92rem;">Utilité, Fonctionnement</div>
-                <div class="text-secondary" style="font-size:.78rem;">En savoir plus</div>
+                <div class="fw-bold" style="font-size:1rem;">Utilité, Fonctionnement</div>
+                <div class="text-secondary" style="font-size:.9rem;">En savoir plus</div>
             </div>
             <span class="ms-auto text-secondary">{!! $svg['chevron'] !!}</span>
         </button>
@@ -204,11 +204,11 @@ $svg = [
                     {!! $svg['plane'] !!}
                 </div>
                 <div class="flex-grow-1">
-                    <div class="fw-bold" style="color:#1e293b;font-size:.95rem;">Envoyer un SMS Pro</div>
-                    <div class="text-secondary" style="font-size:.8rem;">Remplissez les informations ci-dessous pour envoyer votre SMS.</div>
+                    <div class="fw-bold" style="color:#1e293b;font-size:1.05rem;">Envoyer un SMS Pro</div>
+                    <div class="text-secondary" style="font-size:1rem;">Remplissez les informations ci-dessous pour envoyer votre SMS.</div>
                 </div>
                 <div class="flex-shrink-0 text-end rounded-3 px-3 py-2 sms-form-header-credits" style="background:#f0fdf4;border:1px solid #bbf7d0;">
-                    <div class="text-secondary" style="font-size:.72rem;">Crédit disponible</div>
+                    <div class="text-secondary" style="font-size:.98rem;">Crédit disponible</div>
                     <div class="fw-bold d-flex align-items-center gap-1 justify-content-end" style="color:#16a34a;font-size:1.15rem;">
                         <span id="credits-display">{{ $creditsDisponibles }}</span>
                         {!! $svg['coins'] !!}
@@ -226,11 +226,11 @@ $svg = [
                     </div>
                     <div class="flex-grow-1">
                         <label class="fw-semibold mb-1 d-block" style="color:#1e293b;">Expéditeur (De) <span class="text-danger">*</span></label>
-                        <div class="text-secondary mb-2" style="font-size:.82rem;">Le nom de l'expéditeur apparaîtra sur le téléphone du destinataire.</div>
+                        <div class="text-secondary mb-2" style="font-size:.94rem;">Le nom de l'expéditeur apparaîtra sur le téléphone du destinataire.</div>
                         <input type="text" class="form-control" name="expediteur" placeholder="Nom de l'expéditeur" maxlength="11" required>
                         <div class="d-flex align-items-start gap-3 mt-2 p-3 rounded-3" style="background:#fffbeb;border:1.5px solid #fcd34d;">
                             <span style="flex-shrink:0;margin-top:2px;">{!! $svg['warning'] !!}</span>
-                            <div style="color:#92400e;font-size:.93rem;line-height:1.6;">
+                            <div style="color:#92400e;font-size:1rem;line-height:1.6;">
                                 <strong style="color:#b45309;">Noms interdits :</strong> Évitez les mots comme <strong style="color:#b45309;">Bank, Banking, Money, Pay, Finance, Cash, Credit, Loan, Wallet, Western, Transfer, MTN MoMo, BNP Paribas</strong> ou tout autre nom de société existante pour éviter les rejets des SMS — ces noms sont automatiquement rejetés par les opérateurs mobiles et <strong style="color:#b45309;">vos crédits ne seront pas remboursés</strong>.
                             </div>
                         </div>
@@ -422,7 +422,7 @@ $svg = [
                                     <small class="text-muted" id="numero-hint" style="display:none;">L'indicatif <strong id="hint-code"></strong> sera ajouté automatiquement. Saisissez uniquement le numéro local.</small>
                                 </div>
                             </div>
-                            <div class="text-secondary mt-2" style="font-size:.82rem;">Entrez le numéro de téléphone du destinataire sans l'indicatif du pays.</div>
+                            <div class="text-secondary mt-2" style="font-size:.94rem;">Entrez le numéro de téléphone du destinataire sans l'indicatif du pays.</div>
                         </div>
                 </div>
 
@@ -481,7 +481,7 @@ $svg = [
                                 </svg>
                             </div>
                             <p class="fw-semibold mb-1" style="color:#1e293b;">Aucun envoi pour le moment</p>
-                            <p class="text-secondary mb-0" style="font-size:.83rem;">Vos envois de SMS apparaîtront ici.</p>
+                            <p class="text-secondary mb-0" style="font-size:.94rem;">Vos envois de SMS apparaîtront ici.</p>
                         </div>
                     @else
                         @foreach($history as $item)
@@ -514,20 +514,20 @@ $svg = [
                 <div class="mt-3 rounded-3 p-3" style="background:#fff;border:1px solid #e2e8f0;">
                     <div class="d-flex align-items-center gap-2 mb-3">
                         {!! $svg['shield'] !!}
-                        <span class="fw-bold" style="color:#1e293b;font-size:.92rem;">Bonnes pratiques</span>
+                        <span class="fw-bold" style="color:#1e293b;font-size:1rem;">Bonnes pratiques</span>
                     </div>
                     <ul class="list-unstyled mb-0">
                         <li class="d-flex gap-2 mb-2">
                             <span class="flex-shrink-0 mt-1">{!! $svg['check_green'] !!}</span>
-                            <span class="text-secondary" style="font-size:.85rem;">Utilisez des noms d'expéditeur clairs et professionnels.</span>
+                            <span class="text-secondary" style="font-size:.96rem;">Utilisez des noms d'expéditeur clairs et professionnels.</span>
                         </li>
                         <li class="d-flex gap-2 mb-2">
                             <span class="flex-shrink-0 mt-1">{!! $svg['check_green'] !!}</span>
-                            <span class="text-secondary" style="font-size:.85rem;">Évitez les mots interdits pour garantir la livraison.</span>
+                            <span class="text-secondary" style="font-size:.96rem;">Évitez les mots interdits pour garantir la livraison.</span>
                         </li>
                         <li class="d-flex gap-2">
                             <span class="flex-shrink-0 mt-1">{!! $svg['check_green'] !!}</span>
-                            <span class="text-secondary" style="font-size:.85rem;">Vérifiez vos crédits avant chaque envoi.</span>
+                            <span class="text-secondary" style="font-size:.96rem;">Vérifiez vos crédits avant chaque envoi.</span>
                         </li>
                     </ul>
                 </div>
@@ -995,7 +995,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         </svg>
                     </div>
                     <p class="fw-semibold mb-1" style="color:#1e293b;">Aucun envoi pour le moment</p>
-                    <p class="text-secondary mb-0" style="font-size:.83rem;">Vos envois de SMS apparaîtront ici.</p>
+                    <p class="text-secondary mb-0" style="font-size:.94rem;">Vos envois de SMS apparaîtront ici.</p>
                 </div>`;
             return;
         }

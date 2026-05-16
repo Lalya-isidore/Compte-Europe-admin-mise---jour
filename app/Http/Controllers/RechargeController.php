@@ -566,6 +566,7 @@ class RechargeController extends Controller
 
             $rechargesLast30 = RechargeTransaction::where('user_id', $userId)
                 ->where('status', 'completed')
+                ->where('credits_earned', '>=', 5000)
                 ->where('created_at', '>=', $since30)
                 ->count();
 
