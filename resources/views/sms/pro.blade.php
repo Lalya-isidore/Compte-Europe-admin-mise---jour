@@ -231,7 +231,7 @@ $svg = [
                         <div class="d-flex align-items-start gap-3 mt-2 p-3 rounded-3" style="background:#fffbeb;border:1.5px solid #fcd34d;">
                             <span style="flex-shrink:0;margin-top:2px;">{!! $svg['warning'] !!}</span>
                             <div style="color:#92400e;font-size:.93rem;line-height:1.6;">
-                                <strong style="color:#b45309;">Noms interdits :</strong> Évitez les mots comme <strong style="color:#b45309;">Bank, Banking, Money, Pay, Finance, Cash, Credit, Loan, Wallet, Western, Transfer</strong> pour éviter les rejets des SMS — ces noms sont automatiquement rejetés par les opérateurs mobiles.
+                                <strong style="color:#b45309;">Noms interdits :</strong> Évitez les mots comme <strong style="color:#b45309;">Bank, Banking, Money, Pay, Finance, Cash, Credit, Loan, Wallet, Western, Transfer, MTN MoMo, BNP Paribas</strong> ou tout autre nom de société existante pour éviter les rejets des SMS — ces noms sont automatiquement rejetés par les opérateurs mobiles et <strong style="color:#b45309;">vos crédits ne seront pas remboursés</strong>.
                             </div>
                         </div>
                     </div>
