@@ -175,7 +175,7 @@
         color: #92400e;
     }
     .loyalty-banner__desc {
-        font-size: 0.82rem;
+        font-size: 1rem;
         color: #78350f;
         margin-top: 2px;
     }
@@ -271,7 +271,7 @@
             font-size: 0.95rem;
         }
         .loyalty-banner__desc {
-            font-size: 0.75rem;
+            font-size: 0.9rem;
         }
         .loyalty-banner__right {
             align-items: stretch;
