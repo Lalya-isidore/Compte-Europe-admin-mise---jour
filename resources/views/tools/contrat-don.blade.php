@@ -649,6 +649,8 @@ input[type="radio"]:checked + .seal-style-pill { background: #1e3a5f; color: #ff
 @media (max-width: 600px) {
     .cp-row2 { grid-template-columns: 1fr; }
     .cp-card__head { font-size: 1rem; padding: 12px 16px; }
+    .cp-field label { font-size: 0.95rem; }
+    .cp-field input, .cp-field select { font-size: 0.95rem; padding: 11px 12px; }
     .cp-info-card { margin-bottom: 16px; }
     .cp-grid { gap: 0; max-width: 100%; overflow: hidden; }
     .cp-col { gap: 0; max-width: 100%; overflow: hidden; }
