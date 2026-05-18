@@ -475,7 +475,7 @@
 </div>
 
 <style>
-.cp-wrapper { max-width: 1200px; margin: 0 auto; overflow-x: hidden; }
+.cp-wrapper { max-width: 1200px; margin: 0 auto; }
 .cp-info-card { background: #fff; border-radius: 8px; box-shadow: 0 0 12px 0 rgba(0,0,0,.08); margin-bottom: 24px; overflow: hidden; }
 .cp-info-title { font-family: 'Righteous', cursive, sans-serif; padding: 18px 20px; border-bottom: 1px solid #e2e2e2; color: #0d6efd; font-size: 1rem; }
 .cp-info-body { padding: 18px 20px 10px; }
@@ -606,8 +606,8 @@ input[type="radio"]:checked + .seal-style-pill { background: #1e3a5f; color: #ff
     .cp-info-card { margin-bottom: 16px; }
     .cp-grid { gap: 0; }
     .cp-col { gap: 0; }
-    .cp-wrapper { padding: 0; max-width: 100vw; }
-    .cp-preview { padding: 10px 5px; overflow-x: auto; }
+    .cp-wrapper { padding: 0; max-width: 100vw; overflow-x: clip; }
+    .cp-preview { padding: 10px 5px; overflow-x: auto; overflow-y: auto; }
     .cp-preview__doc { min-width: 480px; }
     .prev-container { padding: 16px 14px 30px; }
     /* Boîtes identification empilées sur mobile */
