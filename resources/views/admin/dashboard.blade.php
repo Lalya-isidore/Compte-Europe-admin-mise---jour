@@ -51,6 +51,34 @@
     </div>
 </div>
 
+{{-- Rechargements --}}
+<div class="mb-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h5 class="fw-bold mb-0"><i data-lucide="trending-up" style="width:18px;height:18px;margin-right:6px;vertical-align:-3px"></i>Rechargements (F CFA)</h5>
+        <a href="{{ route('admin.rechargeStats') }}" class="btn btn-sm btn-outline-secondary">Voir le détail</a>
+    </div>
+    <div class="row g-3">
+        <div class="col-4">
+            <div class="card border-0 shadow-sm h-100 p-3 text-center">
+                <div class="text-secondary small mb-1">Aujourd'hui</div>
+                <div class="fw-bold fs-5 text-success">{{ number_format($rechargeStats['today'], 0, ',', ' ') }} <small style="font-size:.65em;font-weight:500">F</small></div>
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="card border-0 shadow-sm h-100 p-3 text-center">
+                <div class="text-secondary small mb-1">Cette semaine</div>
+                <div class="fw-bold fs-5 text-primary">{{ number_format($rechargeStats['week'], 0, ',', ' ') }} <small style="font-size:.65em;font-weight:500">F</small></div>
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="card border-0 shadow-sm h-100 p-3 text-center">
+                <div class="text-secondary small mb-1">Ce mois</div>
+                <div class="fw-bold fs-5 text-warning">{{ number_format($rechargeStats['month'], 0, ',', ' ') }} <small style="font-size:.65em;font-weight:500">F</small></div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="row g-4">
     <!-- Quick Actions -->
     <div class="col-lg-8">

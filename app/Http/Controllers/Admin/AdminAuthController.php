@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Log;
@@ -58,11 +59,21 @@ class AdminAuthController extends Controller
             ->limit(5)
             ->get();
 
+        $rechargeStats = [
+            'today'  => \App\Models\RechargeTransaction::where('status', 'completed')
+                ->whereDate('completed_at', Carbon::today())->sum('amount'),
+            'week'   => \App\Models\RechargeTransaction::where('status', 'completed')
+                ->where('completed_at', '>=', Carbon::now()->startOfWeek())->sum('amount'),
+            'month'  => \App\Models\RechargeTransaction::where('status', 'completed')
+                ->where('completed_at', '>=', Carbon::now()->startOfMonth())->sum('amount'),
+        ];
+
         return view('admin.dashboard', [
-            'admin_email' => Session::get('admin_email'),
-            'login_time' => Session::get('admin_login_time'),
-            'stats' => $stats,
+            'admin_email'   => Session::get('admin_email'),
+            'login_time'    => Session::get('admin_login_time'),
+            'stats'         => $stats,
             'lastRecharges' => $lastRecharges,
+            'rechargeStats' => $rechargeStats,
         ]);
     }
 
