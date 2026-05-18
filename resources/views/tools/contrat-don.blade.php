@@ -652,9 +652,11 @@ input[type="radio"]:checked + .seal-style-pill { background: #1e3a5f; color: #ff
     .cp-grid { gap: 0; max-width: 100%; overflow: hidden; }
     .cp-col { gap: 0; max-width: 100%; overflow: hidden; }
     .cp-col--preview { max-width: 100%; overflow: hidden; }
+    .cp-col--preview .cp-card { border: none; border-radius: 0; margin: 0; }
+    .cp-col--preview .cp-card__head { border-radius: 0; }
     .cp-wrapper { padding: 0; max-width: 100vw; overflow: hidden; }
     .cp-preview {
-        padding: 10px 5px;
+        padding: 10px 0;
         overflow-x: auto;
         max-width: 100%;
         box-sizing: border-box;
