@@ -500,7 +500,7 @@
 .cp-btn-generate:hover { background: linear-gradient(135deg, #145c22, #1e8035); transform: translateY(-1px); box-shadow: 0 6px 20px rgba(40,167,69,0.35); }
 
 /* A4 Realistic Preview Viewer Style */
-.cp-col--preview .cp-card { position: sticky; top: 20px; }
+.cp-col--preview .cp-card { position: sticky; top: 20px; overflow: visible; }
 .cp-preview {
     padding: 20px 15px;
     background: #525659; /* classic dark grey PDF reader background */
