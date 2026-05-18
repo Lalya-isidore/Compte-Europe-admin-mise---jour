@@ -757,6 +757,13 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('prev-tribunal').textContent = t.tribunal_local.replace(':ville', ville);
         document.getElementById('prev-greffier').textContent = t.secretario;
         document.getElementById('prev-no-lbl').textContent   = t.contrat_no;
+        // Générer un numéro simulé pour l'aperçu
+        const r = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
+        if (!document.getElementById('prev-dossier-val').dataset.generated) {
+            document.getElementById('prev-dossier-val').textContent =
+                r(10,99) + ' ' + r(100,999) + ' - ' + r(100,999) + ' MJLDH / TPIC / EMMQ';
+            document.getElementById('prev-dossier-val').dataset.generated = '1';
+        }
 
         // Page 2 Header
         document.getElementById('prev-rep-fr-2').textContent   = repName;
