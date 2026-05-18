@@ -29,7 +29,7 @@
             </p>
             <div class="alert alert-primary" role="alert" style="font-size:.9em;">
                 <p><i class="fas fa-info-circle"></i> Cet outil génère un <b>Certificat d'Enregistrement de Donation</b> officiel, certifié par le Tribunal, suivant le modèle légal international. Parfait pour les donations de fonds (testamentaires ou entre vifs).</p>
-                <b>NB :</b> Chaque téléchargement coûte <b>1 250 crédits</b>. La première génération est <b>gratuite</b>.
+                <b>NB :</b> Chaque téléchargement coûte <b>1 000 crédits</b>. La première génération est <b>gratuite</b>.
             </div>
         </div>
     </div>
@@ -311,7 +311,7 @@
                     Générer le Testament
                     @if($freeUsed)
                     <span style="margin-left:10px; background:rgba(255,255,255,0.18); border-radius:20px; padding:2px 10px; font-size:0.78rem; font-weight:600; letter-spacing:0.5px;">
-                        <i class="fas fa-coins" style="font-size:0.72rem;"></i> 1 250 crédits
+                        <i class="fas fa-coins" style="font-size:0.72rem;"></i> 1 000 crédits
                     </span>
                     @else
                     <span style="margin-left:10px; background:rgba(255,255,255,0.18); border-radius:20px; padding:2px 10px; font-size:0.78rem; font-weight:600; letter-spacing:0.5px;">

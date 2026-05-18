@@ -33,7 +33,7 @@
             </p>
             <div class="alert alert-primary" role="alert" style="font-size:.9em;">
                 <p><i class="fas fa-info-circle"></i> Cet outil vous permet de générer un <b>contrat de prêt professionnel</b> en PDF, signé et horodaté, dans la langue de votre choix (10 langues disponibles). Personnalisez les parties, le montant, la durée, le taux, et les articles du contrat.</p>
-                <b>NB :</b> Chaque téléchargement coûte <b>1 250 crédits</b>. La première génération est <b>gratuite</b> (contrat avec filigrane Flash Bilan).
+                <b>NB :</b> Chaque téléchargement coûte <b>1 000 crédits</b>. La première génération est <b>gratuite</b> (contrat avec filigrane Flash Bilan).
             </div>
         </div>
     </div>
@@ -299,7 +299,7 @@
                     Télécharger
                     @if($freeUsed)
                     <span style="margin-left:10px; background:rgba(255,255,255,0.18); border-radius:20px; padding:2px 10px; font-size:0.78rem; font-weight:600; letter-spacing:0.5px;">
-                        <i class="fas fa-coins" style="font-size:0.72rem;"></i> 1 250 crédits
+                        <i class="fas fa-coins" style="font-size:0.72rem;"></i> 1 000 crédits
                     </span>
                     @else
                     <span style="margin-left:10px; background:rgba(255,255,255,0.18); border-radius:20px; padding:2px 10px; font-size:0.78rem; font-weight:600; letter-spacing:0.5px;">
@@ -436,7 +436,7 @@
                 <p>Cet outil vous permet de générer un <b>contrat de prêt professionnel</b> en PDF, signé et horodaté. Personnalisez librement les informations du prêteur et de l'emprunteur, le montant, la durée, le taux d'intérêt, la devise, et le contenu des 10 articles du contrat.</p>
                 <h6 class="text-primary">Fonctionnement</h6>
                 <p>Remplissez le formulaire avec les informations des parties, les conditions financières et éventuellement vos signatures. L'aperçu se met à jour en temps réel. Cliquez sur <b>Télécharger</b> pour générer et télécharger le PDF.</p>
-                <p>Cet outil est payant (<b>1 250 crédits</b> par téléchargement). La <b>première génération est gratuite</b> mais le contrat portera un filigrane <em>Flash Bilan</em> sur chaque page. Les générations suivantes produisent un contrat officiel sans filigrane.</p>
+                <p>Cet outil est payant (<b>1 000 crédits</b> par téléchargement). La <b>première génération est gratuite</b> mais le contrat portera un filigrane <em>Flash Bilan</em> sur chaque page. Les générations suivantes produisent un contrat officiel sans filigrane.</p>
                 <p><b>Langues disponibles :</b> Français, Anglais, Espagnol, Portugais, Allemand, Italien, Néerlandais, Polonais, Croate, Russe.</p>
             </div>
             <div class="modal-footer">
