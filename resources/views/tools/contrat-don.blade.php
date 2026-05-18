@@ -636,7 +636,7 @@ input[type="radio"]:checked + .seal-style-pill { background: #1e3a5f; color: #ff
 
 @media (max-width: 900px) {
     .cp-grid { grid-template-columns: 1fr; }
-    .cp-col--preview .cp-card { position: static; }
+    .cp-col--preview .cp-card { position: static !important; top: auto !important; z-index: auto !important; }
     .cp-row2 { grid-template-columns: 1fr; }
     .cp-wrapper { padding: 0; }
     .cp-card { border-radius: 0; border-left: none; border-right: none; }
