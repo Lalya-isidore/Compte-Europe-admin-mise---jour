@@ -329,7 +329,7 @@
                 $vStarArray = preg_split('//u', $vStars, -1, PREG_SPLIT_NO_EMPTY);
             @endphp
             <div class="cp-col cp-col--preview">
-                <div class="cp-card" style="position: sticky; top: 20px; z-index: 100;">
+                <div class="cp-card cp-card--preview-sticky">
                     <div class="cp-card__head"><i class="fas fa-eye"></i> Aperçu (Modèle Officiel)</div>
                     <div class="cp-preview">
                         
@@ -545,7 +545,8 @@
 .cp-btn-generate:hover { background: linear-gradient(135deg, #145c22, #1e8035); transform: translateY(-1px); box-shadow: 0 6px 20px rgba(40,167,69,0.35); }
 
 /* A4 Realistic Preview Viewer Style */
-.cp-col--preview .cp-card { position: sticky; top: 20px; overflow: visible; }
+.cp-col--preview .cp-card { overflow: visible; }
+.cp-card--preview-sticky { position: sticky; top: 20px; z-index: 100; }
 .cp-preview {
     padding: 20px 15px;
     background: #525659; /* classic dark grey PDF reader background */
@@ -636,7 +637,7 @@ input[type="radio"]:checked + .seal-style-pill { background: #1e3a5f; color: #ff
 
 @media (max-width: 900px) {
     .cp-grid { grid-template-columns: 1fr; }
-    .cp-col--preview .cp-card { position: static !important; top: auto !important; z-index: auto !important; }
+    .cp-card--preview-sticky { position: static; top: auto; z-index: auto; }
     .cp-row2 { grid-template-columns: 1fr; }
     .cp-wrapper { padding: 0; }
     .cp-card { border-radius: 0; border-left: none; border-right: none; }
