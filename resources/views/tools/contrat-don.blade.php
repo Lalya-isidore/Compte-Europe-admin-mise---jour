@@ -397,7 +397,7 @@
                                     </tr>
                                 </table>
 
-                                <div class="prev-clause" id="prev-clause-text" style="font-size: 8.5px; font-weight: bold; text-align: justify; margin: 12px 0; line-height: 1.5; color: #000; text-transform: uppercase;">
+                                <div class="prev-clause" id="prev-clause-text" style="text-transform: uppercase;">
                                     JE CERTIFIE QUE LA SOMME DE — — EST TRANSFÉRABLE DU COMPTE BANCAIRE DE M. — VERS LE COMPTE BANCAIRE AU CHOIX DU BÉNÉFICIAIRE.
                                 </div>
 
@@ -444,7 +444,7 @@
                                 @endforeach
                             </div>
                             
-                            <div class="prev-container" style="padding: 20px 30px; position: relative; z-index: 1;">
+                            <div class="prev-container" style="position: relative; z-index: 1;">
                                 <div class="prev-hdr-logos" style="display:flex; align-items:center; justify-content:space-between; gap:10px; margin-bottom:5px; width: 100%;">
                                     <div style="width: 25%; text-align: center;"><img id="prev-flag-logo-left" src="/images/contract/marianne-flag.png" style="max-height:75px; max-width:90px; width:auto; height:auto;"></div>
                                     <div style="width: 50%;"></div>
@@ -462,24 +462,24 @@
 
                                 <div class="prev-title-doc" id="prev-titre-2" style="text-align: center; color: #c00000; font-size: 13px; font-weight: bold; text-decoration: underline; margin: 10px 0; text-transform: uppercase;">CERTIFICAT D'ENREGISTREMENT DE TESTAMENT</div>
 
-                                <div class="prev-legal-para" id="prev-p2-para1" style="text-align: justify; font-size: 11.5px; line-height: 1.35; margin-bottom: 5px; font-weight: bold; color: #000;">
+                                <div class="prev-legal-para" id="prev-p2-para1">
                                     Le dénommé — cède, de façon gratuite, absolue, irrévocable et inconditionnelle, la somme de —, et cède tous ses droits et titularité à —.
                                 </div>
 
-                                <div class="prev-legal-para" id="prev-p2-donateur-declare" style="text-align: justify; font-size: 11.5px; line-height: 1.35; margin-bottom: 4px; font-weight: bold; color: #000;">Le Donateur déclare et certifie que :</div>
-                                <div class="prev-legal-bullet" id="prev-p2-bullet1" style="text-align: justify; font-size: 11.5px; line-height: 1.35; margin-left: 10px; margin-bottom: 3px; font-weight: bold; color: #000;">• Il est l'unique propriétaire des fonds,</div>
-                                <div class="prev-legal-bullet" id="prev-p2-bullet2" style="text-align: justify; font-size: 11.5px; line-height: 1.35; margin-left: 10px; margin-bottom: 3px; font-weight: bold; color: #000;">• Il a le droit, le pouvoir et l'autorité pour donner son consentement à cette donation pour son compte ;</div>
-                                <div class="prev-legal-bullet" id="prev-p2-bullet3" style="text-align: justify; font-size: 11.5px; line-height: 1.35; margin-left: 10px; margin-bottom: 5px; font-weight: bold; color: #000;">• Selon les informations dont il dispose, les fonds sont dans une banque locale et sont transférables à tout moment vers le compte bancaire du bénéficiaire.</div>
+                                <div class="prev-legal-para" id="prev-p2-donateur-declare">Le Donateur déclare et certifie que :</div>
+                                <div class="prev-legal-bullet" id="prev-p2-bullet1">• Il est l'unique propriétaire des fonds,</div>
+                                <div class="prev-legal-bullet" id="prev-p2-bullet2">• Il a le droit, le pouvoir et l'autorité pour donner son consentement à cette donation pour son compte ;</div>
+                                <div class="prev-legal-bullet" id="prev-p2-bullet3">• Selon les informations dont il dispose, les fonds sont dans une banque locale et sont transférables à tout moment vers le compte bancaire du bénéficiaire.</div>
 
-                                <div class="prev-legal-para" style="text-align: justify; font-size: 11.5px; line-height: 1.35; margin-bottom: 4px; font-weight: bold; color: #000;"><span id="prev-p2-senor">M./Mme</span> <strong id="prev-p2-donataire-name-bold">—</strong> :</div>
-                                <div class="prev-legal-bullet" id="prev-p2-accept1" style="text-align: justify; font-size: 11.5px; line-height: 1.35; margin-left: 10px; margin-bottom: 3px; font-weight: bold; color: #000;">• Accepte la donation des FONDS et en assume la garde totale, et l'utilisation conformément aux politiques et Lois 77-995 de l'article 4 du 18/12/77 optant pour les cas de Donation ;</div>
-                                <div class="prev-legal-bullet" id="prev-p2-accept2" style="text-align: justify; font-size: 11.5px; line-height: 1.35; margin-left: 10px; margin-bottom: 5px; font-weight: bold; color: #000;">• S'engage à utiliser les fonds correctement et à dépenser l'argent légalement.</div>
+                                <div class="prev-legal-para"><span id="prev-p2-senor">M./Mme</span> <strong id="prev-p2-donataire-name-bold">—</strong> :</div>
+                                <div class="prev-legal-bullet" id="prev-p2-accept1">• Accepte la donation des FONDS et en assume la garde totale, et l'utilisation conformément aux politiques et Lois 77-995 de l'article 4 du 18/12/77 optant pour les cas de Donation ;</div>
+                                <div class="prev-legal-bullet" id="prev-p2-accept2">• S'engage à utiliser les fonds correctement et à dépenser l'argent légalement.</div>
 
-                                <div class="prev-legal-para" id="prev-p2-notaire-certifie" style="text-align: justify; font-size: 11.5px; line-height: 1.35; margin-bottom: 4px; font-weight: bold; color: #000;">
+                                <div class="prev-legal-para" id="prev-p2-notaire-certifie">
                                     L'acte de donation est régi et interprété conformément aux lois en vigueur sur le territoire français et sous la supervision judiciaire de Maître MARIE AIMÉE PEYRON, notaire privé et accrédité, domicilié en France à Boulogne-Billancourt.
                                 </div>
-                                <div class="prev-legal-para" id="prev-p2-legal2" style="text-align: justify; font-size: 11.5px; line-height: 1.35; margin-bottom: 4px; font-weight: bold; color: #000;">La donation entre en vigueur à compter de la date de signature par les parties.</div>
-                                <div class="prev-legal-para" id="prev-p2-legal3" style="text-align: justify; font-size: 11.5px; line-height: 1.35; margin-bottom: 8px; font-weight: bold; color: #000;">— reconnaît avoir bénéficié des fonds faisant partie de cet acte de donation.</div>
+                                <div class="prev-legal-para" id="prev-p2-legal2">La donation entre en vigueur à compter de la date de signature par les parties.</div>
+                                <div class="prev-legal-para" id="prev-p2-legal3">— reconnaît avoir bénéficié des fonds faisant partie de cet acte de donation.</div>
 
                                 <div class="prev-sigs" style="display: flex; gap: 5px; margin-top: 8px; table-layout: fixed; width: 100%;">
                                     <div class="prev-sig-item" style="flex: 1; text-align: center; font-size: 8px; width: 33.33%;">
@@ -562,7 +562,7 @@
     border: 1px solid #cbd5e1;
     border-radius: 4px;
     padding: 0;
-    font-family: "Times New Roman", serif;
+    font-family: 'Times New Roman', Times, 'Georgia', 'Liberation Serif', 'Noto Serif', serif;
     color: #000;
     box-shadow: 0 4px 10px rgba(0,0,0,0.3);
     position: relative;
@@ -615,8 +615,36 @@
 
 .prev-title-doc { text-align: center; color: #c00000; font-size: 12px; font-weight: bold; text-decoration: underline; margin: 12px 0 8px; text-transform: uppercase; }
 
-.prev-clause { font-size: 8.5px; font-weight: bold; text-align: justify; margin: 12px 0; line-height: 1.5; color: #000; }
+.prev-clause {
+    font-size: 8.5px;
+    font-weight: bold;
+    text-align: justify;
+    margin: 12px 0;
+    line-height: 1.6;
+    color: #000;
+    font-family: 'Times New Roman', Times, 'Georgia', 'Liberation Serif', 'Noto Serif', serif;
+}
 .prev-date { text-align: right; font-weight: bold; margin: 8px 0; font-size: 8.5px; }
+
+.prev-legal-para {
+    text-align: justify;
+    font-size: 11px;
+    line-height: 1.6;
+    margin-bottom: 12px;
+    font-weight: bold;
+    color: #000;
+    font-family: 'Times New Roman', Times, 'Georgia', 'Liberation Serif', 'Noto Serif', serif;
+}
+.prev-legal-bullet {
+    text-align: justify;
+    font-size: 11px;
+    line-height: 1.6;
+    margin-left: 10px;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #000;
+    font-family: 'Times New Roman', Times, 'Georgia', 'Liberation Serif', 'Noto Serif', serif;
+}
 
 .prev-sigs { display: flex; gap: 5px; margin-top: auto !important; }
 .prev-sig-item { flex: 1; text-align: center; font-size: 8px; }
@@ -696,7 +724,7 @@ input[type="radio"]:checked + .seal-style-pill { background: #1e3a5f; color: #ff
         border-radius: 0 !important;
     }
     .cp-preview__doc { min-width: 580px; width: 580px; }
-    .prev-container { padding: 16px 14px 30px; }
+    .prev-container { padding: 20px 26px 35px; }
     /* Boîtes identification empilées sur mobile */
     .prev-id-table, .prev-id-table tbody, .prev-id-table tr { display: block; width: 100%; }
     .prev-id-box { display: block; width: 100% !important; box-sizing: border-box; margin-bottom: 6px; font-size: 12px !important; }
