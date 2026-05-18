@@ -607,7 +607,8 @@ input[type="radio"]:checked + .seal-style-pill { background: #1e3a5f; color: #ff
     .cp-grid { gap: 0; }
     .cp-col { gap: 0; }
     .cp-wrapper { padding: 0; max-width: 100vw; }
-    .cp-preview { padding: 10px 5px; max-width: 100%; }
+    .cp-preview { padding: 10px 5px; overflow-x: auto; }
+    .cp-preview__doc { min-width: 480px; }
     .prev-container { padding: 16px 14px 30px; }
     /* Boîtes identification empilées sur mobile */
     .prev-id-table, .prev-id-table tbody, .prev-id-table tr { display: block; width: 100%; }

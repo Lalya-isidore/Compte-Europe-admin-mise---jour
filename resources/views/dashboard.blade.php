@@ -434,5 +434,6 @@
     }
     img.tool-icon[src*="contrat-pret"] { border-radius: 12px; }
     img.tool-icon[src*="badge-agent"] { width: 80px; height: 80px; }
+    img.tool-icon[src*="certificat-don"] { width: 80px; height: 80px; }
 </style>
 @endsection
