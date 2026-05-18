@@ -568,7 +568,10 @@
     position: relative;
     overflow: hidden;
     width: 100%;
-    min-height: 800px;
+    min-height: 820px;
+    height: 820px;
+    display: flex;
+    flex-direction: column;
     box-sizing: border-box;
 }
 
@@ -587,7 +590,16 @@
 .prev-b-left   { top: 12px; bottom: 12px; left: 4px; width: 12px; text-align: center; word-wrap: break-word; overflow: hidden; line-height: 0.95; }
 .prev-b-right  { top: 12px; bottom: 12px; right: 4px; width: 12px; text-align: center; word-wrap: break-word; overflow: hidden; line-height: 0.95; }
 
-.prev-container { padding: 24px 30px 40px; position: relative; z-index: 1; box-sizing: border-box; width: 100%; }
+.prev-container {
+    padding: 24px 30px 40px;
+    position: relative;
+    z-index: 1;
+    box-sizing: border-box;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
 
 .prev-hdr-logos { text-align: center; margin-bottom: 8px; }
 .prev-hdr-logos img { height: 30px; margin: 0 5px; }
@@ -606,7 +618,7 @@
 .prev-clause { font-size: 8.5px; font-weight: bold; text-align: justify; margin: 12px 0; line-height: 1.5; color: #000; }
 .prev-date { text-align: right; font-weight: bold; margin: 8px 0; font-size: 8.5px; }
 
-.prev-sigs { display: flex; gap: 5px; margin-top: 15px; }
+.prev-sigs { display: flex; gap: 5px; margin-top: auto !important; }
 .prev-sig-item { flex: 1; text-align: center; font-size: 8px; }
 .prev-sig-lbl { color: #c00000; font-weight: bold; text-transform: uppercase; text-decoration: underline; display: block; margin-bottom: 5px; height: 18px; }
 .prev-sig-box { height: 40px; margin: 2px auto; width: 80%; display: flex; align-items: center; justify-content: center; position: relative; }
