@@ -5,7 +5,7 @@
 @section('content')
 <div class="mb-4">
     <h2 class="fw-bold h3 mb-1"><i data-lucide="heart-handshake" style="width:28px;height:28px" class="me-2"></i>Document de Don — Derniers utilisateurs</h2>
-    <p class="text-secondary">Les 10 dernières personnes ayant utilisé l'outil Document de Don.</p>
+    <p class="text-secondary">Les 50 dernières personnes ayant utilisé l'outil Document de Don (comptes de test exclus).</p>
 </div>
 
 <div class="card border-0 shadow-sm">
