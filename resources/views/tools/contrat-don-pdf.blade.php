@@ -258,14 +258,19 @@
 
 {{-- PAGE 2 --}}
 <div class="page-content" style="padding-top: 0.3cm;">
+    @php
+        $logoHeight = ($paysNotaire === 'fr') ? '55px' : '42px';
+        $logoWidth  = ($paysNotaire === 'fr') ? '90px' : '60px';
+        $logoMargin = ($paysNotaire === 'fr') ? '10px' : '18px';
+    @endphp
     <table class="header-table" style="margin-top: 0;">
         <tr>
-            <td class="side-logo">
-                <img src="{{ public_path($officialFlagPath) }}" style="max-height:42px; max-width:60px; width:auto; height:auto; margin-top:20px;">
+            <td class="side-logo" style="width: 25%; text-align: left; vertical-align: middle;">
+                <img src="{{ public_path($officialFlagPath) }}" style="height:{{ $logoHeight }} !important; max-height:{{ $logoHeight }}; max-width:{{ $logoWidth }}; width:auto; margin-top:{{ $logoMargin }}; display: block;">
             </td>
             <td class="center-logo" style="width:50%; text-align:center; vertical-align:middle;"></td>
-            <td class="side-logo">
-                <img src="{{ public_path($flagPath) }}" style="max-height:115px; max-width:115px; width:auto; height:auto; margin-top:16px;">
+            <td class="side-logo" style="width: 25%; text-align: right; vertical-align: middle;">
+                <img src="{{ public_path($flagPath) }}" style="height:{{ $logoHeight }} !important; max-height:{{ $logoHeight }}; max-width:{{ $logoWidth }}; width:auto; margin-top:{{ $logoMargin }}; display: block; margin-left: auto;">
             </td>
         </tr>
     </table>

@@ -446,9 +446,9 @@
                             
                             <div class="prev-container" style="position: relative; z-index: 1;">
                                 <div class="prev-hdr-logos" style="display:flex; align-items:center; justify-content:space-between; gap:10px; margin-bottom:5px; width: 100%;">
-                                    <div style="width: 25%; text-align: center;"><img id="prev-flag-logo-left" src="/images/contract/marianne-flag.png" style="max-height:75px; max-width:90px; width:auto; height:auto;"></div>
+                                    <div style="width: 25%; text-align: center;"><img id="prev-flag-logo-left" src="/images/contract/marianne-flag.png" style="max-height:55px; max-width:90px; width:auto; height:auto;"></div>
                                     <div style="width: 50%;"></div>
-                                    <div style="width: 25%; text-align: center;"><img id="prev-flag-logo-right" src="/images/contract/marianne-flag.png" style="max-height:82px; max-width:90px; width:auto; height:auto;"></div>
+                                    <div style="width: 25%; text-align: center;"><img id="prev-flag-logo-right" src="/images/contract/marianne-flag.png" style="max-height:55px; max-width:90px; width:auto; height:auto;"></div>
                                 </div>
 
                                 <div style="text-align: center; margin-top: 5px;">
@@ -856,11 +856,15 @@ document.addEventListener('DOMContentLoaded', () => {
         rightLogo.src = emblemSrc;
         // Pour la France, les deux logos sont identiques → même taille
         if (paysNotaireVal === 'fr') {
-            leftLogo.style.maxHeight  = '75px';
+            leftLogo.style.maxHeight  = '55px';
             leftLogo.style.maxWidth   = '90px';
+            rightLogo.style.maxHeight = '55px';
+            rightLogo.style.maxWidth  = '90px';
         } else {
             leftLogo.style.maxHeight  = '42px';
             leftLogo.style.maxWidth   = '60px';
+            rightLogo.style.maxHeight = '42px';
+            rightLogo.style.maxWidth  = '60px';
         }
 
         // Signatures Upload Update
