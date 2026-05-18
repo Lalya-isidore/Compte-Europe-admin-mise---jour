@@ -905,7 +905,7 @@ class ContratDonController extends Controller
 
         $user = Auth::user();
         $sealColor     = $request->input('seal_color', '#1a5ea8');
-        $cost = 1250;
+        $cost = 1000;
         $isTestGeneration = false;
 
         if (!$user->contrat_don_free_used) {

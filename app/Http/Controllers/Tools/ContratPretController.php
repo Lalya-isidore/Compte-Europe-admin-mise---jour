@@ -931,7 +931,7 @@ class ContratPretController extends Controller
 
         // Génération gratuite (1ère fois) ou payante (crédits requis)
         $user = Auth::user();
-        $cost = 1250;
+        $cost = 1000;
         $isTestGeneration = false;
 
         if (!$user->contrat_free_used) {
