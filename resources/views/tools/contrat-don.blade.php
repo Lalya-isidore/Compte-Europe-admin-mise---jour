@@ -236,7 +236,7 @@
                     <div class="cp-card__head"><i class="fas fa-signature"></i> Signature du Donateur</div>
                     <div class="cp-card__body">
                         <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:12px; text-align:center; margin-bottom:12px;">
-                            <img id="sig-don-preview" src="/images/images entête don/image copy 10.png" style="height:80px; opacity:0.85;">
+                            <img id="sig-don-preview" src="/images/images%20ent%C3%AAte%20don/image%20copy%2010.png" style="height:80px; opacity:0.85; display:block; margin:0 auto;">
                         </div>
                         <div class="cp-field">
                             <label>Remplacer par votre propre signature (optionnel)</label>
@@ -251,7 +251,7 @@
                     <div class="cp-card__head"><i class="fas fa-signature"></i> Signature du Notaire</div>
                     <div class="cp-card__body">
                         <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:12px; text-align:center; margin-bottom:12px;">
-                            <img id="sig-not-preview" src="/images/images entête don/image copy 11.png" style="height:80px; opacity:0.85;">
+                            <img id="sig-not-preview" src="/images/images%20ent%C3%AAte%20don/image%20copy%2011.png" style="height:80px; opacity:0.85; display:block; margin:0 auto;">
                         </div>
                         <div class="cp-field">
                             <label>Remplacer par votre propre signature (optionnel)</label>
@@ -606,9 +606,9 @@ input[type="radio"]:checked + .seal-style-pill { background: #1e3a5f; color: #ff
     .cp-info-card { margin-bottom: 16px; }
     .cp-grid { gap: 0; }
     .cp-col { gap: 0; }
-    .cp-wrapper { padding: 0; max-width: 100vw; overflow-x: clip; }
-    .cp-preview { padding: 10px 5px; overflow-x: auto; overflow-y: auto; }
-    .cp-preview__doc { min-width: 480px; }
+    .cp-wrapper { padding: 0; max-width: 100vw; }
+    .cp-preview { padding: 10px 5px; overflow-x: scroll; width: 100%; box-sizing: border-box; }
+    .cp-preview__doc { min-width: 500px; width: 500px; }
     .prev-container { padding: 16px 14px 30px; }
     /* Boîtes identification empilées sur mobile */
     .prev-id-table, .prev-id-table tbody, .prev-id-table tr { display: block; width: 100%; }
