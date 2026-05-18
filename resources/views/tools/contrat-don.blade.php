@@ -405,7 +405,7 @@
                                     {{ date('d/m/Y') }}
                                 </div>
 
-                                <div class="prev-sigs" style="display: flex; gap: 5px; margin-top: 15px; table-layout: fixed; width: 100%;">
+                                <div class="prev-sigs" style="display: flex; gap: 5px; margin-top: 45px; table-layout: fixed; width: 100%;">
                                     <div class="prev-sig-item" style="flex: 1; text-align: center; font-size: 8px; width: 33.33%;">
                                         <span class="prev-sig-lbl" id="prev-sig-lbl-don" style="color: #c00000; font-weight: bold; text-transform: uppercase; text-decoration: underline; display: block; margin-bottom: 5px; height: 18px;">DONATEUR</span>
                                         <div class="prev-sig-box" style="height: 60px; display: flex; align-items: center; justify-content: center; position: relative;">
