@@ -606,7 +606,7 @@ input[type="radio"]:checked + .seal-style-pill { background: #1e3a5f; color: #ff
     .cp-info-card { margin-bottom: 16px; }
     .cp-grid { gap: 0; }
     .cp-col { gap: 0; }
-    body { overflow-x: hidden; }
+    html, body { overflow-x: hidden; }
     .cp-wrapper { padding: 0; max-width: 100vw; }
     .cp-preview { padding: 10px 5px; overflow-x: scroll; width: 100%; box-sizing: border-box; }
     .cp-preview__doc { min-width: 500px; width: 500px; }
