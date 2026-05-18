@@ -55,7 +55,7 @@
 <div class="mb-4">
     <div class="d-flex justify-content-between align-items-center mb-3">
         <h5 class="fw-bold mb-0"><i data-lucide="trending-up" style="width:18px;height:18px;margin-right:6px;vertical-align:-3px"></i>Rechargements (F CFA)</h5>
-        <a href="{{ route('admin.rechargeStats') }}" class="btn btn-sm btn-outline-secondary">Voir le détail</a>
+        <a href="{{ route('rechargeStats.index') }}" class="btn btn-sm btn-outline-secondary">Voir le détail</a>
     </div>
     <div class="row g-3">
         <div class="col-4">
