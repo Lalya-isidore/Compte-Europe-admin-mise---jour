@@ -151,9 +151,8 @@
         /* Color only for names and amounts */
         .key-red { color: #c00000; }
         @if($isTestGeneration)
-        .test-watermark { position: fixed; top: 38%; left: 0; right: 0; z-index: 999; text-align: center; }
-        .test-watermark-text { font-size: 60pt; font-weight: 900; color: rgba(200,0,0,0.07); letter-spacing: 6px; font-family: Arial, sans-serif; }
-        .test-banner { position: fixed; bottom: 0; left: 0; right: 0; background: #c0392b; color: #fff; font-size: 8.5pt; font-weight: bold; text-align: center; padding: 6px 10px; z-index: 1000; letter-spacing: 0.3px; }
+        .test-banner-top { position: fixed; top: 0; left: 0; right: 0; background: #c0392b; color: #fff; font-size: 9pt; font-weight: bold; text-align: center; padding: 5px 10px; z-index: 1000; letter-spacing: 1px; }
+        .test-banner-bottom { position: fixed; bottom: 0; left: 0; right: 0; background: #c0392b; color: #fff; font-size: 9pt; font-weight: bold; text-align: center; padding: 5px 10px; z-index: 1000; letter-spacing: 1px; }
         @endif
     </style>
 </head>
@@ -166,8 +165,8 @@
 @endphp
 
 @if($isTestGeneration)
-<div class="test-watermark"><div class="test-watermark-text">FLASH BILAN</div></div>
-<div class="test-banner">⚠ Ceci est une génération de test. Générez avec des crédits pour obtenir un certificat officiel sans filigrane Flash Bilan.</div>
+<div class="test-banner-top">⚠ FLASH BILAN — Génération de test. Générez avec des crédits pour un certificat officiel sans filigrane.</div>
+<div class="test-banner-bottom">⚠ FLASH BILAN — Génération de test. Générez avec des crédits pour un certificat officiel sans filigrane.</div>
 @endif
 
 <div class="border-fixed b-top">{{ $hStars }}</div>
