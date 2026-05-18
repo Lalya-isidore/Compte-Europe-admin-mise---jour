@@ -475,7 +475,7 @@
 </div>
 
 <style>
-.cp-wrapper { max-width: 1200px; margin: 0 auto; }
+.cp-wrapper { max-width: 960px; margin: 0 auto; padding: 0 20px; }
 .cp-info-card { background: #fff; border-radius: 8px; box-shadow: 0 0 12px 0 rgba(0,0,0,.08); margin-bottom: 24px; overflow: hidden; }
 .cp-info-title { font-family: 'Righteous', cursive, sans-serif; padding: 18px 20px; border-bottom: 1px solid #e2e2e2; color: #0d6efd; font-size: 1rem; }
 .cp-info-body { padding: 18px 20px 10px; }
