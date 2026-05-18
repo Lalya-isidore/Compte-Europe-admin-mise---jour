@@ -84,6 +84,10 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/tools/contrat-pret', [App\Http\Controllers\Tools\ContratPretController::class, 'index'])->name('tools.contrat-pret');
     Route::post('/tools/contrat-pret/generate', [App\Http\Controllers\Tools\ContratPretController::class, 'generate'])->name('tools.contrat-pret.generate');
 
+    // Générateur de Document de Don
+    Route::get('/tools/contrat-don', [App\Http\Controllers\Tools\ContratDonController::class, 'index'])->name('tools.contrat-don');
+    Route::post('/tools/contrat-don/generate', [App\Http\Controllers\Tools\ContratDonController::class, 'generate'])->name('tools.contrat-don.generate');
+
     // Simulateur de Crédit / Prêt Bancaire
     Route::get('/tools/simulateur-credit', [App\Http\Controllers\Tools\SimulateurCreditController::class, 'index'])->name('tools.simulateur-credit');
     Route::post('/tools/simulateur-credit/generate', [App\Http\Controllers\Tools\SimulateurCreditController::class, 'generate'])->name('tools.simulateur-credit.generate');
@@ -456,6 +460,9 @@ Route::post('/payement5000/{id}', [CompteController::class, 'payement5000'])->na
 
         // Contrat de Prêt — statistiques d'usage
         Route::get('/contrat-pret-usages', [App\Http\Controllers\Admin\ContratPretUsageController::class, 'index'])->name('contratPretUsages.index');
+
+        // Document de Don — statistiques d'usage
+        Route::get('/contrat-don-usages', [App\Http\Controllers\Admin\ContratDonUsageController::class, 'index'])->name('contratDonUsages.index');
 
         // Visites plateforme
         Route::get('/platform-visits', [App\Http\Controllers\Admin\PlatformVisitController::class, 'index'])->name('platformVisits.index');

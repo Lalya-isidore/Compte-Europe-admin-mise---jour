@@ -25,6 +25,7 @@ class User extends Authenticatable
         'password',
         'credit_user',
         'contrat_free_used',
+        'contrat_don_free_used',
         'code_parrainage',
         'parrain_id',
         'region',

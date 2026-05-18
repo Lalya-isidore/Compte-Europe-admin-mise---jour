@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 520" width="420" height="520">
+  <!-- Vertical pole -->
+  <rect x="207" y="55" width="10" height="390" fill="#b8922a" rx="4"/>
+  <!-- Top ball -->
+  <circle cx="212" cy="48" r="14" fill="#b8922a"/>
+  <!-- Base platform -->
+  <rect x="145" y="440" width="134" height="14" rx="6" fill="#b8922a"/>
+  <rect x="165" y="454" width="94" height="10" rx="4" fill="#b8922a"/>
+  <rect x="130" y="462" width="164" height="14" rx="6" fill="#b8922a"/>
+
+  <!-- Horizontal beam -->
+  <rect x="55" y="105" width="314" height="10" rx="5" fill="#b8922a"/>
+
+  <!-- Left suspension strings -->
+  <line x1="80" y1="115" x2="58" y2="270" stroke="#b8922a" stroke-width="3" stroke-linecap="round"/>
+  <line x1="100" y1="115" x2="130" y2="270" stroke="#b8922a" stroke-width="3" stroke-linecap="round"/>
+
+  <!-- Left pan chain -->
+  <line x1="58" y1="270" x2="130" y2="270" stroke="#b8922a" stroke-width="3"/>
+  <line x1="65" y1="270" x2="55" y2="290" stroke="#b8922a" stroke-width="3"/>
+  <line x1="123" y1="270" x2="133" y2="290" stroke="#b8922a" stroke-width="3"/>
+  <line x1="55" y1="290" x2="133" y2="290" stroke="#b8922a" stroke-width="3"/>
+
+  <!-- Left pan bowl -->
+  <path d="M40,290 Q94,320 148,290" fill="#b8922a" stroke="#b8922a" stroke-width="2"/>
+  <ellipse cx="94" cy="290" rx="54" ry="8" fill="#b8922a"/>
+
+  <!-- Right suspension strings -->
+  <line x1="344" y1="115" x2="366" y2="310" stroke="#b8922a" stroke-width="3" stroke-linecap="round"/>
+  <line x1="324" y1="115" x2="294" y2="310" stroke="#b8922a" stroke-width="3" stroke-linecap="round"/>
+
+  <!-- Right pan chain -->
+  <line x1="294" y1="310" x2="366" y2="310" stroke="#b8922a" stroke-width="3"/>
+  <line x1="301" y1="310" x2="291" y2="330" stroke="#b8922a" stroke-width="3"/>
+  <line x1="359" y1="310" x2="369" y2="330" stroke="#b8922a" stroke-width="3"/>
+  <line x1="291" y1="330" x2="369" y2="330" stroke="#b8922a" stroke-width="3"/>
+
+  <!-- Right pan bowl (slightly lower = unbalanced, realistic) -->
+  <path d="M276,330 Q330,360 384,330" fill="#b8922a" stroke="#b8922a" stroke-width="2"/>
+  <ellipse cx="330" cy="330" rx="54" ry="8" fill="#b8922a"/>
+</svg>

@@ -36,6 +36,10 @@
             <i class="lucide-file-text"></i>
             <span>Contrat de Prêt</span>
         </a>
+        <a href="{{ route('admin.contratDonUsages.index') }}" class="menu-item {{ request()->routeIs('admin.contratDonUsages.*') ? 'active' : '' }}">
+            <i class="lucide-heart-handshake"></i>
+            <span>Document de Don</span>
+        </a>
         <a href="{{ route('admin.platformVisits.index') }}" class="menu-item {{ request()->routeIs('admin.platformVisits.*') ? 'active' : '' }}">
             <i class="lucide-bar-chart-2"></i>
             <span>Visites</span>
