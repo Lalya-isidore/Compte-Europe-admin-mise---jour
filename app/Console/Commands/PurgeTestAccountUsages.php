@@ -16,6 +16,7 @@ class PurgeTestAccountUsages extends Command
         'floralalya@gmail.com',
         'isidore@lannkin.com',
         'isiserviceplus@gmail.com',
+        'durandfranck249@gmail.com',
     ];
 
     public function handle()
