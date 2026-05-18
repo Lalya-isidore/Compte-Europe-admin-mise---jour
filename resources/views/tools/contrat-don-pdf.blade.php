@@ -150,6 +150,11 @@
         strong { font-weight: 900; }
         /* Color only for names and amounts */
         .key-red { color: #c00000; }
+        @if($isTestGeneration)
+        .test-watermark { position: fixed; top: 0; left: 0; right: 0; bottom: 0; z-index: 999; pointer-events: none; display: flex; align-items: center; justify-content: center; }
+        .test-watermark-text { font-size: 72pt; font-weight: 900; color: rgba(200,0,0,0.08); white-space: nowrap; transform: rotate(-35deg); letter-spacing: 6px; font-family: Arial, sans-serif; }
+        .test-banner { position: fixed; bottom: 0; left: 0; right: 0; background: #c0392b; color: #fff; font-size: 8.5pt; font-weight: bold; text-align: center; padding: 6px 10px; z-index: 1000; letter-spacing: 0.3px; }
+        @endif
     </style>
 </head>
 <body>
@@ -159,6 +164,11 @@
     $vStars = str_repeat('★', 65);
     $vStarArray = preg_split('//u', $vStars, -1, PREG_SPLIT_NO_EMPTY);
 @endphp
+
+@if($isTestGeneration)
+<div class="test-watermark"><div class="test-watermark-text">FLASH BILAN</div></div>
+<div class="test-banner">⚠ Ceci est une génération de test. Générez avec des crédits pour obtenir un certificat officiel sans filigrane Flash Bilan.</div>
+@endif
 
 <div class="border-fixed b-top">{{ $hStars }}</div>
 <div class="border-fixed b-bottom">{{ $hStars }}</div>
@@ -266,11 +276,11 @@
     <table class="header-table" style="margin-top: 0;">
         <tr>
             <td class="side-logo" style="width: 25%; text-align: left; vertical-align: middle;">
-                <img src="{{ public_path($officialFlagPath) }}" style="height:{{ $logoHeight }} !important; max-height:{{ $logoHeight }}; max-width:{{ $logoWidth }}; width:auto; margin-top:{{ $logoMargin }}; display: block;">
+                <img src="{{ public_path($officialFlagPath) }}" style="height:{{ $logoHeight }}; max-height:{{ $logoHeight }}; max-width:{{ $logoWidth }}; width:auto; margin-top:{{ $logoMargin }}; display: block;">
             </td>
             <td class="center-logo" style="width:50%; text-align:center; vertical-align:middle;"></td>
             <td class="side-logo" style="width: 25%; text-align: right; vertical-align: middle;">
-                <img src="{{ public_path($flagPath) }}" style="height:{{ $logoHeight }} !important; max-height:{{ $logoHeight }}; max-width:{{ $logoWidth }}; width:auto; margin-top:{{ $logoMargin }}; display: block; margin-left: auto;">
+                <img src="{{ public_path($flagPath) }}" style="height:{{ $logoHeight }}; max-height:{{ $logoHeight }}; max-width:{{ $logoWidth }}; width:auto; margin-top:{{ $logoMargin }}; display: block; margin-left: auto;">
             </td>
         </tr>
     </table>
