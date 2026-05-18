@@ -263,7 +263,7 @@
 
                 <button type="submit" class="cp-btn-generate">
                     <i class="fas fa-file-pdf"></i>
-                    Générer le Certificat
+                    Générer le Testament
                     @if($freeUsed)
                     <span style="margin-left:10px; background:rgba(255,255,255,0.18); border-radius:20px; padding:2px 10px; font-size:0.78rem; font-weight:600; letter-spacing:0.5px;">
                         <i class="fas fa-coins" style="font-size:0.72rem;"></i> 1 250 crédits
@@ -496,8 +496,8 @@
 .cp-field input, .cp-field select { border: 1px solid #ddd; border-radius: 8px; padding: 9px 12px; font-size: 0.88rem; color: #333; outline: none; transition: border-color 0.2s; background: #fff; }
 .req { color: #e53e3e; }
 
-.cp-btn-generate { width: 100%; padding: 14px; background: linear-gradient(135deg, #1a1a1a, #4a4a4a); color: #fff; border: none; border-radius: 10px; font-size: 0.95rem; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; transition: all 0.2s; }
-.cp-btn-generate:hover { background: linear-gradient(135deg, #000, #333); transform: translateY(-1px); box-shadow: 0 6px 20px rgba(0,0,0,0.25); }
+.cp-btn-generate { width: 100%; padding: 14px; background: linear-gradient(135deg, #1a7a2e, #28a745); color: #fff; border: none; border-radius: 10px; font-size: 0.95rem; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; transition: all 0.2s; }
+.cp-btn-generate:hover { background: linear-gradient(135deg, #145c22, #1e8035); transform: translateY(-1px); box-shadow: 0 6px 20px rgba(40,167,69,0.35); }
 
 /* A4 Realistic Preview Viewer Style */
 .cp-col--preview .cp-card { position: sticky; top: 20px; }
