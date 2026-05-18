@@ -920,6 +920,23 @@ class ContratDonController extends Controller
         $devise        = $request->devise;
         $t             = $this->translations[$lang] ?? $this->translations['fr'];
         $deviseSymbole = $this->currencies[$devise]['symbol'] ?? '€';
+
+        // Override paragraphes avec les valeurs personnalisées si soumises
+        $paraOverrides = [
+            'clause_sum'         => $request->input('para_clause'),
+            'p2_para1'           => $request->input('para_p2_para1'),
+            'p2_bullet1'         => $request->input('para_bullet1'),
+            'p2_bullet2'         => $request->input('para_bullet2'),
+            'p2_bullet3'         => $request->input('para_bullet3'),
+            'p2_accept1'         => $request->input('para_accept1'),
+            'p2_accept2'         => $request->input('para_accept2'),
+            'p2_notaire_certifie'=> $request->input('para_notcertifie'),
+            'p2_legal2'          => $request->input('para_legal2'),
+            'p2_legal3'          => $request->input('para_legal3'),
+        ];
+        foreach ($paraOverrides as $key => $val) {
+            if (!empty($val)) $t[$key] = $val;
+        }
         $paysNotaire    = $request->get('pays_notaire', 'fr');
         $flagPath         = $this->flagsMap[$paysNotaire] ?? $this->flagsMap['fr'];
         $officialFlagPath = $this->officialFlagsMap[$paysNotaire] ?? $flagPath;

@@ -261,6 +261,51 @@
                     </div>
                 </div>
 
+                {{-- Paragraphes personnalisables --}}
+                <div class="cp-card">
+                    <div class="cp-card__head cp-card__head--toggle" onclick="toggleParasSection()" style="cursor:pointer;">
+                        <i class="fas fa-edit"></i> Contenu du document
+                        <small style="font-weight:normal; margin-left:8px; opacity:0.7;">Modifiez les paragraphes</small>
+                        <i class="fas fa-chevron-down" id="paras-chev" style="margin-left:auto; transition:transform 0.2s;"></i>
+                    </div>
+                    <div id="paras-section" style="display:none;">
+                        <div class="cp-card__body" style="padding-top:10px;">
+                            <button type="button" onclick="resetParagraphs()" class="cp-btn-reset">
+                                <i class="fas fa-sync-alt"></i> Réinitialiser depuis la langue sélectionnée
+                            </button>
+                            <div style="margin-top:12px;">
+                                @php
+                                $paraItems = [
+                                    ['key'=>'clause',      'label'=>'Clause de certification (page 1)',   'name'=>'para_clause',       'hint'=>'Variables : :montant :devise :donneur :banque'],
+                                    ['key'=>'p2para1',     'label'=>'Paragraphe principal (page 2)',       'name'=>'para_p2_para1',     'hint'=>'Variables : :donneur :montant :devise :donataire'],
+                                    ['key'=>'bullet1',     'label'=>'Déclaration 1 du donateur',           'name'=>'para_bullet1',      'hint'=>''],
+                                    ['key'=>'bullet2',     'label'=>'Déclaration 2 du donateur',           'name'=>'para_bullet2',      'hint'=>''],
+                                    ['key'=>'bullet3',     'label'=>'Déclaration 3 du donateur',           'name'=>'para_bullet3',      'hint'=>''],
+                                    ['key'=>'accept1',     'label'=>'Acceptation 1 du bénéficiaire',       'name'=>'para_accept1',      'hint'=>''],
+                                    ['key'=>'accept2',     'label'=>'Acceptation 2 du bénéficiaire',       'name'=>'para_accept2',      'hint'=>''],
+                                    ['key'=>'notcertifie', 'label'=>'Certification du notaire',            'name'=>'para_notcertifie',  'hint'=>'Variables : :territoire :notaire :adresse'],
+                                    ['key'=>'legal2',      'label'=>'Disposition légale 1',                'name'=>'para_legal2',       'hint'=>''],
+                                    ['key'=>'legal3',      'label'=>'Disposition légale 2',                'name'=>'para_legal3',       'hint'=>'Variable : :donataire'],
+                                ];
+                                @endphp
+                                @foreach($paraItems as $i => $p)
+                                <div class="art-item" id="para-item-{{ $p['key'] }}">
+                                    <div class="art-item__hd" onclick="togglePara('{{ $p['key'] }}')">
+                                        <span class="art-item__badge">{{ $i + 1 }}</span>
+                                        <span style="font-size:0.85rem; flex:1;">{{ $p['label'] }}</span>
+                                        <i class="fas fa-chevron-down art-chev" id="para-chev-{{ $p['key'] }}"></i>
+                                    </div>
+                                    <div class="art-item__bd" id="para-bd-{{ $p['key'] }}" style="display:none;">
+                                        <textarea name="{{ $p['name'] }}" id="para-{{ $p['key'] }}" class="art-corps-inp" rows="3" placeholder="Texte du paragraphe..."></textarea>
+                                        @if($p['hint'])<div class="para-hint">{{ $p['hint'] }}</div>@endif
+                                    </div>
+                                </div>
+                                @endforeach
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <button type="submit" class="cp-btn-generate">
                     <i class="fas fa-file-pdf"></i>
                     Générer le Testament
@@ -604,12 +649,18 @@ input[type="radio"]:checked + .seal-style-pill { background: #1e3a5f; color: #ff
     .cp-row2 { grid-template-columns: 1fr; }
     .cp-card__head { font-size: 0.82rem; padding: 10px 14px; }
     .cp-info-card { margin-bottom: 16px; }
-    .cp-grid { gap: 0; }
-    .cp-col { gap: 0; }
-    html, body { overflow-x: hidden; }
-    .cp-wrapper { padding: 0; max-width: 100vw; }
-    .cp-preview { padding: 10px 5px; overflow-x: scroll; width: 100%; box-sizing: border-box; }
-    .cp-preview__doc { min-width: 500px; width: 500px; }
+    .cp-grid { gap: 0; max-width: 100%; overflow: hidden; }
+    .cp-col { gap: 0; max-width: 100%; overflow: hidden; }
+    .cp-col--preview { max-width: 100%; overflow: hidden; }
+    .cp-wrapper { padding: 0; max-width: 100vw; overflow: hidden; }
+    .cp-preview {
+        padding: 10px 5px;
+        overflow-x: auto;
+        max-width: 100%;
+        box-sizing: border-box;
+        -webkit-overflow-scrolling: touch;
+    }
+    .cp-preview__doc { min-width: 580px; width: 580px; }
     .prev-container { padding: 16px 14px 30px; }
     /* Boîtes identification empilées sur mobile */
     .prev-id-table, .prev-id-table tbody, .prev-id-table tr { display: block; width: 100%; }
@@ -619,6 +670,17 @@ input[type="radio"]:checked + .seal-style-pill { background: #1e3a5f; color: #ff
     .prev-id-row { font-size: 12px !important; margin: 6px 0 !important; }
     .prev-id-note { font-size: 10px !important; }
 }
+.cp-btn-reset { padding: 7px 14px; background: #f3f4f6; color: #374151; border: 1px solid #d1d5db; border-radius: 7px; font-size: 0.82rem; cursor: pointer; display: flex; align-items: center; gap: 6px; }
+.cp-btn-reset:hover { background: #e5e7eb; }
+.art-item { border: 1px solid #e5e7eb; border-radius: 8px; margin-bottom: 7px; overflow: hidden; transition: opacity 0.2s; }
+.art-item__hd { display: flex; align-items: center; gap: 8px; padding: 9px 12px; background: #f9fafb; cursor: pointer; }
+.art-item__badge { background: #1e3a5f; color: #fff; border-radius: 50%; width: 22px; height: 22px; display: flex; align-items: center; justify-content: center; font-size: 0.73rem; font-weight: bold; flex-shrink: 0; }
+.art-item .art-chev { margin-left: auto; font-size: 0.75rem; color: #888; transition: transform 0.2s; }
+.art-item.open .art-chev { transform: rotate(180deg); }
+.art-item__bd { padding: 0 12px 12px; background: #fff; }
+.art-corps-inp { width: 100%; border: 1px solid #ddd; border-radius: 6px; padding: 9px; font-size: 0.82rem; line-height: 1.6; color: #333; resize: vertical; font-family: 'Times New Roman', serif; box-sizing: border-box; margin-top: 8px; }
+.art-corps-inp:focus { outline: none; border-color: #1a7a2e; }
+.para-hint { font-size: 0.75rem; color: #888; margin-top: 4px; font-style: italic; }
 </style>
 
 <script>
@@ -1168,6 +1230,52 @@ document.addEventListener('DOMContentLoaded', () => {
 
     generateSealPreview();
     if (typeof updatePreview === 'function') updatePreview();
+});
+
+// ---- Fonctions paragraphes personnalisables ----
+const paraKeys = {
+    'clause':      'clause_sum',
+    'p2para1':     'p2_para1',
+    'bullet1':     'p2_bullet1',
+    'bullet2':     'p2_bullet2',
+    'bullet3':     'p2_bullet3',
+    'accept1':     'p2_accept1',
+    'accept2':     'p2_accept2',
+    'notcertifie': 'p2_notaire_certifie',
+    'legal2':      'p2_legal2',
+    'legal3':      'p2_legal3',
+};
+
+function toggleParasSection() {
+    const sec  = document.getElementById('paras-section');
+    const chev = document.getElementById('paras-chev');
+    const open = sec.style.display === 'none';
+    sec.style.display  = open ? 'block' : 'none';
+    chev.style.transform = open ? 'rotate(180deg)' : '';
+}
+
+function togglePara(key) {
+    const bd   = document.getElementById('para-bd-' + key);
+    const item = document.getElementById('para-item-' + key);
+    const open = bd.style.display === 'none';
+    bd.style.display = open ? 'block' : 'none';
+    item.classList.toggle('open', open);
+}
+
+function resetParagraphs() {
+    const lang = document.getElementById('lang-select').value;
+    const t    = allTranslations[lang] || allTranslations['fr'];
+    Object.entries(paraKeys).forEach(([key, tKey]) => {
+        const el = document.getElementById('para-' + key);
+        if (el) el.value = t[tKey] || '';
+    });
+    if (typeof updatePreview === 'function') updatePreview();
+}
+
+// Remplir les textareas au chargement et au changement de langue
+document.addEventListener('DOMContentLoaded', () => {
+    resetParagraphs();
+    document.getElementById('lang-select').addEventListener('change', resetParagraphs);
 });
 </script>
 @endsection
