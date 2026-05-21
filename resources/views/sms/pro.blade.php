@@ -245,6 +245,10 @@ $svg = [
                         <li>Vérifiez que le pays destinataire supporte les SMS d'expéditeurs alphanumériques.</li>
                         <li style="color:#86efac;font-weight:600;">✅ Les SMS rejetés ne sont pas facturés.</li>
                     </ul>
+
+                    <div class="mt-3 px-3 py-2 rounded-2" style="background:rgba(255,255,255,.1);font-size:1rem;color:#fff;line-height:1.7;">
+                        <strong>NB :</strong> Les SMS ne sont généralement pas rejetés vers les pays africains, sauf en cas d'abus de nom d'expéditeur de type opérateur mobile (ex. <strong>MTN MOMO</strong>, <strong>MOOV MONEY</strong>, <strong>ORANGE MONEY</strong>…).
+                    </div>
                 </div>
             </div>
         </div>
