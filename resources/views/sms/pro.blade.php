@@ -196,48 +196,66 @@ $svg = [
 
     {{-- Bandeau avertissement rejets opérateurs --}}
     <div class="mx-3 mx-sm-4 mb-3">
-        <div class="rounded-3 border border-warning-subtle" style="background:#fffbeb;">
-            <button class="btn w-100 d-flex align-items-center gap-3 px-3 py-3 rounded-3 border-0" type="button"
+        <div class="rounded-3 overflow-hidden" style="background:#c0392b;">
+
+            {{-- Ligne ticker --}}
+            <div class="d-flex align-items-center" style="background:#a93226;padding:7px 14px;gap:10px;">
+                <span style="white-space:nowrap;font-size:.82rem;font-weight:700;color:#fff;background:#e74c3c;border-radius:4px;padding:2px 8px;flex-shrink:0;">⚠ REJET</span>
+                <div style="overflow:hidden;flex:1;">
+                    <div class="sms-ticker-text" style="white-space:nowrap;font-size:.82rem;color:#fecaca;animation:smsTicker 28s linear infinite;">
+                        🚫 Mots interdits : "frais d'activation", "montant", "transfert international", "payer", "virement", "débloquer"&nbsp;&nbsp;&nbsp;•&nbsp;&nbsp;&nbsp;💰 Symboles $ € XOF répétés = score de fraude élevé&nbsp;&nbsp;&nbsp;•&nbsp;&nbsp;&nbsp;🌍 Certains pays bloquent les SMS bancaires d'expéditeurs non certifiés&nbsp;&nbsp;&nbsp;•&nbsp;&nbsp;&nbsp;📵 Nom d'expéditeur privé interdit pour les notifications bancaires&nbsp;&nbsp;&nbsp;•&nbsp;&nbsp;&nbsp;✅ SMS rejetés = non facturés
+                    </div>
+                </div>
+            </div>
+
+            {{-- Bouton pour ouvrir le détail --}}
+            <button class="btn w-100 d-flex align-items-center gap-3 px-4 py-3 border-0" type="button"
                 data-bs-toggle="collapse" data-bs-target="#rejetOpeCollapse" aria-expanded="false"
                 style="background:transparent;text-align:left;">
-                <div class="flex-shrink-0 rounded-circle d-flex align-items-center justify-content-center" style="width:38px;height:38px;background:#fef08a;flex-shrink:0;">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="#b45309"><path d="M12 2L1 21h22L12 2zm0 3.5L20.5 19h-17L12 5.5zM11 10v4h2v-4h-2zm0 6v2h2v-2h-2z"/></svg>
-                </div>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="#fff" style="flex-shrink:0;"><path d="M12 2L1 21h22L12 2zm0 3.5L20.5 19h-17L12 5.5zM11 10v4h2v-4h-2zm0 6v2h2v-2h-2z"/></svg>
                 <div class="flex-grow-1">
-                    <div class="fw-bold" style="font-size:.97rem;color:#92400e;">⚠ Messages susceptibles d'être rejetés</div>
-                    <div style="font-size:.84rem;color:#b45309;">Certains messages n'arrivent pas à destination — voir pourquoi</div>
+                    <div class="fw-bold" style="font-size:.95rem;color:#fff;">Pourquoi mon SMS est rejeté ? Cliquez pour tout savoir</div>
                 </div>
-                <span class="ms-auto text-secondary">{!! $svg['chevron'] !!}</span>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><polyline points="6 9 12 15 18 9"/></svg>
             </button>
+
+            {{-- Contenu détaillé --}}
             <div class="collapse" id="rejetOpeCollapse">
-                <div class="px-4 pb-3 pt-1" style="font-size:.88rem;color:#1e293b;border-top:1px solid #fde68a;">
+                <div class="px-4 pb-4 pt-2" style="font-size:.88rem;color:#fff;border-top:1px solid rgba(255,255,255,.15);">
 
-                    <p class="fw-bold mb-2 mt-2" style="color:#92400e;">🚨 Pourquoi votre SMS peut être bloqué par l'opérateur</p>
+                    <p class="fw-bold mb-3 mt-2" style="font-size:.95rem;">🚨 Pourquoi votre SMS peut être bloqué par l'opérateur</p>
 
-                    <p class="mb-1 fw-semibold">1. Contenu à caractère financier ou d'arnaque</p>
-                    <ul class="mb-2 ps-3" style="line-height:1.7;">
-                        <li>Les messages demandant des <strong>frais d'activation</strong>, de <strong>libération de fonds</strong> ou un <strong>virement préalable</strong> sont automatiquement identifiés comme fraude.</li>
-                        <li>Les termes tels que <code>frais d'activation</code>, <code>transfert international</code>, <code>montant</code>, <code>payer</code>, <code>débloquer</code>, <code>virement</code> déclenchent les filtres anti-spam des opérateurs.</li>
-                        <li>L'utilisation répétée de symboles monétaires (<code>$</code>, <code>€</code>, <code>XOF</code>) associés à des montants augmente le score de dangerosité du message.</li>
+                    <p class="fw-semibold mb-1" style="color:#fca5a5;">1. Contenu à caractère financier ou d'arnaque</p>
+                    <ul class="mb-3 ps-3" style="line-height:1.8;color:#fecaca;">
+                        <li>Les messages demandant des <strong style="color:#fff;">frais d'activation</strong>, de <strong style="color:#fff;">libération de fonds</strong> ou un <strong style="color:#fff;">virement préalable</strong> sont automatiquement identifiés comme fraude.</li>
+                        <li>Mots déclencheurs : <strong style="color:#fff;">frais d'activation, transfert international, montant, payer, débloquer, virement</strong>.</li>
+                        <li>L'utilisation répétée de <strong style="color:#fff;">$ € XOF</strong> associée à des montants augmente le score de dangerosité.</li>
                     </ul>
 
-                    <p class="mb-1 fw-semibold">2. Restrictions réglementaires selon le pays</p>
-                    <ul class="mb-2 ps-3" style="line-height:1.7;">
-                        <li>Certains pays <strong>interdisent les messages à caractère bancaire</strong> envoyés par des expéditeurs non certifiés (ex. Honduras, certains pays africains).</li>
-                        <li>Un nom d'expéditeur personnalisé (ex. <code>MOVICREDO</code>, <code>FLASHBILAN</code>) <strong>n'est pas autorisé</strong> à envoyer des notifications de type bancaire dans ces zones.</li>
+                    <p class="fw-semibold mb-1" style="color:#fca5a5;">2. Restrictions réglementaires selon le pays</p>
+                    <ul class="mb-3 ps-3" style="line-height:1.8;color:#fecaca;">
+                        <li>Certains pays <strong style="color:#fff;">interdisent les SMS à caractère bancaire</strong> envoyés par des expéditeurs non certifiés (Honduras, certains pays africains…).</li>
+                        <li>Un nom d'expéditeur comme <strong style="color:#fff;">MOVICREDO</strong> ou <strong style="color:#fff;">FLASHBILAN</strong> n'est pas autorisé à envoyer des notifications de type bancaire.</li>
                     </ul>
 
-                    <p class="mb-1 fw-semibold">3. Bonnes pratiques pour éviter le rejet</p>
-                    <ul class="mb-0 ps-3" style="line-height:1.7;">
-                        <li>Évitez tout vocabulaire lié aux transactions financières, virements ou paiements.</li>
+                    <p class="fw-semibold mb-1" style="color:#fca5a5;">3. Bonnes pratiques</p>
+                    <ul class="mb-0 ps-3" style="line-height:1.8;color:#fecaca;">
+                        <li>Évitez tout vocabulaire lié aux transactions financières ou aux paiements.</li>
                         <li>Rédigez des messages neutres, clairs et sans urgence forcée.</li>
-                        <li>Vérifiez que le pays destinataire supporte les SMS provenant d'expéditeurs alphanumériques.</li>
-                        <li>Les SMS rejetés <strong>ne sont pas facturés</strong>.</li>
+                        <li>Vérifiez que le pays destinataire supporte les SMS d'expéditeurs alphanumériques.</li>
+                        <li style="color:#86efac;font-weight:600;">✅ Les SMS rejetés ne sont pas facturés.</li>
                     </ul>
                 </div>
             </div>
         </div>
     </div>
+
+    <style>
+    @keyframes smsTicker {
+        0%   { transform: translateX(100%); }
+        100% { transform: translateX(-100%); }
+    }
+    </style>
 
     <div class="row g-0 m-0 sms-layout-row">
         <!-- Colonne gauche: Formulaire d'envoi -->
