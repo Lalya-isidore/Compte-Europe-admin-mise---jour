@@ -225,11 +225,12 @@ $svg = [
 
                     <p class="fw-bold mb-3 mt-2" style="font-size:1.08rem;">🚨 Pourquoi votre SMS peut être bloqué par certains opérateurs dans certains pays d'Europe et d'Amérique</p>
 
-                    <p class="fw-semibold mb-1" style="color:#fca5a5;font-size:1.02rem;">1. Contenu à caractère financier ou d'arnaque</p>
+                    <p class="fw-semibold mb-1" style="color:#fca5a5;font-size:1.02rem;">1. Contenu à caractère d'arnaque (pas les notifications bancaires simples)</p>
                     <ul class="mb-3 ps-3" style="line-height:2;color:#fff;">
-                        <li>Les messages demandant des <strong>frais d'activation</strong>, de <strong>libération de fonds</strong> ou un <strong>virement préalable</strong> sont automatiquement identifiés comme fraude.</li>
-                        <li>Mots déclencheurs : <strong>frais d'activation, transfert international, montant, payer, débloquer, virement</strong>.</li>
-                        <li>L'utilisation répétée de <strong>$ € XOF</strong> associée à des montants augmente le score de dangerosité.</li>
+                        <li>⚠ Ce qui est bloqué : les messages qui <strong>demandent un paiement préalable</strong> pour recevoir de l'argent (ex. "payez 500€ de frais d'activation pour débloquer vos €25.000").</li>
+                        <li>✅ Ce qui passe : une <strong>notification de virement simple</strong> (IBAN, BIC, montant, nom) est généralement livrée sans problème.</li>
+                        <li>Mots déclencheurs à éviter : <strong>frais d'activation, débloquer, payer pour recevoir, transfert conditionnel</strong>.</li>
+                        <li>L'utilisation répétée de <strong>$ € XOF</strong> combinée à une demande de paiement augmente le score de dangerosité.</li>
                     </ul>
 
                     <p class="fw-semibold mb-1" style="color:#fca5a5;font-size:1.02rem;">2. Restrictions réglementaires selon le pays</p>
