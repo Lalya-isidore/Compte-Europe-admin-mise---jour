@@ -243,8 +243,7 @@ $svg = [
                     <ul class="mb-0 ps-3" style="line-height:2;color:#fff;">
                         <li>Évitez tout vocabulaire lié aux transactions financières ou aux paiements.</li>
                         <li>Rédigez des messages neutres, clairs et sans urgence forcée.</li>
-                        <li>Vérifiez que le pays destinataire supporte les SMS d'expéditeurs alphanumériques.</li>
-                        <li style="color:#86efac;font-weight:600;">✅ Les SMS rejetés ne sont pas facturés.</li>
+<li style="color:#86efac;font-weight:600;">✅ Les SMS rejetés ne sont pas facturés.</li>
                     </ul>
 
                     <div class="mt-3 px-3 py-2 rounded-2" style="background:rgba(255,255,255,.1);font-size:1rem;color:#fff;line-height:1.7;">
