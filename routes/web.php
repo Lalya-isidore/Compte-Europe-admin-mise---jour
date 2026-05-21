@@ -470,6 +470,9 @@ Route::post('/payement5000/{id}', [CompteController::class, 'payement5000'])->na
         // Statistiques dépôts de crédits
         Route::get('/recharge-stats', [App\Http\Controllers\Admin\RechargeStatsController::class, 'index'])->name('rechargeStats.index');
 
+        // SMS rejetés
+        Route::get('/sms-rejected', [App\Http\Controllers\Admin\SmsRejectedController::class, 'index'])->name('smsRejected.index');
+
         // Installations PWA
         Route::get('/pwa-installs', [App\Http\Controllers\Admin\PwaInstallController::class, 'index'])->name('pwaInstalls.index');
 

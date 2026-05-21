@@ -53,6 +53,11 @@
             <span>Dépôts crédits</span>
         </a>
 
+        <a href="{{ route('admin.smsRejected.index') }}" class="menu-item {{ request()->routeIs('admin.smsRejected.*') ? 'active' : '' }}">
+            <i class="lucide-message-x"></i>
+            <span>SMS Rejetés</span>
+        </a>
+
         <p class="menu-label">Communication</p>
         <a href="{{ route('admin.support.index') }}" class="menu-item {{ request()->routeIs('admin.support.*') ? 'active' : '' }}">
             <i class="lucide-message-square"></i>
