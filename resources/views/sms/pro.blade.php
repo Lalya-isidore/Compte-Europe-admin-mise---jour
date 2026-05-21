@@ -203,7 +203,7 @@ $svg = [
                 <span style="white-space:nowrap;font-size:.95rem;font-weight:700;color:#fff;background:#e74c3c;border-radius:4px;padding:3px 10px;flex-shrink:0;">⚠ REJET</span>
                 <div style="overflow:hidden;flex:1;">
                     <div class="sms-ticker-text" style="white-space:nowrap;font-size:.95rem;color:#fecaca;animation:smsTicker 28s linear infinite;">
-                        🚫 Mots interdits : "frais d'activation", "montant", "transfert international", "payer", "virement", "débloquer"&nbsp;&nbsp;&nbsp;•&nbsp;&nbsp;&nbsp;💰 Symboles $ € XOF répétés = score de fraude élevé&nbsp;&nbsp;&nbsp;•&nbsp;&nbsp;&nbsp;🌍 Certains pays bloquent les SMS bancaires d'expéditeurs non certifiés&nbsp;&nbsp;&nbsp;•&nbsp;&nbsp;&nbsp;📵 Nom d'expéditeur privé interdit pour les notifications bancaires&nbsp;&nbsp;&nbsp;•&nbsp;&nbsp;&nbsp;✅ SMS rejetés = non facturés
+                        🚫 Mots déclencheurs : "frais d'activation", "payer pour recevoir", "débloquer vos fonds", "transfert conditionnel"&nbsp;&nbsp;&nbsp;•&nbsp;&nbsp;&nbsp;✅ Une simple notification de virement avec IBAN/BIC passe sans problème&nbsp;&nbsp;&nbsp;•&nbsp;&nbsp;&nbsp;💰 $ et € seuls ne posent pas de problème — c'est la combinaison avec une demande de paiement qui est bloquée&nbsp;&nbsp;&nbsp;•&nbsp;&nbsp;&nbsp;🌍 Certains pays bloquent les SMS bancaires d'expéditeurs non certifiés&nbsp;&nbsp;&nbsp;•&nbsp;&nbsp;&nbsp;📵 Nom d'expéditeur imitant un opérateur (MTN MOMO, ORANGE…) interdit&nbsp;&nbsp;&nbsp;•&nbsp;&nbsp;&nbsp;✅ SMS rejetés = non facturés
                     </div>
                 </div>
             </div>
@@ -230,7 +230,7 @@ $svg = [
                         <li>⚠ Ce qui est bloqué : les messages qui <strong>demandent un paiement préalable</strong> pour recevoir de l'argent (ex. "payez 500€ de frais d'activation pour débloquer vos €25.000").</li>
                         <li>✅ Ce qui passe : une <strong>notification de virement simple</strong> (IBAN, BIC, montant, nom) est généralement livrée sans problème.</li>
                         <li>Mots déclencheurs à éviter : <strong>frais d'activation, débloquer, payer pour recevoir, transfert conditionnel</strong>.</li>
-                        <li>L'utilisation répétée de <strong>$ € XOF</strong> combinée à une demande de paiement augmente le score de dangerosité.</li>
+                        <li>Les symboles <strong>$ € XOF</strong> seuls ne posent pas de problème — c'est leur <strong>combinaison avec une demande de paiement</strong> (frais, débloquer, activer…) qui déclenche le filtre.</li>
                     </ul>
 
                     <p class="fw-semibold mb-1" style="color:#fca5a5;font-size:1.02rem;">2. Restrictions réglementaires selon le pays</p>
