@@ -223,7 +223,7 @@ $svg = [
             <div class="collapse" id="rejetOpeCollapse">
                 <div class="px-4 pb-4 pt-2" style="font-size:.88rem;color:#fff;border-top:1px solid rgba(255,255,255,.15);">
 
-                    <p class="fw-bold mb-3 mt-2" style="font-size:.95rem;">🚨 Pourquoi votre SMS peut être bloqué par l'opérateur</p>
+                    <p class="fw-bold mb-3 mt-2" style="font-size:.95rem;">🚨 Pourquoi votre SMS peut être bloqué par certains opérateurs dans certains pays d'Europe et d'Amérique</p>
 
                     <p class="fw-semibold mb-1" style="color:#fca5a5;">1. Contenu à caractère financier ou d'arnaque</p>
                     <ul class="mb-3 ps-3" style="line-height:1.8;color:#fecaca;">
