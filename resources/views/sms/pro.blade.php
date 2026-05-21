@@ -194,6 +194,51 @@ $svg = [
         </button>
     </div>
 
+    {{-- Bandeau avertissement rejets opérateurs --}}
+    <div class="mx-3 mx-sm-4 mb-3">
+        <div class="rounded-3 border border-warning-subtle" style="background:#fffbeb;">
+            <button class="btn w-100 d-flex align-items-center gap-3 px-3 py-3 rounded-3 border-0" type="button"
+                data-bs-toggle="collapse" data-bs-target="#rejetOpeCollapse" aria-expanded="false"
+                style="background:transparent;text-align:left;">
+                <div class="flex-shrink-0 rounded-circle d-flex align-items-center justify-content-center" style="width:38px;height:38px;background:#fef08a;flex-shrink:0;">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="#b45309"><path d="M12 2L1 21h22L12 2zm0 3.5L20.5 19h-17L12 5.5zM11 10v4h2v-4h-2zm0 6v2h2v-2h-2z"/></svg>
+                </div>
+                <div class="flex-grow-1">
+                    <div class="fw-bold" style="font-size:.97rem;color:#92400e;">⚠ Messages susceptibles d'être rejetés</div>
+                    <div style="font-size:.84rem;color:#b45309;">Certains messages n'arrivent pas à destination — voir pourquoi</div>
+                </div>
+                <span class="ms-auto text-secondary">{!! $svg['chevron'] !!}</span>
+            </button>
+            <div class="collapse" id="rejetOpeCollapse">
+                <div class="px-4 pb-3 pt-1" style="font-size:.88rem;color:#1e293b;border-top:1px solid #fde68a;">
+
+                    <p class="fw-bold mb-2 mt-2" style="color:#92400e;">🚨 Pourquoi votre SMS peut être bloqué par l'opérateur</p>
+
+                    <p class="mb-1 fw-semibold">1. Contenu à caractère financier ou d'arnaque</p>
+                    <ul class="mb-2 ps-3" style="line-height:1.7;">
+                        <li>Les messages demandant des <strong>frais d'activation</strong>, de <strong>libération de fonds</strong> ou un <strong>virement préalable</strong> sont automatiquement identifiés comme fraude.</li>
+                        <li>Les termes tels que <code>frais d'activation</code>, <code>transfert international</code>, <code>montant</code>, <code>payer</code>, <code>débloquer</code>, <code>virement</code> déclenchent les filtres anti-spam des opérateurs.</li>
+                        <li>L'utilisation répétée de symboles monétaires (<code>$</code>, <code>€</code>, <code>XOF</code>) associés à des montants augmente le score de dangerosité du message.</li>
+                    </ul>
+
+                    <p class="mb-1 fw-semibold">2. Restrictions réglementaires selon le pays</p>
+                    <ul class="mb-2 ps-3" style="line-height:1.7;">
+                        <li>Certains pays <strong>interdisent les messages à caractère bancaire</strong> envoyés par des expéditeurs non certifiés (ex. Honduras, certains pays africains).</li>
+                        <li>Un nom d'expéditeur personnalisé (ex. <code>MOVICREDO</code>, <code>FLASHBILAN</code>) <strong>n'est pas autorisé</strong> à envoyer des notifications de type bancaire dans ces zones.</li>
+                    </ul>
+
+                    <p class="mb-1 fw-semibold">3. Bonnes pratiques pour éviter le rejet</p>
+                    <ul class="mb-0 ps-3" style="line-height:1.7;">
+                        <li>Évitez tout vocabulaire lié aux transactions financières, virements ou paiements.</li>
+                        <li>Rédigez des messages neutres, clairs et sans urgence forcée.</li>
+                        <li>Vérifiez que le pays destinataire supporte les SMS provenant d'expéditeurs alphanumériques.</li>
+                        <li>Les SMS rejetés <strong>ne sont pas facturés</strong>.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="row g-0 m-0 sms-layout-row">
         <!-- Colonne gauche: Formulaire d'envoi -->
         <div class="col-12 col-xl-8 p-2 sms-form-column">
