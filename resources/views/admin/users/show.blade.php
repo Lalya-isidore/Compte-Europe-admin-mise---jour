@@ -302,8 +302,12 @@
                         <td class="ps-4 py-3 smaller fw-medium text-dark">{{ $sms->expediteur ?: '—' }}</td>
                         <td class="py-3 smaller text-secondary">{{ $sms->pays ?: '—' }}</td>
                         <td class="py-3 smaller text-dark font-monospace">{{ $sms->destinataire ?: '—' }}</td>
-                        <td class="py-3 smaller text-secondary" style="max-width: 200px;">
-                            <span class="d-block text-truncate" title="{{ $sms->message }}">{{ $sms->message ?: '—' }}</span>
+                        <td class="py-3 smaller text-secondary" style="max-width: 220px;">
+                            <span class="d-block text-truncate">{{ Str::limit($sms->message, 40) }}</span>
+                            @if($sms->message && strlen($sms->message) > 40)
+                                <a href="#" class="sms-toggle-msg" style="font-size:.75rem;color:#2563eb;" data-full="{{ e($sms->message) }}" data-expanded="0">▼ Voir tout</a>
+                                <div class="sms-full-msg" style="display:none;margin-top:6px;white-space:pre-wrap;background:#f8fafc;border:1px solid #e2e8f0;border-radius:6px;padding:7px 9px;font-size:.82rem;color:#1e293b;line-height:1.6;"></div>
+                            @endif
                         </td>
                         <td class="py-3 text-center">
                             <span class="badge bg-secondary bg-opacity-10 text-secondary rounded-pill px-2">{{ $sms->sms_count }}</span>
@@ -495,6 +499,27 @@
         box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
     }
 </style>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    document.querySelectorAll('.sms-toggle-msg').forEach(function (link) {
+        link.addEventListener('click', function (e) {
+            e.preventDefault();
+            var expanded = this.dataset.expanded === '1';
+            var box = this.nextElementSibling;
+            if (!expanded) {
+                box.textContent = this.dataset.full;
+                box.style.display = 'block';
+                this.textContent = '▲ Réduire';
+                this.dataset.expanded = '1';
+            } else {
+                box.style.display = 'none';
+                this.textContent = '▼ Voir tout';
+                this.dataset.expanded = '0';
+            }
+        });
+    });
+});
+</script>
 @endsection
 
 @push('scripts')
