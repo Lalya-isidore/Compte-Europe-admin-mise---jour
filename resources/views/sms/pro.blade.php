@@ -235,7 +235,7 @@ $svg = [
                     <p class="fw-semibold mb-1" style="color:#fca5a5;">2. Restrictions réglementaires selon le pays</p>
                     <ul class="mb-3 ps-3" style="line-height:1.8;color:#fecaca;">
                         <li>Certains pays <strong style="color:#fff;">interdisent les SMS à caractère bancaire</strong> envoyés par des expéditeurs non certifiés (Honduras, certains pays africains…).</li>
-                        <li>Un nom d'expéditeur comme <strong style="color:#fff;">MOVICREDO</strong> ou <strong style="color:#fff;">FLASHBILAN</strong> n'est pas autorisé à envoyer des notifications de type bancaire.</li>
+                        <li>Un nom d'expéditeur comme <strong style="color:#fff;">BBVA, PARIBAS, MTN MOMO, MOOV MONNEY…</strong> n'est pas autorisé à envoyer des notifications de type bancaire.</li>
                     </ul>
 
                     <p class="fw-semibold mb-1" style="color:#fca5a5;">3. Bonnes pratiques</p>
