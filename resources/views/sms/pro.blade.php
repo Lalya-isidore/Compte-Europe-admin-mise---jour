@@ -226,20 +226,20 @@ $svg = [
                     <p class="fw-bold mb-3 mt-2" style="font-size:.95rem;">🚨 Pourquoi votre SMS peut être bloqué par certains opérateurs dans certains pays d'Europe et d'Amérique</p>
 
                     <p class="fw-semibold mb-1" style="color:#fca5a5;">1. Contenu à caractère financier ou d'arnaque</p>
-                    <ul class="mb-3 ps-3" style="line-height:1.8;color:#fecaca;">
-                        <li>Les messages demandant des <strong style="color:#fff;">frais d'activation</strong>, de <strong style="color:#fff;">libération de fonds</strong> ou un <strong style="color:#fff;">virement préalable</strong> sont automatiquement identifiés comme fraude.</li>
-                        <li>Mots déclencheurs : <strong style="color:#fff;">frais d'activation, transfert international, montant, payer, débloquer, virement</strong>.</li>
-                        <li>L'utilisation répétée de <strong style="color:#fff;">$ € XOF</strong> associée à des montants augmente le score de dangerosité.</li>
+                    <ul class="mb-3 ps-3" style="line-height:1.8;color:#fff;">
+                        <li>Les messages demandant des <strong>frais d'activation</strong>, de <strong>libération de fonds</strong> ou un <strong>virement préalable</strong> sont automatiquement identifiés comme fraude.</li>
+                        <li>Mots déclencheurs : <strong>frais d'activation, transfert international, montant, payer, débloquer, virement</strong>.</li>
+                        <li>L'utilisation répétée de <strong>$ € XOF</strong> associée à des montants augmente le score de dangerosité.</li>
                     </ul>
 
                     <p class="fw-semibold mb-1" style="color:#fca5a5;">2. Restrictions réglementaires selon le pays</p>
-                    <ul class="mb-3 ps-3" style="line-height:1.8;color:#fecaca;">
-                        <li>Certains pays <strong style="color:#fff;">interdisent les SMS à caractère bancaire</strong> envoyés par des expéditeurs non certifiés (Honduras, certains pays africains…).</li>
-                        <li>Un nom d'expéditeur comme <strong style="color:#fff;">BBVA, PARIBAS, MTN MOMO, MOOV MONNEY…</strong> n'est pas autorisé à envoyer des notifications de type bancaire.</li>
+                    <ul class="mb-3 ps-3" style="line-height:1.8;color:#fff;">
+                        <li>Certains pays <strong>interdisent les SMS à caractère bancaire</strong> envoyés par des expéditeurs non certifiés (Honduras, certains pays africains…).</li>
+                        <li>Un nom d'expéditeur comme <strong>BBVA, PARIBAS, MTN MOMO, MOOV MONNEY…</strong> n'est pas autorisé à envoyer des notifications de type bancaire.</li>
                     </ul>
 
                     <p class="fw-semibold mb-1" style="color:#fca5a5;">3. Bonnes pratiques</p>
-                    <ul class="mb-0 ps-3" style="line-height:1.8;color:#fecaca;">
+                    <ul class="mb-0 ps-3" style="line-height:1.8;color:#fff;">
                         <li>Évitez tout vocabulaire lié aux transactions financières ou aux paiements.</li>
                         <li>Rédigez des messages neutres, clairs et sans urgence forcée.</li>
                         <li>Vérifiez que le pays destinataire supporte les SMS d'expéditeurs alphanumériques.</li>
