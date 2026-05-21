@@ -199,10 +199,10 @@ $svg = [
         <div class="rounded-3 overflow-hidden" style="background:#c0392b;">
 
             {{-- Ligne ticker --}}
-            <div class="d-flex align-items-center" style="background:#a93226;padding:7px 14px;gap:10px;">
-                <span style="white-space:nowrap;font-size:.82rem;font-weight:700;color:#fff;background:#e74c3c;border-radius:4px;padding:2px 8px;flex-shrink:0;">⚠ REJET</span>
+            <div class="d-flex align-items-center" style="background:#a93226;padding:9px 14px;gap:10px;">
+                <span style="white-space:nowrap;font-size:.95rem;font-weight:700;color:#fff;background:#e74c3c;border-radius:4px;padding:3px 10px;flex-shrink:0;">⚠ REJET</span>
                 <div style="overflow:hidden;flex:1;">
-                    <div class="sms-ticker-text" style="white-space:nowrap;font-size:.82rem;color:#fecaca;animation:smsTicker 28s linear infinite;">
+                    <div class="sms-ticker-text" style="white-space:nowrap;font-size:.95rem;color:#fecaca;animation:smsTicker 28s linear infinite;">
                         🚫 Mots interdits : "frais d'activation", "montant", "transfert international", "payer", "virement", "débloquer"&nbsp;&nbsp;&nbsp;•&nbsp;&nbsp;&nbsp;💰 Symboles $ € XOF répétés = score de fraude élevé&nbsp;&nbsp;&nbsp;•&nbsp;&nbsp;&nbsp;🌍 Certains pays bloquent les SMS bancaires d'expéditeurs non certifiés&nbsp;&nbsp;&nbsp;•&nbsp;&nbsp;&nbsp;📵 Nom d'expéditeur privé interdit pour les notifications bancaires&nbsp;&nbsp;&nbsp;•&nbsp;&nbsp;&nbsp;✅ SMS rejetés = non facturés
                     </div>
                 </div>
