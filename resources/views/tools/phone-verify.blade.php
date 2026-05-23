@@ -120,8 +120,8 @@
                                 <div class="col-md-4 col-sm-6">
                                     <div class="result-pill {{ $result['is_reachable'] ? 'result-pill--success' : 'result-pill--warning' }}">
                                         <span class="result-pill__label">Joignabilité</span>
-                                        <span class="result-pill__value">{{ $result['is_reachable'] ? 'Joignable' : 'Injoignable' }}</span>
-                                        <small>HLR Lookup</small>
+                                        <span class="result-pill__value">{{ $result['is_reachable'] ? 'Numéro actif' : 'Numéro inactif' }}</span>
+                                        <small>Validation numéro</small>
                                     </div>
                                 </div>
                                 <div class="col-md-4 col-sm-6">
