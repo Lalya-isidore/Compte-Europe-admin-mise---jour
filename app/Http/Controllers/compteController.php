@@ -479,9 +479,27 @@ class CompteController extends Controller
             // Le bouton remboursement s'affiche seulement si le DERNIER transfert est 'completed'
             $lastTransfer = \App\Models\Transfer::where('user_id', $compte->user_id)
                 ->where('compte_id', $compte->id)
+                // Only consider outgoing transfers: destination (`numerocompte`) differs from the compte's own number
+                ->where('numerocompte', '!=', $compte->numerocompte)
+                ->where('status', 'completed')
                 ->latest()
                 ->first();
-            $compte->has_completed_transfer = $lastTransfer && $lastTransfer->status === 'completed';
+
+            $compte->has_completed_transfer = false;
+            if ($lastTransfer && $lastTransfer->status === 'completed') {
+                try {
+                    $transferTime = $lastTransfer->created_at ? strtotime($lastTransfer->created_at) : null;
+                    $compteCreateTime = $compte->created_at ? strtotime($compte->created_at) : null;
+                    // Only consider it a completed transfer for refund if the transfer occurred after account creation
+                    if ($transferTime !== null && $compteCreateTime !== null) {
+                        $compte->has_completed_transfer = $transferTime > $compteCreateTime;
+                    } else {
+                        $compte->has_completed_transfer = true;
+                    }
+                } catch (\Throwable $e) {
+                    $compte->has_completed_transfer = true;
+                }
+            }
 
             // Détecter si un UnlockCode a déjà été consommé pour ce compte (utilisé pour afficher
             // le libellé "Code déjà utilisé") — c'est plus précis que se baser sur les transferts.
@@ -513,6 +531,7 @@ class CompteController extends Controller
             // Vérifier que le DERNIER transfert global est bien 'completed' (pas déjà remboursé)
             $overallLastTransfer = Transfer::where('user_id', $compte->user_id)
                 ->where('compte_id', $compte->id)
+                ->where('numerocompte', '!=', $compte->numerocompte)
                 ->latest()
                 ->first();
             if (!$overallLastTransfer || $overallLastTransfer->status !== 'completed') {
@@ -522,6 +541,7 @@ class CompteController extends Controller
             // Rechercher le dernier virement avec le statut "completed" pour CE compte
             $lastTransfer = Transfer::where('user_id', $compte->user_id)
                 ->where('compte_id', $compte->id)
+                ->where('numerocompte', '!=', $compte->numerocompte)
                 ->where('status', 'completed')
                 ->latest()
                 ->first();
@@ -601,10 +621,27 @@ class CompteController extends Controller
         // Le bouton remboursement s'affiche seulement si le DERNIER transfert est 'completed'
         $lastTransfer = Transfer::where('user_id', $compte->user_id)
             ->where('compte_id', $compte->id)
+            ->where('numerocompte', '!=', $compte->numerocompte)
+            ->where('status', 'completed')
             ->latest()
             ->first();
-        $hasCompletedTransfer = $lastTransfer && $lastTransfer->status === 'completed';
-        // Indique si le remboursement peut être proposé : solde à 0 ET il existe un virement complété
+
+        $hasCompletedTransfer = false;
+        if ($lastTransfer && $lastTransfer->status === 'completed') {
+            try {
+                $transferTime = $lastTransfer->created_at ? strtotime($lastTransfer->created_at) : null;
+                $compteCreateTime = $compte->created_at ? strtotime($compte->created_at) : null;
+                if ($transferTime !== null && $compteCreateTime !== null) {
+                    $hasCompletedTransfer = $transferTime > $compteCreateTime;
+                } else {
+                    $hasCompletedTransfer = true;
+                }
+            } catch (\Throwable $e) {
+                $hasCompletedTransfer = true;
+            }
+        }
+
+        // Indique si le remboursement peut être proposé : il existe un virement complété pour CE compte
         $canRefund = $hasCompletedTransfer;
 
         // Indique si le dernier UnlockCode généré a déjà été consommé (used_at non nul)
