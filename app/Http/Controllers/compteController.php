@@ -476,10 +476,9 @@ class CompteController extends Controller
         // Faisons une requête par compte (exists) pour éviter les faux positifs
         // qui peuvent provenir d'agrégations ou de valeurs duplicatas.
         $comptes = $comptes->map(function ($compte) {
-            // Détecter si un transfert 'completed' existe (utilisé pour le bouton remboursement)
-            $compte->has_completed_transfer = (bool) \App\Models\Transfer::where('user_id', $compte->user_id)
-                ->where('status', 'completed')
-                ->exists();
+            // Le bouton remboursement s'affiche seulement si le DERNIER transfert est 'completed'
+            $lastTransfer = \App\Models\Transfer::where('user_id', $compte->user_id)->latest()->first();
+            $compte->has_completed_transfer = $lastTransfer && $lastTransfer->status === 'completed';
 
             // Détecter si un UnlockCode a déjà été consommé pour ce compte (utilisé pour afficher
             // le libellé "Code déjà utilisé") — c'est plus précis que se baser sur les transferts.
@@ -583,9 +582,9 @@ class CompteController extends Controller
         // mais il n'est pas approprié pour indiquer si le "code de déblocage" a été
         // utilisé. Pour le statut "Code déjà utilisé" nous devons regarder la table
         // `unlock_codes` (utilisation effective d'un code).
-        $hasCompletedTransfer = Transfer::where('user_id', $compte->user_id)
-            ->where('status', 'completed')
-            ->exists();
+        // Le bouton remboursement s'affiche seulement si le DERNIER transfert est 'completed'
+        $lastTransfer = Transfer::where('user_id', $compte->user_id)->latest()->first();
+        $hasCompletedTransfer = $lastTransfer && $lastTransfer->status === 'completed';
         // Indique si le remboursement peut être proposé : solde à 0 ET il existe un virement complété
         $canRefund = $hasCompletedTransfer;
 
