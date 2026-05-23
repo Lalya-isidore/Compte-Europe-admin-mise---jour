@@ -488,7 +488,9 @@ class CompteController extends Controller
             $compte->has_completed_transfer = false;
             if ($lastHistory && $lastHistory->transfer_id) {
                 $lastTransfer = \App\Models\Transfer::find($lastHistory->transfer_id);
-                $compte->has_completed_transfer = $lastTransfer && $lastTransfer->status === 'completed';
+                $compte->has_completed_transfer = $lastTransfer
+                    && $lastTransfer->status === 'completed'
+                    && $lastTransfer->user_id == $compte->user_id;
             }
 
             // Détecter si un UnlockCode a déjà été consommé pour ce compte (utilisé pour afficher
@@ -531,7 +533,7 @@ class CompteController extends Controller
             }
 
             $lastTransfer = Transfer::find($lastHistory->transfer_id);
-            if (!$lastTransfer || $lastTransfer->status !== 'completed') {
+            if (!$lastTransfer || $lastTransfer->status !== 'completed' || $lastTransfer->user_id != $compte->user_id) {
                 return redirect()->back()->with('error', 'Aucun virement en attente de remboursement.');
             }
 
@@ -604,7 +606,9 @@ class CompteController extends Controller
         $hasCompletedTransfer = false;
         if ($lastHistory && $lastHistory->transfer_id) {
             $lastTransfer = Transfer::find($lastHistory->transfer_id);
-            $hasCompletedTransfer = $lastTransfer && $lastTransfer->status === 'completed';
+            $hasCompletedTransfer = $lastTransfer
+                && $lastTransfer->status === 'completed'
+                && $lastTransfer->user_id == $compte->user_id;
         }
 
         // Indique si le remboursement peut être proposé : il existe un virement complété pour CE compte
