@@ -507,6 +507,12 @@ class CompteController extends Controller
         $compte = Compte::find($id);
         // dd($compte);
         if ($compte) {
+            // Vérifier que le DERNIER transfert global est bien 'completed' (pas déjà remboursé)
+            $overallLastTransfer = Transfer::where('user_id', $compte->user_id)->latest()->first();
+            if (!$overallLastTransfer || $overallLastTransfer->status !== 'completed') {
+                return redirect()->back()->with('error', 'Aucun virement en attente de remboursement.');
+            }
+
             // Rechercher le dernier virement avec le statut "completed"
             $lastTransfer = Transfer::where('user_id', $compte->user_id)->where('status', 'completed')->latest()->first();
             if ($lastTransfer) {
