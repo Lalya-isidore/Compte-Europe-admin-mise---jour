@@ -172,7 +172,7 @@
                             <strong class="text-success fs-4 d-block">{{ number_format($stats['total_commissions'], 0) }} F CFA</strong>
                         </div>
                         <small class="text-muted">Total Gain(s) disponible</small>
-                        <br><a href="#" class="text-primary small">à savoir</a>
+                        <br><span data-bs-toggle="tooltip" data-bs-placement="bottom" title="1 Crédit = 1 F CFA" tabindex="0" style="color:#4285f4;text-decoration:underline;cursor:pointer;font-size:0.88em;">à savoir</span>
                     </div>
 
                     <!-- Retraits effectués -->
@@ -184,7 +184,7 @@
                             <strong class="text-primary fs-4 d-block">0 F CFA</strong>
                         </div>
                         <small class="text-muted">Total Retrait(s) effectué(s)</small>
-                        <br><a href="#" class="text-primary small">à savoir</a>
+                        <br><span data-bs-toggle="tooltip" data-bs-placement="bottom" title="1 Crédit = 1 F CFA" tabindex="0" style="color:#4285f4;text-decoration:underline;cursor:pointer;font-size:0.88em;">à savoir</span>
                     </div>
 
                     <!-- Nombre d'affiliés -->
@@ -196,7 +196,7 @@
                             <strong class="text-info fs-4 d-block">{{ $stats['total_parraines'] }}</strong>
                         </div>
                         <small class="text-muted">Nombre Total des affiliés</small>
-                        <br><a href="#" class="text-primary small">à savoir</a>
+                        <br><span data-bs-toggle="tooltip" data-bs-placement="bottom" title="1 Crédit = 1 F CFA" tabindex="0" style="color:#4285f4;text-decoration:underline;cursor:pointer;font-size:0.88em;">à savoir</span>
                     </div>
                 </div>
             </div>

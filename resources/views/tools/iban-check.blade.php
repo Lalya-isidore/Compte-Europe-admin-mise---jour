@@ -30,7 +30,7 @@
                     <span class="credits-badge">
                         <i class="fas fa-coins me-1"></i>Crédit(s) disponible : <strong>{{ $creditsDisponibles }}</strong>
                     </span>
-                    <a href="{{ route('tarifs.index') }}" class="text-primary small">à savoir</a>
+                    <span data-bs-toggle="tooltip" data-bs-placement="bottom" title="1 Crédit = 1 F CFA" tabindex="0" style="color:#4285f4;text-decoration:underline;cursor:pointer;font-size:0.88em;">à savoir</span>
                 </div>
 
                 <div class="d-flex flex-wrap gap-3 mb-4">
