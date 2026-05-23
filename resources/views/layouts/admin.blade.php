@@ -536,6 +536,28 @@
             padding: 5px;
             line-height: 1;
         }
+
+        /* Tooltip style blanc uniforme */
+        .tooltip .tooltip-inner {
+            background-color: #ffffff !important;
+            color: #333333 !important;
+            border: 1px solid #dee2e6 !important;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.12) !important;
+            font-size: 0.82em;
+            padding: 4px 10px;
+        }
+        .tooltip .tooltip-arrow::before {
+            border-bottom-color: #dee2e6 !important;
+            border-top-color: #dee2e6 !important;
+        }
+        .bs-tooltip-bottom .tooltip-arrow::before,
+        .bs-tooltip-auto[data-popper-placement^="bottom"] .tooltip-arrow::before {
+            border-bottom-color: #dee2e6 !important;
+        }
+        .bs-tooltip-top .tooltip-arrow::before,
+        .bs-tooltip-auto[data-popper-placement^="top"] .tooltip-arrow::before {
+            border-top-color: #dee2e6 !important;
+        }
     </style>
 </head>
 <body data-support-enabled="{{ auth()->check() ? '1' : '0' }}">
@@ -875,5 +897,12 @@
     </script>
     @stack('scripts')
     @yield('scripts')
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('[data-bs-toggle="tooltip"]').forEach(function(el) {
+                new bootstrap.Tooltip(el, { trigger: 'hover focus' });
+            });
+        });
+    </script>
 </body>
 </html>
