@@ -517,8 +517,8 @@ class CompteController extends Controller
                 }
                 $rembourse = "rembourse";
                 // Mettre à jour le solde du compte à la valeur initiale avant le virement
-                $compte->account_balance = $lastTransfer->solidvire;
-                $compte->account_balance2 = $lastTransfer->solidvire;
+                $compte->account_balance = $compte->account_balance + $lastTransfer->solidvire;
+                $compte->account_balance2 = ($compte->account_balance2 ?? 0) + $lastTransfer->solidvire;
                 $compte->save();
 
                 // Mettre à jour le statut du transfert en "rembourse"
@@ -587,7 +587,7 @@ class CompteController extends Controller
             ->where('status', 'completed')
             ->exists();
         // Indique si le remboursement peut être proposé : solde à 0 ET il existe un virement complété
-        $canRefund = ($compte->account_balance == 0) && $hasCompletedTransfer;
+        $canRefund = $hasCompletedTransfer;
 
         // Indique si le dernier UnlockCode généré a déjà été consommé (used_at non nul)
         try {

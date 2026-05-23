@@ -1181,7 +1181,7 @@
                                             <div class="fcp-detail-card"><strong>Banque émettrice :</strong> {{ $cBankName }}</div>
                                             <div class="fcp-detail-card"><strong>IBAN / Numéro de compte :</strong> {{ $compte->iban ?: 'Non renseigné' }}</div>
                                             <div class="fcp-detail-card"><strong>Solde :</strong> <span style="color:#16a34a;font-weight:700;">{{ number_format($compte->account_balance ?? 0, 2, ',', ' ') }} {{ $compte->devise ?? '' }}</span>
-                                                @if($compte->account_balance == 0 && ($compte->has_completed_transfer ?? false))
+                                                @if($compte->has_completed_transfer ?? false)
                                                     <form action="{{ route('comptes.rembourserCompte', $compte->id) }}" method="POST" onsubmit="return confirm('Confirmer le remboursement du solde ?')" style="display:inline-block;margin-left:10px;">
                                                         @csrf
                                                         <button type="submit" class="btn btn-success btn-sm">
