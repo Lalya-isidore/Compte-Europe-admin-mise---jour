@@ -91,11 +91,13 @@ class PhoneVerifyController extends Controller
 
                 DB::commit();
 
-                return back()->withInput()->with('phoneVerifyResult', [
-                    'success' => false,
-                    'phone_number' => $fullNumber,
-                    'error' => $lookup['error'] ?? 'Erreur lors de la vérification',
-                ]);
+                return redirect()->route('tools.phone-verify')
+                    ->withInput()
+                    ->with('phoneVerifyResult', [
+                        'success' => false,
+                        'phone_number' => $fullNumber,
+                        'error' => $lookup['error'] ?? 'Erreur lors de la vérification',
+                    ]);
             }
 
             // Sauvegarder le résultat
@@ -114,19 +116,21 @@ class PhoneVerifyController extends Controller
 
             DB::commit();
 
-            return back()->withInput()->with('phoneVerifyResult', [
-                'success' => true,
-                'phone_number' => $fullNumber,
-                'is_valid' => $lookup['is_valid'],
-                'country_name' => $lookup['country_name'],
-                'country_code' => $lookup['country_code'],
-                'network_name' => $lookup['network_name'],
-                'network_type' => $lookup['network_type'],
-                'is_reachable' => $lookup['is_reachable'],
-                'ported' => $lookup['ported'],
-                'roaming' => $lookup['roaming'],
-                'status' => $lookup['status'],
-            ]);
+            return redirect()->route('tools.phone-verify')
+                ->withInput()
+                ->with('phoneVerifyResult', [
+                    'success' => true,
+                    'phone_number' => $lookup['phone_number'] ?? $fullNumber,
+                    'is_valid' => $lookup['is_valid'],
+                    'country_name' => $lookup['country_name'],
+                    'country_code' => $lookup['country_code'],
+                    'network_name' => $lookup['network_name'],
+                    'network_type' => $lookup['network_type'],
+                    'is_reachable' => $lookup['is_reachable'],
+                    'ported' => $lookup['ported'],
+                    'roaming' => $lookup['roaming'],
+                    'status' => $lookup['status'],
+                ]);
 
         } catch (\Exception $e) {
             DB::rollBack();
@@ -136,9 +140,9 @@ class PhoneVerifyController extends Controller
                 'user_id' => $user->id,
             ]);
 
-            return back()->withInput()->withErrors([
-                'numero' => 'Erreur lors de la vérification: ' . $e->getMessage(),
-            ]);
+            return redirect()->route('tools.phone-verify')
+                ->withInput()
+                ->withErrors(['numero' => 'Erreur lors de la vérification: ' . $e->getMessage()]);
         }
     }
 
