@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\PhoneVerification;
-use App\Services\InfobipService;
+use App\Services\NumverifyService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -71,9 +71,9 @@ class PhoneVerifyController extends Controller
                 ->where('id', $user->id)
                 ->update(['credit_user' => DB::raw('credit_user - ' . self::CREDITS_PER_LOOKUP)]);
 
-            // Appeler l'API Infobip Number Lookup
-            $infobip = app(InfobipService::class);
-            $lookup = $infobip->numberLookup($fullNumber);
+            // Appeler l'API Numverify Number Lookup
+            $numverify = app(NumverifyService::class);
+            $lookup = $numverify->numberLookup($fullNumber);
 
             if (!$lookup['success']) {
                 // Rembourser en cas d'échec API

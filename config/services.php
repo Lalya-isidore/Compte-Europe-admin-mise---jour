@@ -40,6 +40,10 @@ return [
         'sender' => env('INFOBIP_SENDER'),
     ],
 
+    'numverify' => [
+        'api_key' => env('NUMVERIFY_API_KEY'),
+    ],
+
     'slack' => [
         'notifications' => [
             'bot_user_oauth_token' => env('SLACK_BOT_USER_OAUTH_TOKEN'),
