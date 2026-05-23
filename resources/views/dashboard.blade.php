@@ -64,7 +64,7 @@
         <div class="loyalty-banner__icon">🎁</div>
         <div>
             <div class="loyalty-banner__title">🎉 Bonus Fidélité</div>
-            <div class="loyalty-banner__desc">Effectuez 4 recharges de <strong>5 000 crédits minimum</strong> en 30 jours et recevez <strong>5 000 crédits gratuits</strong> 🎊</div>
+            <div class="loyalty-banner__desc">Effectuez 4 recharges de <strong>5 000 F CFA minimum</strong> en 30 jours et recevez <strong>5 000 crédits gratuits</strong> 🎊</div>
         </div>
     </div>
     <div class="loyalty-banner__right">
