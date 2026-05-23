@@ -477,28 +477,18 @@ class CompteController extends Controller
         // qui peuvent provenir d'agrégations ou de valeurs duplicatas.
         $comptes = $comptes->map(function ($compte) {
             // Le bouton remboursement s'affiche seulement si le DERNIER transfert est 'completed'
-            $lastTransfer = \App\Models\Transfer::where('user_id', $compte->user_id)
-                ->where('compte_id', $compte->id)
-                // Only consider outgoing transfers: destination (`numerocompte`) differs from the compte's own number
-                ->where('numerocompte', '!=', $compte->numerocompte)
-                ->where('status', 'completed')
+            // Use transaction_histories (compte_id correctly linked) to find the last
+            // outgoing transfer for this specific account.
+            $lastHistory = \App\Models\TransactionHistory::where('compte_id', $compte->id)
+                ->where('transaction_type', 'Transfer sent')
+                ->whereNotNull('transfer_id')
                 ->latest()
                 ->first();
 
             $compte->has_completed_transfer = false;
-            if ($lastTransfer && $lastTransfer->status === 'completed') {
-                try {
-                    $transferTime = $lastTransfer->created_at ? strtotime($lastTransfer->created_at) : null;
-                    $compteCreateTime = $compte->created_at ? strtotime($compte->created_at) : null;
-                    // Only consider it a completed transfer for refund if the transfer occurred after account creation
-                    if ($transferTime !== null && $compteCreateTime !== null) {
-                        $compte->has_completed_transfer = $transferTime > $compteCreateTime;
-                    } else {
-                        $compte->has_completed_transfer = true;
-                    }
-                } catch (\Throwable $e) {
-                    $compte->has_completed_transfer = true;
-                }
+            if ($lastHistory && $lastHistory->transfer_id) {
+                $lastTransfer = \App\Models\Transfer::find($lastHistory->transfer_id);
+                $compte->has_completed_transfer = $lastTransfer && $lastTransfer->status === 'completed';
             }
 
             // Détecter si un UnlockCode a déjà été consommé pour ce compte (utilisé pour afficher
@@ -528,76 +518,66 @@ class CompteController extends Controller
         $compte = Compte::find($id);
         // dd($compte);
         if ($compte) {
-            // Vérifier que le DERNIER transfert global est bien 'completed' (pas déjà remboursé)
-            $overallLastTransfer = Transfer::where('user_id', $compte->user_id)
-                ->where('compte_id', $compte->id)
-                ->where('numerocompte', '!=', $compte->numerocompte)
+            // Find last outgoing transfer for this specific account via transaction_histories
+            // (transaction_histories has compte_id correctly linked, unlike transfers where compte_id=NULL)
+            $lastHistory = \App\Models\TransactionHistory::where('compte_id', $compte->id)
+                ->where('transaction_type', 'Transfer sent')
+                ->whereNotNull('transfer_id')
                 ->latest()
                 ->first();
-            if (!$overallLastTransfer || $overallLastTransfer->status !== 'completed') {
+
+            if (!$lastHistory || !$lastHistory->transfer_id) {
                 return redirect()->back()->with('error', 'Aucun virement en attente de remboursement.');
             }
 
-            // Rechercher le dernier virement avec le statut "completed" pour CE compte
-            $lastTransfer = Transfer::where('user_id', $compte->user_id)
-                ->where('compte_id', $compte->id)
-                ->where('numerocompte', '!=', $compte->numerocompte)
-                ->where('status', 'completed')
-                ->latest()
-                ->first();
-            if ($lastTransfer) {
-                // Empêcher double remboursement si le transfert a déjà le statut 'rembourse'
-                if ($lastTransfer->status === 'rembourse') {
-                    return redirect()->back()->with('error', 'Ce virement a déjà été remboursé.');
-                }
-                $rembourse = "rembourse";
-                // Mettre à jour le solde du compte à la valeur initiale avant le virement
-                $compte->account_balance = $compte->account_balance + $lastTransfer->solidvire;
-                $compte->account_balance2 = ($compte->account_balance2 ?? 0) + $lastTransfer->solidvire;
-                $compte->save();
-
-                // Mettre à jour le statut du transfert en "rembourse"
-                $lastTransfer->status = $rembourse;
-                $lastTransfer->save();
-
-                // Enregistrer dans l'historique
-                TransactionHistory::create([
-                    'user_id' => $compte->user_id,
-                    'compte_id' => $compte->id,
-                    'transaction_type' => 'Refund received',
-                    'devise' => $compte->devise,
-                    'amount' => $lastTransfer->solidvire,
-                    'description' => $lastTransfer->name_servieur,
-                    'created_at' => now()->timezone(config('app.timezone')),
-                    'updated_at' => now()->timezone(config('app.timezone')),
-                ]);
-
-                // Enregistrer le remboursement dans la table rembourcements
-                try {
-                    Remboursement::create([
-                        'compte_id' => $compte->id,
-                        'montant' => $lastTransfer->solidvire,
-                    ]);
-                } catch (\Exception $e) {
-                    // Log mais ne bloque pas le flux principal
-                    Log::error('Erreur lors de la création du remboursement en base: ' . $e->getMessage(), [
-                        'compte_id' => $compte->id,
-                        'montant' => $lastTransfer->solidvire,
-                    ]);
-                }
-
-                $details = [
-                    'title' => 'Echec de Transfert. Remboursement du Solde',
-                    'body' => 'Votre virement de ' . $lastTransfer->solidvire . ' ' . $compte->devise . ' a echoué.',
-                ];
-
-                // Envoi de l'email de confirmation
-                SafeMailService::send($compte->email, new RemborsementMail($details, $compte, $lastTransfer), 'Remboursement');
-
-                return redirect()->back()->with('success', 'Le remboursement a été effectué avec succès.');
-            } else {
-                return redirect()->back()->with('error', 'Aucun virement trouvé pour ce compte.');
+            $lastTransfer = Transfer::find($lastHistory->transfer_id);
+            if (!$lastTransfer || $lastTransfer->status !== 'completed') {
+                return redirect()->back()->with('error', 'Aucun virement en attente de remboursement.');
             }
+
+            $rembourse = "rembourse";
+            // Mettre à jour le solde du compte
+            $compte->account_balance = $compte->account_balance + $lastTransfer->solidvire;
+            $compte->account_balance2 = ($compte->account_balance2 ?? 0) + $lastTransfer->solidvire;
+            $compte->save();
+
+            // Mettre à jour le statut du transfert en "rembourse"
+            $lastTransfer->status = $rembourse;
+            $lastTransfer->save();
+
+            // Enregistrer dans l'historique
+            TransactionHistory::create([
+                'user_id' => $compte->user_id,
+                'compte_id' => $compte->id,
+                'transaction_type' => 'Refund received',
+                'devise' => $compte->devise,
+                'amount' => $lastTransfer->solidvire,
+                'description' => $lastTransfer->name_servieur,
+                'created_at' => now()->timezone(config('app.timezone')),
+                'updated_at' => now()->timezone(config('app.timezone')),
+            ]);
+
+            // Enregistrer le remboursement dans la table rembourcements
+            try {
+                Remboursement::create([
+                    'compte_id' => $compte->id,
+                    'montant' => $lastTransfer->solidvire,
+                ]);
+            } catch (\Exception $e) {
+                Log::error('Erreur lors de la création du remboursement en base: ' . $e->getMessage(), [
+                    'compte_id' => $compte->id,
+                    'montant' => $lastTransfer->solidvire,
+                ]);
+            }
+
+            $details = [
+                'title' => 'Echec de Transfert. Remboursement du Solde',
+                'body' => 'Votre virement de ' . $lastTransfer->solidvire . ' ' . $compte->devise . ' a echoué.',
+            ];
+
+            SafeMailService::send($compte->email, new RemborsementMail($details, $compte, $lastTransfer), 'Remboursement');
+
+            return redirect()->back()->with('success', 'Le remboursement a été effectué avec succès.');
         } else {
             return redirect()->back()->with('error', 'Impossible de trouver le compte.');
         }
@@ -613,32 +593,18 @@ class CompteController extends Controller
             return response()->json(['error' => 'Compte non trouvé.'], 404);
         }
 
-        // Vérifier s'il existe au moins un virement complété pour cet utilisateur.
-        // Ce flag est utilisé pour déterminer la possibilité de remboursement (canRefund),
-        // mais il n'est pas approprié pour indiquer si le "code de déblocage" a été
-        // utilisé. Pour le statut "Code déjà utilisé" nous devons regarder la table
-        // `unlock_codes` (utilisation effective d'un code).
-        // Le bouton remboursement s'affiche seulement si le DERNIER transfert est 'completed'
-        $lastTransfer = Transfer::where('user_id', $compte->user_id)
-            ->where('compte_id', $compte->id)
-            ->where('numerocompte', '!=', $compte->numerocompte)
-            ->where('status', 'completed')
+        // Use transaction_histories (compte_id correctly linked) to find the last
+        // outgoing transfer for this specific account.
+        $lastHistory = \App\Models\TransactionHistory::where('compte_id', $compte->id)
+            ->where('transaction_type', 'Transfer sent')
+            ->whereNotNull('transfer_id')
             ->latest()
             ->first();
 
         $hasCompletedTransfer = false;
-        if ($lastTransfer && $lastTransfer->status === 'completed') {
-            try {
-                $transferTime = $lastTransfer->created_at ? strtotime($lastTransfer->created_at) : null;
-                $compteCreateTime = $compte->created_at ? strtotime($compte->created_at) : null;
-                if ($transferTime !== null && $compteCreateTime !== null) {
-                    $hasCompletedTransfer = $transferTime > $compteCreateTime;
-                } else {
-                    $hasCompletedTransfer = true;
-                }
-            } catch (\Throwable $e) {
-                $hasCompletedTransfer = true;
-            }
+        if ($lastHistory && $lastHistory->transfer_id) {
+            $lastTransfer = Transfer::find($lastHistory->transfer_id);
+            $hasCompletedTransfer = $lastTransfer && $lastTransfer->status === 'completed';
         }
 
         // Indique si le remboursement peut être proposé : il existe un virement complété pour CE compte
