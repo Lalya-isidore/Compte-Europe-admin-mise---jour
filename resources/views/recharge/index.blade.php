@@ -76,7 +76,7 @@
                     </div>
                     <div class="row g-3 mb-4 pack-row">
                         <div class="col-6 col-md-6 col-lg-4">
-                            <div class="card h-100 package-card position-relative" style="border:2px solid #10b981;border-radius:16px;background:#fff;" data-amount="1500" data-credits="1000">
+                            <div class="card h-100 package-card position-relative" style="border:2px solid #10b981;border-radius:16px;background:#fff;" data-amount="2000" data-credits="1000">
                                 <div class="text-center fw-bold text-white py-1" style="background:#10b981;border-radius:14px 14px 0 0;font-size:.75rem;letter-spacing:.06em;">Découverte</div>
                                 <span class="position-absolute badge fw-bold px-2 py-1" style="background:#10b981;border-radius:8px;font-size:.7rem;top:28px;left:8px;">NOUVEAU</span>
                                 <div class="card-body text-center p-4 pt-4">
@@ -84,7 +84,7 @@
                                         <i class="fas fa-coins fs-1" style="color:#10b981;"></i>
                                     </div>
                                     <h5 class="card-title fw-bold mb-3" style="color:#10b981;">Pack Mini</h5>
-                                    <div class="d-inline-block px-3 py-1 rounded-pill fw-bold mb-2" style="background:#059669;color:#fff;font-size:1.05rem;">1 500 F CFA</div>
+                                    <div class="d-inline-block px-3 py-1 rounded-pill fw-bold mb-2" style="background:#059669;color:#fff;font-size:1.05rem;">2 000 F CFA</div>
                                     <p class="fw-bold text-primary mb-3" style="font-size:1.05rem;">+ 1 000 Crédits</p>
                                     <button class="btn btn-select-package w-100 fw-bold text-white" style="background:#10b981;border-radius:10px;border:none;">
                                         <i class="fas fa-check-circle me-2"></i>Choisir
