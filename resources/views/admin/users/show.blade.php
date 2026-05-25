@@ -37,6 +37,12 @@
                         <span class="d-flex align-items-center gap-1">
                             <i data-lucide="calendar" style="width: 14px;"></i> Inscrit le {{ $user->created_at?->setTimezone('Europe/Paris')->format('d/m/Y à H:i') }}
                         </span>
+                        @if($user->source)
+                        <span class="d-flex align-items-center gap-1">
+                            <i data-lucide="{{ $user->source === 'Google' ? 'search' : 'share-2' }}" style="width: 14px;"></i>
+                            Source : <strong>{{ $user->source }}</strong>
+                        </span>
+                        @endif
                     </div>
                 </div>
                 <div class="d-flex gap-2">

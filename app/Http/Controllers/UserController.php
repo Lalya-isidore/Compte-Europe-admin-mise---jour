@@ -75,6 +75,7 @@ class UserController extends Controller
             // Assigner le téléphone depuis la requête validée (champ obligatoire)
             $user->phone = $phoneNumber;
             $user->region = $region;
+            $user->source = session('visit_source', 'Manuel');
             $user->save();
 
             // Gérer le parrainage si un code est fourni

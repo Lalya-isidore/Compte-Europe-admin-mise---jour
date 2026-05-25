@@ -30,6 +30,7 @@ class User extends Authenticatable
         'parrain_id',
         'region',
         'pwa_installed_at',
+        'source',
     ];
 
     /**

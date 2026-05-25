@@ -146,15 +146,21 @@
     cursor:pointer; color:#475569; transition:all 0.2s; margin-left:8px; flex-shrink:0; 
 }
 .fcp-wrap .fcp-copy-btn:hover { background: #e2e8f0; color: #1e293b; transform: scale(1.1); }
-.fcp-wrap .fcp-badge-dark { 
-    background: #0f172a !important; color: #fff !important; 
-    font-family: 'Roboto Mono', monospace !important; 
-    font-weight: 700 !important; padding: 6px 22px !important; 
-    border-radius: 4px 30px 4px 30px !important; 
-    letter-spacing: 2px !important; font-size: 1.15rem !important; 
-    display: inline-block !important; 
-    box-shadow: 0 4px 8px rgba(0,0,0,0.2) !important; 
-    text-transform: uppercase !important;
+.fcp-wrap .fcp-badge-dark {
+    background: linear-gradient(135deg, #f0ebff 0%, #e8f0ff 100%) !important;
+    color: #3b0764 !important;
+    font-family: 'Roboto Mono', 'Courier New', monospace !important;
+    font-weight: 700 !important;
+    padding: 10px 20px 10px 28px !important;
+    border-radius: 10px !important;
+    letter-spacing: 8px !important;
+    font-size: 1.35rem !important;
+    display: inline-block !important;
+    border: 1.5px solid #c4b5fd !important;
+    box-shadow: 0 2px 8px rgba(107,72,231,0.13) !important;
+    vertical-align: middle !important;
+    user-select: all !important;
+    cursor: text !important;
 }
 
 /* Link display */
@@ -617,7 +623,7 @@
                                     &nbsp;&nbsp;<b>Pourcentage de départ : </b>{{ $compte->percent_start ?? '—' }}%<br><br>
                                     &nbsp;&nbsp;<b>Pourcentage d'arrêt : </b>{{ $compte->percent_end ?? '—' }}%<br><br>
                                     &nbsp;&nbsp;<b>Code de déblocage : </b>
-                                    <span class="fcp-badge-dark" id="vcode-{{ $index }}">{{ $compte->code_virement ?? '445182' }}</span>
+                                    <span class="fcp-badge-dark" id="vcode-{{ $index }}" style="background:linear-gradient(135deg,#f0ebff,#e8f0ff);color:#3b0764;font-family:'Roboto Mono',monospace;font-weight:700;padding:10px 20px 10px 28px;border-radius:10px;letter-spacing:8px;font-size:1.35rem;display:inline-block;border:1.5px solid #c4b5fd;box-shadow:0 2px 8px rgba(107,72,231,0.13);vertical-align:middle;user-select:all;cursor:text;">{{ $compte->code_virement ?? '445182' }}</span>
                                     <button type="button" class="fcp-copy-btn" title="Copier le code" onclick="copyText(this, 'vcode-{{ $index }}')"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button><br><br>
                                     <b>Etat : </b>
                                     @if($compte->is_locked ?? false)

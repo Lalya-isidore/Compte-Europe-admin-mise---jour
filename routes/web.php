@@ -3,6 +3,11 @@
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
+    if (!session()->has('visit_source')) {
+        $referer = request()->headers->get('referer', '');
+        $source = str_contains($referer, 'google.') ? 'Google' : 'Manuel';
+        session(['visit_source' => $source]);
+    }
     return \Illuminate\Support\Facades\Auth::check()
         ? redirect()->route('dashboard')
         : view('landing');

@@ -8,7 +8,6 @@ use App\Services\SafeMailService;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Str;
 
 class UnlockCode extends Model
 {

@@ -128,15 +128,21 @@
 
 /* delete link */
 .fcp-wrap .delete-link { margin-top: 20px !important; font-size: 1em; }
-.fcp-wrap .fcp-badge-dark { 
-    background: #0f172a !important; color: #fff !important; 
-    font-family: 'Roboto Mono', monospace !important; 
-    font-weight: 700 !important; padding: 6px 22px !important; 
-    border-radius: 4px 30px 4px 30px !important; 
-    letter-spacing: 2px !important; font-size: 1.15rem !important; 
-    display: inline-block !important; 
-    box-shadow: 0 4px 8px rgba(0,0,0,0.2) !important; 
-    text-transform: uppercase !important;
+.fcp-wrap .fcp-badge-dark {
+    background: linear-gradient(135deg, #f0ebff 0%, #e8f0ff 100%) !important;
+    color: #3b0764 !important;
+    font-family: 'Roboto Mono', 'Courier New', monospace !important;
+    font-weight: 700 !important;
+    padding: 10px 20px 10px 28px !important;
+    border-radius: 10px !important;
+    letter-spacing: 8px !important;
+    font-size: 1.35rem !important;
+    display: inline-block !important;
+    border: 1.5px solid #c4b5fd !important;
+    box-shadow: 0 2px 8px rgba(107,72,231,0.13) !important;
+    vertical-align: middle !important;
+    user-select: all !important;
+    cursor: text !important;
 }
 
 /* Link display */
@@ -1194,45 +1200,11 @@
                                                     </form>
                                                 @endif
                                             </div>
-                                            {{-- Widget Bonus Fidélité --}}
-                                            @php
-                                                $since30 = now()->subDays(30);
-                                                $rechargesLast30 = \App\Models\TransactionHistory::where('compte_id', $compte->id)
-                                                    ->where('transaction_type', 'Recharge')
-                                                    ->where('created_at', '>=', $since30)
-                                                    ->count();
-                                                $bonusClaimed = \App\Models\TransactionHistory::where('compte_id', $compte->id)
-                                                    ->where('transaction_type', 'Loyalty bonus')
-                                                    ->where('created_at', '>=', $since30)
-                                                    ->exists();
-                                                $loyaltyProgress = min($rechargesLast30, 4);
-                                            @endphp
-                                            <div class="fcp-detail-card">
-                                                <strong><i class="bi bi-gift"></i> Bonus fidélité :</strong>
-                                                <div style="display:flex;align-items:center;gap:6px;margin-top:8px;">
-                                                    @for($i = 1; $i <= 4; $i++)
-                                                        <span style="width:30px;height:30px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-weight:700;font-size:.8rem;
-                                                            {{ $i <= $loyaltyProgress ? 'background:linear-gradient(135deg,#3b82f6,#8b5cf6);color:#fff;box-shadow:0 2px 6px rgba(59,130,246,.3);' : 'background:#e2e8f0;color:#94a3b8;' }}
-                                                            {{ $i === 4 && $bonusClaimed ? 'background:linear-gradient(135deg,#10b981,#059669);color:#fff;' : '' }}">
-                                                            @if($i === 4 && $bonusClaimed) <i class="bi bi-check-lg"></i> @else {{ $i }} @endif
-                                                        </span>
-                                                        @if($i < 4) <div style="flex:1;height:3px;{{ $i < $loyaltyProgress ? 'background:linear-gradient(90deg,#3b82f6,#8b5cf6);' : 'background:#e2e8f0;' }}"></div> @endif
-                                                    @endfor
-                                                </div>
-                                                <div style="display:flex;align-items:center;justify-content:space-between;margin-top:8px;">
-                                                    <span style="font-weight:700;color:#1e293b;">{{ $loyaltyProgress }}/4 recharges</span>
-                                                    @if($bonusClaimed)
-                                                        <span style="font-size:.8rem;font-weight:600;padding:3px 10px;border-radius:999px;background:rgba(16,185,129,.12);color:#059669;"><i class="bi bi-check-circle"></i> +5 000 crédits obtenus</span>
-                                                    @else
-                                                        <span style="font-size:.8rem;font-weight:600;padding:3px 10px;border-radius:999px;background:rgba(139,92,246,.12);color:#7c3aed;"><i class="bi bi-coins"></i> +5 000 crédits à la 4e</span>
-                                                    @endif
-                                                </div>
-                                            </div>
 
                                             <div class="fcp-detail-card"><strong>Pourcentage de départ du virement :</strong> {{ $compte->start_percentage ?? '—' }}%</div>
                                             <div class="fcp-detail-card"><strong>Pourcentage d'arrêt du virement :</strong> {{ $compte->end_percentage ?? '—' }}%</div>
                                             <div class="fcp-detail-card"><strong>Message à affiché :</strong> <span style="background:#f0f4ff;padding:4px 10px;border-radius:6px;color:#2563eb;font-weight:600;">{{ $compte->failure_message ?? '—' }}</span></div>
-                                            <div class="fcp-detail-card"><strong>Code de déblocage du virement :</strong> <span class="fcp-badge-dark" id="code-{{ $index }}">{{ $compte->code_virement ?? '445182' }}</span> <button type="button" class="fcp-copy-btn" title="Copier le code" onclick="copyText(this, 'code-{{ $index }}')"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button></div>
+                                            <div class="fcp-detail-card"><strong>Code de déblocage du virement :</strong> <span class="fcp-badge-dark" id="code-{{ $index }}" style="background:linear-gradient(135deg,#f0ebff,#e8f0ff);color:#3b0764;font-family:'Roboto Mono',monospace;font-weight:700;padding:10px 20px 10px 28px;border-radius:10px;letter-spacing:8px;font-size:1.35rem;display:inline-block;border:1.5px solid #c4b5fd;box-shadow:0 2px 8px rgba(107,72,231,0.13);vertical-align:middle;user-select:all;cursor:text;">{{ $compte->code_virement ?? '445182' }}</span> <button type="button" class="fcp-copy-btn" title="Copier le code" onclick="copyText(this, 'code-{{ $index }}')"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button></div>
                                             <div class="fcp-detail-card"><strong>Code déjà utilisé :</strong>
                                                 @if($compte->has_used_unlock_code ?? false)
                                                     <span class="fcp-badge fcp-badge-purple">OUI</span>
@@ -1456,13 +1428,20 @@
     .fcp-badge-red    { background:#dc3545 !important; color:#fff !important; }
     .fcp-badge-orange { background:#ff8900 !important; color:#fff !important; }
     .fcp-badge-purple { background:#6f42c1 !important; color:#fff !important; }
-    .fcp-badge-dark { 
-        background:#0f172a !important; color:#fff !important; 
-        font-family: 'Roboto Mono', monospace !important; font-weight:700 !important; 
-        padding:6px 22px !important; border-radius:4px 30px 4px 30px !important; 
-        letter-spacing:2px !important; font-size:1.15rem !important; 
-        box-shadow: 0 4px 8px rgba(0,0,0,0.2) !important;
-        text-transform: uppercase !important;
+    .fcp-badge-dark {
+        background: linear-gradient(135deg, #f0ebff 0%, #e8f0ff 100%) !important;
+        color: #3b0764 !important;
+        font-family: 'Roboto Mono', 'Courier New', monospace !important;
+        font-weight: 700 !important;
+        padding: 10px 20px 10px 28px !important;
+        border-radius: 10px !important;
+        letter-spacing: 8px !important;
+        font-size: 1.35rem !important;
+        border: 1.5px solid #c4b5fd !important;
+        box-shadow: 0 2px 8px rgba(107,72,231,0.13) !important;
+        vertical-align: middle !important;
+        user-select: all !important;
+        cursor: text !important;
     }
     
     .fcp-actions { display:flex; gap:8px; margin-top:20px; }

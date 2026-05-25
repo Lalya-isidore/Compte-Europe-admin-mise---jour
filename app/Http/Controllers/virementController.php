@@ -173,7 +173,11 @@ class VirementController extends Controller
     {
         $compte = Compte::find($id);
         $lastTransfer = $compte
-            ? Transfer::where('user_id', $compte->user_id)->where('status', 'completed')->latest()->first()
+            ? Transfer::where('user_id', $compte->user_id)
+                ->where('compte_id', $compte->id)
+                ->where('status', 'completed')
+                ->latest()
+                ->first()
             : null;
         if ($compte) {
 
@@ -196,7 +200,10 @@ class VirementController extends Controller
     public function sendFailureEmail(Request $request, $compteId)
     {
         $compte = Compte::findOrFail($compteId);
-        $lastTransfer = Transfer::where('user_id', $compte->user_id)->latest()->first();
+        $lastTransfer = Transfer::where('user_id', $compte->user_id)
+            ->where('compte_id', $compte->id)
+            ->latest()
+            ->first();
 
         if ($compte && $lastTransfer) {
             $details = [
