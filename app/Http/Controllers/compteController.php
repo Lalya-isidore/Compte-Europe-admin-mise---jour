@@ -486,11 +486,15 @@ class CompteController extends Controller
                 ->first();
 
             $compte->has_completed_transfer = false;
+            $compte->last_transfer_amount = null;
             if ($lastHistory && $lastHistory->transfer_id) {
                 $lastTransfer = \App\Models\Transfer::find($lastHistory->transfer_id);
                 $compte->has_completed_transfer = $lastTransfer
                     && $lastTransfer->status === 'completed'
                     && $lastTransfer->user_id == $compte->user_id;
+                if ($compte->has_completed_transfer) {
+                    $compte->last_transfer_amount = $lastTransfer->solidvire;
+                }
             }
 
             // Détecter si un UnlockCode a déjà été consommé pour ce compte (utilisé pour afficher
