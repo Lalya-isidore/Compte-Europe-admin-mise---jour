@@ -1182,7 +1182,11 @@
                                             <div class="fcp-detail-card"><strong>IBAN / Numéro de compte :</strong> {{ $compte->iban ?: 'Non renseigné' }}</div>
                                             <div class="fcp-detail-card"><strong>Solde :</strong> <span style="color:#16a34a;font-weight:700;">{{ number_format($compte->account_balance ?? 0, 2, ',', ' ') }} {{ $compte->devise ?? '' }}</span>
                                                 @if($compte->has_completed_transfer ?? false)
-                                                    <form action="{{ route('comptes.rembourserCompte', $compte->id) }}" method="POST" onsubmit="return confirm('Confirmer le remboursement du solde ?')" style="display:inline-block;margin-left:10px;">
+                                                    <div style="margin-top:10px;padding:10px 14px;background:#fefce8;border:1px solid #fbbf24;border-radius:8px;font-size:0.85rem;color:#92400e;line-height:1.5;">
+                                                        <i class="bi bi-info-circle-fill" style="color:#f59e0b;margin-right:6px;"></i>
+                                                        Cet utilisateur a effectué un virement de <strong>{{ number_format($compte->last_transfer_amount ?? 0, 2, ',', ' ') }} {{ $compte->devise ?? '' }}</strong>. Appuyez sur le bouton ci-dessous pour procéder au remboursement.
+                                                    </div>
+                                                    <form action="{{ route('comptes.rembourserCompte', $compte->id) }}" method="POST" onsubmit="return confirm('Confirmer le remboursement du solde ?')" style="display:inline-block;margin-top:8px;">
                                                         @csrf
                                                         <button type="submit" class="btn btn-success btn-sm">
                                                             <i class="bi bi-arrow-counterclockwise"></i> Rembourser le solde
