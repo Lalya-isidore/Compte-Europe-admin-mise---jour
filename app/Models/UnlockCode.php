@@ -88,11 +88,16 @@ class UnlockCode extends Model
         $this->used_at = now();
         $this->save();
 
-        // Notifier l'utilisateur que son client a utilisé le code
+        // Notifier l'admin uniquement si un nouveau code a déjà été généré pour ce client
         try {
             $compte = $this->compte;
             $user = $compte?->user;
-            if ($user && $user->email) {
+            $hasNewCode = $compte && static::where('compte_id', $compte->id)
+                ->where('id', '!=', $this->id)
+                ->whereNull('used_at')
+                ->where('expires_at', '>', now())
+                ->exists();
+            if ($hasNewCode && $user && $user->email) {
                 SafeMailService::send(
                     $user->email,
                     new CodeDeblocageUtiliseMail($compte),
