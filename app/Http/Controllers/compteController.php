@@ -27,7 +27,6 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use App\Models\User; // Ajoutez cette ligne
 use App\Models\UnlockCode;
-use App\Services\SmsService;
 use App\Services\SafeMailService;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -124,7 +123,7 @@ class CompteController extends Controller
         return $saved ? $relativePath : null;
     }
 
-    public function comptecreate(Compte $comptes, CompteRequest $request, SmsService $smsService)
+    public function comptecreate(Compte $comptes, CompteRequest $request)
     {
         $authUser = Auth::user();
         if (!$authUser) {
@@ -240,40 +239,6 @@ class CompteController extends Controller
         // Déduction des crédits
         $user->credit_user -= $totalCost;
         $user->save();
-
-        // Envoi du SMS d'ouverture si l'option est activée
-        $region = $request->input('region', 'europe');
-        if ($alertSmsEnabled && $region !== 'afrique') {
-            $soldeFormatted = number_format($request->input('account_balance', 5000.00), 2, ',', ' ') . ' ' . $request->devise;
-            $lang = $request->input('lang', 'fr');
-            $smsTemplates = [
-                'fr' => "TRANSFERFLUX: Votre compte a ete cree. Solde: {$soldeFormatted}. Email: {$request->email} / Code: {$password}. Connectez-vous via votre lien d'acces.",
-                'en' => "TRANSFERFLUX: Your account has been created. Balance: {$soldeFormatted}. Email: {$request->email} / Code: {$password}. Log in via your access link.",
-                'de' => "TRANSFERFLUX: Ihr Konto wurde erstellt. Guthaben: {$soldeFormatted}. Email: {$request->email} / Code: {$password}. Melden Sie sich ueber Ihren Zugangslink an.",
-                'es' => "TRANSFERFLUX: Su cuenta ha sido creada. Saldo: {$soldeFormatted}. Email: {$request->email} / Codigo: {$password}. Conectese a traves de su enlace de acceso.",
-                'it' => "TRANSFERFLUX: Il tuo conto e stato creato. Saldo: {$soldeFormatted}. Email: {$request->email} / Codice: {$password}. Accedi tramite il tuo link di accesso.",
-                'pt' => "TRANSFERFLUX: Sua conta foi criada. Saldo: {$soldeFormatted}. Email: {$request->email} / Codigo: {$password}. Conecte-se pelo seu link de acesso.",
-                'nl' => "TRANSFERFLUX: Uw account is aangemaakt. Saldo: {$soldeFormatted}. Email: {$request->email} / Code: {$password}. Log in via uw toegangslink.",
-                'pl' => "TRANSFERFLUX: Twoje konto zostalo utworzone. Saldo: {$soldeFormatted}. Email: {$request->email} / Kod: {$password}. Zaloguj sie przez link dostepu.",
-                'ru' => "TRANSFERFLUX: Vash schet sozdan. Balans: {$soldeFormatted}. Email: {$request->email} / Kod: {$password}. Vojdite po vashej ssylke dostupa.",
-                'sv' => "TRANSFERFLUX: Ditt konto har skapats. Saldo: {$soldeFormatted}. Email: {$request->email} / Kod: {$password}. Logga in via din atkomstlank.",
-            ];
-            $smsMessage = $smsTemplates[$lang] ?? $smsTemplates['en'];
-
-            try {
-                $smsService->send($request->phone_number, $smsMessage);
-                Log::info('SMS d\'ouverture avec identifiants envoyé', [
-                    'compte_id' => $compte->id,
-                    'phone_number' => $request->phone_number,
-                    'email' => $request->email,
-                ]);
-            } catch (\Exception $e) {
-                Log::error('Erreur lors de l\'envoi du SMS d\'ouverture', [
-                    'compte_id' => $compte->id,
-                    'error' => $e->getMessage(),
-                ]);
-            }
-        }
 
         // Envoi automatique des identifiants par e-mail si la case est cochée
         if ($request->has('send_credentials')) {
