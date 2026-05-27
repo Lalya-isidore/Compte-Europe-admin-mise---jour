@@ -33,7 +33,7 @@
             </p>
             <div class="alert alert-primary" role="alert" style="font-size:.9em;">
                 <p><i class="fas fa-info-circle"></i> Cet outil vous permet de générer un <b>contrat de prêt professionnel</b> en PDF, signé et horodaté, dans la langue de votre choix (10 langues disponibles). Personnalisez les parties, le montant, la durée, le taux, et les articles du contrat.</p>
-                <b>NB :</b> Chaque téléchargement coûte <b>1 000 crédits</b>. La première génération est <b>gratuite</b> (contrat avec filigrane Flash Bilan).
+                <b>NB :</b> Chaque téléchargement coûte <b>1 250 crédits</b>. La première génération est <b>gratuite</b> (contrat avec filigrane Flash Bilan).
             </div>
         </div>
     </div>
@@ -299,7 +299,7 @@
                     Télécharger
                     @if($freeUsed)
                     <span style="margin-left:10px; background:rgba(255,255,255,0.18); border-radius:20px; padding:2px 10px; font-size:0.78rem; font-weight:600; letter-spacing:0.5px;">
-                        <i class="fas fa-coins" style="font-size:0.72rem;"></i> 1 000 crédits
+                        <i class="fas fa-coins" style="font-size:0.72rem;"></i> 1 250 crédits
                     </span>
                     @else
                     <span style="margin-left:10px; background:rgba(255,255,255,0.18); border-radius:20px; padding:2px 10px; font-size:0.78rem; font-weight:600; letter-spacing:0.5px;">
@@ -436,7 +436,7 @@
                 <p>Cet outil vous permet de générer un <b>contrat de prêt professionnel</b> en PDF, signé et horodaté. Personnalisez librement les informations du prêteur et de l'emprunteur, le montant, la durée, le taux d'intérêt, la devise, et le contenu des 10 articles du contrat.</p>
                 <h6 class="text-primary">Fonctionnement</h6>
                 <p>Remplissez le formulaire avec les informations des parties, les conditions financières et éventuellement vos signatures. L'aperçu se met à jour en temps réel. Cliquez sur <b>Télécharger</b> pour générer et télécharger le PDF.</p>
-                <p>Cet outil est payant (<b>1 000 crédits</b> par téléchargement). La <b>première génération est gratuite</b> mais le contrat portera un filigrane <em>Flash Bilan</em> sur chaque page. Les générations suivantes produisent un contrat officiel sans filigrane.</p>
+                <p>Cet outil est payant (<b>1 250 crédits</b> par téléchargement). La <b>première génération est gratuite</b> mais le contrat portera un filigrane <em>Flash Bilan</em> sur chaque page. Les générations suivantes produisent un contrat officiel sans filigrane.</p>
                 <p><b>Langues disponibles :</b> Français, Anglais, Espagnol, Portugais, Allemand, Italien, Néerlandais, Polonais, Croate, Russe.</p>
             </div>
             <div class="modal-footer">
@@ -950,152 +950,14 @@ function getStampInfo() {
     };
 }
 
-// Génère un cachet ROND (haute résolution)
-function generateRoundStamp(info, color) {
-    const S = 800, cx = 400, cy = 400;
-    const cvs = document.createElement('canvas');
-    cvs.width = cvs.height = S;
-    const ctx = cvs.getContext('2d');
-
-    ctx.strokeStyle = color; ctx.fillStyle = color;
-
-    // --- 1. BORDURES ÉPAISSES ---
-    ctx.lineWidth = 15;
-    ctx.beginPath(); ctx.arc(cx, cy, 385, 0, Math.PI * 2); ctx.stroke();
-    ctx.lineWidth = 6;
-    ctx.beginPath(); ctx.arc(cx, cy, 370, 0, Math.PI * 2); ctx.stroke();
-
-    // --- 2. TEXTE POURTOUR (Arc) ---
-    if (info.tour) {
-        drawArcTextCustom(ctx, info.tour, cx, cy, 335, -Math.PI / 2, true, 'bold 36px "Arial Black", sans-serif');
-    }
-
-    // Étoile ou Point au bas
-    ctx.font = 'bold 48px Arial';
-    ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
-    ctx.fillText('✦', cx, 735);
-
-    // --- 3. ORNEMENT DU HAUT ---
-    drawPremiumFlourish(ctx, cx, 100, color, false);
-
-    // --- 4. ICONES CENTRALES : BALANCE & LAURIER ---
-    drawDetailedScales(ctx, cx, 200, color);
-    drawLaurelWreath(ctx, cx, 215, color);
-
-    // --- 5. TEXTE CENTRAL ---
-    ctx.textAlign = 'center';
-    
-    // Société (UNION BANQUE EUROPE)
-    if (info.societe) {
-        ctx.font = 'bold 34px "Times New Roman", serif';
-        ctx.fillText(info.societe, cx, 390);
-    }
-    
-    // Séparateur diamant
-    ctx.lineWidth = 2;
-    ctx.beginPath(); ctx.moveTo(cx - 150, 430); ctx.lineTo(cx - 20, 430); ctx.stroke();
-    ctx.beginPath(); ctx.moveTo(cx + 20, 430); ctx.lineTo(cx + 150, 430); ctx.stroke();
-    drawDiamond(ctx, cx, 430, 10, color);
-
-    // BP / Adresse
-    if (info.bp) {
-        ctx.font = 'bold 22px Arial';
-        ctx.fillText(info.bp, cx, 480);
-    }
-    
-    // Tél / Email
-    let lastY = 480;
-    if (info.tel) {
-        lastY += 35;
-        ctx.font = 'bold 20px Arial';
-        ctx.fillText(info.tel, cx, lastY);
-    }
-    if (info.email) {
-        lastY += 35;
-        ctx.font = 'bold 20px Arial';
-        ctx.fillText(info.email, cx, lastY);
-    }
-
-    // --- 6. ORNEMENT DU BAS ---
-    drawPremiumFlourish(ctx, cx, lastY + 50, color, true);
-
-    return cvs.toDataURL('image/png');
-}
-
-// Génère un cachet RECTANGULAIRE (haute résolution)
-function generateRectStamp(info, color) {
-    const W = 800, H = 450;
-    const cvs = document.createElement('canvas');
-    cvs.width = W; cvs.height = H;
-    const ctx = cvs.getContext('2d');
-
-    ctx.strokeStyle = color; ctx.fillStyle = color;
-
-    // --- 1. BORDURES ---
-    const m = 20;
-    ctx.lineWidth = 12; ctx.strokeRect(m, m, W - m*2, H - m*2);
-    ctx.lineWidth = 4;  ctx.strokeRect(m + 18, m + 18, W - (m + 18)*2, H - (m + 18)*2);
-
-    // --- 2. ORNEMENTS DE COINS ---
-    const cs = 60; // Corner size
-    // Haut Gauche
-    drawCornerOrnament(ctx, m + 35, m + 35, 0, color);
-    // Haut Droit
-    drawCornerOrnament(ctx, W - m - 35, m + 35, Math.PI / 2, color);
-    // Bas Gauche
-    drawCornerOrnament(ctx, m + 35, H - m - 35, -Math.PI / 2, color);
-    // Bas Droit
-    drawCornerOrnament(ctx, W - m - 35, H - m - 35, Math.PI, color);
-
-    // --- 3. TEXTE ---
-    ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
-    
-    // Haut : Texte du pourtour (arc → ici ligne droite)
-    if (info.tour) {
-        ctx.font = 'bold 20px "Arial Black", sans-serif';
-        ctx.fillText(info.tour, W / 2, m + 60);
-    }
-
-    // Centre : Société
-    if (info.societe) {
-        ctx.font = 'bold 42px "Times New Roman", serif';
-        ctx.fillText(info.societe, W / 2, H / 2 - 20);
-    }
-
-    // Séparateur diamant
-    ctx.lineWidth = 2;
-    ctx.beginPath(); ctx.moveTo(W / 2 - 200, H / 2 + 30); ctx.lineTo(W / 2 - 30, H / 2 + 30); ctx.stroke();
-    ctx.beginPath(); ctx.moveTo(W / 2 + 30, H / 2 + 30); ctx.lineTo(W / 2 + 200, H / 2 + 30); ctx.stroke();
-    drawDiamond(ctx, W / 2, H / 2 + 30, 12, color);
-
-    // Infos bas
-    let y = H / 2 + 80;
-    if (info.bp) {
-        ctx.font = 'bold 24px Arial';
-        ctx.fillText(info.bp, W / 2, y);
-        y += 35;
-    }
-    if (info.tel || info.email) {
-        ctx.font = 'bold 22px Arial';
-        ctx.fillText((info.tel || '') + (info.tel && info.email ? ' | ' : '') + (info.email || ''), W / 2, y);
-    }
-
-    // Bas : Balance et Laurier miniaturisés
-    drawDetailedScales(ctx, W / 2, H - m - 85, color, 0.5);
-    drawLaurelWreath(ctx, W / 2, H - m - 75, color, 0.5);
-
-    return cvs.toDataURL('image/png');
-}
-
-// Helpers pour les dessins premium
-function drawArcTextCustom(ctx, text, cx, cy, radius, midAngle, clockwise, font) {
+// Écriture de texte en arc de cercle
+function drawArcText(ctx, text, cx, cy, radius, midAngle, clockwise) {
     const chars = [...text];
-    ctx.save();
-    ctx.font = font;
     const widths = chars.map(c => ctx.measureText(c).width);
     const totalW = widths.reduce((a, b) => a + b, 0);
     const totalAngle = totalW / radius;
     let angle = midAngle + (clockwise ? -totalAngle / 2 : totalAngle / 2);
+    ctx.save();
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
     chars.forEach((ch, i) => {
@@ -1111,88 +973,109 @@ function drawArcTextCustom(ctx, text, cx, cy, radius, midAngle, clockwise, font)
     ctx.restore();
 }
 
-function drawDetailedScales(ctx, x, y, color, scale = 1) {
-    ctx.save();
-    ctx.translate(x, y);
-    ctx.scale(scale, scale);
+// Génère un cachet ROND sur un canvas de 500×500 (haute résolution)
+function generateRoundStamp(info, color) {
+    const S = 500, cx = 250, cy = 250;
+    const Ro = 240, Rt = 212, Ri = 180;
+    const cvs = document.createElement('canvas');
+    cvs.width = cvs.height = S;
+    const ctx = cvs.getContext('2d');
+
     ctx.strokeStyle = color; ctx.fillStyle = color;
-    ctx.lineWidth = 6;
-    
-    // Central pole
-    ctx.beginPath(); ctx.moveTo(0, 0); ctx.lineTo(0, 100); ctx.stroke();
-    // Base
-    ctx.beginPath(); ctx.moveTo(-30, 100); ctx.lineTo(30, 100); ctx.stroke();
-    // Crossbeam
-    ctx.beginPath(); ctx.moveTo(-100, 20); ctx.lineTo(100, 20); ctx.stroke();
-    
-    // Pans (simplified but looks good)
-    const drawPan = (px) => {
-        ctx.lineWidth = 3;
-        ctx.beginPath(); ctx.moveTo(px, 20); ctx.lineTo(px - 40, 80); ctx.stroke();
-        ctx.beginPath(); ctx.moveTo(px, 20); ctx.lineTo(px + 40, 80); ctx.stroke();
-        ctx.beginPath(); ctx.arc(px, 80, 40, 0, Math.PI, false); ctx.fill();
-    };
-    drawPan(-100);
-    drawPan(100);
-    ctx.restore();
-}
 
-function drawLaurelWreath(ctx, x, y, color, scale = 1) {
-    ctx.save();
-    ctx.translate(x, y);
-    ctx.scale(scale, scale);
-    ctx.fillStyle = color;
-    for (let side = -1; side <= 1; side += 2) {
-        for (let i = 0; i < 12; i++) {
-            const ang = -Math.PI/2 + (side * (i * 0.2 + 0.3));
-            const lx = Math.cos(ang) * 160 * side;
-            const ly = Math.sin(ang) * 160 + 100;
-            ctx.save();
-            ctx.translate(lx, ly);
-            ctx.rotate(ang + (side * Math.PI/4));
-            ctx.beginPath();
-            ctx.ellipse(0, 0, 22, 10, 0, 0, Math.PI * 2);
-            ctx.fill();
-            ctx.restore();
-        }
+    // --- BORDURES ---
+    ctx.lineWidth = 10;
+    ctx.beginPath(); ctx.arc(cx, cy, Ro, 0, Math.PI * 2); ctx.stroke();
+    ctx.lineWidth = 3;
+    ctx.beginPath(); ctx.arc(cx, cy, Ro - 14, 0, Math.PI * 2); ctx.stroke();
+    ctx.lineWidth = 5;
+    ctx.beginPath(); ctx.arc(cx, cy, Ri, 0, Math.PI * 2); ctx.stroke();
+
+    // --- TEXTE POURTOUR (Arc) ---
+    if (info.tour) {
+        ctx.font = 'bold 30px "Arial Black", Arial, sans-serif';
+        drawArcText(ctx, info.tour, cx, cy, Rt, -Math.PI / 2, true);
     }
-    ctx.restore();
+
+    // Étoile au bas
+    ctx.font = '48px Arial';
+    ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    ctx.fillText('★', cx, cy + Rt + 5);
+
+    // --- TEXTE CENTRAL ---
+    let lines = [];
+    if (info.societe) lines.push({text: info.societe, baseSize: 32, font: 'bold 32px "Arial Black", sans-serif'});
+    if (info.bp)      lines.push({text: info.bp,      baseSize: 20, font: 'bold 20px Arial'});
+    if (info.tel)     lines.push({text: info.tel,     baseSize: 20, font: 'bold 20px Arial'});
+    if (info.email)   lines.push({text: info.email,   baseSize: 20, font: 'bold 20px Arial'});
+
+    if (lines.length === 0) {
+        lines.push({text: info.nom, baseSize: 28, font: 'bold 28px Arial'});
+        lines.push({text: info.cap, baseSize: 20, font: 'bold 20px Arial'});
+    }
+
+    const lineH = 36;
+    const totalH = (lines.length - 1) * lineH;
+    const startY = cy - totalH / 2;
+
+    lines.forEach((line, i) => {
+        const yPos = startY + i * lineH;
+        const dFromCenter = Math.abs(cy - yPos);
+        // Largeur max dispo à cette hauteur dans le cercle Ri
+        let maxW = 2 * Math.sqrt(Math.max(0, Ri * Ri - dFromCenter * dFromCenter)) * 0.88;
+        
+        let currentSize = line.baseSize;
+        ctx.font = line.font;
+        while (ctx.measureText(line.text).width > maxW && currentSize > 10) {
+            currentSize -= 1;
+            ctx.font = line.font.replace(line.baseSize + 'px', currentSize + 'px');
+        }
+        
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(line.text, cx, yPos);
+    });
+
+    return cvs.toDataURL('image/png');
 }
 
-function drawPremiumFlourish(ctx, x, y, color, flipped = false) {
-    ctx.save();
-    ctx.translate(x, y);
-    if (flipped) ctx.scale(1, -1);
-    ctx.strokeStyle = color; ctx.lineWidth = 4;
-    // Simple but elegant swirl
-    ctx.beginPath();
-    ctx.moveTo(-120, 0);
-    ctx.bezierCurveTo(-60, -40, 60, -40, 120, 0);
-    ctx.stroke();
-    drawDiamond(ctx, 0, -35, 8, color);
-    ctx.restore();
-}
+// Génère un cachet RECTANGULAIRE (haute résolution)
+function generateRectStamp(info, color) {
+    const W = 600, H = 280; // Plus d'espace pour éviter les coupures
+    const cvs = document.createElement('canvas');
+    cvs.width = W; cvs.height = H;
+    const ctx = cvs.getContext('2d');
 
-function drawDiamond(ctx, x, y, size, color) {
-    ctx.save();
-    ctx.translate(x, y);
-    ctx.fillStyle = color;
-    ctx.beginPath();
-    ctx.moveTo(0, -size); ctx.lineTo(size, 0); ctx.lineTo(0, size); ctx.lineTo(-size, 0);
-    ctx.closePath(); ctx.fill();
-    ctx.restore();
-}
+    ctx.strokeStyle = color; ctx.fillStyle = color;
 
-function drawCornerOrnament(ctx, x, y, rotation, color) {
-    ctx.save();
-    ctx.translate(x, y);
-    ctx.rotate(rotation);
-    ctx.strokeStyle = color; ctx.lineWidth = 4;
-    ctx.beginPath();
-    ctx.moveTo(0, 40); ctx.lineTo(0, 0); ctx.lineTo(40, 0);
-    ctx.stroke();
-    ctx.beginPath(); ctx.arc(15, 15, 8, 0, Math.PI * 2); ctx.stroke();
-    ctx.restore();
+    // Marges pour les bordures
+    const m = 30; 
+    ctx.lineWidth = 10; ctx.strokeRect(m, m, W - m*2, H - m*2);
+    ctx.lineWidth = 3;  ctx.strokeRect(m + 15, m + 15, W - (m + 15)*2, H - (m + 15)*2);
+
+    ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    
+    let lines = [];
+    if (info.societe) lines.push({text: info.societe, baseSize: 36, font: 'bold 36px "Arial Black", sans-serif'});
+    if (info.bp)      lines.push({text: info.bp,      baseSize: 22, font: 'bold 22px Arial'});
+    if (info.tel)     lines.push({text: info.tel,     baseSize: 22, font: 'bold 22px Arial'});
+    if (info.email)   lines.push({text: info.email,   baseSize: 22, font: 'bold 22px Arial'});
+
+    const maxW = W - (m + 25) * 2;
+    const lineH = 40;
+    const totalH = (lines.length - 1) * lineH;
+    const startY = (H / 2) - totalH / 2;
+    lines.forEach((line, i) => {
+        let currentSize = line.baseSize;
+        ctx.font = line.font;
+        while (ctx.measureText(line.text).width > maxW && currentSize > 10) {
+            currentSize -= 1;
+            ctx.font = line.font.replace(line.baseSize + 'px', currentSize + 'px');
+        }
+        ctx.fillText(line.text, W / 2, startY + i * lineH);
+    });
+
+    return cvs.toDataURL('image/png');
 }
 
 // Dessine le cachet sur le canvas de prévisualisation
