@@ -18,6 +18,8 @@ use App\Models\Affiliation;
 use App\Models\SmsHistory;
 use App\Models\MailHistory;
 use App\Models\CouponCollection;
+use App\Models\ContratPretUsage;
+use App\Models\ContratDonUsage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
@@ -100,6 +102,14 @@ class UserManagementController extends Controller
             ->limit(50)
             ->get();
 
+        $contratPretUsages = ContratPretUsage::where('user_id', $user->id)
+            ->orderByDesc('created_at')
+            ->get();
+
+        $contratDonUsages = ContratDonUsage::where('user_id', $user->id)
+            ->orderByDesc('created_at')
+            ->get();
+
         return view('admin.users.show', [
             'user' => $user,
             'recharges' => $recharges,
@@ -107,6 +117,8 @@ class UserManagementController extends Controller
             'smsHistory' => $smsHistory,
             'mailHistory' => $mailHistory,
             'couponCollections' => $couponCollections,
+            'contratPretUsages' => $contratPretUsages,
+            'contratDonUsages' => $contratDonUsages,
         ]);
     }
 

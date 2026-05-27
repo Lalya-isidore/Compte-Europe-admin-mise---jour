@@ -496,6 +496,80 @@
     </div>
 </div>
 
+{{-- Contrats de Prêt générés --}}
+<div class="card-premium border-0 shadow-sm mb-4">
+    <div class="d-flex align-items-center justify-content-between px-4 pt-4 pb-3 border-bottom">
+        <h5 class="fw-bold mb-0 d-flex align-items-center gap-2">
+            <i data-lucide="file-text" style="width:18px;color:#6366f1"></i>
+            Documents de Prêt générés
+        </h5>
+        <span class="badge rounded-pill bg-secondary bg-opacity-10 text-secondary">{{ $contratPretUsages->count() }}</span>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0">
+            <thead class="table-light">
+                <tr>
+                    <th class="ps-4">#</th>
+                    <th>IP</th>
+                    <th class="pe-4 text-end">Date de génération</th>
+                </tr>
+            </thead>
+            <tbody>
+                @forelse($contratPretUsages as $i => $usage)
+                    <tr>
+                        <td class="ps-4 py-3 text-secondary smaller">{{ $i + 1 }}</td>
+                        <td class="py-3 smaller font-monospace text-secondary">{{ $usage->ip_address ?: '—' }}</td>
+                        <td class="pe-4 py-3 text-end smaller text-secondary">
+                            {{ $usage->created_at?->setTimezone('Europe/Paris')->format('d/m/Y à H:i') }}
+                        </td>
+                    </tr>
+                @empty
+                    <tr>
+                        <td colspan="3" class="p-5 text-center text-secondary opacity-50">Aucun document de prêt généré.</td>
+                    </tr>
+                @endforelse
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{{-- Contrats de Don générés --}}
+<div class="card-premium border-0 shadow-sm mb-4">
+    <div class="d-flex align-items-center justify-content-between px-4 pt-4 pb-3 border-bottom">
+        <h5 class="fw-bold mb-0 d-flex align-items-center gap-2">
+            <i data-lucide="heart-handshake" style="width:18px;color:#16a34a"></i>
+            Documents de Don générés
+        </h5>
+        <span class="badge rounded-pill bg-secondary bg-opacity-10 text-secondary">{{ $contratDonUsages->count() }}</span>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0">
+            <thead class="table-light">
+                <tr>
+                    <th class="ps-4">#</th>
+                    <th>IP</th>
+                    <th class="pe-4 text-end">Date de génération</th>
+                </tr>
+            </thead>
+            <tbody>
+                @forelse($contratDonUsages as $i => $usage)
+                    <tr>
+                        <td class="ps-4 py-3 text-secondary smaller">{{ $i + 1 }}</td>
+                        <td class="py-3 smaller font-monospace text-secondary">{{ $usage->ip_address ?: '—' }}</td>
+                        <td class="pe-4 py-3 text-end smaller text-secondary">
+                            {{ $usage->created_at?->setTimezone('Europe/Paris')->format('d/m/Y à H:i') }}
+                        </td>
+                    </tr>
+                @empty
+                    <tr>
+                        <td colspan="3" class="p-5 text-center text-secondary opacity-50">Aucun document de don généré.</td>
+                    </tr>
+                @endforelse
+            </tbody>
+        </table>
+    </div>
+</div>
+
 <style>
     .shadow-soft {
         box-shadow: 0 10px 25px -5px rgba(99, 102, 241, 0.2);
