@@ -55,7 +55,7 @@
                             <a href="{{ route('contracts.history.download', $entry->id) }}"
                                class="btn btn-sm"
                                style="background:#1a3a5c; color:#fff; padding:4px 10px; border-radius:6px; font-size:.8rem; text-decoration:none;">
-                                <i data-lucide="download" style="width:13px;height:13px;vertical-align:middle;"></i> PDF
+                                <i data-lucide="download" style="width:13px;height:13px;vertical-align:middle;"></i> Télécharger PDF
                             </a>
                             <form method="POST" action="{{ route('contracts.history.destroy', $entry->id) }}"
                                   onsubmit="return confirm('Supprimer ce document ?')">
