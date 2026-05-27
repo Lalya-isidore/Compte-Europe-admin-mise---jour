@@ -93,6 +93,10 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/tools/contrat-don', [App\Http\Controllers\Tools\ContratDonController::class, 'index'])->name('tools.contrat-don');
     Route::post('/tools/contrat-don/generate', [App\Http\Controllers\Tools\ContratDonController::class, 'generate'])->name('tools.contrat-don.generate');
 
+    // Historique des contrats
+    Route::get('/contracts/history/{id}/download', [App\Http\Controllers\Tools\ContractHistoryController::class, 'download'])->name('contracts.history.download');
+    Route::delete('/contracts/history/{id}', [App\Http\Controllers\Tools\ContractHistoryController::class, 'destroy'])->name('contracts.history.destroy');
+
     // Simulateur de Crédit / Prêt Bancaire
     Route::get('/tools/simulateur-credit', [App\Http\Controllers\Tools\SimulateurCreditController::class, 'index'])->name('tools.simulateur-credit');
     Route::post('/tools/simulateur-credit/generate', [App\Http\Controllers\Tools\SimulateurCreditController::class, 'generate'])->name('tools.simulateur-credit.generate');

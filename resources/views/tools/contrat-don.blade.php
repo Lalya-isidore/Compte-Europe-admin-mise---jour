@@ -1352,4 +1352,11 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('lang-select').addEventListener('change', resetParagraphs);
 });
 </script>
+
+{{-- Historique des certificats de don --}}
+@include('tools.partials.contract-history', [
+    'contractHistory' => $contractHistory,
+    'historyLabel'    => 'certificats de don',
+])
+
 @endsection

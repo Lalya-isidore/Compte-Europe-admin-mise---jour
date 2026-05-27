@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Tools;
 
 use App\Http\Controllers\Controller;
 use App\Models\ContratDonUsage;
+use App\Models\ContractHistory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -862,6 +863,14 @@ class ContratDonController extends Controller
             ]);
         }
 
+        $contractHistory = $user
+            ? ContractHistory::where('user_id', $user->id)
+                ->where('type', 'don')
+                ->where('expires_at', '>', now())
+                ->latest()
+                ->get()
+            : collect();
+
         return view('tools.contrat-don', [
             'currencies'      => $this->currencies,
             'translations'    => $this->translations,
@@ -873,6 +882,7 @@ class ContratDonController extends Controller
             'notaireAdressesAll' => $this->notaireAdresses,
             'freeUsed'        => $user ? (bool) $user->contrat_don_free_used : false,
             'userCredits'     => $user ? (int) $user->credit_user : 0,
+            'contractHistory' => $contractHistory,
         ]);
     }
 
@@ -1019,6 +1029,27 @@ class ContratDonController extends Controller
             DB::table('users')->where('id', $user->id)->update(['contrat_don_free_used' => true]);
         } else {
             DB::table('users')->where('id', $user->id)->decrement('credit_user', $cost);
+        }
+
+        // Sauvegarder dans l'historique
+        try {
+            ContractHistory::saveContract(
+                userId:      $user->id,
+                type:        'don',
+                pdfContent:  $pdf->output(),
+                displayName: $filename,
+                metadata:    [
+                    'donateur'   => ($request->donateur_prenom ?? '') . ' ' . ($request->donateur_nom ?? ''),
+                    'donataire'  => $request->donataire_nom,
+                    'montant'    => (float) $request->montant,
+                    'devise'     => $devise,
+                    'lang'       => $lang,
+                    'deed_no'    => $deedNo ?? '',
+                ],
+                isTest:      $isTestGeneration,
+            );
+        } catch (\Throwable $e) {
+            \Illuminate\Support\Facades\Log::warning('Échec sauvegarde historique contrat-don', ['error' => $e->getMessage()]);
         }
 
         $response = $pdf->download($filename);

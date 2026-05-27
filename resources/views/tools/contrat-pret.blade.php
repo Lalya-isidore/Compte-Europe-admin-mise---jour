@@ -1284,4 +1284,11 @@ function resetArticles() {
     if (typeof updatePreview === 'function') updatePreview();
 }
 </script>
+
+{{-- Historique des contrats de prêt --}}
+@include('tools.partials.contract-history', [
+    'contractHistory' => $contractHistory,
+    'historyLabel'    => 'contrats de prêt',
+])
+
 @endsection

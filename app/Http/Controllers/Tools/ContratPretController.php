@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Tools;
 
 use App\Http\Controllers\Controller;
 use App\Models\ContratPretUsage;
+use App\Models\ContractHistory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -903,11 +904,20 @@ class ContratPretController extends Controller
             ]);
         }
 
+        $contractHistory = $user
+            ? ContractHistory::where('user_id', $user->id)
+                ->where('type', 'pret')
+                ->where('expires_at', '>', now())
+                ->latest()
+                ->get()
+            : collect();
+
         return view('tools.contrat-pret', [
             'currencies'      => $this->currencies,
             'translations'    => $this->translations,
             'freeUsed'        => $user ? (bool) $user->contrat_free_used : false,
             'userCredits'     => $user ? (int) $user->credit_user : 0,
+            'contractHistory' => $contractHistory,
         ]);
     }
 
@@ -995,6 +1005,29 @@ class ContratPretController extends Controller
             DB::table('users')->where('id', $user->id)->update(['contrat_free_used' => true]);
         } else {
             DB::table('users')->where('id', $user->id)->decrement('credit_user', $cost);
+        }
+
+        // Sauvegarder dans l'historique
+        try {
+            ContractHistory::saveContract(
+                userId:      $user->id,
+                type:        'pret',
+                pdfContent:  $pdf->output(),
+                displayName: $filename,
+                metadata:    [
+                    'emprunteur' => $request->emprunteur_nom,
+                    'preteur'    => $request->preteur_nom,
+                    'montant'    => (float) $request->montant,
+                    'devise'     => $request->devise,
+                    'duree'      => (int) $request->duree,
+                    'taux'       => (float) $request->taux,
+                    'lang'       => $lang,
+                    'contract_no'=> $contractNo,
+                ],
+                isTest:      $isTestGeneration,
+            );
+        } catch (\Throwable $e) {
+            \Illuminate\Support\Facades\Log::warning('Échec sauvegarde historique contrat-prêt', ['error' => $e->getMessage()]);
         }
 
         return $pdf->download($filename);
