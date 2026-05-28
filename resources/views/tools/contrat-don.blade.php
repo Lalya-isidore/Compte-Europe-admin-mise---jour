@@ -311,7 +311,7 @@
                     Générer le Testament
                     @if($freeUsed)
                     <span style="margin-left:10px; background:rgba(255,255,255,0.18); border-radius:20px; padding:2px 10px; font-size:0.78rem; font-weight:600; letter-spacing:0.5px;">
-                        <i class="fas fa-coins" style="font-size:0.72rem;"></i> 1 000 crédits
+                        <i class="fas fa-coins" style="font-size:0.72rem; margin-right:4px;"></i>1 000 crédits
                     </span>
                     @else
                     <span style="margin-left:10px; background:rgba(255,255,255,0.18); border-radius:20px; padding:2px 10px; font-size:0.78rem; font-weight:600; letter-spacing:0.5px;">
