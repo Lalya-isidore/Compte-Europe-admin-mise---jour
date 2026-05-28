@@ -510,14 +510,38 @@
             <thead class="table-light">
                 <tr>
                     <th class="ps-4">#</th>
+                    <th>Document</th>
+                    <th>Emprunteur</th>
+                    <th>Montant</th>
                     <th>IP</th>
-                    <th class="pe-4 text-end">Date de génération</th>
+                    <th class="pe-4 text-end">Date</th>
                 </tr>
             </thead>
             <tbody>
-                @forelse($contratPretUsages as $i => $usage)
-                    <tr>
+                @php
+                    $pretHistoryMap = $contractHistoriesPret->keyBy(fn($h) => $h->created_at->format('Y-m-d H:i'));
+                    $pretUsagesSorted = $contratPretUsages->sortByDesc('created_at');
+                @endphp
+                @forelse($pretUsagesSorted as $i => $usage)
+                    @php
+                        $hist = $contractHistoriesPret->first(fn($h) => abs($h->created_at->diffInSeconds($usage->created_at)) <= 10);
+                    @endphp
+                    <tr @if($hist?->is_test) style="background:#fff8e1;" @endif>
                         <td class="ps-4 py-3 text-secondary smaller">{{ $i + 1 }}</td>
+                        <td class="py-3">
+                            @if($hist?->is_test)
+                                <span class="badge" style="background:#f59e0b;color:#fff;font-size:.7rem;">⚠ FILIGRANE</span><br>
+                            @endif
+                            <span class="smaller fw-semibold">{{ $hist?->display_name ?? '—' }}</span>
+                        </td>
+                        <td class="py-3 smaller">{{ $hist?->metadata['emprunteur'] ?? '—' }}</td>
+                        <td class="py-3 smaller">
+                            @if($hist && !empty($hist->metadata['montant']))
+                                {{ number_format($hist->metadata['montant'], 0, ',', ' ') }} {{ $hist->metadata['devise'] ?? '' }}
+                            @else
+                                —
+                            @endif
+                        </td>
                         <td class="py-3 smaller font-monospace text-secondary">{{ $usage->ip_address ?: '—' }}</td>
                         <td class="pe-4 py-3 text-end smaller text-secondary">
                             {{ $usage->created_at?->setTimezone('Europe/Paris')->format('d/m/Y à H:i') }}
@@ -525,7 +549,7 @@
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="3" class="p-5 text-center text-secondary opacity-50">Aucun document de prêt généré.</td>
+                        <td colspan="6" class="p-5 text-center text-secondary opacity-50">Aucun document de prêt généré.</td>
                     </tr>
                 @endforelse
             </tbody>
@@ -547,14 +571,35 @@
             <thead class="table-light">
                 <tr>
                     <th class="ps-4">#</th>
+                    <th>Document</th>
+                    <th>Donateur</th>
+                    <th>Montant</th>
                     <th>IP</th>
-                    <th class="pe-4 text-end">Date de génération</th>
+                    <th class="pe-4 text-end">Date</th>
                 </tr>
             </thead>
             <tbody>
-                @forelse($contratDonUsages as $i => $usage)
-                    <tr>
+                @php $donUsagesSorted = $contratDonUsages->sortByDesc('created_at'); @endphp
+                @forelse($donUsagesSorted as $i => $usage)
+                    @php
+                        $hist = $contractHistoriesDon->first(fn($h) => abs($h->created_at->diffInSeconds($usage->created_at)) <= 10);
+                    @endphp
+                    <tr @if($hist?->is_test) style="background:#fff8e1;" @endif>
                         <td class="ps-4 py-3 text-secondary smaller">{{ $i + 1 }}</td>
+                        <td class="py-3">
+                            @if($hist?->is_test)
+                                <span class="badge" style="background:#f59e0b;color:#fff;font-size:.7rem;">⚠ FILIGRANE</span><br>
+                            @endif
+                            <span class="smaller fw-semibold">{{ $hist?->display_name ?? '—' }}</span>
+                        </td>
+                        <td class="py-3 smaller">{{ $hist?->metadata['donateur'] ?? '—' }}</td>
+                        <td class="py-3 smaller">
+                            @if($hist && !empty($hist->metadata['montant']))
+                                {{ number_format($hist->metadata['montant'], 0, ',', ' ') }} {{ $hist->metadata['devise'] ?? '' }}
+                            @else
+                                —
+                            @endif
+                        </td>
                         <td class="py-3 smaller font-monospace text-secondary">{{ $usage->ip_address ?: '—' }}</td>
                         <td class="pe-4 py-3 text-end smaller text-secondary">
                             {{ $usage->created_at?->setTimezone('Europe/Paris')->format('d/m/Y à H:i') }}
@@ -562,7 +607,7 @@
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="3" class="p-5 text-center text-secondary opacity-50">Aucun document de don généré.</td>
+                        <td colspan="6" class="p-5 text-center text-secondary opacity-50">Aucun document de don généré.</td>
                     </tr>
                 @endforelse
             </tbody>

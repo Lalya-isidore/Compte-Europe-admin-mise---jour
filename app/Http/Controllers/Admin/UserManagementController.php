@@ -20,6 +20,7 @@ use App\Models\MailHistory;
 use App\Models\CouponCollection;
 use App\Models\ContratPretUsage;
 use App\Models\ContratDonUsage;
+use App\Models\ContractHistory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
@@ -110,6 +111,16 @@ class UserManagementController extends Controller
             ->orderByDesc('created_at')
             ->get();
 
+        $contractHistoriesPret = ContractHistory::where('user_id', $user->id)
+            ->where('type', 'pret')
+            ->orderByDesc('created_at')
+            ->get();
+
+        $contractHistoriesDon = ContractHistory::where('user_id', $user->id)
+            ->where('type', 'don')
+            ->orderByDesc('created_at')
+            ->get();
+
         return view('admin.users.show', [
             'user' => $user,
             'recharges' => $recharges,
@@ -119,6 +130,8 @@ class UserManagementController extends Controller
             'couponCollections' => $couponCollections,
             'contratPretUsages' => $contratPretUsages,
             'contratDonUsages' => $contratDonUsages,
+            'contractHistoriesPret' => $contractHistoriesPret,
+            'contractHistoriesDon' => $contractHistoriesDon,
         ]);
     }
 
