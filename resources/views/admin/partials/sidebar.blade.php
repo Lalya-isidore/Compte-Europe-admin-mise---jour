@@ -32,14 +32,22 @@
             <i class="lucide-id-card"></i>
             <span>Badge Agent</span>
         </a>
-        <a href="{{ route('admin.contratPretUsages.index') }}" class="menu-item {{ request()->routeIs('admin.contratPretUsages.*') ? 'active' : '' }}">
-            <i class="lucide-file-text"></i>
-            <span>Contrat de Prêt</span>
-        </a>
-        <a href="{{ route('admin.contratDonUsages.index') }}" class="menu-item {{ request()->routeIs('admin.contratDonUsages.*') ? 'active' : '' }}">
-            <i class="lucide-heart-handshake"></i>
-            <span>Document de Don</span>
-        </a>
+        @php $toolsOpen = request()->routeIs('admin.contratPretUsages.*') || request()->routeIs('admin.contratDonUsages.*'); @endphp
+        <button type="button" class="menu-item menu-group-toggle {{ $toolsOpen ? 'active' : '' }}" onclick="toggleMenuGroup(this)">
+            <i class="lucide-wrench"></i>
+            <span>Outils</span>
+            <i class="lucide-chevron-down menu-chevron" style="{{ $toolsOpen ? 'transform:rotate(180deg)' : '' }}"></i>
+        </button>
+        <div class="menu-group-items" style="{{ $toolsOpen ? '' : 'display:none;' }}">
+            <a href="{{ route('admin.contratPretUsages.index') }}" class="menu-item menu-sub-item {{ request()->routeIs('admin.contratPretUsages.*') ? 'active' : '' }}">
+                <i class="lucide-file-text"></i>
+                <span>Contrat de Prêt</span>
+            </a>
+            <a href="{{ route('admin.contratDonUsages.index') }}" class="menu-item menu-sub-item {{ request()->routeIs('admin.contratDonUsages.*') ? 'active' : '' }}">
+                <i class="lucide-heart-handshake"></i>
+                <span>Document de Don</span>
+            </a>
+        </div>
         <a href="{{ route('admin.platformVisits.index') }}" class="menu-item {{ request()->routeIs('admin.platformVisits.*') ? 'active' : '' }}">
             <i class="lucide-bar-chart-2"></i>
             <span>Visites</span>
@@ -78,6 +86,14 @@
 </aside>
 
 <script>
+    function toggleMenuGroup(btn) {
+        const items = btn.nextElementSibling;
+        const chevron = btn.querySelector('.menu-chevron');
+        const isOpen = items.style.display !== 'none';
+        items.style.display = isOpen ? 'none' : 'block';
+        if (chevron) chevron.style.transform = isOpen ? '' : 'rotate(180deg)';
+    }
+
     document.addEventListener('DOMContentLoaded', function() {
         // Simple polling for the badge (reusing the logic from the old nav)
         const sidebarBadge = document.getElementById('adminSidebarBadge');

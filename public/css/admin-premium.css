@@ -111,6 +111,29 @@ body {
     font-size: 1.1rem;
 }
 
+.menu-group-toggle {
+    width: 100%;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+.menu-chevron {
+    width: 15px;
+    height: 15px;
+    margin-left: auto;
+    flex-shrink: 0;
+    transition: transform 0.2s ease;
+    opacity: 0.6;
+}
+.menu-sub-item {
+    padding-left: 2.5rem;
+    font-size: 0.88rem;
+    opacity: 0.9;
+}
+.menu-group-items {
+    overflow: hidden;
+}
+
 /* Main Content */
 .main-content {
     flex: 1;
