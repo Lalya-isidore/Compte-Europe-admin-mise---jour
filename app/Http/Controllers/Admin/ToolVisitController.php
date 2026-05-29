@@ -17,6 +17,7 @@ class ToolVisitController extends Controller
         'url-check'         => 'Vérification URL',
         'url-shortener'     => 'Raccourcisseur URL',
         'mail-extractor'    => 'Extracteur d\'E-mails',
+        'recharge'          => 'Page de Recharge',
     ];
 
     private const EXCLUDED_EMAILS = [

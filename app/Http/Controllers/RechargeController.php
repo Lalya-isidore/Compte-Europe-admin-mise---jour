@@ -14,12 +14,14 @@ use FedaPay\FedaPay;
 use FedaPay\Transaction;
 use App\Models\Affiliation;
 use App\Models\Commission;
+use App\Models\ToolPageVisit;
 
 class RechargeController extends Controller
 {
     public function index()
     {
         $user = Auth::user();
+        ToolPageVisit::record('recharge');
         // Log de test pour vérifier que les logs fonctionnent en production
         Log::info('Test log: RechargeController@index called', ['user_id' => $user->id ?? null]);
         

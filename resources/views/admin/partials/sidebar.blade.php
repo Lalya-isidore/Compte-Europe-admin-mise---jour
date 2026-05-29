@@ -113,6 +113,10 @@
             <i class="lucide-smartphone"></i>
             <span>App installée</span>
         </a>
+        <a href="{{ route('admin.toolVisits.show', 'recharge') }}" class="menu-item {{ $currentTool === 'recharge' ? 'active' : '' }}">
+            <i class="lucide-wallet"></i>
+            <span>Page Recharge</span>
+        </a>
         <a href="{{ route('admin.rechargeStats.index') }}" class="menu-item {{ request()->routeIs('admin.rechargeStats.*') ? 'active' : '' }}">
             <i class="lucide-credit-card"></i>
             <span>Dépôts crédits</span>
