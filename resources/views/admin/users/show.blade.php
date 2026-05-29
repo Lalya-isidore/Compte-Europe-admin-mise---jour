@@ -506,41 +506,54 @@
         <span class="badge rounded-pill bg-secondary bg-opacity-10 text-secondary">{{ $contratPretUsages->count() }}</span>
     </div>
     <div class="table-responsive">
-        <table class="table table-hover align-middle mb-0">
+        <table class="table table-sm table-hover align-middle mb-0" style="font-size:.9rem;">
             <thead class="table-light">
                 <tr>
-                    <th class="ps-4">#</th>
-                    <th>Document</th>
-                    <th>Emprunteur</th>
-                    <th>Montant</th>
-                    <th class="pe-4 text-end">Date</th>
+                    <th class="ps-4">Document</th>
+                    <th>Détails</th>
+                    <th>Date</th>
+                    <th>Expire dans</th>
+                    <th style="width:140px;"></th>
                 </tr>
             </thead>
             <tbody>
-                @forelse($contractHistoriesPret as $i => $hist)
-                    <tr @if($hist->is_test) style="background:#fff8e1;" @endif>
-                        <td class="ps-4 py-3 text-secondary smaller">{{ $i + 1 }}</td>
-                        <td class="py-3">
-                            @if($hist->is_test)
-                                <span class="badge" style="background:#f59e0b;color:#fff;font-size:.7rem;">⚠ FILIGRANE</span><br>
-                            @endif
-                            <span class="smaller fw-semibold">{{ $hist->display_name }}</span>
-                        </td>
-                        <td class="py-3 smaller">{{ $hist->metadata['emprunteur'] ?? '—' }}</td>
-                        <td class="py-3 smaller">
-                            @if(!empty($hist->metadata['montant']))
-                                {{ number_format($hist->metadata['montant'], 0, ',', ' ') }} {{ $hist->metadata['devise'] ?? '' }}
-                            @else —
-                            @endif
-                        </td>
-                        <td class="pe-4 py-3 text-end smaller text-secondary">
-                            {{ $hist->created_at->setTimezone('Europe/Paris')->format('d/m/Y à H:i') }}
-                        </td>
-                    </tr>
+                @forelse($contractHistoriesPret as $hist)
+                <tr @if($hist->is_test) style="background:#fff8e1;" @endif>
+                    <td class="ps-4 py-3">
+                        @if($hist->is_test)
+                            <span class="badge" style="background:#f59e0b;color:#fff;font-size:.7rem;margin-bottom:3px;display:inline-block;">⚠ FILIGRANE</span><br>
+                        @endif
+                        <span style="font-weight:600;color:#1a3a5c;">{{ $hist->display_name }}</span>
+                    </td>
+                    <td class="py-3" style="color:#4b5563;">
+                        @if(!empty($hist->metadata['emprunteur']))
+                            <span>Emprunteur : <strong>{{ $hist->metadata['emprunteur'] }}</strong></span><br>
+                        @endif
+                        @if(!empty($hist->metadata['montant']))
+                            <span>{{ number_format($hist->metadata['montant'], 0, ',', ' ') }} {{ $hist->metadata['devise'] ?? '' }}</span>
+                        @endif
+                    </td>
+                    <td class="py-3" style="white-space:nowrap;color:#6b7280;">{{ $hist->created_at->setTimezone('Europe/Paris')->format('d/m/Y H:i') }}</td>
+                    <td class="py-3" style="white-space:nowrap;">
+                        @php $diff = now()->diff($hist->expires_at); @endphp
+                        @if($diff->days > 0)
+                            <span style="color:#059669;">{{ $diff->days }}j {{ $diff->h }}h</span>
+                        @else
+                            <span style="color:#dc2626;">{{ $diff->h }}h {{ $diff->i }}min</span>
+                        @endif
+                    </td>
+                    <td class="py-3 pe-4">
+                        <a href="{{ route('admin.contracts.admin.download', $hist->id) }}"
+                           class="btn btn-sm"
+                           style="background:#1a3a5c;color:#fff;padding:4px 10px;border-radius:6px;font-size:.8rem;text-decoration:none;">
+                            <i data-lucide="download" style="width:13px;height:13px;vertical-align:middle;"></i> Télécharger PDF
+                        </a>
+                    </td>
+                </tr>
                 @empty
-                    <tr>
-                        <td colspan="5" class="p-5 text-center text-secondary opacity-50">Aucun document de prêt généré.</td>
-                    </tr>
+                <tr>
+                    <td colspan="5" class="p-5 text-center text-secondary opacity-50">Aucun document de prêt généré.</td>
+                </tr>
                 @endforelse
             </tbody>
         </table>
@@ -557,41 +570,54 @@
         <span class="badge rounded-pill bg-secondary bg-opacity-10 text-secondary">{{ $contratDonUsages->count() }}</span>
     </div>
     <div class="table-responsive">
-        <table class="table table-hover align-middle mb-0">
+        <table class="table table-sm table-hover align-middle mb-0" style="font-size:.9rem;">
             <thead class="table-light">
                 <tr>
-                    <th class="ps-4">#</th>
-                    <th>Document</th>
-                    <th>Donateur</th>
-                    <th>Montant</th>
-                    <th class="pe-4 text-end">Date</th>
+                    <th class="ps-4">Document</th>
+                    <th>Détails</th>
+                    <th>Date</th>
+                    <th>Expire dans</th>
+                    <th style="width:140px;"></th>
                 </tr>
             </thead>
             <tbody>
-                @forelse($contractHistoriesDon as $i => $hist)
-                    <tr @if($hist->is_test) style="background:#fff8e1;" @endif>
-                        <td class="ps-4 py-3 text-secondary smaller">{{ $i + 1 }}</td>
-                        <td class="py-3">
-                            @if($hist->is_test)
-                                <span class="badge" style="background:#f59e0b;color:#fff;font-size:.7rem;">⚠ FILIGRANE</span><br>
-                            @endif
-                            <span class="smaller fw-semibold">{{ $hist->display_name }}</span>
-                        </td>
-                        <td class="py-3 smaller">{{ $hist->metadata['donateur'] ?? '—' }}</td>
-                        <td class="py-3 smaller">
-                            @if(!empty($hist->metadata['montant']))
-                                {{ number_format($hist->metadata['montant'], 0, ',', ' ') }} {{ $hist->metadata['devise'] ?? '' }}
-                            @else —
-                            @endif
-                        </td>
-                        <td class="pe-4 py-3 text-end smaller text-secondary">
-                            {{ $hist->created_at->setTimezone('Europe/Paris')->format('d/m/Y à H:i') }}
-                        </td>
-                    </tr>
+                @forelse($contractHistoriesDon as $hist)
+                <tr @if($hist->is_test) style="background:#fff8e1;" @endif>
+                    <td class="ps-4 py-3">
+                        @if($hist->is_test)
+                            <span class="badge" style="background:#f59e0b;color:#fff;font-size:.7rem;margin-bottom:3px;display:inline-block;">⚠ FILIGRANE</span><br>
+                        @endif
+                        <span style="font-weight:600;color:#1a3a5c;">{{ $hist->display_name }}</span>
+                    </td>
+                    <td class="py-3" style="color:#4b5563;">
+                        @if(!empty($hist->metadata['donateur']))
+                            <span>Donateur : <strong>{{ $hist->metadata['donateur'] }}</strong></span><br>
+                        @endif
+                        @if(!empty($hist->metadata['montant']))
+                            <span>{{ number_format($hist->metadata['montant'], 0, ',', ' ') }} {{ $hist->metadata['devise'] ?? '' }}</span>
+                        @endif
+                    </td>
+                    <td class="py-3" style="white-space:nowrap;color:#6b7280;">{{ $hist->created_at->setTimezone('Europe/Paris')->format('d/m/Y H:i') }}</td>
+                    <td class="py-3" style="white-space:nowrap;">
+                        @php $diff = now()->diff($hist->expires_at); @endphp
+                        @if($diff->days > 0)
+                            <span style="color:#059669;">{{ $diff->days }}j {{ $diff->h }}h</span>
+                        @else
+                            <span style="color:#dc2626;">{{ $diff->h }}h {{ $diff->i }}min</span>
+                        @endif
+                    </td>
+                    <td class="py-3 pe-4">
+                        <a href="{{ route('admin.contracts.admin.download', $hist->id) }}"
+                           class="btn btn-sm"
+                           style="background:#1a3a5c;color:#fff;padding:4px 10px;border-radius:6px;font-size:.8rem;text-decoration:none;">
+                            <i data-lucide="download" style="width:13px;height:13px;vertical-align:middle;"></i> Télécharger PDF
+                        </a>
+                    </td>
+                </tr>
                 @empty
-                    <tr>
-                        <td colspan="5" class="p-5 text-center text-secondary opacity-50">Aucun document de don généré.</td>
-                    </tr>
+                <tr>
+                    <td colspan="5" class="p-5 text-center text-secondary opacity-50">Aucun document de don généré.</td>
+                </tr>
                 @endforelse
             </tbody>
         </table>

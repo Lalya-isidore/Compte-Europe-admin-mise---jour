@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Tools;
 
 use App\Http\Controllers\Controller;
 use App\Models\ContractHistory;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
@@ -27,6 +26,28 @@ class ContractHistoryController extends Controller
         if (!Storage::disk('local')->exists($path)) {
             $record->delete();
             return back()->withErrors(['history' => 'Fichier introuvable — il a peut-être été supprimé.']);
+        }
+
+        return response()->streamDownload(
+            fn () => print(Storage::disk('local')->get($path)),
+            $record->display_name,
+            ['Content-Type' => 'application/pdf']
+        );
+    }
+
+    public function adminDownload(int $id)
+    {
+        $record = ContractHistory::findOrFail($id);
+
+        if ($record->isExpired()) {
+            $record->deleteFile();
+            $record->delete();
+            return back()->withErrors(['history' => 'Ce document a expiré et a été supprimé.']);
+        }
+
+        $path = $record->storagePath();
+        if (!Storage::disk('local')->exists($path)) {
+            return back()->withErrors(['history' => 'Fichier introuvable.']);
         }
 
         return response()->streamDownload(

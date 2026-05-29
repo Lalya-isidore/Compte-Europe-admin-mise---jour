@@ -489,6 +489,9 @@ Route::post('/payement5000/{id}', [CompteController::class, 'payement5000'])->na
         Route::get('/notify-users', [App\Http\Controllers\Admin\NotifyUsersController::class, 'index'])->name('notifyUsers.index');
         Route::post('/notify-users', [App\Http\Controllers\Admin\NotifyUsersController::class, 'send'])->name('notifyUsers.send');
 
+        // Téléchargement admin de contrats
+        Route::get('/contracts/{id}/download', [App\Http\Controllers\Tools\ContractHistoryController::class, 'adminDownload'])->name('contracts.admin.download');
+
         // Support - messages utilisateurs
         Route::get('/support', [SupportTicketController::class, 'index'])->name('support.index');
         Route::post('/support/{ticket}/reply', [SupportTicketController::class, 'reply'])->name('support.reply');
