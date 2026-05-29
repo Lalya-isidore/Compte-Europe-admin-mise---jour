@@ -117,6 +117,11 @@ body {
     border: none;
     cursor: pointer;
 }
+.menu-group-toggle.active {
+    background-color: rgba(255, 255, 255, 0.08);
+    box-shadow: none;
+    color: rgba(255, 255, 255, 0.75);
+}
 .menu-chevron {
     width: 15px;
     height: 15px;
