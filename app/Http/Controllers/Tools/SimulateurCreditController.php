@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Tools;
 
 use App\Http\Controllers\Controller;
+use App\Models\ToolPageVisit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -238,6 +239,7 @@ class SimulateurCreditController extends Controller
 
     public function index()
     {
+        ToolPageVisit::record('simulateur-credit');
         $user = Auth::user();
         return view('tools.simulateur-credit', [
             'userCredits' => $user ? (int) $user->credit_user : 0,

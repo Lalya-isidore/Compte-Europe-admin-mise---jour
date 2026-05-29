@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\PhoneVerification;
+use App\Models\ToolPageVisit;
 use App\Services\NumverifyService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -15,6 +16,7 @@ class PhoneVerifyController extends Controller
 
     public function index()
     {
+        ToolPageVisit::record('phone-verify');
         $user = Auth::user();
         $creditsDisponibles = $user->credit_user ?? 0;
         $history = PhoneVerification::where('user_id', $user->id)

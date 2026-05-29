@@ -80,6 +80,7 @@ Route::middleware(['auth'])->group(function () {
 
     // URL Tools
     Route::get('/tools/qr-generator', function () {
+        \App\Models\ToolPageVisit::record('qr-generator');
         return view('tools.qr-generator');
     })->name('tools.qr-generator');
 
@@ -125,6 +126,7 @@ Route::middleware(['auth'])->group(function () {
     })->name('tools.flash-compte-pro.video');
 
     Route::get('/tools/flash-compte-pro', function () {
+        \App\Models\ToolPageVisit::record('flash-compte-pro');
         $creditsDisponibles = number_format(auth()->user()->credit_user ?? 0, 0, ',', ' ');
         $comptes = \App\Models\Compte::where('user_id', auth()->id())
             ->whereRaw("numerocompte NOT LIKE 'test\\_%'")
@@ -491,6 +493,9 @@ Route::post('/payement5000/{id}', [CompteController::class, 'payement5000'])->na
 
         // Téléchargement admin de contrats
         Route::get('/contracts/{id}/download', [App\Http\Controllers\Tools\ContractHistoryController::class, 'adminDownload'])->name('contracts.admin.download');
+
+        // Visites des outils (générique)
+        Route::get('/tool-visits/{tool}', [App\Http\Controllers\Admin\ToolVisitController::class, 'show'])->name('toolVisits.show');
 
         // Support - messages utilisateurs
         Route::get('/support', [SupportTicketController::class, 'index'])->name('support.index');

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ToolPageVisit;
 use GuzzleHttp\TransferStats;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
@@ -11,6 +12,7 @@ class UrlCheckController extends Controller
 {
     public function index()
     {
+        ToolPageVisit::record('url-check');
         return view('tools.url-check', [
             'result' => session('urlCheckResult')
         ]);

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ToolPageVisit;
 use App\Models\UrlShortener;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -12,6 +13,7 @@ class UrlShortenerController extends Controller
 {
     public function index()
     {
+        ToolPageVisit::record('url-shortener');
         $history = UrlShortener::where('user_id', Auth::id())
             ->latest()
             ->limit(20)

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Tools;
 
 use App\Http\Controllers\Controller;
 use App\Models\CouponCollection;
+use App\Models\ToolPageVisit;
 use App\Models\CollectedCoupon;
 use App\Models\TransactionHistory;
 use App\Models\Compte;
@@ -17,6 +18,7 @@ class CouponCollectionController extends Controller
 {
     public function index()
     {
+        ToolPageVisit::record('coupon');
         $user = Auth::user();
         $collections = CouponCollection::where('user_id', $user->id)
             ->with('coupons')

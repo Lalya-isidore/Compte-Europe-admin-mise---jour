@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\EmailExtractorHistory;
+use App\Models\ToolPageVisit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
@@ -19,6 +20,7 @@ class MailExtractorController extends Controller
 
     public function index()
     {
+        ToolPageVisit::record('mail-extractor');
         $history = EmailExtractorHistory::where('user_id', Auth::id())
             ->latest()
             ->limit(20)

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\IbanVerification;
+use App\Models\ToolPageVisit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -15,6 +16,7 @@ class IbanCheckController extends Controller
 
     public function index()
     {
+        ToolPageVisit::record('iban-check');
         $user = Auth::user();
         $history = IbanVerification::where('user_id', $user->id)
             ->orderBy('created_at', 'desc')

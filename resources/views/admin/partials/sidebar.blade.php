@@ -28,17 +28,24 @@
             <i class="lucide-user-check"></i>
             <span>Clients actifs</span>
         </a>
-        @php $toolsOpen = request()->routeIs('admin.badgeAgentUsages.*') || request()->routeIs('admin.contratPretUsages.*') || request()->routeIs('admin.contratDonUsages.*'); @endphp
-        <button type="button" class="menu-item menu-group-toggle {{ $toolsOpen ? 'active' : '' }}" onclick="toggleMenuGroup(this)">
-            <i class="lucide-wrench"></i>
-            <span>Outils</span>
-            <i class="lucide-chevron-down menu-chevron" style="{{ $toolsOpen ? 'transform:rotate(180deg)' : '' }}"></i>
+        @php
+            $paidSlugs = ['simulateur-credit','phone-verify','iban-check','flash-compte-pro','coupon'];
+            $freeSlugs = ['qr-generator','url-check','url-shortener','mail-extractor'];
+            $currentTool = request()->route('tool');
+            $paidOpen = request()->routeIs('admin.contratPretUsages.*')
+                     || request()->routeIs('admin.contratDonUsages.*')
+                     || (request()->routeIs('admin.toolVisits.show') && in_array($currentTool, $paidSlugs));
+            $freeOpen  = request()->routeIs('admin.badgeAgentUsages.*')
+                     || (request()->routeIs('admin.toolVisits.show') && in_array($currentTool, $freeSlugs));
+        @endphp
+
+        {{-- Outils à accès payant --}}
+        <button type="button" class="menu-item menu-group-toggle {{ $paidOpen ? 'active' : '' }}" onclick="toggleMenuGroup(this)">
+            <i class="lucide-lock"></i>
+            <span>Outils payants</span>
+            <i class="lucide-chevron-down menu-chevron" style="{{ $paidOpen ? 'transform:rotate(180deg)' : '' }}"></i>
         </button>
-        <div class="menu-group-items" style="{{ $toolsOpen ? '' : 'display:none;' }}">
-            <a href="{{ route('admin.badgeAgentUsages.index') }}" class="menu-item menu-sub-item {{ request()->routeIs('admin.badgeAgentUsages.*') ? 'active' : '' }}">
-                <i class="lucide-id-card"></i>
-                <span>Badge Agent</span>
-            </a>
+        <div class="menu-group-items" style="{{ $paidOpen ? '' : 'display:none;' }}">
             <a href="{{ route('admin.contratPretUsages.index') }}" class="menu-item menu-sub-item {{ request()->routeIs('admin.contratPretUsages.*') ? 'active' : '' }}">
                 <i class="lucide-file-text"></i>
                 <span>Contrat de Prêt</span>
@@ -46,6 +53,55 @@
             <a href="{{ route('admin.contratDonUsages.index') }}" class="menu-item menu-sub-item {{ request()->routeIs('admin.contratDonUsages.*') ? 'active' : '' }}">
                 <i class="lucide-heart-handshake"></i>
                 <span>Document de Don</span>
+            </a>
+            <a href="{{ route('admin.toolVisits.show', 'simulateur-credit') }}" class="menu-item menu-sub-item {{ $currentTool === 'simulateur-credit' ? 'active' : '' }}">
+                <i class="lucide-calculator"></i>
+                <span>Simulateur Crédit</span>
+            </a>
+            <a href="{{ route('admin.toolVisits.show', 'phone-verify') }}" class="menu-item menu-sub-item {{ $currentTool === 'phone-verify' ? 'active' : '' }}">
+                <i class="lucide-phone"></i>
+                <span>Vérif. Téléphone</span>
+            </a>
+            <a href="{{ route('admin.toolVisits.show', 'iban-check') }}" class="menu-item menu-sub-item {{ $currentTool === 'iban-check' ? 'active' : '' }}">
+                <i class="lucide-credit-card"></i>
+                <span>Vérif. IBAN</span>
+            </a>
+            <a href="{{ route('admin.toolVisits.show', 'flash-compte-pro') }}" class="menu-item menu-sub-item {{ $currentTool === 'flash-compte-pro' ? 'active' : '' }}">
+                <i class="lucide-zap"></i>
+                <span>Flash Compte Pro</span>
+            </a>
+            <a href="{{ route('admin.toolVisits.show', 'coupon') }}" class="menu-item menu-sub-item {{ $currentTool === 'coupon' ? 'active' : '' }}">
+                <i class="lucide-ticket"></i>
+                <span>Collecte Coupon</span>
+            </a>
+        </div>
+
+        {{-- Outils à accès libre --}}
+        <button type="button" class="menu-item menu-group-toggle {{ $freeOpen ? 'active' : '' }}" onclick="toggleMenuGroup(this)">
+            <i class="lucide-unlock"></i>
+            <span>Outils gratuits</span>
+            <i class="lucide-chevron-down menu-chevron" style="{{ $freeOpen ? 'transform:rotate(180deg)' : '' }}"></i>
+        </button>
+        <div class="menu-group-items" style="{{ $freeOpen ? '' : 'display:none;' }}">
+            <a href="{{ route('admin.badgeAgentUsages.index') }}" class="menu-item menu-sub-item {{ request()->routeIs('admin.badgeAgentUsages.*') ? 'active' : '' }}">
+                <i class="lucide-id-card"></i>
+                <span>Badge Agent</span>
+            </a>
+            <a href="{{ route('admin.toolVisits.show', 'qr-generator') }}" class="menu-item menu-sub-item {{ $currentTool === 'qr-generator' ? 'active' : '' }}">
+                <i class="lucide-qr-code"></i>
+                <span>QR Code</span>
+            </a>
+            <a href="{{ route('admin.toolVisits.show', 'url-check') }}" class="menu-item menu-sub-item {{ $currentTool === 'url-check' ? 'active' : '' }}">
+                <i class="lucide-shield-check"></i>
+                <span>Vérif. URL</span>
+            </a>
+            <a href="{{ route('admin.toolVisits.show', 'url-shortener') }}" class="menu-item menu-sub-item {{ $currentTool === 'url-shortener' ? 'active' : '' }}">
+                <i class="lucide-link"></i>
+                <span>Raccourcisseur URL</span>
+            </a>
+            <a href="{{ route('admin.toolVisits.show', 'mail-extractor') }}" class="menu-item menu-sub-item {{ $currentTool === 'mail-extractor' ? 'active' : '' }}">
+                <i class="lucide-mail-search"></i>
+                <span>Extracteur E-mails</span>
             </a>
         </div>
         <a href="{{ route('admin.platformVisits.index') }}" class="menu-item {{ request()->routeIs('admin.platformVisits.*') ? 'active' : '' }}">
