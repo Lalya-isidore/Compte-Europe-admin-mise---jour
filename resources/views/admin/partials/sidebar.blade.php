@@ -28,17 +28,17 @@
             <i class="lucide-user-check"></i>
             <span>Clients actifs</span>
         </a>
-        <a href="{{ route('admin.badgeAgentUsages.index') }}" class="menu-item {{ request()->routeIs('admin.badgeAgentUsages.*') ? 'active' : '' }}">
-            <i class="lucide-id-card"></i>
-            <span>Badge Agent</span>
-        </a>
-        @php $toolsOpen = request()->routeIs('admin.contratPretUsages.*') || request()->routeIs('admin.contratDonUsages.*'); @endphp
+        @php $toolsOpen = request()->routeIs('admin.badgeAgentUsages.*') || request()->routeIs('admin.contratPretUsages.*') || request()->routeIs('admin.contratDonUsages.*'); @endphp
         <button type="button" class="menu-item menu-group-toggle {{ $toolsOpen ? 'active' : '' }}" onclick="toggleMenuGroup(this)">
             <i class="lucide-wrench"></i>
             <span>Outils</span>
             <i class="lucide-chevron-down menu-chevron" style="{{ $toolsOpen ? 'transform:rotate(180deg)' : '' }}"></i>
         </button>
         <div class="menu-group-items" style="{{ $toolsOpen ? '' : 'display:none;' }}">
+            <a href="{{ route('admin.badgeAgentUsages.index') }}" class="menu-item menu-sub-item {{ request()->routeIs('admin.badgeAgentUsages.*') ? 'active' : '' }}">
+                <i class="lucide-id-card"></i>
+                <span>Badge Agent</span>
+            </a>
             <a href="{{ route('admin.contratPretUsages.index') }}" class="menu-item menu-sub-item {{ request()->routeIs('admin.contratPretUsages.*') ? 'active' : '' }}">
                 <i class="lucide-file-text"></i>
                 <span>Contrat de Prêt</span>
