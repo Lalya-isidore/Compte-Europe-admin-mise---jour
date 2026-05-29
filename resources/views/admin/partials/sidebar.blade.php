@@ -104,6 +104,7 @@
                 <span>Extracteur E-mails</span>
             </a>
         </div>
+        <p class="menu-label">Statistiques</p>
         <a href="{{ route('admin.platformVisits.index') }}" class="menu-item {{ request()->routeIs('admin.platformVisits.*') ? 'active' : '' }}">
             <i class="lucide-bar-chart-2"></i>
             <span>Visites</span>
