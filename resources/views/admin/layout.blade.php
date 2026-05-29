@@ -16,6 +16,7 @@
     @stack('styles')
 </head>
 <body>
+    <div id="sidebarOverlay" class="sidebar-overlay"></div>
     <div class="admin-layout">
         <!-- Sidebar -->
         @include('admin.partials.sidebar')
@@ -91,11 +92,24 @@
         // Sidebar Toggle for Mobile
         const sidebarToggle = document.getElementById('sidebarToggle');
         const sidebar = document.getElementById('adminSidebar');
-        
+        const overlay = document.getElementById('sidebarOverlay');
+
+        function openSidebar() {
+            sidebar.classList.add('open');
+            overlay.classList.add('active');
+        }
+        function closeSidebar() {
+            sidebar.classList.remove('open');
+            overlay.classList.remove('active');
+        }
+
         if(sidebarToggle && sidebar) {
             sidebarToggle.addEventListener('click', () => {
-                sidebar.classList.toggle('open');
+                sidebar.classList.contains('open') ? closeSidebar() : openSidebar();
             });
+        }
+        if(overlay) {
+            overlay.addEventListener('click', closeSidebar);
         }
     </script>
     @stack('scripts')
