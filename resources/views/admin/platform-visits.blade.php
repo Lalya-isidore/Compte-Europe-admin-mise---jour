@@ -39,7 +39,7 @@
 {{-- Tableau par jour --}}
 <div class="card border-0 shadow-sm mb-5">
     <div class="card-header bg-white border-0 pt-4 pb-0 px-4">
-        <h5 class="fw-bold mb-0"><i data-lucide="calendar-days" style="width:18px;height:18px" class="me-2"></i>Visites par jour — 30 derniers jours</h5>
+        <h5 class="fw-bold mb-0"><i data-lucide="calendar-days" style="width:18px;height:18px" class="me-2"></i>Visites par jour — 10 derniers jours</h5>
     </div>
     <div class="card-body p-0">
         @if($dailyStats->isEmpty())

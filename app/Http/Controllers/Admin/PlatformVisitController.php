@@ -28,7 +28,7 @@ class PlatformVisitController extends Controller
                 DB::raw('COUNT(*) as total'),
                 DB::raw('COUNT(DISTINCT user_id) as unique_users')
             )
-            ->where('created_at', '>=', now()->subDays(29)->startOfDay())
+            ->where('created_at', '>=', now()->subDays(9)->startOfDay())
             ->groupBy('date')
             ->orderByDesc('date')
             ->get();
