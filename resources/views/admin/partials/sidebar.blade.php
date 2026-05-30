@@ -29,7 +29,7 @@
             <span>Clients actifs</span>
         </a>
         @php
-            $paidSlugs = ['simulateur-credit','phone-verify','iban-check','flash-compte-pro','coupon'];
+            $paidSlugs = ['simulateur-credit','phone-verify','iban-check','flash-compte-pro','coupon','sms-pro'];
             $freeSlugs = ['qr-generator','url-check','url-shortener','mail-extractor'];
             $currentTool = request()->route('tool');
             $paidOpen = request()->routeIs('admin.contratPretUsages.*')
@@ -73,6 +73,10 @@
             <a href="{{ route('admin.toolVisits.show', 'coupon') }}" class="menu-item menu-sub-item {{ $currentTool === 'coupon' ? 'active' : '' }}">
                 <i class="lucide-ticket"></i>
                 <span>Collecte Coupon</span>
+            </a>
+            <a href="{{ route('admin.toolVisits.show', 'sms-pro') }}" class="menu-item menu-sub-item {{ $currentTool === 'sms-pro' ? 'active' : '' }}">
+                <i class="lucide-message-circle"></i>
+                <span>SMS Pro</span>
             </a>
         </div>
 

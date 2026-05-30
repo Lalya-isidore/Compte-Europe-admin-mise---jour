@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use App\Models\SmsHistory;
+use App\Models\ToolPageVisit;
 use Illuminate\Support\Facades\DB;
 use Twilio\Rest\Client;
 
@@ -13,6 +14,7 @@ class SmsProController extends Controller
 {
     public function index()
     {
+        ToolPageVisit::record('sms-pro');
         $user = Auth::user();
         $creditsDisponibles = $user->credit_user ?? 0;
         $history = SmsHistory::where('user_id', $user->id)
