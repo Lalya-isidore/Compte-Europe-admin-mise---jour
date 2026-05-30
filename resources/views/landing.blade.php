@@ -298,7 +298,7 @@
         et tous vos outils professionnels en un seul endroit
     </h1>
     <p class="lp-hero__sub">
-        Créez des relevés de compte européens professionnels, envoyez des SMS en masse, générez des contrats de prêt PDF et vérifiez des IBAN en quelques secondes.
+        Obtenez des numéros virtuels pour WhatsApp à partir de 3200 F CFA, Créer des Flash Comptes Pro, envoyez des SMS pro en masse partout dans le monde, générez des contrats de prêt, de certificat de donation PDF et beaucoup d'autres outils à découvrir.
     </p>
     <div class="lp-hero__cta">
         <a href="{{ route('inscription') }}" class="btn-hero-primary">
