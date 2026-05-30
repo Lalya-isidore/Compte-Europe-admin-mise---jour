@@ -3,12 +3,13 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Log;
+use Ifsnop\Mysqldump\Mysqldump;
 
 class BackupDatabase extends Command
 {
     protected $signature   = 'db:backup';
-    protected $description = 'Sauvegarde la base de données MySQL (mysqldump) et supprime les backups de plus de 7 jours';
+    protected $description = 'Sauvegarde la base de données (pure PHP, sans exec) — 7 jours de rétention';
 
     public function handle(): int
     {
@@ -18,37 +19,39 @@ class BackupDatabase extends Command
         $username = config('database.connections.mysql.username');
         $password = config('database.connections.mysql.password');
 
-        $filename  = 'backup_' . now()->format('Y-m-d_H-i-s') . '.sql.gz';
-        $localPath = storage_path('app/backups/' . $filename);
-
-        if (!is_dir(storage_path('app/backups'))) {
-            mkdir(storage_path('app/backups'), 0755, true);
+        $backupDir = storage_path('app/backups');
+        if (!is_dir($backupDir)) {
+            mkdir($backupDir, 0755, true);
         }
 
-        $command = sprintf(
-            'mysqldump --host=%s --port=%s --user=%s --password=%s --single-transaction --routines --triggers %s | gzip > %s 2>&1',
-            escapeshellarg($host),
-            escapeshellarg($port),
-            escapeshellarg($username),
-            escapeshellarg($password),
-            escapeshellarg($database),
-            escapeshellarg($localPath)
-        );
+        $filename  = 'backup_' . now()->format('Y-m-d_H-i-s') . '.sql';
+        $localPath = $backupDir . '/' . $filename;
 
-        exec($command, $output, $exitCode);
-
-        if ($exitCode !== 0 || !file_exists($localPath) || filesize($localPath) < 100) {
-            $this->error("Backup échoué (code {$exitCode}).");
-            \Illuminate\Support\Facades\Log::error("db:backup failed", ['exit' => $exitCode, 'output' => $output]);
+        try {
+            $dump = new Mysqldump(
+                "mysql:host={$host};port={$port};dbname={$database}",
+                $username,
+                $password,
+                [
+                    'compress'        => Mysqldump::GZIP,
+                    'single-transaction' => true,
+                    'add-drop-table'  => true,
+                ]
+            );
+            $dump->start($localPath . '.gz');
+        } catch (\Exception $e) {
+            $this->error('Backup échoué : ' . $e->getMessage());
+            Log::error('db:backup failed', ['error' => $e->getMessage()]);
             return self::FAILURE;
         }
 
-        $sizeMb = round(filesize($localPath) / 1024 / 1024, 2);
-        $this->info("Backup créé : {$filename} ({$sizeMb} MB)");
+        $finalPath = $localPath . '.gz';
+        $sizeMb    = file_exists($finalPath) ? round(filesize($finalPath) / 1024 / 1024, 2) : 0;
+        $this->info("Backup créé : {$filename}.gz ({$sizeMb} MB)");
 
         // Supprimer les backups de plus de 7 jours
         $deleted = 0;
-        foreach (glob(storage_path('app/backups/backup_*.sql.gz')) as $file) {
+        foreach (glob($backupDir . '/backup_*.sql.gz') as $file) {
             if (filemtime($file) < now()->subDays(7)->timestamp) {
                 unlink($file);
                 $deleted++;
@@ -56,7 +59,7 @@ class BackupDatabase extends Command
         }
 
         if ($deleted > 0) {
-            $this->info("Anciens backups supprimés : {$deleted}");
+            $this->info("{$deleted} ancien(s) backup(s) supprimé(s).");
         }
 
         return self::SUCCESS;
