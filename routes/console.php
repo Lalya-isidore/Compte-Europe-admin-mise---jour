@@ -10,3 +10,6 @@ Artisan::command('inspire', function () {
 
 // Purge des contrats expirés — chaque nuit à 3h00
 Schedule::command('contracts:purge-expired')->dailyAt('03:00');
+
+// Backup base de données — chaque nuit à 02h00
+Schedule::command('db:backup')->dailyAt('02:00');
