@@ -2,6 +2,16 @@
 
 @section('title', 'Statistiques des dépôts')
 
+@push('styles')
+<style>
+.chart-container { position:relative; height:280px; margin-bottom:0; }
+.tab-section-title {
+    font-size:.7rem; font-weight:700; text-transform:uppercase;
+    letter-spacing:.05em; color:#94a3b8; padding:1rem 1.25rem .5rem;
+}
+</style>
+@endpush
+
 @section('content')
 <div class="mb-4">
     <h2 class="fw-bold h3 mb-1"><i data-lucide="credit-card" style="width:28px;height:28px" class="me-2"></i>Statistiques des dépôts de crédits</h2>
@@ -56,6 +66,10 @@
 
     {{-- PAR JOUR --}}
     <div class="tab-pane fade show active" id="tab-jour">
+        <div class="p-3">
+            <div class="chart-container"><canvas id="chartJour"></canvas></div>
+        </div>
+        <div class="tab-section-title">Détail jour par jour</div>
         <div class="table-responsive">
             <table class="table table-hover align-middle mb-0">
                 <thead class="table-light">
@@ -86,6 +100,10 @@
 
     {{-- PAR SEMAINE --}}
     <div class="tab-pane fade" id="tab-semaine">
+        <div class="p-3">
+            <div class="chart-container"><canvas id="chartSemaine"></canvas></div>
+        </div>
+        <div class="tab-section-title">Détail semaine par semaine</div>
         <div class="table-responsive">
             <table class="table table-hover align-middle mb-0">
                 <thead class="table-light">
@@ -118,6 +136,10 @@
 
     {{-- PAR MOIS --}}
     <div class="tab-pane fade" id="tab-mois">
+        <div class="p-3">
+            <div class="chart-container"><canvas id="chartMois"></canvas></div>
+        </div>
+        <div class="tab-section-title">Détail mois par mois</div>
         <div class="table-responsive">
             <table class="table table-hover align-middle mb-0">
                 <thead class="table-light">
@@ -130,10 +152,8 @@
                     </tr>
                 </thead>
                 <tbody>
+                    @php $moisNoms = ['','Janv','Févr','Mars','Avr','Mai','Juin','Juil','Août','Sept','Oct','Nov','Déc']; @endphp
                     @forelse($byMonth as $row)
-                    @php
-                        $moisNoms = ['', 'Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'];
-                    @endphp
                     <tr>
                         <td class="fw-semibold">{{ $moisNoms[$row->mois] }} {{ $row->annee }}</td>
                         <td class="text-center"><span class="badge bg-primary">{{ $row->nb_depots }}</span></td>
@@ -151,6 +171,10 @@
 
     {{-- PAR ANNÉE --}}
     <div class="tab-pane fade" id="tab-annee">
+        <div class="p-3">
+            <div class="chart-container"><canvas id="chartAnnee"></canvas></div>
+        </div>
+        <div class="tab-section-title">Détail par année</div>
         <div class="table-responsive">
             <table class="table table-hover align-middle mb-0">
                 <thead class="table-light">
@@ -181,3 +205,118 @@
 
 </div>
 @endsection
+
+@push('scripts')
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script>
+const chartDefaults = {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+        legend: { position: 'top', labels: { boxWidth: 12, font: { size: 12 } } },
+        tooltip: {
+            callbacks: {
+                label: function(ctx) {
+                    if (ctx.dataset.yAxisID === 'yMontant') {
+                        return ' ' + ctx.parsed.y.toLocaleString('fr-FR') + ' F CFA';
+                    }
+                    return ' ' + ctx.parsed.y + ' dépôts';
+                }
+            }
+        }
+    },
+    scales: {
+        x: { grid: { display: false }, ticks: { font: { size: 11 } } },
+        yMontant: {
+            type: 'linear', position: 'left',
+            ticks: {
+                font: { size: 11 },
+                callback: v => (v >= 1000 ? (v/1000).toFixed(0)+'k' : v) + ' F'
+            },
+            grid: { color: '#f1f5f9' }
+        },
+        yDepots: {
+            type: 'linear', position: 'right',
+            ticks: { font: { size: 11 }, stepSize: 1 },
+            grid: { drawOnChartArea: false }
+        }
+    }
+};
+
+function makeChart(id, labels, montants, depots) {
+    return new Chart(document.getElementById(id), {
+        data: {
+            labels,
+            datasets: [
+                {
+                    type: 'bar',
+                    label: 'Montant (F CFA)',
+                    data: montants,
+                    backgroundColor: 'rgba(99,102,241,.75)',
+                    borderRadius: 6,
+                    yAxisID: 'yMontant',
+                    order: 2
+                },
+                {
+                    type: 'line',
+                    label: 'Nb dépôts',
+                    data: depots,
+                    borderColor: '#f59e0b',
+                    backgroundColor: 'rgba(245,158,11,.15)',
+                    borderWidth: 2,
+                    pointRadius: 4,
+                    tension: 0.3,
+                    yAxisID: 'yDepots',
+                    fill: true,
+                    order: 1
+                }
+            ]
+        },
+        options: chartDefaults
+    });
+}
+
+// Données PAR JOUR (ordre chronologique)
+const jourData = @json($byDay->sortBy('periode')->values());
+makeChart(
+    'chartJour',
+    jourData.map(r => r.periode.slice(5).split('-').reverse().join('/')),
+    jourData.map(r => r.montant_total),
+    jourData.map(r => r.nb_depots)
+);
+
+// Données PAR SEMAINE
+const semData = @json($byWeek->sortBy(fn($r) => $r->annee * 100 + $r->semaine)->values());
+makeChart(
+    'chartSemaine',
+    semData.map(r => 'S'+r.semaine+' '+r.annee),
+    semData.map(r => r.montant_total),
+    semData.map(r => r.nb_depots)
+);
+
+// Données PAR MOIS
+const moisNoms = ['','Jan','Fév','Mar','Avr','Mai','Jun','Jul','Aoû','Sep','Oct','Nov','Déc'];
+const moisData = @json($byMonth->sortBy(fn($r) => $r->annee * 100 + $r->mois)->values());
+makeChart(
+    'chartMois',
+    moisData.map(r => moisNoms[r.mois]+' '+r.annee),
+    moisData.map(r => r.montant_total),
+    moisData.map(r => r.nb_depots)
+);
+
+// Données PAR ANNÉE
+const anneeData = @json($byYear->sortBy('annee')->values());
+makeChart(
+    'chartAnnee',
+    anneeData.map(r => String(r.annee)),
+    anneeData.map(r => r.montant_total),
+    anneeData.map(r => r.nb_depots)
+);
+
+// Redessiner les graphiques cachés à l'ouverture de l'onglet
+// (Chart.js nécessite que le canvas soit visible au premier render)
+document.querySelectorAll('[data-bs-toggle="tab"]').forEach(btn => {
+    btn.addEventListener('shown.bs.tab', () => Chart.instances && Object.values(Chart.instances).forEach(c => c.resize()));
+});
+</script>
+@endpush
