@@ -6,7 +6,8 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="robots" content="noindex, nofollow">
     <title>@yield('title', 'Administration') | Admin Panel</title>
-    <link rel="icon" type="image/svg+xml" href="{{ asset('images/favicon.svg') }}">
+    <link rel="icon" type="image/png" sizes="192x192" href="{{ asset('icon-192.png') }}">
+    <link rel="shortcut icon" href="{{ asset('favicon.ico') }}">
 
     <!-- Fonts & Icons -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
