@@ -8,7 +8,6 @@ use Illuminate\Support\Facades\Log;
 use App\Models\SmsHistory;
 use App\Models\ToolPageVisit;
 use Illuminate\Support\Facades\DB;
-use Twilio\Rest\Client;
 
 class SmsProController extends Controller
 {
@@ -112,16 +111,17 @@ class SmsProController extends Controller
 
                 // Sauvegarder dans l'historique
                 SmsHistory::create([
-                    'user_id' => $user->id,
-                    'expediteur' => $request->expediteur,
-                    'pays' => $request->pays,
+                    'user_id'      => $user->id,
+                    'expediteur'   => $request->expediteur,
+                    'pays'         => $request->pays,
                     'destinataire' => $fullNumber,
-                    'message' => $request->message,
-                    'sms_count' => max($segments, 1),
-                    'credits_used' => $status === 'Rejeté' ? 0 : $creditsNeeded, // Envoyé = crédits déduits, Rejeté = déjà remboursé
-                    'status' => $status,
-                    'message_id' => $messageId,
-                    'error_message' => $errorMessage
+                    'message'      => $request->message,
+                    'sms_count'    => max($segments, 1),
+                    'credits_used' => $status === 'Rejeté' ? 0 : $creditsNeeded,
+                    'status'       => $status,
+                    'message_id'   => $messageId,
+                    'twilio_sid'   => $response['twilio_sid'] ?? null,
+                    'error_message'=> $errorMessage,
                 ]);
 
                 DB::commit();

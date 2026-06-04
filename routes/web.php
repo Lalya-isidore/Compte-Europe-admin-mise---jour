@@ -2,6 +2,12 @@
 
 use Illuminate\Support\Facades\Route;
 
+// ── Webhooks Twilio SMS (public — pas de CSRF, pas d'auth) ──────
+Route::withoutMiddleware([\Illuminate\Foundation\Http\Middleware\VerifyCsrfToken::class])->group(function () {
+    Route::post('/webhook/twilio/sms-status', [App\Http\Controllers\SmsWebhookController::class, 'twilioStatus'])->name('webhook.twilio.sms-status');
+    Route::post('/webhook/twilio/sms-status-fallback', [App\Http\Controllers\SmsWebhookController::class, 'twilioStatusFallback'])->name('webhook.twilio.sms-status-fallback');
+});
+
 Route::get('/', function () {
     if (!session()->has('visit_source')) {
         $referer = request()->headers->get('referer', '');

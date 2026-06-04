@@ -20,11 +20,17 @@ class SmsHistory extends Model
         'status',
         'message_id',
         'error_message',
+        'twilio_sid',
+        'delivery_status',
+        'error_code',
+        'fallback_sent',
+        'fallback_sid',
     ];
 
     protected $casts = [
-        'created_at' => 'datetime',
-        'updated_at' => 'datetime',
+        'created_at'    => 'datetime',
+        'updated_at'    => 'datetime',
+        'fallback_sent' => 'boolean',
     ];
 
     public function user(): BelongsTo

@@ -29,9 +29,11 @@ return [
     ],
 
     'twilio' => [
-        'account_sid' => env('TWILIO_ACCOUNT_SID'),
-        'auth_token' => env('TWILIO_AUTH_TOKEN'),
-        'whatsapp_from' => env('TWILIO_WHATSAPP_FROM'),
+        'account_sid'  => env('TWILIO_ACCOUNT_SID'),
+        'auth_token'   => env('TWILIO_AUTH_TOKEN'),
+        'whatsapp_from'=> env('TWILIO_WHATSAPP_FROM'),
+        'alpha_sender' => env('TWILIO_ALPHA_SENDER', 'FlashBilan'),
+        'phone_number' => env('TWILIO_PHONE_NUMBER'),   // numéro fallback classique
     ],
 
     'infobip' => [

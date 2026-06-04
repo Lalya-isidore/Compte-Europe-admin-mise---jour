@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use Illuminate\Support\Facades\Log;
+use Twilio\Rest\Client as TwilioClient;
 
 class SmsService
 {
@@ -10,56 +11,84 @@ class SmsService
 
     public function __construct()
     {
-        $this->provider = config('sms.provider', 'infobip');
+        $this->provider = config('sms.provider', 'twilio');
     }
 
-    /**
-     * Send SMS using the configured provider
-     */
     public function send(string $to, string $message, ?string $sender = null): array
     {
-        Log::info("Sending SMS via {$this->provider}", ['to' => $to]);
+        Log::info("Sending SMS via {$this->provider}", ['to' => $to, 'sender' => $sender]);
 
         if ($this->provider === 'infobip') {
             return app(InfobipService::class)->sendSms($to, $message, $sender);
         }
 
-        if ($this->provider === 'twilio') {
-            // Adapt to existing TwilioService or implement Twilio sending here
-            // For now, let's bridge to TwilioService if it exists and has a compatible method
-            // or just use the SDK if SID/Token are available
-            return $this->sendViaTwilio($to, $message);
-        }
-
-        return [
-            'success' => false,
-            'error' => "Provider {$this->provider} not implemented"
-        ];
+        return $this->sendViaTwilio($to, $message, $sender);
     }
 
-    protected function sendViaTwilio(string $to, string $message): array
+    /**
+     * Envoie via Twilio avec expéditeur alphanumérique.
+     * Inclut un statusCallback pour détecter les échecs et déclencher le fallback.
+     */
+    public function sendViaTwilio(string $to, string $message, ?string $sender = null): array
     {
-        $sid = config('services.twilio.account_sid');
-        $token = config('services.twilio.auth_token');
-        $from = config('services.twilio.phone_number');
+        $sid    = config('services.twilio.account_sid');
+        $token  = config('services.twilio.auth_token');
+        $from   = $sender ?: config('services.twilio.alpha_sender', 'FlashBilan');
+        $callbackUrl = rtrim(config('app.url'), '/') . '/webhook/twilio/sms-status';
 
-        if (!$sid || !$token || !$from) {
-            return ['success' => false, 'error' => 'Twilio credentials missing'];
+        if (!$sid || !$token) {
+            return ['success' => false, 'error' => 'Twilio credentials manquants'];
         }
 
         try {
-            $client = new \Twilio\Rest\Client($sid, $token);
-            $response = $client->messages->create($to, [
-                'from' => $from,
-                'body' => $message
+            $client  = new TwilioClient($sid, $token);
+            $message = $client->messages->create($to, [
+                'from'           => $from,
+                'body'           => $message,
+                'statusCallback' => $callbackUrl,
             ]);
 
             return [
-                'success' => true,
-                'message_id' => $response->sid
+                'success'    => true,
+                'message_id' => $message->sid,
+                'twilio_sid' => $message->sid,
             ];
         } catch (\Exception $e) {
-            Log::error('Twilio SMS error: ' . $e->getMessage());
+            Log::error('Twilio sendViaTwilio error', ['error' => $e->getMessage(), 'to' => $to]);
+            return ['success' => false, 'error' => $e->getMessage()];
+        }
+    }
+
+    /**
+     * Fallback : renvoie avec le numéro Twilio classique.
+     * Appelé automatiquement par le webhook si l'alphanumérique échoue.
+     */
+    public function sendFallback(string $to, string $message): array
+    {
+        $sid          = config('services.twilio.account_sid');
+        $token        = config('services.twilio.auth_token');
+        $phoneNumber  = config('services.twilio.phone_number');
+        $callbackUrl  = rtrim(config('app.url'), '/') . '/webhook/twilio/sms-status-fallback';
+
+        if (!$phoneNumber) {
+            return ['success' => false, 'error' => 'Numéro fallback Twilio non configuré (TWILIO_PHONE_NUMBER)'];
+        }
+
+        try {
+            $client  = new TwilioClient($sid, $token);
+            $message = $client->messages->create($to, [
+                'from'           => $phoneNumber,
+                'body'           => $message,
+                'statusCallback' => $callbackUrl,
+            ]);
+
+            return [
+                'success'    => true,
+                'message_id' => $message->sid,
+                'twilio_sid' => $message->sid,
+            ];
+        } catch (\Exception $e) {
+            Log::error('Twilio fallback error', ['error' => $e->getMessage(), 'to' => $to]);
             return ['success' => false, 'error' => $e->getMessage()];
         }
     }
