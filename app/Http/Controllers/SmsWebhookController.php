@@ -72,7 +72,7 @@ class SmsWebhookController extends Controller
         }
 
         if ($messageStatus === 'delivered') {
-            $sms->status = 'Livré (fallback)';
+            $sms->status = 'Livré (2e tentative auto)';
         } elseif (in_array($messageStatus, self::FALLBACK_STATUSES)) {
             $sms->status = 'Rejeté';
         }
