@@ -272,27 +272,36 @@ class CompteController extends Controller
     }
     public function envoyerEmail($id)
     {
+        Log::info('envoyerEmail appelé', ['id' => $id, 'ajax' => request()->ajax()]);
 
         $compte = Compte::find($id);
 
         if (!$compte) {
+            if (request()->ajax() || request()->wantsJson()) {
+                return response()->json(['success' => false, 'error' => 'Compte non trouvé.'], 404);
+            }
             return redirect()->back()->with('error', 'Compte non trouvé.');
         }
 
         $details = [
-            'title' => 'Titre de l\'email',
-            'body' => 'Ceci est le corps de l\'email.'
+            'title' => 'Ouverture de compte',
+            'body' => 'Vos identifiants de connexion.',
         ];
 
-        SafeMailService::send($compte->email, new CompteCreeMail($details, $compte), 'Ouverture de compte');
+        $sent = SafeMailService::send($compte->email, new CompteCreeMail($details, $compte), 'Ouverture de compte');
         $clientName = strtoupper(trim(($compte->prenom ?? '') . ' ' . ($compte->nom ?? '')));
-        $successMsg = 'Identifiant de connexion envoyé avec succès au client <strong>' . $clientName . '</strong> vers son e-mail <strong>&lt;' . e($compte->email) . '&gt;</strong>.';
-        
-        if (request()->ajax() || request()->wantsJson()) {
-            return response()->json(['success' => true, 'message' => $successMsg]);
+
+        if ($sent) {
+            $successMsg = 'Identifiant de connexion envoyé avec succès au client <strong>' . $clientName . '</strong> vers son e-mail <strong>&lt;' . e($compte->email) . '&gt;</strong>.';
+        } else {
+            $successMsg = 'Erreur lors de l\'envoi. Vérifiez les logs.';
         }
 
-        return redirect()->route("compte.create")->with('success', $successMsg);
+        if (request()->ajax() || request()->wantsJson()) {
+            return response()->json(['success' => $sent, 'message' => $successMsg]);
+        }
+
+        return redirect()->route("compte.create")->with($sent ? 'success' : 'error', $successMsg);
     }
 
     public function envoyerCodeDeblocage($id)
