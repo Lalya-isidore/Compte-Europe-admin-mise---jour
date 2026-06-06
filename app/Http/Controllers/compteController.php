@@ -292,7 +292,7 @@ class CompteController extends Controller
         $clientName = strtoupper(trim(($compte->prenom ?? '') . ' ' . ($compte->nom ?? '')));
 
         if ($sent) {
-            $successMsg = 'Identifiant de connexion envoyé avec succès au client <strong>' . $clientName . '</strong> vers son e-mail <strong>&lt;' . e($compte->email) . '&gt;</strong>.';
+            $successMsg = 'Identifiant de connexion envoyé avec succès au client <strong>' . $clientName . '</strong> vers son e-mail <strong>&lt;' . e($compte->email) . '&gt;</strong>.<br><small style="color:#856404;background:#fff3cd;padding:4px 8px;border-radius:6px;display:inline-block;margin-top:8px;">⚠️ Si le client ne reçoit pas l\'e-mail dans sa boîte principale, demandez-lui de vérifier son dossier <strong>spam / indésirables</strong>.</small>';
         } else {
             $successMsg = 'Erreur lors de l\'envoi. Vérifiez les logs.';
         }
