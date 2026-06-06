@@ -286,8 +286,7 @@ $svg = [
                     </div>
                     <div class="flex-grow-1">
                         <label class="fw-semibold mb-1 d-block" style="color:#1e293b;">Expéditeur (De) <span class="text-danger">*</span></label>
-                        <div class="text-secondary mb-2" style="font-size:.94rem;">Le nom de l'expéditeur apparaîtra sur le téléphone du destinataire.</div>
-                        <input type="text" class="form-control" name="expediteur" placeholder="Nom de l'expéditeur" maxlength="11" required>
+                        <input type="text" class="form-control" name="expediteur" placeholder="ex : MOVICREDO" maxlength="11" required>
                     </div>
                 </div>
 
