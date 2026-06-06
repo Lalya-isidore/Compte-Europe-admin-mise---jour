@@ -483,7 +483,6 @@ $svg = [
                                     <small class="text-muted" id="numero-hint" style="display:none;">L'indicatif <strong id="hint-code"></strong> sera ajouté automatiquement. Saisissez uniquement le numéro local.</small>
                                 </div>
                             </div>
-                            <div class="text-secondary mt-2" style="font-size:.94rem;">Entrez le numéro de téléphone du destinataire sans l'indicatif du pays.</div>
                         </div>
                 </div>
 
