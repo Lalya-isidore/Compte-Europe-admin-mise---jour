@@ -295,12 +295,6 @@ $svg = [
                         <label class="fw-semibold mb-1 d-block" style="color:#1e293b;">Expéditeur (De) <span class="text-danger">*</span></label>
                         <div class="text-secondary mb-2" style="font-size:.94rem;">Le nom de l'expéditeur apparaîtra sur le téléphone du destinataire.</div>
                         <input type="text" class="form-control" name="expediteur" placeholder="Nom de l'expéditeur" maxlength="11" required>
-                        <div class="d-flex align-items-start gap-3 mt-2 p-3 rounded-3" style="background:#fffbeb;border:1.5px solid #fcd34d;">
-                            <span style="flex-shrink:0;margin-top:2px;">{!! $svg['warning'] !!}</span>
-                            <div style="color:#92400e;font-size:1rem;line-height:1.6;">
-                                <strong style="color:#b45309;">Noms interdits :</strong> Évitez les mots comme <strong style="color:#b45309;">Bank, Banking, Money, Pay, Finance, Cash, Credit, Loan, Wallet, Western, Transfer, MTN MoMo, BNP Paribas</strong> ou tout autre nom de société existante pour éviter les rejets des SMS — ces noms sont automatiquement rejetés par les opérateurs mobiles et <strong style="color:#b45309;">vos crédits ne seront pas remboursés</strong>.
-                            </div>
-                        </div>
                     </div>
                 </div>
 
