@@ -13,6 +13,7 @@ class ResendFailedSms extends Command
 {
     protected $signature = 'sms:resend-failed
                             {--days=7 : Fenêtre en jours}
+                            {--delay=5 : Délai en secondes entre chaque envoi}
                             {--dry-run : Simuler sans envoyer}';
 
     protected $description = 'Renvoie les SMS rejetés à cause d\'une erreur d\'authentification API';
@@ -20,6 +21,7 @@ class ResendFailedSms extends Command
     public function handle(SmsService $smsService): int
     {
         $days   = (int) $this->option('days');
+        $delay  = (int) $this->option('delay');
         $dryRun = $this->option('dry-run');
 
         $sms = SmsHistory::where('status', 'Rejeté')
@@ -77,6 +79,10 @@ class ResendFailedSms extends Command
                     DB::commit();
                     $this->info("  [OK] SMS #{$record->id} renvoyé (message_id: {$record->message_id})");
                     $sent++;
+
+                    if ($delay > 0) {
+                        sleep($delay);
+                    }
                 } else {
                     DB::rollBack();
                     $record->error_message = 'Erreur SMS: ' . ($response['error'] ?? 'Inconnue');
