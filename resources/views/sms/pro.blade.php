@@ -295,6 +295,19 @@ $svg = [
                         <label class="fw-semibold mb-1 d-block" style="color:#1e293b;">Expéditeur (De) <span class="text-danger">*</span></label>
                         <div class="text-secondary mb-2" style="font-size:.94rem;">Le nom de l'expéditeur apparaîtra sur le téléphone du destinataire.</div>
                         <input type="text" class="form-control" name="expediteur" placeholder="Nom de l'expéditeur" maxlength="11" required>
+                        <div class="mt-3 p-3 rounded-3" style="background:#fff8f0;border:1.5px solid #fed7aa;font-size:.92rem;color:#7c3d12;line-height:1.65;">
+                            <div class="fw-bold mb-2" style="font-size:.97rem;">🚨 Pourquoi certains SMS sont bloqués en Europe et en Amérique</div>
+                            <div class="mb-2"><span class="fw-semibold">1. Contenu sensible</span><br>
+                            Les SMS demandant un paiement pour recevoir de l'argent (ex. frais d'activation, déblocage de fonds) sont souvent bloqués.<br>
+                            ✅ Les simples notifications de virement sont généralement acceptées.</div>
+                            <div class="mb-2"><span class="fw-semibold">2. Restrictions réglementaires</span><br>
+                            Certains pays interdisent les SMS bancaires provenant d'expéditeurs non certifiés. Les noms comme <strong>BBVA, PARIBAS, MTN MOMO, MOOV MONEY</strong> peuvent être refusés.</div>
+                            <div class="mb-2"><span class="fw-semibold">3. Bonnes pratiques</span><br>
+                            • Évitez les termes liés aux paiements et transactions.<br>
+                            • Utilisez des messages neutres et clairs.<br>
+                            • Les SMS rejetés ne sont généralement pas facturés.</div>
+                            <div class="mt-1"><span class="fw-semibold">NB :</span> Les SMS passent généralement sans problème vers les pays africains, sauf en cas d'utilisation abusive de noms d'opérateurs ou de services financiers.</div>
+                        </div>
                     </div>
                 </div>
 
