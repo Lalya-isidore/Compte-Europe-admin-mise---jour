@@ -83,6 +83,42 @@ class SmsWebhookController extends Controller
         return response('OK', 200);
     }
 
+    /**
+     * Webhook Infobip : reçoit les rapports de livraison SMS.
+     */
+    public function handleInfobipStatus(Request $request)
+    {
+        $payload = $request->all();
+        Log::info('Infobip delivery webhook reçu', ['payload' => $payload]);
+
+        $results = $payload['results'] ?? [];
+
+        foreach ($results as $result) {
+            $messageId   = $result['messageId'] ?? null;
+            $groupName   = $result['status']['groupName'] ?? null;
+            $statusName  = $result['status']['name'] ?? null;
+
+            if (!$messageId) continue;
+
+            $sms = SmsHistory::where('message_id', $messageId)->first();
+            if (!$sms) continue;
+
+            $sms->delivery_status = strtolower($statusName ?? $groupName);
+
+            if ($groupName === 'DELIVERED') {
+                $sms->status = 'Livré';
+            } elseif (in_array($groupName, ['UNDELIVERABLE', 'REJECTED', 'EXPIRED'])) {
+                $sms->status = 'Rejeté';
+                $sms->error_code = $result['error']['name'] ?? null;
+            }
+
+            $sms->save();
+            Log::info('Infobip DLR traité', ['message_id' => $messageId, 'status' => $sms->status]);
+        }
+
+        return response('OK', 200);
+    }
+
     private function sendFallback(SmsHistory $sms): void
     {
         try {
