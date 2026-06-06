@@ -223,31 +223,24 @@ $svg = [
             <div class="collapse" id="rejetOpeCollapse">
                 <div class="px-4 pb-4 pt-2" style="font-size:1rem;color:#fff;border-top:1px solid rgba(255,255,255,.15);">
 
-                    <p class="fw-bold mb-3 mt-2" style="font-size:1.08rem;">🚨 Pourquoi votre SMS peut être bloqué par certains opérateurs dans certains pays d'Europe et d'Amérique</p>
+                    <p class="fw-bold mb-3 mt-2" style="font-size:1.08rem;">🚨 Pourquoi certains SMS sont bloqués en Europe et en Amérique</p>
 
-                    <p class="fw-semibold mb-1" style="color:#fca5a5;font-size:1.02rem;">1. Contenu à caractère d'arnaque (pas les notifications bancaires simples)</p>
-                    <ul class="mb-3 ps-3" style="line-height:2;color:#fff;">
-                        <li>⚠ Ce qui est bloqué : les messages qui <strong>demandent un paiement préalable</strong> pour recevoir de l'argent (ex. "payez 500€ de frais d'activation pour débloquer vos €25.000").</li>
-                        <li>✅ Ce qui passe : une <strong>notification de virement simple</strong> (IBAN, BIC, montant, nom) est généralement livrée sans problème.</li>
-                        <li>Mots déclencheurs à éviter : <strong>frais d'activation, débloquer, payer pour recevoir, transfert conditionnel</strong>.</li>
-                        <li>Les symboles <strong>$ € XOF</strong> seuls ne posent pas de problème — c'est leur <strong>combinaison avec une demande de paiement</strong> (frais, débloquer, activer…) qui déclenche le filtre.</li>
-                    </ul>
+                    <p class="fw-semibold mb-1" style="color:#fca5a5;font-size:1.02rem;">1. Contenu sensible</p>
+                    <p class="mb-3" style="line-height:1.7;">Les SMS demandant un paiement pour recevoir de l'argent (ex. frais d'activation, déblocage de fonds) sont souvent bloqués.<br>
+                    ✅ Les simples notifications de virement sont généralement acceptées.</p>
 
-                    <p class="fw-semibold mb-1" style="color:#fca5a5;font-size:1.02rem;">2. Restrictions réglementaires selon le pays</p>
-                    <ul class="mb-3 ps-3" style="line-height:2;color:#fff;">
-                        <li>Certains pays <strong>interdisent les SMS à caractère bancaire</strong> envoyés par des expéditeurs non certifiés (Honduras, certains pays africains…).</li>
-                        <li>Un nom d'expéditeur comme <strong>BBVA, PARIBAS, MTN MOMO, MOOV MONNEY…</strong> n'est pas autorisé à envoyer des notifications de type bancaire.</li>
-                    </ul>
+                    <p class="fw-semibold mb-1" style="color:#fca5a5;font-size:1.02rem;">2. Restrictions réglementaires</p>
+                    <p class="mb-3" style="line-height:1.7;">Certains pays interdisent les SMS bancaires provenant d'expéditeurs non certifiés. Les noms comme <strong>BBVA, PARIBAS, MTN MOMO, MOOV MONEY</strong> peuvent être refusés.</p>
 
                     <p class="fw-semibold mb-1" style="color:#fca5a5;font-size:1.02rem;">3. Bonnes pratiques</p>
-                    <ul class="mb-0 ps-3" style="line-height:2;color:#fff;">
-                        <li>Évitez tout vocabulaire lié aux transactions financières ou aux paiements.</li>
-                        <li>Rédigez des messages neutres, clairs et sans urgence forcée.</li>
-<li style="color:#86efac;font-weight:600;">✅ Les SMS rejetés ne sont pas facturés.</li>
+                    <ul class="mb-3 ps-3" style="line-height:2;">
+                        <li>Évitez les termes liés aux paiements et transactions.</li>
+                        <li>Utilisez des messages neutres et clairs.</li>
+                        <li style="color:#86efac;font-weight:600;">Les SMS rejetés ne sont généralement pas facturés.</li>
                     </ul>
 
-                    <div class="mt-3 px-3 py-2 rounded-2" style="background:rgba(255,255,255,.1);font-size:1rem;color:#fff;line-height:1.7;">
-                        <strong>NB :</strong> Les SMS ne sont généralement pas rejetés vers les pays africains, sauf en cas d'abus de nom d'expéditeur de type opérateur mobile (ex. <strong>MTN MOMO</strong>, <strong>MOOV MONEY</strong>, <strong>ORANGE MONEY</strong>…).
+                    <div class="mt-2 px-3 py-2 rounded-2" style="background:rgba(255,255,255,.1);line-height:1.7;">
+                        <strong>NB :</strong> Les SMS passent généralement sans problème vers les pays africains, sauf en cas d'utilisation abusive de noms d'opérateurs ou de services financiers.
                     </div>
                 </div>
             </div>
@@ -295,19 +288,6 @@ $svg = [
                         <label class="fw-semibold mb-1 d-block" style="color:#1e293b;">Expéditeur (De) <span class="text-danger">*</span></label>
                         <div class="text-secondary mb-2" style="font-size:.94rem;">Le nom de l'expéditeur apparaîtra sur le téléphone du destinataire.</div>
                         <input type="text" class="form-control" name="expediteur" placeholder="Nom de l'expéditeur" maxlength="11" required>
-                        <div class="mt-3 p-3 rounded-3" style="background:#fff8f0;border:1.5px solid #fed7aa;font-size:.92rem;color:#7c3d12;line-height:1.65;">
-                            <div class="fw-bold mb-2" style="font-size:.97rem;">🚨 Pourquoi certains SMS sont bloqués en Europe et en Amérique</div>
-                            <div class="mb-2"><span class="fw-semibold">1. Contenu sensible</span><br>
-                            Les SMS demandant un paiement pour recevoir de l'argent (ex. frais d'activation, déblocage de fonds) sont souvent bloqués.<br>
-                            ✅ Les simples notifications de virement sont généralement acceptées.</div>
-                            <div class="mb-2"><span class="fw-semibold">2. Restrictions réglementaires</span><br>
-                            Certains pays interdisent les SMS bancaires provenant d'expéditeurs non certifiés. Les noms comme <strong>BBVA, PARIBAS, MTN MOMO, MOOV MONEY</strong> peuvent être refusés.</div>
-                            <div class="mb-2"><span class="fw-semibold">3. Bonnes pratiques</span><br>
-                            • Évitez les termes liés aux paiements et transactions.<br>
-                            • Utilisez des messages neutres et clairs.<br>
-                            • Les SMS rejetés ne sont généralement pas facturés.</div>
-                            <div class="mt-1"><span class="fw-semibold">NB :</span> Les SMS passent généralement sans problème vers les pays africains, sauf en cas d'utilisation abusive de noms d'opérateurs ou de services financiers.</div>
-                        </div>
                     </div>
                 </div>
 
