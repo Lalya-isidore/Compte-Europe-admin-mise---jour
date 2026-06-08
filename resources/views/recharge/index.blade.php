@@ -313,15 +313,9 @@
                                                     <div class="card-body text-center p-3 d-flex flex-column align-items-center justify-content-center gap-2">
                                                         <h6 class="card-title mb-0 fw-bold" style="font-size:.95rem;">FedaPay</h6>
                                                         <div class="d-flex align-items-center justify-content-center gap-2 flex-wrap">
-                                                            <div style="width:75px;height:55px;background:#fff;border:1px solid #e2e8f0;border-radius:8px;display:flex;align-items:center;justify-content:center;padding:4px;">
-                                                                <img src="{{ asset('images/MTN Money.jpeg') }}" alt="MTN MoMo" style="max-width:100%;max-height:100%;object-fit:contain;">
-                                                            </div>
-                                                            <div style="width:75px;height:55px;background:#fff;border:1px solid #e2e8f0;border-radius:8px;display:flex;align-items:center;justify-content:center;padding:4px;">
-                                                                <img src="{{ asset('images/Moov Money.jpeg') }}" alt="Moov Money" style="max-width:100%;max-height:100%;object-fit:contain;">
-                                                            </div>
-                                                            <div style="width:58px;height:40px;background:#fff;border:1px solid #e2e8f0;border-radius:8px;display:flex;align-items:center;justify-content:center;padding:4px;">
-                                                                <img src="{{ asset('images/Celtis Cash.jpeg') }}" alt="Celtiis" style="max-width:100%;max-height:100%;object-fit:contain;">
-                                                            </div>
+                                                            <img src="{{ asset('images/MTN Money.jpeg') }}" alt="MTN MoMo" style="height:65px;width:auto;object-fit:contain;border-radius:8px;">
+                                                            <img src="{{ asset('images/Moov Money.jpeg') }}" alt="Moov Money" style="height:65px;width:auto;object-fit:contain;border-radius:8px;">
+                                                            <img src="{{ asset('images/Celtis Cash.jpeg') }}" alt="Celtiis" style="height:50px;width:auto;object-fit:contain;border-radius:8px;">
                                                         </div>
                                                         <p class="mb-0 text-muted" style="font-size:.75rem;letter-spacing:.03em;">Mobile Money</p>
                                                     </div>
