@@ -89,7 +89,6 @@ class SmsWebhookController extends Controller
     public function handleInfobipStatus(Request $request)
     {
         $payload = $request->all();
-        Log::info('Infobip delivery webhook reçu', ['payload' => $payload]);
 
         $results = $payload['results'] ?? [];
 
@@ -103,8 +102,6 @@ class SmsWebhookController extends Controller
             $sms = SmsHistory::where('message_id', $messageId)->first();
             if (!$sms) continue;
 
-            $sms->delivery_status = strtolower($statusName ?? $groupName);
-
             if ($groupName === 'DELIVERED') {
                 $sms->status = 'Livré';
             } elseif (in_array($groupName, ['UNDELIVERABLE', 'REJECTED', 'EXPIRED'])) {
@@ -112,8 +109,20 @@ class SmsWebhookController extends Controller
                 $sms->error_code = $result['error']['name'] ?? null;
             }
 
-            $sms->save();
-            Log::info('Infobip DLR traité', ['message_id' => $messageId, 'status' => $sms->status]);
+            try {
+                $sms->delivery_status = strtolower($statusName ?? $groupName);
+                $sms->save();
+            } catch (\Exception $e) {
+                // Colonne delivery_status absente en DB — sauvegarder sans elle
+                try {
+                    $sms->syncOriginal();
+                    \Illuminate\Support\Facades\DB::table('sms_history')
+                        ->where('id', $sms->id)
+                        ->update(['status' => $sms->status, 'error_code' => $sms->error_code, 'updated_at' => now()]);
+                } catch (\Exception $e2) {
+                    Log::warning('Infobip DLR save failed', ['message_id' => $messageId, 'error' => $e2->getMessage()]);
+                }
+            }
         }
 
         return response('OK', 200);

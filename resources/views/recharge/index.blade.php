@@ -250,11 +250,11 @@
                                         </div>
                                     </div>
 
-                                    <!-- Options de paiement (seulement FedaPay et Mobile Money) -->
-                                    <div class="row g-3 mb-4">
+                                    <!-- Option de paiement FedaPay -->
+                                    <div class="row g-3 mb-4 justify-content-center">
                                         <div class="col-md-6">
-                                            <div class="payment-option" data-method="fedapay">
-                                                <div class="card h-100 cursor-pointer">
+                                            <div class="payment-option selected" data-method="fedapay">
+                                                <div class="card h-100 cursor-pointer border-primary">
                                                     <div class="card-body text-center p-3">
                                                         <i class="fab fa-cc-visa text-primary fs-2 mb-2"></i>
                                                         <h6 class="card-title">FedaPay</h6>
@@ -263,21 +263,9 @@
                                                 </div>
                                             </div>
                                         </div>
-
-                                        <div class="col-md-6">
-                                            <div class="payment-option" data-method="mobile_money">
-                                                <div class="card h-100 cursor-pointer">
-                                                    <div class="card-body text-center p-3">
-                                                        <i class="fas fa-phone text-info fs-2 mb-2"></i>
-                                                        <h6 class="card-title">Mobile Money</h6>
-                                                        <p class="card-text small text-muted">Paiement mobile direct</p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
                                     </div>
 
-                                    <input type="hidden" id="payment-method" name="payment_method">
+                                    <input type="hidden" id="payment-method" name="payment_method" value="fedapay">
                                     
                                     <div class="text-center">
                                         <button type="submit" class="btn btn-primary btn-lg px-5" id="btn-pay" disabled>
