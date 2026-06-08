@@ -313,7 +313,7 @@
                                                     <div class="card-body text-center p-3 d-flex flex-column align-items-center justify-content-center gap-2">
                                                         <h6 class="card-title mb-0 fw-bold" style="font-size:.95rem;">FedaPay</h6>
                                                         <div class="d-flex align-items-center justify-content-center gap-4 flex-wrap">
-                                                            <img src="{{ asset('images/Celtis Cash.jpeg') }}" alt="MTN, Moov, Celtiis" style="max-width:100%;height:70px;object-fit:contain;border-radius:8px;">
+                                                            <img src="{{ asset('images/WhatsApp Image 2026-06-08 at 21.48.19.jpeg') }}" alt="MTN, Moov, Celtiis" style="max-width:100%;height:70px;object-fit:contain;border-radius:8px;">
                                                         </div>
                                                         <p class="mb-0 text-muted" style="font-size:.75rem;letter-spacing:.03em;">Mobile Money</p>
                                                     </div>
