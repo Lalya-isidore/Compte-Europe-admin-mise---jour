@@ -68,48 +68,41 @@ class MailProController extends Controller
             $errorMessage = 'Service d\'envoi d\'email non configuré';
 
             // Vérifier si le service d'email est configuré
-            $mailHost = env('MAIL_HOST');
-            $mailUsername = env('MAIL_USERNAME');
-
             $trackingPixel = '<img src="' . route('mail.flash.pro.open', ['messageId' => $messageId]) . '" alt="" width="1" height="1" style="display:none;" />';
             $emailBody = $request->contenu . $trackingPixel;
 
-            if ($mailHost && $mailUsername) {
-                try {
-                    Mail::send([], [], function ($message) use ($request, $fichierPath, $emailBody) {
-                        $message->from(env('MAIL_FROM_ADDRESS'), $request->expediteur)
-                            ->to($request->destinataire)
-                            ->subject($request->objet)
-                            ->html($emailBody);
+            try {
+                Mail::send([], [], function ($message) use ($request, $fichierPath, $emailBody) {
+                    $message->from(config('mail.from.address'), $request->expediteur)
+                        ->to($request->destinataire)
+                        ->subject($request->objet)
+                        ->html($emailBody);
 
-                        if ($request->adresse_reponse) {
-                            $message->replyTo($request->adresse_reponse);
-                        }
+                    if ($request->adresse_reponse) {
+                        $message->replyTo($request->adresse_reponse);
+                    }
 
-                        if ($fichierPath) {
-                            $message->attach(storage_path('app/public/' . $fichierPath));
-                        }
-                    });
+                    if ($fichierPath) {
+                        $message->attach(storage_path('app/public/' . $fichierPath));
+                    }
+                });
 
-                    $status = 'Envoyé';
-                    $errorMessage = null;
+                $status = 'Envoyé';
+                $errorMessage = null;
 
-                    Log::info('Email envoyé avec succès', [
-                        'to' => $request->destinataire,
-                        'from' => $request->expediteur
-                    ]);
+                Log::info('Email envoyé avec succès', [
+                    'to' => $request->destinataire,
+                    'from' => $request->expediteur
+                ]);
 
-                } catch (\Exception $e) {
-                    $status = 'Rejeté';
-                    $errorMessage = 'Erreur envoi email: ' . $e->getMessage();
+            } catch (\Exception $e) {
+                $status = 'Rejeté';
+                $errorMessage = 'Erreur envoi email: ' . $e->getMessage();
 
-                    Log::error('Erreur envoi email', [
-                        'error' => $e->getMessage(),
-                        'to' => $request->destinataire
-                    ]);
-                }
-            } else {
-                Log::warning('Service email non configuré - Email non envoyé');
+                Log::error('Erreur envoi email', [
+                    'error' => $e->getMessage(),
+                    'to' => $request->destinataire
+                ]);
             }
 
             // Si l'email est rejeté, rembourser les crédits
