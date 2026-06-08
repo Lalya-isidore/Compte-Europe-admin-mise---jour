@@ -314,8 +314,8 @@
                                                         <h6 class="card-title mb-0 fw-bold" style="font-size:.95rem;">FedaPay</h6>
                                                         <div class="d-flex align-items-center justify-content-center gap-2 flex-wrap">
                                                             <img src="{{ asset('images/MTN Money.jpeg') }}" alt="MTN MoMo" style="height:65px;width:auto;object-fit:contain;border-radius:8px;">
-                                                            <img src="{{ asset('images/Moov Money.jpeg') }}" alt="Moov Money" style="height:65px;width:auto;object-fit:contain;border-radius:8px;">
-                                                            <img src="{{ asset('images/Celtis Cash.jpeg') }}" alt="Celtiis" style="height:50px;width:auto;object-fit:contain;border-radius:8px;">
+                                                            <img src="{{ asset('images/Moov Money.jpeg') }}" alt="Moov Money" style="height:50px;width:auto;object-fit:contain;border-radius:8px;">
+                                                            <img src="{{ asset('images/Celtis Cash.jpeg') }}" alt="Celtiis" style="height:40px;width:auto;object-fit:contain;border-radius:8px;">
                                                         </div>
                                                         <p class="mb-0 text-muted" style="font-size:.75rem;letter-spacing:.03em;">Mobile Money</p>
                                                     </div>
