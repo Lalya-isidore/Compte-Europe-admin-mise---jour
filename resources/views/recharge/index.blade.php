@@ -318,7 +318,6 @@
                                                             <img src="{{ asset('images/Orange Money.jpeg') }}" alt="Orange Money" style="height:38px;width:auto;object-fit:contain;border-radius:6px;">
                                                         </div>
                                                         <h6 class="card-title">FedaPay</h6>
-                                                        <p class="card-text small text-muted">Visa, MasterCard, Mobile Money</p>
                                                     </div>
                                                 </div>
                                             </div>
