@@ -128,10 +128,10 @@
                         padding: 0 20px;
                     }
                     .op-img {
-                        height: 36px;
+                        height: 52px;
                         width: auto;
                         object-fit: contain;
-                        border-radius: 6px;
+                        border-radius: 8px;
                         display: block;
                     }
                     @keyframes ticker-scroll {
