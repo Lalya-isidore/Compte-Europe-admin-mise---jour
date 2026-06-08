@@ -70,6 +70,76 @@
                         </div>
                     @endif
 
+                    <!-- Ticker opérateurs Mobile Money -->
+                    <div class="operators-ticker-wrap mb-3">
+                        <span class="operators-ticker-label">Paiements acceptés</span>
+                        <div class="operators-ticker-track-outer">
+                            <div class="operators-ticker-track">
+                                {{-- Dupliqué pour boucle infinie sans saut --}}
+                                @foreach([0,1] as $_)
+                                <div class="operators-ticker-item">
+                                    <img src="{{ asset('images/MTN Money.jpeg') }}" alt="MTN MoMo" class="op-img">
+                                </div>
+                                <div class="operators-ticker-item">
+                                    <img src="{{ asset('images/Moov Money.jpeg') }}" alt="Moov Money" class="op-img">
+                                </div>
+                                <div class="operators-ticker-item">
+                                    <img src="{{ asset('images/Celtis Cash.jpeg') }}" alt="Celtiis" class="op-img">
+                                </div>
+                                <div class="operators-ticker-item">
+                                    <img src="{{ asset('images/Orange Money.jpeg') }}" alt="Orange Money" class="op-img">
+                                </div>
+                                @endforeach
+                            </div>
+                        </div>
+                    </div>
+
+                    <style>
+                    .operators-ticker-wrap {
+                        display: flex;
+                        align-items: center;
+                        gap: 10px;
+                        background: #f0fdf4;
+                        border: 1px solid #bbf7d0;
+                        border-radius: 12px;
+                        padding: 8px 14px;
+                        overflow: hidden;
+                    }
+                    .operators-ticker-label {
+                        white-space: nowrap;
+                        font-size: .72rem;
+                        font-weight: 700;
+                        color: #059669;
+                        letter-spacing: .04em;
+                        text-transform: uppercase;
+                        flex-shrink: 0;
+                    }
+                    .operators-ticker-track-outer {
+                        overflow: hidden;
+                        flex: 1;
+                    }
+                    .operators-ticker-track {
+                        display: flex;
+                        align-items: center;
+                        width: max-content;
+                        animation: ticker-scroll 16s linear infinite;
+                    }
+                    .operators-ticker-item {
+                        padding: 0 20px;
+                    }
+                    .op-img {
+                        height: 36px;
+                        width: auto;
+                        object-fit: contain;
+                        border-radius: 6px;
+                        display: block;
+                    }
+                    @keyframes ticker-scroll {
+                        0%   { transform: translateX(0); }
+                        100% { transform: translateX(-50%); }
+                    }
+                    </style>
+
                     <!-- Nouveaux packs -->
                     <div class="text-center mb-3">
                         <span class="badge fw-bold px-4 py-2" style="background:#10b981;font-size:.85rem;border-radius:999px;letter-spacing:.05em;">✨ NOUVEAUX PACKS</span>
