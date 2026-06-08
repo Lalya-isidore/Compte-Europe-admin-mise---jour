@@ -312,7 +312,7 @@
                                                 <div class="card h-100 cursor-pointer border-primary">
                                                     <div class="card-body text-center p-3 d-flex flex-column align-items-center justify-content-center gap-2">
                                                         <h6 class="card-title mb-0 fw-bold" style="font-size:.95rem;">FedaPay</h6>
-                                                        <div class="d-flex align-items-center justify-content-center gap-2 flex-wrap">
+                                                        <div class="d-flex align-items-center justify-content-center gap-4 flex-wrap">
                                                             <img src="{{ asset('images/MTN Money.jpeg') }}" alt="MTN MoMo" style="height:65px;width:auto;object-fit:contain;border-radius:8px;">
                                                             <img src="{{ asset('images/Moov Money.jpeg') }}" alt="Moov Money" style="height:50px;width:auto;object-fit:contain;border-radius:8px;">
                                                             <img src="{{ asset('images/Celtis Cash.jpeg') }}" alt="Celtiis" style="height:40px;width:auto;object-fit:contain;border-radius:8px;">
