@@ -38,24 +38,6 @@
                         </div>
                     </div>
 
-                    <!-- Information sur les crédits -->
-                    <div class="rounded-3 mb-4 overflow-hidden" style="background:#fffbeb;border:1.5px solid #fde68a;">
-                        <div class="d-flex align-items-center px-3 py-3 gap-3 position-relative">
-                            <div class="flex-shrink-0 d-flex align-items-center justify-content-center rounded-circle" style="width:52px;height:52px;background:#fef3c7;">
-                                <i class="fas fa-lightbulb" style="color:#d97706;font-size:1.4rem;"></i>
-                            </div>
-                            <div class="flex-grow-1 overflow-hidden">
-                                <div class="fw-bold mb-0" style="color:#b45309;font-size:.95rem;">Comment ça fonctionne ?</div>
-                                <div class="d-none d-sm-block" style="font-size:.83rem;color:#78350f;line-height:1.4;">
-                                    Les recharges vous donnent des <strong>crédits</strong> pour créer des Flash Comptes à vos clients, envoyé des SMS Pro partout dans le monde, de généré des contrats de prêt, des mails pro et bien d'autres.
-                                </div>
-                            </div>
-                            <i class="fas fa-cog position-absolute end-0 top-50 translate-middle-y me-2 d-none d-sm-block" style="font-size:3.5rem;color:#fde68a;pointer-events:none;"></i>
-                        </div>
-                        <div class="px-3 pb-2 d-block d-sm-none" style="font-size:.8rem;color:#78350f;">
-                            Les recharges vous donnent des <strong>crédits</strong> pour créer des Flash Comptes à vos clients, envoyé des SMS Pro partout dans le monde, de généré des contrats de prêt, des mails pro et bien d'autres.
-                        </div>
-                    </div>
 
                     @if(auth()->user()->parrain_id)
                         <!-- Information parrainage -->
