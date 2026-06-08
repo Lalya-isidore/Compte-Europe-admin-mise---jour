@@ -333,7 +333,7 @@
                                     <input type="hidden" id="payment-method" name="payment_method" value="fedapay">
                                     
                                     <div class="text-center">
-                                        <button type="submit" class="btn btn-primary btn-lg px-5" id="btn-pay" disabled>
+                                        <button type="submit" class="btn btn-primary btn-lg w-100" id="btn-pay" disabled>
                                             <i class="fas fa-lock me-2"></i>Procéder au Paiement Sécurisé
                                         </button>
                                     </div>
