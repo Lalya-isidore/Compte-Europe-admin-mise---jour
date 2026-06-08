@@ -322,9 +322,6 @@
                                                             <div style="width:58px;height:40px;background:#fff;border:1px solid #e2e8f0;border-radius:8px;display:flex;align-items:center;justify-content:center;padding:4px;">
                                                                 <img src="{{ asset('images/Celtis Cash.jpeg') }}" alt="Celtiis" style="max-width:100%;max-height:100%;object-fit:contain;">
                                                             </div>
-                                                            <div style="width:58px;height:40px;background:#fff;border:1px solid #e2e8f0;border-radius:8px;display:flex;align-items:center;justify-content:center;padding:4px;">
-                                                                <img src="{{ asset('images/Orange Money.jpeg') }}" alt="Orange Money" style="max-width:100%;max-height:100%;object-fit:contain;">
-                                                            </div>
                                                         </div>
                                                         <p class="mb-0 text-muted" style="font-size:.75rem;letter-spacing:.03em;">Mobile Money</p>
                                                     </div>
