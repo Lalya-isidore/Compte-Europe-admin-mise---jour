@@ -44,9 +44,9 @@ class SmsWebhookController extends Controller
         } elseif (in_array($messageStatus, self::FALLBACK_STATUSES)) {
             $sms->status = 'Rejeté';
 
-            // Fallback automatique si numéro configuré et pas encore tenté
-            if (!$sms->fallback_sent && config('services.twilio.phone_number')) {
-                $this->sendFallback($sms);
+            // Planifier le renvoi automatique dans 60s si numéro fallback configuré
+            if (!$sms->fallback_sent && config('services.twilio.phone_number') && !$sms->retry_after) {
+                $sms->retry_after = now()->addSeconds(60);
             }
         }
 
@@ -112,7 +112,7 @@ class SmsWebhookController extends Controller
             try {
                 $sms->delivery_status = strtolower($statusName ?? $groupName);
                 $sms->save();
-            } catch (\Exception $e) {
+            } catch (\Exception) {
                 // Colonne delivery_status absente en DB — sauvegarder sans elle
                 try {
                     $sms->syncOriginal();

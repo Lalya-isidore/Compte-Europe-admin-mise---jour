@@ -25,6 +25,11 @@ class Kernel extends ConsoleKernel
         // Désactivé : suppression automatique des comptes auto-créés désactivée (suppression manuelle)
         // $schedule->command('comptes:cleanup-auto')->everyMinute();
         
+        // Renvoyer les SMS rejetés via numéro fallback après 60s
+        $schedule->command('sms:retry-failed')
+                 ->everyMinute()
+                 ->withoutOverlapping();
+
         // Vérifier les transactions de recharge en attente toutes les 5 minutes
         $schedule->command('recharge:check-pending')
                  ->everyFiveMinutes()

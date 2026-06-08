@@ -25,11 +25,13 @@ class SmsHistory extends Model
         'error_code',
         'fallback_sent',
         'fallback_sid',
+        'retry_after',
     ];
 
     protected $casts = [
         'created_at'    => 'datetime',
         'updated_at'    => 'datetime',
+        'retry_after'   => 'datetime',
         'fallback_sent' => 'boolean',
     ];
 
