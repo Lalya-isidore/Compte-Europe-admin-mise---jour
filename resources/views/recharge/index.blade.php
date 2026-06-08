@@ -39,6 +39,19 @@
                     </div>
 
 
+                    <!-- Information sur les crédits -->
+                    <div class="rounded-3 mb-4 overflow-hidden" style="background:#fffbeb;border:1.5px solid #fde68a;">
+                        <div class="d-flex align-items-center px-3 py-3 gap-3 position-relative">
+                            <div class="flex-shrink-0 d-flex align-items-center justify-content-center rounded-circle" style="width:48px;height:48px;background:#fef3c7;">
+                                <i class="fas fa-lightbulb" style="color:#d97706;font-size:1.3rem;"></i>
+                            </div>
+                            <div style="font-size:.88rem;color:#78350f;line-height:1.5;">
+                                Chaque recharge vous donne des crédits et vous permet d'utiliser les services payants dont vous avez besoin.
+                            </div>
+                            <i class="fas fa-cog position-absolute end-0 top-50 translate-middle-y me-2 d-none d-sm-block" style="font-size:3.5rem;color:#fde68a;pointer-events:none;"></i>
+                        </div>
+                    </div>
+
                     @if(auth()->user()->parrain_id)
                         <!-- Information parrainage -->
                         <div class="alert alert-success d-flex align-items-center mb-4">
