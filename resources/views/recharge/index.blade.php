@@ -117,7 +117,7 @@
                         display: block;
                     }
                     .op-img-lg {
-                        height: 70px;
+                        height: 90px;
                     }
                     @keyframes ticker-scroll {
                         0%   { transform: translateX(0); }
