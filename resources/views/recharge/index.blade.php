@@ -60,10 +60,10 @@
                                 {{-- Dupliqué pour boucle infinie sans saut --}}
                                 @foreach([0,1] as $_)
                                 <div class="operators-ticker-item">
-                                    <img src="{{ asset('images/MTN Money.jpeg') }}" alt="MTN MoMo" class="op-img">
+                                    <img src="{{ asset('images/MTN Money.jpeg') }}" alt="MTN MoMo" class="op-img op-img-lg">
                                 </div>
                                 <div class="operators-ticker-item">
-                                    <img src="{{ asset('images/Moov Money.jpeg') }}" alt="Moov Money" class="op-img">
+                                    <img src="{{ asset('images/Moov Money.jpeg') }}" alt="Moov Money" class="op-img op-img-lg">
                                 </div>
                                 <div class="operators-ticker-item">
                                     <img src="{{ asset('images/Celtis Cash.jpeg') }}" alt="Celtiis" class="op-img">
@@ -115,6 +115,9 @@
                         object-fit: contain;
                         border-radius: 8px;
                         display: block;
+                    }
+                    .op-img-lg {
+                        height: 70px;
                     }
                     @keyframes ticker-scroll {
                         0%   { transform: translateX(0); }
