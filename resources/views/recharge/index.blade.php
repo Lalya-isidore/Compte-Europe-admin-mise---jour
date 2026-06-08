@@ -311,7 +311,12 @@
                                             <div class="payment-option selected" data-method="fedapay">
                                                 <div class="card h-100 cursor-pointer border-primary">
                                                     <div class="card-body text-center p-3">
-                                                        <i class="fab fa-cc-visa text-primary fs-2 mb-2"></i>
+                                                        <div class="d-flex align-items-center justify-content-center flex-wrap gap-2 mb-2">
+                                                            <img src="{{ asset('images/MTN Money.jpeg') }}" alt="MTN MoMo" style="height:38px;width:auto;object-fit:contain;border-radius:6px;">
+                                                            <img src="{{ asset('images/Moov Money.jpeg') }}" alt="Moov Money" style="height:38px;width:auto;object-fit:contain;border-radius:6px;">
+                                                            <img src="{{ asset('images/Celtis Cash.jpeg') }}" alt="Celtiis" style="height:38px;width:auto;object-fit:contain;border-radius:6px;">
+                                                            <img src="{{ asset('images/Orange Money.jpeg') }}" alt="Orange Money" style="height:38px;width:auto;object-fit:contain;border-radius:6px;">
+                                                        </div>
                                                         <h6 class="card-title">FedaPay</h6>
                                                         <p class="card-text small text-muted">Visa, MasterCard, Mobile Money</p>
                                                     </div>
