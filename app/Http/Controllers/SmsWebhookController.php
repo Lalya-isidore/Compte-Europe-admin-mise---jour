@@ -42,7 +42,8 @@ class SmsWebhookController extends Controller
         if ($messageStatus === 'delivered') {
             $sms->status = 'Livré';
         } elseif (in_array($messageStatus, self::FALLBACK_STATUSES)) {
-            $sms->status = 'Rejeté';
+            $sms->status        = 'Rejeté';
+            $sms->error_message = self::errorCodeToFrench($errorCode);
 
             // Planifier le renvoi automatique dans 60s si numéro fallback configuré
             if (!$sms->fallback_sent && config('services.twilio.phone_number') && !$sms->retry_after) {
@@ -52,6 +53,25 @@ class SmsWebhookController extends Controller
 
         $sms->save();
         return response('OK', 200);
+    }
+
+    private static function errorCodeToFrench(?string $code): string
+    {
+        return match($code) {
+            '30001' => 'File d\'attente saturée, veuillez réessayer.',
+            '30002' => 'Compte Twilio suspendu.',
+            '30003' => 'Numéro de destination hors ligne ou inaccessible.',
+            '30004' => 'Message bloqué par l\'opérateur du destinataire.',
+            '30005' => 'Numéro de destination inconnu ou inexistant.',
+            '30006' => 'Numéro fixe ou opérateur ne supportant pas les SMS.',
+            '30007' => 'Message bloqué par l\'opérateur (expéditeur alphanumérique non supporté dans ce pays).',
+            '30008' => 'Échec d\'envoi pour raison inconnue.',
+            '21211' => 'Numéro de téléphone invalide.',
+            '21612' => 'Numéro non joignable via Twilio.',
+            '21614' => 'Ce numéro n\'est pas un mobile valide.',
+            '21408' => 'Envoi SMS non autorisé pour ce pays.',
+            default => $code ? "Erreur Twilio : code {$code}." : 'SMS rejeté par l\'opérateur.',
+        };
     }
 
     /**
