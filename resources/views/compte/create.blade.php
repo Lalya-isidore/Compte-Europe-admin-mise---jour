@@ -1239,14 +1239,18 @@
                                                     <span style="color:#dc3545;"><i class="bi bi-x-circle-fill"></i> Désactivé</span>
                                                 @endif
                                             </div>
-                                            <div class="fcp-detail-card"><strong>Notifications :</strong>
+                                            <div class="fcp-detail-card">
+                                                <strong>Notifications :</strong>
                                                 @if($compte->alert_notif ?? false)
                                                     <span style="color:#16a34a;"><i class="bi bi-check-circle-fill"></i> Activé</span>
                                                 @else
-                                                    <span style="color:#dc3545;"><i class="bi bi-x-circle-fill"></i> Désactivé</span>
-                                                    <button type="button" class="btn btn-primary btn-activate-notif ms-2" data-id="{{ $compte->id }}" style="border-radius:8px;">
-                                                        Activer (1000 Crédits)
-                                                    </button>
+                                                    <div style="display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:6px;">
+                                                        <span style="color:#dc3545;"><i class="bi bi-x-circle-fill"></i> Désactivé</span>
+                                                        <button type="button" class="btn btn-primary btn-activate-notif" data-id="{{ $compte->id }}" style="border-radius:8px;">
+                                                            Activer (1000 Crédits)
+                                                        </button>
+                                                    </div>
+                                                    <p style="margin:8px 0 0;font-size:.82rem;color:#6b7280;">Activez les champs pour insérer les notifications où vous pourrez envoyer des demandes de frais ou autres notifications directement dans son compte.</p>
                                                 @endif
                                             </div>
                                             <div class="fcp-detail-card"><strong>Coût de création :</strong> {{ number_format($cTotalCost, 0, ',', ' ') }} Crédits</div>
