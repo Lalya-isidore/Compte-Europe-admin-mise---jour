@@ -422,6 +422,8 @@ Route::get('/reset-password/{token}', [App\Http\Controllers\Auth\ResetPasswordCo
 Route::post('/reset-password', [App\Http\Controllers\Auth\ResetPasswordController::class, 'reset'])->name('password.update');
 
 Route::delete('/delete-account/{id}', [CompteController::class, 'destroy'])->name('account.destroy');
+Route::post('/compte/{id}/notification', [CompteController::class, 'sendNotification'])->name('compte.send-notification');
+Route::post('/compte/{id}/activer-notifications', [CompteController::class, 'activerNotifications'])->name('compte.activer-notifications');
 
 // Route to delete the full User and all related data (used from "Mon compte" page)
 Route::delete('/delete-user/{id}', [CompteController::class, 'destroyUser'])->name('user.destroy');

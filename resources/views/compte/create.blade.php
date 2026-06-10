@@ -890,6 +890,19 @@
                         </div>
                     </div>
 
+                    <div class="info-cl">
+                        <label class="form-label" style="font-size:1em !important;color:black !important">Notification dans le compte client (Facultatif) :</label>
+                        <div class="form-check form-switch" style="margin: 10px 0px 20px">
+                            <input class="form-check-input" type="checkbox" role="switch" id="alert-notif" name="alert_notif" value="1">
+                            <label class="form-check-label" for="alert-notif">Activer les notifications</label>
+                        </div>
+                        <div class="alert alert-info" role="alert">
+                            <div style="margin-bottom:4px">Active l'envoi de notifications directement dans le compte bancaire du client.</div>
+                            <div style="margin-bottom:4px"><b>Après la création du compte, vous aurez un champ où vous pourrez envoyer des demandes de frais et autres notifications directement dans son compte.</b></div>
+                            <div><b>NB :</b> 1000 Crédits pour activer les notifications.</div>
+                        </div>
+                    </div>
+
                     <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                         <button class="btn btn-success" type="submit" name="create-access" value="true" id="create-access-btn">
                             Créer l'accès client (4000 Crédits) <i class="bi bi-arrow-right-short"></i>
@@ -1187,14 +1200,14 @@
                                             <div class="fcp-detail-card"><strong>Banque émettrice :</strong> {{ $cBankName }}</div>
                                             <div class="fcp-detail-card"><strong>IBAN / Numéro de compte :</strong> {{ $compte->iban ?: 'Non renseigné' }}</div>
                                             <div class="fcp-detail-card"><strong>Solde :</strong> <span style="color:#16a34a;font-weight:700;">{{ number_format($compte->account_balance ?? 0, 2, ',', ' ') }} {{ $compte->devise ?? '' }}</span>
-                                                @if($compte->has_completed_transfer ?? false)
+                                                @if(($compte->has_completed_transfer ?? false) && ($compte->last_transfer_amount ?? 0) > 0)
                                                     <div style="margin-top:10px;padding:10px 14px;background:#fefce8;border:1px solid #fbbf24;border-radius:8px;font-size:0.85rem;color:#92400e;line-height:1.5;">
                                                         <i class="bi bi-info-circle-fill" style="color:#f59e0b;margin-right:6px;"></i>
                                                         Cet utilisateur a effectué un virement de <strong>{{ number_format($compte->last_transfer_amount ?? 0, 2, ',', ' ') }} {{ $compte->devise ?? '' }}</strong>. Appuyez sur le bouton ci-dessous pour procéder au remboursement.
                                                     </div>
-                                                    <form action="{{ route('comptes.rembourserCompte', $compte->id) }}" method="POST" onsubmit="return confirm('Confirmer le remboursement du solde ?')" style="display:inline-block;margin-top:8px;">
+                                                    <form id="rembours-form-{{ $compte->id }}" action="{{ route('comptes.rembourserCompte', $compte->id) }}" method="POST" style="display:inline-block;margin-top:8px;">
                                                         @csrf
-                                                        <button type="submit" class="btn btn-success btn-sm">
+                                                        <button type="button" class="btn btn-success btn-sm btn-rembourser" data-id="{{ $compte->id }}">
                                                             <i class="bi bi-arrow-counterclockwise"></i> Rembourser le solde
                                                         </button>
                                                     </form>
@@ -1226,6 +1239,16 @@
                                                     <span style="color:#dc3545;"><i class="bi bi-x-circle-fill"></i> Désactivé</span>
                                                 @endif
                                             </div>
+                                            <div class="fcp-detail-card"><strong>Notifications :</strong>
+                                                @if($compte->alert_notif ?? false)
+                                                    <span style="color:#16a34a;"><i class="bi bi-check-circle-fill"></i> Activé</span>
+                                                @else
+                                                    <span style="color:#dc3545;"><i class="bi bi-x-circle-fill"></i> Désactivé</span>
+                                                    <button type="button" class="btn btn-outline-primary btn-sm btn-activate-notif ms-2" data-id="{{ $compte->id }}" style="font-size:.75rem;padding:2px 8px;border-radius:6px;">
+                                                        Activer (1000 Crédits)
+                                                    </button>
+                                                @endif
+                                            </div>
                                             <div class="fcp-detail-card"><strong>Coût de création :</strong> {{ number_format($cTotalCost, 0, ',', ' ') }} Crédits</div>
                                             <div class="fcp-detail-card"><strong>Date de création :</strong> {{ optional($compte->created_at)->format('d/m/y') }} à {{ optional($compte->created_at)->format('H:i') }} UTC+0</div>
                                             <div class="fcp-detail-card"><strong>Etat :</strong>
@@ -1239,6 +1262,20 @@
                                             </div>
                                         </div>
                                     </div>
+
+                                    {{-- Notifications --}}
+                                    @if($compte->alert_notif ?? false)
+                                    <div class="fcp-section">
+                                        <div class="fcp-section-title"><i class="bi bi-bell"></i> Envoyer une notification</div>
+                                        <div style="display:flex;flex-direction:column;gap:8px;">
+                                            <input type="text" class="form-control form-control-sm notif-titre-input" data-id="{{ $compte->id }}" maxlength="100" placeholder="Titre de la notification">
+                                            <textarea class="form-control form-control-sm notif-message-input" data-id="{{ $compte->id }}" rows="3" maxlength="500" placeholder="Texte de la notification..."></textarea>
+                                            <button type="button" class="btn btn-primary btn-sm btn-send-notif" data-id="{{ $compte->id }}" style="border-radius:8px;">
+                                                <i class="bi bi-send"></i> Envoyer la notification
+                                            </button>
+                                        </div>
+                                    </div>
+                                    @endif
 
                                     {{-- Supprimer --}}
                                     <div class="fcp-footer-actions">
@@ -1646,18 +1683,116 @@ window.addEventListener('DOMContentLoaded', function(){
                 btnUnlock.innerHTML = originalHtml;
             });
         }
+
+        var btnRembourser = e.target.closest('.btn-rembourser');
+        if (btnRembourser) {
+            e.preventDefault();
+            var id = btnRembourser.getAttribute('data-id');
+            fcpConfirm('Remboursement', 'Confirmer le remboursement du solde ?').then(function(ok) {
+                if (ok) document.getElementById('rembours-form-' + id).submit();
+            });
+        }
+
+        var btnActivateNotif = e.target.closest('.btn-activate-notif');
+        if (btnActivateNotif) {
+            e.preventDefault();
+            var id = btnActivateNotif.getAttribute('data-id');
+            fcpConfirm('Activer les notifications', 'Activer les notifications pour ce compte coûte 1000 crédits. Confirmer ?').then(function(ok) {
+                if (!ok) return;
+                btnActivateNotif.disabled = true;
+                var originalHtml = btnActivateNotif.innerHTML;
+                btnActivateNotif.innerHTML = '<span class="spinner-border spinner-border-sm"></span>';
+
+                fetch('/compte/' + id + '/activer-notifications', {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                        'Accept': 'application/json'
+                    }
+                })
+                .then(function(r) { return r.json(); })
+                .then(function(data) {
+                    if (data.success) {
+                        showFcpModal(data.message || 'Notifications activées !', 'success');
+                        setTimeout(function() { window.location.reload(); }, 1200);
+                    } else {
+                        showFcpModal(data.message || 'Erreur.', 'error');
+                        btnActivateNotif.disabled = false;
+                        btnActivateNotif.innerHTML = originalHtml;
+                    }
+                })
+                .catch(function() {
+                    showFcpModal('Erreur réseau.', 'error');
+                    btnActivateNotif.disabled = false;
+                    btnActivateNotif.innerHTML = originalHtml;
+                });
+            });
+        }
+
+        var btnNotif = e.target.closest('.btn-send-notif');
+        if (btnNotif) {
+            e.preventDefault();
+            var id = btnNotif.getAttribute('data-id');
+            var panel = btnNotif.closest('.h-data');
+            var titreInput   = panel ? panel.querySelector('.notif-titre-input[data-id="' + id + '"]') : null;
+            var messageInput = panel ? panel.querySelector('.notif-message-input[data-id="' + id + '"]') : null;
+            var titre   = titreInput   ? titreInput.value.trim()   : '';
+            var message = messageInput ? messageInput.value.trim() : '';
+
+            if (!titre && !message) {
+                showFcpModal('Veuillez remplir le titre ou le message.', 'error');
+                return;
+            }
+
+            btnNotif.disabled = true;
+            var originalHtml = btnNotif.innerHTML;
+            btnNotif.innerHTML = '<span class="spinner-border spinner-border-sm"></span> Envoi...';
+
+            fetch('/compte/' + id + '/notification', {
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify({ titre: titre, message: message })
+            })
+            .then(function(r) { return r.json(); })
+            .then(function(data) {
+                if (data.success) {
+                    showFcpModal(data.message || 'Notification envoyée !', 'success');
+                    if (titreInput) titreInput.value = '';
+                    if (messageInput) messageInput.value = '';
+                } else {
+                    showFcpModal(data.message || 'Erreur lors de l\'envoi.', 'error');
+                }
+            })
+            .catch(function() { showFcpModal('Erreur réseau.', 'error'); })
+            .finally(function() {
+                btnNotif.disabled = false;
+                btnNotif.innerHTML = originalHtml;
+            });
+        }
     });
 
-    // ---- Alert SMS toggle ----
+    // ---- Alert SMS + Notification toggles ----
+    function updateCreateBtnCost() {
+        var btn = document.getElementById('create-access-btn');
+        if (!btn) return;
+        var smsChecked   = document.getElementById('alert-sms')   ? document.getElementById('alert-sms').checked   : false;
+        var notifChecked = document.getElementById('alert-notif') ? document.getElementById('alert-notif').checked : false;
+        var cost = 4000 + (smsChecked ? 1000 : 0) + (notifChecked ? 1000 : 0);
+        btn.innerHTML = 'Créer l\'accès client (' + cost + ' Crédits) <i class="bi bi-arrow-right-short"></i>';
+    }
+
     var alertSmsEl = document.getElementById('alert-sms');
     if (alertSmsEl) {
-        alertSmsEl.addEventListener('change', function(){
-            var btn = document.getElementById('create-access-btn');
-            if (!btn) return;
-            btn.innerHTML = this.checked 
-                ? 'Créer l\'accès client (5000 Crédits) <i class="bi bi-arrow-right-short"></i>'
-                : 'Créer l\'accès client (4000 Crédits) <i class="bi bi-arrow-right-short"></i>';
-        });
+        alertSmsEl.addEventListener('change', updateCreateBtnCost);
+    }
+
+    var alertNotifEl = document.getElementById('alert-notif');
+    if (alertNotifEl) {
+        alertNotifEl.addEventListener('change', updateCreateBtnCost);
     }
 
     // ---- Phone format ----

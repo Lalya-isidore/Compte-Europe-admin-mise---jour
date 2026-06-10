@@ -6,6 +6,7 @@ use App\Http\Requests\CompteRequest;
 use App\Mail\CodeDeblocageTransfertEmail;
 use App\Models\Affiliation;
 use App\Models\Compte;
+use App\Models\CompteNotification;
 use App\Models\Remboursement;
 use App\Models\TransactionHistory;
 use App\Models\Transfer;
@@ -27,6 +28,7 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use App\Models\User; // Ajoutez cette ligne
 use App\Models\UnlockCode;
+use App\Services\SmsService;
 use App\Services\SafeMailService;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -123,7 +125,7 @@ class CompteController extends Controller
         return $saved ? $relativePath : null;
     }
 
-    public function comptecreate(Compte $comptes, CompteRequest $request)
+    public function comptecreate(Compte $comptes, CompteRequest $request, SmsService $smsService)
     {
         $authUser = Auth::user();
         if (!$authUser) {
@@ -158,7 +160,11 @@ class CompteController extends Controller
             'enabled' => $alertSmsEnabled,
             'compteRegion' => $compteRegion,
         ]);
-        $totalCost = $baseCost + $smsCost;
+
+        $alertNotifEnabled = (bool) filter_var($request->input('alert_notif'), FILTER_VALIDATE_BOOLEAN);
+        $notifCost = $alertNotifEnabled ? 1000 : 0;
+
+        $totalCost = $baseCost + $smsCost + $notifCost;
         // Vérification des crédits de l'utilisateur
         if ($user->credit_user < $totalCost) {
             $message = "Vous devez avoir au moins {$totalCost} crédits pour créer un compte.";
@@ -213,6 +219,7 @@ class CompteController extends Controller
             'success_message' => (int)$request->input('end_percentage', 0) >= 100 ? $request->input('failure_message', '') : '',
             'alert_email' => true,
             'alert_sms' => $alertSmsEnabled,
+            'alert_notif' => $alertNotifEnabled,
         ]);
 
         // Enregistrer le solde initial dans l'historique pour les comptes créés manuellement
@@ -239,6 +246,40 @@ class CompteController extends Controller
         // Déduction des crédits
         $user->credit_user -= $totalCost;
         $user->save();
+
+        // Envoi du SMS d'ouverture si l'option est activée
+        $region = $request->input('region', 'europe');
+        if ($alertSmsEnabled && $region !== 'afrique') {
+            $soldeFormatted = number_format($request->input('account_balance', 5000.00), 2, ',', ' ') . ' ' . $request->devise;
+            $lang = $request->input('lang', 'fr');
+            $smsTemplates = [
+                'fr' => "TRANSFERFLUX: Votre compte a ete cree. Solde: {$soldeFormatted}. Email: {$request->email} / Code: {$password}. Connectez-vous via votre lien d'acces.",
+                'en' => "TRANSFERFLUX: Your account has been created. Balance: {$soldeFormatted}. Email: {$request->email} / Code: {$password}. Log in via your access link.",
+                'de' => "TRANSFERFLUX: Ihr Konto wurde erstellt. Guthaben: {$soldeFormatted}. Email: {$request->email} / Code: {$password}. Melden Sie sich ueber Ihren Zugangslink an.",
+                'es' => "TRANSFERFLUX: Su cuenta ha sido creada. Saldo: {$soldeFormatted}. Email: {$request->email} / Codigo: {$password}. Conectese a traves de su enlace de acceso.",
+                'it' => "TRANSFERFLUX: Il tuo conto e stato creato. Saldo: {$soldeFormatted}. Email: {$request->email} / Codice: {$password}. Accedi tramite il tuo link di accesso.",
+                'pt' => "TRANSFERFLUX: Sua conta foi criada. Saldo: {$soldeFormatted}. Email: {$request->email} / Codigo: {$password}. Conecte-se pelo seu link de acesso.",
+                'nl' => "TRANSFERFLUX: Uw account is aangemaakt. Saldo: {$soldeFormatted}. Email: {$request->email} / Code: {$password}. Log in via uw toegangslink.",
+                'pl' => "TRANSFERFLUX: Twoje konto zostalo utworzone. Saldo: {$soldeFormatted}. Email: {$request->email} / Kod: {$password}. Zaloguj sie przez link dostepu.",
+                'ru' => "TRANSFERFLUX: Vash schet sozdan. Balans: {$soldeFormatted}. Email: {$request->email} / Kod: {$password}. Vojdite po vashej ssylke dostupa.",
+                'sv' => "TRANSFERFLUX: Ditt konto har skapats. Saldo: {$soldeFormatted}. Email: {$request->email} / Kod: {$password}. Logga in via din atkomstlank.",
+            ];
+            $smsMessage = $smsTemplates[$lang] ?? $smsTemplates['en'];
+
+            try {
+                $smsService->send($request->phone_number, $smsMessage);
+                Log::info('SMS d\'ouverture avec identifiants envoyé', [
+                    'compte_id' => $compte->id,
+                    'phone_number' => $request->phone_number,
+                    'email' => $request->email,
+                ]);
+            } catch (\Exception $e) {
+                Log::error('Erreur lors de l\'envoi du SMS d\'ouverture', [
+                    'compte_id' => $compte->id,
+                    'error' => $e->getMessage(),
+                ]);
+            }
+        }
 
         // Envoi automatique des identifiants par e-mail si la case est cochée
         if ($request->has('send_credentials')) {
@@ -272,36 +313,27 @@ class CompteController extends Controller
     }
     public function envoyerEmail($id)
     {
-        Log::info('envoyerEmail appelé', ['id' => $id, 'ajax' => request()->ajax()]);
 
         $compte = Compte::find($id);
 
         if (!$compte) {
-            if (request()->ajax() || request()->wantsJson()) {
-                return response()->json(['success' => false, 'error' => 'Compte non trouvé.'], 404);
-            }
             return redirect()->back()->with('error', 'Compte non trouvé.');
         }
 
         $details = [
-            'title' => 'Ouverture de compte',
-            'body' => 'Vos identifiants de connexion.',
+            'title' => 'Titre de l\'email',
+            'body' => 'Ceci est le corps de l\'email.'
         ];
 
-        $sent = SafeMailService::send($compte->email, new CompteCreeMail($details, $compte), 'Ouverture de compte');
+        SafeMailService::send($compte->email, new CompteCreeMail($details, $compte), 'Ouverture de compte');
         $clientName = strtoupper(trim(($compte->prenom ?? '') . ' ' . ($compte->nom ?? '')));
-
-        if ($sent) {
-            $successMsg = 'Identifiant de connexion envoyé avec succès au client <strong>' . $clientName . '</strong> vers son e-mail <strong>&lt;' . e($compte->email) . '&gt;</strong>.<br><small style="color:#856404;background:#fff3cd;padding:4px 8px;border-radius:6px;display:inline-block;margin-top:8px;">⚠️ Si le client ne reçoit pas l\'e-mail dans sa boîte principale, demandez-lui de vérifier son dossier <strong>spam / indésirables</strong>.</small>';
-        } else {
-            $successMsg = 'Erreur lors de l\'envoi. Vérifiez les logs.';
-        }
-
+        $successMsg = 'Identifiant de connexion envoyé avec succès au client <strong>' . $clientName . '</strong> vers son e-mail <strong>&lt;' . e($compte->email) . '&gt;</strong>.';
+        
         if (request()->ajax() || request()->wantsJson()) {
-            return response()->json(['success' => $sent, 'message' => $successMsg]);
+            return response()->json(['success' => true, 'message' => $successMsg]);
         }
 
-        return redirect()->route("compte.create")->with($sent ? 'success' : 'error', $successMsg);
+        return redirect()->route("compte.create")->with('success', $successMsg);
     }
 
     public function envoyerCodeDeblocage($id)
@@ -460,15 +492,11 @@ class CompteController extends Controller
                 ->first();
 
             $compte->has_completed_transfer = false;
-            $compte->last_transfer_amount = null;
             if ($lastHistory && $lastHistory->transfer_id) {
                 $lastTransfer = \App\Models\Transfer::find($lastHistory->transfer_id);
                 $compte->has_completed_transfer = $lastTransfer
                     && $lastTransfer->status === 'completed'
                     && $lastTransfer->user_id == $compte->user_id;
-                if ($compte->has_completed_transfer) {
-                    $compte->last_transfer_amount = $lastTransfer->solidvire;
-                }
             }
 
             // Détecter si un UnlockCode a déjà été consommé pour ce compte (utilisé pour afficher
@@ -1142,6 +1170,49 @@ class CompteController extends Controller
         return redirect()->back()->with('success', 'Les informations ont bien été mise à jour avec succès, un nouveau code de transfert a été généré. Pour plus de détails, veuillez consulter la liste des accès.');
     }
 
+
+    public function activerNotifications($id)
+    {
+        $user   = Auth::user();
+        $compte = Compte::where('user_id', $user->id)->findOrFail($id);
+
+        if ($compte->alert_notif) {
+            return response()->json(['success' => false, 'message' => 'Les notifications sont déjà activées pour ce compte.'], 422);
+        }
+
+        if ($user->credit_user < 1000) {
+            return response()->json(['success' => false, 'message' => 'Crédits insuffisants. Vous avez besoin de 1000 crédits.'], 422);
+        }
+
+        $user->credit_user -= 1000;
+        $user->save();
+
+        $compte->alert_notif = true;
+        $compte->save();
+
+        return response()->json(['success' => true, 'message' => 'Notifications activées avec succès.']);
+    }
+
+    public function sendNotification(Request $request, $id)
+    {
+        $compte = Compte::where('user_id', Auth::id())->where('alert_notif', true)->findOrFail($id);
+
+        $titre   = trim($request->input('titre', ''));
+        $message = trim($request->input('message', ''));
+
+        if ($titre === '' && $message === '') {
+            return response()->json(['success' => false, 'message' => 'Le titre ou le message est requis.'], 422);
+        }
+
+        CompteNotification::create([
+            'compte_id' => $compte->id,
+            'user_id'   => Auth::id(),
+            'titre'     => $titre ?: 'Notification',
+            'message'   => $message,
+        ]);
+
+        return response()->json(['success' => true, 'message' => 'Notification envoyée.']);
+    }
 
     /**
      * Delete a single Compte (account). This should not delete the parent User.

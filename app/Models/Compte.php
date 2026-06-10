@@ -19,7 +19,7 @@ class Compte extends Model
         'account_balance', 'account_balance2', 'code_virement', 'account_type',
         'account_status', 'transfer_supported', 'card_number', 'cvv', 'iban',
         'start_percentage', 'end_percentage', 'failure_message', 'success_message', 'alert_email',
-        'alert_sms', 'token', 'is_default',
+        'alert_sms', 'alert_notif', 'token', 'is_default',
         // nouveaux champs pour suppression automatique
         'is_auto_created', 'auto_deletes_at',
     ];
@@ -28,6 +28,7 @@ class Compte extends Model
         'is_default' => 'boolean',
         'alert_email' => 'boolean',
         'alert_sms' => 'boolean',
+        'alert_notif' => 'boolean',
         'account_balance' => 'decimal:2',
         'account_balance2' => 'decimal:2',
         'is_auto_created' => 'boolean',
