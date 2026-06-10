@@ -1244,7 +1244,7 @@
                                                     <span style="color:#16a34a;"><i class="bi bi-check-circle-fill"></i> Activé</span>
                                                 @else
                                                     <span style="color:#dc3545;"><i class="bi bi-x-circle-fill"></i> Désactivé</span>
-                                                    <button type="button" class="btn btn-outline-primary btn-activate-notif ms-2" data-id="{{ $compte->id }}" style="border-radius:8px;">
+                                                    <button type="button" class="btn btn-primary btn-activate-notif ms-2" data-id="{{ $compte->id }}" style="border-radius:8px;">
                                                         Activer (1000 Crédits)
                                                     </button>
                                                 @endif
