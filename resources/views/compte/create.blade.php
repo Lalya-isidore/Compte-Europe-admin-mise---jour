@@ -1272,7 +1272,7 @@
                                         <div style="display:flex;flex-direction:column;gap:8px;">
                                             <input type="text" class="form-control form-control-sm notif-titre-input" data-id="{{ $compte->id }}" maxlength="100" placeholder="Titre de la notification">
                                             <textarea class="form-control form-control-sm notif-message-input" data-id="{{ $compte->id }}" rows="3" maxlength="500" placeholder="Texte de la notification..."></textarea>
-                                            <button type="button" class="btn btn-primary btn-sm btn-send-notif" data-id="{{ $compte->id }}" style="border-radius:8px;">
+                                            <button type="button" class="btn btn-primary btn-send-notif" data-id="{{ $compte->id }}" style="border-radius:8px;">
                                                 <i class="bi bi-send"></i> Envoyer la notification
                                             </button>
                                         </div>
@@ -1284,7 +1284,7 @@
                                         <form id="delete-form-{{ $compte->id }}" method="POST" action="{{ route('account.destroy', $compte->id) }}" style="display:inline">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="button" class="btn btn-danger btn-sm" style="border-radius:8px"
+                                            <button type="button" class="btn btn-danger" style="border-radius:8px;width:100%;"
                                                     onclick="fcpConfirm('Supprimer', 'Confirmez-vous la suppression de ce lien d\'accès client ?').then(function(ok){ if(ok) document.getElementById('delete-form-{{ $compte->id }}').submit(); });">
                                                 <i class="bi bi-trash3"></i> Supprimer cet accès
                                             </button>
