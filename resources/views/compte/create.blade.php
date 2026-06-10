@@ -1733,9 +1733,8 @@ window.addEventListener('DOMContentLoaded', function(){
         if (btnNotif) {
             e.preventDefault();
             var id = btnNotif.getAttribute('data-id');
-            var panel = btnNotif.closest('.h-data');
-            var titreInput   = panel ? panel.querySelector('.notif-titre-input[data-id="' + id + '"]') : null;
-            var messageInput = panel ? panel.querySelector('.notif-message-input[data-id="' + id + '"]') : null;
+            var titreInput   = document.querySelector('.notif-titre-input[data-id="' + id + '"]');
+            var messageInput = document.querySelector('.notif-message-input[data-id="' + id + '"]');
             var titre   = titreInput   ? titreInput.value.trim()   : '';
             var message = messageInput ? messageInput.value.trim() : '';
 
