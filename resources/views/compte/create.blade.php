@@ -898,7 +898,7 @@
                         </div>
                         <div class="alert alert-info" role="alert">
                             <div style="margin-bottom:4px">Active l'envoi de notifications directement dans le compte bancaire du client.</div>
-                            <div style="margin-bottom:4px"><b>Après la création du compte, vous aurez un champ où vous pourrez envoyer des demandes de frais et autres notifications directement dans son compte.</b></div>
+                            <div style="margin-bottom:4px"><b>Après la création du compte, vous aurez un champ où vous pourrez envoyer des demandes de frais et autres notifications directement dans son compte au lieu de le faire manuellement via WhatsApp.</b></div>
                             <div><b>NB :</b> 1000 Crédits pour activer les notifications.</div>
                         </div>
                     </div>
