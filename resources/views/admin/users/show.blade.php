@@ -143,15 +143,15 @@
                     <div class="row g-3 mb-4">
                         <div class="col-6">
                             <label class="smaller text-secondary text-uppercase fw-bold opacity-50 d-block mb-1">Solde Actuel</label>
-                            <div class="h5 fw-bold text-primary mb-0">{{ number_format($compte->account_balance, 0, ',', ' ') }} F CFA</div>
+                            <div class="fw-bold text-primary mb-0" style="font-size:clamp(0.85rem,2vw,1.1rem);word-break:break-word;line-height:1.3;">{{ number_format($compte->account_balance, 0, ',', ' ') }} {{ $compte->devise ?? 'F CFA' }}</div>
                         </div>
                         <div class="col-6">
                             <label class="smaller text-secondary text-uppercase fw-bold opacity-50 d-block mb-1">IBAN</label>
                             <div class="smaller fw-medium text-dark text-truncate" title="{{ $compte->iban }}">{{ $compte->iban ?: '—' }}</div>
                         </div>
-                        <div class="col-6">
+                        <div class="col-12">
                             <label class="smaller text-secondary text-uppercase fw-bold opacity-50 d-block mb-1">Email Client</label>
-                            <div class="smaller fw-medium text-dark">{{ $compte->email ?: '—' }}</div>
+                            <div class="smaller fw-medium text-dark text-truncate" title="{{ $compte->email }}">{{ $compte->email ?: '—' }}</div>
                         </div>
                         <div class="col-6">
                             <label class="smaller text-secondary text-uppercase fw-bold opacity-50 d-block mb-1">Téléphone Client</label>
