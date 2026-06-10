@@ -1245,7 +1245,7 @@
                                                     <span style="color:#16a34a;"><i class="bi bi-check-circle-fill"></i> Activé</span>
                                                 @else
                                                     <span style="color:#dc3545;"><i class="bi bi-x-circle-fill"></i> Désactivé</span>
-                                                    <p style="margin:8px 0;font-size:.82rem;color:#6b7280;">Activez les champs pour insérer les notifications où vous pourrez envoyer des demandes de frais ou autres notifications directement dans son compte.</p>
+                                                    <p style="margin:8px 0;font-size:.82rem;color:#6b7280;">Activez les champs pour insérer les notifications où vous pourrez envoyer des demandes de frais ou autres notifications directement dans son compte au lieu de le faire manuellement via WhatsApp.</p>
                                                     <button type="button" class="btn btn-primary btn-activate-notif" data-id="{{ $compte->id }}" style="border-radius:8px;">
                                                         Activer (1000 Crédits)
                                                     </button>
