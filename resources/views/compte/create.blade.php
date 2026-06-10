@@ -1270,8 +1270,8 @@
                                     <div class="fcp-section">
                                         <div class="fcp-section-title"><i class="bi bi-bell"></i> Envoyer une notification</div>
                                         <div style="display:flex;flex-direction:column;gap:8px;">
-                                            <input type="text" class="form-control form-control-sm notif-titre-input" data-id="{{ $compte->id }}" maxlength="100" placeholder="Titre de la notification">
-                                            <textarea class="form-control form-control-sm notif-message-input" data-id="{{ $compte->id }}" rows="3" maxlength="500" placeholder="Texte de la notification..."></textarea>
+                                            <input type="text" class="form-control notif-titre-input" data-id="{{ $compte->id }}" maxlength="100" placeholder="Titre de la notification">
+                                            <textarea class="form-control notif-message-input" data-id="{{ $compte->id }}" rows="4" maxlength="500" placeholder="Texte de la notification..."></textarea>
                                             <button type="button" class="btn btn-primary btn-send-notif" data-id="{{ $compte->id }}" style="border-radius:8px;">
                                                 <i class="bi bi-send"></i> Envoyer la notification
                                             </button>
