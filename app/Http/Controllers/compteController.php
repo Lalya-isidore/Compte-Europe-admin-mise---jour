@@ -495,8 +495,7 @@ class CompteController extends Controller
             if ($lastHistory && $lastHistory->transfer_id) {
                 $lastTransfer = \App\Models\Transfer::find($lastHistory->transfer_id);
                 $compte->has_completed_transfer = $lastTransfer
-                    && $lastTransfer->status === 'completed'
-                    && $lastTransfer->user_id == $compte->user_id;
+                    && $lastTransfer->status === 'completed';
             }
 
             // Détecter si un UnlockCode a déjà été consommé pour ce compte (utilisé pour afficher
@@ -539,7 +538,7 @@ class CompteController extends Controller
             }
 
             $lastTransfer = Transfer::find($lastHistory->transfer_id);
-            if (!$lastTransfer || $lastTransfer->status !== 'completed' || $lastTransfer->user_id != $compte->user_id) {
+            if (!$lastTransfer || $lastTransfer->status !== 'completed') {
                 return redirect()->back()->with('error', 'Aucun virement en attente de remboursement.');
             }
 
