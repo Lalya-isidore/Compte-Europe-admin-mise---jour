@@ -510,6 +510,8 @@ class CompteController extends Controller
             return $compte;
         });
 
+        \App\Models\ToolPageVisit::record('flash-compte-pro');
+
         return view('compte.create', [
             'comptes' => $comptes,
             'availableCredits' => Auth::user()->credit_user ?? 0,
