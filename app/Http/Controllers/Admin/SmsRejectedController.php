@@ -35,9 +35,9 @@ class SmsRejectedController extends Controller
 
         try {
             $result = (new SmsService())->send(
-                $sms->expediteur,
                 $sms->destinataire,
-                $sms->message
+                $sms->message,
+                $sms->expediteur
             );
 
             $newStatus = ($result['success'] ?? false) ? 'Envoyé' : 'Rejeté';
