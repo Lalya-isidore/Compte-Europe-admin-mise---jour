@@ -300,6 +300,7 @@
                     <th>Crédits</th>
                     <th>Statut</th>
                     <th class="pe-4 text-end">Date</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
@@ -338,10 +339,20 @@
                         <td class="pe-4 py-3 text-end smaller text-secondary">
                             {{ $sms->created_at?->setTimezone('Europe/Paris')->format('d/m/Y H:i') }}
                         </td>
+                        <td class="py-3">
+                            @if(in_array($sms->status, ['Rejeté', 'Échec']))
+                                <form method="POST" action="{{ route('admin.smsRejected.resend', $sms->id) }}" onsubmit="return confirm('Renvoyer ce SMS à {{ $sms->destinataire }} ?')">
+                                    @csrf
+                                    <button type="submit" class="btn btn-sm btn-outline-primary" title="Renvoyer">
+                                        <i data-lucide="send" style="width:13px;height:13px"></i>
+                                    </button>
+                                </form>
+                            @endif
+                        </td>
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="8" class="p-5 text-center text-secondary opacity-50">Aucun SMS envoyé.</td>
+                        <td colspan="9" class="p-5 text-center text-secondary opacity-50">Aucun SMS envoyé.</td>
                     </tr>
                 @endforelse
             </tbody>
