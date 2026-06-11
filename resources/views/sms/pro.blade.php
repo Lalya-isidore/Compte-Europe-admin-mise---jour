@@ -286,7 +286,8 @@ $svg = [
                     </div>
                     <div class="flex-grow-1">
                         <label class="fw-semibold mb-1 d-block" style="color:#1e293b;">Expéditeur (De) <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" name="expediteur" placeholder="ex : MOVICREDO" maxlength="11" required>
+                        <input type="text" class="form-control" id="expediteurInput" name="expediteur" placeholder="ex : MOVICREDO" maxlength="11" minlength="3" pattern="\S+" title="Sans espaces, 3 à 11 caractères" required autocomplete="off">
+                        <div class="form-text text-muted" style="font-size:.78rem;">3 à 11 caractères, sans espaces ni caractères spéciaux.</div>
                     </div>
                 </div>
 
@@ -916,6 +917,22 @@ $svg = [
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
+    // Bloquer les espaces dans le champ expéditeur
+    const expediteurInput = document.getElementById('expediteurInput');
+    if (expediteurInput) {
+        expediteurInput.addEventListener('input', function() {
+            const pos = this.selectionStart;
+            const cleaned = this.value.replace(/\s/g, '');
+            if (cleaned !== this.value) {
+                this.value = cleaned;
+                this.setSelectionRange(pos - 1, pos - 1);
+            }
+        });
+        expediteurInput.addEventListener('keydown', function(e) {
+            if (e.key === ' ') e.preventDefault();
+        });
+    }
+
     const messageInput = document.getElementById('message');
     const charCount = document.getElementById('char-count');
     const cost = document.getElementById('cost');

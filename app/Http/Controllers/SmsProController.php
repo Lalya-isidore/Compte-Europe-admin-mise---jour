@@ -27,7 +27,7 @@ class SmsProController extends Controller
     public function send(Request $request)
     {
         $request->validate([
-            'expediteur' => 'required|string|max:11',
+            'expediteur' => ['required', 'string', 'min:3', 'max:11', 'regex:/^\S+$/'],
             'pays' => 'required|string',
             'numero' => 'required|string',
             'message' => 'required|string',
