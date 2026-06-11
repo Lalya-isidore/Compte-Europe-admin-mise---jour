@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\SmsHistory;
 use App\Services\SmsService;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
 class SmsRejectedController extends Controller
@@ -40,8 +41,16 @@ class SmsRejectedController extends Controller
                 $sms->expediteur
             );
 
-            $newStatus = ($result['success'] ?? false) ? 'Envoyé' : 'Rejeté';
-            $errorMsg  = $result['error'] ?? null;
+            $success      = $result['success'] ?? false;
+            $newStatus    = $success ? 'Envoyé' : 'Rejeté';
+            $errorMsg     = $result['error'] ?? null;
+            $creditsNeeded = ($sms->sms_count ?? 1) * 500;
+
+            if ($success && $sms->user_id) {
+                DB::table('users')
+                    ->where('id', $sms->user_id)
+                    ->update(['credit_user' => DB::raw('credit_user - ' . $creditsNeeded)]);
+            }
 
             SmsHistory::create([
                 'user_id'       => $sms->user_id,
@@ -50,15 +59,15 @@ class SmsRejectedController extends Controller
                 'destinataire'  => $sms->destinataire,
                 'message'       => $sms->message,
                 'sms_count'     => $sms->sms_count,
-                'credits_used'  => 0,
+                'credits_used'  => $success ? $creditsNeeded : 0,
                 'status'        => $newStatus,
                 'message_id'    => $result['message_id'] ?? null,
                 'twilio_sid'    => $result['twilio_sid'] ?? null,
                 'error_message' => $errorMsg,
             ]);
 
-            if ($result['success'] ?? false) {
-                return back()->with('success', "SMS renvoyé avec succès vers {$sms->destinataire}.");
+            if ($success) {
+                return back()->with('success', "SMS renvoyé avec succès vers {$sms->destinataire}. {$creditsNeeded} crédit(s) déduit(s).");
             }
             return back()->with('error', "Renvoi échoué : " . ($errorMsg ?? 'erreur inconnue'));
 
