@@ -37,7 +37,10 @@ class ToolVisitController extends Controller
 
         $visits = ToolPageVisit::with('user')
             ->where('tool_slug', $tool)
-            ->whereHas('user', fn($q) => $q->whereNotIn('email', self::EXCLUDED_EMAILS))
+            ->where(function ($q) {
+                $q->whereNull('user_id')
+                  ->orWhereHas('user', fn($q2) => $q2->whereNotIn('email', self::EXCLUDED_EMAILS));
+            })
             ->latest()
             ->take(100)
             ->get();

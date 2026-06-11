@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Log;
 
 class ToolPageVisit extends Model
 {
-    protected $fillable = ['user_id', 'tool_slug', 'ip_address'];
+    protected $fillable = ['user_id', 'tool_slug', 'ip_address', 'session_id'];
 
     public function user()
     {
@@ -17,12 +17,12 @@ class ToolPageVisit extends Model
 
     public static function record(string $toolSlug): void
     {
-        if (!Auth::check()) return;
         try {
             static::create([
-                'user_id'    => Auth::id(),
+                'user_id'    => Auth::check() ? Auth::id() : null,
                 'tool_slug'  => $toolSlug,
                 'ip_address' => request()->ip(),
+                'session_id' => session()->getId(),
             ]);
         } catch (\Exception $e) {
             Log::error("ToolPageVisit::record failed for [{$toolSlug}]: " . $e->getMessage());

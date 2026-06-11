@@ -127,11 +127,6 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/tools/iban-check', [IbanCheckController::class, 'clear'])->name('tools.iban-check.clear');
 
     // Flash Compte Pro v1
-    Route::get('/tools/flash-compte-pro/video', function () {
-        \App\Models\ToolPageVisit::record('flash-compte-pro-video');
-        return view('tools.flash-compte-video');
-    })->name('tools.flash-compte-pro.video');
-
     Route::get('/tools/flash-compte-pro', function () {
         \App\Models\ToolPageVisit::record('flash-compte-pro');
         $creditsDisponibles = number_format(auth()->user()->credit_user ?? 0, 0, ',', ' ');
@@ -244,6 +239,12 @@ Route::middleware(['auth'])->group(function () {
         })->name('test.csrf');
     }
 });
+
+// Page vidéo Flash Compte Pro — publique (accessible sans compte)
+Route::get('/tools/flash-compte-pro/video', function () {
+    \App\Models\ToolPageVisit::record('flash-compte-pro-video');
+    return view('tools.flash-compte-video');
+})->name('tools.flash-compte-pro.video');
 
 // Webhooks publics (sans authentification)
 // - POST : notifications serveur (webhook) envoyées par FedaPay

@@ -38,14 +38,14 @@
                     <td class="text-secondary fw-bold">{{ $i + 1 }}</td>
                     <td>
                         <div class="d-flex align-items-center gap-2">
-                            <div class="rounded-circle bg-primary d-flex align-items-center justify-content-center text-white fw-bold"
+                            <div class="rounded-circle {{ $visit->user ? 'bg-primary' : 'bg-secondary' }} d-flex align-items-center justify-content-center text-white fw-bold"
                                  style="width:36px;height:36px;font-size:.85rem;flex-shrink:0;">
-                                {{ strtoupper(substr($visit->user->prenom ?? '?', 0, 1)) }}{{ strtoupper(substr($visit->user->nom ?? '', 0, 1)) }}
+                                {{ $visit->user ? strtoupper(substr($visit->user->prenom ?? '?', 0, 1)).strtoupper(substr($visit->user->nom ?? '', 0, 1)) : '?' }}
                             </div>
-                            <div class="fw-semibold">{{ $visit->user->prenom }} {{ $visit->user->nom }}</div>
+                            <div class="fw-semibold">{{ $visit->user ? $visit->user->prenom.' '.$visit->user->nom : 'Visiteur anonyme' }}</div>
                         </div>
                     </td>
-                    <td>{{ $visit->user->email }}</td>
+                    <td>{{ $visit->user->email ?? '—' }}</td>
                     <td>{{ $visit->user->phone ?? '—' }}</td>
                     <td><code>{{ $visit->ip_address ?? '—' }}</code></td>
                     <td>
@@ -54,9 +54,13 @@
                         </span>
                     </td>
                     <td>
+                        @if($visit->user_id)
                         <a href="{{ route('admin.users.show', $visit->user_id) }}" class="btn btn-sm btn-outline-primary">
                             <i data-lucide="eye" style="width:14px;height:14px"></i>
                         </a>
+                        @else
+                        <span class="text-secondary small">—</span>
+                        @endif
                     </td>
                 </tr>
                 @endforeach
