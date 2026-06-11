@@ -70,6 +70,10 @@
                 <i class="lucide-zap"></i>
                 <span>Flash Compte Pro</span>
             </a>
+            <a href="{{ route('admin.toolVisits.show', 'flash-compte-pro-video') }}" class="menu-item menu-sub-item {{ $currentTool === 'flash-compte-pro-video' ? 'active' : '' }}">
+                <i class="lucide-play-circle"></i>
+                <span>Vidéo Flash Compte</span>
+            </a>
             <a href="{{ route('admin.toolVisits.show', 'coupon') }}" class="menu-item menu-sub-item {{ $currentTool === 'coupon' ? 'active' : '' }}">
                 <i class="lucide-ticket"></i>
                 <span>Collecte Coupon</span>

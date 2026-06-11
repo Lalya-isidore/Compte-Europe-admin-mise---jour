@@ -128,6 +128,7 @@ Route::middleware(['auth'])->group(function () {
 
     // Flash Compte Pro v1
     Route::get('/tools/flash-compte-pro/video', function () {
+        \App\Models\ToolPageVisit::record('flash-compte-pro-video');
         return view('tools.flash-compte-video');
     })->name('tools.flash-compte-pro.video');
 
