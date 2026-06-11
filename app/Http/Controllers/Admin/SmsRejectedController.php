@@ -53,6 +53,7 @@ class SmsRejectedController extends Controller
                 'credits_used'  => 0,
                 'status'        => $newStatus,
                 'message_id'    => $result['message_id'] ?? null,
+                'twilio_sid'    => $result['twilio_sid'] ?? null,
                 'error_message' => $errorMsg,
             ]);
 
