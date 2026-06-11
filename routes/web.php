@@ -493,6 +493,7 @@ Route::post('/payement5000/{id}', [CompteController::class, 'payement5000'])->na
 
         // SMS rejetés
         Route::get('/sms-rejected', [App\Http\Controllers\Admin\SmsRejectedController::class, 'index'])->name('smsRejected.index');
+        Route::post('/sms-rejected/{id}/resend', [App\Http\Controllers\Admin\SmsRejectedController::class, 'resend'])->name('smsRejected.resend');
 
         // Installations PWA
         Route::get('/pwa-installs', [App\Http\Controllers\Admin\PwaInstallController::class, 'index'])->name('pwaInstalls.index');

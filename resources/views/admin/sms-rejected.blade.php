@@ -8,6 +8,19 @@
     <p class="text-secondary">Messages envoyés par les utilisateurs et rejetés par l'opérateur.</p>
 </div>
 
+@if(session('success'))
+    <div class="alert alert-success alert-dismissible fade show mb-3" role="alert">
+        <i data-lucide="check-circle" style="width:16px;height:16px" class="me-1"></i> {{ session('success') }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+@endif
+@if(session('error'))
+    <div class="alert alert-danger alert-dismissible fade show mb-3" role="alert">
+        <i data-lucide="alert-circle" style="width:16px;height:16px" class="me-1"></i> {{ session('error') }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+@endif
+
 <div class="card border-0 shadow-sm">
     <div class="card-body p-0">
         @if($rejected->isEmpty())
@@ -27,6 +40,7 @@
                         <th>Message complet</th>
                         <th>Erreur opérateur</th>
                         <th>Date</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -56,6 +70,14 @@
                             @endif
                         </td>
                         <td class="text-muted" style="white-space:nowrap;">{{ $sms->created_at->setTimezone('Europe/Paris')->format('d/m/Y H:i') }}</td>
+                        <td>
+                            <form method="POST" action="{{ route('admin.smsRejected.resend', $sms->id) }}" onsubmit="return confirm('Renvoyer ce SMS à {{ $sms->destinataire }} ?')">
+                                @csrf
+                                <button type="submit" class="btn btn-sm btn-outline-primary" title="Renvoyer">
+                                    <i data-lucide="send" style="width:14px;height:14px"></i>
+                                </button>
+                            </form>
+                        </td>
                     </tr>
                     @endforeach
                 </tbody>
