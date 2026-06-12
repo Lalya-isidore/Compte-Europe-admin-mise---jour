@@ -32,7 +32,7 @@
                 </span>
             </p>
             <div class="alert alert-primary" role="alert" style="font-size:.9em;">
-                <p><i class="fas fa-info-circle"></i> Cet outil vous permet de générer un <b>contrat de prêt professionnel</b> en PDF, signé et horodaté, dans la langue de votre choix (10 langues disponibles). Personnalisez les parties, le montant, la durée, le taux, et les articles du contrat.</p>
+                <p><i class="fas fa-info-circle"></i> Cet outil vous permet de générer un <b>contrat de prêt professionnel</b> en PDF, signé et horodaté, dans la langue de votre choix (11 langues disponibles). Personnalisez les parties, le montant, la durée, le taux, et les articles du contrat.</p>
                 <b>NB :</b> Chaque téléchargement coûte <b>1 000 crédits</b>. La première génération est <b>gratuite</b> (contrat avec filigrane Flash Bilan).
             </div>
         </div>
@@ -51,7 +51,7 @@
                     <div class="cp-card__body">
                         <div class="cp-field">
                             <select name="lang" id="lang-select">
-                                @foreach(['fr' => '🇫🇷 Français', 'en' => '🇬🇧 Anglais', 'es' => '🇪🇸 Espagnol', 'pt' => '🇵🇹 Portugais', 'de' => '🇩🇪 Allemand', 'it' => '🇮🇹 Italien', 'nl' => '🇳🇱 Néerlandais', 'pl' => '🇵🇱 Polonais', 'hr' => '🇭🇷 Croate', 'ru' => '🇷🇺 Russe'] as $code => $label)
+                                @foreach(['fr' => '🇫🇷 Français', 'en' => '🇬🇧 Anglais', 'es' => '🇪🇸 Espagnol', 'pt' => '🇵🇹 Portugais', 'de' => '🇩🇪 Allemand', 'it' => '🇮🇹 Italien', 'nl' => '🇳🇱 Néerlandais', 'pl' => '🇵🇱 Polonais', 'hr' => '🇭🇷 Croate', 'ru' => '🇷🇺 Russe', 'ro' => '🇷🇴 Roumain'] as $code => $label)
                                     <option value="{{ $code }}" {{ $code === 'fr' ? 'selected' : '' }}>{{ $label }}</option>
                                 @endforeach
                             </select>
@@ -437,7 +437,7 @@
                 <h6 class="text-primary">Fonctionnement</h6>
                 <p>Remplissez le formulaire avec les informations des parties, les conditions financières et éventuellement vos signatures. L'aperçu se met à jour en temps réel. Cliquez sur <b>Télécharger</b> pour générer et télécharger le PDF.</p>
                 <p>Cet outil est payant (<b>1 000 crédits</b> par téléchargement). La <b>première génération est gratuite</b> mais le contrat portera un filigrane <em>Flash Bilan</em> sur chaque page. Les générations suivantes produisent un contrat officiel sans filigrane.</p>
-                <p><b>Langues disponibles :</b> Français, Anglais, Espagnol, Portugais, Allemand, Italien, Néerlandais, Polonais, Croate, Russe.</p>
+                <p><b>Langues disponibles :</b> Français, Anglais, Espagnol, Portugais, Allemand, Italien, Néerlandais, Polonais, Croate, Russe, Roumain.</p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
@@ -605,7 +605,7 @@ const allTranslations = @json($translations);
 const currencySymbols = @json(array_map(fn($c) => $c['symbol'], $currencies));
 
 document.addEventListener('DOMContentLoaded', () => {
-    const langTitles = { fr: 'CONTRAT DE PRÊT', en: 'LOAN CONTRACT', es: 'CONTRATO DE PRÉSTAMO', pt: 'CONTRATO DE EMPRÉSTIMO', de: 'DARLEHENSVERTRAG', it: 'CONTRATTO DI PRESTITO', nl: 'LENINGSOVEREENKOMST', pl: 'UMOWA POŻYCZKI', hr: 'UGOVOR O ZAJMU', ru: 'КРЕДИТНЫЙ ДОГОВОР' };
+    const langTitles = { fr: 'CONTRAT DE PRÊT', en: 'LOAN CONTRACT', es: 'CONTRATO DE PRÉSTAMO', pt: 'CONTRATO DE EMPRÉSTIMO', de: 'DARLEHENSVERTRAG', it: 'CONTRATTO DI PRESTITO', nl: 'LENINGSOVEREENKOMST', pl: 'UMOWA POŻYCZKI', hr: 'UGOVOR O ZAJMU', ru: 'КРЕДИТНЫЙ ДОГОВОР', ro: 'CONTRACT DE ÎMPRUMUT' };
 
     const articleBodies = [
         (t, montant, sym, duree) => t.art1_p1a + ' ' + (montant > 0 ? montant.toLocaleString('fr-FR') + ' ' + sym : '—') + '. ' + (t.art1_p1b || ''),
