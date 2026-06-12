@@ -41,6 +41,30 @@
                 <form method="POST" action="{{ route('admin.notifyUsers.send') }}" id="emailForm" enctype="multipart/form-data">
                     @csrf
 
+                    {{-- Type d'envoi --}}
+                    <div class="mb-4">
+                        <label class="form-label fw-bold text-dark d-flex align-items-center gap-2 mb-2">
+                            <i data-lucide="send" style="width: 16px;"></i> Type d'envoi
+                        </label>
+                        <div class="d-flex gap-2">
+                            <label class="flex-fill text-center">
+                                <input type="radio" name="type" value="email" id="type-email" class="btn-check" checked>
+                                <span class="btn btn-outline-primary w-100 py-2 fw-medium">✉️ E-mail</span>
+                            </label>
+                            <label class="flex-fill text-center">
+                                <input type="radio" name="type" value="chat" id="type-chat" class="btn-check">
+                                <span class="btn btn-outline-success w-100 py-2 fw-medium">💬 Chat</span>
+                            </label>
+                            <label class="flex-fill text-center">
+                                <input type="radio" name="type" value="both" id="type-both" class="btn-check">
+                                <span class="btn btn-outline-warning w-100 py-2 fw-medium">📨 Les deux</span>
+                            </label>
+                        </div>
+                        <p class="text-secondary small mt-2 mb-0" id="type-hint-email">Envoyé dans leur boîte e-mail (Gmail, etc.).</p>
+                        <p class="text-secondary small mt-2 mb-0 d-none" id="type-hint-chat">Apparaît dans l'icône de support quand ils se connectent à leur compte.</p>
+                        <p class="text-secondary small mt-2 mb-0 d-none" id="type-hint-both">Envoyé simultanément par e-mail et dans le chat de support.</p>
+                    </div>
+
                     <div class="mb-4">
                         <label class="form-label fw-bold text-dark d-flex align-items-center gap-2 mb-2">
                             <i data-lucide="users" style="width: 16px;"></i> Destinataires
@@ -107,15 +131,16 @@
                         </div>
                     </div>
 
-                    <div class="mb-4">
+                    <div class="mb-4" id="subject-block">
                         <label class="form-label fw-bold text-dark d-flex align-items-center gap-2 mb-2">
                             <i data-lucide="type" style="width: 16px;"></i> Sujet de l'e-mail
                         </label>
                         <input type="text" name="subject" id="email-subject" class="form-control form-control-lg border rounded-3 fs-6 py-3 bg-light bg-opacity-50"
-                               value="Mise à jour requise - Photo de profil client" required>
+                               value="Mise à jour requise - Photo de profil client">
+                        @error('subject')<div class="text-danger small mt-1">{{ $message }}</div>@enderror
                     </div>
 
-                    <div class="mb-4">
+                    <div class="mb-4" id="banner-block">
                         <label class="form-label fw-bold text-dark d-flex align-items-center gap-2 mb-2">
                             <i data-lucide="image" style="width: 16px;"></i> Affiche / Bannière (optionnel)
                         </label>
@@ -157,8 +182,8 @@ L'équipe {{ config('app.name', 'TRANSFERFLUX') }}</textarea>
                     </div>
 
                     <div class="pt-2">
-                        <button type="submit" class="btn btn-primary-premium btn-premium w-100 py-3 shadow-premium fs-5 fw-bold d-flex align-items-center justify-content-center gap-2">
-                            <i data-lucide="send"></i> Envoyer la notification
+                        <button type="submit" id="submit-btn" class="btn btn-primary-premium btn-premium w-100 py-3 shadow-premium fs-5 fw-bold d-flex align-items-center justify-content-center gap-2">
+                            <i data-lucide="send"></i> <span id="submit-label">Envoyer par e-mail</span>
                         </button>
                     </div>
                 </form>
@@ -198,7 +223,40 @@ document.addEventListener('DOMContentLoaded', () => {
     const targetSelect = document.getElementById('target-select');
     const singleUserBlock = document.getElementById('single-user-block');
     const emailForm = document.getElementById('emailForm');
-    
+    const subjectBlock = document.getElementById('subject-block');
+    const bannerBlock = document.getElementById('banner-block');
+    const submitLabel = document.getElementById('submit-label');
+    const typeHints = {
+        email: document.getElementById('type-hint-email'),
+        chat: document.getElementById('type-hint-chat'),
+        both: document.getElementById('type-hint-both'),
+    };
+    const submitLabels = {
+        email: 'Envoyer par e-mail',
+        chat: 'Envoyer dans le chat',
+        both: 'Envoyer par e-mail & chat',
+    };
+
+    function applyTypeToggle(type) {
+        const isEmail = type === 'email' || type === 'both';
+        subjectBlock.style.display = isEmail ? '' : 'none';
+        bannerBlock.style.display = isEmail ? '' : 'none';
+        submitLabel.textContent = submitLabels[type] || submitLabels.email;
+        Object.keys(typeHints).forEach(k => {
+            typeHints[k].classList.toggle('d-none', k !== type);
+        });
+    }
+
+    document.querySelectorAll('input[name="type"]').forEach(radio => {
+        radio.addEventListener('change', function() {
+            applyTypeToggle(this.value);
+        });
+    });
+
+    // État initial
+    const checkedType = document.querySelector('input[name="type"]:checked');
+    if (checkedType) applyTypeToggle(checkedType.value);
+
     targetSelect.addEventListener('change', function(){
         if(this.value === 'single') {
             singleUserBlock.style.display = 'block';
@@ -207,7 +265,7 @@ document.addEventListener('DOMContentLoaded', () => {
             singleUserBlock.style.display = 'none';
         }
     });
-    
+
     emailForm.addEventListener('submit', function(e) {
         if(!confirm('Attention : Vous êtes sur le point d\'envoyer un message à vos utilisateurs. Confirmer l\'envoi ?')) {
             e.preventDefault();
