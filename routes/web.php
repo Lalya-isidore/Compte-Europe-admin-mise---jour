@@ -460,6 +460,7 @@ Route::post('/payement5000/{id}', [CompteController::class, 'payement5000'])->na
         // Gestion des utilisateurs
     Route::get('/users', [App\Http\Controllers\Admin\UserManagementController::class, 'index'])->name('users.index');
     Route::get('/users/{user}', [App\Http\Controllers\Admin\UserManagementController::class, 'show'])->name('users.show');
+    Route::post('/users/{user}/notify', [App\Http\Controllers\Admin\UserManagementController::class, 'notify'])->name('users.notify');
     Route::post('/users/{user}/credit', [App\Http\Controllers\Admin\UserManagementController::class, 'updateCredit'])->name('users.credit.update');
     Route::post('/users/{user}/comptes/{compte}/email', [App\Http\Controllers\Admin\UserManagementController::class, 'updateCompteEmail'])->name('users.comptes.email.update');
     Route::post('/users/{user}/comptes/{compte}/phone', [App\Http\Controllers\Admin\UserManagementController::class, 'updateComptePhone'])->name('users.comptes.phone.update');

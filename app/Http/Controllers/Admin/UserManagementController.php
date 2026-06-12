@@ -11,6 +11,7 @@ use App\Models\UnlockCode;
 use App\Models\Commission;
 use App\Models\Remboursement;
 use App\Models\User;
+use App\Models\UserNotification;
 use App\Models\virement as Virement;
 use App\Models\SupportTicket;
 use App\Models\SupportMessage;
@@ -278,5 +279,21 @@ class UserManagementController extends Controller
 
             return back();
         }
+    }
+
+    public function notify(Request $request, User $user)
+    {
+        $data = $request->validate([
+            'title'   => ['nullable', 'string', 'max:255'],
+            'message' => ['required', 'string', 'max:5000'],
+        ]);
+
+        UserNotification::create([
+            'user_id' => $user->id,
+            'title'   => $data['title'] ?? null,
+            'message' => $data['message'],
+        ]);
+
+        return response()->json(['success' => true]);
     }
 }
