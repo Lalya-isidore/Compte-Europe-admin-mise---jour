@@ -53,16 +53,16 @@
                             </label>
                             <label class="flex-fill text-center">
                                 <input type="radio" name="type" value="chat" id="type-chat" class="btn-check">
-                                <span class="btn btn-outline-success w-100 py-2 fw-medium">💬 Chat</span>
+                                <span class="btn btn-outline-success w-100 py-2 fw-medium">🔔 Notification</span>
                             </label>
                             <label class="flex-fill text-center">
                                 <input type="radio" name="type" value="both" id="type-both" class="btn-check">
-                                <span class="btn btn-outline-warning w-100 py-2 fw-medium">📨 Les deux</span>
+                                <span class="btn btn-outline-warning w-100 py-2 fw-medium">📨 E-mail + 🔔</span>
                             </label>
                         </div>
                         <p class="text-secondary small mt-2 mb-0" id="type-hint-email">Envoyé dans leur boîte e-mail (Gmail, etc.).</p>
-                        <p class="text-secondary small mt-2 mb-0 d-none" id="type-hint-chat">Apparaît dans l'icône de support quand ils se connectent à leur compte.</p>
-                        <p class="text-secondary small mt-2 mb-0 d-none" id="type-hint-both">Envoyé simultanément par e-mail et dans le chat de support.</p>
+                        <p class="text-secondary small mt-2 mb-0 d-none" id="type-hint-chat">Apparaît dans l'icône cloche 🔔 de leur tableau de bord quand ils se connectent.</p>
+                        <p class="text-secondary small mt-2 mb-0 d-none" id="type-hint-both">Envoyé simultanément par e-mail et dans la cloche 🔔 de leur tableau de bord.</p>
                     </div>
 
                     <div class="mb-4">
@@ -233,8 +233,8 @@ document.addEventListener('DOMContentLoaded', () => {
     };
     const submitLabels = {
         email: 'Envoyer par e-mail',
-        chat: 'Envoyer dans le chat',
-        both: 'Envoyer par e-mail & chat',
+        chat: 'Envoyer la notification 🔔',
+        both: 'Envoyer par e-mail + notification 🔔',
     };
 
     function applyTypeToggle(type) {
