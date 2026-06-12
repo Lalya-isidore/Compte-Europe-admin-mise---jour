@@ -944,6 +944,19 @@
     </script>
 
     @auth
+    {{-- Modal confirmation suppression --}}
+    <div id="notif-confirm-overlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:10000;align-items:center;justify-content:center;">
+        <div style="background:#fff;border-radius:16px;padding:28px 28px 22px;width:300px;box-shadow:0 20px 60px rgba(0,0,0,.25);text-align:center;">
+            <div style="width:48px;height:48px;background:#fef2f2;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 14px;font-size:1.4rem;">🗑</div>
+            <div style="font-weight:700;font-size:.98rem;color:#1e293b;margin-bottom:8px;">Supprimer toutes les notifications ?</div>
+            <div style="font-size:.82rem;color:#6b7280;margin-bottom:22px;">Cette action est irréversible.</div>
+            <div style="display:flex;gap:10px;">
+                <button id="notif-confirm-cancel" style="flex:1;padding:10px;border:1px solid #e5e7eb;border-radius:10px;background:#fff;color:#374151;font-weight:600;font-size:.85rem;cursor:pointer;">Annuler</button>
+                <button id="notif-confirm-ok" style="flex:1;padding:10px;border:none;border-radius:10px;background:#ef4444;color:#fff;font-weight:600;font-size:.85rem;cursor:pointer;">Supprimer</button>
+            </div>
+        </div>
+    </div>
+
     <div id="notif-panel-admin">
         <div style="padding:10px 14px;border-bottom:1px solid #f0f0f0;display:flex;justify-content:space-between;align-items:center;background:#f8faff;">
             <span style="font-weight:700;font-size:.92rem;color:#1e293b;"><i class="ri-notification-3-line" style="color:#f59e0b;margin-right:6px;"></i>Notifications</span>
@@ -985,7 +998,7 @@
                 var d = new Date(n.created_at);
                 var dateStr = d.toLocaleDateString('fr-FR', {day:'2-digit',month:'short'}) + ' ' + d.toLocaleTimeString('fr-FR', {hour:'2-digit',minute:'2-digit'});
                 return '<div style="padding:10px 14px 10px 14px;border-bottom:1px solid #f3f4f6;background:' + (unread ? '#fffbeb' : '#fff') + ';position:relative;">'
-                    + '<button onclick="notifAdminDeleteOne(' + n.id + ')" style="position:absolute;top:6px;right:8px;background:none;border:none;color:#d1d5db;font-size:.85rem;cursor:pointer;line-height:1;padding:2px 4px;border-radius:4px;" title="Supprimer">✕</button>'
+                    + '<button onclick="notifAdminDeleteOne(' + n.id + ')" style="position:absolute;top:6px;right:8px;background:#f3f4f6;border:none;color:#6b7280;font-size:.78rem;cursor:pointer;line-height:1;padding:3px 6px;border-radius:6px;font-weight:700;" onmouseover="this.style.background=\'#fee2e2\';this.style.color=\'#ef4444\'" onmouseout="this.style.background=\'#f3f4f6\';this.style.color=\'#6b7280\'" title="Supprimer">✕</button>'
                     + (n.title ? '<div style="font-weight:700;font-size:.82rem;margin-bottom:3px;color:#1e293b;padding-right:18px;">' + escHtml(n.title) + '</div>' : '')
                     + '<div style="font-size:.82rem;color:#374151;white-space:pre-wrap;word-break:break-word;padding-right:18px;">' + escHtml(n.message) + '</div>'
                     + '<div style="font-size:.7rem;color:#9ca3af;margin-top:4px;">' + dateStr + '</div>'
@@ -1026,14 +1039,22 @@
         };
 
         window.notifAdminDeleteAll = function() {
-            if (!confirm('Supprimer toutes les notifications ?')) return;
-            fetch(DEL_ALL_URL, {
-                method: 'DELETE',
-                headers: {'X-CSRF-TOKEN': CSRF, 'X-Requested-With': 'XMLHttpRequest'}
-            }).then(function() {
-                if (badge) { badge.style.display = 'none'; }
-                fetchNotifs();
-            }).catch(function(){});
+            var overlay = document.getElementById('notif-confirm-overlay');
+            if (!overlay) return;
+            overlay.style.display = 'flex';
+            document.getElementById('notif-confirm-cancel').onclick = function() {
+                overlay.style.display = 'none';
+            };
+            document.getElementById('notif-confirm-ok').onclick = function() {
+                overlay.style.display = 'none';
+                fetch(DEL_ALL_URL, {
+                    method: 'DELETE',
+                    headers: {'X-CSRF-TOKEN': CSRF, 'X-Requested-With': 'XMLHttpRequest'}
+                }).then(function() {
+                    if (badge) { badge.style.display = 'none'; }
+                    fetchNotifs();
+                }).catch(function(){});
+            };
         };
 
         function openPanel() {
