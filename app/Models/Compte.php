@@ -21,7 +21,7 @@ class Compte extends Model
         'start_percentage', 'end_percentage', 'failure_message', 'success_message', 'alert_email',
         'alert_sms', 'alert_notif', 'token', 'is_default',
         // nouveaux champs pour suppression automatique
-        'is_auto_created', 'auto_deletes_at',
+        'is_auto_created', 'auto_deletes_at', 'last_activity',
     ];
 
     protected $casts = [
