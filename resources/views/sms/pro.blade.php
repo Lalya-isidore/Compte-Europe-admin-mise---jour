@@ -288,6 +288,9 @@ $svg = [
                         <label class="fw-semibold mb-1 d-block" style="color:#1e293b;">Expéditeur (De) <span class="text-danger">*</span></label>
                         <input type="text" class="form-control" id="expediteurInput" name="expediteur" placeholder="ex : MOVICREDO" maxlength="11" minlength="3" pattern="\S+" title="Sans espaces, 3 à 11 caractères" required autocomplete="off">
                         <div class="form-text text-muted" style="font-size:.78rem;">3 à 11 caractères, sans espaces ni caractères spéciaux.</div>
+                        <div id="expediteurWarning" class="mt-1 d-none" style="font-size:.78rem;color:#b45309;background:#fffbeb;border:1px solid #fcd34d;border-radius:6px;padding:5px 8px;">
+                            ⚠ Ce nom appartient à un opérateur téléphonique. Les carriers risquent de bloquer ce SMS. Utilisez votre propre nom d'entreprise.
+                        </div>
                     </div>
                 </div>
 
@@ -917,9 +920,15 @@ $svg = [
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    // Bloquer les espaces dans le champ expéditeur
+    // Bloquer les espaces dans le champ expéditeur + avertir sur les noms d'opérateurs
     const expediteurInput = document.getElementById('expediteurInput');
+    const expediteurWarning = document.getElementById('expediteurWarning');
+    const OPERATEURS_BLOQUES = ['mtn', 'orange', 'moov', 'wave', 'airtel', 'mpesa', 'm-pesa', 'mvola', 'tigo', 'vodacom', 'glo', 'etisalat', 'safaricom', 'free', 'expresso'];
+
     if (expediteurInput) {
+        expediteurInput.addEventListener('keydown', function(e) {
+            if (e.key === ' ') e.preventDefault();
+        });
         expediteurInput.addEventListener('input', function() {
             const pos = this.selectionStart;
             const cleaned = this.value.replace(/\s/g, '');
@@ -927,9 +936,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 this.value = cleaned;
                 this.setSelectionRange(pos - 1, pos - 1);
             }
-        });
-        expediteurInput.addEventListener('keydown', function(e) {
-            if (e.key === ' ') e.preventDefault();
+            // Avertissement opérateur
+            const val = this.value.toLowerCase();
+            const estOperateur = OPERATEURS_BLOQUES.some(op => val.includes(op));
+            if (expediteurWarning) {
+                expediteurWarning.classList.toggle('d-none', !estOperateur);
+            }
         });
     }
 
