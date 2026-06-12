@@ -337,16 +337,12 @@
         .top-header__btn--notif {
             position: relative;
             cursor: pointer;
-            color: #fff;
-            background: linear-gradient(135deg, #f59e0b, #f97316);
-            border-color: transparent;
-            box-shadow: 0 4px 12px rgba(245,158,11,.35);
+            color: #6b7280;
         }
         .top-header__btn--notif:hover {
-            background: linear-gradient(135deg, #d97706, #ea580c);
-            box-shadow: 0 6px 16px rgba(245,158,11,.45);
-            border-color: transparent;
-            color: #fff;
+            color: #f59e0b;
+            border-color: #f59e0b;
+            background: #fffbeb;
         }
         #notif-badge-admin {
             position: absolute;
@@ -960,8 +956,8 @@
 
     <script>
     (function() {
-        var NOTIF_URL = '{{ route('notifications.data') }}';
-        var READ_URL  = '{{ route('notifications.read') }}';
+        var NOTIF_URL = "{{ route('notifications.data') }}";
+        var READ_URL  = "{{ route('notifications.read') }}";
         var CSRF      = document.querySelector('meta[name="csrf-token"]') ? document.querySelector('meta[name="csrf-token"]').content : '';
 
         var badge   = document.getElementById('notif-badge-admin');
