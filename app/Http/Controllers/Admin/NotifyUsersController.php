@@ -4,9 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Mail\MassNotification;
-use App\Models\SupportMessage;
-use App\Models\SupportTicket;
 use App\Models\User;
+use App\Models\UserNotification;
 use App\Services\SafeMailService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -77,39 +76,19 @@ class NotifyUsersController extends Controller
             $results[] = "{$count} e-mail(s) en cours d'envoi";
         }
 
-        // Envoi dans le chat support
+        // Envoi dans les notifications in-app (cloche)
         if (in_array($type, ['chat', 'both'])) {
-            $now = now();
+            $title = $data['subject'] ?? null;
             foreach ($list as $user) {
-                $ticket = SupportTicket::where('user_id', $user->id)
-                    ->whereIn('status', ['open', 'pending', 'answered'])
-                    ->orderByDesc('last_message_at')
-                    ->first();
-
-                if (! $ticket) {
-                    $ticket = SupportTicket::create([
-                        'user_id'         => $user->id,
-                        'subject'         => 'Message de l\'équipe FlashBilan',
-                        'status'          => 'answered',
-                        'last_message_at' => $now,
-                    ]);
-                } else {
-                    $ticket->update([
-                        'status'          => 'answered',
-                        'last_message_at' => $now,
-                    ]);
-                }
-
-                SupportMessage::create([
-                    'support_ticket_id' => $ticket->id,
-                    'user_id'           => null,
-                    'sent_by_admin'     => true,
-                    'content'           => $message,
-                    'read_at'           => null,
+                UserNotification::create([
+                    'user_id' => $user->id,
+                    'title'   => $title,
+                    'message' => $message,
+                    'read_at' => null,
                 ]);
             }
 
-            $results[] = "{$count} message(s) envoyés dans le chat";
+            $results[] = "{$count} notification(s) envoyées dans la cloche";
         }
 
         return back()->with('success', '✅ ' . implode(' et ', $results) . '.');

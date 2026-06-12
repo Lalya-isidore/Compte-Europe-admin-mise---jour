@@ -318,6 +318,12 @@
                             <li class="nav-item mx-1">
                                 <a class="nav-link {{ request()->routeIs('compte.create') ? 'active' : '' }}" href="{{ route('compte.create') }}">Compte</a>
                             </li>
+                            <li class="nav-item mx-1" style="position:relative;">
+                                <button type="button" id="notif-bell-btn" class="nav-link" style="background:none;border:none;cursor:pointer;padding:0.45rem 1.1rem;position:relative;" title="Notifications">
+                                    <i class="fas fa-bell"></i>
+                                    <span id="notif-badge" style="position:absolute;top:2px;right:4px;background:#ef4444;color:#fff;border-radius:999px;font-size:.6rem;min-width:16px;height:16px;display:none;align-items:center;justify-content:center;padding:0 3px;line-height:16px;font-weight:700;">0</span>
+                                </button>
+                            </li>
                             <li class="nav-item mx-1">
                                 <a class="nav-link" href="{{ route('logout') }}">Me déconnecter</a>
                             </li>
@@ -495,6 +501,109 @@
             });
         }
     </script>
+
+    @auth
+    {{-- Panneau de notifications --}}
+    <div id="notif-panel" style="display:none;flex-direction:column;position:fixed;top:64px;right:12px;width:320px;max-height:460px;background:#fff;border-radius:14px;box-shadow:0 8px 32px rgba(0,0,0,.18);z-index:9999;overflow:hidden;">
+        <div style="padding:12px 16px;border-bottom:1px solid #f0f0f0;display:flex;justify-content:space-between;align-items:center;background:#f8faff;">
+            <span style="font-weight:700;font-size:.92rem;color:#1e293b;"><i class="fas fa-bell me-1" style="color:#6366f1;margin-right:6px;"></i>Notifications</span>
+            <button onclick="notifMarkAllRead()" style="background:none;border:none;color:#6366f1;font-size:.75rem;cursor:pointer;padding:0;font-weight:600;">Tout marquer lu</button>
+        </div>
+        <div id="notif-list" style="overflow-y:auto;flex:1;">
+            <div id="notif-empty" style="text-align:center;padding:32px 16px;color:#9ca3af;font-size:.85rem;">Aucune notification</div>
+        </div>
+    </div>
+
+    <script>
+    (function() {
+        var NOTIF_URL = '{{ route('notifications.data') }}';
+        var READ_URL  = '{{ route('notifications.read') }}';
+        var CSRF      = document.querySelector('meta[name="csrf-token"]') ? document.querySelector('meta[name="csrf-token"]').content : '';
+
+        var badge   = document.getElementById('notif-badge');
+        var panel   = document.getElementById('notif-panel');
+        var bellBtn = document.getElementById('notif-bell-btn');
+        var list    = document.getElementById('notif-list');
+
+        var panelOpen = false;
+
+        function escHtml(s) {
+            return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+        }
+
+        function renderNotifs(notifs) {
+            if (!list) return;
+            if (!notifs || notifs.length === 0) {
+                list.innerHTML = '<div style="text-align:center;padding:32px 16px;color:#9ca3af;font-size:.85rem;">Aucune notification</div>';
+                return;
+            }
+            list.innerHTML = notifs.map(function(n) {
+                var unread = !n.read_at;
+                var d = new Date(n.created_at);
+                var dateStr = d.toLocaleDateString('fr-FR', {day:'2-digit',month:'short'}) + ' ' + d.toLocaleTimeString('fr-FR', {hour:'2-digit',minute:'2-digit'});
+                return '<div style="padding:11px 16px;border-bottom:1px solid #f3f4f6;background:' + (unread ? '#f0f4ff' : '#fff') + ';">'
+                    + (n.title ? '<div style="font-weight:700;font-size:.82rem;margin-bottom:3px;color:#1e293b;">' + escHtml(n.title) + '</div>' : '')
+                    + '<div style="font-size:.82rem;color:#374151;white-space:pre-wrap;word-break:break-word;">' + escHtml(n.message) + '</div>'
+                    + '<div style="font-size:.7rem;color:#9ca3af;margin-top:4px;">' + dateStr + '</div>'
+                    + '</div>';
+            }).join('');
+        }
+
+        function fetchNotifs() {
+            fetch(NOTIF_URL, {headers:{'X-Requested-With':'XMLHttpRequest'}})
+                .then(function(r) { return r.json(); })
+                .then(function(data) {
+                    if (!data.success) return;
+                    var count = data.unread_count;
+                    if (badge) {
+                        badge.textContent = count > 9 ? '9+' : count;
+                        badge.style.display = count > 0 ? 'inline-flex' : 'none';
+                    }
+                    if (panelOpen) renderNotifs(data.notifications);
+                }).catch(function(){});
+        }
+
+        window.notifMarkAllRead = function() {
+            fetch(READ_URL, {
+                method: 'POST',
+                headers: {'X-CSRF-TOKEN': CSRF, 'Content-Type': 'application/json', 'X-Requested-With': 'XMLHttpRequest'},
+                body: JSON.stringify({ids: []})
+            }).then(function() {
+                if (badge) { badge.textContent = '0'; badge.style.display = 'none'; }
+                fetchNotifs();
+            }).catch(function(){});
+        };
+
+        function openPanel() {
+            panelOpen = true;
+            if (panel) panel.style.display = 'flex';
+            fetchNotifs();
+            setTimeout(notifMarkAllRead, 800);
+        }
+
+        function closePanel() {
+            panelOpen = false;
+            if (panel) panel.style.display = 'none';
+        }
+
+        if (bellBtn) {
+            bellBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                panelOpen ? closePanel() : openPanel();
+            });
+        }
+
+        document.addEventListener('click', function(e) {
+            if (panelOpen && panel && !panel.contains(e.target) && bellBtn && !bellBtn.contains(e.target)) {
+                closePanel();
+            }
+        });
+
+        fetchNotifs();
+        setInterval(fetchNotifs, 30000);
+    })();
+    </script>
+    @endauth
 
 </body>
 

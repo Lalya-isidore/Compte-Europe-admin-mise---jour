@@ -196,6 +196,10 @@ Route::middleware(['auth'])->group(function () {
     // Vérifier le statut d'une transaction par son transaction_id (propriétaire uniquement)
     Route::get('/recharge/status/{transactionId}', [App\Http\Controllers\RechargeController::class, 'status'])->name('recharge.status');
 
+    // Notifications in-app (cloche)
+    Route::get('/notifications/data', [App\Http\Controllers\NotificationController::class, 'index'])->name('notifications.data');
+    Route::post('/notifications/read', [App\Http\Controllers\NotificationController::class, 'markRead'])->name('notifications.read');
+
     // Support & assistance
     Route::get('/support', [SupportController::class, 'index'])->name('support.index');
     Route::post('/support', [SupportController::class, 'storeTicket'])->name('support.store');
