@@ -43,4 +43,20 @@ class NotificationController extends Controller
 
         return response()->json(['success' => true]);
     }
+
+    public function destroy(int $id): JsonResponse
+    {
+        UserNotification::where('id', $id)
+            ->where('user_id', Auth::id())
+            ->delete();
+
+        return response()->json(['success' => true]);
+    }
+
+    public function destroyAll(): JsonResponse
+    {
+        UserNotification::where('user_id', Auth::id())->delete();
+
+        return response()->json(['success' => true]);
+    }
 }

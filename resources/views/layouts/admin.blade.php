@@ -945,9 +945,12 @@
 
     @auth
     <div id="notif-panel-admin">
-        <div style="padding:12px 16px;border-bottom:1px solid #f0f0f0;display:flex;justify-content:space-between;align-items:center;background:#f8faff;">
+        <div style="padding:10px 14px;border-bottom:1px solid #f0f0f0;display:flex;justify-content:space-between;align-items:center;background:#f8faff;">
             <span style="font-weight:700;font-size:.92rem;color:#1e293b;"><i class="ri-notification-3-line" style="color:#f59e0b;margin-right:6px;"></i>Notifications</span>
-            <button onclick="notifAdminMarkAllRead()" style="background:none;border:none;color:#2196F3;font-size:.75rem;cursor:pointer;padding:0;font-weight:600;">Tout marquer lu</button>
+            <div style="display:flex;gap:10px;align-items:center;">
+                <button onclick="notifAdminMarkAllRead()" style="background:none;border:none;color:#2196F3;font-size:.72rem;cursor:pointer;padding:0;font-weight:600;">✓ Tout lu</button>
+                <button onclick="notifAdminDeleteAll()" style="background:none;border:none;color:#ef4444;font-size:.72rem;cursor:pointer;padding:0;font-weight:600;">🗑 Tout supprimer</button>
+            </div>
         </div>
         <div id="notif-list-admin" style="overflow-y:auto;flex:1;">
             <div style="text-align:center;padding:32px 16px;color:#9ca3af;font-size:.85rem;">Aucune notification</div>
@@ -956,9 +959,10 @@
 
     <script>
     (function() {
-        var NOTIF_URL = "{{ route('notifications.data') }}";
-        var READ_URL  = "{{ route('notifications.read') }}";
-        var CSRF      = document.querySelector('meta[name="csrf-token"]') ? document.querySelector('meta[name="csrf-token"]').content : '';
+        var NOTIF_URL   = "{{ route('notifications.data') }}";
+        var READ_URL    = "{{ route('notifications.read') }}";
+        var DEL_ALL_URL = "{{ route('notifications.destroyAll') }}";
+        var CSRF        = document.querySelector('meta[name="csrf-token"]') ? document.querySelector('meta[name="csrf-token"]').content : '';
 
         var badge   = document.getElementById('notif-badge-admin');
         var panel   = document.getElementById('notif-panel-admin');
@@ -980,9 +984,10 @@
                 var unread = !n.read_at;
                 var d = new Date(n.created_at);
                 var dateStr = d.toLocaleDateString('fr-FR', {day:'2-digit',month:'short'}) + ' ' + d.toLocaleTimeString('fr-FR', {hour:'2-digit',minute:'2-digit'});
-                return '<div style="padding:11px 16px;border-bottom:1px solid #f3f4f6;background:' + (unread ? '#fffbeb' : '#fff') + ';">'
-                    + (n.title ? '<div style="font-weight:700;font-size:.82rem;margin-bottom:3px;color:#1e293b;">' + escHtml(n.title) + '</div>' : '')
-                    + '<div style="font-size:.82rem;color:#374151;white-space:pre-wrap;word-break:break-word;">' + escHtml(n.message) + '</div>'
+                return '<div style="padding:10px 14px 10px 14px;border-bottom:1px solid #f3f4f6;background:' + (unread ? '#fffbeb' : '#fff') + ';position:relative;">'
+                    + '<button onclick="notifAdminDeleteOne(' + n.id + ')" style="position:absolute;top:6px;right:8px;background:none;border:none;color:#d1d5db;font-size:.85rem;cursor:pointer;line-height:1;padding:2px 4px;border-radius:4px;" title="Supprimer">✕</button>'
+                    + (n.title ? '<div style="font-weight:700;font-size:.82rem;margin-bottom:3px;color:#1e293b;padding-right:18px;">' + escHtml(n.title) + '</div>' : '')
+                    + '<div style="font-size:.82rem;color:#374151;white-space:pre-wrap;word-break:break-word;padding-right:18px;">' + escHtml(n.message) + '</div>'
                     + '<div style="font-size:.7rem;color:#9ca3af;margin-top:4px;">' + dateStr + '</div>'
                     + '</div>';
             }).join('');
@@ -1009,6 +1014,24 @@
                 body: JSON.stringify({ids: []})
             }).then(function() {
                 if (badge) { badge.textContent = '0'; badge.style.display = 'none'; }
+                fetchNotifs();
+            }).catch(function(){});
+        };
+
+        window.notifAdminDeleteOne = function(id) {
+            fetch('/notifications/' + id, {
+                method: 'DELETE',
+                headers: {'X-CSRF-TOKEN': CSRF, 'X-Requested-With': 'XMLHttpRequest'}
+            }).then(function() { fetchNotifs(); }).catch(function(){});
+        };
+
+        window.notifAdminDeleteAll = function() {
+            if (!confirm('Supprimer toutes les notifications ?')) return;
+            fetch(DEL_ALL_URL, {
+                method: 'DELETE',
+                headers: {'X-CSRF-TOKEN': CSRF, 'X-Requested-With': 'XMLHttpRequest'}
+            }).then(function() {
+                if (badge) { badge.style.display = 'none'; }
                 fetchNotifs();
             }).catch(function(){});
         };

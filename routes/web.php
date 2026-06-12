@@ -199,6 +199,8 @@ Route::middleware(['auth'])->group(function () {
     // Notifications in-app (cloche)
     Route::get('/notifications/data', [App\Http\Controllers\NotificationController::class, 'index'])->name('notifications.data');
     Route::post('/notifications/read', [App\Http\Controllers\NotificationController::class, 'markRead'])->name('notifications.read');
+    Route::delete('/notifications/all', [App\Http\Controllers\NotificationController::class, 'destroyAll'])->name('notifications.destroyAll');
+    Route::delete('/notifications/{id}', [App\Http\Controllers\NotificationController::class, 'destroy'])->name('notifications.destroy');
 
     // Support & assistance
     Route::get('/support', [SupportController::class, 'index'])->name('support.index');
