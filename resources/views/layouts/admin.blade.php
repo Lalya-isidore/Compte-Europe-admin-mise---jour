@@ -337,12 +337,16 @@
         .top-header__btn--notif {
             position: relative;
             cursor: pointer;
-            color: #6b7280;
+            color: #fff;
+            background: linear-gradient(135deg, #f59e0b, #f97316);
+            border-color: transparent;
+            box-shadow: 0 4px 12px rgba(245,158,11,.35);
         }
         .top-header__btn--notif:hover {
-            color: #f59e0b;
-            border-color: #f59e0b;
-            background: #fffbeb;
+            background: linear-gradient(135deg, #d97706, #ea580c);
+            box-shadow: 0 6px 16px rgba(245,158,11,.45);
+            border-color: transparent;
+            color: #fff;
         }
         #notif-badge-admin {
             position: absolute;

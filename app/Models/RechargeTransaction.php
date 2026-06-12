@@ -61,7 +61,7 @@ class RechargeTransaction extends Model
             3000 => 2000,    // 3000 F CFA = 2000 crédits
             5000 => 5000,    // 5000 F CFA = 5000 crédits (+0%)
             10000 => 15000,  // 10000 F CFA = 15000 crédits (+50%)
-            15000 => 25000,  // 15000 F CFA = 25000 crédits (+67%)
+            15000 => 20000,  // 15000 F CFA = 20000 crédits (+33%)
             20000 => 35000,  // 20000 F CFA = 35000 crédits (+75%)
             25000 => 40000,  // 25000 F CFA = 40000 crédits (+60%)
             50000 => 100000, // 50000 F CFA = 100000 crédits (+100%)
