@@ -178,6 +178,7 @@
     box-shadow: 0 0 15px rgba(102, 126, 234, 0.2);
 }
 @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+@keyframes pulse-dot { 0%,100% { opacity:1; transform:scale(1); } 50% { opacity:.5; transform:scale(1.4); } }
 .fcp-loading-text { font-weight: 600; color: #4b5563; font-size: 1.1rem; letter-spacing: 0.5px; }
 
 /* Popover */
@@ -1133,6 +1134,30 @@
                                                 <span class="fcp-badge fcp-badge-green"><i class="bi bi-check2-circle"></i> Actif</span>
                                             @endif
                                         </div>
+                                        @php
+                                            $onlineLabel = null;
+                                            if (!empty($compte->last_activity)) {
+                                                $lastAct = \Carbon\Carbon::createFromTimestamp($compte->last_activity)->setTimezone('Europe/Paris');
+                                                $now = \Carbon\Carbon::now('Europe/Paris');
+                                                if ($now->diffInMinutes($lastAct) < 5) {
+                                                    $onlineLabel = ['color' => '#16a34a', 'dot' => true, 'text' => 'En ligne'];
+                                                } elseif ($lastAct->isToday()) {
+                                                    $onlineLabel = ['color' => '#6b7280', 'dot' => false, 'text' => 'En ligne aujourd\'hui à ' . $lastAct->format('H\hi')];
+                                                } else {
+                                                    $onlineLabel = ['color' => '#6b7280', 'dot' => false, 'text' => 'En ligne le ' . $lastAct->format('d/m') . ' à ' . $lastAct->format('H\hi')];
+                                                }
+                                            }
+                                        @endphp
+                                        @if($onlineLabel)
+                                        <div style="margin-top:6px;font-size:.78rem;color:{{ $onlineLabel['color'] }};display:flex;align-items:center;justify-content:center;gap:5px;">
+                                            @if($onlineLabel['dot'])
+                                                <span style="width:7px;height:7px;border-radius:50%;background:#16a34a;display:inline-block;animation:pulse-dot 1.5s infinite;"></span>
+                                            @else
+                                                <i class="bi bi-clock-history" style="font-size:.75rem;"></i>
+                                            @endif
+                                            {{ $onlineLabel['text'] }}
+                                        </div>
+                                        @endif
                                     </div>
 
                                     {{-- Identifiants de connexion --}}
