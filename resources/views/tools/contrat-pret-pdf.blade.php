@@ -31,6 +31,14 @@
         .test-banner { position: fixed; bottom: 0; left: 0; right: 0; background: #c0392b; color: #fff; font-size: 8.5pt; font-weight: bold; text-align: center; padding: 6px 10px; z-index: 1000; letter-spacing: 0.3px; }
         @endif
     </style>
+    @if($lang === 'ro')
+    {{-- DejaVu Serif supporte les caractères roumains spéciaux (ă, â, î, ș, ț) --}}
+    <style>
+        body, table, td, th, h1, h2, h3, p, div, span {
+            font-family: 'DejaVu Serif', serif !important;
+        }
+    </style>
+    @endif
 </head>
 <body>
 <div class="frame"></div>
