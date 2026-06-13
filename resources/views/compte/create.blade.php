@@ -1372,7 +1372,7 @@
 
 {{-- ============ MODAL AIDE ============ --}}
 <div class="modal fade" id="fcpHelpModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-scrollable">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title"><i class="fi fi-rr-info"></i> Utilité et Fonctionnement</h5>
@@ -1522,7 +1522,7 @@
     .fcp-footer-actions { padding:12px 20px 20px; text-align:right; }
 </style>
 <div class="modal fade" id="fcp-data-box" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-scrollable">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title"><i class="bi bi-person-badge"></i> Détails de l'accès client</h5>
