@@ -5,7 +5,7 @@
     <title>Contrat de Prêt</title>
     <style>
         @page { margin: 2cm 1.8cm; }
-        body { font-family: {{ $lang === 'ro' ? "'DejaVu Serif'" : "'Times New Roman'" }}, serif; font-size: 12pt; line-height: 1.75; color: #2c3e50; }
+        body { font-family: {!! $lang === 'ro' ? "'DejaVu Serif'" : "'Times New Roman'" !!}, serif; font-size: 12pt; line-height: 1.75; color: #2c3e50; }
         .container { width: 100%; position: relative; }
         .frame { position: fixed; top: 0; left: 0; right: 0; bottom: 0; border: 2px solid #002B5B; margin: -1.2cm; z-index: -2; }
         .frame-inner { position: fixed; top: 0; left: 0; right: 0; bottom: 0; border: 1px solid #002B5B; margin: -1.1cm; z-index: -2; }
