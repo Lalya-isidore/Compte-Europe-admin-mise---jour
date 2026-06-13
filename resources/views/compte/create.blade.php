@@ -1328,7 +1328,7 @@
 
 {{-- ============ MODAL ALERTE ============ --}}
 <div class="modal fade" id="fcp-modal" tabindex="-1" aria-hidden="true" style="z-index:1070;">
-    <div class="modal-dialog modal-dialog-centered" style="max-width:300px;margin-left:auto;margin-right:auto;">
+    <div class="modal-dialog" style="max-width:300px;margin-left:auto;margin-right:auto;">
         <div class="modal-content" style="border:none;border-radius:16px;overflow:hidden;box-shadow:0 8px 40px rgba(0,0,0,.15)">
             <div class="modal-header" style="background:#198754;border:none;padding:12px 18px;border-radius:16px 16px 0 0;">
                 <h5 class="modal-title" style="color:#fff;font-weight:700;font-size:.95rem;display:flex;align-items:center;gap:8px;">
@@ -1346,7 +1346,7 @@
 
 {{-- ============ MODAL INTERACTION (prompt/confirm) ============ --}}
 <div class="modal fade" id="fcp-interact" tabindex="-1" aria-hidden="true" data-bs-backdrop="static" style="z-index:1070;">
-    <div class="modal-dialog modal-dialog-centered" style="max-width:400px;margin-left:auto;margin-right:auto;">
+    <div class="modal-dialog" style="max-width:400px;margin-left:auto;margin-right:auto;">
         <div class="modal-content">
             <div class="modal-header" id="fcp-interact-header">
                 <h6 class="modal-title" style="color:#fff;" id="fcp-interact-title">Action</h6>
@@ -1372,7 +1372,7 @@
 
 {{-- ============ MODAL AIDE ============ --}}
 <div class="modal fade" id="fcpHelpModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title"><i class="fi fi-rr-info"></i> Utilité et Fonctionnement</h5>
@@ -1429,10 +1429,6 @@
     #fcp-modal .modal-header { border: none; padding: 18px 24px; }
     #fcp-modal .modal-title { font-weight: 700; font-size: 1.05rem; display: flex; align-items: center; gap: 10px; }
     #fcp-modal .modal-body { padding: 30px 25px; font-size: 1.05rem; font-weight: 500; line-height: 1.4; }
-
-    #fcp-data-box .modal-content { background: #f8fafc; }
-    #fcp-data-box .modal-header { background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); border-bottom: 2px solid #3b82f6; padding: 24px 30px; }
-    #fcp-data-box .modal-title { font-size: 1.25rem; }
 
     .fcp-modal-avatar { text-align:center; padding:30px 20px 20px; background:#fff; border-bottom:1px solid #e2e8f0; }
     .fcp-modal-avatar img, .fcp-modal-avatar .fcp-avatar-placeholder {
@@ -1523,7 +1519,7 @@
     .fcp-footer-actions { padding:12px 20px 20px; text-align:right; }
 </style>
 <div class="modal fade" id="fcp-data-box" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title"><i class="bi bi-person-badge"></i> Détails de l'accès client</h5>
