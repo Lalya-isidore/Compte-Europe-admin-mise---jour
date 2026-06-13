@@ -11,7 +11,7 @@
         .frame-inner { position: fixed; top: 0; left: 0; right: 0; bottom: 0; border: 1px solid #002B5B; margin: -1.1cm; z-index: -2; }
         .watermark { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 500px; height: 500px; opacity: 0.05; z-index: -1; background-image: url("{{ public_path('images/contract/logo-justice.jpg') }}"); background-repeat: no-repeat; background-position: center; background-size: contain; }
         .header-table { width: 100%; border-bottom: 3px double #002B5B; margin-bottom: 18px; padding-bottom: 18px; }
-        h1 { color: #4B0082; font-size: 17pt; font-weight: bold; margin: 0; letter-spacing: 1px; white-space: nowrap; }
+        h1 { color: #0a1f5c; font-size: 17pt; font-weight: bold; margin: 0; letter-spacing: 2px; }
         .subtitle { text-align: center; font-size: 11pt; font-weight: bold; margin-bottom: 16px; font-style: italic; text-decoration: underline; }
         .party-box { width: 42%; display: inline-block; vertical-align: top; }
         .party-box.left { margin-right: 12%; }
@@ -45,7 +45,7 @@
     <table class="header-table" style="border: none; margin-bottom: 20px;">
         <tr>
             <td style="width: 25%; text-align: center; vertical-align: top; padding-top: 10px;">
-                <img src="{{ public_path('images/contract/logo-ue.png') }}" alt="UE" style="height: 65px; width: auto; display: block; margin: 0 auto 5px auto;">
+                <img src="{{ public_path('images/contract/logo-ue-wave.png') }}" alt="UE" style="height: 80px; width: auto; display: block; margin: 0 auto 5px auto;">
                 <div style="font-size: 8pt; font-weight: bold; color: #003399; line-height: 1.2;">
                     {{ $t['union_eu'] }}<br>
                     <span style="font-size: 6pt; font-weight: normal; color: #333;">_._._._._._._._</span><br>
@@ -54,10 +54,9 @@
                     <span style="font-size: 6.5pt;">{{ $t['tribunal'] }}</span>
                 </div>
             </td>
-            <td style="width: 50%; text-align: center; vertical-align: middle; padding-top: 20px;">
-                <div style="border: 3px solid #4B0082; margin-top: 15px; padding: 12px 25px; display: inline-block; border-radius: 8px; background: linear-gradient(135deg, rgba(75,0,130,0.05), rgba(75,0,130,0.02));">
-                    <h1>{{ $t['titre'] }}</h1>
-                </div>
+            <td style="width: 50%; text-align: center; vertical-align: middle; padding: 5px 8px;">
+                <img src="{{ public_path('images/contract/image.png') }}" alt="" style="width: 100%; height: auto; display: block; margin: 0 auto 2px auto;">
+                <h1>{{ $t['titre'] }}</h1>
             </td>
             <td style="width: 25%; text-align: center; vertical-align: top; padding-top: 10px;">
                 <img src="{{ public_path('images/contract/logo-justice.jpg') }}" alt="Justice" style="height: 75px; width: auto; display: block; margin: 0 auto 5px auto;">
