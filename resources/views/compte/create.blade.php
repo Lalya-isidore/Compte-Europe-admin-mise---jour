@@ -1438,7 +1438,7 @@
     #fcp-data-box .modal-header { background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); border-bottom: 2px solid #3b82f6; padding: 24px 30px; }
     #fcp-data-box .modal-title { font-size: 1.25rem; }
 
-    .fcp-modal-avatar { text-align:center; padding:30px 20px 20px; background:#fff; border-bottom:1px solid #e2e8f0; }
+    .fcp-modal-avatar { text-align:center; padding:30px 20px 20px; background:#fff; border-bottom:1px solid #e2e8f0; position:sticky; top:0; z-index:10; }
     .fcp-modal-avatar img, .fcp-modal-avatar .fcp-avatar-placeholder {
         width:84px; height:84px; border-radius:50%; object-fit:cover; border:4px solid #fff; box-shadow:0 6px 16px rgba(0,0,0,.08);
     }
