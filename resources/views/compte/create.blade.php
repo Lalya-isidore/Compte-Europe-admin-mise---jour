@@ -1527,7 +1527,7 @@
     .fcp-footer-actions { padding:12px 20px 20px; text-align:right; }
 </style>
 <div class="modal fade" id="fcp-data-box" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
+    <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title"><i class="bi bi-person-badge"></i> Détails de l'accès client</h5>
