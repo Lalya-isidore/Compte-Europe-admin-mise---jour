@@ -1393,12 +1393,7 @@
 
 {{-- ============ MODAL DÉTAILS ACCÈS ============ --}}
 <style>
-    #fcp-data-box .modal-content { border:none; border-radius:18px; overflow:hidden; box-shadow: 0 10px 50px rgba(0,0,0,0.2); }
-    #fcp-data-box .modal-header { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); border:none; padding:22px 24px; position: relative; }
-    #fcp-data-box .modal-header::after { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: rgba(255,255,255,0.1); }
-    #fcp-data-box .modal-title { color:#fff; font-weight:700; font-size:1.15rem; letter-spacing: 0.3px; }
-    #fcp-data-box .btn-close { filter:brightness(0) invert(1); opacity: 0.8; }
-    #fcp-data-box .btn-close:hover { opacity: 1; }
+    #fcp-data-box .modal-content { background: #f8fafc; }
 
     /* Interaction Modal (fcp-interact) Premium Styles */
     #fcp-interact { z-index: 9999 !important; }
@@ -1527,7 +1522,7 @@
     .fcp-footer-actions { padding:12px 20px 20px; text-align:right; }
 </style>
 <div class="modal fade" id="fcp-data-box" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title"><i class="bi bi-person-badge"></i> Détails de l'accès client</h5>
