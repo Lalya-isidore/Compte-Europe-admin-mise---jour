@@ -319,7 +319,7 @@
                             {{-- En-tête 3 colonnes identique au PDF --}}
                             <div class="prev-hdr-flex">
                                 <div class="prev-hdr-left">
-                                    <img src="/images/contract/logo-ue.png" class="prev-hdr-img">
+                                    <img src="/images/contract/logo-ue-wave.png" class="prev-hdr-img">
                                     <div id="prev-union-eu" class="prev-hdr-txt-blue">UNION EUROPÉENNE</div>
                                     <span class="prev-hdr-sep">_._._._._._</span>
                                     <div id="prev-service-justice" class="prev-hdr-txt-blue">SERVICE DE JUSTICE ET DROITS HUMAINS</div>
@@ -327,8 +327,11 @@
                                     <div id="prev-tribunal" class="prev-hdr-txt-blue">TRIBUNAL EUROPÉEN DE PREMIÈRE INSTANCE</div>
                                 </div>
                                 <div class="prev-hdr-center">
+                                    <img src="/images/contract/image.png" class="prev-medallion-img">
                                     <div class="prev-title-wrap">
-                                        <div class="prev-title" id="prev-titre">CONTRAT DE PRÊT</div>
+                                        <div class="prev-title-inner">
+                                            <div class="prev-title" id="prev-titre">CONTRAT DE PRÊT</div>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="prev-hdr-right">
@@ -528,8 +531,10 @@
 .prev-hdr-txt-red  { font-size: clamp(6px, 1.5vw, 8px); font-weight: bold; color: #8B0000; line-height: 1.3; word-break: break-word; }
 .prev-hdr-txt-navy { font-size: clamp(5px, 1.3vw, 7px); font-weight: bold; color: #002B5B; word-break: break-word; }
 .prev-hdr-sep { font-size: clamp(5px, 1.2vw, 6px); color: #999; display: block; line-height: 1.2; }
-.prev-title-wrap { border: 2px solid #4B0082; display: inline-block; padding: clamp(3px,0.8vw,5px) clamp(6px,1.5vw,12px); border-radius: 6px; background: rgba(75,0,130,0.03); }
-.prev-title { font-size: clamp(9px, 2.8vw, 15px); font-weight: bold; color: #4B0082; }
+.prev-medallion-img { height: clamp(30px, 6vw, 55px); width: auto; display: block; margin: 0 auto 3px; }
+.prev-title-wrap { border: 2px solid #4B0082; padding: 2px; display: inline-block; width: 90%; }
+.prev-title-inner { border: 1px solid #c8a84b; padding: clamp(3px,0.6vw,5px) clamp(6px,1.2vw,10px); text-align: center; }
+.prev-title { font-size: clamp(9px, 2.8vw, 15px); font-weight: bold; color: #0a1f5c; letter-spacing: 1px; }
 .prev-contract-no { font-size: clamp(6px, 1.6vw, 9px); color: #d00; font-weight: bold; margin-top: 3px; }
 
 .prev-subtitle { text-align: center; font-size: 13px; font-style: italic; font-weight: bold; text-decoration: underline; margin: 10px 0 14px; }

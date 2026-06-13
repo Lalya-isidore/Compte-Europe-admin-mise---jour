@@ -45,7 +45,7 @@
     <table class="header-table" style="border: none; margin-bottom: 20px;">
         <tr>
             <td style="width: 25%; text-align: center; vertical-align: top; padding-top: 10px;">
-                <img src="{{ public_path('images/contract/logo-ue-wave.png') }}" alt="UE" style="height: 80px; width: auto; display: block; margin: 0 auto 5px auto;">
+                <img src="{{ public_path('images/contract/logo-ue-wave.png') }}" alt="UE" style="height: 75px; width: auto; display: block; margin: 0 auto 5px auto;">
                 <div style="font-size: 8pt; font-weight: bold; color: #003399; line-height: 1.2;">
                     {{ $t['union_eu'] }}<br>
                     <span style="font-size: 6pt; font-weight: normal; color: #333;">_._._._._._._._</span><br>
@@ -54,9 +54,13 @@
                     <span style="font-size: 6.5pt;">{{ $t['tribunal'] }}</span>
                 </div>
             </td>
-            <td style="width: 50%; text-align: center; vertical-align: middle; padding: 5px 8px;">
-                <img src="{{ public_path('images/contract/image.png') }}" alt="" style="width: 100%; height: auto; display: block; margin: 0 auto 2px auto;">
-                <h1>{{ $t['titre'] }}</h1>
+            <td style="width: 50%; text-align: center; vertical-align: middle; padding: 4px 8px;">
+                <img src="{{ public_path('images/contract/image.png') }}" alt="" style="height: 55px; width: auto; display: block; margin: 0 auto 4px auto;">
+                <div style="border: 2px solid #4B0082; padding: 3px; display: inline-block; width: 96%;">
+                    <div style="border: 1px solid #c8a84b; padding: 5px 10px; text-align: center;">
+                        <h1>{{ $t['titre'] }}</h1>
+                    </div>
+                </div>
             </td>
             <td style="width: 25%; text-align: center; vertical-align: top; padding-top: 10px;">
                 <img src="{{ public_path('images/contract/logo-justice.jpg') }}" alt="Justice" style="height: 75px; width: auto; display: block; margin: 0 auto 5px auto;">
