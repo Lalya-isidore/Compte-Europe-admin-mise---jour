@@ -1438,7 +1438,8 @@
     #fcp-data-box .modal-header { background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); border-bottom: 2px solid #3b82f6; padding: 24px 30px; }
     #fcp-data-box .modal-title { font-size: 1.25rem; }
 
-    .fcp-modal-avatar { text-align:center; padding:30px 20px 20px; background:#fff; border-bottom:1px solid #e2e8f0; position:sticky; top:0; z-index:10; }
+    #fcp-user-info-bar { background:#fff; border-bottom:2px solid #e2e8f0; flex-shrink:0; }
+    .fcp-modal-avatar { text-align:center; padding:20px 20px 16px; background:#fff; }
     .fcp-modal-avatar img, .fcp-modal-avatar .fcp-avatar-placeholder {
         width:84px; height:84px; border-radius:50%; object-fit:cover; border:4px solid #fff; box-shadow:0 6px 16px rgba(0,0,0,.08);
     }
@@ -1533,6 +1534,7 @@
                 <h5 class="modal-title"><i class="bi bi-person-badge"></i> Détails de l'accès client</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
+            <div id="fcp-user-info-bar"></div>
             <div class="modal-body" style="padding: 15px 6px;">
                 <div id="fcp-data-box-body"></div>
                 <textarea style="opacity:0;position:absolute;pointer-events:none;left:0" id="fcp-copy"></textarea>
@@ -1646,6 +1648,13 @@ window.addEventListener('DOMContentLoaded', function(){
             if (data && fcpDataBox) {
                 document.querySelector('#fcp-data-box .modal-title').innerText = "Détails de l'accès client";
                 document.getElementById('fcp-data-box-body').innerHTML = data.innerHTML;
+                // Extraire l'avatar hors du modal-body (overflow scroll) vers la barre fixe
+                var avatarEl = document.querySelector('#fcp-data-box-body .fcp-modal-avatar');
+                var infoBar = document.getElementById('fcp-user-info-bar');
+                if (avatarEl && infoBar) {
+                    infoBar.innerHTML = avatarEl.outerHTML;
+                    avatarEl.remove();
+                }
                 fcpDataBox.show();
             }
         });
