@@ -531,6 +531,14 @@ class CompteController extends Controller
         return view('pages.show');
     }
 
+    public function getLastActivity($id)
+    {
+        $compte = Compte::find($id);
+        return response()->json([
+            'last_activity' => $compte ? (int)$compte->last_activity : 0
+        ]);
+    }
+
 
 
 

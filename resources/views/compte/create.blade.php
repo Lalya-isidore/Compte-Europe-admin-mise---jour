@@ -1113,7 +1113,7 @@
                                     $cSmsCost = ($cRegionCost['compte_sms_optional'] ?? true) ? ($compte->alert_sms ? ($cRegionCost['compte_sms_cost'] ?? 1000) : 0) : 0;
                                     $cTotalCost = $cBaseCost + $cSmsCost;
                                 @endphp
-                                <div class="h-data" style="display:none" id="fcp-{{ $index }}">
+                                <div class="h-data" style="display:none" id="fcp-{{ $index }}" data-compte-id="{{ $compte->id }}">
                                     {{-- Avatar + Nom --}}
                                     <div class="fcp-modal-avatar">
                                         @if(!empty($compte->photo_path))
@@ -1665,11 +1665,18 @@ function updateOnlineStatuses(container) {
     var elements = (container || document).querySelectorAll('.fcp-online-status[data-last-activity]');
     var now = Math.floor(Date.now() / 1000);
     elements.forEach(function(el) {
-        var ts = parseInt(el.getAttribute('data-last-activity'), 10);
-        if (!ts) { el.style.display = 'none'; return; }
-        var diffMin = (now - ts) / 60;
+        var tsRaw = el.getAttribute('data-last-activity');
+        var ts = parseInt(tsRaw, 10);
+        if (isNaN(ts)) { el.style.display = 'none'; return; }
         el.innerHTML = '';
-        if (diffMin < 2) {
+        el.style.display = 'flex';
+        if (ts === 0) {
+            el.style.color = '#6b7280';
+            el.innerHTML = '<i class="bi bi-dash-circle" style="font-size:.7rem;"></i> Hors ligne';
+            return;
+        }
+        var diffSec = now - ts;
+        if (diffSec < 35) {
             el.style.color = '#16a34a';
             el.innerHTML = '<span style="width:7px;height:7px;border-radius:50%;background:#16a34a;display:inline-block;animation:pulse-dot 1.5s infinite;"></span> En ligne';
         } else {
@@ -1759,15 +1766,32 @@ window.addEventListener('DOMContentLoaded', function(){
     });
 
     // ---- History items click → modal ----
+    var activityBase = "{{ url('/api/compte-activity') }}";
     document.querySelectorAll('.fcp-wrap .history-item').forEach(function(item){
         item.addEventListener('click', function(e){
             if (e.target.closest('form') || e.target.closest('button') || e.target.closest('a')) return;
             var data = this.querySelector('.h-data');
             if (data && fcpDataBox) {
                 document.querySelector('#fcp-data-box .modal-title').innerText = "Détails de l'accès client";
-                document.getElementById('fcp-data-box-body').innerHTML = data.innerHTML;
-                updateOnlineStatuses(document.getElementById('fcp-data-box-body'));
-                fcpDataBox.show();
+                var boxBody = document.getElementById('fcp-data-box-body');
+                boxBody.innerHTML = data.innerHTML;
+                var compteId = data.getAttribute('data-compte-id');
+                if (compteId) {
+                    fetch(activityBase + '/' + compteId, { credentials: 'same-origin' })
+                        .then(function(r) { return r.json(); })
+                        .then(function(json) {
+                            var el = boxBody.querySelector('.fcp-online-status');
+                            if (el) el.setAttribute('data-last-activity', json.last_activity !== undefined ? json.last_activity : '');
+                            updateOnlineStatuses(boxBody);
+                            fcpDataBox.show();
+                        }).catch(function() {
+                            updateOnlineStatuses(boxBody);
+                            fcpDataBox.show();
+                        });
+                } else {
+                    updateOnlineStatuses(boxBody);
+                    fcpDataBox.show();
+                }
             }
         });
     });

@@ -174,6 +174,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('logout', [UserController::class, 'logout'])->name('logout');
     // Liste des comptes de l'utilisateur
     Route::get('/compte', [CompteController::class, 'overview'])->name('compte.view');
+    Route::get('/api/compte-activity/{id}', [CompteController::class, 'getLastActivity'])->name('compte.activity');
     // Formulaire de création (affiche la vue de création)
     Route::get('/compte/create', [CompteController::class, 'compteview'])->name('compte.create');
     // Enregistrement du compte (soumission du formulaire)
