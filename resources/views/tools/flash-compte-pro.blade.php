@@ -215,6 +215,9 @@
         border-radius: 16px;
         overflow: hidden;
         box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        transform: translate3d(0, 0, 0);
+        will-change: transform;
+        backface-visibility: hidden;
     }
     #fcp-data-box .modal-header { 
         background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%) !important; 
@@ -232,7 +235,11 @@
     #fcp-data-box .modal-body { 
         max-height: 72vh; 
         overflow-y: auto; 
+        overflow-x: hidden;
         padding: 0 !important; /* Stretches white profile section to the edges */
+        min-height: 0;
+        display: block;
+        -webkit-overflow-scrolling: touch; /* Smooth scroll on iOS */
     }
 
     /* Help Modal (fcpHelpModal) Premium Styles */
@@ -245,6 +252,9 @@
         overflow: hidden !important;
         box-shadow: 0 15px 45px rgba(0, 0, 0, 0.18) !important;
         background-color: #ffffff !important;
+        transform: translate3d(0, 0, 0);
+        will-change: transform;
+        backface-visibility: hidden;
     }
     #fcpHelpModal .modal-header {
         background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%) !important;
@@ -266,6 +276,12 @@
         padding: 24px !important;
         color: #334155 !important;
         line-height: 1.6 !important;
+        max-height: 72vh;
+        overflow-y: auto;
+        overflow-x: hidden;
+        -webkit-overflow-scrolling: touch;
+        min-height: 0;
+        display: block;
     }
     #fcpHelpModal .modal-body h6 {
         font-weight: 700 !important;
@@ -817,7 +833,36 @@
 (function(){
     // ---- Modals ----
     var fcpModal = new bootstrap.Modal(document.getElementById('fcp-modal'), { keyboard: false });
-    var fcpDataBox = new bootstrap.Modal(document.getElementById('fcp-data-box'), { keyboard: false });
+    var fcpDataBoxEl = document.getElementById('fcp-data-box');
+    var fcpDataBox = fcpDataBoxEl ? new bootstrap.Modal(fcpDataBoxEl, { keyboard: false }) : null;
+
+    if (fcpDataBoxEl) {
+        fcpDataBoxEl.addEventListener('shown.bs.modal', function () {
+            var modalBody = this.querySelector('.modal-body');
+            if (modalBody) {
+                modalBody.scrollTop = 0;
+                // Force a layout reflow to fix browser repaint issues (content blank until scroll)
+                var temp = modalBody.style.display;
+                modalBody.style.display = 'none';
+                modalBody.offsetHeight; // trigger reflow
+                modalBody.style.display = temp || 'block';
+            }
+        });
+    }
+
+    var fcpHelpModalEl = document.getElementById('fcpHelpModal');
+    if (fcpHelpModalEl) {
+        fcpHelpModalEl.addEventListener('shown.bs.modal', function () {
+            var modalBody = this.querySelector('.modal-body');
+            if (modalBody) {
+                modalBody.scrollTop = 0;
+                var temp = modalBody.style.display;
+                modalBody.style.display = 'none';
+                modalBody.offsetHeight;
+                modalBody.style.display = temp || 'block';
+            }
+        });
+    }
 
     function showFcpModal(content, status) {
         status = status || 'error';

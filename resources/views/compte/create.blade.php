@@ -1407,6 +1407,9 @@
         border-radius: 16px;
         overflow: hidden;
         box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        transform: translate3d(0, 0, 0);
+        will-change: transform;
+        backface-visibility: hidden;
     }
     #fcp-data-box .modal-header { 
         background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%) !important; 
@@ -1437,6 +1440,9 @@
         overflow: hidden !important;
         box-shadow: 0 15px 45px rgba(0, 0, 0, 0.18) !important;
         background-color: #ffffff !important;
+        transform: translate3d(0, 0, 0);
+        will-change: transform;
+        backface-visibility: hidden;
     }
     #fcpHelpModal .modal-header {
         background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%) !important;
@@ -1687,7 +1693,6 @@ window.addEventListener('DOMContentLoaded', function(){
     var csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || '{{ csrf_token() }}';
     var _fcpNeedsReload = false;
 
-    // ---- Modals ----
     var fcpModalEl = document.getElementById('fcp-modal');
     var fcpModal = fcpModalEl ? new bootstrap.Modal(fcpModalEl, { keyboard: false }) : null;
     var fcpDataBoxEl = document.getElementById('fcp-data-box');
@@ -1695,6 +1700,20 @@ window.addEventListener('DOMContentLoaded', function(){
     var fcpInteractEl = document.getElementById('fcp-interact');
     var fcpInteract = fcpInteractEl ? new bootstrap.Modal(fcpInteractEl) : null;
     var _fcpInteractResolve = null;
+
+    if (fcpDataBoxEl) {
+        fcpDataBoxEl.addEventListener('shown.bs.modal', function () {
+            var modalBody = this.querySelector('.modal-body');
+            if (modalBody) {
+                modalBody.scrollTop = 0;
+                // Force a layout reflow (repaint) to fix browser redraw issues where content is blank until scroll
+                var temp = modalBody.style.display;
+                modalBody.style.display = 'none';
+                modalBody.offsetHeight; // force reflow
+                modalBody.style.display = temp || 'block';
+            }
+        });
+    }
 
     if (fcpModalEl) {
         fcpModalEl.addEventListener('hidden.bs.modal', function() {
