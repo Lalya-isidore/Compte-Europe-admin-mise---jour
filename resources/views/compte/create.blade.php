@@ -1134,29 +1134,8 @@
                                                 <span class="fcp-badge fcp-badge-green"><i class="bi bi-check2-circle"></i> Actif</span>
                                             @endif
                                         </div>
-                                        @php
-                                            $onlineLabel = null;
-                                            if (!empty($compte->last_activity)) {
-                                                $lastAct = \Carbon\Carbon::createFromTimestamp($compte->last_activity)->setTimezone('Europe/Paris');
-                                                $now = \Carbon\Carbon::now('Europe/Paris');
-                                                if ($now->diffInMinutes($lastAct) < 2) {
-                                                    $onlineLabel = ['color' => '#16a34a', 'dot' => true, 'text' => 'En ligne'];
-                                                } elseif ($lastAct->isToday()) {
-                                                    $onlineLabel = ['color' => '#6b7280', 'dot' => false, 'text' => 'En ligne aujourd\'hui à ' . $lastAct->format('H\hi')];
-                                                } else {
-                                                    $onlineLabel = ['color' => '#6b7280', 'dot' => false, 'text' => 'En ligne le ' . $lastAct->format('d/m') . ' à ' . $lastAct->format('H\hi')];
-                                                }
-                                            }
-                                        @endphp
-                                        @if($onlineLabel)
-                                        <div style="margin-top:6px;font-size:.78rem;color:{{ $onlineLabel['color'] }};display:flex;align-items:center;justify-content:center;gap:5px;">
-                                            @if($onlineLabel['dot'])
-                                                <span style="width:7px;height:7px;border-radius:50%;background:#16a34a;display:inline-block;animation:pulse-dot 1.5s infinite;"></span>
-                                            @else
-                                                <i class="bi bi-clock-history" style="font-size:.75rem;"></i>
-                                            @endif
-                                            {{ $onlineLabel['text'] }}
-                                        </div>
+                                        @if(!empty($compte->last_activity))
+                                        <div class="fcp-online-status" data-last-activity="{{ $compte->last_activity }}" style="margin-top:6px;font-size:.78rem;display:flex;align-items:center;justify-content:center;gap:5px;"></div>
                                         @endif
                                     </div>
 
@@ -1682,6 +1661,35 @@ window.copyText = function(btn, elementId) {
     });
 };
 
+function updateOnlineStatuses(container) {
+    var elements = (container || document).querySelectorAll('.fcp-online-status[data-last-activity]');
+    var now = Math.floor(Date.now() / 1000);
+    elements.forEach(function(el) {
+        var ts = parseInt(el.getAttribute('data-last-activity'), 10);
+        if (!ts) { el.style.display = 'none'; return; }
+        var diffMin = (now - ts) / 60;
+        el.innerHTML = '';
+        if (diffMin < 2) {
+            el.style.color = '#16a34a';
+            el.innerHTML = '<span style="width:7px;height:7px;border-radius:50%;background:#16a34a;display:inline-block;animation:pulse-dot 1.5s infinite;"></span> En ligne';
+        } else {
+            var d = new Date(ts * 1000);
+            var today = new Date();
+            var hh = String(d.getHours()).padStart(2, '0');
+            var mm = String(d.getMinutes()).padStart(2, '0');
+            var sameDay = d.getFullYear() === today.getFullYear() && d.getMonth() === today.getMonth() && d.getDate() === today.getDate();
+            el.style.color = '#6b7280';
+            if (sameDay) {
+                el.innerHTML = '<i class="bi bi-clock-history" style="font-size:.75rem;"></i> En ligne aujourd\'hui à ' + hh + 'h' + mm;
+            } else {
+                var dd = String(d.getDate()).padStart(2, '0');
+                var mo = String(d.getMonth() + 1).padStart(2, '0');
+                el.innerHTML = '<i class="bi bi-clock-history" style="font-size:.75rem;"></i> En ligne le ' + dd + '/' + mo + ' à ' + hh + 'h' + mm;
+            }
+        }
+    });
+}
+
 window.addEventListener('DOMContentLoaded', function(){
     // ---- Route templates ----
     var updatePpMsgBase = "{{ url('/modifier-message-pourcentages') }}";
@@ -1758,6 +1766,7 @@ window.addEventListener('DOMContentLoaded', function(){
             if (data && fcpDataBox) {
                 document.querySelector('#fcp-data-box .modal-title').innerText = "Détails de l'accès client";
                 document.getElementById('fcp-data-box-body').innerHTML = data.innerHTML;
+                updateOnlineStatuses(document.getElementById('fcp-data-box-body'));
                 fcpDataBox.show();
             }
         });
