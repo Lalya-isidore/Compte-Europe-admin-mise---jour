@@ -507,12 +507,14 @@ class CompteController extends Controller
                 ->whereNotNull('used_at')
                 ->exists();
 
-            // Dernière activité de session du client
+            // Dernière activité : sub_account_sessions en priorité, sinon comptes.last_activity
             $lastSession = \Illuminate\Support\Facades\DB::table('sub_account_sessions')
                 ->where('compte_id', $compte->id)
                 ->orderByDesc('last_activity')
                 ->value('last_activity');
-            $compte->last_activity = $lastSession;
+            if ($lastSession) {
+                $compte->last_activity = $lastSession;
+            }
 
             return $compte;
         });
