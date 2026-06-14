@@ -1139,7 +1139,7 @@
                                             if (!empty($compte->last_activity)) {
                                                 $lastAct = \Carbon\Carbon::createFromTimestamp($compte->last_activity)->setTimezone('Europe/Paris');
                                                 $now = \Carbon\Carbon::now('Europe/Paris');
-                                                if ($now->diffInMinutes($lastAct) < 5) {
+                                                if ($now->diffInMinutes($lastAct) < 2) {
                                                     $onlineLabel = ['color' => '#16a34a', 'dot' => true, 'text' => 'En ligne'];
                                                 } elseif ($lastAct->isToday()) {
                                                     $onlineLabel = ['color' => '#6b7280', 'dot' => false, 'text' => 'En ligne aujourd\'hui à ' . $lastAct->format('H\hi')];
