@@ -1393,8 +1393,108 @@
 
 {{-- ============ MODAL DÉTAILS ACCÈS ============ --}}
 <style>
-    #fcp-data-box .modal-content { background: #f8fafc; }
-    #fcp-data-box .modal-body { max-height: 72vh; overflow-y: auto; }
+    /* Fix global stacking context issue for all modals on this page */
+    .modal {
+        z-index: 1080 !important;
+    }
+    .modal-backdrop {
+        z-index: 1075 !important;
+    }
+
+    #fcp-data-box .modal-content { 
+        background: #f8fafc; 
+        border: none;
+        border-radius: 16px;
+        overflow: hidden;
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+    }
+    #fcp-data-box .modal-header { 
+        background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%) !important; 
+        border-bottom: 2px solid #3b82f6 !important; 
+        padding: 20px 24px !important; 
+    }
+    #fcp-data-box .modal-title { 
+        color: #ffffff !important;
+        font-size: 1.15rem !important; 
+        font-weight: 700 !important;
+    }
+    #fcp-data-box .modal-header .btn-close {
+        filter: brightness(0) invert(1) !important;
+    }
+    #fcp-data-box .modal-body { 
+        max-height: 72vh; 
+        overflow-y: auto; 
+        padding: 0 !important; /* Stretches white profile section to the edges */
+    }
+
+    /* Help Modal (fcpHelpModal) Premium Styles */
+    #fcpHelpModal {
+        z-index: 1080 !important;
+    }
+    #fcpHelpModal .modal-content {
+        border: none !important;
+        border-radius: 16px !important;
+        overflow: hidden !important;
+        box-shadow: 0 15px 45px rgba(0, 0, 0, 0.18) !important;
+        background-color: #ffffff !important;
+    }
+    #fcpHelpModal .modal-header {
+        background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%) !important;
+        border: none !important;
+        padding: 20px 24px !important;
+    }
+    #fcpHelpModal .modal-title {
+        color: #ffffff !important;
+        font-size: 1.15rem !important;
+        font-weight: 700 !important;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+    #fcpHelpModal .modal-header .btn-close {
+        filter: brightness(0) invert(1) !important;
+    }
+    #fcpHelpModal .modal-body {
+        padding: 24px !important;
+        color: #334155 !important;
+        line-height: 1.6 !important;
+    }
+    #fcpHelpModal .modal-body h6 {
+        font-weight: 700 !important;
+        font-size: 0.95rem !important;
+        margin-top: 15px !important;
+        margin-bottom: 8px !important;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+    #fcpHelpModal .modal-body h6:first-of-type {
+        margin-top: 0 !important;
+    }
+    #fcpHelpModal .modal-body p {
+        margin-bottom: 15px !important;
+        font-size: 0.92rem !important;
+    }
+    #fcpHelpModal .modal-footer {
+        padding: 16px 24px !important;
+        background-color: #f8fafc !important;
+        border-top: 1px solid #e2e8f0 !important;
+        justify-content: flex-end !important;
+        gap: 10px;
+    }
+    #fcpHelpModal .modal-footer .btn-secondary {
+        background: #f1f5f9 !important;
+        color: #475569 !important;
+        border: 1px solid #cbd5e1 !important;
+        border-radius: 10px !important;
+        padding: 8px 20px !important;
+        font-weight: 600 !important;
+        font-size: 0.88rem !important;
+        transition: all 0.2s ease !important;
+    }
+    #fcpHelpModal .modal-footer .btn-secondary:hover {
+        background: #e2e8f0 !important;
+        color: #1e293b !important;
+    }
 
     /* Interaction Modal (fcp-interact) Premium Styles */
     #fcp-interact { z-index: 9999 !important; }
@@ -1430,9 +1530,6 @@
     #fcp-modal .modal-title { font-weight: 700; font-size: 1.05rem; display: flex; align-items: center; gap: 10px; }
     #fcp-modal .modal-body { padding: 30px 25px; font-size: 1.05rem; font-weight: 500; line-height: 1.4; }
 
-    #fcp-data-box .modal-content { background: #f8fafc; }
-    #fcp-data-box .modal-header { background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); border-bottom: 2px solid #3b82f6; padding: 24px 30px; }
-    #fcp-data-box .modal-title { font-size: 1.25rem; }
 
     .fcp-modal-avatar { text-align:center; padding:30px 20px 20px; background:#fff; border-bottom:1px solid #e2e8f0; }
     .fcp-modal-avatar img, .fcp-modal-avatar .fcp-avatar-placeholder {
@@ -1529,7 +1626,7 @@
                 <h5 class="modal-title"><i class="bi bi-person-badge"></i> Détails de l'accès client</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body" style="padding: 15px 6px;">
+            <div class="modal-body">
                 <div id="fcp-data-box-body"></div>
                 <textarea style="opacity:0;position:absolute;pointer-events:none;left:0" id="fcp-copy"></textarea>
             </div>
