@@ -32,6 +32,7 @@ class NotifyUsersController extends Controller
             'target'       => ['required', 'in:all,missing_photo,afrique,single'],
             'user_id'      => ['nullable', 'required_if:target,single', 'exists:users,id'],
             'subject'      => ['nullable', 'string', 'max:255'],
+            'notif_title'  => ['nullable', 'string', 'max:255'],
             'message'      => ['required', 'string', 'max:10000'],
             'banner_image' => ['nullable', 'image', 'max:5120'],
         ]);
@@ -78,7 +79,7 @@ class NotifyUsersController extends Controller
 
         // Envoi dans les notifications in-app (cloche)
         if (in_array($type, ['chat', 'both'])) {
-            $title = $data['subject'] ?? null;
+            $title = $data['notif_title'] ?? ($data['subject'] ?? null);
             foreach ($list as $user) {
                 UserNotification::create([
                     'user_id' => $user->id,

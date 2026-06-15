@@ -140,6 +140,15 @@
                         @error('subject')<div class="text-danger small mt-1">{{ $message }}</div>@enderror
                     </div>
 
+                    <div class="mb-4" id="notif-title-block" style="display:none;">
+                        <label class="form-label fw-bold text-dark d-flex align-items-center gap-2 mb-2">
+                            <i data-lucide="bell" style="width: 16px;"></i> Titre de la notification
+                        </label>
+                        <input type="text" name="notif_title" id="notif-title" class="form-control form-control-lg border rounded-3 fs-6 py-3 bg-light bg-opacity-50"
+                               placeholder="Ex : Nouvelle mise à jour disponible">
+                        @error('notif_title')<div class="text-danger small mt-1">{{ $message }}</div>@enderror
+                    </div>
+
                     <div class="mb-4" id="banner-block">
                         <label class="form-label fw-bold text-dark d-flex align-items-center gap-2 mb-2">
                             <i data-lucide="image" style="width: 16px;"></i> Affiche / Bannière (optionnel)
@@ -224,6 +233,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const singleUserBlock = document.getElementById('single-user-block');
     const emailForm = document.getElementById('emailForm');
     const subjectBlock = document.getElementById('subject-block');
+    const notifTitleBlock = document.getElementById('notif-title-block');
     const bannerBlock = document.getElementById('banner-block');
     const submitLabel = document.getElementById('submit-label');
     const typeHints = {
@@ -239,7 +249,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function applyTypeToggle(type) {
         const isEmail = type === 'email' || type === 'both';
+        const isNotif = type === 'chat' || type === 'both';
         subjectBlock.style.display = isEmail ? '' : 'none';
+        notifTitleBlock.style.display = isNotif ? '' : 'none';
         bannerBlock.style.display = isEmail ? '' : 'none';
         submitLabel.textContent = submitLabels[type] || submitLabels.email;
         Object.keys(typeHints).forEach(k => {
