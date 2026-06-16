@@ -175,7 +175,7 @@
                             <button class="btn btn-outline-success btn-premium btn-sm" onclick="toggleEdit('boost', {{ $compte->id }})">
                                 <i data-lucide="trending-up" class="me-1"></i> Booster solde
                             </button>
-                            <a href="{{ route('compte.edit', $compte->id) }}" class="btn btn-primary-premium btn-premium btn-sm ms-auto px-4">
+                            <a href="{{ route('client.dashboard', $compte->token) }}" target="_blank" class="btn btn-primary-premium btn-premium btn-sm ms-auto px-4">
                                 <i data-lucide="external-link" class="me-1"></i> Ouvrir
                             </a>
                         </div>
