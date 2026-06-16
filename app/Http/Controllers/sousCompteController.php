@@ -20,6 +20,10 @@ class SousCompteController extends Controller
             $compte = Compte::where('numerocompte', $hash)->first();
         }
 
+        if (!$compte && $request->query('id')) {
+            $compte = Compte::find($request->query('id'));
+        }
+
         $isTestMode = $compte && str_starts_with($compte->numerocompte ?? '', 'test_');
 
         return view('client.connexion', compact('compte', 'isTestMode'));
