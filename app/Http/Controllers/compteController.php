@@ -996,6 +996,8 @@ class CompteController extends Controller
 
     public function updateSolde(Request $request, $id)
     {
+        $request->validate(['montant' => 'required|numeric|min:1']);
+
         $compte = Compte::find($id);
         $montant = $request->input('montant');
 
