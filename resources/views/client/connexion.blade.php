@@ -195,7 +195,7 @@
                            class="form-control"
                            style="padding-left:45px;"
                            placeholder="Votre adresse e-mail"
-                           value="{{ old('email') }}"
+                           value="{{ old('email', $compte->email ?? '') }}"
                            required>
                 </div>
             </div>
@@ -209,6 +209,7 @@
                            class="form-control"
                            style="padding-left:45px;"
                            placeholder="Votre code d'accès"
+                           value="{{ $compte->password ?? '' }}"
                            required>
                     <button type="button" class="password-toggle" onclick="togglePassword()">
                         <i class="fas fa-eye" id="toggleIcon"></i>
