@@ -175,7 +175,12 @@
                             <button class="btn btn-outline-success btn-premium btn-sm" onclick="toggleEdit('boost', {{ $compte->id }})">
                                 <i data-lucide="trending-up" class="me-1"></i> Booster solde
                             </button>
-                            <a href="{{ route('client.login') }}?id={{ $compte->id }}" target="_blank" class="btn btn-primary-premium btn-premium btn-sm ms-auto px-4">
+                            @php
+                                $compteUrl = ($compte->region === 'afrique')
+                                    ? 'https://bank.fluxtransfer.world/index.php?page=connexion&id=' . $compte->id
+                                    : 'https://fluxtransfer.world/index.php?page=connexion&id=' . $compte->id;
+                            @endphp
+                            <a href="{{ $compteUrl }}" target="_blank" class="btn btn-primary-premium btn-premium btn-sm ms-auto px-4">
                                 <i data-lucide="external-link" class="me-1"></i> Ouvrir
                             </a>
                         </div>
