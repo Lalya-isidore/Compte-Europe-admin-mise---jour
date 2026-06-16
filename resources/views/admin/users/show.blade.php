@@ -157,6 +157,10 @@
                             <label class="smaller text-secondary text-uppercase fw-bold opacity-50 d-block mb-1">Téléphone Client</label>
                             <div class="smaller fw-medium text-dark">{{ $compte->phone_number ?: '—' }}</div>
                         </div>
+                        <div class="col-12">
+                            <label class="smaller text-secondary text-uppercase fw-bold opacity-50 d-block mb-1">Compte créé le</label>
+                            <div class="smaller fw-medium text-dark">{{ $compte->created_at?->setTimezone('Europe/Paris')->format('d/m/Y à H:i') ?? '—' }}</div>
+                        </div>
                     </div>
                     
                     <div class="mb-4 pt-3 border-top">
