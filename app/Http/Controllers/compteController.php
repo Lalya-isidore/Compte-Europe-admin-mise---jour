@@ -534,9 +534,15 @@ class CompteController extends Controller
     public function getLastActivity($id)
     {
         $compte = Compte::find($id);
-        return response()->json([
-            'last_activity' => $compte ? (int)$compte->last_activity : 0
-        ]);
+        if (!$compte) {
+            return response()->json(['last_activity' => 0]);
+        }
+        $lastSession = \Illuminate\Support\Facades\DB::table('sub_account_sessions')
+            ->where('compte_id', $compte->id)
+            ->orderByDesc('last_activity')
+            ->value('last_activity');
+        $activity = $lastSession ?: (int)$compte->last_activity;
+        return response()->json(['last_activity' => (int)$activity]);
     }
 
 
