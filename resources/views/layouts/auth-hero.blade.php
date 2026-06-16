@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="description" content="Kits FlashBilan — SMS Pro, Flash Compte Pro (Europe & Afrique), Mail Flash Pro, Numero virtuel (a partir de 3 200 CFA), Verification de numero de telephone, Verification d'IBAN/CB.">
+    <meta name="keywords" content="flash compte, flash compte pro, flashcompte, créer un accès flash compte, compte flash, flash compte pro v1, FlashBilan, SMS Pro, numéro virtuel">
     <meta property="og:type" content="website">
     <meta property="og:url" content="{{ url()->current() }}">
     <meta property="og:title" content="Kits FlashBilan">

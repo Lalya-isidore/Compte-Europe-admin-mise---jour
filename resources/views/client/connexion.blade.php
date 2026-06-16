@@ -3,7 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ app('region')->appName() }} - Espace Client</title>
+    <title>Flash Compte Pro — Connexion Espace Client | FlashBilan</title>
+    <meta name="description" content="Connectez-vous à votre Flash Compte Pro sur FlashBilan. Créez un accès Flash Compte, gérez votre compte professionnel en toute sécurité.">
+    <meta name="keywords" content="flash compte, flash compte pro, flashcompte, créer un accès flash compte, compte flash, connexion flash compte, espace client flashbilan">
+    <meta name="robots" content="index, follow">
     <link rel="icon" type="image/svg+xml" href="{{ asset('images/favicon.svg') }}">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>

@@ -7,7 +7,7 @@
 
     <title>Flash Compte Pro &amp; SMS Pro — Outils bancaires professionnels | FlashBilan</title>
     <meta name="description" content="Flash Compte Pro &amp; SMS Pro : créez des relevés de compte européens professionnels et envoyez des SMS en masse en quelques secondes. Contrat de Prêt PDF, Vérification IBAN, QR Code et bien plus. Essayez gratuitement sur FlashBilan.">
-    <meta name="keywords" content="flash compte, flash compte pro, compte européen, relevé bancaire, SMS Pro, contrat de prêt, vérification IBAN, FlashBilan, outils bancaires, générateur compte">
+    <meta name="keywords" content="flash compte, flash compte pro, flashcompte, flash compte pro v1, créer un accès flash compte, compte flash, compte européen, relevé bancaire, SMS Pro, contrat de prêt, vérification IBAN, FlashBilan, outils bancaires, générateur compte">
     <meta name="author" content="FlashBilan">
     <meta name="robots" content="index, follow">
 
