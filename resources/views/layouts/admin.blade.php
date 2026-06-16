@@ -380,10 +380,27 @@
         .breadcrumb-bar {
             background: var(--bg-card);
             border-radius: 14px;
-            margin: 1rem 1.5rem 0;
+            margin: 0.75rem 0.5rem 0;
             padding: 0.85rem 1.5rem;
             box-shadow: 0 2px 8px rgba(0,0,0,.03);
             border: 1px solid var(--border-color);
+        }
+
+        .breadcrumb-recharge-btn {
+            background: #16a34a;
+            color: #fff !important;
+            border-radius: 8px;
+            padding: 2px 12px;
+            font-weight: 600;
+            text-decoration: none !important;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 0.88rem;
+        }
+        .breadcrumb-recharge-btn:hover {
+            background: #15803d;
+            color: #fff !important;
         }
 
         .breadcrumb-bar .breadcrumb {

@@ -4,7 +4,7 @@
 
 @section('breadcrumb')
     <li class="breadcrumb-item"><a href="{{ route('dashboard') }}"><i class="ri-briefcase-line me-1"></i>Liste des outils</a></li>
-    <li class="breadcrumb-item"><a href="{{ route('recharge.index') }}"><i class="ri-wallet-line me-1"></i>Recharge</a></li>
+    <li class="breadcrumb-item"><a href="{{ route('recharge.index') }}" class="breadcrumb-recharge-btn"><i class="ri-wallet-line"></i>Recharge</a></li>
 @endsection
 
 @section('content')
