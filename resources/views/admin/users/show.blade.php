@@ -49,6 +49,11 @@
                     <a href="{{ route('admin.users.index') }}" class="btn btn-light btn-premium btn-sm border">
                         <i data-lucide="arrow-left" class="me-1"></i> Retour
                     </a>
+                    <button type="button" class="btn btn-warning btn-premium btn-sm"
+                            onclick="openNotifModal({{ $user->id }}, '{{ addslashes(trim($user->prenom . ' ' . $user->nom)) }}')"
+                            title="Envoyer une notification">
+                        <i data-lucide="bell" class="me-1" style="width:14px;"></i> Notifier
+                    </button>
                     <form action="{{ route('admin.users.destroy', $user) }}" method="POST" class="js-delete-user" data-name="{{ $user->nom }} {{ $user->prenom }}">
                         @csrf
                         @method('DELETE')
@@ -712,5 +717,102 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 });
+
+function openNotifModal(userId, userName) {
+    document.getElementById('notifUserId').value = userId;
+    document.getElementById('notifUserName').textContent = 'Destinataire : ' + userName;
+    document.getElementById('notifTitle').value = '';
+    document.getElementById('notifMessage').value = '';
+    const fb = document.getElementById('notifFeedback');
+    fb.className = 'd-none';
+    fb.textContent = '';
+    const btn = document.getElementById('notifSendBtn');
+    btn.disabled = false;
+    btn.innerHTML = '<i data-lucide="send" style="width:14px;" class="me-1"></i> Envoyer';
+    lucide.createIcons();
+    new bootstrap.Modal(document.getElementById('notifModal')).show();
+}
+
+function sendNotif() {
+    const userId  = document.getElementById('notifUserId').value;
+    const title   = document.getElementById('notifTitle').value.trim();
+    const message = document.getElementById('notifMessage').value.trim();
+    const fb      = document.getElementById('notifFeedback');
+    const btn     = document.getElementById('notifSendBtn');
+
+    if (!message) {
+        fb.className = 'alert alert-danger rounded-3 p-2 small';
+        fb.textContent = 'Le message est obligatoire.';
+        return;
+    }
+
+    btn.disabled = true;
+    btn.textContent = 'Envoi en cours...';
+    fb.className = 'd-none';
+
+    fetch('/admin/users/' + userId + '/notify', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+            'X-Requested-With': 'XMLHttpRequest'
+        },
+        body: JSON.stringify({ title: title || null, message })
+    })
+    .then(r => r.json())
+    .then(data => {
+        if (data.success) {
+            fb.className = 'alert alert-success rounded-3 p-2 small';
+            fb.textContent = '✅ Notification envoyée avec succès.';
+            setTimeout(() => {
+                bootstrap.Modal.getInstance(document.getElementById('notifModal')).hide();
+            }, 1500);
+        } else {
+            fb.className = 'alert alert-danger rounded-3 p-2 small';
+            fb.textContent = 'Erreur : ' + (data.message || 'Inconnue');
+            btn.disabled = false;
+            btn.innerHTML = '<i data-lucide="send" style="width:14px;" class="me-1"></i> Envoyer';
+            lucide.createIcons();
+        }
+    })
+    .catch(() => {
+        fb.className = 'alert alert-danger rounded-3 p-2 small';
+        fb.textContent = 'Erreur réseau. Réessayez.';
+        btn.disabled = false;
+        btn.innerHTML = '<i data-lucide="send" style="width:14px;" class="me-1"></i> Envoyer';
+        lucide.createIcons();
+    });
+}
 </script>
+
+{{-- Modal notification --}}
+<div class="modal fade" id="notifModal" tabindex="-1" aria-labelledby="notifModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 shadow-lg rounded-4">
+            <div class="modal-header border-0 pb-0 pt-4 px-4">
+                <h5 class="modal-title fw-bold" id="notifModalLabel">🔔 Envoyer une notification</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body px-4 py-3">
+                <input type="hidden" id="notifUserId">
+                <p class="text-secondary small mb-3" id="notifUserName"></p>
+                <div class="mb-3">
+                    <label class="form-label fw-semibold small text-dark">Titre <span class="text-secondary fw-normal">(optionnel)</span></label>
+                    <input type="text" id="notifTitle" class="form-control rounded-3" placeholder="Ex: Mise à jour importante" maxlength="255">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label fw-semibold small text-dark">Message <span class="text-danger">*</span></label>
+                    <textarea id="notifMessage" class="form-control rounded-3" rows="4" placeholder="Votre message à cet utilisateur..." maxlength="5000"></textarea>
+                </div>
+                <div id="notifFeedback" class="d-none rounded-3 p-2 small"></div>
+            </div>
+            <div class="modal-footer border-0 pt-0 px-4 pb-4">
+                <button type="button" class="btn btn-light rounded-3 px-4" data-bs-dismiss="modal">Annuler</button>
+                <button type="button" class="btn btn-warning rounded-3 fw-semibold px-4" id="notifSendBtn" onclick="sendNotif()">
+                    <i data-lucide="send" style="width:14px;" class="me-1"></i> Envoyer
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
 @endpush
