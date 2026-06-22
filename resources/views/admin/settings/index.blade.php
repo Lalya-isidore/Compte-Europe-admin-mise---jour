@@ -13,34 +13,50 @@
     <div class="alert alert-success rounded-3 py-2 mb-4">{{ session('success') }}</div>
 @endif
 
-<div class="card-premium" style="max-width:600px;">
-    <h6 class="fw-bold mb-4"><i data-lucide="link" style="width:16px;" class="me-2"></i>Lien de paiement SebPay</h6>
+@php
+$currencyLabels = [
+    'XOF' => 'XOF — Franc CFA Ouest (Bénin, Côte d\'Ivoire…)',
+    'XAF' => 'XAF — Franc CFA Central (Cameroun, Congo…)',
+    'EUR' => 'EUR — Euro',
+    'USD' => 'USD — US Dollar',
+    'CDF' => 'CDF — Franc Congolais',
+    'GNF' => 'GNF — Franc Guinéen',
+    'GMD' => 'GMD — Dalasi (Gambie)',
+];
+@endphp
+
+<div class="card-premium" style="max-width:700px;">
+    <h6 class="fw-bold mb-1"><i data-lucide="link" style="width:16px;" class="me-2"></i>Liens de paiement SebPay par devise</h6>
+    <p class="text-muted small mb-4">Configurez un lien SebPay pour chaque devise. Les utilisateurs pourront choisir leur devise lors de la création d'un lien.</p>
 
     <form action="{{ route('admin.settings.update') }}" method="POST">
         @csrf
         @method('PUT')
 
-        <div class="mb-4">
-            <label class="form-label fw-semibold">URL du lien de paiement</label>
-            <input type="url" name="sebpay_payment_url"
-                   class="form-control rounded-3 @error('sebpay_payment_url') is-invalid @enderror"
-                   value="{{ old('sebpay_payment_url', $sebpayUrl) }}"
-                   placeholder="https://new.sebpay.bj/pay/...">
-            <div class="form-text">Ce lien sera affiché à tous les utilisateurs dans leur espace Encaissement.</div>
-            @error('sebpay_payment_url')<div class="invalid-feedback">{{ $message }}</div>@enderror
-        </div>
-
-        @if($sebpayUrl)
-        <div class="bg-light rounded-3 p-3 mb-4 d-flex align-items-center gap-3">
-            <i data-lucide="external-link" class="text-primary" style="width:18px;flex-shrink:0;"></i>
-            <div>
-                <div class="small text-muted mb-1">Lien actuel :</div>
-                <a href="{{ $sebpayUrl }}" target="_blank" class="small text-break">{{ $sebpayUrl }}</a>
+        @foreach($sebpayLinks as $currency => $url)
+        <div class="mb-4 pb-3" style="{{ !$loop->last ? 'border-bottom:1px solid #f0f0f0;' : '' }}">
+            <div class="d-flex align-items-center gap-2 mb-2">
+                <span class="badge fw-bold px-2 py-1 rounded-2"
+                      style="background:#1e3a5f;color:#fff;font-size:.78rem;letter-spacing:.04em;">{{ $currency }}</span>
+                <label class="form-label fw-semibold mb-0 small">{{ $currencyLabels[$currency] }}</label>
             </div>
+            <input type="url" name="sebpay_url_{{ $currency }}"
+                   class="form-control rounded-3 @error('sebpay_url_'.$currency) is-invalid @enderror"
+                   value="{{ old('sebpay_url_'.$currency, $url) }}"
+                   placeholder="https://new.sebpay.bj/pay/...">
+            @error('sebpay_url_'.$currency)
+                <div class="invalid-feedback">{{ $message }}</div>
+            @enderror
+            @if($url)
+                <div class="mt-1 small text-muted d-flex align-items-center gap-2">
+                    <i data-lucide="check-circle" style="width:13px;color:#16a34a;"></i>
+                    <a href="{{ $url }}" target="_blank" class="text-break" style="color:#16a34a;">{{ $url }}</a>
+                </div>
+            @endif
         </div>
-        @endif
+        @endforeach
 
-        <button type="submit" class="btn btn-primary rounded-3 px-4 fw-semibold">
+        <button type="submit" class="btn btn-primary rounded-3 px-4 fw-semibold mt-2">
             <i data-lucide="save" style="width:14px;" class="me-2"></i>Enregistrer
         </button>
     </form>

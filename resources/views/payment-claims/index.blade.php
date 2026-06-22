@@ -8,6 +8,18 @@
 
 @section('content')
 
+@php
+$currencyLabels = [
+    'XOF' => 'FCFA Ouest (XOF)',
+    'XAF' => 'FCFA Central (XAF)',
+    'EUR' => 'Euro (EUR)',
+    'USD' => 'US Dollar (USD)',
+    'CDF' => 'Franc Congolais (CDF)',
+    'GNF' => 'Franc Guinéen (GNF)',
+    'GMD' => 'Dalasi (GMD)',
+];
+@endphp
+
 @if(session('success'))
     <div class="alert alert-success rounded-3 py-2 mb-4">{{ session('success') }}</div>
 @endif
@@ -55,31 +67,34 @@
             </tr>
         </thead>
         <tbody>
-        @if($sebpayUrl)
-            <tr class="hover-row" style="border-bottom:1px solid #f0f0f0;">
+        @forelse($sebpayLinks as $currency => $url)
+            <tr class="hover-row" style="{{ !$loop->last ? 'border-bottom:1px solid #f0f0f0;' : '' }}">
                 <td style="padding:14px 20px;">
-                    <div style="font-weight:600;font-size:.95rem;">Paiement</div>
+                    <div style="font-weight:600;font-size:.95rem;">Paiement {{ $currency }}</div>
                     <div style="font-family:monospace;font-size:.75rem;color:#aaa;margin-top:3px;">
-                        {{ parse_url($sebpayUrl, PHP_URL_PATH) }}
+                        {{ parse_url($url, PHP_URL_PATH) }}
                     </div>
                 </td>
-                <td style="padding:14px 16px;font-weight:600;font-size:.9rem;">Min 1 FCFA</td>
+                <td style="padding:14px 16px;font-weight:600;font-size:.9rem;">Min 1 {{ $currency }}</td>
                 <td style="padding:14px 16px;">
                     <span style="display:inline-block;padding:3px 12px;border-radius:20px;background:#d1fae5;color:#065f46;font-size:.78rem;font-weight:700;">ACTIF</span>
                 </td>
                 <td style="padding:14px 16px;color:#999;font-size:.88rem;">{{ now()->format('d/m/Y') }}</td>
                 <td style="padding:14px 20px;text-align:right;">
                     <div style="display:flex;justify-content:flex-end;gap:8px;">
-                        <button class="btn btn-sm btn-light rounded-2" title="Copier le lien" onclick="copyLink()">
+                        <button class="btn btn-sm btn-light rounded-2" title="Copier le lien"
+                                onclick="copySpecificLink('{{ addslashes($url) }}')">
                             <i class="ri-file-copy-line"></i>
                         </button>
-                        <button class="btn btn-sm btn-light rounded-2" title="Soumettre une preuve" onclick="openSubmitModal()" style="color:#e8521a;">
+                        <button class="btn btn-sm btn-light rounded-2" title="Soumettre une preuve"
+                                onclick="openSubmitModal('{{ $currency }}')"
+                                style="color:#e8521a;">
                             <i class="ri-send-plane-line"></i>
                         </button>
                     </div>
                 </td>
             </tr>
-        @else
+        @empty
             <tr>
                 <td colspan="5" style="padding:60px 20px;text-align:center;color:#bbb;">
                     <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="none" viewBox="0 0 24 24" stroke="#ccc" stroke-width="1.3" style="display:block;margin:0 auto 14px;">
@@ -89,14 +104,16 @@
                     <span style="font-size:.95rem;color:#bbb;">Aucun lien de paiement trouvé.</span>
                 </td>
             </tr>
-        @endif
+        @endforelse
         </tbody>
     </table>
 
-    @if($sebpayUrl)
-    {{-- Pagination --}}
+    @if(count($sebpayLinks) > 0)
     <div style="padding:12px 20px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;border-top:1px solid #f0f0f0;">
-        <span style="font-size:.82rem;color:#aaa;">Affichage de <strong>1</strong> à <strong>1</strong> sur <strong>1</strong> résultats</span>
+        <span style="font-size:.82rem;color:#aaa;">
+            Affichage de <strong>1</strong> à <strong>{{ count($sebpayLinks) }}</strong>
+            sur <strong>{{ count($sebpayLinks) }}</strong> résultats
+        </span>
         <div style="display:flex;gap:4px;">
             <button class="btn btn-sm btn-light rounded-2 disabled"><i class="ri-arrow-left-s-line"></i></button>
             <button class="btn btn-sm rounded-2 text-white fw-bold" style="background:#e8521a;min-width:32px;">1</button>
@@ -117,6 +134,7 @@
                     <tr>
                         <th class="px-4 py-3">ID Transaction</th>
                         <th>Montant</th>
+                        <th>Devise</th>
                         <th>Réseau</th>
                         <th>Statut</th>
                         <th>Date</th>
@@ -127,7 +145,8 @@
                 @foreach($claims as $claim)
                     <tr>
                         <td class="px-4 fw-semibold" style="font-family:monospace;">{{ $claim->transaction_id }}</td>
-                        <td class="fw-bold">{{ number_format($claim->amount, 0, ',', ' ') }} FCFA</td>
+                        <td class="fw-bold">{{ number_format($claim->amount, 0, ',', ' ') }}</td>
+                        <td><span class="badge bg-secondary rounded-2">{{ $claim->currency }}</span></td>
                         <td>
                             @php
                                 $netStyle = $claim->payout_network === 'MTN'
@@ -140,7 +159,10 @@
                             <div class="text-muted smaller">{{ $claim->payout_phone }}</div>
                         </td>
                         <td>
-                            @php $map = ['pending'=>['#fff3cd','#856404','En attente'],'approved'=>['#cfe2ff','#0a58ca','Approuvée'],'paid'=>['#d1fae5','#065f46','Payée'],'rejected'=>['#f8d7da','#842029','Rejetée']]; $s=$map[$claim->status]??['#eee','#555',$claim->status]; @endphp
+                            @php
+                                $map = ['pending'=>['#fff3cd','#856404','En attente'],'approved'=>['#cfe2ff','#0a58ca','Approuvée'],'paid'=>['#d1fae5','#065f46','Payée'],'rejected'=>['#f8d7da','#842029','Rejetée']];
+                                $s = $map[$claim->status] ?? ['#eee','#555',$claim->status];
+                            @endphp
                             <span class="badge rounded-pill px-2 fw-semibold"
                                   style="background:{{ $s[0] }};color:{{ $s[1] }};font-size:.75rem;">{{ $s[2] }}</span>
                             @if($claim->isRejected() && $claim->rejection_reason)
@@ -168,50 +190,71 @@
 </div>
 @endif
 
-{{-- Modal : affichage lien généré --}}
+{{-- Modal : choisir devise puis afficher lien --}}
 <div class="modal fade" id="createLinkModal" tabindex="-1">
-    <div class="modal-dialog modal-dialog-centered" style="max-width:480px;">
+    <div class="modal-dialog modal-dialog-centered" style="max-width:500px;">
         <div class="modal-content border-0 shadow-lg rounded-4">
             <div class="modal-header border-0 pt-4 px-4">
                 <div>
-                    <h5 class="modal-title fw-bold mb-1">🔗 Votre lien de paiement</h5>
-                    <p class="text-muted small mb-0">Partagez ce lien avec vos clients pour recevoir des paiements.</p>
+                    <h5 class="modal-title fw-bold mb-1" id="clModalTitle">🔗 Créer un lien de paiement</h5>
+                    <p class="text-muted small mb-0" id="clModalSubtitle">Choisissez la devise dans laquelle vos clients vont payer.</p>
                 </div>
                 <button class="btn-close ms-3" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body px-4 py-3">
-                @if($sebpayUrl)
-                    <div class="bg-light rounded-3 p-3 d-flex align-items-center gap-2">
-                        <code class="flex-grow-1 text-break small" id="linkToCopy">{{ $sebpayUrl }}</code>
+
+                {{-- Étape 1 : sélection devise --}}
+                <div id="stepCurrency">
+                    @if(count($sebpayLinks) > 0)
+                        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:12px;">
+                            @foreach($sebpayLinks as $currency => $url)
+                            <button type="button"
+                                    onclick="selectCurrency('{{ $currency }}', '{{ addslashes($url) }}')"
+                                    style="border:2px solid #eee;border-radius:14px;padding:18px 10px;background:#fff;cursor:pointer;transition:all .18s;text-align:center;"
+                                    onmouseover="this.style.borderColor='#e8521a'" onmouseout="this.style.borderColor='#eee'">
+                                <div style="font-size:1.5rem;font-weight:800;color:#1e3a5f;line-height:1;">{{ $currency }}</div>
+                                <div style="font-size:.75rem;color:#888;margin-top:5px;">{{ $currencyLabels[$currency] ?? $currency }}</div>
+                            </button>
+                            @endforeach
+                        </div>
+                    @else
+                        <div class="text-center py-4 text-muted">
+                            <i class="ri-time-line" style="font-size:2rem;opacity:.4;"></i>
+                            <p class="mt-2 mb-0 small">Aucun lien configuré par l'administrateur.</p>
+                        </div>
+                    @endif
+                </div>
+
+                {{-- Étape 2 : affichage URL --}}
+                <div id="stepLink" style="display:none;">
+                    <button type="button" onclick="backToCurrencyStep()" class="btn btn-sm btn-light rounded-2 mb-3">
+                        <i class="ri-arrow-left-line me-1"></i>Changer de devise
+                    </button>
+                    <div class="bg-light rounded-3 p-3 d-flex align-items-center gap-2 mb-3">
+                        <code class="flex-grow-1 text-break small" id="selectedLinkDisplay"></code>
                         <button class="btn btn-sm fw-semibold text-white flex-shrink-0 rounded-2"
-                                style="background:#e8521a;" onclick="copyLink()">
+                                style="background:#e8521a;" onclick="copySelectedLink()">
                             <i class="ri-file-copy-line me-1"></i>Copier
                         </button>
                     </div>
-                    <div id="copyFeedback" class="text-success small mt-2 d-none">
+                    <div id="copyFeedback2" class="text-success small mb-3 d-none">
                         <i class="ri-check-line me-1"></i>Lien copié !
                     </div>
-                    <div class="mt-3 p-3 rounded-3" style="background:#fff3cd;border:1px solid #ffc107;">
+                    <div class="p-3 rounded-3 mb-3" style="background:#fff3cd;border:1px solid #ffc107;">
                         <div class="small fw-semibold mb-1">📋 Instructions pour vos clients :</div>
                         <ol class="small mb-0 ps-3" style="line-height:1.8;">
                             <li>Cliquer sur votre lien de paiement</li>
-                            <li>Effectuer le paiement</li>
+                            <li>Effectuer le paiement en <strong id="selectedCurrencyLabel"></strong></li>
                             <li>Vous envoyer la <strong>capture d'écran</strong> + l'<strong>ID de transaction</strong></li>
                         </ol>
                     </div>
-                    <div class="mt-3 border-top pt-3">
-                        <button class="btn fw-semibold w-100 rounded-3 text-white"
-                                style="background:#1e3a5f;"
-                                onclick="bootstrap.Modal.getInstance(document.getElementById('createLinkModal')).hide(); openSubmitModal();">
-                            <i class="ri-send-plane-line me-2"></i>J'ai reçu une preuve → Soumettre
-                        </button>
-                    </div>
-                @else
-                    <div class="text-center py-4 text-muted">
-                        <i class="ri-time-line" style="font-size:2rem;opacity:.4;"></i>
-                        <p class="mt-2 mb-0 small">Le lien est en cours de configuration par l'administrateur.</p>
-                    </div>
-                @endif
+                    <button class="btn fw-semibold w-100 rounded-3 text-white"
+                            style="background:#1e3a5f;"
+                            onclick="bootstrap.Modal.getInstance(document.getElementById('createLinkModal')).hide(); openSubmitModal(currentCurrency);">
+                        <i class="ri-send-plane-line me-2"></i>J'ai reçu une preuve → Soumettre
+                    </button>
+                </div>
+
             </div>
         </div>
     </div>
@@ -239,6 +282,21 @@
             <form action="{{ route('payment-claims.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="modal-body px-4 py-3">
+
+                    {{-- Devise (pré-remplie) --}}
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold small">Devise du paiement <span class="text-danger">*</span></label>
+                        <select name="currency" id="submitCurrency"
+                                class="form-select rounded-3 @error('currency') is-invalid @enderror">
+                            @foreach($sebpayLinks as $currency => $url)
+                                <option value="{{ $currency }}" {{ old('currency') === $currency ? 'selected' : '' }}>
+                                    {{ $currency }} — {{ $currencyLabels[$currency] ?? $currency }}
+                                </option>
+                            @endforeach
+                        </select>
+                        @error('currency')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                    </div>
+
                     <div class="mb-3">
                         <label class="form-label fw-semibold small">ID de Transaction <span class="text-danger">*</span></label>
                         <input type="text" name="transaction_id"
@@ -248,12 +306,14 @@
                         @error('transaction_id')<div class="invalid-feedback">{{ $message }}</div>@enderror
                     </div>
                     <div class="mb-3">
-                        <label class="form-label fw-semibold small">Montant reçu (FCFA) <span class="text-danger">*</span></label>
+                        <label class="form-label fw-semibold small">Montant reçu <span class="text-danger">*</span></label>
                         <div class="input-group">
                             <input type="number" name="amount" step="1" min="1"
                                    class="form-control rounded-start-3 @error('amount') is-invalid @enderror"
                                    value="{{ old('amount') }}" placeholder="Ex: 5000">
-                            <span class="input-group-text bg-light">FCFA</span>
+                            <span class="input-group-text bg-light" id="currencyAddon">
+                                {{ array_key_first($sebpayLinks) ?? 'XOF' }}
+                            </span>
                         </div>
                         @error('amount')<div class="text-danger small mt-1">{{ $message }}</div>@enderror
                     </div>
@@ -286,28 +346,71 @@
 </div>
 
 <style>
-.hover-row:hover { background: #fafafa; }
+.hover-row:hover { background:#fafafa; }
 </style>
 
 @push('scripts')
 <script>
+var currentCurrency = null;
+var currentLink = null;
+
 function openCreateLink() {
+    backToCurrencyStep();
     new bootstrap.Modal(document.getElementById('createLinkModal')).show();
 }
-function openSubmitModal() {
-    new bootstrap.Modal(document.getElementById('submitModal')).show();
+
+function selectCurrency(currency, url) {
+    currentCurrency = currency;
+    currentLink = url;
+    document.getElementById('selectedLinkDisplay').textContent = url;
+    document.getElementById('selectedCurrencyLabel').textContent = currency;
+    document.getElementById('stepCurrency').style.display = 'none';
+    document.getElementById('stepLink').style.display = 'block';
+    document.getElementById('clModalTitle').textContent = '🔗 Votre lien ' + currency;
+    document.getElementById('clModalSubtitle').textContent = 'Partagez ce lien avec vos clients pour recevoir des paiements.';
 }
-function copyLink() {
-    const txt = document.getElementById('linkToCopy')?.textContent?.trim();
-    if (!txt) return;
-    navigator.clipboard.writeText(txt).then(() => {
-        const fb = document.getElementById('copyFeedback');
-        if (fb) { fb.classList.remove('d-none'); setTimeout(() => fb.classList.add('d-none'), 2500); }
+
+function backToCurrencyStep() {
+    currentCurrency = null;
+    currentLink = null;
+    document.getElementById('stepCurrency').style.display = 'block';
+    document.getElementById('stepLink').style.display = 'none';
+    document.getElementById('clModalTitle').textContent = '🔗 Créer un lien de paiement';
+    document.getElementById('clModalSubtitle').textContent = 'Choisissez la devise dans laquelle vos clients vont payer.';
+}
+
+function copySelectedLink() {
+    if (!currentLink) return;
+    navigator.clipboard.writeText(currentLink).then(() => {
+        const fb = document.getElementById('copyFeedback2');
+        fb.classList.remove('d-none');
+        setTimeout(() => fb.classList.add('d-none'), 2500);
     });
 }
-// Ouvrir auto le modal de soumission si erreur de validation
+
+function copySpecificLink(url) {
+    navigator.clipboard.writeText(url).then(() => {
+        alert('Lien copié !');
+    });
+}
+
+function openSubmitModal(currency) {
+    const sel = document.getElementById('submitCurrency');
+    const addon = document.getElementById('currencyAddon');
+    if (sel && currency) {
+        sel.value = currency;
+        if (addon) addon.textContent = currency;
+    }
+    new bootstrap.Modal(document.getElementById('submitModal')).show();
+}
+
+document.getElementById('submitCurrency')?.addEventListener('change', function() {
+    const addon = document.getElementById('currencyAddon');
+    if (addon) addon.textContent = this.value;
+});
+
 @if($errors->any())
-document.addEventListener('DOMContentLoaded', () => openSubmitModal());
+document.addEventListener('DOMContentLoaded', () => openSubmitModal('{{ old('currency', array_key_first($sebpayLinks ?? [])) }}'));
 @endif
 </script>
 @endpush
