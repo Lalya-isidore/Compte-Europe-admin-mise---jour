@@ -5,9 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\AppSetting;
 use App\Models\PaymentClaim;
 use App\Models\PayoutConfig;
+use App\Models\UserPaymentLink;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Storage;
 
 class PaymentClaimController extends Controller
 {
@@ -20,15 +20,54 @@ class PaymentClaimController extends Controller
                     ->paginate(15);
         $config = PayoutConfig::where('user_id', Auth::id())->first();
 
+        // Liens créés par cet utilisateur
+        $userLinks = UserPaymentLink::where('user_id', Auth::id())
+                        ->orderBy('created_at')
+                        ->get();
+
+        // Pour chaque lien créé, résoudre l'URL SebPay configurée
         $sebpayLinks = [];
-        foreach (self::CURRENCIES as $currency) {
-            $url = AppSetting::get("sebpay_url_{$currency}");
+        foreach ($userLinks as $link) {
+            $url = AppSetting::get("sebpay_url_{$link->currency}");
             if ($url) {
-                $sebpayLinks[$currency] = $url;
+                $sebpayLinks[$link->currency] = [
+                    'url'        => $url,
+                    'created_at' => $link->created_at,
+                ];
             }
         }
 
-        return view('payment-claims.index', compact('claims', 'config', 'sebpayLinks'));
+        // Devises disponibles (admin a configuré un URL) que l'utilisateur n'a pas encore créées
+        $userCurrencies = $userLinks->pluck('currency')->toArray();
+        $availableCurrencies = [];
+        foreach (self::CURRENCIES as $currency) {
+            if (!in_array($currency, $userCurrencies) && AppSetting::get("sebpay_url_{$currency}")) {
+                $availableCurrencies[] = $currency;
+            }
+        }
+
+        return view('payment-claims.index', compact('claims', 'config', 'sebpayLinks', 'availableCurrencies'));
+    }
+
+    public function createLink(Request $request)
+    {
+        $data = $request->validate([
+            'currency' => ['required', 'string', 'in:' . implode(',', self::CURRENCIES)],
+        ]);
+
+        $currency = $data['currency'];
+
+        // Vérifier que l'admin a bien configuré un lien pour cette devise
+        if (!AppSetting::get("sebpay_url_{$currency}")) {
+            return back()->withErrors(['currency' => 'Aucun lien configuré pour cette devise.']);
+        }
+
+        UserPaymentLink::firstOrCreate([
+            'user_id'  => Auth::id(),
+            'currency' => $currency,
+        ]);
+
+        return back()->with('success', "Lien de paiement {$currency} créé avec succès.");
     }
 
     public function store(Request $request)
