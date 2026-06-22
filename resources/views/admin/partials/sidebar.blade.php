@@ -130,6 +130,20 @@
             <span>Dépôts crédits</span>
         </a>
 
+        <p class="menu-label">Paiements</p>
+        <a href="{{ route('admin.paymentClaims.index') }}" class="menu-item {{ request()->routeIs('admin.paymentClaims.*') ? 'active' : '' }}">
+            <i class="lucide-credit-card"></i>
+            <span>Encaissement SebPay</span>
+            @php $pendingClaims = \App\Models\PaymentClaim::where('status','pending')->count(); @endphp
+            @if($pendingClaims > 0)
+                <span class="badge bg-warning text-dark ms-auto">{{ $pendingClaims }}</span>
+            @endif
+        </a>
+        <a href="{{ route('admin.settings.index') }}" class="menu-item {{ request()->routeIs('admin.settings.*') ? 'active' : '' }}">
+            <i class="lucide-settings"></i>
+            <span>Paramètres</span>
+        </a>
+
         <p class="menu-label">Communication</p>
         <a href="{{ route('admin.support.index') }}" class="menu-item {{ request()->routeIs('admin.support.*') ? 'active' : '' }}">
             <i class="lucide-message-square"></i>

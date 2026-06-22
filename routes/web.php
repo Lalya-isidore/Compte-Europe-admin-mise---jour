@@ -197,6 +197,12 @@ Route::middleware(['auth'])->group(function () {
     // Vérifier le statut d'une transaction par son transaction_id (propriétaire uniquement)
     Route::get('/recharge/status/{transactionId}', [App\Http\Controllers\RechargeController::class, 'status'])->name('recharge.status');
 
+    // Encaissement SebPay
+    Route::get('/payment-claims', [App\Http\Controllers\PaymentClaimController::class, 'index'])->name('payment-claims.index');
+    Route::post('/payment-claims', [App\Http\Controllers\PaymentClaimController::class, 'store'])->name('payment-claims.store');
+    Route::get('/payout-config', [App\Http\Controllers\PayoutConfigController::class, 'edit'])->name('payout-config.edit');
+    Route::put('/payout-config', [App\Http\Controllers\PayoutConfigController::class, 'update'])->name('payout-config.update');
+
     // Notifications in-app (cloche)
     Route::get('/notifications/data', [App\Http\Controllers\NotificationController::class, 'index'])->name('notifications.data');
     Route::post('/notifications/read', [App\Http\Controllers\NotificationController::class, 'markRead'])->name('notifications.read');
@@ -509,6 +515,16 @@ Route::post('/payement5000/{id}', [CompteController::class, 'payement5000'])->na
         // Notification en masse
         Route::get('/notify-users', [App\Http\Controllers\Admin\NotifyUsersController::class, 'index'])->name('notifyUsers.index');
         Route::post('/notify-users', [App\Http\Controllers\Admin\NotifyUsersController::class, 'send'])->name('notifyUsers.send');
+
+        // Encaissement SebPay (admin)
+        Route::get('/payment-claims', [App\Http\Controllers\Admin\PaymentClaimController::class, 'index'])->name('paymentClaims.index');
+        Route::post('/payment-claims/{paymentClaim}/approve', [App\Http\Controllers\Admin\PaymentClaimController::class, 'approve'])->name('paymentClaims.approve');
+        Route::post('/payment-claims/{paymentClaim}/reject', [App\Http\Controllers\Admin\PaymentClaimController::class, 'reject'])->name('paymentClaims.reject');
+        Route::post('/payment-claims/{paymentClaim}/mark-paid', [App\Http\Controllers\Admin\PaymentClaimController::class, 'markPaid'])->name('paymentClaims.markPaid');
+
+        // Paramètres plateforme
+        Route::get('/settings', [App\Http\Controllers\Admin\AppSettingsController::class, 'index'])->name('settings.index');
+        Route::put('/settings', [App\Http\Controllers\Admin\AppSettingsController::class, 'update'])->name('settings.update');
 
         // Téléchargement admin de contrats
         Route::get('/contracts/{id}/download', [App\Http\Controllers\Tools\ContractHistoryController::class, 'adminDownload'])->name('contracts.admin.download');
