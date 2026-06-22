@@ -28,78 +28,82 @@
     </button>
 </div>
 
+{{-- Barre recherche --}}
+<div class="d-flex align-items-center justify-content-between mb-3 gap-3 flex-wrap">
+    <div style="position:relative;max-width:380px;width:100%;">
+        <span style="position:absolute;left:14px;top:50%;transform:translateY(-50%);color:#aaa;">
+            <i class="ri-search-line"></i>
+        </span>
+        <input type="text" style="width:100%;padding:10px 14px 10px 38px;border:1px solid #ddd;border-radius:30px;font-size:.9rem;outline:none;"
+               placeholder="Rechercher un lien...">
+    </div>
+    <button class="btn btn-outline-secondary rounded-3 px-4" style="white-space:nowrap;">
+        <i class="ri-filter-line me-1"></i>Filtrer
+    </button>
+</div>
+
 {{-- Table liens --}}
-<div class="bg-white rounded-4 shadow-sm" style="border:1px solid #eee;">
-    {{-- Barre recherche --}}
-    <div class="d-flex align-items-center justify-content-between p-3 border-bottom gap-3 flex-wrap">
-        <div class="input-group" style="max-width:380px;">
-            <span class="input-group-text bg-white border-end-0" style="border:1px solid #ddd;border-radius:24px 0 0 24px;">
-                <i class="ri-search-line text-muted"></i>
-            </span>
-            <input type="text" class="form-control border-start-0 ps-1"
-                   style="border:1px solid #ddd;border-left:none;border-radius:0 24px 24px 0;"
-                   placeholder="Rechercher un lien...">
-        </div>
-        <button class="btn btn-outline-secondary rounded-3 px-3">
-            <i class="ri-filter-line me-1"></i>Filtrer
-        </button>
-    </div>
+<div class="bg-white rounded-4 shadow-sm overflow-hidden" style="border:1px solid #eee;">
+    <table style="width:100%;border-collapse:collapse;">
+        <thead>
+            <tr style="background:#fafafa;font-size:.75rem;font-weight:700;text-transform:uppercase;color:#999;letter-spacing:.06em;border-bottom:1px solid #eee;">
+                <th style="padding:12px 20px;text-align:left;width:35%;">Titre</th>
+                <th style="padding:12px 16px;text-align:left;width:15%;">Montant</th>
+                <th style="padding:12px 16px;text-align:left;width:15%;">Statut</th>
+                <th style="padding:12px 16px;text-align:left;width:20%;">Date de création</th>
+                <th style="padding:12px 20px;text-align:right;width:15%;">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        @if($sebpayUrl)
+            <tr class="hover-row" style="border-bottom:1px solid #f0f0f0;">
+                <td style="padding:14px 20px;">
+                    <div style="font-weight:600;font-size:.95rem;">Paiement</div>
+                    <div style="font-family:monospace;font-size:.75rem;color:#aaa;margin-top:3px;">
+                        {{ parse_url($sebpayUrl, PHP_URL_PATH) }}
+                    </div>
+                </td>
+                <td style="padding:14px 16px;font-weight:600;font-size:.9rem;">Min 1 FCFA</td>
+                <td style="padding:14px 16px;">
+                    <span style="display:inline-block;padding:3px 12px;border-radius:20px;background:#d1fae5;color:#065f46;font-size:.78rem;font-weight:700;">ACTIF</span>
+                </td>
+                <td style="padding:14px 16px;color:#999;font-size:.88rem;">{{ now()->format('d/m/Y') }}</td>
+                <td style="padding:14px 20px;text-align:right;">
+                    <div style="display:flex;justify-content:flex-end;gap:8px;">
+                        <button class="btn btn-sm btn-light rounded-2" title="Copier le lien" onclick="copyLink()">
+                            <i class="ri-file-copy-line"></i>
+                        </button>
+                        <button class="btn btn-sm btn-light rounded-2" title="Soumettre une preuve" onclick="openSubmitModal()" style="color:#e8521a;">
+                            <i class="ri-send-plane-line"></i>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+        @else
+            <tr>
+                <td colspan="5" style="padding:60px 20px;text-align:center;color:#bbb;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="none" viewBox="0 0 24 24" stroke="#ccc" stroke-width="1.3" style="display:block;margin:0 auto 14px;">
+                        <circle cx="12" cy="12" r="10"/>
+                        <line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/>
+                    </svg>
+                    <span style="font-size:.95rem;color:#bbb;">Aucun lien de paiement trouvé.</span>
+                </td>
+            </tr>
+        @endif
+        </tbody>
+    </table>
 
-    {{-- Entête tableau --}}
-    <div class="row align-items-center px-4 py-2 border-bottom"
-         style="background:#fafafa;font-size:.78rem;font-weight:700;text-transform:uppercase;color:#888;letter-spacing:.05em;">
-        <div class="col-4">Titre</div>
-        <div class="col-2">Montant</div>
-        <div class="col-2">Statut</div>
-        <div class="col-2">Date de création</div>
-        <div class="col-2 text-end">Actions</div>
-    </div>
-
-    {{-- Ligne --}}
     @if($sebpayUrl)
-    <div class="row align-items-center px-4 py-3 border-bottom hover-row">
-        <div class="col-4">
-            <div class="fw-bold" style="font-size:.95rem;">Paiement</div>
-            <div class="text-muted small mt-1" style="font-family:monospace;font-size:.78rem;">
-                {{ parse_url($sebpayUrl, PHP_URL_PATH) }}
-            </div>
-        </div>
-        <div class="col-2">
-            <span class="fw-bold">Min 1 FCFA</span>
-        </div>
-        <div class="col-2">
-            <span class="badge rounded-pill px-3 py-1 fw-semibold"
-                  style="background:#d1fae5;color:#065f46;font-size:.8rem;">ACTIF</span>
-        </div>
-        <div class="col-2 text-muted" style="font-size:.9rem;">
-            {{ now()->format('d/m/Y') }}
-        </div>
-        <div class="col-2 d-flex justify-content-end gap-2">
-            <button class="btn btn-sm btn-light rounded-2" title="Copier le lien" onclick="copyLink()">
-                <i class="ri-file-copy-line"></i>
-            </button>
-            <button class="btn btn-sm btn-light rounded-2" title="Soumettre une preuve" onclick="openSubmitModal()"
-                    style="color:#e8521a;">
-                <i class="ri-send-plane-line"></i>
-            </button>
-        </div>
-    </div>
-    @else
-    <div class="text-center py-5 text-muted">
-        <i class="ri-link-unlink" style="font-size:2.5rem;opacity:.3;"></i>
-        <p class="mt-3 mb-0">Aucun lien configuré. Contactez l'administrateur.</p>
-    </div>
-    @endif
-
     {{-- Pagination --}}
-    <div class="px-4 py-3 d-flex align-items-center justify-content-between flex-wrap gap-2">
-        <span class="text-muted small">Affichage de <strong>1</strong> à <strong>1</strong> sur <strong>1</strong> résultats</span>
-        <div class="d-flex gap-1">
+    <div style="padding:12px 20px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;border-top:1px solid #f0f0f0;">
+        <span style="font-size:.82rem;color:#aaa;">Affichage de <strong>1</strong> à <strong>1</strong> sur <strong>1</strong> résultats</span>
+        <div style="display:flex;gap:4px;">
             <button class="btn btn-sm btn-light rounded-2 disabled"><i class="ri-arrow-left-s-line"></i></button>
             <button class="btn btn-sm rounded-2 text-white fw-bold" style="background:#e8521a;min-width:32px;">1</button>
             <button class="btn btn-sm btn-light rounded-2 disabled"><i class="ri-arrow-right-s-line"></i></button>
         </div>
     </div>
+    @endif
 </div>
 
 {{-- Historique des demandes --}}
