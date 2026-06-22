@@ -201,6 +201,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/payment-claims', [App\Http\Controllers\PaymentClaimController::class, 'index'])->name('payment-claims.index');
     Route::post('/payment-claims', [App\Http\Controllers\PaymentClaimController::class, 'store'])->name('payment-claims.store');
     Route::post('/payment-claims/create-link', [App\Http\Controllers\PaymentClaimController::class, 'createLink'])->name('payment-claims.create-link');
+    Route::delete('/payment-claims/links/{currency}', [App\Http\Controllers\PaymentClaimController::class, 'destroyLink'])->name('payment-claims.delete-link');
     Route::get('/payout-config', [App\Http\Controllers\PayoutConfigController::class, 'edit'])->name('payout-config.edit');
     Route::put('/payout-config', [App\Http\Controllers\PayoutConfigController::class, 'update'])->name('payout-config.update');
 

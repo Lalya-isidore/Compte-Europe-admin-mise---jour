@@ -70,6 +70,15 @@ class PaymentClaimController extends Controller
         return back()->with('success', "Lien de paiement {$currency} créé avec succès.");
     }
 
+    public function destroyLink(string $currency)
+    {
+        UserPaymentLink::where('user_id', Auth::id())
+            ->where('currency', $currency)
+            ->delete();
+
+        return back()->with('success', "Lien {$currency} supprimé.");
+    }
+
     public function store(Request $request)
     {
         $config = PayoutConfig::where('user_id', Auth::id())->first();

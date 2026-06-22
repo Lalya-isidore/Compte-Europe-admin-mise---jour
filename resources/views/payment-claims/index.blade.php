@@ -98,6 +98,14 @@ $currencyLabels = [
                                 style="color:#e8521a;">
                             <i class="ri-send-plane-line"></i>
                         </button>
+                        <form action="{{ route('payment-claims.delete-link', $currency) }}" method="POST"
+                              onsubmit="return confirm('Supprimer le lien {{ $currency }} ?')" style="margin:0;">
+                            @csrf @method('DELETE')
+                            <button type="submit" class="btn btn-sm btn-light rounded-2" title="Supprimer"
+                                    style="color:#dc2626;">
+                                <i class="ri-delete-bin-line"></i>
+                            </button>
+                        </form>
                     </div>
                 </td>
             </tr>
