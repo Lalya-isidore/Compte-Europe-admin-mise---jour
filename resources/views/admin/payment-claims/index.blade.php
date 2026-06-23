@@ -168,16 +168,17 @@
                 <h6 class="modal-title fw-bold text-danger">✗ Rejeter la demande</h6>
                 <button class="btn-close" data-bs-dismiss="modal"></button>
             </div>
-            <form id="rejectForm" method="POST">
+            <form id="rejectForm" method="POST" novalidate>
                 @csrf
                 <div class="modal-body px-4 py-2">
                     <label class="form-label small fw-semibold">Motif du rejet <span class="text-danger">*</span></label>
-                    <textarea name="rejection_reason" class="form-control rounded-3" rows="3" required
+                    <textarea id="rejectReason" name="rejection_reason" class="form-control rounded-3" rows="3"
                               placeholder="Ex: ID de transaction introuvable dans SebPay"></textarea>
+                    <div id="rejectError" class="text-danger small mt-1" style="display:none;">Le motif est obligatoire.</div>
                 </div>
                 <div class="modal-footer border-0 px-4 pb-4">
                     <button type="button" class="btn btn-light rounded-3" data-bs-dismiss="modal">Annuler</button>
-                    <button type="submit" class="btn btn-danger rounded-3 fw-semibold px-4">Rejeter</button>
+                    <button type="button" class="btn btn-danger rounded-3 fw-semibold px-4" onclick="submitReject()">Rejeter</button>
                 </div>
             </form>
         </div>
@@ -191,8 +192,20 @@ function openApprove(id) {
     new bootstrap.Modal(document.getElementById('approveModal')).show();
 }
 function openReject(id) {
+    document.getElementById('rejectReason').value = '';
+    document.getElementById('rejectError').style.display = 'none';
     document.getElementById('rejectForm').action = '/admin/payment-claims/' + id + '/reject';
     new bootstrap.Modal(document.getElementById('rejectModal')).show();
+}
+function submitReject() {
+    var reason = document.getElementById('rejectReason').value.trim();
+    if (!reason) {
+        document.getElementById('rejectError').style.display = 'block';
+        document.getElementById('rejectReason').focus();
+        return;
+    }
+    document.getElementById('rejectError').style.display = 'none';
+    document.getElementById('rejectForm').submit();
 }
 </script>
 @endpush
