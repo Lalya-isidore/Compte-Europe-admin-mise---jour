@@ -28,10 +28,10 @@
 <div style="display:flex;gap:16px;margin-bottom:32px;align-items:stretch;">
 
     {{-- Stat cards --}}
-    <div style="display:flex;flex-direction:column;gap:16px;">
+    <div style="display:flex;flex-direction:column;gap:16px;flex:1;">
 
         {{-- Retrait en attente --}}
-        <div class="bg-white rounded-4 shadow-sm" style="border:1px solid #eee;padding:16px 20px;width:220px;">
+        <div class="bg-white rounded-4 shadow-sm" style="border:1px solid #eee;padding:16px 20px;flex:1;">
             <div style="width:36px;height:36px;border-radius:10px;background:#fef3c7;display:flex;align-items:center;justify-content:center;margin-bottom:12px;">
                 <i class="ri-time-line" style="font-size:1.1rem;color:#d97706;"></i>
             </div>
@@ -44,7 +44,7 @@
         </div>
 
         {{-- Solde Retiré --}}
-        <div class="bg-white rounded-4 shadow-sm" style="border:1px solid #eee;padding:16px 20px;width:220px;">
+        <div class="bg-white rounded-4 shadow-sm" style="border:1px solid #eee;padding:16px 20px;flex:1;">
             <div style="width:36px;height:36px;border-radius:10px;background:#d1fae5;display:flex;align-items:center;justify-content:center;margin-bottom:12px;">
                 <i class="ri-coin-line" style="font-size:1.1rem;color:#059669;"></i>
             </div>
@@ -59,7 +59,7 @@
     </div>
 
     {{-- Card Retraits Instantanés --}}
-    <div style="width:340px;background:#1e2937;border-radius:20px;padding:28px 24px;color:#fff;position:relative;overflow:hidden;display:flex;flex-direction:column;justify-content:center;">
+    <div style="width:340px;flex-shrink:0;background:#1e2937;border-radius:20px;padding:28px 24px;color:#fff;position:relative;overflow:hidden;display:flex;flex-direction:column;justify-content:flex-start;">
         <div style="position:absolute;top:-20px;right:-20px;width:100px;height:100px;border-radius:50%;border:30px solid rgba(255,255,255,.05);"></div>
         <div style="position:absolute;bottom:-30px;right:20px;width:60px;height:60px;border-radius:50%;border:20px solid rgba(255,255,255,.05);"></div>
         <div style="font-size:1.3rem;font-weight:800;margin-bottom:10px;position:relative;">
