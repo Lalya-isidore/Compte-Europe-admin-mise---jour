@@ -56,6 +56,19 @@
             </div>
         </div>
 
+        {{-- Paiements Annulés --}}
+        <div class="bg-white rounded-4 shadow-sm" style="border:1px solid #eee;padding:16px 20px;flex:1;">
+            <div style="width:36px;height:36px;border-radius:10px;background:#fee2e2;display:flex;align-items:center;justify-content:center;margin-bottom:12px;">
+                <i class="ri-close-circle-line" style="font-size:1.1rem;color:#dc2626;"></i>
+            </div>
+            <div style="font-size:.68rem;font-weight:700;text-transform:uppercase;color:#aaa;letter-spacing:.06em;margin-bottom:4px;">Paiements Annulés</div>
+            <div style="font-size:1.3rem;font-weight:800;color:#dc2626;">{{ $rejectedCount }} <span style="font-size:.8rem;font-weight:600;">demande{{ $rejectedCount > 1 ? 's' : '' }}</span></div>
+            <div style="font-size:.68rem;color:#dc2626;margin-top:6px;text-transform:uppercase;letter-spacing:.04em;">
+                <span style="width:7px;height:7px;border-radius:50%;background:#dc2626;display:inline-block;margin-right:4px;"></span>
+                Rejetées par l'admin
+            </div>
+        </div>
+
     </div>
 
     {{-- Card Retraits Instantanés --}}

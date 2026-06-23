@@ -18,6 +18,7 @@ class PortfolioController extends Controller
         $claims = PaymentClaim::where('user_id', $userId)->get();
         $pendingBalance   = $claims->where('status', 'pending')->sum('amount');
         $withdrawnBalance = $claims->where('status', 'paid')->sum('amount');
+        $rejectedCount    = $claims->where('status', 'rejected')->count();
 
         $history = PaymentClaim::where('user_id', $userId)
                     ->orderByDesc('created_at')
@@ -34,7 +35,7 @@ class PortfolioController extends Controller
         }
 
         return view('portfolio.index', compact(
-            'pendingBalance', 'withdrawnBalance',
+            'pendingBalance', 'withdrawnBalance', 'rejectedCount',
             'history', 'payoutMethods', 'sebpayLinks'
         ));
     }
