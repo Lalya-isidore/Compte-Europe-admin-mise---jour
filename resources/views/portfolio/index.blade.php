@@ -154,7 +154,7 @@
     {{-- Sidebar droite --}}
     <div style="display:flex;flex-direction:column;gap:20px;">
 
-        {{-- Card Retraits Instantanés --}}
+        {{-- Card Soumettre preuve --}}
         <div style="background:#1e2937;border-radius:20px;padding:28px 24px;color:#fff;position:relative;overflow:hidden;">
             <div style="position:absolute;top:-20px;right:-20px;width:100px;height:100px;border-radius:50%;border:30px solid rgba(255,255,255,.05);"></div>
             <div style="position:absolute;bottom:-30px;right:20px;width:60px;height:60px;border-radius:50%;border:20px solid rgba(255,255,255,.05);"></div>
@@ -165,10 +165,10 @@
             <p style="font-size:.82rem;color:#94a3b8;line-height:1.6;margin-bottom:20px;position:relative;">
                 Le délai de retrait est de 24h. Passé ce délai, contactez le support.
             </p>
-            <a href="{{ route('payment-claims.index') }}"
-               style="display:block;background:#e8521a;color:#fff;text-align:center;padding:12px;border-radius:12px;font-weight:700;font-size:.9rem;text-decoration:none;position:relative;">
-                Demander un retrait
-            </a>
+            <button onclick="openSubmitProof()"
+               style="display:block;width:100%;background:#e8521a;color:#fff;text-align:center;padding:12px;border-radius:12px;font-weight:700;font-size:.9rem;border:none;cursor:pointer;position:relative;">
+                Soumettre une capture d'écran
+            </button>
         </div>
 
         {{-- Moyens de Paiement --}}
@@ -266,6 +266,104 @@
     </div>
 </div>
 
+{{-- Modal : Soumettre une capture d'écran --}}
+<div class="modal fade" id="submitProofModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered" style="max-width:480px;">
+        <div class="modal-content border-0 shadow-lg rounded-4">
+            <div class="modal-header border-0 pt-4 px-4">
+                <div>
+                    <h5 class="modal-title fw-bold mb-1">📤 Soumettre une preuve de paiement</h5>
+                    <p class="text-muted small mb-0">L'admin vérifiera votre capture et lancera le retrait sous 24h.</p>
+                </div>
+                <button class="btn-close ms-3" data-bs-dismiss="modal"></button>
+            </div>
+            <form action="{{ route('payment-claims.store') }}" method="POST" enctype="multipart/form-data">
+                @csrf
+                <div class="modal-body px-4 py-3">
+
+                    {{-- Moyen de paiement --}}
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold small">Recevoir sur quel numéro <span class="text-danger">*</span></label>
+                        @if($payoutMethods->isNotEmpty())
+                            <select name="payout_method_id" class="form-select rounded-3">
+                                <option value="">Choisir un moyen</option>
+                                @foreach($payoutMethods as $m)
+                                    <option value="{{ $m->id }}">{{ $m->holder_name }} — {{ $m->operator }} ({{ $m->phone_number }})</option>
+                                @endforeach
+                            </select>
+                        @else
+                            <div class="rounded-3 p-2 small" style="background:#fef3c7;border:1px solid #fde68a;">
+                                <i class="ri-alert-line me-1" style="color:#d97706;"></i>
+                                Aucun moyen configuré.
+                                <button type="button" class="btn btn-link btn-sm p-0 ms-1" onclick="bootstrap.Modal.getInstance(document.getElementById('submitProofModal')).hide(); openAddMethod();">
+                                    Ajouter un moyen →
+                                </button>
+                            </div>
+                        @endif
+                    </div>
+
+                    {{-- Devise --}}
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold small">Devise du paiement <span class="text-danger">*</span></label>
+                        <select name="currency" id="proofCurrency" class="form-select rounded-3 @error('currency') is-invalid @enderror">
+                            @if(count($sebpayLinks) > 0)
+                                @foreach($sebpayLinks as $currency => $url)
+                                    <option value="{{ $currency }}" {{ old('currency') === $currency ? 'selected' : '' }}>{{ $currency }}</option>
+                                @endforeach
+                            @else
+                                @foreach(['XOF','XAF','EUR','USD','CDF','GNF','GMD'] as $c)
+                                    <option value="{{ $c }}">{{ $c }}</option>
+                                @endforeach
+                            @endif
+                        </select>
+                        @error('currency')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                    </div>
+
+                    {{-- ID Transaction --}}
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold small">ID de Transaction <span class="text-danger">*</span></label>
+                        <input type="text" name="transaction_id"
+                               class="form-control rounded-3 @error('transaction_id') is-invalid @enderror"
+                               value="{{ old('transaction_id') }}"
+                               placeholder="Ex: TXN-XXXXXXXXXX">
+                        @error('transaction_id')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                    </div>
+
+                    {{-- Montant --}}
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold small">Montant reçu <span class="text-danger">*</span></label>
+                        <div class="input-group">
+                            <input type="number" name="amount" step="1" min="1"
+                                   class="form-control rounded-start-3 @error('amount') is-invalid @enderror"
+                                   value="{{ old('amount') }}" placeholder="Ex: 5000">
+                            <span class="input-group-text bg-light" id="proofCurrencyAddon">
+                                {{ array_key_first($sebpayLinks) ?? 'XOF' }}
+                            </span>
+                        </div>
+                        @error('amount')<div class="text-danger small mt-1">{{ $message }}</div>@enderror
+                    </div>
+
+                    {{-- Capture d'écran --}}
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold small">Capture d'écran du paiement <span class="text-danger">*</span></label>
+                        <input type="file" name="screenshot" accept="image/*"
+                               class="form-control rounded-3 @error('screenshot') is-invalid @enderror">
+                        <div class="text-muted small mt-1">JPG, PNG — max 5 Mo</div>
+                        @error('screenshot')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                    </div>
+
+                </div>
+                <div class="modal-footer border-0 px-4 pb-4 pt-0">
+                    <button type="button" class="btn btn-light rounded-3 px-4" data-bs-dismiss="modal">Annuler</button>
+                    <button type="submit" class="btn fw-bold px-4 rounded-3 text-white" style="background:#e8521a;">
+                        <i class="ri-send-plane-line me-2"></i>Envoyer
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 <style>
 @media (max-width: 900px) {
     .portfolio-grid { grid-template-columns: 1fr !important; }
@@ -277,8 +375,17 @@
 function openAddMethod() {
     new bootstrap.Modal(document.getElementById('addMethodModal')).show();
 }
+function openSubmitProof() {
+    new bootstrap.Modal(document.getElementById('submitProofModal')).show();
+}
+document.getElementById('proofCurrency')?.addEventListener('change', function() {
+    const addon = document.getElementById('proofCurrencyAddon');
+    if (addon) addon.textContent = this.value;
+});
 @if($errors->has('operator') || $errors->has('holder_name') || $errors->has('phone_number'))
 document.addEventListener('DOMContentLoaded', () => openAddMethod());
+@elseif($errors->has('transaction_id') || $errors->has('amount') || $errors->has('screenshot') || $errors->has('currency'))
+document.addEventListener('DOMContentLoaded', () => openSubmitProof());
 @endif
 </script>
 @endpush

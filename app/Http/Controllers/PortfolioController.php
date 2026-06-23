@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\AppSetting;
 use App\Models\PaymentClaim;
 use App\Models\PayoutMethod;
+use App\Models\UserPaymentLink;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -26,9 +28,17 @@ class PortfolioController extends Controller
 
         $payoutMethods = PayoutMethod::where('user_id', $userId)->get();
 
+        // Devises disponibles pour ce user (liens créés)
+        $userLinks = UserPaymentLink::where('user_id', $userId)->pluck('currency')->toArray();
+        $sebpayLinks = [];
+        foreach ($userLinks as $currency) {
+            $url = AppSetting::get("sebpay_url_{$currency}");
+            if ($url) $sebpayLinks[$currency] = $url;
+        }
+
         return view('portfolio.index', compact(
             'totalBalance', 'availableBalance', 'pendingBalance', 'withdrawnBalance',
-            'history', 'payoutMethods'
+            'history', 'payoutMethods', 'sebpayLinks'
         ));
     }
 

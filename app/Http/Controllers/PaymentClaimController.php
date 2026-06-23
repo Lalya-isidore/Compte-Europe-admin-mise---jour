@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\AppSetting;
 use App\Models\PaymentClaim;
 use App\Models\PayoutConfig;
+use App\Models\PayoutMethod;
 use App\Models\UserPaymentLink;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -81,18 +82,35 @@ class PaymentClaimController extends Controller
 
     public function store(Request $request)
     {
-        $config = PayoutConfig::where('user_id', Auth::id())->first();
-
-        if (!$config) {
-            return back()->withErrors(['config' => 'Veuillez d\'abord configurer votre numéro de réception mobile money.'])->withInput();
-        }
-
         $data = $request->validate([
-            'transaction_id' => ['required', 'string', 'max:100'],
-            'amount'         => ['required', 'numeric', 'min:1'],
-            'currency'       => ['required', 'string', 'in:' . implode(',', self::CURRENCIES)],
-            'screenshot'     => ['required', 'image', 'max:5120'],
+            'transaction_id'   => ['required', 'string', 'max:100'],
+            'amount'           => ['required', 'numeric', 'min:1'],
+            'currency'         => ['required', 'string', 'in:' . implode(',', self::CURRENCIES)],
+            'screenshot'       => ['required', 'image', 'max:5120'],
+            'payout_method_id' => ['nullable', 'integer'],
         ]);
+
+        // Résoudre les infos de payout : payout_method prioritaire, sinon PayoutConfig
+        $network = $phone = $holder = null;
+        if (!empty($data['payout_method_id'])) {
+            $method = PayoutMethod::where('id', $data['payout_method_id'])
+                                  ->where('user_id', Auth::id())
+                                  ->first();
+            if ($method) {
+                $network = $method->operator;
+                $phone   = $method->phone_number;
+                $holder  = $method->holder_name;
+            }
+        }
+        if (!$network) {
+            $config = PayoutConfig::where('user_id', Auth::id())->first();
+            if (!$config) {
+                return back()->withErrors(['config' => 'Configurez d\'abord un moyen de réception mobile money.'])->withInput();
+            }
+            $network = $config->network;
+            $phone   = $config->phone_number;
+            $holder  = $config->holder_name;
+        }
 
         $path = $request->file('screenshot')->store('payment-proofs', 'public');
 
@@ -102,12 +120,12 @@ class PaymentClaimController extends Controller
             'amount'         => $data['amount'],
             'currency'       => $data['currency'],
             'screenshot_path'=> $path,
-            'payout_network' => $config->network,
-            'payout_phone'   => $config->phone_number,
-            'payout_holder'  => $config->holder_name,
+            'payout_network' => $network,
+            'payout_phone'   => $phone,
+            'payout_holder'  => $holder,
             'status'         => 'pending',
         ]);
 
-        return back()->with('success', 'Votre demande a été soumise. L\'admin la vérifiera sous 24h.');
+        return back()->with('success', 'Votre capture d\'écran a été soumise. L\'admin la vérifiera sous 24h.');
     }
 }
