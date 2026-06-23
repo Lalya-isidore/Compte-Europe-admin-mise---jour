@@ -119,7 +119,7 @@
                             @if($claim->paid_at)<div class="text-muted smaller">{{ $claim->paid_at->format('d/m H:i') }}</div>@endif
 
                         @elseif($claim->isRejected())
-                            <span class="badge bg-danger bg-opacity-15 text-danger rounded-pill px-2">Rejeté</span>
+                            <span class="badge bg-danger text-white rounded-pill px-2">Rejeté</span>
                             @if($claim->rejection_reason)
                                 <div class="text-muted smaller mt-1" title="{{ $claim->rejection_reason }}">
                                     {{ \Str::limit($claim->rejection_reason, 40) }}
