@@ -216,26 +216,29 @@ $currencyLabels = [
             @foreach($claims as $claim)
                 @php $s2 = $statusMap2[$claim->status] ?? ['#eee','#555',$claim->status]; @endphp
                 <div style="border:1px solid #f0f0f0;border-radius:10px;padding:14px;margin-bottom:10px;">
+                    {{-- Ligne 1 : montant + statut --}}
                     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
-                        <span style="font-family:monospace;font-size:.78rem;color:#aaa;">{{ $claim->transaction_id }}</span>
-                        <span style="padding:3px 10px;border-radius:20px;font-size:.72rem;font-weight:700;background:{{ $s2[0] }};color:{{ $s2[1] }};">{{ $s2[2] }}</span>
+                        <span style="font-weight:700;font-size:1rem;">{{ number_format($claim->amount, 0, ',', ' ') }} <span style="font-size:.78rem;color:#aaa;font-weight:400;">{{ $claim->currency }}</span></span>
+                        <span style="flex-shrink:0;padding:3px 10px;border-radius:20px;font-size:.72rem;font-weight:700;background:{{ $s2[0] }};color:{{ $s2[1] }};">{{ $s2[2] }}</span>
                     </div>
-                    <div style="display:flex;align-items:center;justify-content:space-between;">
+                    {{-- Ligne 2 : réseau + numéro --}}
+                    <div style="font-size:.82rem;color:#555;margin-bottom:4px;">{{ $claim->payout_network }} · {{ $claim->payout_phone }}</div>
+                    {{-- Ligne 3 : ID + date + preuve --}}
+                    <div style="display:flex;align-items:center;justify-content:space-between;margin-top:6px;">
                         <div>
-                            <div style="font-weight:700;font-size:.95rem;">{{ number_format($claim->amount, 0, ',', ' ') }} <span style="font-size:.75rem;color:#aaa;font-weight:400;">{{ $claim->currency }}</span></div>
-                            <div style="font-size:.78rem;color:#888;margin-top:3px;">{{ $claim->payout_network }} · {{ $claim->payout_phone }}</div>
-                            <div style="font-size:.72rem;color:#ccc;margin-top:2px;">{{ $claim->created_at->format('d/m/Y') }}</div>
-                            @if($claim->isRejected() && $claim->rejection_reason)
-                                <div style="font-size:.75rem;color:#dc2626;margin-top:4px;">{{ $claim->rejection_reason }}</div>
-                            @endif
+                            <div style="font-family:monospace;font-size:.72rem;color:#bbb;">{{ $claim->transaction_id }}</div>
+                            <div style="font-size:.72rem;color:#ccc;">{{ $claim->created_at->format('d/m/Y') }}</div>
                         </div>
                         @if($claim->screenshot_path)
                             <a href="{{ asset('storage/'.$claim->screenshot_path) }}" target="_blank"
-                               class="btn btn-sm btn-light rounded-2">
-                                <i class="ri-image-line"></i>
+                               style="background:#f5f5f5;border:1px solid #eee;border-radius:8px;padding:6px 10px;font-size:.78rem;color:#555;text-decoration:none;">
+                                <i class="ri-image-line me-1"></i>Voir
                             </a>
                         @endif
                     </div>
+                    @if($claim->isRejected() && $claim->rejection_reason)
+                        <div style="font-size:.75rem;color:#dc2626;margin-top:6px;padding:6px 8px;background:#fee2e2;border-radius:6px;">{{ $claim->rejection_reason }}</div>
+                    @endif
                 </div>
             @endforeach
         </div>
