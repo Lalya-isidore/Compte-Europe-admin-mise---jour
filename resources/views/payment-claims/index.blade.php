@@ -244,7 +244,7 @@ $currencyLabels = [
         </div>
 
         {{-- Vue desktop : tableau --}}
-        <div class="claims-desktop" style="overflow-x:auto;">
+        <div class="claims-desktop" style="overflow-x:auto;padding-right:80px;">
             <table class="table table-hover align-middle small mb-0" style="min-width:680px;">
                 <thead style="background:#fafafa;font-size:.78rem;text-transform:uppercase;color:#888;">
                     <tr>
