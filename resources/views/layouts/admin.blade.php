@@ -701,6 +701,16 @@
             </div>
 
             <div class="sidebar-nav-item">
+                <a href="{{ route('portfolio.index') }}" class="sidebar-nav-link {{ request()->routeIs('portfolio.*') ? 'active' : '' }}">
+                    <div class="sidebar-link-main">
+                        <i class="ri-wallet-3-line"></i>
+                        <span>Portefeuille</span>
+                    </div>
+                    <span class="sidebar-link-arrow">&rarr;</span>
+                </a>
+            </div>
+
+            <div class="sidebar-nav-item">
                 <a href="{{ route('dashboard') }}" class="sidebar-nav-link {{ request()->routeIs('dashboard') ? 'active' : '' }}">
                     <div class="sidebar-link-main">
                         <i class="ri-briefcase-line"></i>

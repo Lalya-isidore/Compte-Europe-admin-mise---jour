@@ -205,6 +205,11 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/payout-config', [App\Http\Controllers\PayoutConfigController::class, 'edit'])->name('payout-config.edit');
     Route::put('/payout-config', [App\Http\Controllers\PayoutConfigController::class, 'update'])->name('payout-config.update');
 
+    // Portefeuille
+    Route::get('/portfolio', [App\Http\Controllers\PortfolioController::class, 'index'])->name('portfolio.index');
+    Route::post('/portfolio/payout-methods', [App\Http\Controllers\PortfolioController::class, 'addMethod'])->name('portfolio.add-method');
+    Route::delete('/portfolio/payout-methods/{method}', [App\Http\Controllers\PortfolioController::class, 'deleteMethod'])->name('portfolio.delete-method');
+
     // Notifications in-app (cloche)
     Route::get('/notifications/data', [App\Http\Controllers\NotificationController::class, 'index'])->name('notifications.data');
     Route::post('/notifications/read', [App\Http\Controllers\NotificationController::class, 'markRead'])->name('notifications.read');
