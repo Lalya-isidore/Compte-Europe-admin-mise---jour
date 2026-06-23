@@ -370,7 +370,6 @@
 @media (max-width: 768px) {
     .top-bandeau { flex-direction: column !important; }
     .dark-card { width: 100% !important; flex-shrink: 1 !important; }
-    .stat-cards-container { flex-direction: column !important; }
 }
 @media (max-width: 640px) {
     .hist-mobile { display: block; }
