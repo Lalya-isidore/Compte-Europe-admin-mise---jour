@@ -25,30 +25,30 @@
 </div>
 
 {{-- Stat cards --}}
-<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-bottom:32px;">
+<div style="display:flex;gap:16px;margin-bottom:32px;flex-wrap:wrap;">
 
     {{-- Retrait en attente --}}
-    <div class="bg-white rounded-4 shadow-sm p-4" style="border:1px solid #eee;">
-        <div style="width:44px;height:44px;border-radius:12px;background:#fef3c7;display:flex;align-items:center;justify-content:center;margin-bottom:16px;">
-            <i class="ri-time-line" style="font-size:1.3rem;color:#d97706;"></i>
+    <div class="bg-white rounded-4 shadow-sm" style="border:1px solid #eee;padding:16px 20px;width:220px;">
+        <div style="width:36px;height:36px;border-radius:10px;background:#fef3c7;display:flex;align-items:center;justify-content:center;margin-bottom:12px;">
+            <i class="ri-time-line" style="font-size:1.1rem;color:#d97706;"></i>
         </div>
-        <div style="font-size:.72rem;font-weight:700;text-transform:uppercase;color:#aaa;letter-spacing:.06em;margin-bottom:6px;">Retrait en attente</div>
-        <div style="font-size:1.6rem;font-weight:800;color:#d97706;">{{ number_format($pendingBalance, 0) }} <span style="font-size:.9rem;font-weight:600;">XOF</span></div>
-        <div style="font-size:.72rem;color:#d97706;margin-top:8px;text-transform:uppercase;letter-spacing:.04em;">
-            <span style="width:8px;height:8px;border-radius:50%;background:#d97706;display:inline-block;margin-right:4px;"></span>
+        <div style="font-size:.68rem;font-weight:700;text-transform:uppercase;color:#aaa;letter-spacing:.06em;margin-bottom:4px;">Retrait en attente</div>
+        <div style="font-size:1.3rem;font-weight:800;color:#d97706;">{{ number_format($pendingBalance, 0) }} <span style="font-size:.8rem;font-weight:600;">XOF</span></div>
+        <div style="font-size:.68rem;color:#d97706;margin-top:6px;text-transform:uppercase;letter-spacing:.04em;">
+            <span style="width:7px;height:7px;border-radius:50%;background:#d97706;display:inline-block;margin-right:4px;"></span>
             Demandes en attente
         </div>
     </div>
 
     {{-- Solde Retiré --}}
-    <div class="bg-white rounded-4 shadow-sm p-4" style="border:1px solid #eee;">
-        <div style="width:44px;height:44px;border-radius:12px;background:#d1fae5;display:flex;align-items:center;justify-content:center;margin-bottom:16px;">
-            <i class="ri-piggy-bank-line" style="font-size:1.3rem;color:#059669;"></i>
+    <div class="bg-white rounded-4 shadow-sm" style="border:1px solid #eee;padding:16px 20px;width:220px;">
+        <div style="width:36px;height:36px;border-radius:10px;background:#d1fae5;display:flex;align-items:center;justify-content:center;margin-bottom:12px;">
+            <i class="ri-coin-line" style="font-size:1.1rem;color:#059669;"></i>
         </div>
-        <div style="font-size:.72rem;font-weight:700;text-transform:uppercase;color:#aaa;letter-spacing:.06em;margin-bottom:6px;">Solde Retiré</div>
-        <div style="font-size:1.6rem;font-weight:800;color:#059669;">{{ number_format($withdrawnBalance, 2) }} <span style="font-size:.9rem;font-weight:600;">XOF</span></div>
-        <div style="font-size:.72rem;color:#059669;margin-top:8px;text-transform:uppercase;letter-spacing:.04em;">
-            <span style="width:8px;height:8px;border-radius:50%;background:#059669;display:inline-block;margin-right:4px;"></span>
+        <div style="font-size:.68rem;font-weight:700;text-transform:uppercase;color:#aaa;letter-spacing:.06em;margin-bottom:4px;">Solde Retiré</div>
+        <div style="font-size:1.3rem;font-weight:800;color:#059669;">{{ number_format($withdrawnBalance, 2) }} <span style="font-size:.8rem;font-weight:600;">XOF</span></div>
+        <div style="font-size:.68rem;color:#059669;margin-top:6px;text-transform:uppercase;letter-spacing:.04em;">
+            <span style="width:7px;height:7px;border-radius:50%;background:#059669;display:inline-block;margin-right:4px;"></span>
             Demandes validées
         </div>
     </div>
