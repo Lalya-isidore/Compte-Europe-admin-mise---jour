@@ -151,7 +151,7 @@
 
         {{-- Moyens de Paiement --}}
         <div class="bg-white rounded-4 shadow-sm p-4" style="border:1px solid #eee;">
-            <div class="d-flex align-items-center justify-content-between mb-3">
+            <div class="d-flex align-items-center justify-content-between mb-3 flex-wrap gap-2">
                 <div>
                     <div class="d-flex align-items-center gap-2 mb-1">
                         <i class="ri-bank-card-line" style="color:#e8521a;"></i>
