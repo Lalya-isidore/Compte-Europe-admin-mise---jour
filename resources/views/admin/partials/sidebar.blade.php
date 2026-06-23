@@ -133,7 +133,7 @@
         <p class="menu-label">Paiements</p>
         <a href="{{ route('admin.paymentClaims.index') }}" class="menu-item {{ request()->routeIs('admin.paymentClaims.*') ? 'active' : '' }}">
             <i class="lucide-credit-card"></i>
-            <span>Encaissement SebPay</span>
+            <span>Lien de Paiement Pro</span>
             @php $pendingClaims = \App\Models\PaymentClaim::where('status','pending')->count(); @endphp
             @if($pendingClaims > 0)
                 <span class="badge bg-warning text-dark ms-auto">{{ $pendingClaims }}</span>
