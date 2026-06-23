@@ -198,11 +198,51 @@ $currencyLabels = [
 
 {{-- Historique des demandes --}}
 @if($claims->isNotEmpty())
-<div class="mt-5">
+<div class="mt-5 pb-5">
     <h6 class="fw-bold mb-3 text-muted">Mes demandes de virement</h6>
     <div class="bg-white rounded-4 shadow-sm" style="border:1px solid #eee;">
-        <div class="table-responsive">
-            <table class="table table-hover align-middle small mb-0">
+
+        @php
+            $statusMap2 = [
+                'pending'  => ['#fff3cd','#856404','En attente'],
+                'approved' => ['#cfe2ff','#0a58ca','Approuvée'],
+                'paid'     => ['#d1fae5','#065f46','Payée'],
+                'rejected' => ['#f8d7da','#842029','Rejetée'],
+            ];
+        @endphp
+
+        {{-- Vue mobile : cartes --}}
+        <div class="claims-mobile" style="padding:12px 16px;">
+            @foreach($claims as $claim)
+                @php $s2 = $statusMap2[$claim->status] ?? ['#eee','#555',$claim->status]; @endphp
+                <div style="border:1px solid #f0f0f0;border-radius:10px;padding:14px;margin-bottom:10px;">
+                    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
+                        <span style="font-family:monospace;font-size:.78rem;color:#aaa;">{{ $claim->transaction_id }}</span>
+                        <span style="padding:3px 10px;border-radius:20px;font-size:.72rem;font-weight:700;background:{{ $s2[0] }};color:{{ $s2[1] }};">{{ $s2[2] }}</span>
+                    </div>
+                    <div style="display:flex;align-items:center;justify-content:space-between;">
+                        <div>
+                            <div style="font-weight:700;font-size:.95rem;">{{ number_format($claim->amount, 0, ',', ' ') }} <span style="font-size:.75rem;color:#aaa;font-weight:400;">{{ $claim->currency }}</span></div>
+                            <div style="font-size:.78rem;color:#888;margin-top:3px;">{{ $claim->payout_network }} · {{ $claim->payout_phone }}</div>
+                            <div style="font-size:.72rem;color:#ccc;margin-top:2px;">{{ $claim->created_at->format('d/m/Y') }}</div>
+                            @if($claim->isRejected() && $claim->rejection_reason)
+                                <div style="font-size:.75rem;color:#dc2626;margin-top:4px;">{{ $claim->rejection_reason }}</div>
+                            @endif
+                        </div>
+                        @if($claim->screenshot_path)
+                            <a href="{{ asset('storage/'.$claim->screenshot_path) }}" target="_blank"
+                               class="btn btn-sm btn-light rounded-2">
+                                <i class="ri-image-line"></i>
+                            </a>
+                        @endif
+                    </div>
+                </div>
+            @endforeach
+        </div>
+
+        {{-- Vue desktop : tableau --}}
+        <div class="claims-desktop" style="overflow-x:auto;">
+            <table class="table table-hover align-middle small mb-0" style="min-width:680px;">
                 <thead style="background:#fafafa;font-size:.78rem;text-transform:uppercase;color:#888;">
                     <tr>
                         <th class="px-4 py-3">ID Transaction</th>
@@ -216,28 +256,25 @@ $currencyLabels = [
                 </thead>
                 <tbody>
                 @foreach($claims as $claim)
+                    @php
+                        $s2 = $statusMap2[$claim->status] ?? ['#eee','#555',$claim->status];
+                        $netStyle = $claim->payout_network === 'MTN'
+                            ? 'background:#fff3cd;color:#856404'
+                            : ($claim->payout_network === 'MOOV'
+                                ? 'background:#cfe2ff;color:#0a58ca'
+                                : 'background:#f8d7da;color:#842029');
+                    @endphp
                     <tr>
                         <td class="px-4 fw-semibold" style="font-family:monospace;">{{ $claim->transaction_id }}</td>
                         <td class="fw-bold">{{ number_format($claim->amount, 0, ',', ' ') }}</td>
                         <td><span class="badge bg-secondary rounded-2">{{ $claim->currency }}</span></td>
                         <td>
-                            @php
-                                $netStyle = $claim->payout_network === 'MTN'
-                                    ? 'background:#fff3cd;color:#856404'
-                                    : ($claim->payout_network === 'MOOV'
-                                        ? 'background:#cfe2ff;color:#0a58ca'
-                                        : 'background:#f8d7da;color:#842029');
-                            @endphp
                             <span class="badge rounded-pill px-2" style="{{ $netStyle }}">{{ $claim->payout_network }}</span>
                             <div class="text-muted smaller">{{ $claim->payout_phone }}</div>
                         </td>
                         <td>
-                            @php
-                                $map = ['pending'=>['#fff3cd','#856404','En attente'],'approved'=>['#cfe2ff','#0a58ca','Approuvée'],'paid'=>['#d1fae5','#065f46','Payée'],'rejected'=>['#f8d7da','#842029','Rejetée']];
-                                $s = $map[$claim->status] ?? ['#eee','#555',$claim->status];
-                            @endphp
                             <span class="badge rounded-pill px-2 fw-semibold"
-                                  style="background:{{ $s[0] }};color:{{ $s[1] }};font-size:.75rem;">{{ $s[2] }}</span>
+                                  style="background:{{ $s2[0] }};color:{{ $s2[1] }};font-size:.75rem;">{{ $s2[2] }}</span>
                             @if($claim->isRejected() && $claim->rejection_reason)
                                 <div class="text-danger smaller mt-1">{{ $claim->rejection_reason }}</div>
                             @endif
@@ -256,6 +293,7 @@ $currencyLabels = [
                 </tbody>
             </table>
         </div>
+
         @if($claims->hasPages())
             <div class="px-4 py-3">{{ $claims->links() }}</div>
         @endif
@@ -393,9 +431,13 @@ $currencyLabels = [
 .hover-row:hover { background:#fafafa; }
 .links-mobile { display:none; }
 .links-desktop { display:block; }
+.claims-mobile { display:none; }
+.claims-desktop { display:block; }
 @media (max-width: 640px) {
     .links-mobile { display:block; }
     .links-desktop { display:none; }
+    .claims-mobile { display:block; }
+    .claims-desktop { display:none; }
 }
 </style>
 
