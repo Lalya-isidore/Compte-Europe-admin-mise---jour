@@ -28,7 +28,7 @@
 <div style="display:flex;gap:16px;margin-bottom:32px;align-items:stretch;">
 
     {{-- Stat cards --}}
-    <div style="display:flex;flex-direction:column;gap:16px;flex:1;">
+    <div style="display:flex;flex-direction:row;gap:16px;flex:1;">
 
         {{-- Retrait en attente --}}
         <div class="bg-white rounded-4 shadow-sm" style="border:1px solid #eee;padding:16px 20px;flex:1;">
