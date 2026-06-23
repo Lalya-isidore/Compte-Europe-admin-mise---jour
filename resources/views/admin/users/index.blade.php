@@ -162,6 +162,7 @@
         </div>
     @endif
 
+@push('modals')
     {{-- Modal notification rapide --}}
     <div class="modal fade" id="notifModal" tabindex="-1" aria-labelledby="notifModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
@@ -192,6 +193,7 @@
             </div>
         </div>
     </div>
+@endpush
 
     <style>
         .transition-hover {

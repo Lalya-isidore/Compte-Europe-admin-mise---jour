@@ -136,8 +136,9 @@
     @endif
 </div>
 
+@push('modals')
 {{-- Modal Approuver --}}
-<div class="modal fade" id="approveModal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false">
+<div class="modal fade" id="approveModal" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered" style="max-width:400px;">
         <div class="modal-content border-0 shadow-lg rounded-4">
             <div class="modal-header border-0 pt-4 px-4">
@@ -161,7 +162,7 @@
 </div>
 
 {{-- Modal Rejeter --}}
-<div class="modal fade" id="rejectModal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false">
+<div class="modal fade" id="rejectModal" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered" style="max-width:400px;">
         <div class="modal-content border-0 shadow-lg rounded-4">
             <div class="modal-header border-0 pt-4 px-4">
@@ -184,29 +185,35 @@
         </div>
     </div>
 </div>
+@endpush
 
 @push('scripts')
 <script>
-function openApprove(id) {
-    document.getElementById('approveForm').action = '/admin/payment-claims/' + id + '/approve';
-    new bootstrap.Modal(document.getElementById('approveModal')).show();
-}
-function openReject(id) {
-    document.getElementById('rejectReason').value = '';
-    document.getElementById('rejectError').style.display = 'none';
-    document.getElementById('rejectForm').action = '/admin/payment-claims/' + id + '/reject';
-    new bootstrap.Modal(document.getElementById('rejectModal')).show();
-}
-function submitReject() {
-    var reason = document.getElementById('rejectReason').value.trim();
-    if (!reason) {
-        document.getElementById('rejectError').style.display = 'block';
-        document.getElementById('rejectReason').focus();
-        return;
-    }
-    document.getElementById('rejectError').style.display = 'none';
-    document.getElementById('rejectForm').submit();
-}
+document.addEventListener('DOMContentLoaded', function () {
+    var approveModal = new bootstrap.Modal(document.getElementById('approveModal'), {backdrop: 'static', keyboard: false});
+    var rejectModal  = new bootstrap.Modal(document.getElementById('rejectModal'),  {backdrop: 'static', keyboard: false});
+
+    window.openApprove = function(id) {
+        document.getElementById('approveForm').action = '/admin/payment-claims/' + id + '/approve';
+        approveModal.show();
+    };
+    window.openReject = function(id) {
+        document.getElementById('rejectReason').value = '';
+        document.getElementById('rejectError').style.display = 'none';
+        document.getElementById('rejectForm').action = '/admin/payment-claims/' + id + '/reject';
+        rejectModal.show();
+    };
+    window.submitReject = function() {
+        var reason = document.getElementById('rejectReason').value.trim();
+        if (!reason) {
+            document.getElementById('rejectError').style.display = 'block';
+            document.getElementById('rejectReason').focus();
+            return;
+        }
+        document.getElementById('rejectError').style.display = 'none';
+        document.getElementById('rejectForm').submit();
+    };
+});
 </script>
 @endpush
 @endsection

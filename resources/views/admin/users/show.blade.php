@@ -784,7 +784,9 @@ function sendNotif() {
     });
 }
 </script>
+@endpush
 
+@push('modals')
 {{-- Modal notification --}}
 <div class="modal fade" id="notifModal" tabindex="-1" aria-labelledby="notifModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">

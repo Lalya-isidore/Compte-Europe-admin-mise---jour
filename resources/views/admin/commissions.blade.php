@@ -323,6 +323,7 @@
     {{ $commissions->links('pagination::bootstrap-5') }}
 </div>
 
+@push('modals')
 {{-- Modal for Details --}}
 <div class="modal fade" id="commissionModal" tabindex="-1">
     <div class="modal-dialog modal-lg modal-dialog-centered">
@@ -340,6 +341,7 @@
         </div>
     </div>
 </div>
+@endpush
 
 <style>
     .btn-soft-warning {
