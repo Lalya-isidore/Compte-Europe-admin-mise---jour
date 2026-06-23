@@ -15,6 +15,10 @@ class PortfolioController extends Controller
     {
         $userId = Auth::id();
 
+        $claims = PaymentClaim::where('user_id', $userId)->get();
+        $pendingBalance   = $claims->where('status', 'pending')->sum('amount');
+        $withdrawnBalance = $claims->where('status', 'paid')->sum('amount');
+
         $history = PaymentClaim::where('user_id', $userId)
                     ->orderByDesc('created_at')
                     ->paginate(15);
@@ -30,6 +34,7 @@ class PortfolioController extends Controller
         }
 
         return view('portfolio.index', compact(
+            'pendingBalance', 'withdrawnBalance',
             'history', 'payoutMethods', 'sebpayLinks'
         ));
     }

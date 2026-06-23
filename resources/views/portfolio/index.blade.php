@@ -24,6 +24,37 @@
     </div>
 </div>
 
+{{-- Stat cards --}}
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-bottom:32px;">
+
+    {{-- Retrait en attente --}}
+    <div class="bg-white rounded-4 shadow-sm p-4" style="border:1px solid #eee;">
+        <div style="width:44px;height:44px;border-radius:50%;background:#fef3c7;display:flex;align-items:center;justify-content:center;margin-bottom:16px;">
+            <i class="ri-time-line" style="font-size:1.3rem;color:#d97706;"></i>
+        </div>
+        <div style="font-size:.72rem;font-weight:700;text-transform:uppercase;color:#aaa;letter-spacing:.06em;margin-bottom:6px;">Retrait en attente</div>
+        <div style="font-size:1.6rem;font-weight:800;color:#d97706;">{{ number_format($pendingBalance, 0) }} <span style="font-size:.9rem;font-weight:600;">XOF</span></div>
+        <div style="font-size:.72rem;color:#d97706;margin-top:8px;text-transform:uppercase;letter-spacing:.04em;">
+            <span style="width:8px;height:8px;border-radius:50%;background:#d97706;display:inline-block;margin-right:4px;"></span>
+            Demandes en attente
+        </div>
+    </div>
+
+    {{-- Solde Retiré --}}
+    <div class="bg-white rounded-4 shadow-sm p-4" style="border:1px solid #eee;">
+        <div style="width:44px;height:44px;border-radius:50%;background:#d1fae5;display:flex;align-items:center;justify-content:center;margin-bottom:16px;">
+            <i class="ri-piggy-bank-line" style="font-size:1.3rem;color:#059669;"></i>
+        </div>
+        <div style="font-size:.72rem;font-weight:700;text-transform:uppercase;color:#aaa;letter-spacing:.06em;margin-bottom:6px;">Solde Retiré</div>
+        <div style="font-size:1.6rem;font-weight:800;color:#059669;">{{ number_format($withdrawnBalance, 2) }} <span style="font-size:.9rem;font-weight:600;">XOF</span></div>
+        <div style="font-size:.72rem;color:#059669;margin-top:8px;text-transform:uppercase;letter-spacing:.04em;">
+            <span style="width:8px;height:8px;border-radius:50%;background:#059669;display:inline-block;margin-right:4px;"></span>
+            Demandes validées
+        </div>
+    </div>
+
+</div>
+
 {{-- Contenu principal --}}
 <div style="display:grid;grid-template-columns:1fr 320px;gap:24px;align-items:start;" class="portfolio-grid">
 
