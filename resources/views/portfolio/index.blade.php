@@ -24,68 +24,59 @@
     </div>
 </div>
 
-{{-- Bandeau supérieur : stat cards + carte Retraits Instantanés --}}
-<div class="top-bandeau" style="display:flex;gap:16px;margin-bottom:32px;align-items:stretch;">
+{{-- Bandeau supérieur : 4 stat cards --}}
+<div class="top-bandeau" style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:32px;">
 
-    {{-- Stat cards --}}
-    <div class="stat-cards-container" style="display:flex;flex-direction:row;gap:16px;flex:1;">
-
-        {{-- Retrait en attente --}}
-        <div class="bg-white rounded-4 shadow-sm" style="border:1px solid #eee;padding:16px 20px;flex:1;">
-            <div style="width:36px;height:36px;border-radius:10px;background:#fef3c7;display:flex;align-items:center;justify-content:center;margin-bottom:12px;">
-                <i class="ri-time-line" style="font-size:1.1rem;color:#d97706;"></i>
-            </div>
-            <div style="font-size:.68rem;font-weight:700;text-transform:uppercase;color:#aaa;letter-spacing:.06em;margin-bottom:4px;">Retrait en attente</div>
-            <div style="font-size:1.3rem;font-weight:800;color:#d97706;">{{ number_format($pendingBalance, 0) }} <span style="font-size:.8rem;font-weight:600;">XOF</span></div>
-            <div style="font-size:.68rem;color:#d97706;margin-top:6px;text-transform:uppercase;letter-spacing:.04em;">
-                <span style="width:7px;height:7px;border-radius:50%;background:#d97706;display:inline-block;margin-right:4px;"></span>
-                Demandes en attente
-            </div>
+    {{-- Retrait en attente --}}
+    <div class="bg-white rounded-4 shadow-sm" style="border:1px solid #eee;padding:16px 20px;">
+        <div style="width:36px;height:36px;border-radius:10px;background:#fef3c7;display:flex;align-items:center;justify-content:center;margin-bottom:12px;">
+            <i class="ri-time-line" style="font-size:1.1rem;color:#d97706;"></i>
         </div>
-
-        {{-- Solde Retiré --}}
-        <div class="bg-white rounded-4 shadow-sm" style="border:1px solid #eee;padding:16px 20px;flex:1;">
-            <div style="width:36px;height:36px;border-radius:10px;background:#d1fae5;display:flex;align-items:center;justify-content:center;margin-bottom:12px;">
-                <i class="ri-coin-line" style="font-size:1.1rem;color:#059669;"></i>
-            </div>
-            <div style="font-size:.68rem;font-weight:700;text-transform:uppercase;color:#aaa;letter-spacing:.06em;margin-bottom:4px;">Solde Retiré</div>
-            <div style="font-size:1.3rem;font-weight:800;color:#059669;">{{ number_format($withdrawnBalance, 2) }} <span style="font-size:.8rem;font-weight:600;">XOF</span></div>
-            <div style="font-size:.68rem;color:#059669;margin-top:6px;text-transform:uppercase;letter-spacing:.04em;">
-                <span style="width:7px;height:7px;border-radius:50%;background:#059669;display:inline-block;margin-right:4px;"></span>
-                Demandes validées
-            </div>
+        <div style="font-size:.68rem;font-weight:700;text-transform:uppercase;color:#aaa;letter-spacing:.06em;margin-bottom:4px;">Retrait en attente</div>
+        <div style="font-size:1.3rem;font-weight:800;color:#d97706;">{{ number_format($pendingBalance, 0) }} <span style="font-size:.8rem;font-weight:600;">XOF</span></div>
+        <div style="font-size:.68rem;color:#d97706;margin-top:6px;text-transform:uppercase;letter-spacing:.04em;">
+            <span style="width:7px;height:7px;border-radius:50%;background:#d97706;display:inline-block;margin-right:4px;"></span>
+            Demandes en attente
         </div>
-
-        {{-- Paiements Annulés --}}
-        <div class="bg-white rounded-4 shadow-sm" style="border:1px solid #eee;padding:16px 20px;flex:1;">
-            <div style="width:36px;height:36px;border-radius:10px;background:#fee2e2;display:flex;align-items:center;justify-content:center;margin-bottom:12px;">
-                <i class="ri-close-circle-line" style="font-size:1.1rem;color:#dc2626;"></i>
-            </div>
-            <div style="font-size:.68rem;font-weight:700;text-transform:uppercase;color:#aaa;letter-spacing:.06em;margin-bottom:4px;">Paiements Annulés</div>
-            <div style="font-size:1.3rem;font-weight:800;color:#dc2626;">{{ $rejectedCount }} <span style="font-size:.8rem;font-weight:600;">demande{{ $rejectedCount > 1 ? 's' : '' }}</span></div>
-            <div style="font-size:.68rem;color:#dc2626;margin-top:6px;text-transform:uppercase;letter-spacing:.04em;">
-                <span style="width:7px;height:7px;border-radius:50%;background:#dc2626;display:inline-block;margin-right:4px;"></span>
-                Rejetées par l'admin
-            </div>
-        </div>
-
     </div>
 
-    {{-- Card Retraits Instantanés --}}
-    <div class="dark-card" style="width:340px;flex-shrink:0;background:#1e2937;border-radius:20px;padding:28px 24px;color:#fff;position:relative;overflow:hidden;display:flex;flex-direction:column;justify-content:flex-start;">
-        <div style="position:absolute;top:-20px;right:-20px;width:100px;height:100px;border-radius:50%;border:30px solid rgba(255,255,255,.05);"></div>
-        <div style="position:absolute;bottom:-30px;right:20px;width:60px;height:60px;border-radius:50%;border:20px solid rgba(255,255,255,.05);"></div>
-        <div style="font-size:1.3rem;font-weight:800;margin-bottom:10px;position:relative;">
-            Retraits Instantanés
-            <i class="ri-arrow-right-up-line ms-1" style="font-size:1rem;"></i>
+    {{-- Paiements Approuvés --}}
+    <div class="bg-white rounded-4 shadow-sm" style="border:1px solid #eee;padding:16px 20px;">
+        <div style="width:36px;height:36px;border-radius:10px;background:#dbeafe;display:flex;align-items:center;justify-content:center;margin-bottom:12px;">
+            <i class="ri-checkbox-circle-line" style="font-size:1.1rem;color:#2563eb;"></i>
         </div>
-        <p style="font-size:.82rem;color:#94a3b8;line-height:1.6;margin-bottom:20px;position:relative;">
-            Le délai de retrait est de 24h. Passé ce délai, contactez le support.
-        </p>
-        <button onclick="openSubmitProof()"
-           style="display:inline-block;background:#e8521a;color:#fff;text-align:center;padding:12px 28px;border-radius:12px;font-weight:700;font-size:.9rem;border:none;cursor:pointer;position:relative;align-self:flex-start;">
-            Soumettre une capture d'écran
-        </button>
+        <div style="font-size:.68rem;font-weight:700;text-transform:uppercase;color:#aaa;letter-spacing:.06em;margin-bottom:4px;">Paiements Approuvés</div>
+        <div style="font-size:1.3rem;font-weight:800;color:#2563eb;">{{ number_format($approvedBalance, 0) }} <span style="font-size:.8rem;font-weight:600;">XOF</span></div>
+        <div style="font-size:.68rem;color:#2563eb;margin-top:6px;text-transform:uppercase;letter-spacing:.04em;">
+            <span style="width:7px;height:7px;border-radius:50%;background:#2563eb;display:inline-block;margin-right:4px;"></span>
+            En cours de virement
+        </div>
+    </div>
+
+    {{-- Solde Retiré --}}
+    <div class="bg-white rounded-4 shadow-sm" style="border:1px solid #eee;padding:16px 20px;">
+        <div style="width:36px;height:36px;border-radius:10px;background:#d1fae5;display:flex;align-items:center;justify-content:center;margin-bottom:12px;">
+            <i class="ri-coin-line" style="font-size:1.1rem;color:#059669;"></i>
+        </div>
+        <div style="font-size:.68rem;font-weight:700;text-transform:uppercase;color:#aaa;letter-spacing:.06em;margin-bottom:4px;">Solde Retiré</div>
+        <div style="font-size:1.3rem;font-weight:800;color:#059669;">{{ number_format($withdrawnBalance, 2) }} <span style="font-size:.8rem;font-weight:600;">XOF</span></div>
+        <div style="font-size:.68rem;color:#059669;margin-top:6px;text-transform:uppercase;letter-spacing:.04em;">
+            <span style="width:7px;height:7px;border-radius:50%;background:#059669;display:inline-block;margin-right:4px;"></span>
+            Demandes validées
+        </div>
+    </div>
+
+    {{-- Paiements Annulés --}}
+    <div class="bg-white rounded-4 shadow-sm" style="border:1px solid #eee;padding:16px 20px;">
+        <div style="width:36px;height:36px;border-radius:10px;background:#fee2e2;display:flex;align-items:center;justify-content:center;margin-bottom:12px;">
+            <i class="ri-close-circle-line" style="font-size:1.1rem;color:#dc2626;"></i>
+        </div>
+        <div style="font-size:.68rem;font-weight:700;text-transform:uppercase;color:#aaa;letter-spacing:.06em;margin-bottom:4px;">Paiements Annulés</div>
+        <div style="font-size:1.3rem;font-weight:800;color:#dc2626;">{{ $rejectedCount }} <span style="font-size:.8rem;font-weight:600;">demande{{ $rejectedCount > 1 ? 's' : '' }}</span></div>
+        <div style="font-size:.68rem;color:#dc2626;margin-top:6px;text-transform:uppercase;letter-spacing:.04em;">
+            <span style="width:7px;height:7px;border-radius:50%;background:#dc2626;display:inline-block;margin-right:4px;"></span>
+            Rejetées par l'admin
+        </div>
     </div>
 
 </div>
@@ -180,6 +171,23 @@
 
     {{-- Sidebar droite --}}
     <div style="display:flex;flex-direction:column;gap:20px;">
+
+        {{-- Card Retraits Instantanés --}}
+        <div style="background:#1e2937;border-radius:20px;padding:24px;color:#fff;position:relative;overflow:hidden;">
+            <div style="position:absolute;top:-20px;right:-20px;width:100px;height:100px;border-radius:50%;border:30px solid rgba(255,255,255,.05);"></div>
+            <div style="position:absolute;bottom:-30px;right:20px;width:60px;height:60px;border-radius:50%;border:20px solid rgba(255,255,255,.05);"></div>
+            <div style="font-size:1.1rem;font-weight:800;margin-bottom:8px;position:relative;">
+                Retraits Instantanés
+                <i class="ri-arrow-right-up-line ms-1" style="font-size:.95rem;"></i>
+            </div>
+            <p style="font-size:.8rem;color:#94a3b8;line-height:1.6;margin-bottom:16px;position:relative;">
+                Le délai de retrait est de 24h. Passé ce délai, contactez le support.
+            </p>
+            <button onclick="openSubmitProof()"
+               style="background:#e8521a;color:#fff;padding:10px 20px;border-radius:12px;font-weight:700;font-size:.85rem;border:none;cursor:pointer;position:relative;width:100%;">
+                Soumettre une capture d'écran
+            </button>
+        </div>
 
         {{-- Moyens de Paiement --}}
         <div class="bg-white rounded-4 shadow-sm p-4" style="border:1px solid #eee;">
@@ -379,9 +387,11 @@
 @media (max-width: 900px) {
     .portfolio-grid { grid-template-columns: 1fr !important; }
 }
-@media (max-width: 768px) {
-    .top-bandeau { flex-direction: column !important; }
-    .dark-card { width: 100% !important; flex-shrink: 1 !important; }
+@media (max-width: 900px) {
+    .top-bandeau { grid-template-columns: repeat(2, 1fr) !important; }
+}
+@media (max-width: 480px) {
+    .top-bandeau { grid-template-columns: 1fr 1fr !important; }
 }
 @media (max-width: 640px) {
     .hist-mobile { display: block; }
