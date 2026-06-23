@@ -29,7 +29,7 @@
 
     {{-- Retrait en attente --}}
     <div class="bg-white rounded-4 shadow-sm p-4" style="border:1px solid #eee;">
-        <div style="width:44px;height:44px;border-radius:50%;background:#fef3c7;display:flex;align-items:center;justify-content:center;margin-bottom:16px;">
+        <div style="width:44px;height:44px;border-radius:12px;background:#fef3c7;display:flex;align-items:center;justify-content:center;margin-bottom:16px;">
             <i class="ri-time-line" style="font-size:1.3rem;color:#d97706;"></i>
         </div>
         <div style="font-size:.72rem;font-weight:700;text-transform:uppercase;color:#aaa;letter-spacing:.06em;margin-bottom:6px;">Retrait en attente</div>
@@ -42,7 +42,7 @@
 
     {{-- Solde Retiré --}}
     <div class="bg-white rounded-4 shadow-sm p-4" style="border:1px solid #eee;">
-        <div style="width:44px;height:44px;border-radius:50%;background:#d1fae5;display:flex;align-items:center;justify-content:center;margin-bottom:16px;">
+        <div style="width:44px;height:44px;border-radius:12px;background:#d1fae5;display:flex;align-items:center;justify-content:center;margin-bottom:16px;">
             <i class="ri-piggy-bank-line" style="font-size:1.3rem;color:#059669;"></i>
         </div>
         <div style="font-size:.72rem;font-weight:700;text-transform:uppercase;color:#aaa;letter-spacing:.06em;margin-bottom:6px;">Solde Retiré</div>
