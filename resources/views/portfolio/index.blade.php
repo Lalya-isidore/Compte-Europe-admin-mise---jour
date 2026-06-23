@@ -58,8 +58,8 @@
 
     </div>
 
-    {{-- Card Retraits Instantanés (prend l'espace restant) --}}
-    <div style="flex:1;background:#1e2937;border-radius:20px;padding:28px 24px;color:#fff;position:relative;overflow:hidden;display:flex;flex-direction:column;justify-content:center;">
+    {{-- Card Retraits Instantanés --}}
+    <div style="width:340px;background:#1e2937;border-radius:20px;padding:28px 24px;color:#fff;position:relative;overflow:hidden;display:flex;flex-direction:column;justify-content:center;">
         <div style="position:absolute;top:-20px;right:-20px;width:100px;height:100px;border-radius:50%;border:30px solid rgba(255,255,255,.05);"></div>
         <div style="position:absolute;bottom:-30px;right:20px;width:60px;height:60px;border-radius:50%;border:20px solid rgba(255,255,255,.05);"></div>
         <div style="font-size:1.3rem;font-weight:800;margin-bottom:10px;position:relative;">
