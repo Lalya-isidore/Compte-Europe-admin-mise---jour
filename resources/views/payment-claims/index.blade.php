@@ -55,7 +55,7 @@ $currencyLabels = [
         </span>
     </p>
     <div class="alert alert-primary mb-0" role="alert" style="font-size:.88rem;">
-        <p class="mb-2"><i class="ri-information-line me-1"></i> Cet outil vous permet de créer des <strong>liens de paiement SebPay</strong> à partager avec vos clients. Vos clients paient via SebPay, vous soumettez la capture d'écran, et l'admin vire les fonds sur votre mobile money.</p>
+        <p class="mb-2"><i class="ri-information-line me-1"></i> Cet outil vous permet de créer des <strong>liens de paiement</strong> à partager avec vos clients. Vos clients paient en ligne, vous soumettez la capture d'écran, et l'admin vire les fonds sur votre mobile money.</p>
         <p class="mb-0"><strong>NB :</strong> Les virements sont traités sous <strong>24h</strong>. Passé ce délai, contactez le support. Pays supportés : <strong>15 pays africains</strong> (XOF, XAF, CDF, GNF, GMD).</p>
     </div>
 </div>
@@ -70,13 +70,13 @@ $currencyLabels = [
             </div>
             <div class="modal-body px-4">
                 <h6 class="text-primary fw-bold">Utilité</h6>
-                <p>Cet outil vous permet de créer des <strong>liens de paiement SebPay</strong> pour recevoir des paiements en mobile money (MTN, MOOV, Orange, Wave…) depuis <strong>15 pays africains</strong>. Vos clients cliquent sur le lien, paient via SebPay, et vous récupérez les fonds en mobile money.</p>
+                <p>Cet outil vous permet de créer des <strong>liens de paiement</strong> pour recevoir des paiements en mobile money (MTN, MOOV, Orange, Wave…) depuis <strong>15 pays africains</strong>. Vos clients cliquent sur le lien, paient en ligne, et vous récupérez les fonds en mobile money.</p>
 
                 <h6 class="text-primary fw-bold">Fonctionnement</h6>
                 <ol class="ps-3" style="font-size:.9rem;line-height:1.8;">
                     <li>Créez un lien par devise souhaitée (XOF, XAF, CDF, GNF, GMD).</li>
                     <li>Copiez et partagez le lien à votre client.</li>
-                    <li>Votre client effectue le paiement via SebPay et vous envoie la capture d'écran.</li>
+                    <li>Votre client effectue le paiement en ligne et vous envoie la capture d'écran.</li>
                     <li>Vous soumettez la preuve de paiement (ID transaction + capture d'écran).</li>
                     <li>L'admin vérifie et vire les fonds sur votre numéro mobile money configuré.</li>
                 </ol>
@@ -450,7 +450,7 @@ $pays = [
                             <p class="small mb-0">
                                 <i class="ri-information-line me-1" style="color:#e8521a;"></i>
                                 Un lien de paiement <strong id="confirmCurrencyLabel"></strong> sera ajouté à votre interface.
-                                Vos clients pourront payer dans cette devise via SebPay.
+                                Vos clients pourront payer en ligne dans cette devise.
                             </p>
                         </div>
                         <button type="submit" class="btn fw-bold w-100 rounded-3 text-white py-2" style="background:#e8521a;">
