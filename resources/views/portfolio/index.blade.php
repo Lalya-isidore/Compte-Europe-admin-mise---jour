@@ -96,12 +96,11 @@
     {{-- Historique --}}
     <div>
         <div class="bg-white rounded-4 shadow-sm overflow-hidden" style="border:1px solid #eee;">
-            <div style="padding:20px 24px 0;display:flex;align-items:center;justify-content:space-between;gap:12px;">
+            <div style="padding:20px 24px 0;">
                 <div class="d-flex align-items-center gap-2">
                     <i class="ri-history-line" style="color:#e8521a;font-size:1.1rem;"></i>
                     <span class="fw-bold" style="font-size:1rem;">Historique des Retraits</span>
                 </div>
-                <i class="ri-search-line" style="color:#bbb;font-size:1.1rem;"></i>
             </div>
 
             {{-- Vue mobile : cartes --}}

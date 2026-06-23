@@ -46,15 +46,15 @@ $currencyLabels = [
 </div>
 
 {{-- Barre recherche --}}
-<div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;">
-    <div style="position:relative;flex:1;">
+<div class="d-flex align-items-center justify-content-between mb-3 gap-3 flex-wrap">
+    <div style="position:relative;max-width:380px;width:100%;">
         <span style="position:absolute;left:14px;top:50%;transform:translateY(-50%);color:#aaa;">
             <i class="ri-search-line"></i>
         </span>
         <input type="text" style="width:100%;padding:10px 14px 10px 38px;border:1px solid #ddd;border-radius:30px;font-size:.9rem;outline:none;"
                placeholder="Rechercher un lien...">
     </div>
-    <button class="btn btn-outline-secondary rounded-3" style="white-space:nowrap;flex-shrink:0;padding:10px 16px;">
+    <button class="btn btn-outline-secondary rounded-3 px-4" style="white-space:nowrap;">
         <i class="ri-filter-line me-1"></i>Filtrer
     </button>
 </div>
