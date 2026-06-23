@@ -135,11 +135,9 @@ $currencyLabels = [
         <span style="font-size:.82rem;color:#aaa;">
             {{ count($sebpayLinks) }} lien{{ count($sebpayLinks) > 1 ? 's' : '' }} actif{{ count($sebpayLinks) > 1 ? 's' : '' }}
         </span>
-        @if(count($availableCurrencies) > 0)
-        <button class="btn btn-sm fw-semibold text-white rounded-2" style="background:#e8521a;" onclick="openCreateLink()">
-            + Ajouter une devise
-        </button>
-        @endif
+        <a href="{{ route('portfolio.index') }}" class="btn btn-sm fw-semibold text-white rounded-2" style="background:#e8521a;">
+            Voir mes paiements
+        </a>
     </div>
     @endif
 </div>
