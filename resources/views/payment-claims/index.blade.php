@@ -55,8 +55,16 @@ $currencyLabels = [
         </span>
     </p>
     <div class="alert alert-primary mb-0" role="alert" style="font-size:.88rem;">
-        <p class="mb-2"><i class="ri-information-line me-1"></i> Cet outil vous permet de créer des <strong>liens de paiement</strong> à partager avec vos clients. Vos clients paient en ligne, vous soumettez la capture d'écran, et l'admin vire les fonds sur votre mobile money.</p>
-        <p class="mb-0"><strong>NB :</strong> Les virements sont traités sous <strong>24h</strong>. Passé ce délai, contactez le support. Pays supportés : <strong>15 pays africains</strong> (XOF, XAF, CDF, GNF, GMD).</p>
+        <p class="mb-2"><i class="ri-information-line me-1"></i> Cet outil vous permet de créer des <strong>liens de paiement</strong> à partager avec vos clients. Au lieu d'aller en agence, votre client <strong>paie directement depuis son téléphone</strong> — il clique sur le lien, entre son numéro mobile money, et <strong>confirme le paiement sur son téléphone</strong> en quelques secondes. Vous soumettez ensuite la capture d'écran et l'admin vire les fonds sur votre mobile money.</p>
+        <p class="mb-2"><strong>NB :</strong> Les virements sont traités sous <strong>24h</strong>. Passé ce délai, contactez le support. Pays supportés : <strong>15 pays africains</strong> (XOF, XAF, CDF, GNF, GMD).</p>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;">
+            <span style="background:#1d4ed8;color:#fff;border-radius:6px;padding:4px 12px;font-size:.82rem;font-weight:600;">
+                <i class="ri-percent-line me-1"></i> Afrique de l'Ouest (XOF) : frais <strong>15%</strong>
+            </span>
+            <span style="background:#7c3aed;color:#fff;border-radius:6px;padding:4px 12px;font-size:.82rem;font-weight:600;">
+                <i class="ri-percent-line me-1"></i> Afrique Centrale (XAF) : frais <strong>20%</strong>
+            </span>
+        </div>
     </div>
 </div>
 
@@ -70,16 +78,26 @@ $currencyLabels = [
             </div>
             <div class="modal-body px-4">
                 <h6 class="text-primary fw-bold">Utilité</h6>
-                <p>Cet outil vous permet de créer des <strong>liens de paiement</strong> pour recevoir des paiements en mobile money (MTN, MOOV, Orange, Wave…) depuis <strong>15 pays africains</strong>. Vos clients cliquent sur le lien, paient en ligne, et vous récupérez les fonds en mobile money.</p>
+                <p>Cet outil vous permet de créer des <strong>liens de paiement</strong> pour recevoir des paiements depuis <strong>15 pays africains</strong>. Au lieu d'aller en agence, votre client <strong>paie directement depuis son téléphone</strong> — il clique sur le lien, entre son numéro mobile money, et <strong>confirme le paiement sur son téléphone</strong> lui-même, en quelques secondes. Vous récupérez ensuite les fonds sur votre mobile money.</p>
 
                 <h6 class="text-primary fw-bold">Fonctionnement</h6>
                 <ol class="ps-3" style="font-size:.9rem;line-height:1.8;">
                     <li>Créez un lien par devise souhaitée (XOF, XAF, CDF, GNF, GMD).</li>
                     <li>Copiez et partagez le lien à votre client.</li>
-                    <li>Votre client effectue le paiement en ligne et vous envoie la capture d'écran.</li>
+                    <li>Votre client clique sur le lien, entre son numéro mobile money et confirme le paiement directement sur son téléphone — sans se déplacer en agence.</li>
                     <li>Vous soumettez la preuve de paiement (ID transaction + capture d'écran).</li>
                     <li>L'admin vérifie et vire les fonds sur votre numéro mobile money configuré.</li>
                 </ol>
+
+                <h6 class="text-primary fw-bold mt-3">Frais de service</h6>
+                <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:12px;">
+                    <span style="background:#1d4ed8;color:#fff;border-radius:6px;padding:5px 14px;font-size:.85rem;font-weight:600;">
+                        <i class="ri-percent-line me-1"></i> Afrique de l'Ouest (XOF) : <strong>15%</strong>
+                    </span>
+                    <span style="background:#7c3aed;color:#fff;border-radius:6px;padding:5px 14px;font-size:.85rem;font-weight:600;">
+                        <i class="ri-percent-line me-1"></i> Afrique Centrale (XAF) : <strong>20%</strong>
+                    </span>
+                </div>
 
                 <div class="rounded-3 p-3 mt-2" style="background:#fff3cd;border:1px solid #fde68a;font-size:.85rem;">
                     <i class="ri-time-line me-1" style="color:#d97706;"></i>
