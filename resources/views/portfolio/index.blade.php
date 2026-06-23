@@ -83,20 +83,41 @@
     {{-- Historique --}}
     <div>
         <div class="bg-white rounded-4 shadow-sm overflow-hidden" style="border:1px solid #eee;">
-            <div style="padding:20px 24px 0;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;">
+            <div style="padding:20px 24px 0;display:flex;align-items:center;justify-content:space-between;gap:12px;">
                 <div class="d-flex align-items-center gap-2">
                     <i class="ri-history-line" style="color:#e8521a;font-size:1.1rem;"></i>
                     <span class="fw-bold" style="font-size:1rem;">Historique des Retraits</span>
                 </div>
-                <div style="position:relative;">
-                    <span style="position:absolute;left:12px;top:50%;transform:translateY(-50%);color:#bbb;">
-                        <i class="ri-search-line"></i>
-                    </span>
-                    <input type="text" style="padding:8px 12px 8px 34px;border:1px solid #eee;border-radius:24px;font-size:.85rem;width:200px;outline:none;" placeholder="Rechercher...">
-                </div>
+                <i class="ri-search-line" style="color:#bbb;font-size:1.1rem;"></i>
             </div>
 
-            <div style="overflow-x:auto;">
+            {{-- Vue mobile : cartes --}}
+            <div class="hist-mobile" style="padding:12px 16px;">
+                @forelse($history as $claim)
+                    @php
+                        $statusMap = [
+                            'pending'  => ['label'=>'En attente','bg'=>'#fef3c7','color'=>'#d97706'],
+                            'approved' => ['label'=>'Approuvé','bg'=>'#dbeafe','color'=>'#2563eb'],
+                            'paid'     => ['label'=>'Payé','bg'=>'#d1fae5','color'=>'#059669'],
+                            'rejected' => ['label'=>'Rejeté','bg'=>'#fee2e2','color'=>'#dc2626'],
+                        ];
+                        $st = $statusMap[$claim->status] ?? ['label'=>$claim->status,'bg'=>'#f0f0f0','color'=>'#555'];
+                    @endphp
+                    <div style="border:1px solid #f0f0f0;border-radius:10px;padding:12px 14px;margin-bottom:10px;">
+                        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;">
+                            <span style="font-weight:700;font-size:.95rem;">{{ number_format($claim->amount, 2) }} <span style="font-size:.75rem;color:#aaa;font-weight:400;">{{ $claim->currency }}</span></span>
+                            <span style="padding:3px 10px;border-radius:20px;font-size:.72rem;font-weight:700;background:{{ $st['bg'] }};color:{{ $st['color'] }};">{{ $st['label'] }}</span>
+                        </div>
+                        <div style="font-size:.78rem;color:#aaa;">{{ $claim->payout_network }} · {{ $claim->payout_phone }}</div>
+                        <div style="font-size:.72rem;color:#ccc;margin-top:3px;">{{ $claim->created_at->format('d/m/Y') }} · #{{ $claim->id }}</div>
+                    </div>
+                @empty
+                    <div style="padding:30px;text-align:center;color:#ccc;font-style:italic;font-size:.85rem;">Aucun retrait trouvé</div>
+                @endforelse
+            </div>
+
+            {{-- Vue desktop : tableau --}}
+            <div class="hist-desktop" style="overflow-x:auto;">
             <table style="width:100%;border-collapse:collapse;margin-top:16px;min-width:560px;">
                 <thead>
                     <tr style="font-size:.72rem;font-weight:700;text-transform:uppercase;color:#bbb;letter-spacing:.06em;border-bottom:1px solid #f0f0f0;">
@@ -138,7 +159,6 @@
                 @endforelse
                 </tbody>
             </table>
-
             </div>
             @if($history->hasPages())
                 <div class="px-4 py-3">{{ $history->links() }}</div>
@@ -152,17 +172,17 @@
         {{-- Moyens de Paiement --}}
         <div class="bg-white rounded-4 shadow-sm p-4" style="border:1px solid #eee;">
             <div style="margin-bottom:16px;">
-                <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:4px;">
-                    <div class="d-flex align-items-center gap-2">
-                        <i class="ri-bank-card-line" style="color:#e8521a;"></i>
-                        <span class="fw-bold" style="font-size:.95rem;">Moyens de Paiement</span>
-                    </div>
+                <div class="d-flex align-items-center gap-2 mb-2">
+                    <i class="ri-bank-card-line" style="color:#e8521a;"></i>
+                    <span class="fw-bold" style="font-size:.95rem;">Moyens de Paiement</span>
                 </div>
-                <p class="text-muted small mb-3">Suivez vos soldes et gérez vos moyens de retrait.</p>
-                <button onclick="openAddMethod()"
-                        style="background:#e8521a;color:#fff;border:none;cursor:pointer;padding:8px 18px;border-radius:10px;font-weight:700;font-size:.82rem;">
-                    + Ajouter un moyen
-                </button>
+                <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;">
+                    <p class="text-muted small mb-0" style="flex:1;">Suivez vos soldes et gérez vos moyens de retrait.</p>
+                    <button onclick="openAddMethod()"
+                            style="background:#e8521a;color:#fff;border:none;cursor:pointer;padding:8px 14px;border-radius:10px;font-weight:700;font-size:.82rem;white-space:nowrap;flex-shrink:0;">
+                        + Ajouter un moyen
+                    </button>
+                </div>
             </div>
 
             @forelse($payoutMethods as $method)
@@ -342,6 +362,8 @@
 </div>
 
 <style>
+.hist-mobile { display: none; }
+.hist-desktop { display: block; }
 @media (max-width: 900px) {
     .portfolio-grid { grid-template-columns: 1fr !important; }
 }
@@ -349,6 +371,10 @@
     .top-bandeau { flex-direction: column !important; }
     .dark-card { width: 100% !important; flex-shrink: 1 !important; }
     .stat-cards-container { flex-direction: column !important; }
+}
+@media (max-width: 640px) {
+    .hist-mobile { display: block; }
+    .hist-desktop { display: none; }
 }
 </style>
 
