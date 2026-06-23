@@ -24,9 +24,9 @@ class AdminAuthenticated
                 ->with('error', 'Veuillez vous connecter pour accéder à cette page.');
         }
 
-        // Vérifier que la session n'a pas expiré (optionnel, 2 heures par défaut)
+        // Vérifier que la session n'a pas expiré (8 heures)
         $loginTime = Session::get('admin_login_time');
-        if ($loginTime && now()->diffInHours($loginTime) > 2) {
+        if ($loginTime && now()->diffInHours($loginTime) > 8) {
             Session::forget('admin_authenticated');
             Session::forget('admin_email');
             Session::forget('admin_login_time');
