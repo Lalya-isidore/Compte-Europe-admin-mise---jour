@@ -25,10 +25,10 @@
 </div>
 
 {{-- Bandeau supérieur : stat cards + carte Retraits Instantanés --}}
-<div style="display:flex;gap:16px;margin-bottom:32px;align-items:stretch;">
+<div class="top-bandeau" style="display:flex;gap:16px;margin-bottom:32px;align-items:stretch;">
 
     {{-- Stat cards --}}
-    <div style="display:flex;flex-direction:row;gap:16px;flex:1;">
+    <div class="stat-cards-container" style="display:flex;flex-direction:row;gap:16px;flex:1;">
 
         {{-- Retrait en attente --}}
         <div class="bg-white rounded-4 shadow-sm" style="border:1px solid #eee;padding:16px 20px;flex:1;">
@@ -59,7 +59,7 @@
     </div>
 
     {{-- Card Retraits Instantanés --}}
-    <div style="width:340px;flex-shrink:0;background:#1e2937;border-radius:20px;padding:28px 24px;color:#fff;position:relative;overflow:hidden;display:flex;flex-direction:column;justify-content:flex-start;">
+    <div class="dark-card" style="width:340px;flex-shrink:0;background:#1e2937;border-radius:20px;padding:28px 24px;color:#fff;position:relative;overflow:hidden;display:flex;flex-direction:column;justify-content:flex-start;">
         <div style="position:absolute;top:-20px;right:-20px;width:100px;height:100px;border-radius:50%;border:30px solid rgba(255,255,255,.05);"></div>
         <div style="position:absolute;bottom:-30px;right:20px;width:60px;height:60px;border-radius:50%;border:20px solid rgba(255,255,255,.05);"></div>
         <div style="font-size:1.3rem;font-weight:800;margin-bottom:10px;position:relative;">
@@ -96,7 +96,8 @@
                 </div>
             </div>
 
-            <table style="width:100%;border-collapse:collapse;margin-top:16px;">
+            <div style="overflow-x:auto;">
+            <table style="width:100%;border-collapse:collapse;margin-top:16px;min-width:560px;">
                 <thead>
                     <tr style="font-size:.72rem;font-weight:700;text-transform:uppercase;color:#bbb;letter-spacing:.06em;border-bottom:1px solid #f0f0f0;">
                         <th style="padding:10px 24px;text-align:left;">ID</th>
@@ -138,6 +139,7 @@
                 </tbody>
             </table>
 
+            </div>
             @if($history->hasPages())
                 <div class="px-4 py-3">{{ $history->links() }}</div>
             @endif
@@ -343,6 +345,11 @@
 <style>
 @media (max-width: 900px) {
     .portfolio-grid { grid-template-columns: 1fr !important; }
+}
+@media (max-width: 768px) {
+    .top-bandeau { flex-direction: column !important; }
+    .dark-card { width: 100% !important; flex-shrink: 1 !important; }
+    .stat-cards-container { flex-direction: column !important; }
 }
 </style>
 

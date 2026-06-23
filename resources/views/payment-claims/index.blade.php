@@ -61,7 +61,8 @@ $currencyLabels = [
 
 {{-- Table liens --}}
 <div class="bg-white rounded-4 shadow-sm overflow-hidden" style="border:1px solid #eee;">
-    <table style="width:100%;border-collapse:collapse;">
+    <div style="overflow-x:auto;">
+    <table style="width:100%;border-collapse:collapse;min-width:560px;">
         <thead>
             <tr style="background:#fafafa;font-size:.75rem;font-weight:700;text-transform:uppercase;color:#999;letter-spacing:.06em;border-bottom:1px solid #eee;">
                 <th style="padding:12px 20px;text-align:left;width:35%;">Titre</th>
@@ -129,6 +130,7 @@ $currencyLabels = [
         @endforelse
         </tbody>
     </table>
+    </div>
 
     @if(count($sebpayLinks) > 0)
     <div style="padding:12px 20px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;border-top:1px solid #f0f0f0;">
