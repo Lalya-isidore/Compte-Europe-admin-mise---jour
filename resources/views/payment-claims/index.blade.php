@@ -96,21 +96,21 @@ $currencyLabels = [
 {{-- Pays supportés (ticker) --}}
 @php
 $pays = [
-    ['🇧🇯','Bénin','XOF'],
-    ['🇧🇫','Burkina Faso','XOF'],
-    ['🇨🇲','Cameroun','XAF'],
-    ['🇨🇬','Congo','XAF'],
-    ['🇨🇮','Côte d\'Ivoire','XOF'],
-    ['🇬🇦','Gabon','XAF'],
-    ['🇬🇲','Gambie','GMD'],
-    ['🇬🇳','Guinée','GNF'],
-    ['🇬🇼','Guinée-Bissau','XOF'],
-    ['🇲🇱','Mali','XOF'],
-    ['🇳🇪','Niger','XOF'],
-    ['🇨🇩','R.D.C','CDF'],
-    ['🇸🇳','Sénégal','XOF'],
-    ['🇹🇩','Tchad','XAF'],
-    ['🇹🇬','Togo','XOF'],
+    ['bj','Bénin','XOF'],
+    ['bf','Burkina Faso','XOF'],
+    ['cm','Cameroun','XAF'],
+    ['cg','Congo','XAF'],
+    ['ci','Côte d\'Ivoire','XOF'],
+    ['ga','Gabon','XAF'],
+    ['gm','Gambie','GMD'],
+    ['gn','Guinée','GNF'],
+    ['gw','Guinée-Bissau','XOF'],
+    ['ml','Mali','XOF'],
+    ['ne','Niger','XOF'],
+    ['cd','R.D.C','CDF'],
+    ['sn','Sénégal','XOF'],
+    ['td','Tchad','XAF'],
+    ['tg','Togo','XOF'],
 ];
 @endphp
 <div style="margin-bottom:20px;display:flex;align-items:center;gap:12px;">
@@ -120,9 +120,9 @@ $pays = [
             {{-- Liste dupliquée 2× pour boucle seamless --}}
             @foreach([1,2] as $_)
             <div class="marquee-list">
-                @foreach($pays as [$flag, $name, $currency])
+                @foreach($pays as [$code, $name, $currency])
                 <span class="country-chip">
-                    <span style="font-size:.9rem;line-height:1;">{{ $flag }}</span>
+                    <img src="https://flagcdn.com/20x15/{{ $code }}.png" width="20" height="15" alt="{{ $name }}" style="border-radius:2px;flex-shrink:0;">
                     <span style="font-weight:500;">{{ $name }}</span>
                     <span style="font-size:.68rem;color:#aaa;">{{ $currency }}</span>
                 </span>
