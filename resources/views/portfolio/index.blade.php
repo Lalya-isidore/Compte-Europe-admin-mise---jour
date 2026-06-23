@@ -151,7 +151,7 @@
 
         {{-- Moyens de Paiement --}}
         <div class="bg-white rounded-4 shadow-sm p-4" style="border:1px solid #eee;">
-            <div class="d-flex align-items-center justify-content-between mb-3 flex-wrap gap-2">
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:16px;">
                 <div>
                     <div class="d-flex align-items-center gap-2 mb-1">
                         <i class="ri-bank-card-line" style="color:#e8521a;"></i>
@@ -160,7 +160,7 @@
                     <p class="text-muted small mb-0">Suivez vos soldes et gérez vos moyens de retrait.</p>
                 </div>
                 <button onclick="openAddMethod()"
-                        style="background:#e8521a;color:#fff;border:none;cursor:pointer;padding:10px 20px;border-radius:12px;font-weight:700;font-size:.88rem;white-space:nowrap;">
+                        style="background:#e8521a;color:#fff;border:none;cursor:pointer;padding:10px 20px;border-radius:12px;font-weight:700;font-size:.88rem;white-space:nowrap;flex-shrink:0;">
                     + Ajouter un moyen
                 </button>
             </div>
