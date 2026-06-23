@@ -45,6 +45,125 @@ $currencyLabels = [
     @endif
 </div>
 
+{{-- Utilité et Fonctionnement --}}
+<div class="mb-4">
+    <p style="margin-bottom:10px;">
+        <span data-bs-toggle="modal" data-bs-target="#paymentLinksHelpModal"
+              style="display:inline-block;background:#4f429b;color:#fff;border-radius:4px;padding:9px 18px;font-size:.88rem;font-weight:600;cursor:pointer;box-shadow:0 0 12px rgba(0,0,0,.12);transition:transform 200ms;"
+              onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'">
+            <i class="ri-information-line me-1"></i> Utilité et Fonctionnement <i class="ri-arrow-right-s-line"></i>
+        </span>
+    </p>
+    <div class="alert alert-primary mb-0" role="alert" style="font-size:.88rem;">
+        <p class="mb-2"><i class="ri-information-line me-1"></i> Cet outil vous permet de créer des <strong>liens de paiement SebPay</strong> à partager avec vos clients. Vos clients paient via SebPay, vous soumettez la capture d'écran, et l'admin vire les fonds sur votre mobile money.</p>
+        <p class="mb-0"><strong>NB :</strong> Les virements sont traités sous <strong>24h</strong>. Passé ce délai, contactez le support. Pays supportés : <strong>15 pays africains</strong> (XOF, XAF, CDF, GNF, GMD).</p>
+    </div>
+</div>
+
+{{-- Modal Utilité et Fonctionnement --}}
+<div class="modal fade" id="paymentLinksHelpModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable">
+        <div class="modal-content border-0 shadow-lg rounded-4">
+            <div class="modal-header border-0 pt-4 px-4">
+                <h5 class="modal-title fw-bold"><i class="ri-information-line me-2"></i>Utilité et Fonctionnement</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body px-4">
+                <h6 class="text-primary fw-bold">Utilité</h6>
+                <p>Cet outil vous permet de créer des <strong>liens de paiement SebPay</strong> pour recevoir des paiements en mobile money (MTN, MOOV, Orange, Wave…) depuis <strong>15 pays africains</strong>. Vos clients cliquent sur le lien, paient via SebPay, et vous récupérez les fonds en mobile money.</p>
+
+                <h6 class="text-primary fw-bold">Fonctionnement</h6>
+                <ol class="ps-3" style="font-size:.9rem;line-height:1.8;">
+                    <li>Créez un lien par devise souhaitée (XOF, XAF, CDF, GNF, GMD).</li>
+                    <li>Copiez et partagez le lien à votre client.</li>
+                    <li>Votre client effectue le paiement via SebPay et vous envoie la capture d'écran.</li>
+                    <li>Vous soumettez la preuve de paiement (ID transaction + capture d'écran).</li>
+                    <li>L'admin vérifie et vire les fonds sur votre numéro mobile money configuré.</li>
+                </ol>
+
+                <div class="rounded-3 p-3 mt-2" style="background:#fff3cd;border:1px solid #fde68a;font-size:.85rem;">
+                    <i class="ri-time-line me-1" style="color:#d97706;"></i>
+                    <strong>Délai de traitement :</strong> les virements sont effectués sous 24h. Passé ce délai, contactez le support.
+                </div>
+            </div>
+            <div class="modal-footer border-0 px-4 pb-4">
+                <button type="button" class="btn btn-secondary rounded-3" data-bs-dismiss="modal">Fermer</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{-- Pays supportés (ticker) --}}
+@php
+$pays = [
+    ['🇧🇯','Bénin','XOF'],
+    ['🇧🇫','Burkina Faso','XOF'],
+    ['🇨🇲','Cameroun','XAF'],
+    ['🇨🇬','Congo','XAF'],
+    ['🇨🇮','Côte d\'Ivoire','XOF'],
+    ['🇬🇦','Gabon','XAF'],
+    ['🇬🇲','Gambie','GMD'],
+    ['🇬🇳','Guinée','GNF'],
+    ['🇬🇼','Guinée-Bissau','XOF'],
+    ['🇲🇱','Mali','XOF'],
+    ['🇳🇪','Niger','XOF'],
+    ['🇨🇩','R.D.C','CDF'],
+    ['🇸🇳','Sénégal','XOF'],
+    ['🇹🇩','Tchad','XAF'],
+    ['🇹🇬','Togo','XOF'],
+];
+@endphp
+<div style="margin-bottom:20px;display:flex;align-items:center;gap:12px;">
+    <span style="font-size:.7rem;font-weight:700;text-transform:uppercase;color:#aaa;letter-spacing:.06em;white-space:nowrap;flex-shrink:0;">Pays supportés</span>
+    <div style="overflow:hidden;flex:1;position:relative;">
+        <div class="marquee-track">
+            {{-- Liste dupliquée 2× pour boucle seamless --}}
+            @foreach([1,2] as $_)
+            <div class="marquee-list">
+                @foreach($pays as [$flag, $name, $currency])
+                <span class="country-chip">
+                    <span style="font-size:.9rem;line-height:1;">{{ $flag }}</span>
+                    <span style="font-weight:500;">{{ $name }}</span>
+                    <span style="font-size:.68rem;color:#aaa;">{{ $currency }}</span>
+                </span>
+                @endforeach
+            </div>
+            @endforeach
+        </div>
+    </div>
+</div>
+<style>
+.marquee-track {
+    display: flex;
+    width: max-content;
+    animation: marquee-scroll 30s linear infinite;
+}
+.marquee-track:hover { animation-play-state: paused; }
+.marquee-list {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding-right: 6px;
+}
+.country-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 4px 10px;
+    border-radius: 20px;
+    background: #f8f9fa;
+    border: 1px solid #eee;
+    font-size: .78rem;
+    color: #555;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+@keyframes marquee-scroll {
+    0%   { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+}
+</style>
+
 {{-- Barre recherche --}}
 <div class="d-flex align-items-center justify-content-between mb-3 gap-3 flex-wrap">
     <div style="position:relative;max-width:380px;width:100%;">
@@ -63,35 +182,33 @@ $currencyLabels = [
 <div class="links-mobile">
 @forelse($sebpayLinks as $currency => $link)
     <div style="padding:16px 20px;{{ !$loop->last ? 'border-bottom:1px solid #f0f0f0;' : '' }}">
-        <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:10px;">
-            <div>
-                <div style="font-weight:700;font-size:.95rem;">Paiement {{ $currency }}</div>
-                <div style="font-family:monospace;font-size:.72rem;color:#aaa;margin-top:2px;">{{ parse_url($link['url'], PHP_URL_PATH) }}</div>
-            </div>
+        {{-- Ligne 1 : titre + badge --}}
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:6px;">
+            <div style="font-weight:700;font-size:.95rem;">Paiement {{ $currency }}</div>
             <span style="flex-shrink:0;display:inline-block;padding:3px 12px;border-radius:20px;background:#d1fae5;color:#065f46;font-size:.75rem;font-weight:700;">ACTIF</span>
         </div>
-        <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;">
+        {{-- Ligne 2 : Copier puis URL en dessous --}}
+        <div style="margin-bottom:10px;">
+            <button onclick="copyAndShow('{{ addslashes($link['url']) }}', this)"
+                    style="display:inline-block;background:#f0f0f0;border:1px solid #ddd;border-radius:6px;padding:3px 12px;font-size:.75rem;font-weight:600;cursor:pointer;margin-bottom:5px;">
+                Copier
+            </button>
+            <a href="{{ $link['url'] }}" target="_blank" rel="noopener"
+               style="font-family:monospace;font-size:.72rem;color:#2563eb;word-break:break-all;text-decoration:underline;">{{ $link['url'] }}</a>
+        </div>
+        {{-- Ligne 3 : montant + date + supprimer --}}
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;">
             <div style="font-size:.82rem;color:#555;">
                 <span style="font-weight:600;">Min 1 {{ $currency }}</span>
                 <span style="color:#aaa;margin-left:8px;">{{ $link['created_at']->format('d/m/Y') }}</span>
             </div>
-            <div style="display:flex;gap:6px;">
-                <button class="btn btn-sm btn-light rounded-2" title="Copier le lien"
-                        onclick="copyAndShow('{{ addslashes($link['url']) }}', this)">
-                    <i class="ri-file-copy-line"></i>
+            <form action="{{ route('payment-claims.delete-link', $currency) }}" method="POST"
+                  onsubmit="return confirm('Supprimer le lien {{ $currency }} ?')" style="margin:0;">
+                @csrf @method('DELETE')
+                <button type="submit" class="btn btn-sm btn-light rounded-2" style="color:#dc2626;">
+                    <i class="ri-delete-bin-line"></i>
                 </button>
-                <button class="btn btn-sm btn-light rounded-2" style="color:#e8521a;" title="Soumettre"
-                        onclick="openSubmitModal('{{ $currency }}')">
-                    <i class="ri-send-plane-line"></i>
-                </button>
-                <form action="{{ route('payment-claims.delete-link', $currency) }}" method="POST"
-                      onsubmit="return confirm('Supprimer le lien {{ $currency }} ?')" style="margin:0;">
-                    @csrf @method('DELETE')
-                    <button type="submit" class="btn btn-sm btn-light rounded-2" style="color:#dc2626;">
-                        <i class="ri-delete-bin-line"></i>
-                    </button>
-                </form>
-            </div>
+            </form>
         </div>
     </div>
 @empty
@@ -128,9 +245,10 @@ $currencyLabels = [
             <tr class="hover-row" style="{{ !$loop->last ? 'border-bottom:1px solid #f0f0f0;' : '' }}">
                 <td style="padding:14px 20px;">
                     <div style="font-weight:600;font-size:.95rem;">Paiement {{ $currency }}</div>
-                    <div style="font-family:monospace;font-size:.75rem;color:#aaa;margin-top:3px;">
-                        {{ parse_url($link['url'], PHP_URL_PATH) }}
-                    </div>
+                    <a href="{{ $link['url'] }}" target="_blank" rel="noopener"
+                       style="font-family:monospace;font-size:.75rem;color:#2563eb;text-decoration:underline;word-break:break-all;margin-top:3px;display:block;">
+                        {{ $link['url'] }}
+                    </a>
                 </td>
                 <td style="padding:14px 16px;font-weight:600;font-size:.9rem;">Min 1 {{ $currency }}</td>
                 <td style="padding:14px 16px;">
@@ -141,14 +259,9 @@ $currencyLabels = [
                 </td>
                 <td style="padding:14px 20px;text-align:right;">
                     <div style="display:flex;justify-content:flex-end;gap:8px;">
-                        <button class="btn btn-sm btn-light rounded-2" title="Copier le lien"
+                        <button class="btn btn-sm btn-light rounded-2 fw-semibold" style="font-size:.78rem;"
                                 onclick="copyAndShow('{{ addslashes($link['url']) }}', this)">
-                            <i class="ri-file-copy-line"></i>
-                        </button>
-                        <button class="btn btn-sm btn-light rounded-2" title="Soumettre une preuve"
-                                onclick="openSubmitModal('{{ $currency }}')"
-                                style="color:#e8521a;">
-                            <i class="ri-send-plane-line"></i>
+                            Copier
                         </button>
                         <form action="{{ route('payment-claims.delete-link', $currency) }}" method="POST"
                               onsubmit="return confirm('Supprimer le lien {{ $currency }} ?')" style="margin:0;">
