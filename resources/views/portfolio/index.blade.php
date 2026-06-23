@@ -160,7 +160,7 @@
                 </div>
                 <p class="text-muted small mb-3">Suivez vos soldes et gérez vos moyens de retrait.</p>
                 <button onclick="openAddMethod()"
-                        style="background:#e8521a;color:#fff;border:none;cursor:pointer;padding:10px 20px;border-radius:12px;font-weight:700;font-size:.88rem;width:100%;">
+                        style="background:#e8521a;color:#fff;border:none;cursor:pointer;padding:8px 18px;border-radius:10px;font-weight:700;font-size:.82rem;">
                     + Ajouter un moyen
                 </button>
             </div>
