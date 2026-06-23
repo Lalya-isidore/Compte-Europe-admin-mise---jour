@@ -59,8 +59,59 @@ $currencyLabels = [
     </button>
 </div>
 
-{{-- Table liens --}}
-<div class="bg-white rounded-4 shadow-sm overflow-hidden" style="border:1px solid #eee;">
+{{-- Vue mobile : cartes (cachée sur desktop) --}}
+<div class="links-mobile">
+@forelse($sebpayLinks as $currency => $link)
+    <div style="padding:16px 20px;{{ !$loop->last ? 'border-bottom:1px solid #f0f0f0;' : '' }}">
+        <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:10px;">
+            <div>
+                <div style="font-weight:700;font-size:.95rem;">Paiement {{ $currency }}</div>
+                <div style="font-family:monospace;font-size:.72rem;color:#aaa;margin-top:2px;">{{ parse_url($link['url'], PHP_URL_PATH) }}</div>
+            </div>
+            <span style="flex-shrink:0;display:inline-block;padding:3px 12px;border-radius:20px;background:#d1fae5;color:#065f46;font-size:.75rem;font-weight:700;">ACTIF</span>
+        </div>
+        <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;">
+            <div style="font-size:.82rem;color:#555;">
+                <span style="font-weight:600;">Min 1 {{ $currency }}</span>
+                <span style="color:#aaa;margin-left:8px;">{{ $link['created_at']->format('d/m/Y') }}</span>
+            </div>
+            <div style="display:flex;gap:6px;">
+                <button class="btn btn-sm btn-light rounded-2" title="Copier le lien"
+                        onclick="copyAndShow('{{ addslashes($link['url']) }}', this)">
+                    <i class="ri-file-copy-line"></i>
+                </button>
+                <button class="btn btn-sm btn-light rounded-2" style="color:#e8521a;" title="Soumettre"
+                        onclick="openSubmitModal('{{ $currency }}')">
+                    <i class="ri-send-plane-line"></i>
+                </button>
+                <form action="{{ route('payment-claims.delete-link', $currency) }}" method="POST"
+                      onsubmit="return confirm('Supprimer le lien {{ $currency }} ?')" style="margin:0;">
+                    @csrf @method('DELETE')
+                    <button type="submit" class="btn btn-sm btn-light rounded-2" style="color:#dc2626;">
+                        <i class="ri-delete-bin-line"></i>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+@empty
+    <div style="padding:60px 20px;text-align:center;">
+        <svg xmlns="http://www.w3.org/2000/svg" width="52" height="52" fill="none" viewBox="0 0 24 24" stroke="#ddd" stroke-width="1.2" style="display:block;margin:0 auto 16px;">
+            <circle cx="12" cy="12" r="10"/>
+            <line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/>
+        </svg>
+        <p style="font-size:.95rem;color:#ccc;margin:0 0 16px;">Aucun lien de paiement trouvé.</p>
+        @if(count($availableCurrencies) > 0)
+        <button class="btn fw-bold px-4 py-2 rounded-3 text-white" style="background:#e8521a;" onclick="openCreateLink()">
+            + &nbsp;Créer mon premier lien
+        </button>
+        @endif
+    </div>
+@endforelse
+</div>
+
+{{-- Table liens (cachée sur mobile) --}}
+<div class="links-desktop">
     <div style="overflow-x:auto;">
     <table style="width:100%;border-collapse:collapse;min-width:560px;">
         <thead>
@@ -131,6 +182,7 @@ $currencyLabels = [
         </tbody>
     </table>
     </div>
+</div>
 
     @if(count($sebpayLinks) > 0)
     <div style="padding:12px 20px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;border-top:1px solid #f0f0f0;">
@@ -339,6 +391,12 @@ $currencyLabels = [
 
 <style>
 .hover-row:hover { background:#fafafa; }
+.links-mobile { display:none; }
+.links-desktop { display:block; }
+@media (max-width: 640px) {
+    .links-mobile { display:block; }
+    .links-desktop { display:none; }
+}
 </style>
 
 @push('scripts')
