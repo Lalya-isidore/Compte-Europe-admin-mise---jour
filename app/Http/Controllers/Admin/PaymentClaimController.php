@@ -3,8 +3,12 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Mail\PaymentClaimApprovedMail;
+use App\Mail\PaymentClaimPaidMail;
+use App\Mail\PaymentClaimRejectedMail;
 use App\Models\PaymentClaim;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class PaymentClaimController extends Controller
 {
@@ -42,6 +46,10 @@ class PaymentClaimController extends Controller
             'approved_at' => now(),
         ]);
 
+        try {
+            Mail::to($paymentClaim->user->email)->send(new PaymentClaimApprovedMail($paymentClaim));
+        } catch (\Throwable $e) {}
+
         return back()->with('success', 'Demande approuvée. Effectuez le virement mobile money.');
     }
 
@@ -55,6 +63,10 @@ class PaymentClaimController extends Controller
             'status'  => 'paid',
             'paid_at' => now(),
         ]);
+
+        try {
+            Mail::to($paymentClaim->user->email)->send(new PaymentClaimPaidMail($paymentClaim));
+        } catch (\Throwable $e) {}
 
         return back()->with('success', 'Demande marquée comme payée.');
     }
@@ -73,6 +85,10 @@ class PaymentClaimController extends Controller
             'status'           => 'rejected',
             'rejection_reason' => $data['rejection_reason'],
         ]);
+
+        try {
+            Mail::to($paymentClaim->user->email)->send(new PaymentClaimRejectedMail($paymentClaim));
+        } catch (\Throwable $e) {}
 
         return back()->with('success', 'Demande rejetée.');
     }
