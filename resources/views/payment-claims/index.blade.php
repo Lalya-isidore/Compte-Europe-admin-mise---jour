@@ -316,11 +316,11 @@ $pays = [
 </div>
 
     @if(count($sebpayLinks) > 0)
-    <div style="padding:12px 20px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;border-top:1px solid #f0f0f0;">
-        <span style="font-size:.82rem;color:#aaa;">
+    <div style="padding:12px 20px;border-top:1px solid #f0f0f0;">
+        <span style="font-size:.82rem;color:#aaa;display:block;margin-bottom:8px;">
             {{ count($sebpayLinks) }} lien{{ count($sebpayLinks) > 1 ? 's' : '' }} actif{{ count($sebpayLinks) > 1 ? 's' : '' }}
         </span>
-        <a href="{{ route('portfolio.index') }}" class="btn btn-sm fw-semibold text-white rounded-2" style="background:#e8521a;">
+        <a href="{{ route('portfolio.index') }}" class="btn fw-bold text-white rounded-3" style="background:#e8521a;font-size:.95rem;width:100%;padding:.5rem 1.5rem;">
             Voir mes paiements
         </a>
     </div>
