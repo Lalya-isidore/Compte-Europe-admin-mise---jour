@@ -25,8 +25,8 @@ class PaymentClaim extends Model
     public function commissionRate(): float
     {
         return match($this->currency) {
-            'XAF', 'CDF' => 20.0,
-            default       => 15.0, // XOF, GNF, GMD
+            'XOF'   => 15.0,
+            default => 20.0,
         };
     }
 
