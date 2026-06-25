@@ -452,6 +452,10 @@
             }
             .breadcrumb-bar .breadcrumb {
                 font-size: 1rem;
+                width: 100%;
+            }
+            .breadcrumb-bar .breadcrumb-item:has(.breadcrumb-recharge-btn) {
+                margin-left: auto;
             }
         }
 
