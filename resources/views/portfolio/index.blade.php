@@ -108,7 +108,13 @@
                     @endphp
                     <div style="border:1px solid #f0f0f0;border-radius:10px;padding:12px 14px;margin-bottom:10px;">
                         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;">
-                            <span style="font-weight:700;font-size:.95rem;">{{ number_format($claim->amount, 2) }} <span style="font-size:.75rem;color:#aaa;font-weight:400;">{{ $claim->currency }}</span></span>
+                            <span style="font-weight:700;font-size:.95rem;">
+                                {{ number_format($claim->net_amount ?? $claim->amount, 0, ',', ' ') }}
+                                <span style="font-size:.75rem;color:#aaa;font-weight:400;">{{ $claim->currency }}</span>
+                                @if($claim->net_amount)
+                                    <span style="font-size:.68rem;color:#aaa;font-weight:400;display:block;">brut {{ number_format($claim->amount, 0, ',', ' ') }} · frais {{ number_format($claim->commission_rate, 0) }}%</span>
+                                @endif
+                            </span>
                             <span style="padding:3px 10px;border-radius:20px;font-size:.72rem;font-weight:700;background:{{ $st['bg'] }};color:{{ $st['color'] }};">{{ $st['label'] }}</span>
                         </div>
                         <div style="font-size:.78rem;color:#aaa;">{{ $claim->payout_network }} · {{ $claim->payout_phone }}</div>
@@ -144,7 +150,13 @@
                     @endphp
                     <tr style="{{ !$loop->last ? 'border-bottom:1px solid #f8f8f8;' : '' }}">
                         <td style="padding:14px 24px;font-size:.82rem;color:#aaa;font-family:monospace;">#{{ $claim->id }}</td>
-                        <td style="padding:14px 16px;font-weight:700;font-size:.95rem;">{{ number_format($claim->amount, 2) }} <span style="font-size:.75rem;color:#aaa;">{{ $claim->currency }}</span></td>
+                        <td style="padding:14px 16px;font-weight:700;font-size:.95rem;">
+                            {{ number_format($claim->net_amount ?? $claim->amount, 0, ',', ' ') }}
+                            <span style="font-size:.75rem;color:#aaa;">{{ $claim->currency }}</span>
+                            @if($claim->net_amount)
+                                <div style="font-size:.72rem;color:#aaa;font-weight:400;">brut {{ number_format($claim->amount, 0, ',', ' ') }} · frais {{ number_format($claim->commission_rate, 0) }}%</div>
+                            @endif
+                        </td>
                         <td style="padding:14px 16px;">
                             <span style="padding:3px 10px;border-radius:20px;font-size:.75rem;font-weight:700;background:{{ $st['bg'] }};color:{{ $st['color'] }};">
                                 {{ $st['label'] }}

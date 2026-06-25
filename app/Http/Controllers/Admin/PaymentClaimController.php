@@ -41,9 +41,11 @@ class PaymentClaimController extends Controller
         ]);
 
         $paymentClaim->update([
-            'status'      => 'approved',
-            'admin_note'  => $data['admin_note'] ?? null,
-            'approved_at' => now(),
+            'status'          => 'approved',
+            'admin_note'      => $data['admin_note'] ?? null,
+            'approved_at'     => now(),
+            'net_amount'      => $paymentClaim->calcNetAmount(),
+            'commission_rate' => $paymentClaim->commissionRate(),
         ]);
 
         try {

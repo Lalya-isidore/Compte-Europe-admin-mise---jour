@@ -11,13 +11,30 @@ class PaymentClaim extends Model
         'user_id', 'transaction_id', 'amount', 'currency',
         'screenshot_path', 'payout_network', 'payout_phone', 'payout_holder',
         'status', 'rejection_reason', 'admin_note', 'approved_at', 'paid_at',
+        'net_amount', 'commission_rate',
     ];
 
     protected $casts = [
-        'amount'      => 'decimal:2',
-        'approved_at' => 'datetime',
-        'paid_at'     => 'datetime',
+        'amount'          => 'decimal:2',
+        'net_amount'      => 'decimal:2',
+        'commission_rate' => 'decimal:2',
+        'approved_at'     => 'datetime',
+        'paid_at'         => 'datetime',
     ];
+
+    public function commissionRate(): float
+    {
+        return match($this->currency) {
+            'XAF', 'CDF' => 20.0,
+            default       => 15.0, // XOF, GNF, GMD
+        };
+    }
+
+    public function calcNetAmount(): float
+    {
+        $rate = $this->commissionRate();
+        return round((float) $this->amount * (1 - $rate / 100), 2);
+    }
 
     public function user(): BelongsTo
     {

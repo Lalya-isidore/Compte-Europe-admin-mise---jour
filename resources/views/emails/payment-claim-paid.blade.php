@@ -55,8 +55,8 @@
             <div class="details-box">
                 <div class="details-title">Récapitulatif du virement</div>
                 <div class="detail-item">
-                    <span class="detail-label">💰 Montant versé</span>
-                    <span class="detail-value">{{ number_format((float)$claim->amount, 0, ',', ' ') }} FCFA</span>
+                    <span class="detail-label">💰 Montant versé sur votre mobile money</span>
+                    <span class="detail-value" style="font-size:18px;">{{ number_format((float)($claim->net_amount ?? $claim->amount), 0, ',', ' ') }} {{ $claim->currency }}</span>
                 </div>
                 <div class="detail-item">
                     <span class="detail-label">📱 Réseau</span>

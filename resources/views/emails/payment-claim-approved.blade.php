@@ -50,8 +50,16 @@
             <div class="details-box">
                 <div class="details-title">Détails de votre demande</div>
                 <div class="detail-item">
-                    <span class="detail-label">💰 Montant</span>
-                    <span class="detail-value">{{ number_format((float)$claim->amount, 0, ',', ' ') }} FCFA</span>
+                    <span class="detail-label">💰 Montant payé par votre client</span>
+                    <span class="detail-value">{{ number_format((float)$claim->amount, 0, ',', ' ') }} {{ $claim->currency }}</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">📉 Frais de service ({{ number_format((float)$claim->commission_rate, 0) }}%)</span>
+                    <span class="detail-value" style="color:#dc2626;">- {{ number_format((float)$claim->amount - (float)$claim->net_amount, 0, ',', ' ') }} {{ $claim->currency }}</span>
+                </div>
+                <div class="detail-item" style="background:#f0fdf4;border-radius:8px;padding:12px;margin-top:4px;">
+                    <span class="detail-label" style="font-weight:700;color:#166534;">✅ Montant que vous recevrez</span>
+                    <span class="detail-value" style="color:#059669;font-size:18px;">{{ number_format((float)$claim->net_amount, 0, ',', ' ') }} {{ $claim->currency }}</span>
                 </div>
                 <div class="detail-item">
                     <span class="detail-label">📱 Réseau</span>
@@ -67,7 +75,7 @@
                 </div>
                 @if($claim->admin_note)
                 <div class="detail-item">
-                    <span class="detail-label">📝 Note admin</span>
+                    <span class="detail-label">📝 Note</span>
                     <span class="detail-value">{{ $claim->admin_note }}</span>
                 </div>
                 @endif

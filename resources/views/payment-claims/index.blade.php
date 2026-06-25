@@ -349,7 +349,13 @@ $pays = [
                 <div style="border:1px solid #f0f0f0;border-radius:10px;padding:14px;margin-bottom:10px;">
                     {{-- Ligne 1 : montant + statut --}}
                     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
-                        <span style="font-weight:700;font-size:1rem;">{{ number_format($claim->amount, 0, ',', ' ') }} <span style="font-size:.78rem;color:#aaa;font-weight:400;">{{ $claim->currency }}</span></span>
+                        <span style="font-weight:700;font-size:1rem;">
+                            {{ number_format($claim->net_amount ?? $claim->amount, 0, ',', ' ') }}
+                            <span style="font-size:.78rem;color:#aaa;font-weight:400;">{{ $claim->currency }}</span>
+                            @if($claim->net_amount)
+                                <span style="font-size:.68rem;color:#aaa;font-weight:400;display:block;">brut {{ number_format($claim->amount, 0, ',', ' ') }} · frais {{ number_format($claim->commission_rate, 0) }}%</span>
+                            @endif
+                        </span>
                         <span style="flex-shrink:0;padding:3px 10px;border-radius:20px;font-size:.72rem;font-weight:700;background:{{ $s2[0] }};color:{{ $s2[1] }};">{{ $s2[2] }}</span>
                     </div>
                     {{-- Ligne 2 : réseau + numéro --}}
@@ -400,7 +406,12 @@ $pays = [
                     @endphp
                     <tr>
                         <td class="px-4 fw-semibold" style="font-family:monospace;">{{ $claim->transaction_id }}</td>
-                        <td class="fw-bold">{{ number_format($claim->amount, 0, ',', ' ') }}</td>
+                        <td class="fw-bold">
+                            {{ number_format($claim->net_amount ?? $claim->amount, 0, ',', ' ') }}
+                            @if($claim->net_amount)
+                                <div style="font-size:.72rem;color:#aaa;font-weight:400;">brut {{ number_format($claim->amount, 0, ',', ' ') }} · frais {{ number_format($claim->commission_rate, 0) }}%</div>
+                            @endif
+                        </td>
                         <td><span class="badge bg-secondary rounded-2">{{ $claim->currency }}</span></td>
                         <td>
                             <span class="badge rounded-pill px-2" style="{{ $netStyle }}">{{ $claim->payout_network }}</span>
