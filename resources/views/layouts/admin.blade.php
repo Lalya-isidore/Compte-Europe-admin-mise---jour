@@ -435,6 +435,26 @@
             font-size: 0.85rem;
         }
 
+        .breadcrumb-bar .breadcrumb-item a {
+            display: inline-flex;
+            align-items: center;
+            padding: 4px 6px;
+            margin: -4px -6px;
+        }
+
+        @media (max-width: 768px) {
+            .breadcrumb-bar .breadcrumb-item a {
+                padding: 8px 10px;
+                margin: -8px -10px;
+            }
+            .breadcrumb-bar .breadcrumb-item i {
+                font-size: 1.1rem;
+            }
+            .breadcrumb-bar .breadcrumb {
+                font-size: 1rem;
+            }
+        }
+
         /* Page content */
         .page-content {
             padding: 1rem 0.75rem;
