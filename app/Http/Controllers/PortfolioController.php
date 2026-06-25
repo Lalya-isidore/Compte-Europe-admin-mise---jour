@@ -17,8 +17,8 @@ class PortfolioController extends Controller
 
         $claims = PaymentClaim::where('user_id', $userId)->get();
         $pendingBalance   = $claims->where('status', 'pending')->sum('amount');
-        $approvedBalance  = $claims->where('status', 'approved')->sum('amount');
-        $withdrawnBalance = $claims->where('status', 'paid')->sum('amount');
+        $approvedBalance  = $claims->where('status', 'approved')->map(fn($c) => $c->net_amount ?? $c->calcNetAmount())->sum();
+        $withdrawnBalance = $claims->where('status', 'paid')->map(fn($c) => $c->net_amount ?? $c->calcNetAmount())->sum();
         $rejectedCount    = $claims->where('status', 'rejected')->count();
 
         $history = PaymentClaim::where('user_id', $userId)
