@@ -97,7 +97,7 @@
                         @if($claim->isPending())
                             {{-- Approuver --}}
                             <button class="btn btn-sm btn-success rounded-2 me-1"
-                                    onclick="openApprove({{ $claim->id }})">
+                                    onclick="openApprove({{ $claim->id }}, {{ $claim->amount }}, '{{ $claim->currency }}')">
                                 <i data-lucide="check" style="width:13px;"></i> Approuver
                             </button>
                             {{-- Rejeter --}}
@@ -148,9 +148,20 @@
             <form id="approveForm" method="POST">
                 @csrf
                 <div class="modal-body px-4 py-2">
-                    <label class="form-label small fw-semibold">Note admin <span class="text-muted fw-normal">(optionnel)</span></label>
-                    <textarea name="admin_note" class="form-control rounded-3" rows="3"
-                              placeholder="Ex: Virement de 5000 FCFA envoyé sur MTN 97XXXXXX"></textarea>
+                    <div class="mb-3">
+                        <label class="form-label small fw-semibold">Montant net à verser <span class="text-danger">*</span></label>
+                        <div class="input-group">
+                            <input type="number" name="net_amount" id="approveNetAmount" class="form-control rounded-start-3"
+                                   placeholder="Ex: 18000" step="1" min="1" required>
+                            <span class="input-group-text" id="approveCurrencyLabel">FCFA</span>
+                        </div>
+                        <div class="form-text text-muted" id="approveAutoCalc"></div>
+                    </div>
+                    <div class="mb-2">
+                        <label class="form-label small fw-semibold">Note admin <span class="text-muted fw-normal">(optionnel)</span></label>
+                        <textarea name="admin_note" class="form-control rounded-3" rows="2"
+                                  placeholder="Ex: Virement envoyé sur MTN 97XXXXXX"></textarea>
+                    </div>
                 </div>
                 <div class="modal-footer border-0 px-4 pb-4">
                     <button type="button" class="btn btn-light rounded-3" data-bs-dismiss="modal">Annuler</button>
@@ -193,8 +204,14 @@ document.addEventListener('DOMContentLoaded', function () {
     var approveModal = new bootstrap.Modal(document.getElementById('approveModal'), {backdrop: 'static', keyboard: false});
     var rejectModal  = new bootstrap.Modal(document.getElementById('rejectModal'),  {backdrop: 'static', keyboard: false});
 
-    window.openApprove = function(id) {
+    window.openApprove = function(id, amount, currency) {
         document.getElementById('approveForm').action = '/admin/payment-claims/' + id + '/approve';
+        var rate = currency === 'XOF' ? 15 : 20;
+        var net  = Math.round(amount * (1 - rate / 100));
+        document.getElementById('approveNetAmount').value = net;
+        document.getElementById('approveCurrencyLabel').textContent = currency;
+        document.getElementById('approveAutoCalc').textContent =
+            'Calcul auto : ' + amount.toLocaleString('fr-FR') + ' ' + currency + ' − ' + rate + '% = ' + net.toLocaleString('fr-FR') + ' ' + currency + '. Modifiez si nécessaire.';
         approveModal.show();
     };
     window.openReject = function(id) {

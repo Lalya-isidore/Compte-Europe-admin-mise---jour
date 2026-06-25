@@ -38,14 +38,16 @@ class PaymentClaimController extends Controller
 
         $data = $request->validate([
             'admin_note' => ['nullable', 'string', 'max:500'],
+            'net_amount' => ['required', 'numeric', 'min:1'],
         ]);
 
+        $rate = $paymentClaim->commissionRate();
         $paymentClaim->update([
             'status'          => 'approved',
             'admin_note'      => $data['admin_note'] ?? null,
             'approved_at'     => now(),
-            'net_amount'      => $paymentClaim->calcNetAmount(),
-            'commission_rate' => $paymentClaim->commissionRate(),
+            'net_amount'      => $data['net_amount'],
+            'commission_rate' => $rate,
         ]);
 
         try {
