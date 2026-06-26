@@ -156,7 +156,7 @@ class UserController extends Controller
                 Session::put('admin_authenticated', true);
                 Session::put('admin_email', Auth::user()->email);
                 Session::put('admin_login_time', now());
-                return redirect('/admin');
+                return redirect()->route('admin.index');
             }
 
             return redirect()->intended('dashboard');

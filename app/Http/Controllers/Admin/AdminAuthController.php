@@ -30,8 +30,9 @@ class AdminAuthController extends Controller
             return $this->dashboard();
         }
 
-        // Sinon, afficher la page de connexion
-        return view('admin.login');
+        // Sinon, rediriger vers la page de connexion utilisateur
+        return redirect()->route('login')
+            ->with('info', 'Veuillez vous connecter pour accéder à l\'espace admin.');
     }
 
     /**

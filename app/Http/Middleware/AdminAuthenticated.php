@@ -19,8 +19,7 @@ class AdminAuthenticated
     {
         // Vérifier si l'administrateur est authentifié
         if (!Session::has('admin_authenticated')) {
-            // Si ce n'est pas le cas, rediriger vers la page de connexion admin
-            return redirect()->route('admin.index')
+            return redirect()->route('login')
                 ->with('error', 'Veuillez vous connecter pour accéder à cette page.');
         }
 
@@ -30,8 +29,8 @@ class AdminAuthenticated
             Session::forget('admin_authenticated');
             Session::forget('admin_email');
             Session::forget('admin_login_time');
-            
-            return redirect()->route('admin.index')
+
+            return redirect()->route('login')
                 ->with('error', 'Votre session a expiré. Veuillez vous reconnecter.');
         }
 

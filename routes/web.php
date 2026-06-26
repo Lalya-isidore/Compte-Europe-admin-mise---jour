@@ -458,13 +458,8 @@ Route::post('/payement5000/{id}', [CompteController::class, 'payement5000'])->na
     Route::post('/payement25000/{id}', [CompteController::class, 'payement25000'])->name('payement.25000');
     Route::post('/payement50000/{id}', [CompteController::class, 'payement50000'])->name('payement.50000');
 
-    // Route principale admin - affiche login ou dashboard selon l'authentification
+    // Route principale admin - redirige vers login utilisateur si non authentifié
     Route::get('/console_', [App\Http\Controllers\Admin\AdminAuthController::class, 'index'])->name('admin.index');
-
-    Route::get('/console_/login', [App\Http\Controllers\Admin\AdminAuthController::class, 'showLoginForm'])->name('admin.login');
-
-    // Routes d'authentification admin
-    Route::post('/console_/login', [App\Http\Controllers\Admin\AdminAuthController::class, 'login'])->name('admin.login.submit');
 
     // Déconnexion admin
     Route::match(['get', 'post'], '/console_/logout', [App\Http\Controllers\Admin\AdminAuthController::class, 'logout'])->name('admin.logout');
