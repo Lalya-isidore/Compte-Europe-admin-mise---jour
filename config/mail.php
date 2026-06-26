@@ -49,6 +49,17 @@ return [
             'local_domain' => env('MAIL_EHLO_DOMAIN', parse_url((string) env('APP_URL', 'http://localhost'), PHP_URL_HOST)),
         ],
 
+        'gmail' => [
+            'transport' => 'smtp',
+            'host' => env('MAIL_GMAIL_HOST', 'smtp.gmail.com'),
+            'port' => env('MAIL_GMAIL_PORT', 587),
+            'encryption' => env('MAIL_GMAIL_ENCRYPTION', 'tls'),
+            'username' => env('MAIL_GMAIL_USERNAME'),
+            'password' => env('MAIL_GMAIL_PASSWORD'),
+            'timeout' => null,
+            'local_domain' => env('MAIL_EHLO_DOMAIN', parse_url((string) env('APP_URL', 'http://localhost'), PHP_URL_HOST)),
+        ],
+
         'fluxtransfer' => [
             'transport' => 'smtp',
             'host' => env('MAIL_FLUX_HOST', 'smtp.hostinger.com'),

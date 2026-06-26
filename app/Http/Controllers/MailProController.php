@@ -72,8 +72,8 @@ class MailProController extends Controller
             $emailBody = $request->contenu . $trackingPixel;
 
             try {
-                Mail::send([], [], function ($message) use ($request, $fichierPath, $emailBody) {
-                    $message->from(config('mail.from.address'), $request->expediteur)
+                Mail::mailer('gmail')->send([], [], function ($message) use ($request, $fichierPath, $emailBody) {
+                    $message->from('notifications.contacts@gmail.com', $request->expediteur)
                         ->to($request->destinataire)
                         ->subject($request->objet)
                         ->html($emailBody);
