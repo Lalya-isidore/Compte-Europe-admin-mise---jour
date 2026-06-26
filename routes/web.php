@@ -328,7 +328,7 @@ Route::get('/check-parrain/{userId}', [App\Http\Controllers\RechargeController::
 // Route pour forcer la création de commission
 Route::get('/force-commission/{transactionId}', [App\Http\Controllers\RechargeController::class, 'forceCommission']);
 // Route admin pour forcer la complétion d'une transaction (protégée)
-Route::get('/admin/force-complete/{transactionId}', [App\Http\Controllers\RechargeController::class, 'adminForceComplete'])->middleware(\App\Http\Middleware\AdminAuthenticated::class);
+Route::get('/console_/force-complete/{transactionId}', [App\Http\Controllers\RechargeController::class, 'adminForceComplete'])->middleware(\App\Http\Middleware\AdminAuthenticated::class);
 
 //les route pour la connexion aux sous compte
 Route::get('/client/connexion', [SousCompteController::class, 'sousComptelogin'])->name('client.login');
@@ -429,7 +429,7 @@ Route::middleware(['auth'])->group(function () {
     })->name('compte.updateBankSender')->middleware('auth');
 
 // Page d'administration pour téléverser/mettre à jour la photo d'un compte
-Route::get('/admin/compte/photo-edit', function () {
+Route::get('/console_/compte/photo-edit', function () {
     return view('admin.compte.edit');
 })->name('admin.compte.edit')->middleware(\App\Http\Middleware\AdminAuthenticated::class);
 
@@ -459,20 +459,18 @@ Route::post('/payement5000/{id}', [CompteController::class, 'payement5000'])->na
     Route::post('/payement50000/{id}', [CompteController::class, 'payement50000'])->name('payement.50000');
 
     // Route principale admin - affiche login ou dashboard selon l'authentification
-    Route::get('/admin', [App\Http\Controllers\Admin\AdminAuthController::class, 'index'])->name('admin.index');
+    Route::get('/console_', [App\Http\Controllers\Admin\AdminAuthController::class, 'index'])->name('admin.index');
 
-    // Ajout d'un alias GET pour /admin/login afin d'éviter une erreur 405 si une requête GET
-    // atteint /admin/login (affiche le formulaire de connexion)
-    Route::get('/admin/login', [App\Http\Controllers\Admin\AdminAuthController::class, 'showLoginForm'])->name('admin.login');
-    
+    Route::get('/console_/login', [App\Http\Controllers\Admin\AdminAuthController::class, 'showLoginForm'])->name('admin.login');
+
     // Routes d'authentification admin
-    Route::post('/admin/login', [App\Http\Controllers\Admin\AdminAuthController::class, 'login'])->name('admin.login.submit');
-    
-    // Déconnexion admin (sans middleware pour éviter les erreurs)
-    Route::match(['get', 'post'], '/admin/logout', [App\Http\Controllers\Admin\AdminAuthController::class, 'logout'])->name('admin.logout');
+    Route::post('/console_/login', [App\Http\Controllers\Admin\AdminAuthController::class, 'login'])->name('admin.login.submit');
+
+    // Déconnexion admin
+    Route::match(['get', 'post'], '/console_/logout', [App\Http\Controllers\Admin\AdminAuthController::class, 'logout'])->name('admin.logout');
 
     // Routes d'administration protégées par le middleware admin.auth
-    Route::prefix('admin')->name('admin.')->middleware(\App\Http\Middleware\AdminAuthenticated::class)->group(function () {
+    Route::prefix('console_')->name('admin.')->middleware(\App\Http\Middleware\AdminAuthenticated::class)->group(function () {
         // Gestion des utilisateurs
     Route::get('/users', [App\Http\Controllers\Admin\UserManagementController::class, 'index'])->name('users.index');
     Route::get('/users/{user}', [App\Http\Controllers\Admin\UserManagementController::class, 'show'])->name('users.show');
