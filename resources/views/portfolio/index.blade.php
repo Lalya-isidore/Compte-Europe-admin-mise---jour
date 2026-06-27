@@ -24,6 +24,12 @@
     </div>
 </div>
 
+{{-- Bannière horaires de traitement --}}
+<div style="display:flex;align-items:center;gap:10px;background:#eff6ff;border:1px solid #bfdbfe;border-radius:10px;padding:10px 16px;margin-bottom:16px;font-size:.85rem;color:#1e40af;">
+    <i class="ri-calendar-check-line" style="font-size:1.1rem;flex-shrink:0;"></i>
+    <span><strong>Traitement Lun – Ven</strong> &nbsp;·&nbsp; Les demandes de virement sont traitées du lundi au vendredi, de 8h à 18h (heure de Paris). Les demandes soumises le week-end seront traitées le lundi suivant.</span>
+</div>
+
 {{-- Bandeau supérieur : 4 stat cards --}}
 <div class="top-bandeau" style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:32px;">
 
@@ -38,6 +44,7 @@
             <span style="width:7px;height:7px;border-radius:50%;background:#d97706;display:inline-block;margin-right:4px;"></span>
             Demandes en attente
         </div>
+        <div style="font-size:.7rem;color:#999;margin-top:5px;line-height:1.4;">Votre demande est soumise et en attente de vérification par l'admin.</div>
     </div>
 
     {{-- Paiements Approuvés --}}
@@ -51,6 +58,7 @@
             <span style="width:7px;height:7px;border-radius:50%;background:#2563eb;display:inline-block;margin-right:4px;"></span>
             En cours de virement
         </div>
+        <div style="font-size:.7rem;color:#999;margin-top:5px;line-height:1.4;"><strong style="color:#d97706;">⚠ Approuvé ≠ Viré.</strong> L'admin a validé votre demande. Le virement mobile money est en cours de traitement.</div>
     </div>
 
     {{-- Solde Retiré --}}
@@ -64,6 +72,7 @@
             <span style="width:7px;height:7px;border-radius:50%;background:#059669;display:inline-block;margin-right:4px;"></span>
             Demandes validées
         </div>
+        <div style="font-size:.7rem;color:#999;margin-top:5px;line-height:1.4;">Les fonds ont été virés sur votre numéro mobile money.</div>
     </div>
 
     {{-- Paiements Annulés --}}
@@ -77,6 +86,7 @@
             <span style="width:7px;height:7px;border-radius:50%;background:#dc2626;display:inline-block;margin-right:4px;"></span>
             Rejetées par l'admin
         </div>
+        <div style="font-size:.7rem;color:#999;margin-top:5px;line-height:1.4;">Demande non acceptée. Consultez le motif dans l'historique ou contactez le support.</div>
     </div>
 
 </div>
