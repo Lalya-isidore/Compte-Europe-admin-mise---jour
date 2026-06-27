@@ -204,8 +204,11 @@ document.addEventListener('DOMContentLoaded', function () {
     var approveModal = new bootstrap.Modal(document.getElementById('approveModal'), {backdrop: 'static', keyboard: false});
     var rejectModal  = new bootstrap.Modal(document.getElementById('rejectModal'),  {backdrop: 'static', keyboard: false});
 
+    var approveUrlBase = '{{ url("/console_/payment-claims") }}';
+    var rejectUrlBase  = '{{ url("/console_/payment-claims") }}';
+
     window.openApprove = function(id, amount, currency) {
-        document.getElementById('approveForm').action = '/admin/payment-claims/' + id + '/approve';
+        document.getElementById('approveForm').action = approveUrlBase + '/' + id + '/approve';
         var rate = currency === 'XOF' ? 15 : 20;
         var net  = Math.round(amount * (1 - rate / 100));
         document.getElementById('approveNetAmount').value = net;
@@ -217,7 +220,7 @@ document.addEventListener('DOMContentLoaded', function () {
     window.openReject = function(id) {
         document.getElementById('rejectReason').value = '';
         document.getElementById('rejectError').style.display = 'none';
-        document.getElementById('rejectForm').action = '/admin/payment-claims/' + id + '/reject';
+        document.getElementById('rejectForm').action = rejectUrlBase + '/' + id + '/reject';
         rejectModal.show();
     };
     window.submitReject = function() {
