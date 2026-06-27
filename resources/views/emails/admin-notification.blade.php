@@ -152,7 +152,7 @@
             <p style="color: #666; font-size: 13px;">📎 Pièce jointe : {{ $supportMessage->file_name }}</p>
             @endif
 
-            <a href="{{ url('/admin/support') }}" class="cta">Répondre dans l'administration</a>
+            <a href="{{ url('/console_/support') }}" class="cta">Répondre dans l'administration</a>
         </div>
 
         <div class="footer">

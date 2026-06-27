@@ -750,7 +750,7 @@ function sendNotif() {
     btn.textContent = 'Envoi en cours...';
     fb.className = 'd-none';
 
-    fetch('/admin/users/' + userId + '/notify', {
+    fetch('/console_/users/' + userId + '/notify', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',

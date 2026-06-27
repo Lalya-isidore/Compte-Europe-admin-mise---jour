@@ -377,7 +377,7 @@ async function showCommissionDetails(commissionId) {
     modal.show();
     
     try {
-        const response = await fetch(`/admin/commissions/${commissionId}`, {
+        const response = await fetch(`/console_/commissions/${commissionId}`, {
             headers: { 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content') }
         });
         
@@ -465,7 +465,7 @@ async function showCommissionDetails(commissionId) {
 async function validateCommission(commissionId) {
     if (!confirm('Confirmer la validation de cette commission ? Le solde de l\'affilié sera crédité.')) return;
     try {
-        const response = await fetch(\`/admin/commissions/\${commissionId}/validate\`, {
+        const response = await fetch(\`/console_/commissions/\${commissionId}/validate\`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json', 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content') }
         });
@@ -477,7 +477,7 @@ async function validateCommission(commissionId) {
 async function rejectCommission(commissionId) {
     if (!confirm('Rejeter cette commission ?')) return;
     try {
-        const response = await fetch(\`/admin/commissions/\${commissionId}/reject\`, {
+        const response = await fetch(\`/console_/commissions/\${commissionId}/reject\`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json', 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content') }
         });
@@ -501,7 +501,7 @@ async function markWithdrawalProcessed(retraitId) {
 async function cleanupInscriptionCommissions() {
     if (!confirm('Supprimer définitivement les commissions d\'inscription obsolètes ?')) return;
     try {
-        const response = await fetch('/admin/commissions/cleanup-inscriptions', {
+        const response = await fetch('/console_/commissions/cleanup-inscriptions', {
             method: 'DELETE',
             headers: { 'Content-Type': 'application/json', 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content') }
         });
