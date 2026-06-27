@@ -57,6 +57,7 @@
                                 <option value="ar">🇸🇦 Arabe</option>
                                 <option value="zh">🇨🇳 Chinois</option>
                                 <option value="tr">🇹🇷 Turc</option>
+                                <option value="no">🇳🇴 Norvégien</option>
                             </select>
                         </div>
                     </div>
@@ -901,7 +902,8 @@ document.addEventListener('DOMContentLoaded', () => {
             'es': { 'fr': 'francés', 'es': 'español', 'it': 'italiano', 'de': 'alemán', 'pt': 'portugués', 'us': 'estadounidense', 'gb': 'británico', 'be': 'belga' },
             'pt': { 'fr': 'francês', 'es': 'espanhol', 'it': 'italiano', 'de': 'alemão', 'pt': 'português', 'us': 'americano', 'gb': 'britânico', 'be': 'belga' },
             'de': { 'fr': 'französischen', 'es': 'spanischen', 'it': 'italienischen', 'de': 'deutschen', 'pt': 'portugiesischen', 'us': 'amerikanischen', 'gb': 'britischen', 'be': 'belgischen' },
-            'it': { 'fr': 'francese', 'es': 'spagnolo', 'it': 'italiano', 'de': 'tedesco', 'pt': 'portoghese', 'us': 'americano', 'gb': 'britannico', 'be': 'belga' }
+            'it': { 'fr': 'francese', 'es': 'spagnolo', 'it': 'italiano', 'de': 'tedesco', 'pt': 'portoghese', 'us': 'americano', 'gb': 'britannico', 'be': 'belga' },
+            'no': { 'fr': 'franske', 'es': 'spanske', 'it': 'italienske', 'de': 'tyske', 'pt': 'portugisiske', 'us': 'amerikanske', 'gb': 'britiske', 'be': 'belgiske' }
         };
         const terr = terrMap[lang]?.[paysNotaireVal] || terrMap['fr']?.[paysNotaireVal] || 'français';
 

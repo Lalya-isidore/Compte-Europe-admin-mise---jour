@@ -395,6 +395,48 @@ class ContratDonController extends Controller
             'p2_date_label'   => '日期',
         ],
 
+        'no' => [
+            'republica_fr'    => 'Den franske republikk',
+            'ministerio'      => 'Justis- og lovgivningsdepartementet',
+            'derechos'        => 'menneskerettigheter',
+            'tribunal_local'  => 'Tingretten i :ville',
+            'secretario'      => 'Sjefsrettsskrivar',
+            'titre_certif'    => 'BEVIS FOR REGISTRERING AV GAVE',
+            'titre_testament' => 'BEVIS FOR REGISTRERING AV TESTAMENT',
+            'id_donante'      => 'IDENTIFIKASJON AV GIVER:',
+            'id_beneficiario' => 'IDENTIFIKASJON AV MOTTAKER:',
+            'nom'             => 'ETTERNAVN:',
+            'prenom'          => 'FORNAVN:',
+            'nom_complet'     => 'FULLT NAVN:',
+            'pays'            => 'LAND:',
+            'adresse'         => 'ADRESSE:',
+            'clause_sum'      => 'BELØPET PÅ :montant :devise KAN OVERFØRES FRA BANKKONTOEN TIL HR. :donneur DOMISISLERT I BANKEN :banque TIL BANKKONTOEN ETTER MOTTAKERS VALG.',
+            'donateur'        => 'GIVER',
+            'notario'         => 'NOTAR',
+            'beneficiaire'    => 'MOTTAKER',
+            'donneur'         => 'GIVEREN',
+            'as_donneur'      => 'Heretter omtalt som "Giveren"',
+            'as_beneficiaire' => 'Heretter omtalt som "Mottakeren"',
+            'certifie_que'    => 'JEG BEKREFTER HERVED AT BELØPET PÅ :montant :devise KAN OVERFØRES FRA BANKKONTOEN TIL HR. :donneur TIL BANKKONTOEN ETTER MOTTAKERS VALG.',
+            'contrat_no'      => 'Nr.',
+            'p2_para1'        => 'Den nevnte :donneur overfører, vederlagsfritt, absolutt, ugjenkallelig og ubetinget, beløpet på :montant :devise, og overdrar alle sine rettigheter og eierskap til :donataire.',
+            'p2_donateur_declare' => 'Giveren erklærer og garanterer at:',
+            'p2_bullet1'      => '• Han/hun er eneste eier av midlene,',
+            'p2_bullet2'      => '• Han/hun har rett, myndighet og fullmakt til å samtykke i denne gaven på egne vegne;',
+            'p2_bullet3'      => '• I henhold til tilgjengelig informasjon er midlene i en lokal bank og kan overføres når som helst til mottakerens bankkonto.',
+            'p2_senor'        => 'Hr./Fru',
+            'p2_accept1'      => '• Aksepterer gaven av MIDLENE og påtar seg fullt ansvar for oppbevaring og bruk i samsvar med retningslinjer og lover 77-995 i artikkel 4 av 18/12/77 for gavetilfeller;',
+            'p2_accept2'      => '• Forplikter seg til å bruke midlene riktig og bruke pengene lovlig.',
+            'p2_legal1'       => 'Gavebrevet er underlagt og tolkes i samsvar med gjeldende lover på fransk territorium og under det judisielle tilsynet av Maître :notaire, privat og akkreditert notar, bosatt i Frankrike i :ville.',
+            'p2_legal2'       => 'Gaven trer i kraft fra signeringsdatoen av partene.',
+            'p2_legal3'       => ':donataire bekrefter å ha mottatt midlene som er en del av dette gavebrevet.',
+            'p2_notaire_certifie' => 'Gavebrevet er underlagt og tolkes i samsvar med gjeldende lover på :territoire territorium og under det judisielle tilsynet av Maître :notaire, privat og akkreditert notar, :adresse.',
+            'p2_notaire_name' => 'Maître Marie Aimée PEYRON',
+            'p2_notaire_lawyer' => 'ADVOKAT VED HØYESTERETT',
+            'p2_notaire_addr' => 'Boulogne-Billancourt, Frankrike',
+            'p2_date_label'   => 'Dato',
+        ],
+
         'tr' => [
             'republica_fr'    => 'Fransız Cumhuriyeti',
             'ministerio'      => 'Adalet ve Mevzuat Bakanlığı',
@@ -509,6 +551,11 @@ class ContratDonController extends Controller
             'de' => 'Almanya Federal Cumhuriyeti', 'pt' => 'Portekiz Cumhuriyeti',
             'us' => 'Amerika Birleşik Devletleri', 'gb' => 'Birleşik Krallık', 'be' => 'Belçika Cumhuriyeti',
         ],
+        'no' => [
+            'fr' => 'Den franske republikk', 'es' => 'Kongeriket Spania', 'it' => 'Republikken Italia',
+            'de' => 'Forbundsrepublikken Tyskland', 'pt' => 'Republikken Portugal',
+            'us' => 'Amerikas forente stater', 'gb' => 'Det forente kongerike', 'be' => 'Kongeriket Belgia',
+        ],
     ];
 
     private array $capitalCities = [
@@ -533,6 +580,7 @@ class ContratDonController extends Controller
         'ar' => ['fr' => 'الفرنسية', 'es' => 'الإسبانية', 'it' => 'الإيطالية', 'de' => 'الألمانية', 'pt' => 'البرتغالية', 'us' => 'الأمريكية', 'gb' => 'البريطانية', 'be' => 'البلجيكية'],
         'zh' => ['fr' => '法国', 'es' => '西班牙', 'it' => '意大利', 'de' => '德国', 'pt' => '葡萄牙', 'us' => '美国', 'gb' => '英国', 'be' => '比利时'],
         'tr' => ['fr' => 'Fransız', 'es' => 'İspanyol', 'it' => 'İtalyan', 'de' => 'Alman', 'pt' => 'Portekiz', 'us' => 'Amerikan', 'gb' => 'İngiliz', 'be' => 'Belçika'],
+        'no' => ['fr' => 'franske', 'es' => 'spanske', 'it' => 'italienske', 'de' => 'tyske', 'pt' => 'portugisiske', 'us' => 'amerikanske', 'gb' => 'britiske', 'be' => 'belgiske'],
     ];
 
     private array $notaireAdresses = [
@@ -636,6 +684,16 @@ class ContratDonController extends Controller
             'gb' => "Birleşik Krallık'ta Londra'da ikamet eden",
             'be' => "Belçika'da Brüksel'de ikamet eden",
         ],
+        'no' => [
+            'fr' => 'bosatt i Frankrike i Boulogne-Billancourt',
+            'es' => 'bosatt i Spania i Madrid',
+            'it' => 'bosatt i Italia i Roma',
+            'de' => 'bosatt i Tyskland i Berlin',
+            'pt' => 'bosatt i Portugal i Lisboa',
+            'us' => 'bosatt i USA i Washington',
+            'gb' => 'bosatt i Storbritannia i London',
+            'be' => 'bosatt i Belgia i Brussel',
+        ],
     ];
 
     private array $ministereNoms = [
@@ -714,6 +772,12 @@ class ContratDonController extends Controller
             'it' => 'Adalet Bakanlığı', 'de' => 'Federal Adalet Bakanlığı',
             'pt' => 'Adalet Bakanlığı', 'us' => 'Adalet Bakanlığı',
             'gb' => 'Adalet Bakanlığı', 'be' => 'Federal Adalet Bakanlığı',
+        ],
+        'no' => [
+            'fr' => 'Justis- og lovgivningsdepartementet', 'es' => 'Justisdepartementet',
+            'it' => 'Justisdepartementet', 'de' => 'Forbundsjustisdepartementet',
+            'pt' => 'Justisdepartementet', 'us' => 'Justisdepartementet',
+            'gb' => 'Justisdepartementet', 'be' => 'Forbundsjustisdepartementet',
         ],
     ];
 
@@ -898,7 +962,7 @@ class ContratDonController extends Controller
             'donateur_adresse' => 'required|string|max:200',
             'montant'          => 'required|numeric|min:1',
             'devise'           => 'required|string',
-            'lang'             => 'required|string|in:fr,en,es,pt,de,it,ru,ar,zh,tr',
+            'lang'             => 'required|string|in:fr,en,es,pt,de,it,ru,ar,zh,tr,no',
             'pays_notaire'     => 'nullable|string|in:fr,es,it,de,pt,us,gb,be',
             'nom_republique'   => 'nullable|string|max:100',
             'ville_tribunal'   => 'nullable|string|max:100',
