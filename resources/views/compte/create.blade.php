@@ -1116,13 +1116,19 @@
                                 <div class="h-data" style="display:none" id="fcp-{{ $index }}" data-compte-id="{{ $compte->id }}">
                                     {{-- Avatar + Nom --}}
                                     <div class="fcp-modal-avatar">
-                                        @if(!empty($compte->photo_path))
-                                            <img src="{{ asset('storage/' . $compte->photo_path) }}" alt="Photo">
-                                        @else
-                                            <div class="fcp-avatar-placeholder" style="margin:0 auto;">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="#8b93a1"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
-                                            </div>
-                                        @endif
+                                        <div class="fcp-avatar-wrap">
+                                            @if(!empty($compte->photo_path))
+                                                <img src="{{ asset('storage/' . $compte->photo_path) }}" alt="Photo" class="fcp-avatar-img">
+                                            @else
+                                                <div class="fcp-avatar-placeholder" style="margin:0 auto;">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="#8b93a1"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+                                                </div>
+                                            @endif
+                                            <label class="fcp-photo-btn" data-compte-id="{{ $compte->id }}" title="Changer la photo">
+                                                <input type="file" accept="image/jpeg,image/png,image/jpg,image/gif" class="fcp-photo-input" style="display:none">
+                                                <i class="bi bi-camera-fill"></i>
+                                            </label>
+                                        </div>
                                         <div class="fcp-client-name">{{ $compte->prenom }} {{ $compte->nom }}</div>
                                         <div class="fcp-client-hash"><i class="bi bi-link-45deg"></i> {{ $compte->numerocompte ?? '—' }}</div>
                                         <div style="margin-top:8px">
@@ -1523,6 +1529,10 @@
     .fcp-avatar-placeholder { background:#e8eaf0; display:inline-flex; align-items:center; justify-content:center; }
     .fcp-modal-avatar .fcp-client-name { font-weight:800; font-size:1.2rem; margin-top:14px; color:#0f172a; }
     .fcp-modal-avatar .fcp-client-hash { font-size:.85rem; color:#64748b; font-family:monospace; margin-top:4px; }
+    .fcp-avatar-wrap { position:relative; display:inline-block; }
+    .fcp-photo-btn { position:absolute; inset:0; border-radius:50%; background:rgba(0,0,0,.52); display:flex; align-items:center; justify-content:center; cursor:pointer; opacity:0; transition:opacity .18s; margin:0; }
+    .fcp-photo-btn i { color:#fff; font-size:1.15rem; pointer-events:none; }
+    .fcp-avatar-wrap:hover .fcp-photo-btn { opacity:1; }
     
     .fcp-section { padding:24px 20px 8px; border:none !important; }
     .fcp-section-title { font-weight:800; font-size:1rem; color:#4f46e5; text-transform:uppercase; letter-spacing:1px; margin-bottom:20px; display:flex; align-items:center; gap:10px; padding-bottom:12px; border-bottom: 2px solid #e0e7ff; }
@@ -1945,6 +1955,48 @@ window.addEventListener('DOMContentLoaded', function(){
                 btnNotif.innerHTML = originalHtml;
             });
         }
+    });
+
+    // ---- Photo upload depuis l'avatar du modal ----
+    document.addEventListener('change', function(e) {
+        var input = e.target.closest('.fcp-photo-input');
+        if (!input) return;
+        var photoBtn = input.closest('.fcp-photo-btn');
+        var compteId = photoBtn ? photoBtn.getAttribute('data-compte-id') : null;
+        if (!compteId || !input.files[0]) return;
+
+        var origContent = photoBtn.innerHTML;
+        photoBtn.innerHTML = '<span class="spinner-border spinner-border-sm" style="color:#fff;width:1rem;height:1rem;border-width:2px;"></span>';
+
+        var fd = new FormData();
+        fd.append('photo', input.files[0]);
+        fd.append('_token', '{{ csrf_token() }}');
+
+        fetch('/compte/' + compteId + '/update-photo', {
+            method: 'POST',
+            headers: { 'X-Requested-With': 'XMLHttpRequest' },
+            body: fd
+        })
+        .then(function(r) { return r.json(); })
+        .then(function(data) {
+            if (data.photo_url) {
+                var wrap = input.closest('.fcp-avatar-wrap');
+                if (wrap) {
+                    var img = wrap.querySelector('img.fcp-avatar-img');
+                    var placeholder = wrap.querySelector('.fcp-avatar-placeholder');
+                    if (img) {
+                        img.src = data.photo_url;
+                    } else if (placeholder) {
+                        placeholder.outerHTML = '<img src="' + data.photo_url + '" alt="Photo" class="fcp-avatar-img" style="width:84px;height:84px;border-radius:50%;object-fit:cover;border:4px solid #fff;box-shadow:0 6px 16px rgba(0,0,0,.08);">';
+                    }
+                }
+                showFcpModal('Photo mise à jour avec succès !', 'success');
+            } else {
+                showFcpModal(data.error || 'Erreur lors de la mise à jour.', 'error');
+            }
+        })
+        .catch(function() { showFcpModal('Erreur réseau.', 'error'); })
+        .finally(function() { photoBtn.innerHTML = origContent; input.value = ''; });
     });
 
     // ---- Alert SMS + Notification toggles ----
