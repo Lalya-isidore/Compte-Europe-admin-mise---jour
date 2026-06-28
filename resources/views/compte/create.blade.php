@@ -1965,11 +1965,14 @@ window.addEventListener('DOMContentLoaded', function(){
         var compteId = photoBtn ? photoBtn.getAttribute('data-compte-id') : null;
         if (!compteId || !input.files[0]) return;
 
+        // Sauvegarder wrap AVANT de toucher au innerHTML (sinon input devient détaché)
+        var wrap = input.closest('.fcp-avatar-wrap');
+        var file = input.files[0];
         var origContent = photoBtn.innerHTML;
         photoBtn.innerHTML = '<span class="spinner-border spinner-border-sm" style="color:#fff;width:1rem;height:1rem;border-width:2px;"></span>';
 
         var fd = new FormData();
-        fd.append('photo', input.files[0]);
+        fd.append('photo', file);
         fd.append('_token', '{{ csrf_token() }}');
 
         fetch('/compte/' + compteId + '/update-photo', {
@@ -1980,14 +1983,23 @@ window.addEventListener('DOMContentLoaded', function(){
         .then(function(r) { return r.json(); })
         .then(function(data) {
             if (data.photo_url) {
-                var wrap = input.closest('.fcp-avatar-wrap');
+                var newImgHtml = '<img src="' + data.photo_url + '" alt="Photo" class="fcp-avatar-img" style="width:84px;height:84px;border-radius:50%;object-fit:cover;border:4px solid #fff;box-shadow:0 6px 16px rgba(0,0,0,.08);">';
+                // Mise à jour dans le modal (wrap sauvegardé avant détachement)
                 if (wrap) {
                     var img = wrap.querySelector('img.fcp-avatar-img');
                     var placeholder = wrap.querySelector('.fcp-avatar-placeholder');
-                    if (img) {
-                        img.src = data.photo_url;
-                    } else if (placeholder) {
-                        placeholder.outerHTML = '<img src="' + data.photo_url + '" alt="Photo" class="fcp-avatar-img" style="width:84px;height:84px;border-radius:50%;object-fit:cover;border:4px solid #fff;box-shadow:0 6px 16px rgba(0,0,0,.08);">';
+                    if (img) { img.src = data.photo_url; }
+                    else if (placeholder) { placeholder.outerHTML = newImgHtml; }
+                }
+                // Mise à jour du .h-data source (pour que fermer/rouvrir le modal affiche la nouvelle photo)
+                var hData = document.querySelector('.h-data[data-compte-id="' + compteId + '"]');
+                if (hData) {
+                    var hWrap = hData.querySelector('.fcp-avatar-wrap');
+                    if (hWrap) {
+                        var hImg = hWrap.querySelector('img.fcp-avatar-img');
+                        var hPh = hWrap.querySelector('.fcp-avatar-placeholder');
+                        if (hImg) { hImg.src = data.photo_url; }
+                        else if (hPh) { hPh.outerHTML = newImgHtml; }
                     }
                 }
                 showFcpModal('Photo mise à jour avec succès !', 'success');
@@ -1996,7 +2008,7 @@ window.addEventListener('DOMContentLoaded', function(){
             }
         })
         .catch(function() { showFcpModal('Erreur réseau.', 'error'); })
-        .finally(function() { photoBtn.innerHTML = origContent; input.value = ''; });
+        .finally(function() { photoBtn.innerHTML = origContent; });
     });
 
     // ---- Alert SMS + Notification toggles ----
