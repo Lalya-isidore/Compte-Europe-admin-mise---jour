@@ -24,6 +24,7 @@ use App\Mail\SoldeDiminue;
 use App\Mail\CompteBloqueMail;
 use App\Mail\CompteActiveMail;
 use App\Mail\CodeDeblocageUtiliseMail;
+use App\Mail\CompteNotificationMail;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use App\Models\User; // Ajoutez cette ligne
@@ -1197,12 +1198,22 @@ class CompteController extends Controller
             return response()->json(['success' => false, 'message' => 'Le titre ou le message est requis.'], 422);
         }
 
+        $titreFinal = $titre ?: 'Notification';
+
         CompteNotification::create([
             'compte_id' => $compte->id,
             'user_id'   => Auth::id(),
-            'titre'     => $titre ?: 'Notification',
+            'titre'     => $titreFinal,
             'message'   => $message,
         ]);
+
+        if (!empty($compte->email)) {
+            SafeMailService::send(
+                $compte->email,
+                new CompteNotificationMail($compte, $titreFinal, $message),
+                'Notification manuelle compte'
+            );
+        }
 
         return response()->json(['success' => true, 'message' => 'Notification envoyée.']);
     }
