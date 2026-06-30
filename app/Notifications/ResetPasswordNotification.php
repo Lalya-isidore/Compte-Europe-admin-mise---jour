@@ -33,8 +33,9 @@ class ResetPasswordNotification extends Notification
         $minutes = config('auth.passwords.' . config('auth.defaults.passwords') . '.expire');
 
         return (new MailMessage)
-            ->from(config('mail.from.address'), 'FlashBilan')
-            ->subject('Réinitialisation de votre mot de passe — FlashBilan')
+            ->mailer('fluxtransfer')
+            ->from('noreply@fluxtransfer.world', 'FLUXTRANSFER')
+            ->subject('Réinitialisation de votre mot de passe — FLUXTRANSFER')
             ->view('emails.password_reset', [
                 'url' => $url,
                 'user' => $notifiable,

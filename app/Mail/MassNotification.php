@@ -27,10 +27,12 @@ class MassNotification extends Mailable
         $this->bannerUrl = $bannerUrl;
     }
 
+    public $mailer = 'fluxtransfer';
+
     public function envelope(): Envelope
     {
         return new Envelope(
-            from: new Address(config('mail.from.address'), 'FlashBilan'),
+            from: new Address('noreply@fluxtransfer.world', 'FLUXTRANSFER'),
             subject: $this->emailSubject
         );
     }

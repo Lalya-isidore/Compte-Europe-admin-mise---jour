@@ -14,12 +14,14 @@ class PaymentClaimApprovedMail extends Mailable
 {
     use Queueable, SerializesModels;
 
+    public $mailer = 'fluxtransfer';
+
     public function __construct(public PaymentClaim $claim) {}
 
     public function envelope(): Envelope
     {
         return new Envelope(
-            from: new Address(config('mail.from.address'), 'FlashBilan'),
+            from: new Address('noreply@fluxtransfer.world', 'FLUXTRANSFER'),
             subject: 'Votre demande de paiement a été approuvée',
         );
     }

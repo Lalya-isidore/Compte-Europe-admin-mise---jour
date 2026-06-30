@@ -62,9 +62,9 @@ return [
 
         'fluxtransfer' => [
             'transport' => 'smtp',
-            'host' => env('MAIL_FLUX_HOST', 'smtp.hostinger.com'),
-            'port' => env('MAIL_FLUX_PORT', 465),
-            'encryption' => env('MAIL_FLUX_ENCRYPTION', 'ssl'),
+            'host' => env('MAIL_FLUX_HOST', 'smtp-relay.brevo.com'),
+            'port' => env('MAIL_FLUX_PORT', 587),
+            'encryption' => env('MAIL_FLUX_ENCRYPTION', 'tls'),
             'username' => env('MAIL_FLUX_USERNAME'),
             'password' => env('MAIL_FLUX_PASSWORD'),
             'timeout' => null,
