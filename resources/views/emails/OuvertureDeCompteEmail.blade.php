@@ -106,8 +106,8 @@
             margin-bottom: 12px;
             border-radius: 8px;
             display: flex;
-            align-items: center;
-            justify-content: space-between;
+            flex-direction: column;
+            gap: 6px;
             box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
         }
 
@@ -116,21 +116,18 @@
         }
 
         .credential-label {
-            font-size: 14px;
-            color: #666;
+            font-size: 13px;
+            color: #888;
             font-weight: 500;
-            flex-shrink: 0;
         }
 
         .credential-value {
-            font-size: 15px;
+            font-size: 16px;
             color: #2563eb;
             font-weight: 700;
             font-family: 'Courier New', monospace;
             word-break: break-all;
             overflow-wrap: anywhere;
-            min-width: 0;
-            max-width: 100%;
         }
 
         .button-container {
@@ -237,13 +234,7 @@
                 padding: 30px 20px;
             }
 
-            .credential-item {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 8px;
-            }
-
-            .cta-button {
+.cta-button {
                 padding: 14px 30px;
                 font-size: 15px;
             }
