@@ -9,7 +9,7 @@ return [
   'label_email' => '📧 Email:',
   'label_password' => 'Kata Sandi',
   'label_initial_balance' => '💰 Saldo Awal:',
-  'cta_login' => 'Akses ruang saya',
+  'cta_login' => 'Akses akun saya',
   'info_access' => 'Anda sekarang dapat mengakses akun dan menggunakan layanan kami.',
   'support_contact' => 'hubungi dukungan kami',
   'footer_thanks' => 'Terima kasih telah menggunakan TRANSFERFLUX!',

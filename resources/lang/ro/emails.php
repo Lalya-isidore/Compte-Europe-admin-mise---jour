@@ -9,7 +9,7 @@ return [
   'label_email' => '📧 Email:',
   'label_password' => 'Parolă',
   'label_initial_balance' => '💰 Sold inițial:',
-  'cta_login' => 'Accesați spațiul meu',
+  'cta_login' => 'Accesați contul meu',
   'info_access' => 'Puteți acum să accesați contul și să beneficiați de serviciile noastre.',
   'support_contact' => 'contactați suportul nostru',
   'footer_thanks' => 'Mulțumim că folosiți TRANSFERFLUX!',

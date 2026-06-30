@@ -9,7 +9,7 @@ return [
   'label_email' => 'Email [MT]',
   'label_password' => 'Mot de passe [MT]',
   'label_initial_balance' => '💰 Solde initial: [MT]',
-  'cta_login' => 'എന്റെ സ്ഥലത്തേക്ക് ആക്സസ്',
+  'cta_login' => 'എന്റെ അക്കൗണ്ടിലേക്ക് ആക്സസ്',
   'info_access' => 'Vous pouvez maintenant accéder à votre compte et profiter de nos services. [MT]',
   'support_contact' => 'contactez notre support [MT]',
   'footer_thanks' => 'Merci d\\\'utiliser TRANSFERFLUX ! [MT]',
