@@ -1311,6 +1311,15 @@
     </div>
 </div>
 
+{{-- ============ TOAST ALERTE (flottant, toujours au-dessus des modals) ============ --}}
+<div id="fcp-toast" style="display:none;position:fixed;top:20px;left:50%;transform:translateX(-50%);z-index:99999;min-width:260px;max-width:340px;border-radius:14px;overflow:hidden;box-shadow:0 8px 32px rgba(0,0,0,.18);pointer-events:auto;">
+    <div id="fcp-toast-header" style="background:#198754;padding:10px 16px;display:flex;align-items:center;justify-content:space-between;">
+        <span id="fcp-toast-title" style="color:#fff;font-weight:700;font-size:.92rem;display:flex;align-items:center;gap:7px;"></span>
+        <button onclick="document.getElementById('fcp-toast').style.display='none'" style="background:none;border:none;color:#fff;font-size:1.2rem;cursor:pointer;line-height:1;padding:0 2px;">&times;</button>
+    </div>
+    <div id="fcp-toast-body" style="background:#fff;padding:18px 20px;text-align:center;font-size:.9rem;color:#333;line-height:1.6;"></div>
+</div>
+
 {{-- ============ MODAL ALERTE ============ --}}
 <div class="modal fade" id="fcp-modal" tabindex="-1" aria-hidden="true" style="z-index:1090;">
     <div class="modal-dialog modal-dialog-centered" style="max-width:300px;margin-left:auto;margin-right:auto;">
@@ -2036,16 +2045,34 @@ window.addEventListener('DOMContentLoaded', function(){
     if (telEl) telEl.addEventListener('blur', function(){ this.value = this.value.replace(/[ )(\-]/g, ''); });
 
     // ---- Utility: showFcpModal ----
+    var infoIcon = '<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>';
+    var alertIcon = '<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>';
+
     window.showFcpModal = function(content, status) {
+        status = status || 'error';
+        var dataBoxOpen = fcpDataBoxEl && fcpDataBoxEl.classList.contains('show');
+
+        if (dataBoxOpen) {
+            // Utiliser le toast fixe pour passer au-dessus du modal détails
+            var toast = document.getElementById('fcp-toast');
+            var toastHeader = document.getElementById('fcp-toast-header');
+            var toastTitle = document.getElementById('fcp-toast-title');
+            var toastBody = document.getElementById('fcp-toast-body');
+            toastHeader.style.background = status === 'success' ? '#198754' : '#e04f5f';
+            toastTitle.innerHTML = (status === 'success' ? infoIcon + ' Info' : alertIcon + ' Alert');
+            toastBody.innerHTML = content;
+            toast.style.display = 'block';
+            clearTimeout(window._fcpToastTimer);
+            window._fcpToastTimer = setTimeout(function() { toast.style.display = 'none'; }, 4000);
+            return;
+        }
+
         if (!fcpModal) {
             alert((status === 'success' ? 'INFO: ' : 'ERREUR: ') + content.replace(/<[^>]*>/g, ''));
             return;
         }
-        status = status || 'error';
         var header = document.querySelector('#fcp-modal .modal-header');
         var title = document.querySelector('#fcp-modal .modal-title');
-        var infoIcon = '<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>';
-        var alertIcon = '<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>';
         if (status === 'success') {
             header.style.background = '#198754';
             title.innerHTML = infoIcon + ' Info';
