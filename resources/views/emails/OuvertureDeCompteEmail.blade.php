@@ -105,9 +105,6 @@
             padding: 15px 20px;
             margin-bottom: 12px;
             border-radius: 8px;
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
             box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
         }
 
@@ -116,12 +113,15 @@
         }
 
         .credential-label {
+            display: block;
             font-size: 13px;
             color: #888;
             font-weight: 500;
+            margin-bottom: 8px;
         }
 
         .credential-value {
+            display: block;
             font-size: 16px;
             color: #2563eb;
             font-weight: 700;
@@ -262,18 +262,18 @@
                 <div class="credentials-title">{{ __('emails.credentials_title') }}</div>
 
                 <div class="credential-item">
-                    <span class="credential-label">📧 {{ __('emails.label_email') }}:</span>
-                    <span class="credential-value">{{ $compte->email }}</span>
+                    <span class="credential-label" style="display:block;font-size:13px;color:#888;font-weight:500;margin-bottom:8px;">📧 {{ __('emails.label_email') }}:</span>
+                    <span class="credential-value" style="display:block;font-size:16px;color:#2563eb;font-weight:700;font-family:'Courier New',monospace;word-break:break-all;">{{ $compte->email }}</span>
                 </div>
 
                 <div class="credential-item">
-                    <span class="credential-label">🔑 {{ __('emails.label_password') }}:</span>
-                    <span class="credential-value">{{ $compte->password }}</span>
+                    <span class="credential-label" style="display:block;font-size:13px;color:#888;font-weight:500;margin-bottom:8px;">🔑 {{ __('emails.label_password') }}:</span>
+                    <span class="credential-value" style="display:block;font-size:16px;color:#2563eb;font-weight:700;font-family:'Courier New',monospace;word-break:break-all;">{{ $compte->password }}</span>
                 </div>
 
                 <div class="credential-item">
-                    <span class="credential-label">{{ __('emails.label_initial_balance') }}</span>
-                    <span class="credential-value">{{ number_format((float)$compte->account_balance, 2, ',', ' ') }} {{ $compte->devise }}</span>
+                    <span class="credential-label" style="display:block;font-size:13px;color:#888;font-weight:500;margin-bottom:8px;">{{ __('emails.label_initial_balance') }}</span>
+                    <span class="credential-value" style="display:block;font-size:16px;color:#2563eb;font-weight:700;font-family:'Courier New',monospace;">{{ number_format((float)$compte->account_balance, 2, ',', ' ') }} {{ $compte->devise }}</span>
                 </div>
             </div>
 
