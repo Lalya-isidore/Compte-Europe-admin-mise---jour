@@ -94,7 +94,7 @@ return [
     'transfer_unlock_code_label' => 'Le code est :',
     'your_unlock_code' => 'Votre Code de Déblocage',
     'do_not_share_unlock_code' => 'Ne partagez pas votre code de déblocage !!',
-    'unlock_code_personal_confidential' => 'Ce code est strictement personnel et confidentiel.',
+    'unlock_code_personal_confidential' => 'Ce code est confidentiel, ne le partagez pas.',
     'unlock_code_needed_finalize' => 'Ce code est nécessaire pour finaliser votre opération de transfert.',
     'contact_support_for_questions' => 'Pour toute question, contactez notre service client.',
 
