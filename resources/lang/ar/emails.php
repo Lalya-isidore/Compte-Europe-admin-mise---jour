@@ -9,7 +9,7 @@ return [
   'label_email' => '📧 البريد الإلكتروني:',
   'label_password' => 'كلمة المرور',
   'label_initial_balance' => '💰 الرصيد الابتدائي:',
-  'cta_login' => 'سجّل الدخول إلى حسابك',
+  'cta_login' => 'الوصول إلى مساحتي',
   'info_access' => 'يمكنك الآن الوصول إلى حسابك والاستفادة من خدماتنا.',
   'support_contact' => 'اتصل بدعمنا',
   'footer_thanks' => 'شكراً لاستخدامك TRANSFERFLUX !',

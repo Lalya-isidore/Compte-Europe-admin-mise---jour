@@ -9,7 +9,7 @@ return [
   'label_email' => '📧 E‑post:',
   'label_password' => '🔑 Lösenord:',
   'label_initial_balance' => '💰 Startsaldo:',
-  'cta_login' => 'Logga in på ditt konto',
+  'cta_login' => 'Tillgång till mitt utrymme',
   'info_access' => 'Du kan nu få åtkomst till ditt konto och använda våra tjänster.',
   'support_contact' => 'kontakta vår support',
   'footer_thanks' => 'Tack för att du använder TRANSFERFLUX !',

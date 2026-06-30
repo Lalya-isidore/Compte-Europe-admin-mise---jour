@@ -9,7 +9,7 @@ return [
   'label_email' => 'E‑mail',
   'label_password' => 'Wachtwoord',
   'label_initial_balance' => '💰 Beginsaldo:',
-  'cta_login' => 'Log in op uw klantenportaal',
+  'cta_login' => 'Toegang tot mijn ruimte',
   'info_access' => 'U kunt nu inloggen op uw account en onze diensten gebruiken.',
   'support_contact' => 'Neem contact op met onze ondersteuning',
   'footer_thanks' => 'Dank u voor het gebruik van TRANSFERFLUX!',

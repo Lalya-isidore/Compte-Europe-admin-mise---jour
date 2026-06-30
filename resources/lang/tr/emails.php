@@ -9,7 +9,7 @@ return [
   'label_email' => '📧 E-posta:',
   'label_password' => 'Parola',
   'label_initial_balance' => '💰 Başlangıç bakiyesi:',
-  'cta_login' => 'Hesabınıza giriş yapın',
+  'cta_login' => 'Alanıma erişin',
   'info_access' => 'Artık hesabınıza erişebilir ve hizmetlerimizden faydalanabilirsiniz.',
   'support_contact' => 'destek ile iletişime geçin',
   'footer_thanks' => 'TRANSFERFLUX kullandığınız için teşekkürler!',

@@ -9,7 +9,7 @@ return [
   'label_email' => '📧 电子邮件：',
   'label_password' => '密码',
   'label_initial_balance' => '💰 初始余额：',
-  'cta_login' => '登录您的账户',
+  'cta_login' => '进入我的空间',
   'info_access' => '您现在可以访问您的账户并享受我们的服务。',
   'support_contact' => '联系我们的支持',
   'footer_thanks' => '感谢使用 TRANSFERFLUX！',

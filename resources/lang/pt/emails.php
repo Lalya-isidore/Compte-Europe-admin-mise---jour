@@ -9,7 +9,7 @@ return [
   'label_email' => 'E-mail',
   'label_password' => 'Senha',
   'label_initial_balance' => '💰 Saldo inicial:',
-  'cta_login' => 'Acesse sua área de cliente',
+  'cta_login' => 'Aceder ao meu espaço',
   'info_access' => 'Você já pode acessar sua conta e aproveitar nossos serviços.',
   'support_contact' => 'contate nosso suporte',
   'footer_thanks' => 'Obrigado por usar TRANSFERFLUX!',
