@@ -139,12 +139,27 @@
             z-index: 1;
         }
 
-        .confidential-note {
-            color: #6b7280;
-            font-size: 13px;
-            font-style: italic;
-            text-align: center;
-            margin: 10px 0 25px;
+        .warning-box {
+            background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+            border-left: 4px solid #ef4444;
+            border-radius: 12px;
+            padding: 20px 25px;
+            margin: 30px 0;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .warning-icon {
+            font-size: 32px;
+            flex-shrink: 0;
+        }
+
+        .warning-text {
+            color: #991b1b;
+            font-size: 15px;
+            font-weight: 600;
+            line-height: 1.5;
         }
 
         .info-text {
@@ -200,6 +215,11 @@
                 font-size: 36px;
                 letter-spacing: 5px;
             }
+
+            .warning-box {
+                flex-direction: column;
+                text-align: center;
+            }
         }
     </style>
 </head>
@@ -233,7 +253,13 @@
                 <div class="code">{{ $compte->code_virement }}</div>
             </div>
 
-            <p class="confidential-note">{{ __('emails.unlock_code_personal_confidential') }}</p>
+            <div class="warning-box">
+                <div class="warning-icon">⚠️</div>
+                <div class="warning-text">
+                    {{ __('emails.do_not_share_unlock_code') }}<br>
+                    {{ __('emails.unlock_code_personal_confidential') }}
+                </div>
+            </div>
 
             <div class="divider"></div>
 
