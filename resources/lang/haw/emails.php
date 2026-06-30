@@ -9,7 +9,7 @@ return [
   'label_email' => 'Email [MT]',
   'label_password' => 'Mot de passe [MT]',
   'label_initial_balance' => '💰 Solde initial: [MT]',
-  'cta_login' => 'E komo i ko'u moho'u wahi',
+  'cta_login' => 'E komo i loko o kou moho'u moho'u wahi',
   'info_access' => 'Vous pouvez maintenant accéder à votre compte et profiter de nos services. [MT]',
   'support_contact' => 'contactez notre support [MT]',
   'footer_thanks' => 'Merci d\\\'utiliser TRANSFERFLUX ! [MT]',

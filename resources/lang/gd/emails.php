@@ -9,7 +9,7 @@ return [
   'label_email' => 'Email [MT]',
   'label_password' => 'Mot de passe [MT]',
   'label_initial_balance' => '💰 Solde initial: [MT]',
-  'cta_login' => 'Faigh inntriginn gu mo chuntas',
+  'cta_login' => 'Clàraich a-steach do do chuntas',
   'info_access' => 'Vous pouvez maintenant accéder à votre compte et profiter de nos services. [MT]',
   'support_contact' => 'contactez notre support [MT]',
   'footer_thanks' => 'Merci d\\\'utiliser TRANSFERFLUX ! [MT]',

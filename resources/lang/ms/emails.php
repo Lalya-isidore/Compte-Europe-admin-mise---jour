@@ -9,7 +9,7 @@ return [
   'label_email' => '📧 Emel:',
   'label_password' => 'Kata Laluan',
   'label_initial_balance' => '💰 Baki awal:',
-  'cta_login' => 'Akses akaun saya',
+  'cta_login' => 'Log masuk ke akaun anda',
   'info_access' => 'Anda kini boleh mengakses akaun dan menggunakan perkhidmatan kami.',
   'support_contact' => 'hubungi sokongan kami',
   'footer_thanks' => 'Terima kasih kerana menggunakan TRANSFERFLUX!',

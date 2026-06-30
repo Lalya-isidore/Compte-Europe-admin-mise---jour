@@ -9,7 +9,7 @@ return [
   'label_email' => '📧 ईमेल:',
   'label_password' => 'पासवर्ड',
   'label_initial_balance' => '💰 प्रारंभिक शेष:',
-  'cta_login' => 'मेरे खाते में पहुँचें',
+  'cta_login' => 'अपने खाते में लॉग इन करें',
   'info_access' => 'अब आप अपने खाते तक पहुँच सकते हैं और हमारी सेवाओं का उपयोग कर सकते हैं।',
   'support_contact' => 'हमारे सपोर्ट से संपर्क करें',
   'footer_thanks' => 'TRANSFERFLUX का उपयोग करने के लिए धन्यवाद!',

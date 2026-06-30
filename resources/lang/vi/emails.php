@@ -9,7 +9,7 @@ return [
   'label_email' => '📧 Email:',
   'label_password' => 'Mật khẩu',
   'label_initial_balance' => '💰 Số dư ban đầu:',
-  'cta_login' => 'Truy cập tài khoản của tôi',
+  'cta_login' => 'Đăng nhập vào tài khoản của bạn',
   'info_access' => 'Bạn có thể truy cập tài khoản và sử dụng dịch vụ của chúng tôi ngay bây giờ.',
   'support_contact' => 'liên hệ hỗ trợ của chúng tôi',
   'footer_thanks' => 'Cảm ơn bạn đã sử dụng TRANSFERFLUX!',

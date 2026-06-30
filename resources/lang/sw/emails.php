@@ -9,7 +9,7 @@ return [
   'label_email' => '📧 Barua pepe:',
   'label_password' => 'Nenosiri',
   'label_initial_balance' => '💰 Salio la awali:',
-  'cta_login' => 'Pata akaunti yangu',
+  'cta_login' => 'Ingia kwenye akaunti yako',
   'info_access' => 'Sasa unaweza kufikia akaunti yako na kutumia huduma zetu.',
   'support_contact' => 'wasiliana na msaada wetu',
   'footer_thanks' => 'Asante kwa kutumia TRANSFERFLUX!',

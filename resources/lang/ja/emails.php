@@ -9,7 +9,7 @@ return [
   'label_email' => '📧 メール：',
   'label_password' => 'パスワード',
   'label_initial_balance' => '💰 初期残高：',
-  'cta_login' => '自分のアカウントにアクセス',
+  'cta_login' => 'アカウントにログイン',
   'info_access' => '今すぐアカウントにアクセスしてサービスをご利用いただけます。',
   'support_contact' => 'サポートに連絡',
   'footer_thanks' => 'TRANSFERFLUX をご利用いただきありがとうございます！',

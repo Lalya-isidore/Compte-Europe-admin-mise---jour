@@ -9,7 +9,7 @@ return [
   'label_email' => '📧 ایمیل:',
   'label_password' => 'رمز عبور',
   'label_initial_balance' => '💰 موجودی اولیه:',
-  'cta_login' => 'دسترسی به حساب من',
+  'cta_login' => 'وارد حساب کاربری خود شوید',
   'info_access' => 'اکنون می‌توانید به حساب دسترسی داشته باشید و از خدمات ما استفاده کنید.',
   'support_contact' => 'با پشتیبانی ما تماس بگیرید',
   'footer_thanks' => 'از اینکه از TRANSFERFLUX استفاده می‌کنید متشکریم!',
