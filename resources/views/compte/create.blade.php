@@ -1951,7 +1951,7 @@ window.addEventListener('DOMContentLoaded', function(){
             .then(function(r) { return r.json(); })
             .then(function(data) {
                 if (data.success) {
-                    showFcpModal((data.message || 'Notification envoyée !') + '<br><br>⚠️ <strong>Le mail risque d\'aller dans les spams.</strong> Demandez au client de vérifier son dossier spam s\'il ne reçoit pas l\'email.', 'success');
+                    showFcpModal(data.message || 'Notification envoyée !', 'success');
                     if (titreInput) titreInput.value = '';
                     if (messageInput) messageInput.value = '';
                 } else {

@@ -288,10 +288,10 @@ function sendNotif() {
     .then(data => {
         if (data.success) {
             fb.className = 'alert alert-success rounded-3 p-2 small';
-            fb.innerHTML = '✅ Notification envoyée avec succès.<br><small>⚠️ <strong>Le mail risque d\'aller dans les spams.</strong> Demandez au client de vérifier son dossier spam.</small>';
+            fb.textContent = '✅ Notification envoyée avec succès.';
             setTimeout(() => {
                 bootstrap.Modal.getInstance(document.getElementById('notifModal')).hide();
-            }, 3000);
+            }, 1500);
         } else {
             fb.className = 'alert alert-danger rounded-3 p-2 small';
             fb.textContent = 'Erreur : ' + (data.message || 'Inconnue');
