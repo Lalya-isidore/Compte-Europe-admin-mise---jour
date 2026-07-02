@@ -15,7 +15,7 @@ class CompteCreeMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $mailer = 'fluxtransfer';
+    public $mailer = 'gmail';
 
     public $details;
     public $compte; // Ajoutez cette ligne
@@ -37,7 +37,7 @@ class CompteCreeMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            from: new Address('noreply@flashbilan.fr', 'FlashBilan'),
+            from: new Address('notifications.contact@gmail.com', 'FLUXTRANSFER'),
             subject: __('emails.compte_created_subject'),
         );
     }
