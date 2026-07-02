@@ -2286,9 +2286,9 @@ window.addEventListener('DOMContentLoaded', function(){
                 var fd = new FormData(); fd.append('_token', csrfToken); fd.append('_method', 'PUT'); fd.append('account_status', v);
                 fetch(updateStatusBase + '/' + id, { method: 'POST', body: fd, headers: {'X-Requested-With': 'XMLHttpRequest'} })
                 .then(r => r.json()).then(d => {
+                    if (d.status === 'success') _fcpNeedsReload = true;
                     var spamNote = '<br><br>⚠️ <strong>Le mail risque d\'aller dans les spams.</strong> Demandez au client de vérifier son dossier spam s\'il ne reçoit pas l\'email.';
                     showFcpModal(d.status === 'success' ? d.message + spamNote : d.message, d.status);
-                    if (d.status === 'success') setTimeout(() => location.reload(), 1500);
                 })
                 .catch(err => alert("Erreur statut."))
                 .finally(() => fcpHideLoader());
