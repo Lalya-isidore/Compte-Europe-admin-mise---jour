@@ -2063,7 +2063,6 @@ window.addEventListener('DOMContentLoaded', function(){
             toastBody.innerHTML = content;
             toast.style.display = 'block';
             clearTimeout(window._fcpToastTimer);
-            window._fcpToastTimer = setTimeout(function() { toast.style.display = 'none'; }, 4000);
             return;
         }
 
