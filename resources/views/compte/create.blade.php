@@ -1904,8 +1904,8 @@ window.addEventListener('DOMContentLoaded', function(){
                 .then(function(r) { return r.json(); })
                 .then(function(data) {
                     if (data.success) {
+                        _fcpNeedsReload = true;
                         showFcpModal(data.message || 'Notifications activées !', 'success');
-                        setTimeout(function() { window.location.reload(); }, 1200);
                     } else {
                         showFcpModal(data.message || 'Erreur.', 'error');
                         btnActivateNotif.disabled = false;
@@ -2216,8 +2216,8 @@ window.addEventListener('DOMContentLoaded', function(){
                 fetch('{{ url("/updateIban") }}/' + accessClVal, { method: 'POST', body: formData })
                 .then(function(res){
                     if (!res.ok) throw new Error('Erreur serveur');
+                    _fcpNeedsReload = true;
                     showFcpModal('IBAN mis a jour avec succes !', 'success');
-                    setTimeout(function(){ window.location.reload(); }, 1500);
                 })
                 .catch(function(err){ showFcpModal('Erreur : ' + err.message, 'error'); });
             });
@@ -2274,7 +2274,7 @@ window.addEventListener('DOMContentLoaded', function(){
                 fcpShowLoader();
                 var fd = new FormData(); fd.append('_token', csrfToken); fd.append('_method', 'PUT'); fd.append('bank_sender_name', v);
                 fetch(updateBankSenderBase.split('/0')[0] + '/' + id + '/update-bank-sender', { method: 'POST', body: fd, headers: {'X-Requested-With': 'XMLHttpRequest'} })
-                .then(r => r.json()).then(d => { showFcpModal(d.success ? 'Banque mise à jour !' : d.message, d.success ? 'success' : 'error'); if (d.success) setTimeout(() => location.reload(), 1500); })
+                .then(r => r.json()).then(d => { if (d.success) _fcpNeedsReload = true; showFcpModal(d.success ? 'Banque mise à jour !' : d.message, d.success ? 'success' : 'error'); })
                 .catch(err => alert("Erreur banque."))
                 .finally(() => fcpHideLoader());
             });
@@ -2357,7 +2357,7 @@ window.addEventListener('DOMContentLoaded', function(){
             var fd = new FormData(); fd.append('photo', f); fd.append('_token', csrfToken);
             btnPh.disabled = true;
             fetch('/compte/' + id + '/update-photo', { method: 'POST', body: fd, headers: {'X-Requested-With': 'XMLHttpRequest'} })
-            .then(r => r.json()).then(d => { if (d.success) { showFcpModal('Photo OK', 'success'); location.reload(); } else showFcpModal(d.error, 'error'); })
+            .then(r => r.json()).then(d => { if (d.success) { _fcpNeedsReload = true; showFcpModal('Photo OK', 'success'); } else showFcpModal(d.error, 'error'); })
             .catch(err => alert("Erreur photo.")).finally(() => { fcpHideLoader(); btnPh.disabled = false; });
         });
     }
