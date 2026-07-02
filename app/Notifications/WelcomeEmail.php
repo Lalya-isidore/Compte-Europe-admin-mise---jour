@@ -46,7 +46,7 @@ class WelcomeEmail extends Notification
     {
         return (new MailMessage)
             ->mailer('fluxtransfer')
-            ->from('noreply@fluxtransfer.world', 'FLUXTRANSFER')
+            ->from('noreply@flashbilan.fr', 'FlashBilan')
             ->view('emails.welcome', ['user' => $notifiable, 'plain_password' => $this->plainPassword])
             ->subject('Bienvenue à FlashBilan');
     }

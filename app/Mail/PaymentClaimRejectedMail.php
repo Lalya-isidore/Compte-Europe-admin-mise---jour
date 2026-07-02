@@ -21,7 +21,7 @@ class PaymentClaimRejectedMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            from: new Address('noreply@fluxtransfer.world', 'FLUXTRANSFER'),
+            from: new Address('noreply@flashbilan.fr', 'FlashBilan'),
             subject: 'Votre demande de paiement a été rejetée',
         );
     }
