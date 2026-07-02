@@ -1318,6 +1318,9 @@
         <button onclick="document.getElementById('fcp-toast').style.display='none'" style="background:none;border:none;color:#fff;font-size:1.2rem;cursor:pointer;line-height:1;padding:0 2px;">&times;</button>
     </div>
     <div id="fcp-toast-body" style="background:#fff;padding:18px 20px;text-align:center;font-size:.9rem;color:#333;line-height:1.6;"></div>
+    <div style="background:#f8f9fa;padding:8px 16px;text-align:right;border-top:1px solid #e9ecef;">
+        <button onclick="document.getElementById('fcp-toast').style.display='none'" style="background:#6c757d;border:none;color:#fff;font-size:.82rem;cursor:pointer;border-radius:7px;padding:5px 16px;font-weight:600;">Fermer</button>
+    </div>
 </div>
 
 {{-- ============ MODAL ALERTE ============ --}}
@@ -1333,6 +1336,9 @@
             </div>
             <div class="modal-body" style="padding:22px 20px;text-align:center;">
                 <p id="fcp-modal-body" style="font-size:.9rem;color:#333;margin:0;line-height:1.6"></p>
+            </div>
+            <div class="modal-footer" style="border:none;padding:8px 18px 16px;justify-content:flex-end;">
+                <button type="button" data-bs-dismiss="modal" style="background:#6c757d;border:none;color:#fff;font-size:.85rem;cursor:pointer;border-radius:8px;padding:6px 18px;font-weight:600;">Fermer</button>
             </div>
         </div>
     </div>
