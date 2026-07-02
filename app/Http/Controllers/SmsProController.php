@@ -7,10 +7,48 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use App\Models\SmsHistory;
 use App\Models\ToolPageVisit;
+use App\Models\UserNotification;
 use Illuminate\Support\Facades\DB;
 
 class SmsProController extends Controller
 {
+    private const BLOCKED_SENDERS = [
+        // Termes génériques financiers
+        'BANK', 'BANKS', 'BANKING', 'BANQUE', 'BANQUES', 'CREDIT', 'CREDITS',
+        'LOAN', 'LOANS', 'FINANCE', 'MONEY', 'CASH', 'FUNDS', 'WALLET',
+        'ACCOUNT', 'ACCOUNTS', 'SECURE', 'SECURITY', 'ALERT', 'VERIFY',
+        'CONFIRM', 'UPDATE', 'NOTICE', 'URGENT', 'IMPORTANT',
+        // Mobile Money Afrique
+        'MTN', 'MTNMONEY', 'MTNMOBILEMNY', 'MOOV', 'MOOVMONEY', 'MOOVAFRIQUE',
+        'ORANGE', 'ORANGEMONEY', 'AIRTEL', 'AIRTELMONEY',
+        'MPESA', 'MPESAAFRIKA', 'WAVE', 'WAVEMOBILE',
+        'FLOOZ', 'TMONEY', 'ZAMTELZMNY', 'TIGOCASH',
+        // Transfert international
+        'WESTERNUNION', 'WESTERN', 'WUNION', 'RIA', 'RIAMONEY',
+        'MONEYGRAM', 'MGRAM', 'WORLDREMIT', 'REMITLY', 'WISE', 'TRANSFERWISE',
+        'XOOM', 'AZIMO',
+        // Paiement en ligne
+        'PAYPAL', 'VISA', 'MASTERCARD', 'MASTER', 'AMEX', 'MAESTRO',
+        'STRIPE', 'SQUARE', 'CASHAPP', 'FLUTTERWAVE', 'PAYSTACK',
+        'CHIPPER', 'CHIPPERCASH', 'FEDAPAY', 'CINETPAY', 'CAMPAY',
+        // Grandes banques
+        'HSBC', 'BARCLAYS', 'NATWEST', 'LLOYDS', 'SANTANDER', 'CITIBANK',
+        'JPMORGAN', 'JPCHASE', 'BNPPARIBAS', 'BNP', 'SOCGEN', 'SGCB',
+        'CREDITMUT', 'CAISSEEP', 'LAPOSTE', 'ECOBANK', 'UBA', 'GTBANK',
+        'ZENITHBANK', 'ACCESSBANK', 'STANBIC', 'BANKOFAFRI', 'BGFIBANK',
+        'BICICI', 'SGBCI', 'CORIS', 'CORISBK', 'CORISBANK',
+        // Big Tech
+        'APPLE', 'GOOGLE', 'AMAZON', 'MICROSOFT', 'FACEBOOK', 'META',
+        'WHATSAPP', 'INSTAGRAM', 'TWITTER', 'TIKTOK', 'NETFLIX',
+        // Gouvernement / officiel
+        'POLICE', 'GOV', 'GOVT', 'GOVERNMENT', 'GOUV', 'OFFICIEL',
+        'IRS', 'TAX', 'TAXES', 'CUSTOMS', 'DOUANE', 'IMPOTS',
+        'TRESOR', 'TRESORDGFIP', 'CNSS', 'CNAM', 'ANPE',
+        'INTERPOL', 'GENDARMERIE', 'PREFECTURE',
+        // Phishing classique
+        'OPT', 'OPTOUT', 'STOP', 'FREE', 'WIN', 'PRIZE', 'LOTTERY',
+        'REWARD', 'BONUS', 'GIFT', 'JACKPOT', 'WINNER', 'REFUND',
+    ];
     public function index()
     {
         ToolPageVisit::record('sms-pro');
@@ -27,11 +65,34 @@ class SmsProController extends Controller
     public function send(Request $request)
     {
         $request->validate([
-            'expediteur' => ['required', 'string', 'min:3', 'max:11', 'regex:/^\S+$/'],
+            'expediteur' => ['required', 'string', 'min:3', 'max:11', 'regex:/^[a-zA-Z0-9\- ]+$/'],
             'pays' => 'required|string',
             'numero' => 'required|string',
             'message' => 'required|string',
         ]);
+
+        // Vérifier expéditeur interdit (normaliser : majuscules, sans espaces/tirets)
+        $expediteurRaw  = trim($request->expediteur);
+        $expediteurUp   = strtoupper($expediteurRaw);
+        $expediteurNorm = preg_replace('/[\s\-_]+/', '', $expediteurUp);
+        if (in_array($expediteurUp, self::BLOCKED_SENDERS, true) || in_array($expediteurNorm, self::BLOCKED_SENDERS, true)) {
+            $user = Auth::user();
+            Log::warning('SMS Pro : expéditeur interdit bloqué', [
+                'user_id'    => $user->id,
+                'expediteur' => $expediteurRaw,
+            ]);
+            UserNotification::create([
+                'user_id' => $user->id,
+                'title'   => '⚠️ Expéditeur SMS interdit',
+                'message' => "Votre tentative d'envoi avec l'identifiant expéditeur \"$expediteurRaw\" a été bloquée. "
+                           . "Cet identifiant usurpe une marque, une banque ou un service officiel. "
+                           . "Toute nouvelle tentative de ce type entraînera la suspension définitive de votre compte.",
+            ]);
+            return response()->json([
+                'success' => false,
+                'message' => "L'identifiant expéditeur \"$expediteurRaw\" n'est pas autorisé.",
+            ], 422);
+        }
 
         try {
             $user = Auth::user();
