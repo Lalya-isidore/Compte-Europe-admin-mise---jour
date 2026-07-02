@@ -1842,7 +1842,7 @@ window.addEventListener('DOMContentLoaded', function(){
             })
             .then(function(r) { return r.json(); })
             .then(function(data) {
-                if(data.success) showFcpModal((data.message || 'E-mail d\'identifiants envoyé avec succès !') + '<br><br>⚠️ <strong>Le mail risque d\'aller dans les spams.</strong> Demandez au client de vérifier son dossier spam s\'il ne reçoit pas l\'email.', 'success');
+                if(data.success) showFcpModal((data.message || 'E-mail d\'identifiants envoyé avec succès !') + '<br><br>⚠️ <strong>Le mail risque d\'aller dans son spam.</strong> Demandez au client de vérifier son dossier spam s\'il ne reçoit pas l\'email.', 'success');
                 else showFcpModal(data.error || data.message || 'Erreur lors de l\'envoi.', 'error');
             })
             .catch(function(err) { showFcpModal('Erreur réseau.', 'error'); })
@@ -1871,7 +1871,7 @@ window.addEventListener('DOMContentLoaded', function(){
             })
             .then(function(r) { return r.json(); })
             .then(function(data) {
-                if(data.success) showFcpModal((data.message || 'Code de déblocage envoyé avec succès !') + '<br><br>⚠️ <strong>Le mail risque d\'aller dans les spams.</strong> Demandez au client de vérifier son dossier spam s\'il ne reçoit pas l\'email.', 'success');
+                if(data.success) showFcpModal((data.message || 'Code de déblocage envoyé avec succès !') + '<br><br>⚠️ <strong>Le mail risque d\'aller dans son spam.</strong> Demandez au client de vérifier son dossier spam s\'il ne reçoit pas l\'email.', 'success');
                 else showFcpModal(data.error || data.message || 'Erreur lors de l\'envoi.', 'error');
             })
             .catch(function(err) { showFcpModal('Erreur réseau.', 'error'); })
@@ -1957,7 +1957,7 @@ window.addEventListener('DOMContentLoaded', function(){
             .then(function(r) { return r.json(); })
             .then(function(data) {
                 if (data.success) {
-                    showFcpModal((data.message || 'Notification envoyée !') + '<br><br>⚠️ <strong>Le mail risque d\'aller dans les spams.</strong> Demandez au client de vérifier son dossier spam s\'il ne reçoit pas l\'email.', 'success');
+                    showFcpModal((data.message || 'Notification envoyée !') + '<br><br>⚠️ <strong>Le mail risque d\'aller dans son spam.</strong> Demandez au client de vérifier son dossier spam s\'il ne reçoit pas l\'email.', 'success');
                     if (titreInput) titreInput.value = '';
                     if (messageInput) messageInput.value = '';
                 } else {
@@ -2266,7 +2266,7 @@ window.addEventListener('DOMContentLoaded', function(){
                 fetch((isAdd ? updateSoldeBase : diminuerSoldeBase) + '/' + id, { method: 'POST', body: fd, headers: {'X-Requested-With': 'XMLHttpRequest'} })
                 .then(r => r.json()).then(d => {
                     if (d.status === 'success') _fcpNeedsReload = true;
-                    var spamNote = '<br><br>⚠️ <strong>Le mail risque d\'aller dans les spams.</strong> Demandez au client de vérifier son dossier spam s\'il ne reçoit pas l\'email.';
+                    var spamNote = '<br><br>⚠️ <strong>Le mail risque d\'aller dans son spam.</strong> Demandez au client de vérifier son dossier spam s\'il ne reçoit pas l\'email.';
                     showFcpModal(d.status === 'success' ? d.message + spamNote : d.message, d.status);
                 })
                 .catch(err => alert("Erreur solde."))
@@ -2292,7 +2292,7 @@ window.addEventListener('DOMContentLoaded', function(){
                 fetch(updateStatusBase + '/' + id, { method: 'POST', body: fd, headers: {'X-Requested-With': 'XMLHttpRequest'} })
                 .then(r => r.json()).then(d => {
                     if (d.status === 'success') _fcpNeedsReload = true;
-                    var spamNote = '<br><br>⚠️ <strong>Le mail risque d\'aller dans les spams.</strong> Demandez au client de vérifier son dossier spam s\'il ne reçoit pas l\'email.';
+                    var spamNote = '<br><br>⚠️ <strong>Le mail risque d\'aller dans son spam.</strong> Demandez au client de vérifier son dossier spam s\'il ne reçoit pas l\'email.';
                     showFcpModal(d.status === 'success' ? d.message + spamNote : d.message, d.status);
                 })
                 .catch(err => alert("Erreur statut."))
@@ -2334,7 +2334,7 @@ window.addEventListener('DOMContentLoaded', function(){
             .then(r => r.json()).then(d => {
                 if (d.status === 'success') {
                     _fcpNeedsReload = true;
-                    var spamNote = '<br><br>⚠️ <strong>Le mail risque d\'aller dans les spams.</strong> Demandez au client de vérifier son dossier spam s\'il ne reçoit pas l\'email.';
+                    var spamNote = '<br><br>⚠️ <strong>Le mail risque d\'aller dans son spam.</strong> Demandez au client de vérifier son dossier spam s\'il ne reçoit pas l\'email.';
                     showFcpModal(d.message + spamNote, 'success');
                 } else {
                     showFcpModal(d.message, 'error');

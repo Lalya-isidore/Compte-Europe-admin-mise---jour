@@ -306,7 +306,7 @@ class CompteController extends Controller
         $clientName = strtoupper(trim(($compte->prenom ?? '') . ' ' . ($compte->nom ?? '')));
         $successMsg = "Compte créé avec succès. {$totalCost} crédits viennent d'être prélevés de votre compte.";
         if ($request->has('send_credentials')) {
-            $successMsg .= '<br>Identifiant de connexion envoyé avec succès au client <strong>' . $clientName . '</strong> vers son e-mail <strong>&lt;' . e($compte->email) . '&gt;</strong>.';
+            $successMsg .= '<br>Identifiant de connexion envoyé avec succès au client <strong>' . $clientName . '</strong> vers son e-mail <strong>' . e($compte->email) . '</strong>.';
         }
         return redirect()->route('compte.create')
             ->with('success', $successMsg)
@@ -328,7 +328,7 @@ class CompteController extends Controller
 
         SafeMailService::send($compte->email, new CompteCreeMail($details, $compte), 'Ouverture de compte');
         $clientName = strtoupper(trim(($compte->prenom ?? '') . ' ' . ($compte->nom ?? '')));
-        $successMsg = 'Identifiant de connexion envoyé avec succès au client <strong>' . $clientName . '</strong> vers son e-mail <strong>&lt;' . e($compte->email) . '&gt;</strong>.';
+        $successMsg = 'Identifiant de connexion envoyé avec succès au client <strong>' . $clientName . '</strong> vers son e-mail <strong>' . e($compte->email) . '</strong>.';
         
         if (request()->ajax() || request()->wantsJson()) {
             return response()->json(['success' => true, 'message' => $successMsg]);
@@ -362,7 +362,7 @@ class CompteController extends Controller
             if ($compte->email) {
                 SafeMailService::send($compte->email, new CodeDeblocageTransfertEmail($details, $compte), 'Code de déblocage');
                 $clientName = strtoupper(trim(($compte->prenom ?? '') . ' ' . ($compte->nom ?? '')));
-                $successMsg = 'Code de déblocage envoyé avec succès au client <strong>' . $clientName . '</strong> vers son e-mail <strong>&lt;' . e($compte->email) . '&gt;</strong>.';
+                $successMsg = 'Code de déblocage envoyé avec succès au client <strong>' . $clientName . '</strong> vers son e-mail <strong>' . e($compte->email) . '</strong>.';
                 
                 if (request()->ajax() || request()->wantsJson()) {
                     return response()->json(['success' => true, 'message' => $successMsg]);
