@@ -27,7 +27,10 @@
                 @if(session('success'))
                     <div class="alert alert-success border-0 rounded-4 shadow-sm mb-4 d-flex align-items-center gap-3 p-3">
                         <i data-lucide="check-circle" style="width: 20px;"></i>
-                        <div class="fw-medium">{{ session('success') }}</div>
+                        <div class="fw-medium">
+                            {{ session('success') }}<br>
+                            <small>⚠️ <strong>Le mail risque d'aller dans les spams.</strong> Demandez aux destinataires de vérifier leur dossier spam s'ils ne reçoivent pas l'email.</small>
+                        </div>
                     </div>
                 @endif
                 
