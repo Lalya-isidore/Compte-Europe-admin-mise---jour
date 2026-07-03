@@ -20,7 +20,8 @@ class RechargeTransaction extends Model
         'payment_details',
         'response_data',
         'failure_reason',
-        'completed_at'
+        'completed_at',
+        'hidden_by_user'
     ];
 
     protected $casts = [

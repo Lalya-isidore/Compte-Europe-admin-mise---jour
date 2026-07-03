@@ -34,6 +34,7 @@ class RechargeController extends Controller
         $compte = Compte::where('user_id', $user->id)->first();
         
         $transactions = RechargeTransaction::where('user_id', $user->id)
+                                         ->where('hidden_by_user', false)
                                          ->orderBy('created_at', 'desc')
                                          ->paginate(10);
         
@@ -786,7 +787,9 @@ class RechargeController extends Controller
         }
 
         try {
-            $deletedCount = RechargeTransaction::where('user_id', $user->id)->delete();
+            $deletedCount = RechargeTransaction::where('user_id', $user->id)
+                ->where('hidden_by_user', false)
+                ->update(['hidden_by_user' => true]);
 
             $message = $deletedCount > 0
                 ? "Historique des recharges supprimé ({$deletedCount} entrée(s))."
