@@ -148,6 +148,19 @@
             <form id="approveForm" method="POST">
                 @csrf
                 <div class="modal-body px-4 py-2">
+                    {{-- Section conversion GNF → XOF (affichée uniquement si devise = GNF) --}}
+                    <div id="gnfConversionSection" style="display:none;" class="mb-3">
+                        <div class="alert alert-warning small p-2 mb-2">
+                            Montant reçu en GNF : <strong id="gnfAmountDisplay"></strong><br>
+                            Sera converti et versé en <strong>XOF</strong>.
+                        </div>
+                        <label class="form-label small fw-semibold">Taux de conversion GNF → XOF</label>
+                        <div class="input-group">
+                            <span class="input-group-text small">1 GNF =</span>
+                            <input type="number" id="gnfRate" class="form-control" value="0.066" step="0.0001" min="0.0001">
+                            <span class="input-group-text small">XOF</span>
+                        </div>
+                    </div>
                     <div class="mb-3">
                         <label class="form-label small fw-semibold">Montant net à verser <span class="text-danger">*</span></label>
                         <div class="input-group">
@@ -207,14 +220,46 @@ document.addEventListener('DOMContentLoaded', function () {
     var approveUrlBase = '{{ url("/console_/payment-claims") }}';
     var rejectUrlBase  = '{{ url("/console_/payment-claims") }}';
 
+    var _gnfRawAmount = 0;
+
+    function recalcApprove() {
+        var gnfSection = document.getElementById('gnfConversionSection');
+        if (gnfSection.style.display !== 'none') {
+            // Mode GNF : convertir puis appliquer commission
+            var convRate = parseFloat(document.getElementById('gnfRate').value) || 0.066;
+            var xof = Math.round(_gnfRawAmount * convRate);
+            var commission = 20;
+            var net = Math.round(xof * (1 - commission / 100));
+            document.getElementById('approveNetAmount').value = net;
+            document.getElementById('approveAutoCalc').textContent =
+                _gnfRawAmount.toLocaleString('fr-FR') + ' GNF × ' + convRate + ' = '
+                + xof.toLocaleString('fr-FR') + ' XOF − ' + commission + '% = '
+                + net.toLocaleString('fr-FR') + ' XOF. Modifiez si nécessaire.';
+        }
+    }
+
+    document.getElementById('gnfRate').addEventListener('input', recalcApprove);
+
     window.openApprove = function(id, amount, currency) {
         document.getElementById('approveForm').action = approveUrlBase + '/' + id + '/approve';
-        var rate = currency === 'XOF' ? 15 : 20;
-        var net  = Math.round(amount * (1 - rate / 100));
-        document.getElementById('approveNetAmount').value = net;
-        document.getElementById('approveCurrencyLabel').textContent = currency;
-        document.getElementById('approveAutoCalc').textContent =
-            'Calcul auto : ' + amount.toLocaleString('fr-FR') + ' ' + currency + ' − ' + rate + '% = ' + net.toLocaleString('fr-FR') + ' ' + currency + '. Modifiez si nécessaire.';
+        var gnfSection = document.getElementById('gnfConversionSection');
+
+        if (currency === 'GNF') {
+            _gnfRawAmount = amount;
+            gnfSection.style.display = 'block';
+            document.getElementById('gnfAmountDisplay').textContent = amount.toLocaleString('fr-FR') + ' GNF';
+            document.getElementById('approveCurrencyLabel').textContent = 'XOF';
+            recalcApprove();
+        } else {
+            gnfSection.style.display = 'none';
+            _gnfRawAmount = 0;
+            var rate = currency === 'XOF' ? 15 : 20;
+            var net  = Math.round(amount * (1 - rate / 100));
+            document.getElementById('approveNetAmount').value = net;
+            document.getElementById('approveCurrencyLabel').textContent = currency;
+            document.getElementById('approveAutoCalc').textContent =
+                'Calcul auto : ' + amount.toLocaleString('fr-FR') + ' ' + currency + ' − ' + rate + '% = ' + net.toLocaleString('fr-FR') + ' ' + currency + '. Modifiez si nécessaire.';
+        }
         approveModal.show();
     };
     window.openReject = function(id) {
