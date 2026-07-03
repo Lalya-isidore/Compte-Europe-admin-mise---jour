@@ -73,7 +73,7 @@
                     <td>
                         <code class="bg-light rounded px-2 py-1 small">{{ $claim->transaction_id }}</code>
                     </td>
-                    <td class="fw-bold">{{ number_format($claim->amount, 0, ',', ' ') }} FCFA</td>
+                    <td class="fw-bold">{{ number_format($claim->net_amount ?? $claim->amount, 0, ',', ' ') }} FCFA</td>
                     <td>
                         <span class="badge rounded-pill px-2"
                               style="background:{{ $claim->payout_network==='MTN'?'#FFCC00':($claim->payout_network==='MOOV'?'#0070C0':'#E30613') }};color:{{ $claim->payout_network==='MTN'?'#333':'#fff' }}">
