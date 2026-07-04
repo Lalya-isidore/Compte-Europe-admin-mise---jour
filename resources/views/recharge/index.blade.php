@@ -2,13 +2,15 @@
 
 @section('title', 'Recharge de Compte')
 
+@section('page-class', 'pt-0')
+
 @section('breadcrumb')
     <li class="breadcrumb-item"><i class="fas fa-wallet me-1"></i>Recharge</li>
     <li class="breadcrumb-item active"><i class="fas fa-credit-card me-1"></i>Recharge de Compte</li>
 @endsection
 
 @section('content')
-<div class="container-fluid pt-2 pb-4 px-0 px-sm-3">
+<div class="container-fluid pt-0 pb-4 px-0 px-sm-3">
     <div class="row g-0 g-sm-3">
         <div class="col-12">
             <div class="card shadow-lg border-0 rounded-0 rounded-sm-3">
