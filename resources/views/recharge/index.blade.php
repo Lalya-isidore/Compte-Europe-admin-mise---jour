@@ -45,8 +45,7 @@
                             <i class="fas fa-exclamation-triangle" style="color:#c2410c;font-size:1.1rem;"></i>
                         </div>
                         <div style="font-size:.85rem;color:#7c2d12;line-height:1.55;">
-                            <strong>Dépôts non remboursables :</strong> Tout dépôt effectué pour l'achat de crédits est définitif et ne peut faire l'objet d'aucun remboursement, annulation ou rétrofacturation. Les crédits sont valables uniquement sur cette plateforme.
-                        </div>
+                            <strong>Dépôts non remboursables :</strong> Tout dépôt effectué pour l'achat de crédits est définitif et ne peut faire l'objet d'aucun remboursement, annulation ou rétrofacturation.                        </div>
                     </div>
 
                     @if(auth()->user()->parrain_id)
