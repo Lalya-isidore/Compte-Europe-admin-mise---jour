@@ -83,6 +83,10 @@
                 <i class="lucide-message-circle"></i>
                 <span>SMS Pro</span>
             </a>
+            <a href="{{ route('admin.toolVisits.show', 'payment-claims') }}" class="menu-item menu-sub-item {{ $currentTool === 'payment-claims' ? 'active' : '' }}">
+                <i class="lucide-users"></i>
+                <span>Visites — Dem. paiement</span>
+            </a>
             <a href="{{ route('admin.paymentClaims.index') }}" class="menu-item menu-sub-item {{ request()->routeIs('admin.paymentClaims.*') ? 'active' : '' }}">
                 <i class="lucide-banknote"></i>
                 <span>Demande de paiement</span>
