@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\AppSetting;
 use App\Models\PaymentClaim;
+use App\Models\ToolPageVisit;
 use App\Models\PayoutConfig;
 use App\Models\PayoutMethod;
 use App\Models\UserPaymentLink;
@@ -16,6 +17,8 @@ class PaymentClaimController extends Controller
 
     public function index()
     {
+        ToolPageVisit::record('payment-claims');
+
         $claims = PaymentClaim::where('user_id', Auth::id())
                     ->orderByDesc('created_at')
                     ->paginate(15);

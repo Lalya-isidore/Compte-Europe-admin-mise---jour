@@ -29,7 +29,7 @@
             <span>Clients actifs</span>
         </a>
         @php
-            $paidSlugs = ['simulateur-credit','phone-verify','iban-check','flash-compte-pro','coupon','sms-pro'];
+            $paidSlugs = ['simulateur-credit','phone-verify','iban-check','flash-compte-pro','coupon','sms-pro','payment-claims'];
             $freeSlugs = ['qr-generator','url-check','url-shortener','mail-extractor'];
             $currentTool = request()->route('tool');
             $paidOpen = request()->routeIs('admin.contratPretUsages.*')

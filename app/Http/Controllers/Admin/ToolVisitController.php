@@ -20,6 +20,7 @@ class ToolVisitController extends Controller
         'mail-extractor'    => 'Extracteur d\'E-mails',
         'recharge'          => 'Page de Recharge',
         'sms-pro'           => 'SMS Pro',
+        'payment-claims'    => 'Demande de Paiement',
     ];
 
     private const EXCLUDED_EMAILS = [
