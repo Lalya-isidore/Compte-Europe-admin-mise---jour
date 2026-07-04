@@ -143,12 +143,6 @@
             <span>Dépôts crédits</span>
         </a>
 
-        <p class="menu-label">Paiements</p>
-        <a href="{{ route('admin.settings.index') }}" class="menu-item {{ request()->routeIs('admin.settings.*') ? 'active' : '' }}">
-            <i class="lucide-settings"></i>
-            <span>Paramètres</span>
-        </a>
-
         <p class="menu-label">Communication</p>
         <a href="{{ route('admin.support.index') }}" class="menu-item {{ request()->routeIs('admin.support.*') ? 'active' : '' }}">
             <i class="lucide-message-square"></i>
@@ -162,6 +156,10 @@
 
         <div style="margin-top: auto; padding-top: 40px;">
             <p class="menu-label">System</p>
+            <a href="{{ route('admin.settings.index') }}" class="menu-item {{ request()->routeIs('admin.settings.*') ? 'active' : '' }}">
+                <i class="lucide-settings"></i>
+                <span>Paramètres</span>
+            </a>
             <form action="{{ route('admin.logout') }}" method="POST" id="logoutForm">
                 @csrf
                 <button type="submit" class="menu-item w-100 border-0 bg-transparent text-start">
