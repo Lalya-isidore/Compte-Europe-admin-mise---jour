@@ -39,6 +39,16 @@
                     </div>
 
 
+                    <!-- Avertissement non-remboursable -->
+                    <div class="d-flex align-items-start gap-3 rounded-3 mb-3 px-3 py-3" style="background:#fff7ed;border:1.5px solid #fed7aa;">
+                        <div class="flex-shrink-0 mt-1">
+                            <i class="fas fa-exclamation-triangle" style="color:#c2410c;font-size:1.1rem;"></i>
+                        </div>
+                        <div style="font-size:.85rem;color:#7c2d12;line-height:1.55;">
+                            <strong>Dépôts non remboursables :</strong> Tout dépôt effectué pour l'achat de crédits est définitif et ne peut faire l'objet d'aucun remboursement, annulation ou rétrofacturation. Les crédits sont valables uniquement sur cette plateforme.
+                        </div>
+                    </div>
+
                     @if(auth()->user()->parrain_id)
                         <!-- Information parrainage -->
                         <div class="alert alert-success d-flex align-items-center mb-4">
@@ -324,6 +334,9 @@
 
                                     <input type="hidden" id="payment-method" name="payment_method" value="fedapay">
                                     
+                                    <p class="text-muted text-center mb-3" style="font-size:.78rem;">
+                                        <i class="fas fa-lock me-1"></i>En confirmant, vous acceptez que ce dépôt est <strong>non remboursable</strong>.
+                                    </p>
                                     <div class="text-center">
                                         <button type="submit" class="btn btn-primary btn-lg w-100" id="btn-pay" disabled>
                                             <i class="fas fa-lock me-2"></i>Procéder au Paiement Sécurisé
