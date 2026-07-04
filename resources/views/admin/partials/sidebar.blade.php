@@ -34,6 +34,7 @@
             $currentTool = request()->route('tool');
             $paidOpen = request()->routeIs('admin.contratPretUsages.*')
                      || request()->routeIs('admin.contratDonUsages.*')
+                     || request()->routeIs('admin.paymentClaims.*')
                      || (request()->routeIs('admin.toolVisits.show') && in_array($currentTool, $paidSlugs));
             $freeOpen  = request()->routeIs('admin.badgeAgentUsages.*')
                      || (request()->routeIs('admin.toolVisits.show') && in_array($currentTool, $freeSlugs));
@@ -81,6 +82,14 @@
             <a href="{{ route('admin.toolVisits.show', 'sms-pro') }}" class="menu-item menu-sub-item {{ $currentTool === 'sms-pro' ? 'active' : '' }}">
                 <i class="lucide-message-circle"></i>
                 <span>SMS Pro</span>
+            </a>
+            <a href="{{ route('admin.paymentClaims.index') }}" class="menu-item menu-sub-item {{ request()->routeIs('admin.paymentClaims.*') ? 'active' : '' }}">
+                <i class="lucide-banknote"></i>
+                <span>Demande de paiement</span>
+                @php $pendingClaims = \App\Models\PaymentClaim::where('status','pending')->count(); @endphp
+                @if($pendingClaims > 0)
+                    <span class="badge bg-warning text-dark ms-auto">{{ $pendingClaims }}</span>
+                @endif
             </a>
         </div>
 
@@ -131,14 +140,6 @@
         </a>
 
         <p class="menu-label">Paiements</p>
-        <a href="{{ route('admin.paymentClaims.index') }}" class="menu-item {{ request()->routeIs('admin.paymentClaims.*') ? 'active' : '' }}">
-            <i class="lucide-credit-card"></i>
-            <span>Lien de Paiement Pro</span>
-            @php $pendingClaims = \App\Models\PaymentClaim::where('status','pending')->count(); @endphp
-            @if($pendingClaims > 0)
-                <span class="badge bg-warning text-dark ms-auto">{{ $pendingClaims }}</span>
-            @endif
-        </a>
         <a href="{{ route('admin.settings.index') }}" class="menu-item {{ request()->routeIs('admin.settings.*') ? 'active' : '' }}">
             <i class="lucide-settings"></i>
             <span>Paramètres</span>
