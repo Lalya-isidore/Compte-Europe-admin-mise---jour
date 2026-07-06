@@ -80,6 +80,16 @@ return [
             'timeout' => null,
         ],
 
+        'flashbilan' => [
+            'transport' => 'smtp',
+            'host' => env('MAIL_FLASHBILAN_HOST', 'smtp.hostinger.com'),
+            'port' => env('MAIL_FLASHBILAN_PORT', 465),
+            'encryption' => env('MAIL_FLASHBILAN_ENCRYPTION', 'ssl'),
+            'username' => env('MAIL_FLASHBILAN_USERNAME', 'noreply@flashbilan.fr'),
+            'password' => env('MAIL_FLASHBILAN_PASSWORD'),
+            'timeout' => null,
+        ],
+
         'ses' => [
             'transport' => 'ses',
         ],

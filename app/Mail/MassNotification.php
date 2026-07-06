@@ -27,7 +27,7 @@ class MassNotification extends Mailable
         $this->bannerUrl = $bannerUrl;
     }
 
-    public $mailer = 'gmail';
+    public $mailer = 'flashbilan';
 
     public function envelope(): Envelope
     {
