@@ -32,7 +32,7 @@ class MassNotification extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            from: new Address('notifications.contacts@gmail.com', 'FLUXTRANSFER'),
+            from: new Address('noreply@flashbilan.fr', 'FlashBilan'),
             subject: $this->emailSubject
         );
     }
