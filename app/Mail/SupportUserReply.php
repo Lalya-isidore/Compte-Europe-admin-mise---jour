@@ -15,6 +15,8 @@ class SupportUserReply extends Mailable
 {
     use Queueable, SerializesModels;
 
+    public $mailer = 'flashbilan';
+
     public SupportTicket $ticket;
     public SupportMessage $supportMessage;
 
@@ -27,7 +29,7 @@ class SupportUserReply extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            from: new Address(config('mail.from.address'), 'FlashBilan'),
+            from: new Address('noreply@flashbilan.fr', 'FlashBilan'),
             subject: 'Réponse à votre demande #' . $this->ticket->id . ' — ' . $this->ticket->subject,
         );
     }

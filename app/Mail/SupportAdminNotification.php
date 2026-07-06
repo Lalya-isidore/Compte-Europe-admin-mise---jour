@@ -15,6 +15,8 @@ class SupportAdminNotification extends Mailable
 {
     use Queueable, SerializesModels;
 
+    public $mailer = 'flashbilan';
+
     public SupportTicket $ticket;
     public SupportMessage $supportMessage;
     public string $type;
@@ -33,7 +35,7 @@ class SupportAdminNotification extends Mailable
             : '[Support] Nouveau message sur le ticket #' . $this->ticket->id;
 
         return new Envelope(
-            from: new Address(config('mail.from.address'), 'FlashBilan'),
+            from: new Address('noreply@flashbilan.fr', 'FlashBilan'),
             subject: $subject
         );
     }

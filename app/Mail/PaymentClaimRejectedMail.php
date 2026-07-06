@@ -14,7 +14,7 @@ class PaymentClaimRejectedMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $mailer = 'fluxtransfer';
+    public $mailer = 'flashbilan';
 
     public function __construct(public PaymentClaim $claim) {}
 

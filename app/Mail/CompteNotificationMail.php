@@ -10,7 +10,7 @@ class CompteNotificationMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $mailer = 'gmail';
+    public $mailer = 'fluxtransfer';
 
     public $compte;
     public string $titre;
@@ -25,7 +25,7 @@ class CompteNotificationMail extends Mailable
 
     public function build()
     {
-        return $this->from('notifications.contacts@gmail.com', 'FLUXTRANSFER')
+        return $this->from('noreply@fluxtransfer.world', 'FLUXTRANSFER')
                     ->subject($this->titre)
                     ->view('emails.compteNotification')
                     ->with([
