@@ -157,4 +157,38 @@ class SupportTicketController extends Controller
                 ->count(),
         ]);
     }
+
+    public function poll(Request $request, SupportTicket $ticket): JsonResponse
+    {
+        $sinceId = (int) $request->query('since', 0);
+
+        $messages = SupportMessage::with(['user:id,nom,prenom'])
+            ->where('support_ticket_id', $ticket->id)
+            ->where('id', '>', $sinceId)
+            ->orderBy('id')
+            ->get();
+
+        if ($messages->where('sent_by_admin', false)->isNotEmpty()) {
+            SupportMessage::where('support_ticket_id', $ticket->id)
+                ->where('sent_by_admin', false)
+                ->whereNull('read_at')
+                ->update(['read_at' => now()]);
+        }
+
+        return response()->json([
+            'messages' => $messages->map(fn($msg) => [
+                'id'            => $msg->id,
+                'content'       => $msg->content,
+                'sent_by_admin' => (bool) $msg->sent_by_admin,
+                'time'          => $msg->created_at->setTimezone('Europe/Paris')->format('H:i'),
+                'read_at'       => $msg->read_at ? $msg->read_at->setTimezone('Europe/Paris')->format('d/m/Y à H:i') : null,
+                'file_url'      => $msg->file_path ? asset('storage/' . $msg->file_path) : null,
+                'file_type'     => $msg->file_type,
+                'file_name'     => $msg->file_name,
+                'voice_url'     => $msg->voice_path ? asset('storage/' . $msg->voice_path) : null,
+                'user_name'     => $msg->user ? $msg->user->nom : 'Client',
+            ]),
+            'ticket_status' => $ticket->status,
+        ]);
+    }
 }

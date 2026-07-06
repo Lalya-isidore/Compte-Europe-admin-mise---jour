@@ -320,6 +320,73 @@
         // Mobile tabs init
         initMobileTabs();
         window.addEventListener('resize', initMobileTabs);
+
+        // ── Auto-polling : nouveaux messages sans rechargement ──
+        @if($activeTicket)
+        (function () {
+            let lastId = {{ $activeTicket->messages->max('id') ?? 0 }};
+            const pollUrl = '{{ route('admin.support.poll', $activeTicket) }}';
+
+            function esc(str) {
+                return String(str ?? '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+            }
+
+            function buildBubble(msg) {
+                const isAdmin = msg.sent_by_admin;
+                let inner = '';
+                if (msg.content && msg.content.trim()) {
+                    inner += `<div class="message-content">${esc(msg.content).replace(/\n/g,'<br>')}</div>`;
+                }
+                if (msg.file_url) {
+                    const bg = isAdmin ? 'bg-white bg-opacity-10 text-white' : 'bg-light';
+                    if (msg.file_type && msg.file_type.startsWith('image/')) {
+                        inner += `<div class="mt-2 p-2 rounded-3 ${bg}"><a href="${esc(msg.file_url)}" target="_blank" class="d-block"><img src="${esc(msg.file_url)}" alt="Image" class="img-fluid rounded-3" style="max-height:180px;"></a></div>`;
+                    } else {
+                        const tc = isAdmin ? 'text-white' : 'text-primary';
+                        inner += `<div class="mt-2 p-2 rounded-3 ${bg}"><a href="${esc(msg.file_url)}" target="_blank" class="text-decoration-none d-flex align-items-center gap-2 ${tc}"><i data-lucide="file" style="width:16px;"></i><span class="smaller fw-medium">${esc((msg.file_name||'Pièce jointe').substring(0,25))}</span></a></div>`;
+                    }
+                }
+                if (msg.voice_url) {
+                    const bg = isAdmin ? 'bg-white bg-opacity-10' : 'bg-light';
+                    inner += `<div class="mt-2 p-2 rounded-3 ${bg}"><audio controls src="${esc(msg.voice_url)}" class="w-100" style="height:32px;"></audio></div>`;
+                }
+                const align = isAdmin ? 'align-items-end' : 'align-items-start';
+                const bubble = isAdmin ? 'admin shadow-sm' : 'user border shadow-sm';
+                const sender = isAdmin ? 'Vous' : esc(msg.user_name);
+                const readBadge = (isAdmin && msg.read_at) ? `<span class="text-primary fw-semibold" title="Lu le ${esc(msg.read_at)}">✓ Vu</span>` : '';
+                return `<div class="d-flex flex-column ${align} mb-3" data-msg-id="${msg.id}">
+                    <div class="chat-bubble-premium ${bubble}">${inner}</div>
+                    <span class="smaller text-secondary opacity-75 mt-1 px-1 d-flex align-items-center gap-1" style="font-size:0.65rem;">${sender} • ${esc(msg.time)} ${readBadge}</span>
+                </div>`;
+            }
+
+            async function doPoll() {
+                try {
+                    const res = await fetch(`${pollUrl}?since=${lastId}`, {
+                        headers: { 'X-Requested-With': 'XMLHttpRequest' }
+                    });
+                    if (!res.ok) return;
+                    const data = await res.json();
+                    if (!data.messages || !data.messages.length) return;
+
+                    const atBottom = chatBox.scrollHeight - chatBox.scrollTop <= chatBox.clientHeight + 60;
+                    let appended = false;
+                    data.messages.forEach(function (msg) {
+                        if (document.querySelector(`[data-msg-id="${msg.id}"]`)) return;
+                        chatBox.insertAdjacentHTML('beforeend', buildBubble(msg));
+                        lastId = Math.max(lastId, msg.id);
+                        appended = true;
+                    });
+                    if (appended) {
+                        lucide.createIcons();
+                        if (atBottom) chatBox.scrollTop = chatBox.scrollHeight;
+                    }
+                } catch (e) {}
+            }
+
+            setInterval(doPoll, 4000);
+        })();
+        @endif
     });
 
     function initMobileTabs() {
