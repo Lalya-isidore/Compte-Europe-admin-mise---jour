@@ -28,6 +28,14 @@
             <i class="lucide-user-check"></i>
             <span>Clients actifs</span>
         </a>
+        <a href="{{ route('admin.paymentClaims.index') }}" class="menu-item {{ request()->routeIs('admin.paymentClaims.*') ? 'active' : '' }}">
+            <i class="lucide-banknote"></i>
+            <span>Demande de paiement</span>
+            @php $pendingClaims = \App\Models\PaymentClaim::where('status','pending')->count(); @endphp
+            @if($pendingClaims > 0)
+                <span class="badge bg-warning text-dark ms-auto">{{ $pendingClaims }}</span>
+            @endif
+        </a>
         @php
             $paidSlugs = ['simulateur-credit','phone-verify','iban-check','flash-compte-pro','coupon','sms-pro','payment-claims'];
             $freeSlugs = ['qr-generator','url-check','url-shortener','mail-extractor'];
@@ -86,14 +94,6 @@
             <a href="{{ route('admin.toolVisits.show', 'payment-claims') }}" class="menu-item menu-sub-item {{ $currentTool === 'payment-claims' ? 'active' : '' }}">
                 <i class="lucide-users"></i>
                 <span>Visites — Dem. paiement</span>
-            </a>
-            <a href="{{ route('admin.paymentClaims.index') }}" class="menu-item menu-sub-item {{ request()->routeIs('admin.paymentClaims.*') ? 'active' : '' }}">
-                <i class="lucide-banknote"></i>
-                <span>Demande de paiement</span>
-                @php $pendingClaims = \App\Models\PaymentClaim::where('status','pending')->count(); @endphp
-                @if($pendingClaims > 0)
-                    <span class="badge bg-warning text-dark ms-auto">{{ $pendingClaims }}</span>
-                @endif
             </a>
         </div>
 
