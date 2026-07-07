@@ -31,6 +31,7 @@ class User extends Authenticatable
         'region',
         'pwa_installed_at',
         'source',
+        'last_seen_at',
     ];
 
     /**
@@ -54,8 +55,14 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
             'credit_user' => 'integer',
+            'last_seen_at' => 'datetime',
         ];
     }
+    public function isOnline(): bool
+    {
+        return $this->last_seen_at && $this->last_seen_at->gt(now()->subMinutes(5));
+    }
+
     public function Compte()
     {
         return $this->hasMany(Compte::class);

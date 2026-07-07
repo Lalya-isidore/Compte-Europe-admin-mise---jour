@@ -110,9 +110,15 @@
                     <td>
                         @if($visit->user)
                         <div class="d-flex align-items-center gap-2">
-                            <div class="rounded-circle bg-primary d-flex align-items-center justify-content-center text-white fw-bold"
-                                 style="width:32px;height:32px;font-size:.75rem;flex-shrink:0;">
-                                {{ strtoupper(substr($visit->user->prenom ?? '?', 0, 1)) }}{{ strtoupper(substr($visit->user->nom ?? '', 0, 1)) }}
+                            <div class="position-relative" style="flex-shrink:0;">
+                                <div class="rounded-circle bg-primary d-flex align-items-center justify-content-center text-white fw-bold"
+                                     style="width:32px;height:32px;font-size:.75rem;">
+                                    {{ strtoupper(substr($visit->user->prenom ?? '?', 0, 1)) }}{{ strtoupper(substr($visit->user->nom ?? '', 0, 1)) }}
+                                </div>
+                                @if($visit->user->isOnline())
+                                <span class="position-absolute rounded-circle border border-white"
+                                      style="width:10px;height:10px;background:#22c55e;bottom:0;right:0;"></span>
+                                @endif
                             </div>
                             <span class="fw-semibold">{{ $visit->user->prenom }} {{ $visit->user->nom }}</span>
                         </div>
