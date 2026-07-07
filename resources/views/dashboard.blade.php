@@ -30,7 +30,7 @@
         ['label' => "Verification d'un site web", 'image' => 'url-check.png', 'route' => route('tools.url-check')],
         ['label' => "Raccourcissement d'URL", 'image' => 'url-shortener.png', 'route' => route('tools.url-shortener')],
         ['label' => 'Vente de Crypto USDT', 'image' => 'crypto-usdt.png', 'route' => route('crypto.vente'), 'badge' => 'Bientot'],
-        ['label' => 'Numeros virtuelles', 'image' => 'telephone.png', 'route' => 'https://console.whatsago.com/partners/45575', 'is_external' => true],
+        ['label' => 'Numeros virtuelles', 'image' => 'telephone.png', 'route' => 'https://console.whatsago.com/partners/45575', 'is_external' => true, 'badge' => 'Rupture', 'modal_trigger' => 'modalNumerosVirtuels'],
         ['label' => 'Cartes virtuelles', 'image' => 'virtual-cards.png', 'route' => 'https://neutrocard.com/new-login/', 'is_external' => true],
     ];
 @endphp
@@ -74,10 +74,25 @@
             </div>
             <div class="tools-grid">
                 @foreach($freeTools as $tool)
-                    @php $href = $tool['route'] ?? '#'; $isExternal = $tool['is_external'] ?? false; @endphp
-                    <a href="{{ $href }}" class="tool-card" {!! $isExternal ? 'target="_blank" rel="noopener noreferrer"' : '' !!}>
+                    @php
+                        $href = $tool['route'] ?? '#';
+                        $isExternal = $tool['is_external'] ?? false;
+                        $modalTrigger = $tool['modal_trigger'] ?? null;
+                    @endphp
+                    <a href="{{ $modalTrigger ? '#' : $href }}"
+                       class="tool-card"
+                       {!! ($isExternal && !$modalTrigger) ? 'target="_blank" rel="noopener noreferrer"' : '' !!}
+                       {!! $modalTrigger ? 'data-bs-toggle="modal" data-bs-target="#' . $modalTrigger . '"' : '' !!}>
                         @if(isset($tool['badge']))
-                            <span class="tool-badge {{ $tool['badge'] === 'Bientot' ? 'tool-badge--soon' : ($tool['badge'] === 'New' ? 'tool-badge--new' : '') }}">{{ $tool['badge'] }}</span>
+                            @php
+                                $badgeClass = match($tool['badge']) {
+                                    'Bientot' => 'tool-badge--soon',
+                                    'New'     => 'tool-badge--new',
+                                    'Rupture' => 'tool-badge--rupture',
+                                    default   => '',
+                                };
+                            @endphp
+                            <span class="tool-badge {{ $badgeClass }}">{{ $tool['badge'] }}</span>
                         @endif
                         @if(isset($tool['svg']))
                             {!! $tool['svg'] !!}
@@ -197,6 +212,11 @@
         color: #fff;
     }
 
+    .tool-badge--rupture {
+        background: #ef4444;
+        color: #fff;
+    }
+
     @media (max-width: 575px) {
         .tools-grid {
             gap: 0.75rem;
@@ -231,4 +251,60 @@
     img.tool-icon[src*="badge-agent"] { width: 80px; height: 80px; }
     img.tool-icon[src*="certificat-don"] { width: 80px; height: 80px; }
 </style>
+
+{{-- Modal : Numéros Virtuels en rupture --}}
+<div class="modal fade" id="modalNumerosVirtuels" tabindex="-1" aria-labelledby="modalNumerosVirtuelsLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 shadow-lg" style="border-radius: 16px; overflow: hidden;">
+            <div class="modal-header border-0 pb-0" style="background: #fef2f2;">
+                <div class="d-flex align-items-center gap-3 w-100 pt-1">
+                    <div class="rounded-circle d-flex align-items-center justify-content-center flex-shrink-0"
+                         style="width:48px;height:48px;background:#fee2e2;">
+                        <img src="{{ asset('images/tools/telephone.png') }}" alt="Numéros Virtuels"
+                             style="width:28px;height:28px;object-fit:contain;">
+                    </div>
+                    <div>
+                        <h5 class="modal-title fw-bold mb-0" id="modalNumerosVirtuelsLabel" style="font-size:1rem;">
+                            Numéros Virtuels
+                        </h5>
+                        <span class="badge rounded-pill" style="background:#ef4444;font-size:0.7rem;">Rupture de stock</span>
+                    </div>
+                    <button type="button" class="btn-close ms-auto" data-bs-dismiss="modal" aria-label="Fermer"></button>
+                </div>
+            </div>
+
+            <div class="modal-body px-4 py-3">
+                <div class="d-flex align-items-start gap-3 p-3 rounded-3 mb-3"
+                     style="background:#fef2f2;border:1px solid #fecaca;">
+                    <span style="font-size:1.4rem;flex-shrink:0;">⚠️</span>
+                    <div>
+                        <p class="fw-semibold mb-1" style="font-size:0.92rem;color:#991b1b;">
+                            Aucun numéro disponible en ce moment
+                        </p>
+                        <p class="mb-0 text-secondary" style="font-size:0.85rem;line-height:1.5;">
+                            Le stock de numéros virtuels WhatsApp est actuellement épuisé.
+                            <strong>Ne rechargez pas votre compte</strong> dans l'immédiat pour cet usage.
+                        </p>
+                    </div>
+                </div>
+                <p class="text-secondary mb-0" style="font-size:0.83rem;">
+                    Vous pouvez tout de même consulter le site partenaire pour vérifier la disponibilité ou être notifié lors d'un réapprovisionnement.
+                </p>
+            </div>
+
+            <div class="modal-footer border-0 pt-0 pb-4 px-4 gap-2">
+                <button type="button" class="btn btn-light rounded-pill px-4" data-bs-dismiss="modal"
+                        style="font-size:0.85rem;">
+                    Fermer
+                </button>
+                <a href="https://console.whatsago.com/partners/45575" target="_blank" rel="noopener noreferrer"
+                   class="btn rounded-pill px-4 fw-semibold"
+                   style="background:#1e3a5f;color:#fff;font-size:0.85rem;"
+                   data-bs-dismiss="modal">
+                    Voir quand même le site &rarr;
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
 @endsection
