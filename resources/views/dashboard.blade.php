@@ -283,7 +283,7 @@
                         </p>
                         <p class="mb-0 text-secondary" style="font-size:0.85rem;line-height:1.5;">
                             Le stock de numéros virtuels WhatsApp est actuellement épuisé.
-                            <strong>Ne rechargez pas votre compte</strong> dans l'immédiat pour cet usage.
+                            <strong>Ne rechargez pas votre compte sur Whatsago</strong> dans l'immédiat pour cet usage.
                         </p>
                     </div>
                 </div>
