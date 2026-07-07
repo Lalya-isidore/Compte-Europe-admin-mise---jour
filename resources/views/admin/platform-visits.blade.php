@@ -150,4 +150,9 @@
         @endif
     </div>
 </div>
+@push('scripts')
+<script>
+setTimeout(function() { location.reload(); }, 60000);
+</script>
+@endpush
 @endsection
