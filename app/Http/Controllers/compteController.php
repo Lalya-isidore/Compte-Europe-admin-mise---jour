@@ -223,6 +223,14 @@ class CompteController extends Controller
             'alert_notif' => $alertNotifEnabled,
         ]);
 
+        // Sauvegarder bank_sender_name dans parameters dès la création
+        if ($request->filled('bank_sender_name')) {
+            $params = json_decode($compte->parameters ?? '{}', true) ?: [];
+            $params['bank_sender_name'] = trim($request->input('bank_sender_name'));
+            $compte->parameters = json_encode($params);
+            $compte->save();
+        }
+
         // Enregistrer le solde initial dans l'historique pour les comptes créés manuellement
         try {
             TransactionHistory::create([
