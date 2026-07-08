@@ -77,20 +77,29 @@ class SmsProController extends Controller
         $expediteurNorm = preg_replace('/[\s\-_]+/', '', $expediteurUp);
         if (in_array($expediteurUp, self::BLOCKED_SENDERS, true) || in_array($expediteurNorm, self::BLOCKED_SENDERS, true)) {
             $user = Auth::user();
-            Log::warning('SMS Pro : expéditeur interdit bloqué', [
+            Log::warning('SMS Pro : tentative usurpation expéditeur', [
                 'user_id'    => $user->id,
+                'email'      => $user->email,
                 'expediteur' => $expediteurRaw,
             ]);
+            // Alerte admin pour révision manuelle
+            DB::table('sender_violations')->insert([
+                'user_id'       => $user->id,
+                'expediteur'    => $expediteurRaw,
+                'status'        => 'pending',
+                'created_at'    => now(),
+                'updated_at'    => now(),
+            ]);
+            // Avertissement visible pour l'utilisateur
             UserNotification::create([
                 'user_id' => $user->id,
                 'title'   => '⚠️ Expéditeur SMS interdit',
-                'message' => "Votre tentative d'envoi avec l'identifiant expéditeur \"$expediteurRaw\" a été bloquée. "
-                           . "Cet identifiant usurpe une marque, une banque ou un service officiel. "
-                           . "Toute nouvelle tentative de ce type entraînera la suspension définitive de votre compte.",
+                'message' => "Votre tentative d'envoi avec l'identifiant expéditeur \"$expediteurRaw\" a été bloquée car il usurpe une marque, une banque ou un service officiel. "
+                           . "Cette violation a été signalée à l'administration. Toute récidive entraînera la suppression de votre compte.",
             ]);
             return response()->json([
                 'success' => false,
-                'message' => "L'identifiant expéditeur \"$expediteurRaw\" n'est pas autorisé.",
+                'message' => "L'identifiant expéditeur \"$expediteurRaw\" n'est pas autorisé. Cette tentative a été signalée.",
             ], 422);
         }
 

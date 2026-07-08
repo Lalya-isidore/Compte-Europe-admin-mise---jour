@@ -291,6 +291,12 @@ $svg = [
                         <div id="expediteurWarning" class="mt-1 d-none" style="font-size:.78rem;color:#b45309;background:#fffbeb;border:1px solid #fcd34d;border-radius:6px;padding:5px 8px;">
                             ⚠ Ce nom appartient à un opérateur téléphonique. Les carriers risquent de bloquer ce SMS. Utilisez votre propre nom d'entreprise.
                         </div>
+                        <div class="mt-2 d-flex align-items-start gap-2 p-3 rounded-3" style="background:#fef2f2;border:1.5px solid #fca5a5;">
+                            <span style="flex-shrink:0;font-size:1.1rem;margin-top:1px;">🚫</span>
+                            <div style="color:#991b1b;font-size:.87rem;line-height:1.55;">
+                                <strong>Avertissement :</strong> Utiliser le nom d'une entreprise existante (banque, opérateur, service officiel…) est considéré comme une <strong>usurpation d'identité</strong>. Toute tentative de ce type entraîne la <strong>suppression immédiate et définitive</strong> de votre compte ainsi que toutes vos données, sans préavis.
+                            </div>
+                        </div>
                     </div>
                 </div>
 

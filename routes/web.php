@@ -522,6 +522,11 @@ Route::post('/payement5000/{id}', [CompteController::class, 'payement5000'])->na
         Route::post('/payment-claims/{paymentClaim}/reject', [App\Http\Controllers\Admin\PaymentClaimController::class, 'reject'])->name('paymentClaims.reject');
         Route::post('/payment-claims/{paymentClaim}/mark-paid', [App\Http\Controllers\Admin\PaymentClaimController::class, 'markPaid'])->name('paymentClaims.markPaid');
 
+        // Violations expéditeur SMS
+        Route::get('/sender-violations', [App\Http\Controllers\Admin\SenderViolationController::class, 'index'])->name('senderViolations.index');
+        Route::post('/sender-violations/{senderViolation}/delete-user', [App\Http\Controllers\Admin\SenderViolationController::class, 'deleteUser'])->name('senderViolations.deleteUser');
+        Route::post('/sender-violations/{senderViolation}/dismiss', [App\Http\Controllers\Admin\SenderViolationController::class, 'dismiss'])->name('senderViolations.dismiss');
+
         // Paramètres plateforme
         Route::get('/settings', [App\Http\Controllers\Admin\AppSettingsController::class, 'index'])->name('settings.index');
         Route::put('/settings', [App\Http\Controllers\Admin\AppSettingsController::class, 'update'])->name('settings.update');

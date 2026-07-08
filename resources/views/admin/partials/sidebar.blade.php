@@ -143,6 +143,15 @@
             <span>Dépôts crédits</span>
         </a>
 
+        <a href="{{ route('admin.senderViolations.index') }}" class="menu-item {{ request()->routeIs('admin.senderViolations.*') ? 'active' : '' }}">
+            <i class="lucide-shield-alert"></i>
+            <span>Violations SMS</span>
+            @php $pendingViolations = \App\Models\SenderViolation::where('status','pending')->count(); @endphp
+            @if($pendingViolations > 0)
+                <span class="badge bg-danger ms-auto">{{ $pendingViolations }}</span>
+            @endif
+        </a>
+
         <p class="menu-label">Communication</p>
         <a href="{{ route('admin.support.index') }}" class="menu-item {{ request()->routeIs('admin.support.*') ? 'active' : '' }}">
             <i class="lucide-message-square"></i>
