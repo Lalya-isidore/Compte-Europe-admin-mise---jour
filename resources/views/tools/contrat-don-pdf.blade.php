@@ -20,7 +20,7 @@
             line-height: 1.3;
         }
         @if($lang === 'el')
-        body { font-family: 'DejaVu Sans', sans-serif; }
+        body, strong, b, span, div, td, th, p { font-family: 'DejaVu Sans', sans-serif; }
         @endif
 
         body * { box-sizing: border-box; }
