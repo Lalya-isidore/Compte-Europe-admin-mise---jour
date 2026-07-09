@@ -922,7 +922,7 @@
                         <select name="access-cl" id="access-cl" class="form-select" required>
                             <option value="" disabled selected>Vos Flash Compte Client(s) Créés...</option>
                             @foreach($comptes as $compte)
-                                <option value="{{ $compte->id }}" data-currency="{{ $compte->devise ?? 'XOF' }}">
+                                <option value="{{ $compte->id }}" data-currency="{{ $compte->devise ?? 'XOF' }}" data-numerocompte="{{ $compte->token ?? $compte->numerocompte }}">
                                     {{ $compte->prenom }} {{ $compte->nom }} - {{ $compte->email }}
                                 </option>
                             @endforeach
@@ -938,6 +938,7 @@
                             <option value="update-pp-msg" selected>Modifier les pourcentages et le message à afficher</option>
                             <option value="update-photo">Modifier la photo de profil du client</option>
                             <option value="update-iban">Modifier l'IBAN / Numéro de compte du client</option>
+                            <option value="update-token">Modifier le lien de connexion du compte client</option>
                         </select>
                     </div>
                     <div class="update-photo" style="display:none">
@@ -965,6 +966,31 @@
                         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                             <button type="button" class="btn btn-primary" id="btn-update-iban">
                                 Mettre à jour l'IBAN <i class="bi bi-arrow-right-short"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="update-token" style="display:none">
+                        <div class="mb-3">
+                            <label for="update-token-field" class="form-label">Token de connexion personnalisé</label>
+                            <div class="input-group">
+                                <span class="input-group-text">{{ rtrim(config('regions.europe.client_login_url', 'https://fluxtransfer.world'), '/') }}/?c=</span>
+                                <input type="text" class="form-control" id="update-token-field"
+                                       placeholder="ex: jean-dupont" maxlength="100"
+                                       pattern="[A-Za-z0-9\-_]+"
+                                       title="Lettres, chiffres, tirets et underscores uniquement">
+                            </div>
+                            <small class="form-text text-muted">Laissez vide pour revenir au numéro de compte par défaut.</small>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Lien de connexion généré</label>
+                            <div class="d-flex align-items-center gap-2">
+                                <code id="update-token-link-preview" class="small text-break">—</code>
+                                <button type="button" class="btn btn-outline-secondary btn-sm" id="btn-copy-token-link">Copier</button>
+                            </div>
+                        </div>
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <button type="button" class="btn btn-primary" id="btn-update-token">
+                                Mettre à jour le lien <i class="bi bi-arrow-right-short"></i>
                             </button>
                         </div>
                     </div>
@@ -2181,6 +2207,7 @@ window.addEventListener('DOMContentLoaded', function(){
     var ppMsgDiv = document.querySelector('.update-pp-msg');
     var photoBlock = document.querySelector('.update-photo');
     var ibanBlock = document.querySelector('.update-iban');
+    var tokenBlock = document.querySelector('.update-token');
     var accessClSel = document.getElementById('access-cl');
 
     if (updateDataSel) {
@@ -2190,17 +2217,21 @@ window.addEventListener('DOMContentLoaded', function(){
             if (ppMsgDiv) ppMsgDiv.style.display = (val === 'update-pp-msg') ? '' : 'none';
             if (photoBlock) photoBlock.style.display = (val === 'update-photo') ? '' : 'none';
             if (ibanBlock) ibanBlock.style.display = (val === 'update-iban') ? '' : 'none';
+            if (tokenBlock) tokenBlock.style.display = (val === 'update-token') ? '' : 'none';
             // Sync 'required' attributes
             document.querySelectorAll('.update-pp-msg [name]').forEach(function(el){
                 if (val === 'update-pp-msg') el.setAttribute('required', 'required');
                 else el.removeAttribute('required');
             });
+            // Mettre à jour le preview du lien token quand on sélectionne le client
+            if (val === 'update-token') updateTokenPreview();
             // Prompt/AJAX actions
             if (['add-amount', 'sub-amount', 'update-codepin', 'update-status', 'update-bank-sender'].includes(val)) {
                 handleOtherActions(val);
                 this.value = 'update-pp-msg';
                 if (ppMsgDiv) ppMsgDiv.style.display = '';
                 if (ibanBlock) ibanBlock.style.display = 'none';
+                if (tokenBlock) tokenBlock.style.display = 'none';
             }
         });
     }
@@ -2223,6 +2254,58 @@ window.addEventListener('DOMContentLoaded', function(){
                     if (!res.ok) throw new Error('Erreur serveur');
                     _fcpNeedsReload = true;
                     showFcpModal('IBAN mis a jour avec succes !', 'success');
+                })
+                .catch(function(err){ showFcpModal('Erreur : ' + err.message, 'error'); });
+            });
+        });
+    }
+
+    // ---- Update Token ----
+    var baseClientUrl = '{{ rtrim(config("regions.europe.client_login_url", "https://fluxtransfer.world"), "/") }}';
+    var tokenField = document.getElementById('update-token-field');
+    var tokenPreview = document.getElementById('update-token-link-preview');
+
+    function updateTokenPreview() {
+        var val = tokenField ? tokenField.value.trim() : '';
+        if (!val && accessClSel && accessClSel.selectedIndex > 0) {
+            var opt = accessClSel.options[accessClSel.selectedIndex];
+            val = opt ? opt.getAttribute('data-numerocompte') || '' : '';
+        }
+        if (tokenPreview) tokenPreview.textContent = val ? baseClientUrl + '/?c=' + val : '—';
+    }
+
+    if (tokenField) tokenField.addEventListener('input', updateTokenPreview);
+    if (accessClSel) accessClSel.addEventListener('change', function(){ if (updateDataSel && updateDataSel.value === 'update-token') updateTokenPreview(); });
+
+    var btnCopyTokenLink = document.getElementById('btn-copy-token-link');
+    if (btnCopyTokenLink) {
+        btnCopyTokenLink.addEventListener('click', function(){
+            var txt = tokenPreview ? tokenPreview.textContent : '';
+            if (txt && txt !== '—') navigator.clipboard.writeText(txt).then(function(){ showFcpModal('Lien copié !', 'success'); });
+        });
+    }
+
+    var btnUpdateToken = document.getElementById('btn-update-token');
+    if (btnUpdateToken) {
+        btnUpdateToken.addEventListener('click', function(){
+            var accessClVal = accessClSel ? accessClSel.value : '';
+            if (!accessClVal) { showFcpModal('Veuillez sélectionner un accès client.'); return; }
+            var tokenVal = tokenField ? tokenField.value.trim() : '';
+            var name = accessClSel.options[accessClSel.selectedIndex]?.text || '';
+            fcpConfirm('Lien de connexion', 'Mettre à jour le lien de connexion du client <b>' + name + '</b> ?').then(function(ok){
+                if (!ok) return;
+                var formData = new FormData();
+                formData.append('_token', csrfToken);
+                formData.append('token', tokenVal);
+                fetch('{{ url("/updateToken") }}/' + accessClVal, { method: 'POST', body: formData })
+                .then(function(res){ return res.json(); })
+                .then(function(data){
+                    if (data.success) {
+                        _fcpNeedsReload = true;
+                        showFcpModal(data.message || 'Lien de connexion mis à jour !', 'success');
+                    } else {
+                        showFcpModal(data.message || 'Erreur lors de la mise à jour.', 'error');
+                    }
                 })
                 .catch(function(err){ showFcpModal('Erreur : ' + err.message, 'error'); });
             });

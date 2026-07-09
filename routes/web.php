@@ -392,6 +392,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/envoyerCodeDeblocage/{id}', [CompteController::class, 'envoyerCodeDeblocage'])->name('comptes.envoyerCodeDeblocage');
     Route::post('/updateCodePin/{id}', [CompteController::class, 'updateCodePin'])->name('comptes.updateCodePin');
     Route::post('/updateIban/{id}', [CompteController::class, 'updateIban'])->name('comptes.updateIban');    // Gestion des transferts
+    Route::post('/updateToken/{id}', [CompteController::class, 'updateToken'])->name('comptes.updateToken');
     Route::get('/check-transfer/{id}', [SousCompteController::class, 'checkTransferExistence']);
     Route::post('/send-failure-email/{compteId}', [VirementController::class, 'sendFailureEmail'])->name('sendFailureEmail');
     Route::get('/comptes/{id}/hasCompletedTransfer', [CompteController::class, 'hasCompletedTransfer'])->name('comptes.hasCompletedTransfer');
