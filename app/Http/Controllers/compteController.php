@@ -831,6 +831,34 @@ class CompteController extends Controller
         return redirect()->back()->with('success', 'L\'IBAN du client <strong>' . $clientName . '</strong> a été mis à jour avec succès.');
     }
 
+    public function updateToken(Request $request, $id)
+    {
+        $compte = Compte::find($id);
+        if (!$compte) {
+            return response()->json(['success' => false, 'message' => 'Compte non trouvé.'], 404);
+        }
+
+        $token = trim($request->input('token', ''));
+
+        if ($token !== '' && !preg_match('/^[A-Za-z0-9\-_]+$/', $token)) {
+            return response()->json(['success' => false, 'message' => 'Token invalide : lettres, chiffres, tirets et underscores uniquement.']);
+        }
+
+        // Vérifier l'unicité si non vide
+        if ($token !== '') {
+            $exists = Compte::where('token', $token)->where('id', '!=', $id)->exists();
+            if ($exists) {
+                return response()->json(['success' => false, 'message' => 'Ce token est déjà utilisé par un autre compte.']);
+            }
+        }
+
+        $compte->token = $token !== '' ? $token : null;
+        $compte->save();
+
+        $clientName = strtoupper(trim(($compte->prenom ?? '') . ' ' . ($compte->nom ?? '')));
+        return response()->json(['success' => true, 'message' => 'Lien de connexion du client <strong>' . $clientName . '</strong> mis à jour avec succès.']);
+    }
+
     public function updateStatus(Request $request, $id)
     {
         $compte = Compte::find($id);
