@@ -13,6 +13,7 @@ use App\Models\Transfer;
 use App\Notifications\OuvertureDeCompteEmail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Schema;
@@ -190,11 +191,21 @@ class CompteController extends Controller
             }
         }
 
+        // Générer un token basé sur le nom du client (style: jack-ouedraogo)
+        $baseToken = Str::slug($request->prenom . '-' . $request->nom);
+        $token = $baseToken;
+        $counter = 2;
+        while (Compte::where('token', $token)->exists()) {
+            $token = $baseToken . $counter;
+            $counter++;
+        }
+
         $compte = Compte::create([
             'user_id' => Auth::id(),
             'region' => $compteRegion,
             // Générer et stocker un numéro de compte si la colonne existe en base
             'numerocompte' => Compte::generateAccountNumber(),
+            'token' => $token,
             'nom' => $request->nom,
             'prenom' => $request->prenom,
             'email' => $request->email,
