@@ -1097,7 +1097,7 @@
                             @php
                                 $cRegion = $compte->region ?: 'europe';
                                 $cBaseUrl = config('regions.' . $cRegion . '.client_login_url');
-                                $cAccessUrl = $cBaseUrl . '/?c=' . $compte->numerocompte;
+                                $cAccessUrl = $cBaseUrl . '/?c=' . ($compte->token ?? $compte->numerocompte);
                                 $isBlocked = in_array($compte->account_status, ['Bloqué', 'Suspendu']);
                                 $isExamen = $compte->account_status === 'Examen';
                             @endphp
