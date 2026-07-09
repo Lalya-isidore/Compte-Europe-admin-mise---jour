@@ -150,7 +150,7 @@
         .notaire-box { text-align: center; font-size: 8pt; font-weight: bold; color: #c00000; margin-top: 2px; }
 
         /* Extra-bold for key data (names, amounts, law refs) */
-        strong { font-weight: 900; }
+        strong { font-weight: bold; }
         /* Color only for names and amounts */
         .key-red { color: #c00000; }
         @if($isTestGeneration)
