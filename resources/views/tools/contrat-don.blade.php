@@ -58,6 +58,7 @@
                                 <option value="zh">🇨🇳 Chinois</option>
                                 <option value="tr">🇹🇷 Turc</option>
                                 <option value="no">🇳🇴 Norvégien</option>
+                                <option value="el">🇬🇷 Grec</option>
                             </select>
                         </div>
                     </div>

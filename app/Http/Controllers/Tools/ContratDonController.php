@@ -478,6 +478,48 @@ class ContratDonController extends Controller
             'p2_notaire_addr' => 'Boulogne-Billancourt, Fransa',
             'p2_date_label'   => 'Tarih',
         ],
+
+        'el' => [
+            'republica_fr'    => 'Γαλλική Δημοκρατία',
+            'ministerio'      => 'Υπουργείο Δικαιοσύνης και Νομοθεσίας',
+            'derechos'        => 'ανθρώπινα δικαιώματα',
+            'tribunal_local'  => 'Πρωτοδικείο :ville',
+            'secretario'      => 'Πρωτογραμματέας',
+            'titre_certif'    => 'ΠΙΣΤΟΠΟΙΗΤΙΚΟ ΕΓΓΡΑΦΗΣ ΔΩΡΕΑΣ',
+            'titre_testament' => 'ΠΙΣΤΟΠΟΙΗΤΙΚΟ ΕΓΓΡΑΦΗΣ ΔΙΑΘΗΚΗΣ',
+            'id_donante'      => 'ΤΑΥΤΟΠΟΙΗΣΗ ΔΩΡΗΤΗ:',
+            'id_beneficiario' => 'ΤΑΥΤΟΠΟΙΗΣΗ ΔΙΚΑΙΟΥΧΟΥ:',
+            'nom'             => 'ΕΠΩΝΥΜΟ:',
+            'prenom'          => 'ΟΝΟΜΑ:',
+            'nom_complet'     => 'ΟΝΟΜΑΤΕΠΩΝΥΜΟ:',
+            'pays'            => 'ΧΩΡΑ:',
+            'adresse'         => 'ΔΙΕΥΘΥΝΣΗ:',
+            'clause_sum'      => 'ΤΟ ΠΟΣΟ ΤΩΝ :montant :devise ΕΙΝΑΙ ΜΕΤΑΦΕΡΣΙΜΟ ΑΠΟ ΤΟΝ ΤΡΑΠΕΖΙΚΟ ΛΟΓΑΡΙΑΣΜΟ ΤΟΥ κ. :donneur ΜΕ ΕΔΡΑ ΤΗΝ ΤΡΑΠΕΖΑ :banque ΣΤΟΝ ΤΡΑΠΕΖΙΚΟ ΛΟΓΑΡΙΑΣΜΟ ΤΗΣ ΕΠΙΛΟΓΗΣ ΤΟΥ ΔΙΚΑΙΟΥΧΟΥ.',
+            'donateur'        => 'ΔΩΡΗΤΗΣ',
+            'notario'         => 'ΣΥΜΒΟΛΑΙΟΓΡΑΦΟΣ',
+            'beneficiaire'    => 'ΔΙΚΑΙΟΥΧΟΣ',
+            'donneur'         => 'Ο ΔΩΡΗΤΗΣ',
+            'as_donneur'      => 'Εφεξής αναφερόμενος ως "Ο Δωρητής"',
+            'as_beneficiaire' => 'Εφεξής αναφερόμενος ως "Ο Δικαιούχος"',
+            'certifie_que'    => 'ΠΙΣΤΟΠΟΙΩ ΟΤΙ ΤΟ ΠΟΣΟ ΤΩΝ :montant :devise ΕΙΝΑΙ ΜΕΤΑΦΕΡΣΙΜΟ ΑΠΟ ΤΟΝ ΤΡΑΠΕΖΙΚΟ ΛΟΓΑΡΙΑΣΜΟ ΤΟΥ κ. :donneur ΣΤΟΝ ΤΡΑΠΕΖΙΚΟ ΛΟΓΑΡΙΑΣΜΟ ΤΗΣ ΕΠΙΛΟΓΗΣ ΤΟΥ ΔΙΚΑΙΟΥΧΟΥ.',
+            'contrat_no'      => 'Αρ.',
+            'p2_para1'        => 'Ο εν λόγω :donneur παραχωρεί, δωρεάν, απόλυτα, αμετάκλητα και άνευ όρων, το ποσό των :montant :devise, και εκχωρεί όλα τα δικαιώματα και την κυριότητά του στον :donataire.',
+            'p2_donateur_declare' => 'Ο Δωρητής δηλώνει και βεβαιώνει ότι:',
+            'p2_bullet1'      => '• Είναι ο αποκλειστικός κάτοχος των κεφαλαίων,',
+            'p2_bullet2'      => '• Έχει το δικαίωμα, την εξουσία και την αρμοδιότητα να δώσει τη συγκατάθεσή του σε αυτή τη δωρεά για λογαριασμό του·',
+            'p2_bullet3'      => '• Σύμφωνα με τις διαθέσιμες πληροφορίες, τα κεφάλαια βρίσκονται σε τοπική τράπεζα και μπορούν να μεταφερθούν ανά πάσα στιγμή στον τραπεζικό λογαριασμό του δικαιούχου.',
+            'p2_senor'        => 'κ./κα.',
+            'p2_accept1'      => '• Αποδέχεται τη δωρεά των ΚΕΦΑΛΑΙΩΝ και αναλαμβάνει την πλήρη επιμέλεια και χρήση τους σύμφωνα με τις πολιτικές και τους Νόμους 77-995 του άρθρου 4 της 18/12/77 για τις περιπτώσεις Δωρεάς·',
+            'p2_accept2'      => '• Δεσμεύεται να χρησιμοποιήσει τα κεφάλαια σωστά και να ξοδέψει το χρήμα νόμιμα.',
+            'p2_legal1'       => 'Η πράξη δωρεάς διέπεται και ερμηνεύεται σύμφωνα με τους νόμους που ισχύουν στο γαλλικό έδαφος και υπό τη δικαστική εποπτεία του Maître :notaire, ιδιώτη και διαπιστευμένου συμβολαιογράφου, με έδρα τη Γαλλία στο :ville.',
+            'p2_legal2'       => 'Η δωρεά τίθεται σε ισχύ από την ημερομηνία υπογραφής από τα μέρη.',
+            'p2_legal3'       => 'Ο :donataire αναγνωρίζει ότι έχει επωφεληθεί από τα κεφάλαια που αποτελούν μέρος αυτής της πράξης δωρεάς.',
+            'p2_notaire_certifie' => 'Η πράξη δωρεάς διέπεται και ερμηνεύεται σύμφωνα με τους νόμους που ισχύουν στο :territoire έδαφος και υπό τη δικαστική εποπτεία του Maître :notaire, ιδιώτη και διαπιστευμένου συμβολαιογράφου, :adresse.',
+            'p2_notaire_name' => 'Maître Marie Aimée PEYRON',
+            'p2_notaire_lawyer' => 'ΔΙΚΗΓΟΡΟΣ ΣΤΟ ΑΝΩΤΑΤΟ ΔΙΚΑΣΤΗΡΙΟ',
+            'p2_notaire_addr' => 'Boulogne-Billancourt, Γαλλία',
+            'p2_date_label'   => 'Ημερομηνία',
+        ],
     ];
 
     private array $republicNames = [
@@ -556,6 +598,11 @@ class ContratDonController extends Controller
             'de' => 'Forbundsrepublikken Tyskland', 'pt' => 'Republikken Portugal',
             'us' => 'Amerikas forente stater', 'gb' => 'Det forente kongerike', 'be' => 'Kongeriket Belgia',
         ],
+        'el' => [
+            'fr' => 'Γαλλική Δημοκρατία', 'es' => 'Βασίλειο της Ισπανίας', 'it' => 'Ιταλική Δημοκρατία',
+            'de' => 'Ομοσπονδιακή Δημοκρατία Γερμανίας', 'pt' => 'Πορτογαλική Δημοκρατία',
+            'us' => 'Ηνωμένες Πολιτείες Αμερικής', 'gb' => 'Ηνωμένο Βασίλειο', 'be' => 'Βασίλειο του Βελγίου',
+        ],
     ];
 
     private array $capitalCities = [
@@ -581,6 +628,7 @@ class ContratDonController extends Controller
         'zh' => ['fr' => '法国', 'es' => '西班牙', 'it' => '意大利', 'de' => '德国', 'pt' => '葡萄牙', 'us' => '美国', 'gb' => '英国', 'be' => '比利时'],
         'tr' => ['fr' => 'Fransız', 'es' => 'İspanyol', 'it' => 'İtalyan', 'de' => 'Alman', 'pt' => 'Portekiz', 'us' => 'Amerikan', 'gb' => 'İngiliz', 'be' => 'Belçika'],
         'no' => ['fr' => 'franske', 'es' => 'spanske', 'it' => 'italienske', 'de' => 'tyske', 'pt' => 'portugisiske', 'us' => 'amerikanske', 'gb' => 'britiske', 'be' => 'belgiske'],
+        'el' => ['fr' => 'γαλλικό', 'es' => 'ισπανικό', 'it' => 'ιταλικό', 'de' => 'γερμανικό', 'pt' => 'πορτογαλικό', 'us' => 'αμερικανικό', 'gb' => 'βρετανικό', 'be' => 'βελγικό'],
     ];
 
     private array $notaireAdresses = [
@@ -694,6 +742,16 @@ class ContratDonController extends Controller
             'gb' => 'bosatt i Storbritannia i London',
             'be' => 'bosatt i Belgia i Brussel',
         ],
+        'el' => [
+            'fr' => 'με έδρα τη Γαλλία στο Boulogne-Billancourt',
+            'es' => 'με έδρα την Ισπανία στη Μαδρίτη',
+            'it' => 'με έδρα την Ιταλία στη Ρώμη',
+            'de' => 'με έδρα τη Γερμανία στο Βερολίνο',
+            'pt' => 'με έδρα την Πορτογαλία στη Λισαβόνα',
+            'us' => 'με έδρα τις ΗΠΑ στην Ουάσιγκτον',
+            'gb' => 'με έδρα στο Ηνωμένο Βασίλειο στο Λονδίνο',
+            'be' => 'με έδρα στο Βέλγιο στις Βρυξέλλες',
+        ],
     ];
 
     private array $ministereNoms = [
@@ -778,6 +836,12 @@ class ContratDonController extends Controller
             'it' => 'Justisdepartementet', 'de' => 'Forbundsjustisdepartementet',
             'pt' => 'Justisdepartementet', 'us' => 'Justisdepartementet',
             'gb' => 'Justisdepartementet', 'be' => 'Forbundsjustisdepartementet',
+        ],
+        'el' => [
+            'fr' => 'Υπουργείο Δικαιοσύνης και Νομοθεσίας', 'es' => 'Υπουργείο Δικαιοσύνης',
+            'it' => 'Υπουργείο Δικαιοσύνης', 'de' => 'Ομοσπονδιακό Υπουργείο Δικαιοσύνης',
+            'pt' => 'Υπουργείο Δικαιοσύνης', 'us' => 'Υπουργείο Δικαιοσύνης',
+            'gb' => 'Υπουργείο Δικαιοσύνης', 'be' => 'Ομοσπονδική Δημόσια Υπηρεσία Δικαιοσύνης',
         ],
     ];
 
@@ -962,7 +1026,7 @@ class ContratDonController extends Controller
             'donateur_adresse' => 'required|string|max:200',
             'montant'          => 'required|numeric|min:1',
             'devise'           => 'required|string',
-            'lang'             => 'required|string|in:fr,en,es,pt,de,it,ru,ar,zh,tr,no',
+            'lang'             => 'required|string|in:fr,en,es,pt,de,it,ru,ar,zh,tr,no,el',
             'pays_notaire'     => 'nullable|string|in:fr,es,it,de,pt,us,gb,be',
             'nom_republique'   => 'nullable|string|max:100',
             'ville_tribunal'   => 'nullable|string|max:100',
