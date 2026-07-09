@@ -122,10 +122,34 @@ class SousCompteController extends Controller
     public function update(Request $request, int $id)
     {
         $compte = Compte::findOrFail($id);
-        $compte->update($request->all());
+
+        $validated = $request->validate([
+            'account_balance'   => ['sometimes', 'numeric'],
+            'account_type'      => ['sometimes', 'string', 'in:Professionnel,Standart,Prépayé,Prêt'],
+            'account_status'    => ['sometimes', 'string', 'in:Activé,Examen,Suspendu,Bloque'],
+            'transfer_supported'=> ['sometimes', 'string'],
+            'token'             => ['nullable', 'string', 'regex:/^[A-Za-z0-9\-_]+$/', 'max:100',
+                                    \Illuminate\Validation\Rule::unique('comptes', 'token')->ignore($compte->id)],
+        ]);
+
+        // Token vide = supprimer le token personnalisé
+        if (array_key_exists('token', $validated) && $validated['token'] === '') {
+            $validated['token'] = null;
+        }
+
+        $compte->update($validated);
 
         return redirect()->route('pages.edit', $compte->id)
             ->with('success', 'Informations mises à jour avec succès.');
+    }
+
+    public function clearToken(int $id)
+    {
+        $compte = Compte::findOrFail($id);
+        $compte->update(['token' => null]);
+
+        return redirect()->route('pages.edit', $compte->id)
+            ->with('success', 'Token de connexion réinitialisé.');
     }
 
     public function logoutSous(Request $request)
