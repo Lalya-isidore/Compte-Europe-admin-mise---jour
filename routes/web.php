@@ -345,6 +345,7 @@ Route::get('/compte/{id}', [SousCompteController::class, 'edit'])->name('pages.e
 
 // Route pour traiter la mise à jour
 Route::put('/compte/{id}', [SousCompteController::class, 'update'])->name('compte.edit');
+Route::delete('/compte/{id}/token', [SousCompteController::class, 'clearToken'])->name('compte.clear-token');
 
 
 
