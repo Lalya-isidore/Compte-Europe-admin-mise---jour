@@ -15,10 +15,13 @@
             padding: 0;
             background: #fff;
             color: #000;
-            font-family: {{ $lang === 'el' ? "'DejaVu Sans', sans-serif" : '"Times New Roman", "DejaVu Serif", serif' }};
+            font-family: "Times New Roman", "DejaVu Serif", serif;
             font-size: 10.5pt;
             line-height: 1.3;
         }
+        @if($lang === 'el')
+        body { font-family: 'DejaVu Sans', sans-serif; }
+        @endif
 
         body * { box-sizing: border-box; }
 
