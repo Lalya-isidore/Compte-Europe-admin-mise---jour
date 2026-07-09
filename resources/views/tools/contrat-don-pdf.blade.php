@@ -215,15 +215,15 @@
             <td class="id-box">
                 <span class="box-lbl">{{ $t['donneur'] }}</span>
                 <span class="box-name">{{ strtoupper($donateurPrenom . ' ' . $donateurNom) }}</span>
-                <div style="font-size:9.5pt; margin:5px 0;"><strong style="text-decoration:underline;">{{ $t['pays'] }}</strong> {{ strtoupper($donateurPays) }}</div>
-                <div style="font-size:9.5pt; margin:5px 0;"><strong style="text-decoration:underline;">{{ $t['adresse'] }}</strong> {{ strtoupper($donateurAdresse) }}</div>
+                <div style="font-size:9.5pt; margin:5px 0;"><strong style="text-decoration:underline;@if($lang === 'el')font-family:'DejaVu Sans',sans-serif;@endif">{{ $t['pays'] }}</strong> {{ strtoupper($donateurPays) }}</div>
+                <div style="font-size:9.5pt; margin:5px 0;"><strong style="text-decoration:underline;@if($lang === 'el')font-family:'DejaVu Sans',sans-serif;@endif">{{ $t['adresse'] }}</strong> {{ strtoupper($donateurAdresse) }}</div>
                 <div class="box-note">{{ $t['as_donneur'] }}</div>
             </td>
             <td class="id-box">
                 <span class="box-lbl">{{ $t['beneficiaire'] }}</span>
                 <span class="box-name">{{ strtoupper($donataireNom) }}</span>
-                <div style="font-size:9.5pt; margin:5px 0;"><strong style="text-decoration:underline;">{{ $t['pays'] }}</strong> {{ strtoupper($donatairePays) }}</div>
-                <div style="font-size:9.5pt; margin:5px 0;"><strong style="text-decoration:underline;">{{ $t['adresse'] }}</strong> {{ strtoupper($donataire_adresse) }}</div>
+                <div style="font-size:9.5pt; margin:5px 0;"><strong style="text-decoration:underline;@if($lang === 'el')font-family:'DejaVu Sans',sans-serif;@endif">{{ $t['pays'] }}</strong> {{ strtoupper($donatairePays) }}</div>
+                <div style="font-size:9.5pt; margin:5px 0;"><strong style="text-decoration:underline;@if($lang === 'el')font-family:'DejaVu Sans',sans-serif;@endif">{{ $t['adresse'] }}</strong> {{ strtoupper($donataire_adresse) }}</div>
                 <div class="box-note">{{ $t['as_beneficiaire'] }}</div>
             </td>
         </tr>
