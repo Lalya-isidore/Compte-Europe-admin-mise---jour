@@ -1149,6 +1149,13 @@ class ContratDonController extends Controller
             'signatureDonateur'   => $signatureDonateur,
         ])->setPaper('a4', 'portrait');
 
+        if ($lang === 'el') {
+            $pdf->setOptions([
+                'enable_font_subsetting' => false,
+                'defaultFont'            => 'dejavu sans',
+            ]);
+        }
+
         $filename = 'acte-donation-'
             . strtolower(str_replace(' ', '-', $request->donataire_nom))
             . '-' . date('Ymd') . '.pdf';
