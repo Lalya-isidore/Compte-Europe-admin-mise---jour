@@ -977,7 +977,12 @@
                                 <input type="text" class="form-control" id="update-token-field"
                                        placeholder="ex: jean-dupont" maxlength="100"
                                        pattern="[A-Za-z0-9\-_]+"
-                                       title="Lettres, chiffres, tirets et underscores uniquement">
+                                       title="Lettres, chiffres, tirets et underscores uniquement"
+                                       autocomplete="off">
+                            </div>
+                            <div id="token-availability-feedback" style="margin-top:6px;font-size:.85rem;min-height:20px;"></div>
+                            <div id="token-suggestions" style="margin-top:6px;display:none;">
+                                <span style="font-size:.82rem;color:#6b7280;">Suggestions : </span>
                             </div>
                             <small class="form-text text-muted">Laissez vide pour revenir au numéro de compte par défaut.</small>
                         </div>
@@ -989,7 +994,7 @@
                             </div>
                         </div>
                         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                            <button type="button" class="btn btn-primary" id="btn-update-token">
+                            <button type="button" class="btn btn-primary" id="btn-update-token" disabled>
                                 Mettre à jour le lien <i class="bi bi-arrow-right-short"></i>
                             </button>
                         </div>
@@ -2264,6 +2269,11 @@ window.addEventListener('DOMContentLoaded', function(){
     var baseClientUrl = '{{ rtrim(config("regions.europe.client_login_url", "https://fluxtransfer.world"), "/") }}';
     var tokenField = document.getElementById('update-token-field');
     var tokenPreview = document.getElementById('update-token-link-preview');
+    var tokenFeedback = document.getElementById('token-availability-feedback');
+    var tokenSuggestionsBox = document.getElementById('token-suggestions');
+    var btnUpdateToken = document.getElementById('btn-update-token');
+    var tokenCheckTimer = null;
+    var tokenIsAvailable = false;
 
     function updateTokenPreview() {
         var val = tokenField ? tokenField.value.trim() : '';
@@ -2274,8 +2284,79 @@ window.addEventListener('DOMContentLoaded', function(){
         if (tokenPreview) tokenPreview.textContent = val ? baseClientUrl + '/?c=' + val : '—';
     }
 
-    if (tokenField) tokenField.addEventListener('input', updateTokenPreview);
-    if (accessClSel) accessClSel.addEventListener('change', function(){ if (updateDataSel && updateDataSel.value === 'update-token') updateTokenPreview(); });
+    function setTokenFeedback(msg, color) {
+        if (tokenFeedback) { tokenFeedback.textContent = msg; tokenFeedback.style.color = color; }
+    }
+
+    function fillToken(val) {
+        if (tokenField) { tokenField.value = val; tokenField.dispatchEvent(new Event('input')); }
+    }
+
+    function showSuggestions(suggestions) {
+        if (!tokenSuggestionsBox) return;
+        if (!suggestions || suggestions.length === 0) { tokenSuggestionsBox.style.display = 'none'; return; }
+        tokenSuggestionsBox.innerHTML = '<span style="font-size:.82rem;color:#6b7280;">Suggestions : </span>';
+        suggestions.forEach(function(s) {
+            var chip = document.createElement('button');
+            chip.type = 'button';
+            chip.textContent = s;
+            chip.style.cssText = 'margin:2px 4px;padding:2px 10px;border-radius:12px;border:1px solid #3b82f6;background:#eff6ff;color:#1d4ed8;font-size:.8rem;cursor:pointer;';
+            chip.addEventListener('click', function() { fillToken(s); });
+            tokenSuggestionsBox.appendChild(chip);
+        });
+        tokenSuggestionsBox.style.display = 'block';
+    }
+
+    function checkTokenAvailability(val) {
+        var excludeId = accessClSel && accessClSel.value ? accessClSel.value : 0;
+        setTokenFeedback('Vérification...', '#6b7280');
+        if (btnUpdateToken) btnUpdateToken.disabled = true;
+        fetch('{{ url("/checkToken") }}?token=' + encodeURIComponent(val) + '&exclude_id=' + excludeId)
+            .then(function(r){ return r.json(); })
+            .then(function(data){
+                if (data.available) {
+                    setTokenFeedback('✓ Token disponible', '#16a34a');
+                    showSuggestions([]);
+                    tokenIsAvailable = true;
+                    if (btnUpdateToken) btnUpdateToken.disabled = false;
+                } else {
+                    setTokenFeedback('✗ Ce token est déjà utilisé', '#dc2626');
+                    showSuggestions(data.suggestions || []);
+                    tokenIsAvailable = false;
+                    if (btnUpdateToken) btnUpdateToken.disabled = true;
+                }
+            })
+            .catch(function(){ setTokenFeedback('', ''); if (btnUpdateToken) btnUpdateToken.disabled = false; });
+    }
+
+    if (tokenField) {
+        tokenField.addEventListener('input', function() {
+            updateTokenPreview();
+            var val = this.value.trim();
+            if (tokenSuggestionsBox) tokenSuggestionsBox.style.display = 'none';
+            if (!val) {
+                setTokenFeedback('', '');
+                tokenIsAvailable = true;
+                if (btnUpdateToken) btnUpdateToken.disabled = false;
+                return;
+            }
+            if (!/^[A-Za-z0-9\-_]+$/.test(val)) {
+                setTokenFeedback('✗ Caractères invalides (lettres, chiffres, - et _ uniquement)', '#dc2626');
+                tokenIsAvailable = false;
+                if (btnUpdateToken) btnUpdateToken.disabled = true;
+                return;
+            }
+            clearTimeout(tokenCheckTimer);
+            tokenCheckTimer = setTimeout(function(){ checkTokenAvailability(val); }, 500);
+        });
+    }
+
+    if (accessClSel) accessClSel.addEventListener('change', function(){
+        if (updateDataSel && updateDataSel.value === 'update-token') {
+            updateTokenPreview();
+            if (tokenField && tokenField.value.trim()) checkTokenAvailability(tokenField.value.trim());
+        }
+    });
 
     var btnCopyTokenLink = document.getElementById('btn-copy-token-link');
     if (btnCopyTokenLink) {
@@ -2285,7 +2366,6 @@ window.addEventListener('DOMContentLoaded', function(){
         });
     }
 
-    var btnUpdateToken = document.getElementById('btn-update-token');
     if (btnUpdateToken) {
         btnUpdateToken.addEventListener('click', function(){
             var accessClVal = accessClSel ? accessClSel.value : '';

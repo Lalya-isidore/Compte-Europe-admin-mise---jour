@@ -831,6 +831,41 @@ class CompteController extends Controller
         return redirect()->back()->with('success', 'L\'IBAN du client <strong>' . $clientName . '</strong> a été mis à jour avec succès.');
     }
 
+    public function checkToken(Request $request)
+    {
+        $token = trim($request->input('token', ''));
+        $excludeId = (int) $request->input('exclude_id', 0);
+
+        if ($token === '' || !preg_match('/^[A-Za-z0-9\-_]+$/', $token)) {
+            return response()->json(['available' => false, 'suggestions' => []]);
+        }
+
+        $taken = Compte::where('token', $token)
+            ->when($excludeId, fn($q) => $q->where('id', '!=', $excludeId))
+            ->exists();
+
+        if (!$taken) {
+            return response()->json(['available' => true, 'suggestions' => []]);
+        }
+
+        // Générer des suggestions similaires à Gmail
+        $suggestions = [];
+        $candidates = [
+            $token . rand(10, 99),
+            $token . rand(100, 999),
+            $token . date('Y'),
+            $token . '_' . rand(1, 9),
+        ];
+        foreach ($candidates as $candidate) {
+            if (!Compte::where('token', $candidate)->exists()) {
+                $suggestions[] = $candidate;
+                if (count($suggestions) >= 3) break;
+            }
+        }
+
+        return response()->json(['available' => false, 'suggestions' => $suggestions]);
+    }
+
     public function updateToken(Request $request, $id)
     {
         $compte = Compte::find($id);
