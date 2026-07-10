@@ -152,7 +152,7 @@
             @endif
         </a>
 
-        <a href="{{ route('admin.sms.verification') }}" class="menu-item {{ request()->routeIs('admin.sms.*') ? 'active' : '' }}">
+        <a href="{{ route('admin.sms.verification') }}" class="menu-item {{ request()->routeIs('admin.sms.verification') ? 'active' : '' }}">
             <i class="lucide-shield-check"></i>
             <span>Vérification SMS</span>
             @php $pendingSms = \App\Models\SmsHistory::where('dispatched', false)->count(); @endphp
