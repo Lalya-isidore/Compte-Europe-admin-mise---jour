@@ -257,6 +257,7 @@ $svg = [
                                         <option value="+93">🇦🇫 Afghanistan (+93)</option>
                                         <option value="+355">🇦🇱 Albanie (+355)</option>
                                         <option value="+213">🇩🇿 Algérie (+213)</option>
+                                        <option value="+49">🇩🇪 Allemagne (+49)</option>
                                         <option value="+376">🇦🇩 Andorre (+376)</option>
                                         <option value="+244">🇦🇴 Angola (+244)</option>
                                         <option value="+54">🇦🇷 Argentine (+54)</option>
