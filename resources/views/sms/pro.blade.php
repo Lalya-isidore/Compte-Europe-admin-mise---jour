@@ -194,64 +194,7 @@ $svg = [
         </button>
     </div>
 
-    {{-- Bandeau avertissement rejets opérateurs --}}
-    <div class="mx-3 mx-sm-4 mb-3">
-        <div class="rounded-3 overflow-hidden" style="background:#c0392b;">
-
-            {{-- Ligne ticker --}}
-            <div class="d-flex align-items-center" style="background:#a93226;padding:9px 14px;gap:10px;">
-                <span style="white-space:nowrap;font-size:.95rem;font-weight:700;color:#fff;background:#e74c3c;border-radius:4px;padding:3px 10px;flex-shrink:0;">⚠ REJET</span>
-                <div style="overflow:hidden;flex:1;">
-                    <div class="sms-ticker-text" style="white-space:nowrap;font-size:.95rem;color:#fecaca;animation:smsTicker 28s linear infinite;">
-                        🚫 Mots déclencheurs : "frais d'activation", "payer pour recevoir", "débloquer vos fonds", "transfert conditionnel"&nbsp;&nbsp;&nbsp;•&nbsp;&nbsp;&nbsp;✅ Une simple notification de virement avec IBAN/BIC passe sans problème&nbsp;&nbsp;&nbsp;•&nbsp;&nbsp;&nbsp;💰 $ et € seuls ne posent pas de problème — c'est la combinaison avec une demande de paiement qui est bloquée&nbsp;&nbsp;&nbsp;•&nbsp;&nbsp;&nbsp;🌍 Certains pays bloquent les SMS bancaires d'expéditeurs non certifiés&nbsp;&nbsp;&nbsp;•&nbsp;&nbsp;&nbsp;📵 Nom d'expéditeur imitant un opérateur (MTN MOMO, ORANGE…) interdit&nbsp;&nbsp;&nbsp;•&nbsp;&nbsp;&nbsp;✅ SMS rejetés = non facturés
-                    </div>
-                </div>
-            </div>
-
-            {{-- Bouton pour ouvrir le détail --}}
-            <button class="btn w-100 d-flex align-items-center gap-3 px-4 py-3 border-0" type="button"
-                data-bs-toggle="collapse" data-bs-target="#rejetOpeCollapse" aria-expanded="false"
-                style="background:transparent;text-align:left;">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="#fff" style="flex-shrink:0;"><path d="M12 2L1 21h22L12 2zm0 3.5L20.5 19h-17L12 5.5zM11 10v4h2v-4h-2zm0 6v2h2v-2h-2z"/></svg>
-                <div class="flex-grow-1">
-                    <div class="fw-bold" style="font-size:.95rem;color:#fff;">Pourquoi mon SMS est rejeté ? Cliquez pour tout savoir</div>
-                </div>
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><polyline points="6 9 12 15 18 9"/></svg>
-            </button>
-
-            {{-- Contenu détaillé --}}
-            <div class="collapse" id="rejetOpeCollapse">
-                <div class="px-4 pb-4 pt-2" style="font-size:1rem;color:#fff;border-top:1px solid rgba(255,255,255,.15);">
-
-                    <p class="fw-bold mb-3 mt-2" style="font-size:1.08rem;">🚨 Pourquoi certains SMS sont bloqués en Europe et en Amérique</p>
-
-                    <p class="fw-semibold mb-1" style="color:#fca5a5;font-size:1.02rem;">1. Contenu sensible</p>
-                    <p class="mb-3" style="line-height:1.7;">Les SMS demandant un paiement pour recevoir de l'argent (ex. frais d'activation, déblocage de fonds) sont souvent bloqués.<br>
-                    ✅ Les simples notifications de virement sont généralement acceptées.</p>
-
-                    <p class="fw-semibold mb-1" style="color:#fca5a5;font-size:1.02rem;">2. Restrictions réglementaires</p>
-                    <p class="mb-3" style="line-height:1.7;">Certains pays interdisent les SMS bancaires provenant d'expéditeurs non certifiés. Les noms comme <strong>BBVA, PARIBAS, MTN MOMO, MOOV MONEY</strong> peuvent être refusés.</p>
-
-                    <p class="fw-semibold mb-1" style="color:#fca5a5;font-size:1.02rem;">3. Bonnes pratiques</p>
-                    <ul class="mb-3 ps-3" style="line-height:2;">
-                        <li>Évitez les termes liés aux paiements et transactions.</li>
-                        <li>Utilisez des messages neutres et clairs.</li>
-                        <li style="color:#86efac;font-weight:600;">Les SMS rejetés ne sont généralement pas facturés.</li>
-                    </ul>
-
-                    <div class="mt-2 px-3 py-2 rounded-2" style="background:rgba(255,255,255,.1);line-height:1.7;">
-                        <strong>NB :</strong> Les SMS passent généralement sans problème vers les pays africains, sauf en cas d'utilisation abusive de noms d'opérateurs ou de services financiers.
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <style>
-    @keyframes smsTicker {
-        0%   { transform: translateX(100%); }
-        100% { transform: translateX(-100%); }
-    }
     </style>
 
     <div class="row g-0 m-0 sms-layout-row">
