@@ -62,7 +62,7 @@
                             <code>{{ $sms->destinataire }}</code>
                             <span class="badge bg-secondary ms-1">{{ $sms->pays ?? '' }}</span>
                         </td>
-                        <td style="max-width:300px;">
+                        <td style="min-width:220px;max-width:320px;">
                             <div style="white-space:pre-wrap;word-break:break-word;background:#f8fafc;border:1px solid #e2e8f0;border-radius:6px;padding:8px 10px;font-size:.85rem;color:#1e293b;line-height:1.6;">{{ $sms->message }}</div>
                             <div class="text-muted mt-1" style="font-size:.75rem;">{{ $sms->sms_count }} segment(s)</div>
                         </td>
