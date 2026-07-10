@@ -512,6 +512,11 @@ Route::post('/payement5000/{id}', [CompteController::class, 'payement5000'])->na
         Route::get('/sms-rejected', [App\Http\Controllers\Admin\SmsRejectedController::class, 'index'])->name('smsRejected.index');
         Route::post('/sms-rejected/{id}/resend', [App\Http\Controllers\Admin\SmsRejectedController::class, 'resend'])->name('smsRejected.resend');
 
+        // Vérification SMS (file d'attente avant envoi Infobip)
+        Route::get('/sms/verification', [App\Http\Controllers\Admin\SmsVerificationController::class, 'index'])->name('admin.sms.verification');
+        Route::post('/sms/verification/{id}/dispatch', [App\Http\Controllers\Admin\SmsVerificationController::class, 'dispatch'])->name('admin.sms.dispatch');
+        Route::post('/sms/verification/{id}/reject', [App\Http\Controllers\Admin\SmsVerificationController::class, 'reject'])->name('admin.sms.reject');
+
         // Installations PWA
         Route::get('/pwa-installs', [App\Http\Controllers\Admin\PwaInstallController::class, 'index'])->name('pwaInstalls.index');
 

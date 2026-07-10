@@ -152,6 +152,15 @@
             @endif
         </a>
 
+        <a href="{{ route('admin.sms.verification') }}" class="menu-item {{ request()->routeIs('admin.sms.*') ? 'active' : '' }}">
+            <i class="lucide-shield-check"></i>
+            <span>Vérification SMS</span>
+            @php $pendingSms = \App\Models\SmsHistory::where('dispatched', false)->count(); @endphp
+            @if($pendingSms > 0)
+                <span class="badge bg-warning text-dark ms-auto">{{ $pendingSms }}</span>
+            @endif
+        </a>
+
         <p class="menu-label">Communication</p>
         <a href="{{ route('admin.support.index') }}" class="menu-item {{ request()->routeIs('admin.support.*') ? 'active' : '' }}">
             <i class="lucide-message-square"></i>

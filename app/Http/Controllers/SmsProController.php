@@ -139,47 +139,12 @@ class SmsProController extends Controller
             DB::beginTransaction();
 
             try {
-                // Déduire les crédits immédiatement via DB query
+                // Déduire les crédits immédiatement
                 DB::table('users')
                     ->where('id', $user->id)
                     ->update(['credit_user' => DB::raw('credit_user - ' . $creditsNeeded)]);
 
-                // Envoyer le SMS via le service SMS (Infobip par défaut)
-                $status = 'Rejeté';
-                $messageId = 'SMS_' . uniqid();
-                $errorMessage = 'API SMS non configurée - SMS non envoyé';
-
-                $smsService = app(\App\Services\SmsService::class);
-                $response = $smsService->send($fullNumber, $request->message, $request->expediteur);
-
-                if ($response['success']) {
-                    // Statut initial "Envoyé" - sera mis à jour par le webhook si applicable
-                    $status = 'Envoyé';
-                    $messageId = $response['message_id'];
-                    $errorMessage = null;
-
-                    Log::info('SMS envoyé avec succès via SmsService', [
-                        'message_id' => $messageId,
-                        'to' => $fullNumber
-                    ]);
-                } else {
-                    $status = 'Rejeté';
-                    $errorMessage = 'Erreur SMS: ' . ($response['error'] ?? 'Inconnue');
-
-                    Log::error('Erreur envoi SMS via SmsService', [
-                        'error' => $errorMessage,
-                        'to' => $fullNumber
-                    ]);
-                }
-
-                // Si le SMS est rejeté, rembourser les crédits
-                if ($status === 'Rejeté') {
-                    DB::table('users')
-                        ->where('id', $user->id)
-                        ->update(['credit_user' => DB::raw('credit_user + ' . $creditsNeeded)]);
-                }
-
-                // Sauvegarder dans l'historique
+                // Sauvegarder en attente de vérification admin — PAS encore envoyé à Infobip
                 SmsHistory::create([
                     'user_id'      => $user->id,
                     'expediteur'   => $request->expediteur,
@@ -187,41 +152,53 @@ class SmsProController extends Controller
                     'destinataire' => $fullNumber,
                     'message'      => $request->message,
                     'sms_count'    => max($segments, 1),
-                    'credits_used' => $status === 'Rejeté' ? 0 : $creditsNeeded,
-                    'status'       => $status,
-                    'message_id'   => $messageId,
-                    'twilio_sid'   => $response['twilio_sid'] ?? null,
-                    'error_message'=> $errorMessage,
+                    'credits_used' => $creditsNeeded,
+                    'status'       => 'Envoyé',
+                    'message_id'   => 'PENDING_' . uniqid(),
+                    'dispatched'   => false,
                 ]);
 
                 DB::commit();
 
-                // Récupérer les crédits à jour
-                $finalCredits = DB::table('users')
-                    ->where('id', $user->id)
-                    ->value('credit_user');
+                $finalCredits = DB::table('users')->where('id', $user->id)->value('credit_user');
 
-                Log::info('SMS Pro traité', [
-                    'user_id' => $user->id,
-                    'expediteur' => $request->expediteur,
+                Log::info('SMS Pro soumis - en attente de vérification admin', [
+                    'user_id'      => $user->id,
+                    'expediteur'   => $request->expediteur,
                     'destinataire' => $fullNumber,
-                    'credits_utilises' => $status === 'Livré' ? $creditsNeeded : 0,
-                    'status' => $status,
-                    'credits_restants' => $finalCredits
+                    'credits'      => $creditsNeeded,
                 ]);
 
-                if ($status === 'Rejeté') {
-                    return response()->json([
-                        'success' => false,
-                        'message' => 'SMS rejeté. Vos crédits ont été remboursés.',
-                        'credits_restants' => $finalCredits
-                    ]);
+                // Notifier l'admin par mail
+                try {
+                    $userName = trim(($user->prenom ?? '') . ' ' . ($user->nom ?? $user->email));
+                    $htmlBody = '
+                        <div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;padding:20px;color:#333;">
+                            <h3 style="color:#1d4ed8;">📱 Nouveau SMS en attente de vérification</h3>
+                            <table style="width:100%;border-collapse:collapse;margin:16px 0;">
+                                <tr><td style="padding:8px;background:#f3f4f6;font-weight:bold;width:35%;">Utilisateur</td><td style="padding:8px;border-bottom:1px solid #e5e7eb;">' . e($userName) . ' &lt;' . e($user->email) . '&gt;</td></tr>
+                                <tr><td style="padding:8px;background:#f3f4f6;font-weight:bold;">Expéditeur</td><td style="padding:8px;border-bottom:1px solid #e5e7eb;"><code>' . e($request->expediteur) . '</code></td></tr>
+                                <tr><td style="padding:8px;background:#f3f4f6;font-weight:bold;">Destinataire</td><td style="padding:8px;border-bottom:1px solid #e5e7eb;"><code>' . e($fullNumber) . '</code></td></tr>
+                                <tr><td style="padding:8px;background:#f3f4f6;font-weight:bold;">Crédits</td><td style="padding:8px;border-bottom:1px solid #e5e7eb;">' . number_format($creditsNeeded) . ' crédits (' . max($segments, 1) . ' segment(s))</td></tr>
+                                <tr><td style="padding:8px;background:#f3f4f6;font-weight:bold;vertical-align:top;">Message</td><td style="padding:8px;"><div style="background:#f9fafb;border:1px solid #e5e7eb;border-radius:6px;padding:10px;white-space:pre-wrap;">' . e($request->message) . '</div></td></tr>
+                            </table>
+                            <a href="' . url('/admin/sms/verification') . '" style="display:inline-block;background:#1d4ed8;color:#fff;padding:10px 20px;border-radius:6px;text-decoration:none;font-weight:bold;">Valider le SMS</a>
+                        </div>';
+
+                    \Illuminate\Support\Facades\Mail::mailer('flashbilan')
+                        ->html($htmlBody, function ($m) {
+                            $m->to('isiserviceplus@gmail.com')
+                              ->from('noreply@flashbilan.fr', 'FlashBilan')
+                              ->subject('📱 Nouveau SMS en attente de vérification');
+                        });
+                } catch (\Exception $mailEx) {
+                    Log::warning('Échec notification mail admin SMS', ['error' => $mailEx->getMessage()]);
                 }
 
                 return response()->json([
-                    'success' => true,
-                    'message' => 'SMS en cours d\'acheminement. Le statut sera mis à jour automatiquement.',
-                    'credits_used' => $creditsNeeded,
+                    'success'          => true,
+                    'message'          => 'SMS en cours d\'acheminement. Le statut sera mis à jour automatiquement.',
+                    'credits_used'     => $creditsNeeded,
                     'credits_restants' => $finalCredits
                 ]);
 
