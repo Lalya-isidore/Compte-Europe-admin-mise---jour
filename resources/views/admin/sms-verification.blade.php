@@ -57,7 +57,7 @@
                                 <span class="text-muted">—</span>
                             @endif
                         </td>
-                        <td><code>{{ $sms->expediteur ?? '—' }}</code></td>
+                        <td><code>{{ $sms->expediteur ?: '—' }}</code></td>
                         <td>
                             <code>{{ $sms->destinataire }}</code>
                             <span class="badge bg-secondary ms-1">{{ $sms->pays ?? '' }}</span>

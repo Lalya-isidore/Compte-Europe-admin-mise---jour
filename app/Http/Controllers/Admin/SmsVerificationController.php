@@ -15,6 +15,7 @@ class SmsVerificationController extends Controller
     {
         $pending = SmsHistory::with('user')
             ->where('dispatched', false)
+            ->where('status', 'Envoyé')
             ->orderBy('created_at', 'asc')
             ->paginate(50);
 
