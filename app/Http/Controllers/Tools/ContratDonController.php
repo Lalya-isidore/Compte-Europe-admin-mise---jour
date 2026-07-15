@@ -1091,7 +1091,7 @@ class ContratDonController extends Controller
             'donateur_adresse' => 'required|string|max:200',
             'montant'          => 'required|numeric|min:1',
             'devise'           => 'required|string',
-            'lang'             => 'required|string|in:fr,en,es,pt,de,it,ru,ar,zh,tr,no,el',
+            'lang'             => 'required|string|in:fr,en,es,pt,de,it,ru,ar,zh,tr,no,el,pl',
             'pays_notaire'     => 'nullable|string|in:fr,es,it,de,pt,us,gb,be',
             'nom_republique'   => 'nullable|string|max:100',
             'ville_tribunal'   => 'nullable|string|max:100',
