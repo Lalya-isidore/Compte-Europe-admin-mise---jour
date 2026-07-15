@@ -59,6 +59,7 @@
                                 <option value="tr">🇹🇷 Turc</option>
                                 <option value="no">🇳🇴 Norvégien</option>
                                 <option value="el">🇬🇷 Grec</option>
+                                <option value="pl">🇵🇱 Polonais</option>
                             </select>
                         </div>
                     </div>

@@ -520,6 +520,49 @@ class ContratDonController extends Controller
             'p2_notaire_addr' => 'Boulogne-Billancourt, Γαλλία',
             'p2_date_label'   => 'Ημερομηνία',
         ],
+
+        'pl' => [
+            'republica_fr'    => 'Republika Francuska',
+            'ministerio'      => 'Ministerstwo Sprawiedliwości i Legislacji',
+            'derechos'        => 'prawa człowieka',
+            'tribunal_local'  => 'Sąd Okręgowy w :ville',
+            'secretario'      => 'Główny Sekretarz',
+            'titre_certif'    => 'CERTYFIKAT REJESTRACJI DAROWIZNY',
+            'titre_testament' => 'CERTYFIKAT REJESTRACJI TESTAMENTU',
+            'id_donante'      => 'DANE DARCZYŃCY:',
+            'id_beneficiario' => 'DANE BENEFICJENTA:',
+            'nom'             => 'NAZWISKO:',
+            'prenom'          => 'IMIĘ:',
+            'nom_complet'     => 'IMIĘ I NAZWISKO:',
+            'pays'            => 'KRAJ:',
+            'adresse'         => 'ADRES:',
+            'clause_sum'      => 'KWOTA :montant :devise JEST PRZELEWALNA Z RACHUNKU BANKOWEGO PANA :donneur POSIADAJĄCEGO RACHUNEK W BANKU :banque NA RACHUNEK BANKOWY WYBRANY PRZEZ BENEFICJENTA.',
+            'donateur'        => 'DARCZYŃCA',
+            'notario'         => 'NOTARIUSZ',
+            'beneficiaire'    => 'BENEFICJENT',
+            'donneur'         => 'DARCZYŃCA',
+            'as_donneur'      => 'Zwany dalej „Darczyńcą"',
+            'as_beneficiaire' => 'Zwany dalej „Beneficjentem"',
+            'certifie_que'    => 'NINIEJSZYM ZAŚWIADCZAM, ŻE KWOTA :montant :devise JEST PRZELEWALNA Z RACHUNKU BANKOWEGO PANA :donneur NA RACHUNEK BANKOWY WYBRANY PRZEZ BENEFICJENTA.',
+            'contrat_no'      => 'Nr',
+            // Page 2 - Legal clauses
+            'p2_para1'        => 'Wyżej wymieniony :donneur przekazuje, dobrowolnie, bezwarunkowo, nieodwołalnie i bez zastrzeżeń, kwotę :montant :devise oraz przenosi wszelkie prawa i własność do tej kwoty na :donataire.',
+            'p2_donateur_declare' => 'Darczyńca oświadcza i zaświadcza, że:',
+            'p2_bullet1'      => '• Jest wyłącznym właścicielem środków,',
+            'p2_bullet2'      => '• Ma prawo, pełnomocnictwo i upoważnienie do wyrażenia zgody na niniejszą darowiznę we własnym imieniu;',
+            'p2_bullet3'      => '• Zgodnie z posiadanymi informacjami środki znajdują się w lokalnym banku i mogą zostać przelane w dowolnym momencie na rachunek bankowy beneficjenta.',
+            'p2_senor'        => 'Pan/Pani',
+            'p2_accept1'      => '• Przyjmuje darowiznę ŚRODKÓW FINANSOWYCH i przejmuje nad nimi pełną pieczę oraz zobowiązuje się do ich wykorzystania zgodnie z polityką i Prawami 77-995 artykułu 4 z dnia 18/12/77 dotyczącymi spraw darowizn;',
+            'p2_accept2'      => '• Zobowiązuje się do właściwego wykorzystania środków i zgodnego z prawem wydatkowania pieniędzy.',
+            'p2_legal1'       => 'Akt darowizny jest regulowany i interpretowany zgodnie z przepisami obowiązującymi na terytorium Francji, pod nadzorem sądowym Maître :notaire, prywatnego i akredytowanego notariusza zamieszkałego we Francji w :ville.',
+            'p2_legal2'       => 'Darowizna wchodzi w życie z dniem podpisania przez strony.',
+            'p2_legal3'       => ':donataire potwierdza, że skorzystał ze środków stanowiących część niniejszego aktu darowizny.',
+            'p2_notaire_certifie' => 'Akt darowizny jest regulowany i interpretowany zgodnie z przepisami obowiązującymi na terytorium :territoire, pod nadzorem sądowym Maître :notaire, prywatnego i akredytowanego notariusza, :adresse.',
+            'p2_notaire_name' => 'Maître Marie Aimée PEYRON',
+            'p2_notaire_lawyer' => 'ADWOKAT PRZY SĄDZIE NAJWYŻSZYM',
+            'p2_notaire_addr' => 'Boulogne-Billancourt, Francja',
+            'p2_date_label'   => 'Data',
+        ],
     ];
 
     private array $republicNames = [
@@ -603,6 +646,11 @@ class ContratDonController extends Controller
             'de' => 'Ομοσπονδιακή Δημοκρατία Γερμανίας', 'pt' => 'Πορτογαλική Δημοκρατία',
             'us' => 'Ηνωμένες Πολιτείες Αμερικής', 'gb' => 'Ηνωμένο Βασίλειο', 'be' => 'Βασίλειο του Βελγίου',
         ],
+        'pl' => [
+            'fr' => 'Republika Francuska', 'es' => 'Królestwo Hiszpanii', 'it' => 'Republika Włoska',
+            'de' => 'Republika Federalna Niemiec', 'pt' => 'Republika Portugalska',
+            'us' => 'Stany Zjednoczone Ameryki', 'gb' => 'Zjednoczone Królestwo', 'be' => 'Królestwo Belgii',
+        ],
     ];
 
     private array $capitalCities = [
@@ -629,6 +677,7 @@ class ContratDonController extends Controller
         'tr' => ['fr' => 'Fransız', 'es' => 'İspanyol', 'it' => 'İtalyan', 'de' => 'Alman', 'pt' => 'Portekiz', 'us' => 'Amerikan', 'gb' => 'İngiliz', 'be' => 'Belçika'],
         'no' => ['fr' => 'franske', 'es' => 'spanske', 'it' => 'italienske', 'de' => 'tyske', 'pt' => 'portugisiske', 'us' => 'amerikanske', 'gb' => 'britiske', 'be' => 'belgiske'],
         'el' => ['fr' => 'γαλλικό', 'es' => 'ισπανικό', 'it' => 'ιταλικό', 'de' => 'γερμανικό', 'pt' => 'πορτογαλικό', 'us' => 'αμερικανικό', 'gb' => 'βρετανικό', 'be' => 'βελγικό'],
+        'pl' => ['fr' => 'francuskim', 'es' => 'hiszpańskim', 'it' => 'włoskim', 'de' => 'niemieckim', 'pt' => 'portugalskim', 'us' => 'amerykańskim', 'gb' => 'brytyjskim', 'be' => 'belgijskim'],
     ];
 
     private array $notaireAdresses = [
@@ -752,6 +801,16 @@ class ContratDonController extends Controller
             'gb' => 'με έδρα στο Ηνωμένο Βασίλειο στο Λονδίνο',
             'be' => 'με έδρα στο Βέλγιο στις Βρυξέλλες',
         ],
+        'pl' => [
+            'fr' => 'zamieszkałego we Francji w Boulogne-Billancourt',
+            'es' => 'zamieszkałego w Hiszpanii w Madrycie',
+            'it' => 'zamieszkałego we Włoszech w Rzymie',
+            'de' => 'zamieszkałego w Niemczech w Berlinie',
+            'pt' => 'zamieszkałego w Portugalii w Lizbonie',
+            'us' => 'zamieszkałego w Stanach Zjednoczonych w Waszyngtonie',
+            'gb' => 'zamieszkałego w Zjednoczonym Królestwie w Londynie',
+            'be' => 'zamieszkałego w Belgii w Brukseli',
+        ],
     ];
 
     private array $ministereNoms = [
@@ -842,6 +901,12 @@ class ContratDonController extends Controller
             'it' => 'Υπουργείο Δικαιοσύνης', 'de' => 'Ομοσπονδιακό Υπουργείο Δικαιοσύνης',
             'pt' => 'Υπουργείο Δικαιοσύνης', 'us' => 'Υπουργείο Δικαιοσύνης',
             'gb' => 'Υπουργείο Δικαιοσύνης', 'be' => 'Ομοσπονδική Δημόσια Υπηρεσία Δικαιοσύνης',
+        ],
+        'pl' => [
+            'fr' => 'Ministerstwo Sprawiedliwości i Legislacji', 'es' => 'Ministerstwo Sprawiedliwości',
+            'it' => 'Ministerstwo Sprawiedliwości', 'de' => 'Federalne Ministerstwo Sprawiedliwości',
+            'pt' => 'Ministerstwo Sprawiedliwości', 'us' => 'Departament Sprawiedliwości',
+            'gb' => 'Ministerstwo Sprawiedliwości', 'be' => 'Federalna Służba Publiczna Sprawiedliwości',
         ],
     ];
 
