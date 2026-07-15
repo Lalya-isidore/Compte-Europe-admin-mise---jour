@@ -129,6 +129,12 @@ class SmsWebhookController extends Controller
                 $sms->status = 'Rejeté';
                 $sms->error_code = $result['error']['name'] ?? null;
 
+                $rejectDesc = $result['status']['description']
+                    ?? $result['error']['description']
+                    ?? $result['error']['name']
+                    ?? $groupName;
+                $sms->error_message = 'Rejeté par l\'opérateur mobile : ' . $rejectDesc;
+
                 // Rembourser les crédits si pas encore remboursés
                 if ($sms->credits_used > 0) {
                     DB::table('users')
