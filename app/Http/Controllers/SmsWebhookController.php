@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\SmsHistory;
 use App\Services\SmsService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Twilio\Security\RequestValidator;
 
@@ -127,6 +128,19 @@ class SmsWebhookController extends Controller
             } elseif (in_array($groupName, ['UNDELIVERABLE', 'REJECTED', 'EXPIRED'])) {
                 $sms->status = 'Rejeté';
                 $sms->error_code = $result['error']['name'] ?? null;
+
+                // Rembourser les crédits si pas encore remboursés
+                if ($sms->credits_used > 0) {
+                    DB::table('users')
+                        ->where('id', $sms->user_id)
+                        ->update(['credit_user' => DB::raw('credit_user + ' . $sms->credits_used)]);
+                    $sms->credits_used = 0;
+                    Log::info('Crédits remboursés (rejet opérateur DLR)', [
+                        'sms_id'  => $sms->id,
+                        'user_id' => $sms->user_id,
+                        'group'   => $groupName,
+                    ]);
+                }
             }
 
             try {
