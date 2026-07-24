@@ -16,11 +16,12 @@ class SmsService
 
     public function send(string $to, string $message, ?string $sender = null): array
     {
-        Log::info("Sending SMS via {$this->provider}", ['to' => $to, 'sender' => $sender]);
+        Log::info("Sending SMS via Twilio", ['to' => $to, 'sender' => $sender]);
 
-        if ($this->provider === 'infobip') {
-            return app(InfobipService::class)->sendSms($to, $message, $sender);
-        }
+        // Infobip temporairement désactivé — Twilio utilisé pour tous les envois
+        // if ($this->provider === 'infobip') {
+        //     return app(InfobipService::class)->sendSms($to, $message, $sender);
+        // }
 
         return $this->sendViaTwilio($to, $message, $sender);
     }

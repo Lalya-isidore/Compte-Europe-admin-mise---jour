@@ -41,16 +41,16 @@ class SmsVerificationController extends Controller
                 $sms->dispatched = true;
                 $sms->save();
 
-                Log::info('SMS dispatché vers Infobip par admin', [
+                Log::info('SMS dispatché vers Twilio par admin', [
                     'sms_id'     => $sms->id,
                     'message_id' => $sms->message_id,
                 ]);
 
                 DB::commit();
-                return back()->with('success', 'SMS envoyé à Infobip. Le statut sera mis à jour automatiquement.');
+                return back()->with('success', 'SMS envoyé via Twilio. Le statut sera mis à jour automatiquement.');
             }
 
-            // Infobip a rejeté immédiatement — rembourser les crédits
+            // Twilio a rejeté immédiatement — rembourser les crédits
             DB::table('users')
                 ->where('id', $sms->user_id)
                 ->update(['credit_user' => DB::raw('credit_user + ' . $sms->credits_used)]);
@@ -63,12 +63,12 @@ class SmsVerificationController extends Controller
 
             DB::commit();
 
-            Log::warning('SMS rejeté par Infobip lors du dispatch admin', [
+            Log::warning('SMS rejeté par Twilio lors du dispatch admin', [
                 'sms_id' => $sms->id,
                 'error'  => $response['error'] ?? '',
             ]);
 
-            return back()->with('error', 'Infobip a rejeté le SMS. Les crédits ont été remboursés à l\'utilisateur.');
+            return back()->with('error', 'Twilio a rejeté le SMS. Les crédits ont été remboursés à l\'utilisateur.');
 
         } catch (\Exception $e) {
             DB::rollBack();
