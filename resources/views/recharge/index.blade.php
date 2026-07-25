@@ -151,7 +151,7 @@
                                     </div>
                                     <h5 class="card-title fw-bold mb-3" style="color:#10b981;">Pack Mini</h5>
                                     <div class="d-inline-block px-3 py-1 rounded-pill fw-bold mb-2" style="background:#059669;color:#fff;font-size:1.05rem;">2 000 F CFA</div>
-                                    <p class="fw-bold text-primary mb-3" style="font-size:1.05rem;">+ 1 000 Crédits</p>
+                                    <p class="fw-bold text-primary mb-3" style="font-size:1.05rem;">→ 1 000 Crédits</p>
                                     <button class="btn btn-select-package w-100 fw-bold text-white" style="background:#10b981;border-radius:10px;border:none;">
                                         <i class="fas fa-check-circle me-2"></i>Choisir
                                     </button>
@@ -168,7 +168,7 @@
                                     </div>
                                     <h5 class="card-title fw-bold mb-3" style="color:#f97316;">Pack Essentiel</h5>
                                     <div class="d-inline-block px-3 py-1 rounded-pill fw-bold mb-2" style="background:#ea580c;color:#fff;font-size:1.05rem;">3 000 F CFA</div>
-                                    <p class="fw-bold text-primary mb-3" style="font-size:1.05rem;">+ 2 000 Crédits</p>
+                                    <p class="fw-bold text-primary mb-3" style="font-size:1.05rem;">→ 2 000 Crédits</p>
                                     <button class="btn btn-select-package w-100 fw-bold text-white" style="background:#f97316;border-radius:10px;border:none;">
                                         <i class="fas fa-check-circle me-2"></i>Choisir
                                     </button>
@@ -189,7 +189,7 @@
                                     <h5 class="card-title fw-bold mb-3" style="color:#0d6efd;">Pack Starter</h5>
                                     <div class="mb-2"><span class="badge" style="background:#0d6efd;">+0% Bonus</span></div>
                                     <div class="d-inline-block px-3 py-1 rounded-pill fw-bold mb-2" style="background:#0b5ed7;color:#fff;font-size:1.05rem;">5 000 F CFA</div>
-                                    <p class="fw-bold text-primary mb-3" style="font-size:1.05rem;">+ 5 000 Crédits</p>
+                                    <p class="fw-bold text-primary mb-3" style="font-size:1.05rem;">→ 5 000 Crédits</p>
                                     <button class="btn btn-select-package w-100 fw-bold text-white mt-2" style="background:#0d6efd;border-radius:10px;border:none;">
                                         <i class="fas fa-check-circle me-2"></i>Choisir
                                     </button>
@@ -206,7 +206,7 @@
                                     <h5 class="card-title fw-bold mb-1" style="color:#198754;">Pack Premium</h5>
                                     <div class="mb-2"><span class="badge" style="background:#198754;">+50% Bonus</span></div>
                                     <div class="d-inline-block px-3 py-1 rounded-pill fw-bold mb-2" style="background:#146c43;color:#fff;font-size:1.05rem;">10 000 F CFA</div>
-                                    <p class="fw-bold text-primary mb-3" style="font-size:1.05rem;">+ 15 000 Crédits</p>
+                                    <p class="fw-bold text-primary mb-3" style="font-size:1.05rem;">→ 15 000 Crédits</p>
                                     <button class="btn btn-select-package w-100 fw-bold text-white mt-2" style="background:#198754;border-radius:10px;border:none;">
                                         <i class="fas fa-check-circle me-2"></i>Choisir
                                     </button>
@@ -224,7 +224,7 @@
                                     <h5 class="card-title fw-bold mb-1" style="color:#0891b2;">Pack Pro</h5>
                                     <div class="mb-2"><span class="badge" style="background:#0891b2;">+67% Bonus</span></div>
                                     <div class="d-inline-block px-3 py-1 rounded-pill fw-bold mb-2" style="background:#0e7490;color:#fff;font-size:1.05rem;">15 000 F CFA</div>
-                                    <p class="fw-bold text-primary mb-3" style="font-size:1.05rem;">+ 25 000 Crédits</p>
+                                    <p class="fw-bold text-primary mb-3" style="font-size:1.05rem;">→ 25 000 Crédits</p>
                                     <button class="btn btn-select-package w-100 fw-bold text-white" style="background:#0891b2;border-radius:10px;border:none;">
                                         <i class="fas fa-check-circle me-2"></i>Choisir
                                     </button>
@@ -242,7 +242,7 @@
                                     <h5 class="card-title fw-bold mb-1" style="color:#7c3aed;">Pack Expert</h5>
                                     <div class="mb-2"><span class="badge" style="background:#7c3aed;">+75% Bonus</span></div>
                                     <div class="d-inline-block px-3 py-1 rounded-pill fw-bold mb-2" style="background:#6d28d9;color:#fff;font-size:1.05rem;">20 000 F CFA</div>
-                                    <p class="fw-bold text-primary mb-3" style="font-size:1.05rem;">+ 35 000 Crédits</p>
+                                    <p class="fw-bold text-primary mb-3" style="font-size:1.05rem;">→ 35 000 Crédits</p>
                                     <button class="btn btn-select-package w-100 fw-bold text-white" style="background:#7c3aed;border-radius:10px;border:none;">
                                         <i class="fas fa-check-circle me-2"></i>Choisir
                                     </button>
@@ -260,7 +260,7 @@
                                     <h5 class="card-title fw-bold mb-1" style="color:#d97706;">Pack Gold</h5>
                                     <div class="mb-2"><span class="badge" style="background:#d97706;">+60% Bonus</span></div>
                                     <div class="d-inline-block px-3 py-1 rounded-pill fw-bold mb-2" style="background:#b45309;color:#fff;font-size:1.05rem;">25 000 F CFA</div>
-                                    <p class="fw-bold text-primary mb-3" style="font-size:1.05rem;">+ 40 000 Crédits</p>
+                                    <p class="fw-bold text-primary mb-3" style="font-size:1.05rem;">→ 40 000 Crédits</p>
                                     <button class="btn btn-select-package w-100 fw-bold text-white" style="background:#d97706;border-radius:10px;border:none;">
                                         <i class="fas fa-check-circle me-2"></i>Choisir
                                     </button>
@@ -278,7 +278,7 @@
                                     <h5 class="card-title fw-bold mb-1" style="color:#dc3545;">Pack VIP</h5>
                                     <div class="mb-2"><span class="badge" style="background:#dc3545;">+100% Bonus</span></div>
                                     <div class="d-inline-block px-3 py-1 rounded-pill fw-bold mb-2" style="background:#b02a37;color:#fff;font-size:1.05rem;">50 000 F CFA</div>
-                                    <p class="fw-bold text-primary mb-3" style="font-size:1.05rem;">+ 100 000 Crédits</p>
+                                    <p class="fw-bold text-primary mb-3" style="font-size:1.05rem;">→ 100 000 Crédits</p>
                                     <button class="btn btn-select-package w-100 fw-bold text-white" style="background:#dc3545;border-radius:10px;border:none;">
                                         <i class="fas fa-check-circle me-2"></i>Choisir
                                     </button>
