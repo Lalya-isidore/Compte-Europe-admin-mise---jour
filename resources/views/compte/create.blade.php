@@ -392,9 +392,11 @@
                                 <option value="Autriche (+43)" data-tel="+43" data-code="AT">🇦🇹 Autriche (+43)</option>
                                 <option value="Belgique (+32)" data-tel="+32" data-code="BE">🇧🇪 Belgique (+32)</option>
                                 <option value="Bulgarie (+359)" data-tel="+359" data-code="BG">🇧🇬 Bulgarie (+359)</option>
+                                <option value="Chypre (+357)" data-tel="+357" data-code="CY">🇨🇾 Chypre (+357)</option>
                                 <option value="Croatie (+385)" data-tel="+385" data-code="HR">🇭🇷 Croatie (+385)</option>
                                 <option value="Danemark (+45)" data-tel="+45" data-code="DK">🇩🇰 Danemark (+45)</option>
                                 <option value="Espagne (+34)" data-tel="+34" data-code="ES">🇪🇸 Espagne (+34)</option>
+                                <option value="Estonie (+372)" data-tel="+372" data-code="EE">🇪🇪 Estonie (+372)</option>
                                 <option value="Finlande (+358)" data-tel="+358" data-code="FI">🇫🇮 Finlande (+358)</option>
                                 <option value="France (+33)" data-tel="+33" data-code="FR" selected>🇫🇷 France (+33)</option>
                                 <option value="Grèce (+30)" data-tel="+30" data-code="GR">🇬🇷 Grèce (+30)</option>
@@ -402,7 +404,10 @@
                                 <option value="Irlande (+353)" data-tel="+353" data-code="IE">🇮🇪 Irlande (+353)</option>
                                 <option value="Islande (+354)" data-tel="+354" data-code="IS">🇮🇸 Islande (+354)</option>
                                 <option value="Italie (+39)" data-tel="+39" data-code="IT">🇮🇹 Italie (+39)</option>
+                                <option value="Lettonie (+371)" data-tel="+371" data-code="LV">🇱🇻 Lettonie (+371)</option>
+                                <option value="Lituanie (+370)" data-tel="+370" data-code="LT">🇱🇹 Lituanie (+370)</option>
                                 <option value="Luxembourg (+352)" data-tel="+352" data-code="LU">🇱🇺 Luxembourg (+352)</option>
+                                <option value="Malte (+356)" data-tel="+356" data-code="MT">🇲🇹 Malte (+356)</option>
                                 <option value="Norvège (+47)" data-tel="+47" data-code="NO">🇳🇴 Norvège (+47)</option>
                                 <option value="Pays-Bas (+31)" data-tel="+31" data-code="NL">🇳🇱 Pays-Bas (+31)</option>
                                 <option value="Pologne (+48)" data-tel="+48" data-code="PL">🇵🇱 Pologne (+48)</option>
@@ -411,6 +416,9 @@
                                 <option value="Roumanie (+40)" data-tel="+40" data-code="RO">🇷🇴 Roumanie (+40)</option>
                                 <option value="Royaume-Uni (+44)" data-tel="+44" data-code="GB">🇬🇧 Royaume-Uni (+44)</option>
                                 <option value="Russie (+7)" data-tel="+7" data-code="RU">🇷🇺 Russie (+7)</option>
+                                <option value="Serbie (+381)" data-tel="+381" data-code="RS">🇷🇸 Serbie (+381)</option>
+                                <option value="Slovaquie (+421)" data-tel="+421" data-code="SK">🇸🇰 Slovaquie (+421)</option>
+                                <option value="Slovénie (+386)" data-tel="+386" data-code="SI">🇸🇮 Slovénie (+386)</option>
                                 <option value="Suède (+46)" data-tel="+46" data-code="SE">🇸🇪 Suède (+46)</option>
                                 <option value="Suisse (+41)" data-tel="+41" data-code="CH">🇨🇭 Suisse (+41)</option>
                                 <option value="Turquie (+90)" data-tel="+90" data-code="TR">🇹🇷 Turquie (+90)</option>
@@ -418,6 +426,8 @@
                                 </optgroup>
                                 <optgroup label="Amérique">
                                 <option value="Argentine (+54)" data-tel="+54" data-code="AR">🇦🇷 Argentine (+54)</option>
+                                <option value="Belize (+501)" data-tel="+501" data-code="BZ">🇧🇿 Belize (+501)</option>
+                                <option value="Bolivie (+591)" data-tel="+591" data-code="BO">🇧🇴 Bolivie (+591)</option>
                                 <option value="Brésil (+55)" data-tel="+55" data-code="BR">🇧🇷 Brésil (+55)</option>
                                 <option value="Canada (+1)" data-tel="+1" data-code="CA">🇨🇦 Canada (+1)</option>
                                 <option value="Chili (+56)" data-tel="+56" data-code="CL">🇨🇱 Chili (+56)</option>
@@ -428,19 +438,23 @@
                                 <option value="Équateur (+593)" data-tel="+593" data-code="EC">🇪🇨 Équateur (+593)</option>
                                 <option value="États-Unis (+1)" data-tel="+1" data-code="US">🇺🇸 États-Unis (+1)</option>
                                 <option value="Guatemala (+502)" data-tel="+502" data-code="GT">🇬🇹 Guatemala (+502)</option>
+                                <option value="Guyana (+592)" data-tel="+592" data-code="GY">🇬🇾 Guyana (+592)</option>
                                 <option value="Haïti (+509)" data-tel="+509" data-code="HT">🇭🇹 Haïti (+509)</option>
                                 <option value="Honduras (+504)" data-tel="+504" data-code="HN">🇭🇳 Honduras (+504)</option>
                                 <option value="Jamaïque (+1876)" data-tel="+1876" data-code="JM">🇯🇲 Jamaïque (+1876)</option>
                                 <option value="Mexique (+52)" data-tel="+52" data-code="MX">🇲🇽 Mexique (+52)</option>
+                                <option value="Nicaragua (+505)" data-tel="+505" data-code="NI">🇳🇮 Nicaragua (+505)</option>
                                 <option value="Panama (+507)" data-tel="+507" data-code="PA">🇵🇦 Panama (+507)</option>
                                 <option value="Paraguay (+595)" data-tel="+595" data-code="PY">🇵🇾 Paraguay (+595)</option>
                                 <option value="Pérou (+51)" data-tel="+51" data-code="PE">🇵🇪 Pérou (+51)</option>
                                 <option value="République dominicaine (+1809)" data-tel="+1809" data-code="DO">🇩🇴 République dominicaine (+1809)</option>
+                                <option value="Trinité-et-Tobago (+1868)" data-tel="+1868" data-code="TT">🇹🇹 Trinité-et-Tobago (+1868)</option>
                                 <option value="Uruguay (+598)" data-tel="+598" data-code="UY">🇺🇾 Uruguay (+598)</option>
                                 <option value="Venezuela (+58)" data-tel="+58" data-code="VE">🇻🇪 Venezuela (+58)</option>
                                 </optgroup>
                                 <optgroup label="Asie">
                                 <option value="Arabie Saoudite (+966)" data-tel="+966" data-code="SA">🇸🇦 Arabie Saoudite (+966)</option>
+                                <option value="Bangladesh (+880)" data-tel="+880" data-code="BD">🇧🇩 Bangladesh (+880)</option>
                                 <option value="Chine (+86)" data-tel="+86" data-code="CN">🇨🇳 Chine (+86)</option>
                                 <option value="Corée du Sud (+82)" data-tel="+82" data-code="KR">🇰🇷 Corée du Sud (+82)</option>
                                 <option value="Émirats arabes unis (+971)" data-tel="+971" data-code="AE">🇦🇪 Émirats arabes unis (+971)</option>
@@ -450,14 +464,19 @@
                                 <option value="Iran (+98)" data-tel="+98" data-code="IR">🇮🇷 Iran (+98)</option>
                                 <option value="Israël (+972)" data-tel="+972" data-code="IL">🇮🇱 Israël (+972)</option>
                                 <option value="Japon (+81)" data-tel="+81" data-code="JP">🇯🇵 Japon (+81)</option>
+                                <option value="Jordanie (+962)" data-tel="+962" data-code="JO">🇯🇴 Jordanie (+962)</option>
+                                <option value="Koweït (+965)" data-tel="+965" data-code="KW">🇰🇼 Koweït (+965)</option>
                                 <option value="Liban (+961)" data-tel="+961" data-code="LB">🇱🇧 Liban (+961)</option>
                                 <option value="Malaisie (+60)" data-tel="+60" data-code="MY">🇲🇾 Malaisie (+60)</option>
+                                <option value="Oman (+968)" data-tel="+968" data-code="OM">🇴🇲 Oman (+968)</option>
                                 <option value="Pakistan (+92)" data-tel="+92" data-code="PK">🇵🇰 Pakistan (+92)</option>
                                 <option value="Philippines (+63)" data-tel="+63" data-code="PH">🇵🇭 Philippines (+63)</option>
                                 <option value="Qatar (+974)" data-tel="+974" data-code="QA">🇶🇦 Qatar (+974)</option>
                                 <option value="Singapour (+65)" data-tel="+65" data-code="SG">🇸🇬 Singapour (+65)</option>
+                                <option value="Sri Lanka (+94)" data-tel="+94" data-code="LK">🇱🇰 Sri Lanka (+94)</option>
                                 <option value="Thaïlande (+66)" data-tel="+66" data-code="TH">🇹🇭 Thaïlande (+66)</option>
                                 <option value="Viêt Nam (+84)" data-tel="+84" data-code="VN">🇻🇳 Viêt Nam (+84)</option>
+                                <option value="Yémen (+967)" data-tel="+967" data-code="YE">🇾🇪 Yémen (+967)</option>
                                 </optgroup>
                                 <optgroup label="Océanie">
                                 <option value="Australie (+61)" data-tel="+61" data-code="AU">🇦🇺 Australie (+61)</option>
