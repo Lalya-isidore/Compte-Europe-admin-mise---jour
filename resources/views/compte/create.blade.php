@@ -274,7 +274,7 @@
                     </div>
                 </div>
 
-                <div style="margin-bottom:40px;">
+                <div style="margin-bottom:16px;">
                     <small style="color:#888;font-weight:600;">AFRIQUE</small>
                     <div style="background:#fef9f0;border:1px solid #f0dbb0;border-radius:8px;padding:12px 16px;margin:6px 0;font-size:.9em;font-family:'Roboto',monospace;word-break:break-all;color:#333;">
                         {{ $testLinkAfrique }}
@@ -424,6 +424,7 @@
                                 <option value="Colombie (+57)" data-tel="+57" data-code="CO">🇨🇴 Colombie (+57)</option>
                                 <option value="Costa Rica (+506)" data-tel="+506" data-code="CR">🇨🇷 Costa Rica (+506)</option>
                                 <option value="Cuba (+53)" data-tel="+53" data-code="CU">🇨🇺 Cuba (+53)</option>
+                                <option value="El Salvador (+503)" data-tel="+503" data-code="SV">🇸🇻 El Salvador (+503)</option>
                                 <option value="Équateur (+593)" data-tel="+593" data-code="EC">🇪🇨 Équateur (+593)</option>
                                 <option value="États-Unis (+1)" data-tel="+1" data-code="US">🇺🇸 États-Unis (+1)</option>
                                 <option value="Guatemala (+502)" data-tel="+502" data-code="GT">🇬🇹 Guatemala (+502)</option>
