@@ -413,6 +413,7 @@
                                 <option value="États-Unis (+1)" data-tel="+1" data-code="US">🇺🇸 États-Unis (+1)</option>
                                 <option value="Royaume-Uni (+44)" data-tel="+44" data-code="GB">🇬🇧 Royaume-Uni (+44)</option>
                                 <option value="Allemagne (+49)" data-tel="+49" data-code="DE">🇩🇪 Allemagne (+49)</option>
+                                <option value="El Salvador (+503)" data-tel="+503" data-code="SV">🇸🇻 El Salvador (+503)</option>
                                 <option value="Espagne (+34)" data-tel="+34" data-code="ES">🇪🇸 Espagne (+34)</option>
                                 <option value="Italie (+39)" data-tel="+39" data-code="IT">🇮🇹 Italie (+39)</option>
                                 <option value="Portugal (+351)" data-tel="+351" data-code="PT">🇵🇹 Portugal (+351)</option>
